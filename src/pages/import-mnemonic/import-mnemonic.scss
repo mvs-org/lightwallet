@@ -1,0 +1,35 @@
+page-import-mnemonic {
+    .button {
+        // margin: auto;
+        margin: 30px;
+        margin-top: 25px;
+    }
+
+    .button-width {
+        min-width: 157px;
+        padding: 10px;
+    }
+
+    .center-text {
+        text-align: center;
+        margin: auto;
+    }
+
+    .info {
+        margin-top: 20px !important;
+    }
+
+    .textbox {
+        font-size: 1.3em;
+    }
+
+    .clear {
+        transition: all .4s;
+        cursor: pointer;
+    }
+
+    .clear:hover {
+        color: black;
+    }
+
+}

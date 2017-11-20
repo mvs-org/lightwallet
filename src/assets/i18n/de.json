@@ -1,0 +1,76 @@
+{
+    "ACCOUNT.TITLE": "Portfolio",
+    "ACCOUNT.FROZEN": "Frozen",
+    "ACCOUNT.AVALIABLE": "Avaliable",
+    "ACCOUNT.TOTAL": "Total",
+
+    "WALLET_SETUP.TITLE": "Setup Wallet",
+    "REGISTER.TITLE": "Wallet erstellen",
+    "CREATE_WALLET_DISCLAIMER.TITLE": "Informationen",
+    "CREATE_WALLET_DISCLAIMER.TEXT": "Disclaimer PLEASE BE VERY CAREFUL WITH YOUR MNEMONIC KEY. THIS ADVICE IS GENERAL IN NATURE AND IS NOT LEGAL OR FINANCIAL ADVICE. This is also known as Metaverse is covering its arse and urging you to be responsible for your own.",
+    "REGISTER.YOUR_MNEMONIC_KEY": "Your Mnemonic Key",
+
+    "MNEMONIC_SHOW.TITLE": "Wallet Sicherung",
+    "YOUR_MNEMONIC_WORDS": "Wallet Wiederherstellungsschluessel",
+    "IMPORT_WALLET": "Importieren",
+    "CREATE_NEW_WALLET": "Wallet erstellen",
+    "CREATE_WALLET": "Alles klar. Verstanden",
+    "BUTTON.OK": "Ok",
+
+    "PLACEHOLDER.MNEMONIC_PASSPHRASE": "Mnemonic Passphrase",
+
+    "TRANSACTIONS": "Transaktionen",
+    "DATE": "Datum",
+    "AMOUNT": "Betrag",
+    "RECIPENT_ADDRESS": "Empfaenger",
+
+    "AVAILABLE_BALANCE": "Verfuegbar",
+    "AVAILABLE": "Verfuegbar",
+
+    "SCAN": "Scan",
+
+    "SWITCH_LANGUAGE": "Sprache wechseln",
+    "LANGUAGE_SETTINGS": "Spracheinstellungen",
+    "SETTINGS": "Einstellungen",
+    "INFORMATION": "Informationen",
+    "MESSAGE.ERROR_TITLE": "Oops",
+    "MESSAGE.LOADING": "Bitte warten...",
+
+    "HISTORY.NO_TXS_YET": "Keine Transaktionen gefunden",
+    "HISTORY.NO_TXS_YET_TEXT": "Starte noch heute!",
+    "SETTINGS.RESET_TEXT": "Wallet zuruecksetzen. Hierbei werden alle Daten geloescht. Ohne die Wiederherstellungswoerter verlieren ist ein Zugriff auf die im Wallet erhaltenen Coins nicht mehr moeglich.",
+    "SETTINGS.RESET_BUTTON": "Zuruecksetzen",
+    "SETTINGS.RESYNC_TEXT": "Erzwingen einer Resynchronisation der Daten.",
+    "SETTINGS.RESYNC_BUTTON": "Resync erzwingen",
+    "SEND": "Senden",
+    "RECEIVE": "Empfangen",
+    "HISTORY": "Historie",
+    "IMPORT_WALLET_ERROR_MESSAGE": "Import fehlgeschlagen",
+     "IMPORT_WALLET_CONNECTION_MESSAGE": "Fehler bei der Verifikation des Wallets. Bitte versuchen Sie es zu einem spaeteren Zeitpunkt erneut.",
+
+     "MENU": "Menu",
+
+     "REORDER": "Anordnen",
+     "FINISH": "Fertig",
+     "ERROR_SEND_TEXT" : "Tranaktion nicht moeglich. Bitte ueberpruefen Sie die Eingabe und versuchen Sie es erneut.",
+     "CREATE_NEW_WALLET_BUTTON": "Neues erstellen",
+     "MNEMONIC_CONFIRM_HEAD": "Bestaetigung",
+     "MNEMONIC_CONFIRM_TEXT": "Um sicherzustellen, dass Sie die Wiederherstellungswoerter korrekt aufgeschieben haben koennen Sie nun die Woerter in der richtigen Reihenfolge anordnen.",
+
+     "CONFIRM": "Ok",
+     "SKIP": "Ueberspringen",
+     "COPY": "Kopieren",
+     "FINISH": "Fertig",
+
+     "WARNING": "Warnung",
+     "BACKUP_WORDS_BACKED_UP_TEXT": "Haben Sie die Wiederherstellungswoerter abgeschrieben?",
+     "BACKUP_WORDS_BACKED_UP_YES": "Ja habe ich",
+     "NO": "Nein",
+     "BACKUP_WORDS_CONFIRM_SKIP_TEXT": "Sind Sie sicher, dass Sie die Woerter nicht ueberpruefen wollen?",
+     "I_AM_SURE": "Ja ich bin sicher",
+     "BACK": "Zurueck",
+     
+     "BACKUP_WORDS_WRITE_DOWN_TEXT": "Mit diesen Woertern laesst sich Ihr Wallet spaeter wiederherstllen. Bitte schreiben Sie die Woerter ab und bewahren Sie sie an einem sicheren Ort auf.",
+    "MESSAGE.ERROR_CONNECT_BLOCKCHAIN": "Verbindung mit Blockchain nodes konnte nicht hergestellt werden.",
+     "SUCCESS_SEND_TEXT" : "Transaktion wurde erfolgreich uebertragen. Bitte warten Sie bis die Transaktion vom Netzwerk bestaetigt wird."
+}

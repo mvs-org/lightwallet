@@ -1,0 +1,48 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>{{'RECEIVE'|translate}}</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content class="spread-out">
+    <ion-grid>
+        <ion-row>
+        </ion-row>
+        <ion-row>
+            <ion-col class="col-margin">
+                <ion-card class="card-margin">
+                    <ion-item>
+                        <h1 class="center">{{selectedAsset}}</h1>
+                    </ion-item>
+                    <div>
+                        <qr-code [value]="address" [size]="550" class="center"></qr-code>
+                    </div>
+                    <ion-card-content>
+                        <h4 class="center"><textarea ion-input full type="text" #copy value="{{address}}" class="center" style="" readonly>{{address}}</textarea></h4>
+                    </ion-card-content>
+                    <ion-row>
+                        <button ion-button full item-right icon-left [ngxClipboard]="copy">
+                            <ion-icon name="copy"></ion-icon>
+                            {{'COPY'|translate}}
+                        </button>
+                    </ion-row>
+                </ion-card>
+            </ion-col>
+            <ion-col>
+                <ion-item>
+                    <ion-label>{{"SHOW_ALL_ASSET_BALANCES"|translate}}</ion-label>
+                    <ion-toggle [(ngModel)]="showAll" name="showAll" checked="false"></ion-toggle>
+                </ion-item>
+                <ion-card *ngFor="let address of addresses" (click)="show(address)" class="font-mono">
+                    <ion-card-content>
+                        <h1>{{address}}</h1>
+                        <p *ngIf="!showAll"><b>{{selectedAsset}}: </b>{{(addressBalancesObject[address] && addressBalancesObject[address][selectedAsset])?format(addressBalancesObject[address][selectedAsset].total-addressBalancesObject[address][selectedAsset].spent,addressBalancesObject[address][selectedAsset].decimals):0}}</p>
+                        <ng-container *ngIf="showAll">
+                            <p *ngFor="let balance of addressbalances[address]"><b>{{balance.name}}: </b> {{format(balance.total-balance.spent, balance.decimals)}}</p>
+                        </ng-container>
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>

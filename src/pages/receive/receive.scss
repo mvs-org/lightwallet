@@ -1,0 +1,40 @@
+page-receive {
+
+    qr-code img{
+        margin-left: 20%;
+        height: auto;
+        width: 60%;
+    }
+
+    ion-card {
+        min-width: 300px;
+    }
+
+    .card-margin {
+        margin-top: 55px;
+
+    }
+
+    .icon {
+        max-width: 30px;
+    }
+
+    textarea{
+        min-width: 300px;
+        width:100%;
+        border: 0px !important;
+        resize: none;
+    }
+
+    ion-card-content {
+        text-align: left;
+    }
+}
+
+
+@media (min-width: 1079px) {
+    .col-margin {
+        margin-right: 54px;
+    }
+}
+

@@ -1,0 +1,338 @@
+// http://ionicframework.com/docs/v2/theming/
+
+
+// App Global Sass
+// --------------------------------------------------
+// Put style rules here that you want to apply globally. These
+// styles are for the entire app and not just one component.
+// Additionally, this file can be also used as an entry point
+// to import other Sass files to be included in the output CSS.
+//
+// Shared Sass variables, which can be used to adjust Ionic's
+// default Sass variables, belong in "theme/variables.scss".
+//
+// To declare rules for a specific mode, create a child rule
+// for the .md, .ios, or .wp mode classes. The mode class is
+// automatically applied to the <body> element in the app.
+
+/*
+.content{
+    background: color($colors,dark);
+}
+
+.toolbar-background {
+    background-color: color($colors,dark);
+}
+
+.toolbar-title{
+    color: color($colors,primary);
+}
+
+.item.item-input {
+    background-color: transparent;
+    color: color($colors,primary);
+}
+
+ion-menu ion-content .scroll-content{
+    overflow: hidden; //no scrollbar in slidebra
+}
+.item-md{
+    background-color: transparent;
+    color: color($colors, light);
+}
+.list-md .item-block .item-inner {
+    border-bottom: 0px;
+}
+
+
+.content-md{
+    color: color($colors, light);
+}
+*/
+// ███▄    █  ▒█████   ▄████▄  ▄▄▄█████▓ ██▓ ██▓     █    ██ ▒██   ██▒
+// ██ ▀█   █ ▒██▒  ██▒▒██▀ ▀█  ▓  ██▒ ▓▒▓██▒▓██▒     ██  ▓██▒▒▒ █ █ ▒░
+// ▓██  ▀█ ██▒▒██░  ██▒▒▓█    ▄ ▒ ▓██░ ▒░▒██▒▒██░    ▓██  ▒██░░░  █   ░
+// ▓██▒  ▐▌██▒▒██   ██░▒▓▓▄ ▄██▒░ ▓██▓ ░ ░██░▒██░    ▓▓█  ░██░ ░ █ █ ▒
+// ▒██░   ▓██░░ ████▓▒░▒ ▓███▀ ░  ▒██▒ ░ ░██░░██████▒▒▒█████▓ ▒██▒ ▒██▒
+// ░ ▒░   ▒ ▒ ░ ▒░▒░▒░ ░ ░▒ ▒  ░  ▒ ░░   ░▓  ░ ▒░▓  ░░▒▓▒ ▒ ▒ ▒▒ ░ ░▓ ░
+// ░ ░░   ░ ▒░  ░ ▒ ▒░   ░  ▒       ░     ▒ ░░ ░ ▒  ░░░▒░ ░ ░ ░░   ░▒ ░
+// ░   ░ ░ ░ ░ ░ ▒  ░          ░       ▒ ░  ░ ░    ░░░ ░ ░  ░    ░
+// ░     ░ ░  ░ ░                ░      ░  ░   ░      ░    ░
+
+.theme-noctilux{
+    .content{
+        background-color: #202020;
+    }
+    .item-md,
+    .bar-button,
+    h1,h2, h3, h4, p, li,
+    ion-card-title,
+    .toolbar-title{
+        background: transparent;
+        color: white;
+    }
+    .toolbar-background {
+        background-color: #383838;
+        .item-md,h1,h2, h3, h4, p {
+            background-color: #383838;
+        }
+
+    }
+    page-login .banner {
+        content:url(../../assets/logo1.png) !important;
+    }
+
+    ion-alert ion-backdrop{
+        -webkit-filter: blur(5px);
+        -moz-filter: blur(5px);
+        -o-filter: blur(5px);
+        -ms-filter: blur(5px);
+        filter: blur(5px);
+    }
+
+    .alert-md{
+        .alert-wrapper{
+            background: rgba(50,50,50,0.8);
+        }
+        .alert-message, .alert-wrapper{
+            color: white;
+            overflow-y: hidden;
+        }
+    }
+
+    textarea {
+        background-color: #383838
+    }
+
+    ion-card {
+        background: #383838;
+        .item-md,h1,h2, h3, h4, p {
+            background-color: #383838;
+        }
+    }
+}
+
+
+
+// ▄████▄▓██   ██▓ ▄▄▄▄   ▓█████  ██▀███   ██▓███   █    ██  ███▄    █  ██ ▄█▀
+// ▒██▀ ▀█ ▒██  ██▒▓█████▄ ▓█   ▀ ▓██ ▒ ██▒▓██░  ██▒ ██  ▓██▒ ██ ▀█   █  ██▄█▒
+// ▒▓█    ▄ ▒██ ██░▒██▒ ▄██▒███   ▓██ ░▄█ ▒▓██░ ██▓▒▓██  ▒██░▓██  ▀█ ██▒▓███▄░
+// ▒▓▓▄ ▄██▒░ ▐██▓░▒██░█▀  ▒▓█  ▄ ▒██▀▀█▄  ▒██▄█▓▒ ▒▓▓█  ░██░▓██▒  ▐▌██▒▓██ █▄
+// ▒ ▓███▀ ░░ ██▒▓░░▓█  ▀█▓░▒████▒░██▓ ▒██▒▒██▒ ░  ░▒▒█████▓ ▒██░   ▓██░▒██▒ █▄
+// ░ ░▒ ▒  ░ ██▒▒▒ ░▒▓███▀▒░░ ▒░ ░░ ▒▓ ░▒▓░▒▓▒░ ░  ░░▒▓▒ ▒ ▒ ░ ▒░   ▒ ▒ ▒ ▒▒ ▓▒
+// ░  ▒  ▓██ ░▒░ ▒░▒   ░  ░ ░  ░  ░▒ ░ ▒░░▒ ░     ░░▒░ ░ ░ ░ ░░   ░ ▒░░ ░▒ ▒░
+// ░       ▒ ▒ ░░   ░    ░    ░     ░░   ░ ░░        ░░░ ░ ░    ░   ░ ░ ░ ░░ ░
+// ░ ░     ░ ░      ░         ░  ░   ░                 ░              ░ ░  ░
+// ░       ░ ░           ░
+
+.theme-cyberpunk{
+    .content{
+        background-color: #000000;
+        color: dcdccc;
+    }
+    .item-md,
+    .bar-button,
+    h1,h2, h3, h4,
+    ion-card-title,
+    .toolbar-title{
+        background: transparent;
+        color: #ff1493;
+        h3 {
+            color: white;
+        }
+        p {
+            color: #fffafa;
+        }
+    }
+    .toolbar-background {
+        background-color: #383838;
+        .item-md,h1,h2, h3, h4, p {
+            background-color: #383838;
+        }
+
+    }
+
+    ion-alert ion-backdrop{
+        -webkit-filter: blur(5px);
+        -moz-filter: blur(5px);
+        -o-filter: blur(5px);
+        -ms-filter: blur(5px);
+        filter: blur(5px);
+    }
+
+    .alert-md{
+        .alert-wrapper{
+            background: rgba(50,50,50,0.8);
+        }
+        .alert-message, .alert-wrapper{
+            color: white;
+            overflow-y: hidden;
+        }
+    }
+
+    textarea {
+        background-color: #383838
+    }
+
+    ion-card {
+        background: #383838;
+        .item-md,h1,h2, h3, h4, p {
+            background-color: #383838;
+        }
+    }
+}
+
+
+// ██████  ▒█████   ██▓    ▄▄▄       ██▀███
+// ▒██    ▒ ▒██▒  ██▒▓██▒   ▒████▄    ▓██ ▒ ██▒
+// ░ ▓██▄   ▒██░  ██▒▒██░   ▒██  ▀█▄  ▓██ ░▄█ ▒
+// ▒   ██▒▒██   ██░▒██░   ░██▄▄▄▄██ ▒██▀▀█▄
+// ▒██████▒▒░ ████▓▒░░██████▒▓█   ▓██▒░██▓ ▒██▒
+// ▒ ▒▓▒ ▒ ░░ ▒░▒░▒░ ░ ▒░▓  ░▒▒   ▓▒█░░ ▒▓ ░▒▓░
+// ░ ░▒  ░ ░  ░ ▒ ▒░ ░ ░ ▒  ░ ▒   ▒▒ ░  ░▒ ░ ▒░
+// ░  ░  ░  ░ ░ ░ ▒    ░ ░    ░   ▒     ░░   ░
+// ░      ░ ░      ░  ░     ░  ░   ░
+
+.theme-solarized{
+    .content{
+        background-color: #073642;
+        color: white;
+    }
+    .item-md,
+    .bar-button,
+    h1,h2, h3, h4,
+    ion-card-title,
+    .toolbar-title{
+        background: transparent;
+        color: #586e75;
+        p {
+            color: #eee8d5;
+        }
+    }
+    .toolbar-background {
+        background-color: #002b36;
+        .item-md,h1,h2, h3, h4, p {
+            background-color: #002b36;
+        }
+
+    }
+
+    ion-alert ion-backdrop{
+        -webkit-filter: blur(5px);
+        -moz-filter: blur(5px);
+        -o-filter: blur(5px);
+        -ms-filter: blur(5px);
+        filter: blur(5px);
+    }
+
+    .alert-md{
+        .alert-wrapper{
+            background: rgba(0,43,54,0.8);
+        }
+        .alert-message, .alert-wrapper{
+            color: white;
+            overflow-y: hidden;
+        }
+    }
+
+
+    page-login .banner {
+        content:url(../../assets/logo1.png) !important;
+    }
+
+    textarea {
+        background-color: #002b36;
+        color: #fff;
+    }
+
+    ion-card {
+        background: #002b36;
+        .item-md,h1,h2, h3, h4, p {
+            background-color: #002b36;
+        }
+    }
+}
+
+
+
+.theme-puppy{
+    .item-md,
+    .bar-button,
+    h1,h2, h3, h4,
+    ion-card-title,
+    .toolbar-title{
+        background: transparent;
+    }
+    .toolbar-background {
+        background-color: pink;
+        .item-md,h1,h2, h3, h4, p {
+            background-color: pink;
+        }
+
+    }
+    .button-md, page-import-wallet .inputfile + label{
+        background-color: pink !important;
+    }
+    .button-md-secondary{
+        background-color: lightblue !important;
+    }
+    .button-clear-md{
+        color: white;
+    }
+
+    ion-card {
+        background: pink;
+        .item-md,h1,h2, h3, h4, p {
+            background-color: pink;
+        }
+    }
+}
+
+
+
+.toolbar-md {
+    min-height: 70px;
+}
+
+.center {
+    text-align: center;
+}
+.platform-ios.platform-cordova:not(.fullscreen) {
+    // margin-top: 20px;
+}
+
+ion-list-header{
+    padding-top: 20px;
+}
+
+.card-md{
+    margin: 8px 0px 8px 0px;
+    width: calc(100%);
+}
+
+.font-mono{
+    font-family: monospace;
+}
+
+
+
+// Global Browser Style settings
+@media (min-width: 1079px) {
+    .scroll-content {
+        padding-top: 20px;
+        padding-left: 50px;
+        padding-right: 50px;
+        max-width: 1500px !important;
+        margin: auto;
+        overflow-y: auto;
+    }
+
+    .menu-inner .scroll-content{
+        padding: 0px 0px 0px 0px;
+        overflow-y: hidden;
+    }
+
+    .alert-md .alert-wrapper{
+        max-width: none;
+    }
+}

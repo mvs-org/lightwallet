@@ -1,0 +1,8 @@
+{
+  "name": "mvs-mobile",
+  "app_id": "8a12ec1e",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}

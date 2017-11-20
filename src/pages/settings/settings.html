@@ -1,0 +1,18 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>{{'SETTINGS'|translate}}</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-list>
+        <a ion-item (click)="reset()" style="white-space: normal;">
+            <ion-icon name="refresh" item-start></ion-icon>
+            <h1 [translate]="'SETTINGS.RESYNC_BUTTON'"></h1>
+            <p [translate]="'SETTINGS.RESYNC_TEXT'" style="white-space: normal;"></p>
+        </a>
+    </ion-list>
+</ion-content>

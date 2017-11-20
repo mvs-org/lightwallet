@@ -1,0 +1,45 @@
+page-login {
+    .login-content {
+        ion-row{
+            padding-top: 10px;
+        }
+
+        .banner {
+            width: 100%;
+            max-width: 500px;
+            display: block;
+            margin: 0 auto;
+            content:url(../../assets/logo.png);
+        }
+
+
+
+        .browser-button, .info-text{
+            width: 50%;
+            margin: 0 auto;
+        }
+
+        .large-btn {
+            padding-top: 22px;
+            padding-bottom: 22px;
+        }
+
+        .logo {
+            padding-top: 55px;
+            padding-bottom: 30px;
+        }
+
+        @media (max-width: 992px) {
+            .browser-button, .info-text {
+                width: 100%;
+                margin-left: 5px;
+                margin-right: 5px;
+            }
+
+            img {
+                width: auto;
+            }
+        }
+    }
+}
+

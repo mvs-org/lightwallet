@@ -1,0 +1,75 @@
+{
+    "ACCOUNT.TITLE": "Compte",
+    "ACCOUNT.FROZEN": "Bloqué",
+    "ACCOUNT.AVALIABLE": "Disponible",
+    "ACCOUNT.TOTAL": "Total",
+
+    "WALLET_SETUP.TITLE": "Configuration",
+    "REGISTER.TITLE": "Créer compte",
+    "CREATE_WALLET_DISCLAIMER.TITLE": "Information",
+    "REGISTER.YOUR_MNEMONIC_KEY": "Votre Clé",
+
+    "MNEMONIC_SHOW.TITLE": "Récupération de votre compte",
+    "YOUR_MNEMONIC_WORDS": "Phrase mnémotechnique",
+    "IMPORT_WALLET": "Importer compte",
+    "CREATE_NEW_WALLET": "Créer nouveau compte",
+    "CREATE_WALLET": "Comprit",
+    "BUTTON.OK": "Ok",
+
+    "PLACEHOLDER.MNEMONIC_PASSPHRASE": "Phrase mnémotechnique",
+
+    "TRANSACTIONS": "Transactions",
+    "DATE": "Date",
+    "AMOUNT": "Montant",
+    "RECIPENT_ADDRESS": "Destinataire",
+
+    "AVAILABLE_BALANCE": "Balance disponible",
+    "AVAILABLE": "Disponible",
+
+    "SCAN": "Scanner",
+
+    "SWITCH_LANGUAGE": "Changer Langue",
+    "LANGUAGE_SETTINGS": "Langue",
+    "SETTINGS": "Paramètres",
+    "INFORMATION": "Information",
+    "MESSAGE.ERROR_TITLE": "Oups...",
+    "MESSAGE.LOADING": "Veuillez patienter...",
+
+    "HISTORY.NO_TXS_YET": "Aucune transaction",
+    "HISTORY.NO_TXS_YET_TEXT": "Commencez à échanger aujourd'hui !",
+    "SETTINGS.RESET_TEXT": "Réinitialiser toutes les données du compte. Veuillez vérifier que vous avez la phrase mnémotechnique de votre compte.",
+    "SETTINGS.RESET_BUTTON": "Réinitialiser",
+    "SETTINGS.RESYNC_TEXT": "Forcer la réinitialisation de toutes les transactions et de la balance.",
+    "SETTINGS.RESYNC_BUTTON": "Forcer réinitialisation",
+    "SEND": "Envoyé",
+    "RECEIVE": "Reçut",
+    "HISTORY": "Histo",
+    "IMPORT_WALLET_ERROR_MESSAGE": "Échec de l'importation du compte. Veuillez vérifier les paramètres et réessayer.",
+     "IMPORT_WALLET_CONNECTION_MESSAGE": "Erreur lors de la vérification du compte. Veuillez réessayer.",
+
+     "MENU": "Menu",
+
+     "REORDER": "Réordonner",
+     "FINISH": "Terminer",
+     "ERROR_SEND_TEXT" : "Échec de la transaction. Veuillez vérifier les paramètres et réessayer.",
+     "CREATE_NEW_WALLET_BUTTON": "Créer nouveau",
+     "MNEMONIC_CONFIRM_HEAD": "Confirmer phrase mnémotechnique",
+     "MNEMONIC_CONFIRM_TEXT": "Afin de confirmer votre phrase mnémotechnique, veuillez réorganiser les mots dans le bon ordre.",
+
+     "CONFIRM": "Confirmer",
+     "SKIP": "Ignorer",
+     "COPY": "Copier",
+     "FINISH": "Terminer",
+
+     "WARNING": "Attention",
+     "BACKUP_WORDS_BACKED_UP_TEXT": "Veuillez confirmer que vous avez bien noté votre phrase mnémotechnique",
+     "BACKUP_WORDS_BACKED_UP_YES": "Oui, je l'ai notée",
+     "NO": "Oui",
+     "BACKUP_WORDS_CONFIRM_SKIP_TEXT": "Êtes vous sûr de vouloir continuer sans vérifier la phrase mnémotechnique de votre compte ?",
+     "I_AM_SURE": "Je suis sûr",
+     "BACK": "Retour",
+
+     "BACKUP_WORDS_WRITE_DOWN_TEXT": "Veuillez noter ces mots sur une feuille de papier, vous en aurez besoin pour restorer votre compte. Il est très important de les conserver dans un endroit sûr et privé.",
+    "MESSAGE.ERROR_CONNECT_BLOCKCHAIN": "Echec de la connection à la blockchain",
+     "SUCCESS_SEND_TEXT" : "La transaction à été envoyée. Veuillez patienter pour confirmation."
+}

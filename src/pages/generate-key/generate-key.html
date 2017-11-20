@@ -1,0 +1,43 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>{{'MNEMONIC_SHOW.TITLE'|translate}}</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-row center text-center class="title-text-padding">
+        <ion-col>
+            <h1>{{'YOUR_MNEMONIC_WORDS'|translate}}</h1>
+        </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col center text-center>
+            <p>{{'BACKUP_WORDS_WRITE_DOWN_TEXT'|translate}}</p>
+        </ion-col>
+    </ion-row>
+    <ion-card>
+        <ion-row class="card-content">
+            <ion-col center text-center>
+                <h1 class="center">
+                    <ion-textarea readonly value="{{wallet.mnemonic}}"></ion-textarea>
+                </h1>
+            </ion-col>
+        </ion-row>
+    </ion-card>
+    <ion-row class="more-bottom-padding">
+        <ion-col center text-center>
+            <p>{{'LIGHT_WALLET_INFO_TEXT'|translate}}</p>
+        </ion-col>
+    </ion-row>
+    <ion-row class="button" *ngIf="builtFor=='browser'">
+        <button ion-button full (click)="download()">{{'BUTTON.NEXT'|translate}}</button>
+    </ion-row>
+</ion-content>
+
+<ion-footer *ngIf="builtFor=='app'">
+    <ion-row>
+        <ion-col>
+            <button ion-button full (click)="download()">{{'BUTTON.NEXT'|translate}}</button>
+        </ion-col>
+    </ion-row>
+</ion-footer>
