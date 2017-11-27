@@ -1,73 +1,82 @@
 <ion-header>
-    <ion-navbar>
-        <button ion-button menuToggle>
-            <ion-icon name="menu"></ion-icon>
-        </button>
-        <ion-title>{{"ACCOUNT.TITLE"|translate}}</ion-title>
-        <ion-buttons end>
-            <button ion-button icon-left>
-                <span>{{"HEIGHT" |translate}}: {{height}}</span>
-            </button>
-            <button ion-button icon-left (click)="logout()">
-                <ion-icon name="off"></ion-icon>
-                <span>{{"LOGOUT" |translate}}</span>
-            </button>
-            <button *ngIf="syncing" ion-button icon-left>
-                <ion-icon name="refresh"></ion-icon>
-                <span>{{"SYNCING" |translate}}</span>
-            </button>
-            <button *ngIf="!syncing" ion-button (click)="sync()" icon-left>
-                <ion-icon name="refresh"></ion-icon>
-                <span>{{"RESYNC" |translate}}</span>
-            </button>
-        </ion-buttons>
-    </ion-navbar>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{"ACCOUNT.TITLE"|translate}}</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-left>
+        <span>{{"HEIGHT" |translate}}: {{height}}</span>
+      </button>
+      <button ion-button icon-left (click)="logout()">
+        <ion-icon name="off"></ion-icon>
+        <span>{{"LOGOUT" |translate}}</span>
+      </button>
+      <button *ngIf="syncing" ion-button icon-left>
+        <ion-icon name="refresh"></ion-icon>
+        <span>{{"SYNCING" |translate}}</span>
+      </button>
+      <button *ngIf="!syncing" ion-button (click)="sync()" icon-left>
+        <ion-icon name="refresh"></ion-icon>
+        <span>{{"RESYNC" |translate}}</span>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
 </ion-header>
 
 <ion-content class="center spread-out">
-    <div class="mini-loader" *ngIf="syncing&&balances==undefined">Loading</div>
-    <ion-list no-lines *ngIf="!syncing||balances!=undefined">
-        <ion-grid>
-            <ion-row>
-                <ng-container *ngFor="let asset of balancesKeys">
-                    <ion-col width-50 *ngIf="balances[asset]!=undefined">
-                        <ion-card>
-                            <ion-item>
-                                <ion-avatar item-start>
-                                    <img class="coinlogo" [src]="'assets/icon/'+asset+'.png'" (error)="errorImg($event)">
-                                </ion-avatar>
+  <div class="mini-loader" *ngIf="syncing&&balances==undefined">Loading</div>
+  <ion-list no-lines *ngIf="!syncing||balances!=undefined">
+    <ion-grid>
+      <ion-row>
+        <ng-container *ngFor="let asset of balancesKeys">
+          <ion-col width-50 *ngIf="balances[asset]!=undefined">
+            <ion-card>
+              <ion-row>
+                <ion-col>
+                  <ion-item>
+                    <ion-avatar item-start>
+                      <img class="coinlogo" [src]="'assets/icon/'+asset+'.png'" (error)="errorImg($event)">
+                    </ion-avatar>
+                    <h1 [translate]="asset"></h1>
+                    <h3>{{"AVAILABLE"|translate}}: {{format((balances[asset] && balances[asset].available)?balances[asset].available:0,balances[asset].decimals)}}</h3>
+                    <p *ngIf="asset=='ETP'">{{"ACCOUNT.TOTAL"|translate}}: {{format((balances[asset]) ? ((balances[asset].total-balances[asset].spent)) : 0, balances[asset].decimals)}}</p>
+                  </ion-item>
+                </ion-col>
+                <ion-col>
+                  <button *ngIf="asset=='ETP'" ion-button full clear color="dark" icon-left (click)="gotoDeposit($event, asset)">
+                    <ion-icon name="snow"></ion-icon>
+                    {{ "DEPOSIT" | translate }}
+                  </button>
+                </ion-col>
+              </ion-row>
 
-                                <h1 [translate]="asset"></h1>
-                                <h3>{{"AVAILABLE"|translate}}: {{format((balances[asset] && balances[asset].available)?balances[asset].available:0,balances[asset].decimals)}}</h3>
-                                <p *ngIf="asset=='ETP'">{{"ACCOUNT.TOTAL"|translate}}: {{format((balances[asset]) ? ((balances[asset].total-balances[asset].spent)) : 0, balances[asset].decimals)}}</p>
-                            </ion-item>
-
-                            <ion-card-content>
-                            </ion-card-content>
-                            <ion-row>
-                                <ion-col>
-                                    <button ion-button full clear color="secondary" icon-left (click)="gotoReceive($event, asset)">
-                                        <ion-icon name="download"></ion-icon>
-                                        {{ "RECEIVE" | translate }}
-                                    </button>
-                                </ion-col>
-                                <ion-col>
-                                    <button ion-button full clear color="danger" icon-left (click)="gotoTransfer($event, asset)">
-                                        <ion-icon name="send"></ion-icon>
-                                        {{ "SEND" | translate }}
-                                    </button>
-                                </ion-col>
-                                <ion-col center text-center>
-                                    <button ion-button full clear icon-left (click)="gotoTransactions($event, asset)">
-                                        <ion-icon name="time"></ion-icon>
-                                        {{ "HISTORY" | translate }}
-                                    </button>
-                                </ion-col>
-                            </ion-row>
-                        </ion-card>
-                    </ion-col>
-                </ng-container>
-            </ion-row>
-        </ion-grid>
-    </ion-list>
+              <ion-card-content>
+              </ion-card-content>
+              <ion-row>
+                <ion-col>
+                  <button ion-button full clear color="secondary" icon-left (click)="gotoReceive($event, asset)">
+                    <ion-icon name="download"></ion-icon>
+                    {{ "RECEIVE" | translate }}
+                  </button>
+                </ion-col>
+                <ion-col>
+                  <button ion-button full clear color="danger" icon-left (click)="gotoTransfer($event, asset)">
+                    <ion-icon name="send"></ion-icon>
+                    {{ "SEND" | translate }}
+                  </button>
+                </ion-col>
+                <ion-col center text-center>
+                  <button ion-button full clear icon-left (click)="gotoTransactions($event, asset)">
+                    <ion-icon name="time"></ion-icon>
+                    {{ "HISTORY" | translate }}
+                  </button>
+                </ion-col>
+              </ion-row>
+            </ion-card>
+          </ion-col>
+        </ng-container>
+      </ion-row>
+    </ion-grid>
+  </ion-list>
 </ion-content>

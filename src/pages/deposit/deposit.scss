@@ -1,0 +1,11 @@
+page-deposit {
+    .error-border,
+    ion-item.error-border .item-inner{
+        border-bottom-color: red !important;
+    }
+
+    .right {
+        text-align: right;
+    }
+
+}
