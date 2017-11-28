@@ -118,8 +118,11 @@ export class MvsServiceProvider {
             .then((transfer_info: any) => {
                 //Create new TX
                 var transaction = new Metaverse.transaction();
+                //Get recipent address
+                if((recipent_address==undefined||recipent_address=='auto')&&transfer_info.outputs.length)
+                    recipent_address=transfer_info.outputs[0].address
                 //Set recipent output
-                transaction.addLockOutput(recipent_address, quantity, locktime);
+                transaction.addLockOutput(recipent_address, quantity, parseInt(locktime));
                 //Add changes
                 let changes = Object.keys(transfer_info.change);
                 if (changes.length) {
