@@ -109,6 +109,8 @@
     "SELECT_FROM_ADDRESS": "选择发送地址 (可选)",
     "SHOW_ADVANCED": "显示高级选项",
     "AUTO": "自动",
+    "SELECT_DEPOSIT_OPTION": "区块数",
+    "DEPOSIT_PROFIT": "你的收益",
     "TRANSACITON_PREVIEW_TEXT": "您的交易编码是:",
     "MESSAGE.SUCCESS": "太棒了",
     "MESSAGE.LOGOUT_CONFIRM": "您确定要退出?",

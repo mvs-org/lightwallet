@@ -44,7 +44,9 @@
                   </ion-item>
                 </ion-col>
                 <ion-col>
-                  <button *ngIf="asset=='ETP'" ion-button full clear color="dark" icon-left (click)="gotoDeposit($event, asset)">
+                </ion-col>
+                <ion-col>
+                  <button *ngIf="asset=='ETP'" ion-button full clear color="dark" icon-left (click)="gotoDeposit($event, asset)" class="deposit-button">
                     <ion-icon name="snow"></ion-icon>
                     {{ "DEPOSIT" | translate }}
                   </button>

@@ -23,8 +23,8 @@ export class DepositPage {
     addressbalances: Array<any>
     deposit_options: Array<any>
     sendFrom: string
-    recipent_address: string
-    custom_recipent: string
+    recipient_address: string
+    custom_recipient: string
     locktime: number
     changeAddress: string
     feeAddress: string
@@ -41,8 +41,10 @@ export class DepositPage {
 
         this.selectedAsset = navParams.get('asset')
         this.sendFrom = 'auto'
-        this.recipent_address = 'auto'
+        this.recipient_address = 'auto'
         this.feeAddress = 'auto'
+        this.locktime = 0
+        this.custom_recipient = ''
         this.deposit_options=[{option:7, locktime: 25200, rate: 0.0009589},{option:30, locktime: 108000, rate: 0.0066667},{option:90, locktime: 331200, rate: 0.032},{option:182, locktime: 655200, rate: 0.08},{option:365, locktime: 1314000, rate: 0.2}]
 
         //Load addresses
@@ -96,6 +98,8 @@ export class DepositPage {
 
     validQuantity = (quantity) => quantity != undefined && this.showBalance >= parseFloat(quantity) * Math.pow(10, this.decimals)
 
+    validrecipient = (custom_recipient) => (custom_recipient.length == 32) && (custom_recipient.charAt(0) == 'M')
+
     cancel(e) {
         e.preventDefault()
         this.navCtrl.pop()
@@ -120,7 +124,7 @@ export class DepositPage {
     create() {
         return this.showLoading()
             .then(() => this.mvs.getMvsAddresses())
-            .then((addresses) => this.mvs.createDepositTx(this.passphrase, (this.recipent_address == 'auto') ? null : (this.recipent_address == 'custom') ? this.custom_recipent : this.recipent_address, Math.floor(parseFloat(this.quantity) * Math.pow(10, this.decimals)), this.locktime, (this.sendFrom != 'auto') ? this.sendFrom : null, (this.changeAddress != 'auto') ? this.changeAddress : undefined))
+            .then((addresses) => this.mvs.createDepositTx(this.passphrase, (this.recipient_address == 'auto') ? null : (this.recipient_address == 'custom') ? this.custom_recipient : this.recipient_address, Math.floor(parseFloat(this.quantity) * Math.pow(10, this.decimals)), this.locktime, (this.sendFrom != 'auto') ? this.sendFrom : null, (this.changeAddress != 'auto') ? this.changeAddress : undefined))
     }
 
     send() {
@@ -141,6 +145,8 @@ export class DepositPage {
     }
 
     format = (quantity, decimals) => quantity / Math.pow(10, decimals)
+
+    round = (val:number) => Math.round(val*100000000)/100000000
 
     showLoading() {
         return new Promise((resolve, reject) => {
