@@ -90,6 +90,10 @@ ion-menu ion-content .scroll-content{
         filter: blur(5px);
     }
 
+    p,div {
+        color: #949494 !important;
+    }
+
     .alert-md{
         .alert-wrapper{
             background: rgba(50,50,50,0.8);
@@ -205,9 +209,6 @@ ion-menu ion-content .scroll-content{
     .toolbar-title{
         background: transparent;
         color: #586e75;
-        p {
-            color: #eee8d5;
-        }
     }
     .toolbar-background {
         background-color: #002b36;
@@ -223,6 +224,10 @@ ion-menu ion-content .scroll-content{
         -o-filter: blur(5px);
         -ms-filter: blur(5px);
         filter: blur(5px);
+    }
+
+    p {
+        color: #0f8082;
     }
 
     .alert-md{
@@ -282,7 +287,7 @@ ion-menu ion-content .scroll-content{
 
     ion-card {
         background: pink;
-        .item-md,h1,h2, h3, h4, p {
+        .item-md,h1,h2, h3, h4, p,textarea {
             background-color: pink;
         }
     }

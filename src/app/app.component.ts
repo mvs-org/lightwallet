@@ -4,6 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { AccountPage } from '../pages/account/account';
 import { LoginPage } from '../pages/login/login';
+import { DepositPage } from '../pages/deposit/deposit';
 import { LanguageSwitcherPage } from '../pages/language-switcher/language-switcher';
 import { ThemeSwitcherPage } from '../pages/theme-switcher/theme-switcher';
 import { InformationPage } from '../pages/information/information';
@@ -63,6 +64,7 @@ export class MyApp {
 
     setMenu() {
         return Promise.all([
+            { title: 'ETP_DEPOSIT', component: DepositPage },
             { title: 'LANGUAGE_SETTINGS', component: LanguageSwitcherPage },
             { title: 'THEME_SETTINGS', component: ThemeSwitcherPage },
             { title: 'SETTINGS', component: SettingsPage },

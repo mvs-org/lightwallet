@@ -32,7 +32,12 @@
       </ion-item>
       <ion-row *ngFor="let deposit_option of deposit_options">
         <ion-item *ngIf="deposit_option.locktime == locktime && quantity > 0">
-          <ion-label color="secondary">{{"DEPOSIT_PROFIT" | translate}}: {{round(deposit_option.rate*quantity)}} ETP</ion-label>
+          <ion-label color="primary">
+            {{"DEPOSIT_PROFIT" | translate}}:
+            <ion-label color="dark" class="inline">
+              {{round(deposit_option.rate*quantity)}} ETP
+            </ion-label>
+          </ion-label>
         </ion-item>
       </ion-row>
       <ion-item [ngClass]="{'error-border': false}">
@@ -66,9 +71,9 @@
         </ion-item>
         <ion-item *ngIf="recipient_address == 'custom'" [ngClass]="{'error-border':!validrecipient(custom_recipient)}">
           <ion-label floating>{{"CUSTOM_RECIPIENT_ADDRESS" | translate}}</ion-label>
-          <ion-input name="custom_recipient" [(ngModel)]="custom_recipient"></ion-input>
+          <ion-input name="custom_recipient" [(ngModel)]="custom_recipient" (ngModelChange)="customRecipientChanged($event)"></ion-input>
         </ion-item>
-        <button ion-button full [disabled]="!sendForm.form.valid" (click)="preview()" color="primary">
+        <button ion-button full [disabled]="!sendForm.form.valid||!validQuantity(quantity)||(recipient_address == 'custom' && !validrecipient(custom_recipient))" (click)="preview()" color="primary">
           {{"PREVIEW" | translate}}
         </button>
         <div *ngIf="rawtx">

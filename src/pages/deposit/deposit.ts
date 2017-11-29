@@ -39,7 +39,7 @@ export class DepositPage {
         private mvs: MvsServiceProvider,
         private translate: TranslateService) {
 
-        this.selectedAsset = navParams.get('asset')
+        this.selectedAsset = "ETP"
         this.sendFrom = 'auto'
         this.recipient_address = 'auto'
         this.feeAddress = 'auto'
@@ -98,7 +98,9 @@ export class DepositPage {
 
     validQuantity = (quantity) => quantity != undefined && this.showBalance >= parseFloat(quantity) * Math.pow(10, this.decimals)
 
-    validrecipient = (custom_recipient) => (custom_recipient.length == 32) && (custom_recipient.charAt(0) == 'M')
+    validrecipient = (custom_recipient) => (custom_recipient.length == 34) && (custom_recipient.charAt(0) == 'M')
+
+    customRecipientChanged = () => {if(this.custom_recipient) this.custom_recipient = this.custom_recipient.trim()}
 
     cancel(e) {
         e.preventDefault()

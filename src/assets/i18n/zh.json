@@ -1,7 +1,7 @@
 {
     "ACCOUNT.TITLE": "账户",
     "ACCOUNT.FROZEN": "冻结",
-    "ACCOUNT.AVALIABLE": "可用",
+    "ACCOUNT.AVAILABLE": "可用",
     "ACCOUNT.TOTAL": "总额",
 
     "WALLET_SETUP.TITLE": "设置钱包",
@@ -21,7 +21,7 @@
     "TRANSACTIONS": "交易",
     "DATE": "日期",
     "AMOUNT": "数量",
-    "RECIPENT_ADDRESS": "收款地址",
+    "RECIPIENT_ADDRESS": "收款地址",
 
     "AVAILABLE_BALANCE": "可用余额",
     "AVAILABLE": "可用",

@@ -1,7 +1,7 @@
 {
     "ACCOUNT.TITLE": "Портфолио",
     "ACCOUNT.FROZEN": "Заморожен",
-    "ACCOUNT.AVALIABLE": "Доступно",
+    "ACCOUNT.AVAILABLE": "Доступно",
     "ACCOUNT.TOTAL": "Всего",
 
     "WALLET_SETUP.TITLE": "Установить кошелек",
@@ -22,7 +22,7 @@
     "TRANSACTIONS": "Транзакции",
     "DATE": "Дата",
     "AMOUNT": "Сумма",
-    "RECIPENT_ADDRESS": "Адрес получателя",
+    "RECIPIENT_ADDRESS": "Адрес получателя",
 
     "AVAILABLE_BALANCE": "Доступный балланс",
     "AVAILABLE": "Доступно",

@@ -1,8 +1,9 @@
 {
     "ACCOUNT.TITLE": "Portfolio",
     "ACCOUNT.FROZEN": "Frozen",
-    "ACCOUNT.AVALIABLE": "Avaliable",
+    "ACCOUNT.AVAILABLE": "Available",
     "ACCOUNT.TOTAL": "Total",
+
 
     "WALLET_SETUP.TITLE": "Setup Wallet",
     "REGISTER.TITLE": "Create Wallet",
@@ -22,7 +23,7 @@
     "TRANSACTIONS": "Transactions",
     "DATE": "Date",
     "AMOUNT": "Amount",
-    "RECIPENT_ADDRESS": "Recipient address",
+    "RECIPIENT_ADDRESS": "Recipient address",
     "SELECT_RECIPIENT_ADDRESS": "Select the recipient address (optional)",
     "CUSTOM_RECIPIENT_ADDRESS": "Custom recipient address",
 
@@ -30,6 +31,8 @@
     "AVAILABLE": "Available",
 
     "SCAN": "Scan",
+
+    "ETP_DEPOSIT": "ETP Deposit",
 
     "SWITCH_LANGUAGE": "Change Language",
     "LANGUAGE_SETTINGS": "Language settings",

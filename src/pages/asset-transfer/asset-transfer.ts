@@ -15,7 +15,7 @@ export class AssetTransferPage {
     decimals: number
     showBalance: number
     loading: Loading
-    recipent_address: string
+    recipient_address: string
     quantity: string
     builtFor: string
     rawtx: string
@@ -38,6 +38,7 @@ export class AssetTransferPage {
         this.selectedAsset = navParams.get('asset')
         this.sendFrom = 'auto'
         this.feeAddress = 'auto'
+        this.recipient_address = ''
 
         //Load addresses
         mvs.getMvsAddresses()
@@ -105,7 +106,7 @@ export class AssetTransferPage {
     create() {
         return this.showLoading()
             .then(() => this.mvs.getMvsAddresses())
-            .then((addresses) => this.mvs.createTx(this.passphrase, this.selectedAsset, this.recipent_address, Math.floor(parseFloat(this.quantity) * Math.pow(10, this.decimals)), (this.sendFrom != 'auto') ? this.sendFrom : null, (this.changeAddress != 'auto') ? this.changeAddress : undefined))
+            .then((addresses) => this.mvs.createTx(this.passphrase, this.selectedAsset, this.recipient_address, Math.floor(parseFloat(this.quantity) * Math.pow(10, this.decimals)), (this.sendFrom != 'auto') ? this.sendFrom : null, (this.changeAddress != 'auto') ? this.changeAddress : undefined))
     }
 
     send() {
@@ -126,6 +127,10 @@ export class AssetTransferPage {
     }
 
     format = (quantity, decimals) => quantity / Math.pow(10, decimals)
+
+    validrecipient = (recipient_address) => (recipient_address.length == 34) && (recipient_address.charAt(0) == 'M')
+
+    recipientChanged = () => {if(this.recipient_address) this.recipient_address=this.recipient_address.trim()}
 
     showLoading() {
         return new Promise((resolve, reject) => {

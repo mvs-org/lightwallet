@@ -1,4 +1,26 @@
 page-account {
+
+  .asset-container {
+     max-width: 100%;
+  }
+
+  @media (min-width: 825px) {
+    .asset-container {
+      max-width: 50%;
+    }
+   }
+
+  @media (min-width: 1310px) {
+    .asset-container {
+            max-width: 33.33%;
+        }
+    }
+    @media (min-width: 1700px) {
+        .asset-container {
+            max-width: 25%;
+        }
+    }
+
     ion-list-header ion-reorder{
         display: none !important;
     }
@@ -106,6 +128,16 @@ page-account {
     }
 
     .deposit-button {
-      margin-top: 30px;
+      top: -5px;
+    }
+
+    .row-buttons {
+      position: absolute;
+      bottom: 20px;
+      left: -1px;
+    }
+
+    .card-block {
+      padding-bottom: 50px;
     }
 }

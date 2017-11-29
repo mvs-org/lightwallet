@@ -76,7 +76,7 @@ export class MvsServiceProvider {
         return new Promise(resolve => resolve(CryptoJS.AES.encrypt(JSON.stringify(ec), pincode).toString()))
     }
 
-    createTx(passphrase, asset, recipent_address, quantity, from_address, change_address) {
+    createTx(passphrase, asset, recipient_address, quantity, from_address, change_address) {
         return this.getUtxoFrom(from_address)
             .then((utxo) => {
                 if (change_address == undefined) {
@@ -88,8 +88,8 @@ export class MvsServiceProvider {
             .then((transfer_info: any) => {
                 //Create new TX
                 var transaction = new Metaverse.transaction();
-                //Set recipent output
-                transaction.addOutput(recipent_address, asset, quantity);
+                //Set recipient output
+                transaction.addOutput(recipient_address, asset, quantity);
                 //Add changes
                 let changes = Object.keys(transfer_info.change);
                 if (changes.length) {
@@ -106,7 +106,7 @@ export class MvsServiceProvider {
             })
     }
 
-    createDepositTx(passphrase, recipent_address, quantity, locktime, from_address, change_address) {
+    createDepositTx(passphrase, recipient_address, quantity, locktime, from_address, change_address) {
         return this.getUtxoFrom(from_address)
             .then((utxo) => {
                 if (change_address == undefined) {
@@ -118,11 +118,11 @@ export class MvsServiceProvider {
             .then((transfer_info: any) => {
                 //Create new TX
                 var transaction = new Metaverse.transaction();
-                //Get recipent address
-                if((recipent_address==undefined||recipent_address=='auto')&&transfer_info.outputs.length)
-                    recipent_address=transfer_info.outputs[0].address
-                //Set recipent output
-                transaction.addLockOutput(recipent_address, quantity, parseInt(locktime));
+                //Get recipient address
+                if((recipient_address==undefined||recipient_address=='auto')&&transfer_info.outputs.length)
+                    recipient_address=transfer_info.outputs[0].address
+                //Set recipient output
+                transaction.addLockOutput(recipient_address, quantity, parseInt(locktime));
                 //Add changes
                 let changes = Object.keys(transfer_info.change);
                 if (changes.length) {

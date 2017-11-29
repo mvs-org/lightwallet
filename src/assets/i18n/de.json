@@ -1,7 +1,7 @@
 {
     "ACCOUNT.TITLE": "Portfolio",
     "ACCOUNT.FROZEN": "Frozen",
-    "ACCOUNT.AVALIABLE": "Avaliable",
+    "ACCOUNT.AVAILABLE": "Available",
     "ACCOUNT.TOTAL": "Total",
 
     "WALLET_SETUP.TITLE": "Setup Wallet",
@@ -22,7 +22,7 @@
     "TRANSACTIONS": "Transaktionen",
     "DATE": "Datum",
     "AMOUNT": "Betrag",
-    "RECIPENT_ADDRESS": "Empfaenger",
+    "RECIPIENT_ADDRESS": "Empfaenger",
 
     "AVAILABLE_BALANCE": "Verfuegbar",
     "AVAILABLE": "Verfuegbar",
