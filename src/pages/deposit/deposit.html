@@ -34,9 +34,9 @@
         <ion-item *ngIf="deposit_option.locktime == locktime && quantity > 0">
           <ion-label color="primary">
             {{"DEPOSIT_PROFIT" | translate}}:
-            <ion-label color="dark" class="inline">
+            <p class="inline">
               {{round(deposit_option.rate*quantity)}} ETP
-            </ion-label>
+            </p>
           </ion-label>
         </ion-item>
       </ion-row>

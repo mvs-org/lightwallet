@@ -28,6 +28,8 @@
 
     "SCAN": "扫一扫",
 
+    "ETP_DEPOSIT": "ETP存款",
+
     "SWITCH_LANGUAGE": "语言设置",
     "LANGUAGE_SETTINGS": "语言设置",
     "SETTINGS": "设置",
@@ -159,5 +161,10 @@
   },
   "PASSWORD_WARNING": "为了您的账户安全，我们建议您设置一个高强度密码",
     "FEE": "交易手续费",
-    "NOTICE_TRANSACTION_FEE_UNCOVERED": "请确保有足够的ETP来支付交易费用。"
+    "NOTICE_TRANSACTION_FEE_UNCOVERED": "请确保有足够的ETP来支付交易费用。",
+
+    "SELECT_RECIPIENT_ADDRESS": "选择发送地址（可选）",
+    "CUSTOM": "手动输入",
+    "BLOCKS": "区块",
+    "INTEREST_RATE": "利率"
 }

@@ -23,7 +23,6 @@ export class MyApp {
 
     constructor(public platform: Platform, private storage: Storage, public translate: TranslateService, private event: Events) {
         this.setTheme();
-        setTimeout(()=>this.initLanguage('en'), 1000);
         this.event.subscribe("theme_changed", (theme) => {
                 this.storage.set('theme',theme)
                 .then(()=>this.setTheme())

@@ -91,7 +91,7 @@ ion-menu ion-content .scroll-content{
     }
 
     p,div {
-        color: #949494 !important;
+        color: #949494;
     }
 
     .alert-md{
@@ -101,6 +101,12 @@ ion-menu ion-content .scroll-content{
         .alert-message, .alert-wrapper{
             color: white;
             overflow-y: hidden;
+        }
+    }
+
+    .alert-md [aria-checked=false]{
+        .alert-radio-label{
+          color: #949494;
         }
     }
 
@@ -226,7 +232,7 @@ ion-menu ion-content .scroll-content{
         filter: blur(5px);
     }
 
-    p {
+    p,div {
         color: #0f8082;
     }
 

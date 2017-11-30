@@ -24,7 +24,6 @@
     "DATE": "Date",
     "AMOUNT": "Amount",
     "RECIPIENT_ADDRESS": "Recipient address",
-    "SELECT_RECIPIENT_ADDRESS": "Select the recipient address (optional)",
     "CUSTOM_RECIPIENT_ADDRESS": "Custom recipient address",
 
     "AVAILABLE_BALANCE": "Available balance",
@@ -120,9 +119,6 @@
     "AUTO": "Automatic",
     "SELECT_DEPOSIT_OPTION": "Deposit duration",
     "DEPOSIT_PROFIT": "Your profit",
-    "CUSTOM": "Custom",
-    "BLOCKS": "Blocks",
-    "INTEREST_RATE": "Interest rates",
     "TRANSACTION_PREVIEW_TEXT": "Your encoded transaction will be:",
     "MESSAGE.SUCCESS": "Awesome!",
     "MESSAGE.LOGOUT_CONFIRM": "Are you sure you want to logout?",
@@ -170,6 +166,10 @@
   },
   "PASSWORD_WARNING": "We advise you to use a strong password for your own security.",
     "FEE": "Transaction fee",
-    "NOTICE_TRANSACTION_FEE_UNCOVERED": "Please make sure that you have enough ETP to cover the transaction fee."
+    "NOTICE_TRANSACTION_FEE_UNCOVERED": "Please make sure that you have enough ETP to cover the transaction fee.",
 
+    "SELECT_RECIPIENT_ADDRESS": "Select the recipient address (optional)",
+    "CUSTOM": "Custom",
+    "BLOCKS": "Blocks",
+    "INTEREST_RATE": "Interest rates"
 }

@@ -39,17 +39,16 @@
                     <ion-avatar item-start>
                       <img class="coinlogo" [src]="'assets/icon/'+asset+'.png'" (error)="errorImg($event)">
                     </ion-avatar>
-                    <h1 [translate]="asset"></h1>
-                    <h3>{{"AVAILABLE"|translate}}: {{format((balances[asset] && balances[asset].available) ? balances[asset].available : 0, balances[asset].decimals)}}</h3>
-                    <p *ngIf="asset=='ETP'">
-                      {{"ACCOUNT.FROZEN"|translate}}: {{format((balances[asset]) ? ((balances[asset].total-balances[asset].spent-balances[asset].available)) : 0, balances[asset].decimals)}}
-                      <!--<p *ngIf="asset=='ETP'">{{"ACCOUNT.TOTAL"|translate}}: {{format((balances[asset]) ? ((balances[asset].total-balances[asset].spent)) : 0, balances[asset].decimals)}}</p>-->
-                      <button ion-button clear color="primary" icon-left (click)="gotoDeposit($event, asset)" class="deposit-button">
-                        <ion-icon name="log-in"></ion-icon>
-                        <!--{{ "DEPOSIT" | translate }}-->
-                      </button>
-                    </p>
-                    <!--<h3 *ngIf="asset=='ETP'">{{"ACCOUNT.TOTAL"|translate}}: {{format((balances[asset]) ? ((balances[asset].total-balances[asset].spent)) : 0, balances[asset].decimals)}}</h3>-->
+                    <div class="asset-info">
+                      <h1 [translate]="asset"></h1>
+                      <h3>{{"AVAILABLE"|translate}}: {{format((balances[asset] && balances[asset].available) ? balances[asset].available : 0, balances[asset].decimals)}}</h3>
+                      <p *ngIf="asset=='ETP'">
+                        {{"ACCOUNT.FROZEN"|translate}}: {{format((balances[asset]) ? ((balances[asset].total-balances[asset].spent-balances[asset].available)) : 0, balances[asset].decimals)}}
+                        <button ion-button clear color="primary" icon-left (click)="gotoDeposit($event, asset)" class="deposit-button">
+                          <ion-icon name="log-in"></ion-icon>
+                        </button>
+                      </p>
+                    </div>
                   </ion-item>
                 </ion-col>
               </ion-row>
