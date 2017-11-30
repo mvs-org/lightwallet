@@ -4,6 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { AccountPage } from '../pages/account/account';
 import { LoginPage } from '../pages/login/login';
+import { DepositPage } from '../pages/deposit/deposit';
 import { LanguageSwitcherPage } from '../pages/language-switcher/language-switcher';
 import { ThemeSwitcherPage } from '../pages/theme-switcher/theme-switcher';
 import { InformationPage } from '../pages/information/information';
@@ -22,7 +23,6 @@ export class MyApp {
 
     constructor(public platform: Platform, private storage: Storage, public translate: TranslateService, private event: Events) {
         this.setTheme();
-        setTimeout(()=>this.initLanguage('en'), 1000);
         this.event.subscribe("theme_changed", (theme) => {
                 this.storage.set('theme',theme)
                 .then(()=>this.setTheme())
@@ -63,17 +63,19 @@ export class MyApp {
 
     setMenu() {
         return Promise.all([
-            { title: 'LANGUAGE_SETTINGS', component: LanguageSwitcherPage },
-            { title: 'THEME_SETTINGS', component: ThemeSwitcherPage },
-            { title: 'SETTINGS', component: SettingsPage },
-            { title: 'INFORMATION', component: InformationPage }
-        ].map((entry) => this.addToMenu(entry.title, entry.component)))
+            { title: 'ETP_DEPOSIT', component: DepositPage, icon: 'log-in' },
+            { title: 'LANGUAGE_SETTINGS', component: LanguageSwitcherPage, icon: 'flag' },
+            { title: 'THEME_SETTINGS', component: ThemeSwitcherPage, icon: 'color-palette' },
+            { title: 'SETTINGS', component: SettingsPage, icon: 'settings' },
+            { title: 'INFORMATION', component: InformationPage, icon: 'information-circle' }
+        ].map((entry) => this.addToMenu(entry)))
     }
 
-    private addToMenu(title, component) {
+    private addToMenu(menu_entry) {
         return new Promise((resolve, reject) => {
-            this.translate.get(title).subscribe((lang) => {
-                resolve({ title: lang, component: component })
+            this.translate.get(menu_entry.title).subscribe((lang) => {
+                menu_entry.caption=lang;
+                resolve(menu_entry)
             })
         })
     }

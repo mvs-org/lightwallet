@@ -1,4 +1,26 @@
 page-account {
+
+  .asset-container {
+     max-width: 100%;
+  }
+
+  @media (min-width: 825px) {
+    .asset-container {
+      max-width: 50%;
+    }
+   }
+
+  @media (min-width: 1310px) {
+    .asset-container {
+            max-width: 33.33%;
+        }
+    }
+    @media (min-width: 1700px) {
+        .asset-container {
+            max-width: 25%;
+        }
+    }
+
     ion-list-header ion-reorder{
         display: none !important;
     }
@@ -103,5 +125,23 @@ page-account {
         40% {
             box-shadow: 0 2.5em 0 0;
         }
+    }
+
+    .deposit-button {
+      top: -7px;
+    }
+
+    .row-buttons {
+      position: absolute;
+      bottom: 20px;
+      left: -1px;
+    }
+
+    .card-block {
+      padding-bottom: 50px;
+    }
+
+    .asset-info {
+      height: 80px;
     }
 }

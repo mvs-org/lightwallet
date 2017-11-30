@@ -76,7 +76,7 @@ export class MvsServiceProvider {
         return new Promise(resolve => resolve(CryptoJS.AES.encrypt(JSON.stringify(ec), pincode).toString()))
     }
 
-    createTx(passphrase, asset, recipent_address, quantity, from_address, change_address) {
+    createTx(passphrase, asset, recipient_address, quantity, from_address, change_address) {
         return this.getUtxoFrom(from_address)
             .then((utxo) => {
                 if (change_address == undefined) {
@@ -88,8 +88,8 @@ export class MvsServiceProvider {
             .then((transfer_info: any) => {
                 //Create new TX
                 var transaction = new Metaverse.transaction();
-                //Set recipent output
-                transaction.addOutput(recipent_address, asset, quantity);
+                //Set recipient output
+                transaction.addOutput(recipient_address, asset, quantity);
                 //Add changes
                 let changes = Object.keys(transfer_info.change);
                 if (changes.length) {
@@ -100,14 +100,40 @@ export class MvsServiceProvider {
                 }
                 return Promise.all([this.getWallet(passphrase), transaction, this.addTxInputs(transaction, transfer_info.outputs)]);
             })
-            .then((results) => {
-                console.log('tx', results)
-                return results[0].sign(results[1])
+            .then((results) => results[0].sign(results[1]))
+            .catch((error) => {
+                throw error.message;
             })
-            .then((raw) => {
-                console.log(raw)
-                return raw
+    }
+
+    createDepositTx(passphrase, recipient_address, quantity, locktime, from_address, change_address) {
+        return this.getUtxoFrom(from_address)
+            .then((utxo) => {
+                if (change_address == undefined) {
+                    //Set change address to first utxo's address
+                    change_address = utxo[0].address;
+                }
+                return Metaverse.transaction_builder.findUtxo(utxo, 'ETP', quantity)
             })
+            .then((transfer_info: any) => {
+                //Create new TX
+                var transaction = new Metaverse.transaction();
+                //Get recipient address
+                if((recipient_address==undefined||recipient_address=='auto')&&transfer_info.outputs.length)
+                    recipient_address=transfer_info.outputs[0].address
+                //Set recipient output
+                transaction.addLockOutput(recipient_address, quantity, parseInt(locktime));
+                //Add changes
+                let changes = Object.keys(transfer_info.change);
+                if (changes.length) {
+                    changes.forEach((change_asset) => {
+                        if (transfer_info.change[change_asset] != 0)
+                            transaction.addOutput(change_address, change_asset, -transfer_info.change[change_asset])
+                    })
+                }
+                return Promise.all([this.getWallet(passphrase), transaction, this.addTxInputs(transaction, transfer_info.outputs)]);
+            })
+            .then((results) => results[0].sign(results[1]))
             .catch((error) => {
                 throw error.message;
             })

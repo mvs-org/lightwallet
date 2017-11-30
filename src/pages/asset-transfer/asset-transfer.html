@@ -19,9 +19,9 @@
     </ion-row>
     <form #sendForm="ngForm">
         <ion-list>
-            <ion-item>
-                <ion-label color="primary" floating>{{"RECIPENT_ADDRESS"|translate}}</ion-label>
-                <ion-input name="recipent_address" [(ngModel)]="recipent_address" required></ion-input>
+            <ion-item [ngClass]="{'error-border':!validrecipient(recipient_address)}">
+                <ion-label color="primary" floating>{{"RECIPIENT_ADDRESS"|translate}}</ion-label>
+                <ion-input name="recipient_address" [(ngModel)]="recipient_address" (ngModelChange)="recipientChanged($event)" required></ion-input>
             </ion-item>
             <ion-item [ngClass]="{'error-border':!validQuantity(quantity)}">
                 <ion-label color="primary" floating>{{"AMOUNT" | translate}}</ion-label>
@@ -54,7 +54,7 @@
                         <ion-option *ngFor="let address of addresses" value="{{address}}">{{address}}</ion-option>
                     </ion-select>
                 </ion-item>
-                <button ion-button full [disabled]="!sendForm.form.valid" (click)="preview()" color="primary">
+                <button ion-button full [disabled]="!sendForm.form.valid||!validQuantity(quantity)||!validrecipient(recipient_address)" (click)="preview()" color="primary">
                     {{"PREVIEW" | translate}}
         </button>
                 <div *ngIf="rawtx">
@@ -67,7 +67,7 @@
         </div>
         <ion-row>
             <ion-col>
-                <button ion-button full icon-left [disabled]="!sendForm.form.valid||!validQuantity(quantity)" (click)="send()" color="secondary">
+                <button ion-button full icon-left [disabled]="!sendForm.form.valid||!validQuantity(quantity)||!validrecipient(recipient_address)" (click)="send()" color="secondary">
                     <ion-icon disabled="checked" name="send"></ion-icon>
                     {{"SEND" | translate}}
                 </button>
