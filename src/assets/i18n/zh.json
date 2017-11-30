@@ -108,12 +108,12 @@
     "TRANSACTION.INNER_WALLET": "内部钱包交易",
     "HEIGHT": "高度",
     "SELECT_CHANGE_ADDRESS": "指定找零地址 (可选)",
-    "SELECT_FROM_ADDRESS": "选择发送地址 (可选)",
+    "SELECT_FROM_ADDRESS": "选定从地址发送 (可选)",
     "SHOW_ADVANCED": "显示高级选项",
     "AUTO": "自动",
     "SELECT_DEPOSIT_OPTION": "区块数",
     "DEPOSIT_PROFIT": "你的收益",
-    "TRANSACITON_PREVIEW_TEXT": "您的交易编码是:",
+    "TRANSACTION_PREVIEW_TEXT": "您的交易编码是:",
     "MESSAGE.SUCCESS": "太棒了",
     "MESSAGE.LOGOUT_CONFIRM": "您确定要退出?",
     "SUCCESS_SEND_TEXT": "交易已发送到网络。请等待确认。您的交易哈希是: ",
@@ -163,8 +163,9 @@
     "FEE": "交易手续费",
     "NOTICE_TRANSACTION_FEE_UNCOVERED": "请确保有足够的ETP来支付交易费用。",
 
-    "SELECT_RECIPIENT_ADDRESS": "选择发送地址（可选）",
+    "SELECT_RECIPIENT_ADDRESS": "选择发送地址 (可选)",
     "CUSTOM": "手动输入",
+    "CUSTOM_RECIPIENT_ADDRESS": "手动输入发送地址 (可选)",
     "BLOCKS": "区块",
     "INTEREST_RATE": "利率"
 }

@@ -193,13 +193,14 @@ export class MvsServiceProvider {
     getUtxo() {
         return new Promise((resolve, reject) => {
             this.storage.get('utxo')
-                .then(_ => resolve((_) ? _ : [[], []]))
+                .then(_ => resolve((_) ? _ : []))
         })
     }
 
     getUtxoFrom(address) {
         return this.getUtxo()
             .then((utxo: Array<any>) => {
+                console.log(utxo)
                 if (address) {
                     let result = [];
                     if (utxo.length) {
