@@ -98,7 +98,7 @@ export class DepositPage {
 
     validQuantity = (quantity) => quantity != undefined && this.showBalance >= parseFloat(quantity) * Math.pow(10, this.decimals)
 
-    validrecipient = (custom_recipient) => (custom_recipient.length == 34) && (custom_recipient.charAt(0) == 'M')
+    validrecipient = (custom_recipient) => (custom_recipient.length == 34) && ((custom_recipient.charAt(0) == 'M') || (custom_recipient.charAt(0) == '3'))
 
     customRecipientChanged = () => {if(this.custom_recipient) this.custom_recipient = this.custom_recipient.trim()}
 
