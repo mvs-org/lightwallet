@@ -320,6 +320,9 @@ ion-list-header{
 }
 
 
+[icon-left] ion-icon, [icon-start] ion-icon{
+    line-height: 1;
+}
 
 // Global Browser Style settings
 @media (min-width: 1079px) {
