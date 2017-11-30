@@ -24,7 +24,6 @@
     "DATE": "Date",
     "AMOUNT": "Amount",
     "RECIPIENT_ADDRESS": "Recipient address",
-    "CUSTOM_RECIPIENT_ADDRESS": "Custom recipient address",
 
     "AVAILABLE_BALANCE": "Available balance",
     "AVAILABLE": "Available",
@@ -170,6 +169,7 @@
 
     "SELECT_RECIPIENT_ADDRESS": "Select the recipient address (optional)",
     "CUSTOM": "Custom",
+    "CUSTOM_RECIPIENT_ADDRESS": "Custom recipient address",
     "BLOCKS": "Blocks",
     "INTEREST_RATE": "Interest rates"
 }
