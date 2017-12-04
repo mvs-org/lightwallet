@@ -1,7 +1,7 @@
 {
     "ACCOUNT.TITLE": "Compte",
     "ACCOUNT.FROZEN": "Bloqué",
-    "ACCOUNT.AVALIABLE": "Disponible",
+    "ACCOUNT.AVAILABLE": "Disponible",
     "ACCOUNT.TOTAL": "Total",
 
     "WALLET_SETUP.TITLE": "Configuration",
@@ -21,7 +21,7 @@
     "TRANSACTIONS": "Transactions",
     "DATE": "Date",
     "AMOUNT": "Montant",
-    "RECIPENT_ADDRESS": "Destinataire",
+    "RECIPIENT_ADDRESS": "Destinataire",
 
     "AVAILABLE_BALANCE": "Balance disponible",
     "AVAILABLE": "Disponible",
@@ -41,8 +41,9 @@
     "SETTINGS.RESET_BUTTON": "Réinitialiser",
     "SETTINGS.RESYNC_TEXT": "Forcer la réinitialisation de toutes les transactions et de la balance.",
     "SETTINGS.RESYNC_BUTTON": "Forcer réinitialisation",
-    "SEND": "Envoyé",
-    "RECEIVE": "Reçut",
+    "DEPOSIT": "Deposit",
+    "SEND": "Envoyer",
+    "RECEIVE": "Recevoir",
     "HISTORY": "Histo",
     "IMPORT_WALLET_ERROR_MESSAGE": "Échec de l'importation du compte. Veuillez vérifier les paramètres et réessayer.",
      "IMPORT_WALLET_CONNECTION_MESSAGE": "Erreur lors de la vérification du compte. Veuillez réessayer.",

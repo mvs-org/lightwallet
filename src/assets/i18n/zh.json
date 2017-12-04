@@ -1,7 +1,7 @@
 {
     "ACCOUNT.TITLE": "账户",
     "ACCOUNT.FROZEN": "冻结",
-    "ACCOUNT.AVALIABLE": "可用",
+    "ACCOUNT.AVAILABLE": "可用",
     "ACCOUNT.TOTAL": "总额",
 
     "WALLET_SETUP.TITLE": "设置钱包",
@@ -21,12 +21,14 @@
     "TRANSACTIONS": "交易",
     "DATE": "日期",
     "AMOUNT": "数量",
-    "RECIPENT_ADDRESS": "收款地址",
+    "RECIPIENT_ADDRESS": "收款地址",
 
     "AVAILABLE_BALANCE": "可用余额",
     "AVAILABLE": "可用",
 
     "SCAN": "扫一扫",
+
+    "ETP_DEPOSIT": "ETP存款",
 
     "SWITCH_LANGUAGE": "语言设置",
     "LANGUAGE_SETTINGS": "语言设置",
@@ -41,6 +43,7 @@
     "SETTINGS.RESET_BUTTON": "重置",
     "SETTINGS.RESYNC_TEXT": "重新同步钱包内所有交易记录和数据",
     "SETTINGS.RESYNC_BUTTON": "重新同步",
+    "DEPOSIT": "存款",
     "SEND": "转账",
     "RECEIVE": "收款",
     "HISTORY": "交易记录",
@@ -101,14 +104,16 @@
     "CREATE_FROM_BACKUP_WORDS": "用助记词创建文件",
     "WRONG_FILE": "错误的文件",
     "CONFIRM_PASSWORD": "确认密码",
-    "LIGHT_WALLET_INFO_TEXT": "请注意，myetpwallet.com无权获取您的钱包密钥。如果您丢失备份文件或密钥文件，我们无权获取您的资金存取权。",  
+    "LIGHT_WALLET_INFO_TEXT": "请注意，myetpwallet.com无权获取您的钱包密钥。如果您丢失备份文件或密钥文件，我们无权获取您的资金存取权。",
     "TRANSACTION.INNER_WALLET": "内部钱包交易",
     "HEIGHT": "高度",
     "SELECT_CHANGE_ADDRESS": "指定找零地址 (可选)",
-    "SELECT_FROM_ADDRESS": "选择发送地址 (可选)",
+    "SELECT_FROM_ADDRESS": "选定从地址发送 (可选)",
     "SHOW_ADVANCED": "显示高级选项",
     "AUTO": "自动",
-    "TRANSACITON_PREVIEW_TEXT": "您的交易编码是:",
+    "SELECT_DEPOSIT_OPTION": "区块数",
+    "DEPOSIT_PROFIT": "你的收益",
+    "TRANSACTION_PREVIEW_TEXT": "您的交易编码是:",
     "MESSAGE.SUCCESS": "太棒了",
     "MESSAGE.LOGOUT_CONFIRM": "您确定要退出?",
     "SUCCESS_SEND_TEXT": "交易已发送到网络。请等待确认。您的交易哈希是: ",
@@ -156,5 +161,11 @@
   },
   "PASSWORD_WARNING": "为了您的账户安全，我们建议您设置一个高强度密码",
     "FEE": "交易手续费",
-    "NOTICE_TRANSACTION_FEE_UNCOVERED": "请确保有足够的ETP来支付交易费用。"
+    "NOTICE_TRANSACTION_FEE_UNCOVERED": "请确保有足够的ETP来支付交易费用。",
+
+    "SELECT_RECIPIENT_ADDRESS": "选择发送地址 (可选)",
+    "CUSTOM": "手动输入",
+    "CUSTOM_RECIPIENT_ADDRESS": "手动输入发送地址 (可选)",
+    "BLOCKS": "区块",
+    "INTEREST_RATE": "利率"
 }

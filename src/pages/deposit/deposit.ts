@@ -4,10 +4,10 @@ import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-    selector: 'page-asset-transfer',
-    templateUrl: 'asset-transfer.html',
+    selector: 'page-deposit',
+    templateUrl: 'deposit.html',
 })
-export class AssetTransferPage {
+export class DepositPage {
 
     selectedAsset: any
     addresses: Array<string>
@@ -15,13 +15,17 @@ export class AssetTransferPage {
     decimals: number
     showBalance: number
     loading: Loading
-    recipient_address: string
+    sendTo: string
     quantity: string
     builtFor: string
     rawtx: string
     passcodeSet: any
     addressbalances: Array<any>
+    deposit_options: Array<any>
     sendFrom: string
+    recipient_address: string
+    custom_recipient: string
+    locktime: number
     changeAddress: string
     feeAddress: string
     passphrase: string
@@ -35,10 +39,13 @@ export class AssetTransferPage {
         private mvs: MvsServiceProvider,
         private translate: TranslateService) {
 
-        this.selectedAsset = navParams.get('asset')
+        this.selectedAsset = "ETP"
         this.sendFrom = 'auto'
+        this.recipient_address = 'auto'
         this.feeAddress = 'auto'
-        this.recipient_address = ''
+        this.locktime = 0
+        this.custom_recipient = ''
+        this.deposit_options=[{option:7, locktime: 25200, rate: 0.0009589},{option:30, locktime: 108000, rate: 0.0066667},{option:90, locktime: 331200, rate: 0.032},{option:182, locktime: 655200, rate: 0.08},{option:365, locktime: 1314000, rate: 0.2}]
 
         //Load addresses
         mvs.getMvsAddresses()
@@ -69,6 +76,10 @@ export class AssetTransferPage {
             })
     }
 
+    onDepositOptionChange(event) {
+
+    }
+
     onFromAddressChange(event) {
         if (this.sendFrom == 'auto') {
             this.showBalance = this.balance
@@ -81,7 +92,15 @@ export class AssetTransferPage {
         }
     }
 
+    onSendToAddressChange(event) {
+
+    }
+
     validQuantity = (quantity) => quantity != undefined && this.showBalance >= parseFloat(quantity) * Math.pow(10, this.decimals)
+
+    validrecipient = (custom_recipient) => (custom_recipient.length == 34) && (custom_recipient.charAt(0) == 'M')
+
+    customRecipientChanged = () => {if(this.custom_recipient) this.custom_recipient = this.custom_recipient.trim()}
 
     cancel(e) {
         e.preventDefault()
@@ -91,6 +110,7 @@ export class AssetTransferPage {
     preview() {
         this.create()
             .then((tx) => {
+            console.log('transaction details: '+tx)
                 this.rawtx = tx.encode().toString('hex')
                 this.loading.dismiss()
             })
@@ -106,7 +126,7 @@ export class AssetTransferPage {
     create() {
         return this.showLoading()
             .then(() => this.mvs.getMvsAddresses())
-            .then((addresses) => this.mvs.createTx(this.passphrase, this.selectedAsset, this.recipient_address, Math.floor(parseFloat(this.quantity) * Math.pow(10, this.decimals)), (this.sendFrom != 'auto') ? this.sendFrom : null, (this.changeAddress != 'auto') ? this.changeAddress : undefined))
+            .then((addresses) => this.mvs.createDepositTx(this.passphrase, (this.recipient_address == 'auto') ? null : (this.recipient_address == 'custom') ? this.custom_recipient : this.recipient_address, Math.floor(parseFloat(this.quantity) * Math.pow(10, this.decimals)), this.locktime, (this.sendFrom != 'auto') ? this.sendFrom : null, (this.changeAddress != 'auto') ? this.changeAddress : undefined))
     }
 
     send() {
@@ -128,9 +148,7 @@ export class AssetTransferPage {
 
     format = (quantity, decimals) => quantity / Math.pow(10, decimals)
 
-    validrecipient = (recipient_address) => (recipient_address.length == 34) && (recipient_address.charAt(0) == 'M')
-
-    recipientChanged = () => {if(this.recipient_address) this.recipient_address=this.recipient_address.trim()}
+    round = (val:number) => Math.round(val*100000000)/100000000
 
     showLoading() {
         return new Promise((resolve, reject) => {

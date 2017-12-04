@@ -1,7 +1,7 @@
 {
     "ACCOUNT.TITLE": "Portfolio",
     "ACCOUNT.FROZEN": "Frozen",
-    "ACCOUNT.AVALIABLE": "Avaliable",
+    "ACCOUNT.AVAILABLE": "Available",
     "ACCOUNT.TOTAL": "Total",
 
     "WALLET_SETUP.TITLE": "Setup Wallet",
@@ -22,7 +22,7 @@
     "TRANSACTIONS": "Transaktionen",
     "DATE": "Datum",
     "AMOUNT": "Betrag",
-    "RECIPENT_ADDRESS": "Empfaenger",
+    "RECIPIENT_ADDRESS": "Empfaenger",
 
     "AVAILABLE_BALANCE": "Verfuegbar",
     "AVAILABLE": "Verfuegbar",
@@ -42,6 +42,7 @@
     "SETTINGS.RESET_BUTTON": "Zuruecksetzen",
     "SETTINGS.RESYNC_TEXT": "Erzwingen einer Resynchronisation der Daten.",
     "SETTINGS.RESYNC_BUTTON": "Resync erzwingen",
+    "DEPOSIT": "Anlage",
     "SEND": "Senden",
     "RECEIVE": "Empfangen",
     "HISTORY": "Historie",
@@ -69,7 +70,7 @@
      "BACKUP_WORDS_CONFIRM_SKIP_TEXT": "Sind Sie sicher, dass Sie die Woerter nicht ueberpruefen wollen?",
      "I_AM_SURE": "Ja ich bin sicher",
      "BACK": "Zurueck",
-     
+
      "BACKUP_WORDS_WRITE_DOWN_TEXT": "Mit diesen Woertern laesst sich Ihr Wallet spaeter wiederherstllen. Bitte schreiben Sie die Woerter ab und bewahren Sie sie an einem sicheren Ort auf.",
     "MESSAGE.ERROR_CONNECT_BLOCKCHAIN": "Verbindung mit Blockchain nodes konnte nicht hergestellt werden.",
      "SUCCESS_SEND_TEXT" : "Transaktion wurde erfolgreich uebertragen. Bitte warten Sie bis die Transaktion vom Netzwerk bestaetigt wird."
