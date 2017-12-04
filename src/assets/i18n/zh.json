@@ -163,7 +163,7 @@
     "FEE": "交易手续费",
     "NOTICE_TRANSACTION_FEE_UNCOVERED": "请确保有足够的ETP来支付交易费用。",
 
-    "SELECT_RECIPIENT_ADDRESS": "选择发送地址 (可选)",
+    "SELECT_RECIPIENT_ADDRESS": "指定本金利息返还地址 (可选)",
     "CUSTOM": "手动输入",
     "CUSTOM_RECIPIENT_ADDRESS": "手动输入发送地址",
     "BLOCKS": "区块",
