@@ -3,75 +3,94 @@
   "ACCOUNT.FROZEN": "ถูกแช่แข็ง",
   "ACCOUNT.AVALIABLE": "ใช้งานได้",
   "ACCOUNT.TOTAL": "รวม",
+
+
   "WALLET_SETUP.TITLE": "ติดตั้งกระเป๋าเหรียญ",
   "REGISTER.TITLE": "สร้างกระเป๋าเหรียญ",
   "CREATE_WALLET_DISCLAIMER.TITLE": "ข้อมูล",
   "CREATE_WALLET_DISCLAIMER.TEXT": "โปรดให้ความระมัดระวังมากๆกับนีโมนิคคีย์ของคุณ คำแนะนำนี้เป็นคำแนะนำที่ยอมรับกันโดยทั่วไป ไม่ใช่คำแนะนำทางกฏหมายหรือการเงิน",
   "REGISTER.YOUR_MNEMONIC_KEY": "คำสำรองของคุณ",
+
   "MNEMONIC_SHOW.TITLE": "กระเป๋าเหรียญสำรองของคุณ",
   "YOUR_MNEMONIC_WORDS": "คำสำรองของคุณ",
   "IMPORT_WALLET": "นำเข้ากระเป๋าเหรียญ",
   "CREATE_NEW_WALLET": "สร้างกระเป๋าเหรียญใหม่",
   "CREATE_WALLET": "ได้ละ ไปต่อเลย!",
   "BUTTON.OK": "ตกลง",
+
   "PLACEHOLDER.MNEMONIC_PASSPHRASE": "ข้อความรหัสนีโมนิค",
+
   "TRANSACTIONS": "ธุรกรรม",
   "DATE": "วันที่",
   "AMOUNT": "จำนวน",
   "RECIPENT_ADDRESS": "ที่อยู่ผู้รับ",
+
   "AVAILABLE_BALANCE": "ยอดคงเหลือ",
   "AVAILABLE": "ใช้ได้",
+
   "SCAN": "สแกน",
+
+  "ETP_DEPOSIT": "ฝาก ETP",
+
   "SWITCH_LANGUAGE": "เปลี่ยนภาษา",
   "LANGUAGE_SETTINGS": "การตั้งค่าภาษา",
   "SETTINGS": "การตั้งค่า",
   "INFORMATION": "ข้อจำกัดความรับผิดชอบตามกฎหมาย",
   "MESSAGE.ERROR_TITLE": "อุ๊ป! เกิดข้อผิดพลาด",
   "MESSAGE.LOADING": "โปรดรอสักครู่...",
+
   "HISTORY.NO_TXS_YET": "ยังไม่มีธุรกรรม",
   "HISTORY.NO_TXS_YET_TEXT": "เริ่มใช้งานกระเป๋าเหรียญวันนี้!",
   "SETTINGS.RESET_TEXT": "รีเซ็ตข้อมูลกระเป๋าเหรียญทั้งหมด โปรดเก็บรักษาคำสำรองสำหรับกระเป๋าเหรียญของคุณก่อนดำเนินการ",
   "SETTINGS.RESET_BUTTON": "รีเซ็ต",
   "SETTINGS.RESYNC_TEXT": "บังคับให้กระเป๋าเหรียญซิงค์ธุรกรรมและข้อมูลคงเหลือทั้งหมด",
   "SETTINGS.RESYNC_BUTTON": "บังคับให้รีซิงค์",
+  "DEPOSIT": "ฝาก",
   "SEND": "ส่ง",
   "RECEIVE": "รับ",
   "HISTORY": "ประวัติ",
   "IMPORT_WALLET_ERROR_MESSAGE": "พบข้อผิดพลาดในการนำเข้ากระเป๋าเหรียญ โปรดตรวจสอบอินพุตของคุณและลองอีกครั้ง",
   "IMPORT_WALLET_CONNECTION_MESSAGE": "พบข้อผิดพลาดในการตรวจสอบกระเป๋าเหรียญ โปรดลองใหม่ภายหลัง",
+
   "MENU": "เมนู",
+
   "REORDER": "ปรับลำดับ",
   "FINISH": "สิ้นสุด",
   "ERROR_SEND_TEXT": "ไม่สามารถสร้างธุรกรรมได้ โปรดตรวจสอบอินพุตของคุณและลองใหม่อีกครั้ง",
-  "CREATE_NEW_WALLET_BUTTON": "สร้างกระเป๋าเหรียญใหม่",
   "MNEMONIC_CONFIRM_HEAD": "ยืนยันคำสำรอง",
   "MNEMONIC_CONFIRM_TEXT": "เพื่อความมั่นใจว่าคุณบันทึกคำสำรองไว้อย่างถูกต้อง ตอนนี้คุณจะต้องสามารถจัดวางคำในลำดับที่ถูกต้อง",
+
   "CONFIRM": "ยืนยัน",
   "SKIP": "ข้าม",
   "COPY": "คัดลอก",
+
   "WARNING": "คำเตือน",
   "BACKUP_WORDS_BACKED_UP_TEXT": "ยืนยันว่าคุณได้จดบันทึกคำสำรองของคุณ",
   "BACKUP_WORDS_BACKED_UP_YES": "ใช่ ยืนยันว่ามีการบันทึกแล้ว",
   "NO": "ไม่ใช่",
   "BACKUP_WORDS_CONFIRM_SKIP_TEXT": "คุณยืนยันที่จะดำเนินการต่อโดยที่ยังไม่ได้ยืนยันว่าคุณบันทึกคำสำรองแล้ว",
   "I_AM_SURE": "ฉันมั่นใจ",
-  "BACKUP_WORDS_WRITE_DOWN_TEXT": "โปรดจดบันทึกคำ 24 คำต่อไปนี้ในกระดาษ คุณจะต้องการมันเพื่อกู้กระเป๋าเหรียญของคุณ มันสำคัญมากที่คุณต้องเก็บรักษามันไว้อย่างปลอดภัยและเป็นความลับสูงสุด โดยคุณห้ามแสดงข้อความเหล่านี้ให้ใครเห็น",
+
   "MESSAGE.ERROR_CONNECT_BLOCKCHAIN": "มีปัญหาในการต่อเชื่อมกับโหนดบล็อคเชน",
+
+
   "BACK": "กลับไป",
   "SETTINGS.WORDS_BUTTON": "คำสำรอง",
   "SETTINGS.WORDS_TEXT": "คำนีโมนิคที่สัมพันธ์กับไพรเวทคีย์ของคุณ",
   "RESET_TITLE": "คุณมั่นใจ?",
-  "RESET_MESSAGE": "ข้อมูลการเข้าระบบทุกอย่างจะถูกล้างทิ้ง",
   "COPIED_MNEMONIC": "ได้คัดลอกคำสำรองไปยังคลิปบอร์ดเรียบร้อย",
+
   "SETTINGS.PINCODE": "การตั้งค่ารหัสพิน",
   "SETTINGS.PINCODE_BUTTON": "ตั้งค่า",
   "SECURITY_WARNING": "คำเตือนเพื่อความปลอดภัย",
   "SET_PIN_FIRST": "โปรดตั้งรหัสพินก่อน",
+
   "PLEASE_AUTHORIZE": "โปรดอนุมัติ",
   "CONFIRM_PINCODE": "ยืนยันรหัสพิน",
   "CREATE_NEW_PINCODE": "สร้างรหัสพินใหม่",
   "GENERATE_KEY_BUTTON": "สร้างคีย์",
   "BUTTON.DOWNLOAD": "ดาวน์โหลดคีย์",
+
   "BUTTON.NEXT": "ถัดไป",
   "IMPORT_WORDS": "ป้อนด้วยตนเอง",
   "IMPORT_WORDS_TITLE": "สองวิธีในการป้อนคำสำรองของคุณ",
@@ -81,6 +100,7 @@
   "PASSWORD": "รหัสผ่าน",
   "CANCEL": "ยกเลิก",
   "ENTER": "ป้อน",
+  "CREATE_NEW_WALLET_BUTTON": "สร้างกระเป๋าเหรียญใหม่",
   "OPEN_WALLET_FILE": "เปิดกระเป๋าเหรียญจากไฟล์",
   "CREATE_FROM_BACKUP_WORDS": "สร้างไฟล์จากคำสำรอง",
   "WRONG_FILE": "ไล์ไม่ถูกต้อง",
@@ -92,6 +112,8 @@
   "SELECT_FROM_ADDRESS": "ระบุที่อยู่ตั้งต้น (ไม่จำเป็น)",
   "SHOW_ADVANCED": "แสดงตัวเลือกขั้นสูง",
   "AUTO": "อัตโนมัติ",
+  "SELECT_DEPOSIT_OPTION": "ช่วงเวลาการฝาก",
+  "DEPOSIT_PROFIT": "กำไรของคุณ",
   "TRANSACTION_PREVIEW_TEXT": "ธุรกรรมที่ถูกเข้ารหัสของคุณจะเป็น:",
   "MESSAGE.SUCCESS": "ดีเยี่ยม!",
   "MESSAGE.LOGOUT_CONFIRM": "คุณต้องการจะออกจากระบบ?",
@@ -99,6 +121,8 @@
   "IMPORT_MNEMONIC_TEXT": "ไฟล์กระเป๋าเหรียญจะถูกสร้างขึ้นสำหรับคุณ ไฟล์นี้จะทำให้คุณเข้าถึงกระเป๋าเหรียญคุณได้",
   "ENTER_PASSWORD_HEADLINE": "ป้อนรหัสผ่านสำหรับไฟล์",
   "CHOOSE_A_FILE": "เลือกไฟล์",
+  "BACKUP_WORDS_WRITE_DOWN_TEXT": "โปรดจดบันทึกคำ 24 คำต่อไปนี้ในกระดาษ คุณจะต้องการมันเพื่อกู้กระเป๋าเหรียญของคุณ มันสำคัญมากที่คุณต้องเก็บรักษามันไว้อย่างปลอดภัยและเป็นความลับสูงสุด โดยคุณห้ามแสดงข้อความเหล่านี้ให้ใครเห็น",
+  "RESET_MESSAGE": "ข้อมูลการเข้าระบบทุกอย่างจะถูกล้างทิ้ง",
   "SHOW_ALL_ASSET_BALANCES": "แสดงสินทรัพย์ที่คงเหลือทั้งหมด",
   "THEME_SETTINGS": "เปลี่ยนตีม",
   "LOGIN_MENU_INFO_TEXT": "ข้อสังเกตสำหรับผู้ใช้งานที่มีกระเป๋าเหรียญ MVS แล้ว: ในการล๊อคอินครั้งแรกที่ myetpwallet.com โปรดสร้างไฟล์กระเป๋าเหรียญจากคำสำรองของคุณแล้วให้เปิดกระเป๋าเหรียญของคุณจากไฟล์ที่สร้างนั้น",
@@ -138,13 +162,10 @@
   "PASSWORD_WARNING": "เราขอแนะนำให้คุณใช้รหัสผ่านที่รัดกุมเพื่อความปลอดภัยของคุณเอง",
   "FEE": "ค่าธรรมเนียมธุรกรรม",
   "NOTICE_TRANSACTION_FEE_UNCOVERED": "โปรดตรวจสอบให้แน่ใจว่าคุณมี ETP เพียงพอเพื่อให้ครอบคลุมค่าธรรมเนียมการธุรกรรม",
-  "CUSTOM_RECIPIENT_ADDRESS": "ที่อยู่ผู้รับกำหนดเอง",
-  "ETP_DEPOSIT": "ฝาก ETP",
-  "DEPOSIT": "ฝาก",
-  "SELECT_DEPOSIT_OPTION": "ช่วงเวลาการฝาก",
-  "DEPOSIT_PROFIT": "กำไรของคุณ",
+
   "SELECT_RECIPIENT_ADDRESS": "เลือกที่อยู่ผู้รับ (ไม่จำเป็น)",
   "CUSTOM": "กำหนดเอง",
+  "CUSTOM_RECIPIENT_ADDRESS": "ที่อยู่ผู้รับกำหนดเอง",
   "BLOCKS": "บล็อก",
   "INTEREST_RATE": "อัตราดอกเบี้ย"
 }
