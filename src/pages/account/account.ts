@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, AlertController } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
+import { DepositPage } from '../deposit/deposit';
 import { TransactionsPage } from '../transactions/transactions';
 import { AssetTransferPage } from '../asset-transfer/asset-transfer';
 import { ReceivePage } from '../receive/receive';
@@ -43,6 +44,8 @@ export class AccountPage {
     }
 
     ionViewWillLeave = () => clearInterval(this.syncinterval)
+
+    gotoDeposit = (event, asset) => this.nav.push(DepositPage, { asset: asset })
 
     gotoTransactions = (event, asset) => this.nav.push(TransactionsPage, { asset: asset })
 

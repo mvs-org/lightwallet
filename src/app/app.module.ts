@@ -21,6 +21,7 @@ import { ThemeSwitcherPage } from '../pages/theme-switcher/theme-switcher';
 import { ImportMnemonicPage } from '../pages/import-mnemonic/import-mnemonic';
 import { InformationPage } from '../pages/information/information';
 import { SettingsPage } from '../pages/settings/settings';
+import { DepositPage } from '../pages/deposit/deposit';
 import { PassphrasePage } from '../pages/passphrase/passphrase';
 
 
@@ -40,6 +41,7 @@ export function HttpLoaderFactory(http: Http) {
         MyApp,
         AccountPage,
         LoginPage,
+        DepositPage,
         ImportWalletPage,
         LanguageSwitcherPage,
         ThemeSwitcherPage,
@@ -81,6 +83,7 @@ export function HttpLoaderFactory(http: Http) {
         TransactionsPage,
         GenerateKeyPage,
         AssetTransferPage,
+        DepositPage,
         InformationPage,
         ReceivePage,
         SettingsPage,

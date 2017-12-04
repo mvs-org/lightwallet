@@ -1,8 +1,9 @@
 {
     "ACCOUNT.TITLE": "Portfolio",
     "ACCOUNT.FROZEN": "Frozen",
-    "ACCOUNT.AVALIABLE": "Avaliable",
+    "ACCOUNT.AVAILABLE": "Available",
     "ACCOUNT.TOTAL": "Total",
+
 
     "WALLET_SETUP.TITLE": "Setup Wallet",
     "REGISTER.TITLE": "Create Wallet",
@@ -22,12 +23,14 @@
     "TRANSACTIONS": "Transactions",
     "DATE": "Date",
     "AMOUNT": "Amount",
-    "RECIPENT_ADDRESS": "Recipent address",
+    "RECIPIENT_ADDRESS": "Recipient address",
 
     "AVAILABLE_BALANCE": "Available balance",
     "AVAILABLE": "Available",
 
     "SCAN": "Scan",
+
+    "ETP_DEPOSIT": "ETP Deposit",
 
     "SWITCH_LANGUAGE": "Change Language",
     "LANGUAGE_SETTINGS": "Language settings",
@@ -42,6 +45,7 @@
     "SETTINGS.RESET_BUTTON": "Reset",
     "SETTINGS.RESYNC_TEXT": "Force the wallet to resync all transactions and balance data.",
     "SETTINGS.RESYNC_BUTTON": "Force Resync",
+    "DEPOSIT": "Deposit",
     "SEND": "Send",
     "RECEIVE": "Receive",
     "HISTORY": "History",
@@ -93,8 +97,8 @@
 
     "BUTTON.NEXT": "Next",
     "IMPORT_WORDS": "enter manually",
-  "IMPORT_WORDS_TITLE": "Two ways to enter your backup words",
-  "IMPORT_WORDS_BAR": "Import Words",
+    "IMPORT_WORDS_TITLE": "Two ways to enter your backup words",
+    "IMPORT_WORDS_BAR": "Import Words",
     "IMPORT_FILE": "Please open your wallet file",
     "UPLOAD_KEYSTORE": "Upload Keystore File",
     "PASSWORD": "Password",
@@ -112,6 +116,8 @@
     "SELECT_FROM_ADDRESS": "Select the source address (optional)",
     "SHOW_ADVANCED": "Show advanced options",
     "AUTO": "Automatic",
+    "SELECT_DEPOSIT_OPTION": "Deposit duration",
+    "DEPOSIT_PROFIT": "Your profit",
     "TRANSACTION_PREVIEW_TEXT": "Your encoded transaction will be:",
     "MESSAGE.SUCCESS": "Awesome!",
     "MESSAGE.LOGOUT_CONFIRM": "Are you sure you want to logout?",
@@ -125,8 +131,8 @@
   	"THEME_SETTINGS": "Theme Switcher",
     "LOGIN_MENU_INFO_TEXT": "Notice for existing MVS wallet users: On your first login to myetpwallet.com, please create a wallet file from backup words and then open the wallet from the file.",
     "PASTE_WORDS": "use the textbox",
-  "RESET": "Reset",
-  "OR": "OR",
+    "RESET": "Reset",
+    "OR": "OR",
     "DISCLAIMER": {
         "HEADLINE": "Disclaimer",
         "INTRODUCTION": "This light wallet is developed based on blockchain technology design. All account information and transaction activity is stored on public blockchains. The wallet service provider will not store users’ wallet private keys, mnemonics or backup words (collectively, “private key information”)  in any centralized database. Users’ private key information and files generated through importing private keys belong solely to the person who created the wallet account. The user bears the responsibility to safeguard his/her private key files and password and is solely responsible for the use of his/her account, password and private key information.",
@@ -159,6 +165,11 @@
   },
   "PASSWORD_WARNING": "We advise you to use a strong password for your own security.",
     "FEE": "Transaction fee",
-    "NOTICE_TRANSACTION_FEE_UNCOVERED": "Please make sure that you have enough ETP to cover the transaction fee."
+    "NOTICE_TRANSACTION_FEE_UNCOVERED": "Please make sure that you have enough ETP to cover the transaction fee.",
 
+    "SELECT_RECIPIENT_ADDRESS": "Select the recipient address (optional)",
+    "CUSTOM": "Custom",
+    "CUSTOM_RECIPIENT_ADDRESS": "Custom recipient address",
+    "BLOCKS": "Blocks",
+    "INTEREST_RATE": "Interest rates"
 }
