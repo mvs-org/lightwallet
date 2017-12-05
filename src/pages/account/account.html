@@ -39,7 +39,7 @@
                       <ion-avatar item-start>
                         <img class="coinlogo" [src]="'assets/icon/'+asset+'.png'" (error)="errorImg($event)">
                       </ion-avatar>
-                      <div class="asset-info">
+                      <div>
                         <h1 [translate]="asset"></h1>
                         <h3>{{"AVAILABLE"|translate}}: {{format((balances[asset] && balances[asset].available) ? balances[asset].available : 0, balances[asset].decimals)}}</h3>
                         <p *ngIf="asset=='ETP'">
