@@ -200,7 +200,6 @@ export class MvsServiceProvider {
     getUtxoFrom(address) {
         return this.getUtxo()
             .then((utxo: Array<any>) => {
-                console.log(utxo)
                 if (address) {
                     let result = [];
                     if (utxo.length) {
@@ -252,7 +251,12 @@ export class MvsServiceProvider {
             newBalances = this.DEFAULT_BALANCES
         return this.getBalances()
             .then((balances) => {
-                if (JSON.stringify(balances) != JSON.stringify(newBalances)) {
+                //Check if balance has been changed
+                let nb = JSON.parse(JSON.stringify(this.DEFAULT_BALANCES));
+                Object.keys(newBalances).forEach((asset)=>{
+                    nb[asset]=newBalances[asset];
+                })
+                if (JSON.stringify(balances) != JSON.stringify(nb)) {
                     this.updateInOuts();
                     return this.storage.set('balances', newBalances)
                 }
