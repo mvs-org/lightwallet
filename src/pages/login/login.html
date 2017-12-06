@@ -7,7 +7,7 @@
 
 <ion-content class="login-content">
     <ion-row class="logo-row">
-        <ion-col width-70 class="logo">
+        <ion-col class="logo">
             <div class="banner"></div>
         </ion-col>
     </ion-row>
@@ -15,21 +15,36 @@
         <div class="info-text">
             <h1 style="text-align: center;">Beta Version</h1>
         </div>
-        <ion-row class="browser-button">
+        <ion-row *ngIf="!platform.is('mobile')" class="browser-button">
             <button ion-button full icon-left class="large-btn" id="open-wallet-button" color="secondary" (click)="login()">
                 <ion-icon name="download"></ion-icon>
-                {{"OPEN_WALLET_FILE"|translate}}</button>
+                {{"OPEN_WALLET_FILE"|translate}}
+            </button>
+        </ion-row>
+        <ion-row *ngIf="platform.is('mobile') && (initial_mvs_key != undefined)"  class="browser-button">
+            <button ion-button full icon-left class="large-btn" id="open-wallet-button" color="secondary" (click)="loginFromMobile()">
+                <ion-icon name="download"></ion-icon>
+                {{"OPEN_EXISTING_WALLET"|translate}}
+            </button>
+        </ion-row>
+        <ion-row *ngIf="platform.is('mobile') && (initial_mvs_key == undefined)" class="browser-button">
+            <button ion-button full icon-left class="large-btn" id="open-wallet-button" color="secondary" (click)="scanQRCode()">
+                <ion-icon name="download"></ion-icon>
+                {{"OPEN_WALLET_QRCODE"|translate}}
+            </button>
         </ion-row>
         <ion-row class="browser-button">
             <button ion-button class="large-btn" block full icon-left (click)="ImportMnemonicPage();">
                 <ion-icon name="download"></ion-icon>
-                {{"CREATE_FROM_BACKUP_WORDS"|translate}}</button>
+                {{"CREATE_FROM_BACKUP_WORDS"|translate}}
+            </button>
         </ion-row>
 
-        <ion-row class="browser-button">
+        <ion-row *ngIf="!platform.is('mobile')" class="browser-button">
             <button ion-button class="large-btn" block full icon-left (click)="GenerateKeyPage();">
                 <ion-icon name="add"></ion-icon>
-                {{"CREATE_NEW_WALLET_BUTTON"|translate}}</button>
+                {{"CREATE_NEW_WALLET_BUTTON"|translate}}
+            </button>
         </ion-row>
 	<ion-row class="info-text">
 		<p>{{"LOGIN_MENU_INFO_TEXT"|translate}}</p>
@@ -39,15 +54,17 @@
 
 <ion-footer>
     <ion-row>
-    <ion-col>
-    <button ion-button block clear icon-left (click)="switchTheme()">
-        <ion-icon name="color-palette"></ion-icon>
-        {{"THEME_SETTINGS"|translate}}</button>
-    </ion-col>
-    <ion-col>
-    <button ion-button block clear icon-left (click)="switchLanguage()">
-        <ion-icon name="flag"></ion-icon>
-        {{"SWITCH_LANGUAGE"|translate}}</button>
-    </ion-col>
+      <ion-col>
+        <button ion-button block clear icon-left (click)="switchTheme()">
+            <ion-icon name="color-palette"></ion-icon>
+            {{"THEME_SETTINGS"|translate}}
+        </button>
+      </ion-col>
+      <ion-col>
+        <button ion-button block clear icon-left (click)="switchLanguage()">
+            <ion-icon name="flag"></ion-icon>
+            {{"SWITCH_LANGUAGE"|translate}}
+          </button>
+      </ion-col>
     </ion-row>
 </ion-footer>

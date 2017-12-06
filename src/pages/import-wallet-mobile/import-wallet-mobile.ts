@@ -5,11 +5,11 @@ import { AccountPage } from '../account/account';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-    selector: 'page-import-wallet',
-    templateUrl: 'import-wallet.html',
+    selector: 'page-import-wallet-mobile',
+    templateUrl: 'import-wallet-mobile.html',
 
 })
-export class ImportWalletPage {
+export class ImportWalletMobilePage {
 
     selectedFiles;
     loading: Loading;

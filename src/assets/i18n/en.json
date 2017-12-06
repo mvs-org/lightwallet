@@ -32,7 +32,7 @@
 
     "ETP_DEPOSIT": "ETP Deposit",
 
-    "SWITCH_LANGUAGE": "Change Language",
+    "SWITCH_LANGUAGE": "Language",
     "LANGUAGE_SETTINGS": "Language settings",
     "SETTINGS": "Settings",
     "INFORMATION": "Legal Disclaimer",
@@ -171,5 +171,7 @@
     "CUSTOM": "Custom",
     "CUSTOM_RECIPIENT_ADDRESS": "Custom recipient address",
     "BLOCKS": "Blocks",
-    "INTEREST_RATE": "Interest rates"
+    "INTEREST_RATE": "Interest rates",
+
+    "OPEN_WALLET_QRCODE": "Open Wallet from QR Code"
 }

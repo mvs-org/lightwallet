@@ -1,20 +1,21 @@
 page-account {
 
-  .asset-container {
-     max-width: 100%;
-  }
-
-  @media (min-width: 825px) {
     .asset-container {
-      max-width: 50%;
+       max-width: 100%;
     }
-   }
 
-  @media (min-width: 1310px) {
-    .asset-container {
+    @media (min-width: 825px) {
+        .asset-container {
+            max-width: 50%;
+        }
+     }
+
+    @media (min-width: 1310px) {
+        .asset-container {
             max-width: 33.33%;
         }
     }
+
     @media (min-width: 1700px) {
         .asset-container {
             max-width: 25%;
