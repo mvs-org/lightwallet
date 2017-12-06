@@ -6,4 +6,6 @@ export class AppGlobals {
     readonly algo: string = 'aes';
     readonly index: number = 10;
     readonly host: string = "https://app.myetpwallet.com/api";
+    readonly platform: string = "android";
+    readonly network: string = "mainnet";
 }
