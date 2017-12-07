@@ -61,6 +61,10 @@ export class MvsServiceProvider {
         return this.storage.set('wallet', wallet)
     }
 
+    setMobileWallet(seed) {
+        return this.storage.set('seed', seed)
+    }
+
     setSeed(passphrase){
     return this.getMnemonic(passphrase)
       .then((mnemonic)=>Metaverse.wallet.mnemonicToSeed(mnemonic, Metaverse.networks[this.globals.network]))

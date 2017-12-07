@@ -49,8 +49,16 @@ export class WalletServiceProvider {
     }
 
     getSeed(passphrase) {
-        return this.storage.get('wallet')
-            .then((wallet) => this.decrypt(wallet.seed, passphrase))
+        return this.storage.get('seed')
+            .then((seed) => this.decrypt(seed, passphrase))
+            .catch((error) => {
+                console.error(error)
+                throw Error('ERR_DECRYPT_WALLET')
+            })
+    }
+
+    getEncSeed() {
+        return this.storage.get('seed')
             .catch((error) => {
                 console.error(error)
                 throw Error('ERR_DECRYPT_WALLET')

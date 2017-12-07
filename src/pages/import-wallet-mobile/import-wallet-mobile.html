@@ -20,11 +20,18 @@
     </ion-item>
     <form *ngIf="disclaimer_agreed" (ngSubmit)="import()" #importForm="ngForm" no-lines>
         <ion-item class="center-text" no-lines>
-            <h1>{{"IMPORT_FILE"|translate}}</h1>
+            <h1>{{"IMPORT.SCAN_QRCODE_TEXT"|translate}}</h1>
         </ion-item>
         <ion-row>
+            <button ion-button full icon-left class="large-btn" id="open-wallet-button" color="secondary" (click)="scan()">
+                <ion-icon name="qr-scanner"></ion-icon>
+                {{"IMPORT.SCAN_QRCODE_BUTTON"|translate}}
+            </button>
+        </ion-row>
+
+        <!--<ion-row>
             <input type="file" name="file" id="file" class="inputfile" (change)="open($event)" />
             <label for="file"> <ion-icon name="download"></ion-icon> {{"CHOOSE_A_FILE"|translate}}</label>
-        </ion-row>
+        </ion-row>-->
     </form>
 </ion-content>

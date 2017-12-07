@@ -173,5 +173,9 @@
     "BLOCKS": "Blocks",
     "INTEREST_RATE": "Interest rates",
 
-    "OPEN_WALLET_QRCODE": "Open Wallet from QR Code"
+    "OPEN_FROM_QRCODE": "Open Wallet from QR Code",
+    "IMPORT.SCAN_QRCODE_TEXT": "Scan QR Code",
+    "IMPORT.SCAN_QRCODE_BUTTON": "Scan",
+    "OPEN_FROM_BACKUP_WORDS": "Open Wallet from Backup words"
+
 }

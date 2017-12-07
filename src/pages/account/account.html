@@ -54,20 +54,20 @@
                 </ion-row>
               </ion-grid>
             </ion-card>
-            <ion-row class="row-buttons">
-              <ion-col>
+            <ion-row col-12 class="row-buttons">
+              <ion-col col-4>
                 <button ion-button full clear color="secondary" icon-left (click)="gotoReceive($event, asset)">
                   <ion-icon name="download"></ion-icon>
                   {{ "RECEIVE" | translate }}
                 </button>
               </ion-col>
-              <ion-col>
+              <ion-col col-4>
                 <button ion-button full clear color="danger" icon-left (click)="gotoTransfer($event, asset)">
                   <ion-icon name="send"></ion-icon>
                   {{ "SEND" | translate }}
                 </button>
               </ion-col>
-              <ion-col center text-center>
+              <ion-col col-4>
                 <button ion-button full clear color="primary" icon-left (click)="gotoTransactions($event, asset)">
                   <ion-icon name="time"></ion-icon>
                   {{ "HISTORY" | translate }}

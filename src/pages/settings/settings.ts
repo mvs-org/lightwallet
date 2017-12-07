@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
-
 import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
+
 
 @Component({
     selector: 'page-settings',
@@ -14,14 +14,15 @@ export class SettingsPage {
 
     constructor(public nav: NavController,  private mvs: MvsServiceProvider, private walletService: WalletServiceProvider) {
 
-      this.gencode('LaurentTest');
+      this.gencode();
+      this.connectcode = ""
 
     }
 
     reset = () => this.mvs.dataReset();
 
-    gencode = (passphrase) =>{
-      this.walletService.export(passphrase)
+    gencode = () =>{
+      this.walletService.getEncSeed()
       .then((content)=>{
       this.connectcode=content;
       });

@@ -3,6 +3,7 @@ import { NavController, NavParams, AlertController, LoadingController, Loading }
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { AccountPage } from '../account/account';
 import { TranslateService } from '@ngx-translate/core';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 @Component({
     selector: 'page-import-wallet-mobile',
@@ -14,7 +15,19 @@ export class ImportWalletMobilePage {
     selectedFiles;
     loading: Loading;
 
-    constructor(public nav: NavController, public navParams: NavParams, public mvs: MvsServiceProvider, private alertCtrl: AlertController, private loadingCtrl: LoadingController, private translate: TranslateService) {
+    constructor(public nav: NavController, public navParams: NavParams, public mvs: MvsServiceProvider, private alertCtrl: AlertController, private loadingCtrl: LoadingController, private translate: TranslateService, private barcodeScanner: BarcodeScanner) {
+    }
+
+    scan() {
+        let wallet = {};
+        wallet = {"index": 10}
+        this.mvs.setWallet(wallet)
+        this.barcodeScanner.scan({formats: 'QR_CODE'}).then((result) => {
+            if(!result.cancelled) {
+                var seed = result.text
+                this.mvs.setMobileWallet(seed).then(()=>this.showPrompt(seed))
+            }
+        })
     }
 
     open(e) {
@@ -38,9 +51,9 @@ export class ImportWalletMobilePage {
     }
 
 
-    decrypt(password) {
+    decrypt(password, seed) {
         this.translate.get('WRONG_PASSWORD').subscribe((message: string) => {
-            this.mvs.setSeed(password)
+            this.mvs.setMobileWallet(seed)
                 .then(()=>Promise.all([this.mvs.getWallet(password), this.mvs.getAddressIndex()]))
                 .then((results) => this.generateAddresses(results[0], 0, results[1]))
                 .then((addresses) => this.mvs.addMvsAddresses(addresses))
@@ -66,7 +79,7 @@ export class ImportWalletMobilePage {
     // Empty options to avoid having a target URL
     // uploader: FileUploader = new FileUploader({});
     // reader: FileReader = new FileReader();
-    showPrompt(result) {
+    showPrompt(seed) {
         this.translate.get('PASSWORD').subscribe((txt_password: string) => {
             this.translate.get('CANCEL').subscribe((txt_cancel: string) => {
                 this.translate.get('ENTER_PASSWORD_HEADLINE').subscribe((txt_headline: string) => {
@@ -93,7 +106,7 @@ export class ImportWalletMobilePage {
                                     text: txt_enter,
                                     handler: data => {
                                         // need error handling
-                                        this.decrypt(data.password)
+                                        this.decrypt(data.password, seed)
                                     }
                                 }
                             ]

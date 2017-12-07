@@ -21,29 +21,29 @@
                 {{"OPEN_WALLET_FILE"|translate}}
             </button>
         </ion-row>
-        <ion-row *ngIf="platform.is('mobile') && (initial_mvs_key != undefined)"  class="browser-button">
-            <button ion-button full icon-left class="large-btn" id="open-wallet-button" color="secondary" (click)="loginFromMobile()">
-                <ion-icon name="download"></ion-icon>
-                {{"OPEN_EXISTING_WALLET"|translate}}
-            </button>
-        </ion-row>
-        <ion-row *ngIf="platform.is('mobile') && (initial_mvs_key == undefined)" class="browser-button">
-            <button ion-button full icon-left class="large-btn" id="open-wallet-button" color="secondary" (click)="scanQRCode()">
-                <ion-icon name="download"></ion-icon>
-                {{"OPEN_WALLET_QRCODE"|translate}}
-            </button>
-        </ion-row>
-        <ion-row class="browser-button">
+        <ion-row *ngIf="!platform.is('mobile')" class="browser-button">
             <button ion-button class="large-btn" block full icon-left (click)="ImportMnemonicPage();">
                 <ion-icon name="download"></ion-icon>
                 {{"CREATE_FROM_BACKUP_WORDS"|translate}}
             </button>
         </ion-row>
-
         <ion-row *ngIf="!platform.is('mobile')" class="browser-button">
             <button ion-button class="large-btn" block full icon-left (click)="GenerateKeyPage();">
                 <ion-icon name="add"></ion-icon>
                 {{"CREATE_NEW_WALLET_BUTTON"|translate}}
+            </button>
+        </ion-row>
+
+        <ion-row *ngIf="platform.is('mobile')"  class="browser-button">
+            <button ion-button full icon-left class="large-btn" id="open-wallet-button" color="secondary" (click)="loginFromMobile()">
+                <ion-icon name="qr-scanner"></ion-icon>
+                {{"OPEN_FROM_QRCODE"|translate}}
+            </button>
+        </ion-row>
+        <ion-row *ngIf="platform.is('mobile')" class="browser-button">
+            <button ion-button class="large-btn" block full icon-left (click)="ImportMnemonicPage();">
+                <ion-icon name="list-box"></ion-icon>
+                {{"OPEN_FROM_BACKUP_WORDS"|translate}}
             </button>
         </ion-row>
 	<ion-row class="info-text">

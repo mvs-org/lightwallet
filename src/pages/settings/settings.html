@@ -9,11 +9,20 @@
 
 <ion-content padding>
     <ion-list>
-        <a ion-item (click)="reset()" style="white-space: normal;">
+      <ion-row>
+        <button ion-item (click)="reset()" style="white-space: normal;">
             <ion-icon name="refresh" item-start></ion-icon>
             <h1 [translate]="'SETTINGS.RESYNC_BUTTON'"></h1>
             <p [translate]="'SETTINGS.RESYNC_TEXT'" style="white-space: normal;"></p>
-        </a>
+        </button>
+      </ion-row>
+      <ion-row>
+        <button ion-item (click)="reset()" style="white-space: normal;">
+            <ion-icon name="qr-code" item-start></ion-icon>
+            <h1 [translate]="'SETTINGS.SHOW_QRCODE_BUTTON'"></h1>
+            <p [translate]="'SETTINGS.SHOW_QRCODE_TEXT'" style="white-space: normal;"></p>
+        </button>
+      </ion-row>
     </ion-list>
     <qr-code [value]="connectcode" [size]="250" class="center"></qr-code>
 </ion-content>
