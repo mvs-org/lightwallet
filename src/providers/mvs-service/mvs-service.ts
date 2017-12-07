@@ -52,7 +52,6 @@ export class MvsServiceProvider {
     }
 
     getHDNodeFromSeed(seed) {
-        console.log(seed);
         Metaverse.wallet.fromSeed(seed)
         return Metaverse.wallet.fromSeed(seed, Metaverse.networks[this.globals.network])
     }
@@ -231,7 +230,7 @@ export class MvsServiceProvider {
     getUtxoFrom(address) {
         return this.getUtxo()
             .then((utxo: Array<any>) => {
-                console.log(utxo)
+                //console.log(utxo)
                 if (address) {
                     let result = [];
                     if (utxo.length) {

@@ -25,6 +25,7 @@ import { InformationPage } from '../pages/information/information';
 import { SettingsPage } from '../pages/settings/settings';
 import { DepositPage } from '../pages/deposit/deposit';
 import { PassphrasePage } from '../pages/passphrase/passphrase';
+import { ExportWalletPage } from '../pages/export-wallet/export-wallet';
 
 
 import { GenerateKeyPage } from '../pages/generate-key/generate-key';
@@ -55,7 +56,8 @@ export function HttpLoaderFactory(http: Http) {
         ReceivePage,
         SettingsPage,
         PassphrasePage,
-        ImportMnemonicPage
+        ImportMnemonicPage,
+        ExportWalletPage
     ],
     imports: [
         BrowserModule,
@@ -92,7 +94,8 @@ export function HttpLoaderFactory(http: Http) {
         ReceivePage,
         SettingsPage,
         PassphrasePage,
-        ImportMnemonicPage
+        ImportMnemonicPage,
+        ExportWalletPage
     ],
     providers: [
         AppGlobals,
