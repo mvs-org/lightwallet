@@ -57,14 +57,12 @@
     "REORDER": "Reorder",
     "FINISH": "Finish",
     "ERROR_SEND_TEXT": "Could not create the transaction. Please check your input and try again.",
-    "CREATE_NEW_WALLET_BUTTON": "Create New",
     "MNEMONIC_CONFIRM_HEAD": "Confirm backup words",
     "MNEMONIC_CONFIRM_TEXT": "In order to make sure you recorded the backup words correctly you can now arrange the words in the right order.",
 
     "CONFIRM": "Confirm",
     "SKIP": "Skip",
     "COPY": "Copy",
-    "FINISH": "Finish",
 
     "WARNING": "Warning",
     "BACKUP_WORDS_BACKED_UP_TEXT": "Confirm that you have written down your backup words",
@@ -73,7 +71,6 @@
     "BACKUP_WORDS_CONFIRM_SKIP_TEXT": "Are you sure you want to continue without confirming the backup words of your wallet?",
     "I_AM_SURE": "I am sure",
 
-    "BACKUP_WORDS_WRITE_DOWN_TEXT": "Please write down the following words on a piece of paper. You will need them in order to restore the wallet. It is very important that you keep them safe and private. Dont show them to someone.",
     "MESSAGE.ERROR_CONNECT_BLOCKCHAIN": "Problem connecting to blockchain nodes.",
 
 
@@ -81,7 +78,6 @@
     "SETTINGS.WORDS_BUTTON": "Backup Words",
     "SETTINGS.WORDS_TEXT": "Your mnemonic words that correlate to your private key",
     "RESET_TITLE": "Are you sure?",
-    "RESET_MESSAGE": "All data will be erased",
     "COPIED_MNEMONIC": "Copied back-up words to clipboard",
 
     "SETTINGS.PINCODE": "Pincode Settings",
