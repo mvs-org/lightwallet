@@ -1,7 +1,7 @@
 {
   "ACCOUNT.TITLE": "พอร์ตโฟลิโอ",
   "ACCOUNT.FROZEN": "ถูกแช่แข็ง",
-  "ACCOUNT.AVALIABLE": "ใช้งานได้",
+  "ACCOUNT.AVAILABLE": "ใช้งานได้",
   "ACCOUNT.TOTAL": "รวม",
 
 
@@ -23,7 +23,7 @@
   "TRANSACTIONS": "ธุรกรรม",
   "DATE": "วันที่",
   "AMOUNT": "จำนวน",
-  "RECIPENT_ADDRESS": "ที่อยู่ของผู้รับ",
+  "RECIPIENT_ADDRESS": "ที่อยู่ของผู้รับ",
 
   "AVAILABLE_BALANCE": "ยอดคงเหลือ",
   "AVAILABLE": "ใช้ได้",
