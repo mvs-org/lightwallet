@@ -42,7 +42,7 @@ export class ImportWalletPage {
         this.translate.get('WRONG_PASSWORD').subscribe((message: string) => {
             this.mvs.setSeed(password)
                 .then(()=>Promise.all([this.mvs.getWallet(password), this.mvs.getAddressIndex()]))
-                .then((results) => this.generateAddresses(results[0], 0, results[1]))
+                .then((results) => this.mvs.generateAddresses(results[0], 0, results[1]))
                 .then((addresses) => this.mvs.addMvsAddresses(addresses))
                 .then(() => this.nav.setRoot(AccountPage))
                 .then(() => this.nav.setRoot(AccountPage))
@@ -51,14 +51,6 @@ export class ImportWalletPage {
                     this.showError(message);
                 });
         });
-    }
-
-    private generateAddresses(wallet, from_index, to_index) {
-        var addresses = [];
-        for (let i = from_index; i < to_index; i++) {
-            addresses.push(this.mvs.generateNewAddress(wallet, i));
-        }
-        return addresses;
     }
 
 

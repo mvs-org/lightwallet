@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController, LoadingController, Loading } from 'ionic-angular';
+import { NavController, NavParams, AlertController, LoadingController, Loading, Platform } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { PassphrasePage } from '../passphrase/passphrase';
@@ -23,6 +23,7 @@ export class ImportMnemonicPage {
         private alertCtrl: AlertController,
         private loadingCtrl: LoadingController,
         private translate: TranslateService,
+        public platform: Platform,
         private global: AppGlobals) {
         for (var i = 0; i < 24; i++)
             this.words[i] = '';
@@ -48,7 +49,7 @@ export class ImportMnemonicPage {
 
     // testing
     onChange() {
-        console.log(this.all_words)
+        //console.log(this.all_words)
         this.displayWords(this.all_words)
         	  .then((all_words)=>this.countWords(all_words))
             .then((count) => this.compareWords(count))
@@ -73,7 +74,7 @@ export class ImportMnemonicPage {
     // returns the number of words
     // TODO: replace with regex
     countWords(words) {
-        console.log(words)
+        //console.log(words)
         let w = words.trim();
         return new Promise((resolve, reject) => {
             if (words) {

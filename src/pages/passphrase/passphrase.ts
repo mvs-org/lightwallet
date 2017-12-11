@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, Platform } from 'ionic-angular';
 
 import { LoginPage } from '../login/login';
+import { AccountPage } from '../account/account';
 import { AppGlobals } from '../../app/app.global';
 import { TranslateService } from '@ngx-translate/core';
 import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
+import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 
 @Component({
     selector: 'page-passphrase',
@@ -18,6 +20,8 @@ export class PassphrasePage {
         public navParams: NavParams,
         public globals: AppGlobals,
         public translate: TranslateService,
+        public platform: Platform,
+        public mvs: MvsServiceProvider,
         public wallet: WalletServiceProvider) {
         this.mnemonic = this.navParams.get('mnemonic');
     }
@@ -36,6 +40,22 @@ export class PassphrasePage {
             });
     }
 
+    encryptMobile(password) {
+        this.nav.push(AccountPage, {});
+        let wallet = {};
+        wallet = {"index": 10}
+        console.log('wallet set 10')
+        this.mvs.setWallet(wallet)
+            .then((wallet) => this.mvs.setSeedMobile(password, this.mnemonic))
+            .then((seed) => this.mvs.setMobileWallet(seed))
+            .then(() => Promise.all([this.mvs.getWallet(password), this.mvs.getAddressIndex()]))
+            .then((results) => this.mvs.generateAddresses(results[0], 0, results[1]))
+            .then((addresses) => this.mvs.addMvsAddresses(addresses))
+            .then(() => this.nav.setRoot(AccountPage))
+            .catch((e) => {
+                console.error(e);
+            });
+    }
 
     passwordValid = (password) => (password) ? password.length > 5 : false;
 

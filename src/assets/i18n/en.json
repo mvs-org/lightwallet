@@ -174,12 +174,18 @@
     "INTEREST_RATE": "Interest rates",
 
     "OPEN_FROM_QRCODE": "Open Wallet from QR Code",
-    "IMPORT.SHOW_QRCODE_BUTTON": "Show QR Code",
     "OPEN_FROM_BACKUP_WORDS": "Open Wallet from Backup words",
+    "ENTER_PASSWORD_HEADLINE_MOBILE": "Enter your password to decode your private key",
     "SETTINGS.SHOW_QRCODE_BUTTON": "Connect phone",
     "SETTINGS.SHOW_QRCODE_TEXT": "Export your private key to the mobile application MyETPWallet.",
 
+    "LOGOUT_TEXT": "Log out of the wallet",
     "EXPORT_ACCOUNT": "Export account",
-    "LOGOUT_TEXT": "Log out of the wallet"
+
+    "IMPORT.SHOW_QRCODE_BUTTON": "Show QR Code",
+
+    "IMPORT_MNEMONIC_TEXT_MOBILE": "Your private key will be stored encrypted via your password on your device."
+
+
 
 }

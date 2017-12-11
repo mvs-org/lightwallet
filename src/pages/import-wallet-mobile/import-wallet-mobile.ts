@@ -30,34 +30,12 @@ export class ImportWalletMobilePage {
         })
     }
 
-    open(e) {
-        let file = e.target.files
-        let reader = new FileReader();
-        reader.onload = (e: any) => {
-            let content = e.target.result;
-            let data = {};
-            try {
-                data = JSON.parse(content)
-                this.mvs.setWallet(data).then(()=>this.showPrompt(data))
-
-            } catch (e) {
-                console.error(e);
-                this.translate.get('WRONG_FILE').subscribe((message: string) => {
-                    this.showError(message);
-                });
-            }
-        };
-        reader.readAsText(file[0]);
-    }
-
-
     decrypt(password, seed) {
         this.translate.get('WRONG_PASSWORD').subscribe((message: string) => {
             this.mvs.setMobileWallet(seed)
                 .then(()=>Promise.all([this.mvs.getWallet(password), this.mvs.getAddressIndex()]))
-                .then((results) => this.generateAddresses(results[0], 0, results[1]))
+                .then((results) => this.mvs.generateAddresses(results[0], 0, results[1]))
                 .then((addresses) => this.mvs.addMvsAddresses(addresses))
-                .then(() => this.nav.setRoot(AccountPage))
                 .then(() => this.nav.setRoot(AccountPage))
                 .catch((e) => {
                     console.error(e);
@@ -66,15 +44,6 @@ export class ImportWalletMobilePage {
         });
     }
 
-    private generateAddresses(wallet, from_index, to_index) {
-        var addresses = [];
-        for (let i = from_index; i < to_index; i++) {
-            addresses.push(this.mvs.generateNewAddress(wallet, i));
-        }
-        return addresses;
-    }
-
-
     // Uploads file but is init in constructor
     // Empty options to avoid having a target URL
     // uploader: FileUploader = new FileUploader({});
@@ -82,7 +51,7 @@ export class ImportWalletMobilePage {
     showPrompt(seed) {
         this.translate.get('PASSWORD').subscribe((txt_password: string) => {
             this.translate.get('CANCEL').subscribe((txt_cancel: string) => {
-                this.translate.get('ENTER_PASSWORD_HEADLINE').subscribe((txt_headline: string) => {
+                this.translate.get('ENTER_PASSWORD_HEADLINE_MOBILE').subscribe((txt_headline: string) => {
                     this.translate.get('ENTER').subscribe((txt_enter: string) => {
 
                         const alert = this.alertCtrl.create({

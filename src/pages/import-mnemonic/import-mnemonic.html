@@ -36,19 +36,20 @@
             </ion-col>
         </ion-row>
         <ion-row class="button">
-            <ion-col>
-                <button ion-button icon-left color="secondary" type="submit" [disabled]="!importForm.form.valid && !passed">
+            <ion-col col-sm-12 offset-md-1 col-md-10 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6>
+                <button col-6 ion-button icon-left color="secondary" type="submit" [disabled]="!importForm.form.valid && !passed">
                     <ion-icon name="download"></ion-icon>
                     {{"IMPORT_WALLET"|translate}}
                 </button>
-                <button ion-button icon-left color="danger" type="button" class="clear button-width" (click)="clear()">
+                <button col-6 ion-button icon-left color="danger" type="button" class="clear button-width" (click)="clear()">
                     <ion-icon name="trash"></ion-icon>
                     {{"RESET"|translate}}
                 </button>
             </ion-col>
         </ion-row>
         <ion-row>
-            <h4 class="center-text">{{"IMPORT_MNEMONIC_TEXT"|translate}}</h4>
+            <h4 *ngIf="!platform.is('mobile')" class="center-text wallet-create">{{"IMPORT_MNEMONIC_TEXT"|translate}}</h4>
+            <h4 *ngIf="platform.is('mobile')" class="center-text wallet-create">{{"IMPORT_MNEMONIC_TEXT_MOBILE"|translate}}</h4>
         </ion-row>
     </form>
 </ion-content>

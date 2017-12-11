@@ -1,8 +1,7 @@
 page-import-mnemonic {
     .button {
-        // margin: auto;
-        margin: 30px;
         margin-top: 25px;
+        margin-bottom: 25px;
     }
 
     .button-width {
@@ -13,6 +12,10 @@ page-import-mnemonic {
     .center-text {
         text-align: center;
         margin: auto;
+    }
+
+    .wallet-create {
+        margin-bottom: 50px;
     }
 
     .info {

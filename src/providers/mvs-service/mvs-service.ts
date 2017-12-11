@@ -71,6 +71,12 @@ export class MvsServiceProvider {
       .then((encseed)=>this.storage.set('seed',encseed))
     }
 
+    setSeedMobile(passphrase, mnemonic){
+    return Metaverse.wallet.mnemonicToSeed(mnemonic, Metaverse.networks[this.globals.network])
+        .then((seed)=>this.encrypt(seed.toString('hex'),passphrase))
+        .then((encseed)=> this.storage.set('seed',encseed))
+    }
+
     getMnemonic(passphrase) {
     console.info('loading menmonic')
         return this.storage.get('wallet')
@@ -88,6 +94,10 @@ export class MvsServiceProvider {
                 console.error(error)
                 throw Error('ERR_DECRYPT_WALLET_FROM_SEED')
             })
+    }
+
+    getEncSeed() {
+        return this.storage.get('seed')
     }
 
     getAddressIndex() {
@@ -499,12 +509,18 @@ export class MvsServiceProvider {
         return wallet.getAddress(index);
     }
 
+    generateAddresses(wallet: any, from_index: number, to_index: number) {
+        var addresses = [];
+        for (let i = from_index; i < to_index; i++) {
+            addresses.push(this.generateNewAddress(wallet, i));
+        }
+        return addresses;
+    }
+
     addMvsAddresses(addresses) {
         return this.getMvsAddresses()
             .then((addr: any[]) => this.storage.set('mvs_addresses', addr.concat(addresses)))
-            .then(() => {
-                return this.getMvsAddresses()
-            })
+            .then(() => this.getMvsAddresses() )
     }
 
     addMvsTxs(newtxs) {
