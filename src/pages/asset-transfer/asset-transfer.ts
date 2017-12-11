@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController, LoadingController, Loading, NavParams } from 'ionic-angular';
+import { NavController, AlertController, LoadingController, Loading, NavParams, Platform } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -33,6 +33,7 @@ export class AssetTransferPage {
         private loadingCtrl: LoadingController,
         public navParams: NavParams,
         private mvs: MvsServiceProvider,
+        public platform: Platform,
         private translate: TranslateService) {
 
         this.selectedAsset = navParams.get('asset')

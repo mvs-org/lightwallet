@@ -10,13 +10,13 @@
       </button>
       <button ion-button icon-left (click)="logout()">
         <ion-icon name="log-out"></ion-icon>
-        <span>{{"LOGOUT" |translate}}</span>
+        <span *ngIf="!platform.is('mobile')">{{"LOGOUT" |translate}}</span>
       </button>
-      <button *ngIf="syncing" ion-button icon-left>
+      <button *ngIf="syncing&&!platform.is('mobile')" ion-button icon-left>
         <ion-icon name="refresh"></ion-icon>
         <span>{{"SYNCING" |translate}}</span>
       </button>
-      <button *ngIf="!syncing" ion-button (click)="sync()" icon-left>
+      <button *ngIf="!syncing&&!platform.is('mobile')" ion-button (click)="sync()" icon-left>
         <ion-icon name="refresh"></ion-icon>
         <span>{{"RESYNC" |translate}}</span>
       </button>
@@ -25,6 +25,9 @@
 </ion-header>
 
 <ion-content class="center spread-out">
+  <ion-refresher *ngIf="platform.is('mobile')" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content class="mini-loader mini-loader-mobile"></ion-refresher-content>
+  </ion-refresher>
   <div class="mini-loader" *ngIf="syncing&&balances==undefined">Loading</div>
   <ion-list no-lines *ngIf="!syncing||balances!=undefined">
     <ion-grid>

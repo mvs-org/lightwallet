@@ -69,6 +69,11 @@ page-account {
         padding: 10px 20px;
     }
 
+    //specificity mobile refresh
+    .mini-loader-mobile {
+      margin-top: -4px !important;
+    }
+
     // loading animation
     .mini-loader,
     .mini-loader:before,

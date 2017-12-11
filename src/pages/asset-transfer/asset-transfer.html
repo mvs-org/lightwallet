@@ -11,10 +11,10 @@
     <p align="center" *ngIf="etpBalance<10000">{{"NOTICE_TRANSACTION_FEE_UNCOVERED"|translate}}</p>
     <ion-row>
         <ion-col>
-            <p>{{"AVAILABLE_BALANCE" | translate}}: {{format(showBalance,decimals)}} {{selectedAsset}}</p>
+            <p>{{"AVAILABLE_BALANCE" | translate}}: <br *ngIf="platform.is('mobile')">{{format(showBalance,decimals)}} {{selectedAsset}}</p>
         </ion-col>
         <ion-col>
-            <p class="right">{{"FEE"|translate}}: {{10000/100000000}} ETP</p>
+            <p class="right">{{"FEE"|translate}}:<br *ngIf="platform.is('mobile')"> {{10000/100000000}} ETP</p>
         </ion-col>
     </ion-row>
     <form #sendForm="ngForm">
