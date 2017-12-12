@@ -57,14 +57,12 @@
     "REORDER": "Reorder",
     "FINISH": "Finish",
     "ERROR_SEND_TEXT": "Could not create the transaction. Please check your input and try again.",
-    "CREATE_NEW_WALLET_BUTTON": "Create New",
     "MNEMONIC_CONFIRM_HEAD": "Confirm backup words",
     "MNEMONIC_CONFIRM_TEXT": "In order to make sure you recorded the backup words correctly you can now arrange the words in the right order.",
 
     "CONFIRM": "Confirm",
     "SKIP": "Skip",
     "COPY": "Copy",
-    "FINISH": "Finish",
 
     "WARNING": "Warning",
     "BACKUP_WORDS_BACKED_UP_TEXT": "Confirm that you have written down your backup words",
@@ -73,7 +71,6 @@
     "BACKUP_WORDS_CONFIRM_SKIP_TEXT": "Are you sure you want to continue without confirming the backup words of your wallet?",
     "I_AM_SURE": "I am sure",
 
-    "BACKUP_WORDS_WRITE_DOWN_TEXT": "Please write down the following words on a piece of paper. You will need them in order to restore the wallet. It is very important that you keep them safe and private. Dont show them to someone.",
     "MESSAGE.ERROR_CONNECT_BLOCKCHAIN": "Problem connecting to blockchain nodes.",
 
 
@@ -147,20 +144,22 @@
   "SYNCING": "Syncing",
   "TRANSFER": "Transfer",
   "OK": "OK",
+
   "PREVIEW": "Preview",
   "LEGAL_DISCLAIMER": {
     "TITLE": "Legal disclaimer",
-    "BRIEF_EXPLAIN": "MyETPWallet.com makes it easy for you to create, save, and access your information and interact with Blockchain. We are not responsible for the management of your funds and you are the sole person responsible for the security of your own funds.",
-    "WARNING": "Before using this wallet, please be aware that there are important risks associated with cryptocurrency and blockchain-based open-source software such as large exchange rate fluctuations and bugs.",
+    "BRIEF_EXPLAIN": "MyETPWallet.com makes it easy for you to create, save, and access your information and assets and interact with the Metaverse blockchain. You are solely responsible for managing your funds and for maintaining the security of your Private Key and any mnemonic passphrase (‘backup words’) associated with your wallet.",
+    "WARNING": "Before using this wallet, please be aware that there are important risks associated with cryptocurrency and blockchain-based open-source software such as large exchange rate fluctuations and software bugs. By registering an account through MyETPWallet.com or MVSD, you agree that you have read, understood and accept all of the terms and conditions contained in this Disclaimer.",
     "I_TITLE": "I. Accessing and Controlling Wallet Information",
-    "I_INFO": "The Wallet does not collect the customer’s private information, such as your password and the private keys. The Development Team is responsible for guaranteeing wallet access and fix bugs. When accessing your account, we strongly advise you to back up the wallet files beforehand to best protect your property rights.",
+    "I_INFO": "1.1 When you create a Wallet account, it generates a mnemonic passphrase (‘backup words’) consisting of 24 English words and a Public and Private keypair used to send and receive digital currency. You must backup your mnemonic passphrase and Private Key information and keep it secure; failure to do so may result in the loss of control of the assets within your Wallet.",
+    "I_INFO_2": "1.2 The Wallet does not collect or store any of our Users’ private information, including as your password and the private keys. This information is stored locally on the User’s own device. Hence, we cannot assist you with Wallet retrieval. The Development Team is only responsible for guaranteeing wallet access and fixing software bugs, and is unable to restore encrypted private keys or otherwise recover private keys. If you use MyETPWallet.com, you acknowledge that Metaverse is not responsible for safeguarding or maintaining private keys associated with the wallet. We strongly advise you to back up your wallet files to best protect your property rights.",
     "II_TITLE": "II. Wallet Security",
-    "II_INFO_1": "2.1 The Metaverse Team will implement various kinds of security techniques and programs to protect the customers against data loss, inappropriate use, unauthorized access and/or disclosure. For example, we implement high-standard encryption techniques such as SSL to protect your personal information. Please be advised that no matter how strong the current security measures are, a 100% information security cannot be guaranteed due to limitations of technology and unforeseeable hostile actions against the platform. By using our service, the customer acknowledges the possibility that the system and telecommunication network they use to access our service can be compromised, which is out of our control. For instance, the software the customer has downloaded or websites visited may contain viruses or malwares that threaten the security of the wallet information. Therefore, it is imperative that the customers ensure the security of their personal information and data. The development team recommended customers to pay special attention to back up password and private keys offline (e.g. writing them on a piece of paper).",
-    "II_INFO_2": "2.2 Under no circumstances should customers trust information originating from non-official sources. Any wallet operation should only take place after the customer has completed due diligence and assessed the counterparty’s identity.",
-    "II_INFO_3": "2.3 It is the sole responsibility of the customer to protect their wallet security. The developers from the Metaverse Team will take appropriate technical measures that are in accordance with industry standards to protect the data security on the customers’ device but are not legally responsible of any data or funds loss. In those circumstance, the customer acknowledge and agree that the Metaverse Team does not guarantee the complete safety of the wallet funds.",
+    "II_INFO_1": "2.1 The Metaverse Team will implement appropriate security measures to protect Users against data loss, inappropriate use, unauthorized access and/or disclosure. For example, we implement high-standard encryption techniques such as SSL to protect your personal information. Please be advised that we cannot guarantee the absolute security of any data you disclose online, due to technical limitations and unforeseeable hostile actions against the platform. By using our service, the User acknowledges the possibility that the system and telecommunication network they use to access our service can be compromised, which is out of our control. For instance, the software the User has downloaded or websites visited may contain viruses or malwares that threaten the security of the wallet information. Therefore, it is imperative that Users ensure the security of their personal information and data. You accept the inherent security risks of providing information and dealing online over the Internet and will not hold us responsible for any breach of security unless this is due to our negligence. The development team recommends that Users pay special attention to backing up password and private keys offline (e.g. writing them on a piece of paper).",
+    "II_INFO_2": "2.2 Under no circumstances should Users trust information originating from non-official sources. Any wallet operation should only take place after the User has completed due diligence and assessed the counterparty’s identity.",
+    "II_INFO_3": "2.3 It is the sole responsibility of the User to protect their wallet security. The developers from the Metaverse Team will take appropriate technical measures in accordance with industry standards to protect data security on the User’s device but are not legally responsible of any data or funds loss. In those circumstance, the User acknowledges and agrees that the Metaverse Team does not guarantee the complete safety of the wallet funds.",
     "III_TITLE": "III. Contact Us",
     "III_INFO": "Should you have any question regarding the privacy policies above, please contact us using the following email address: info@mvs.org",
-    "FOOTER": "The Metaverse Team reserves the right to interpret and change the aforementioned clauses, which are under the protection of the MIT open source protocol."
+    "FOOTER": "The Metaverse Team reserves the right to interpret and change the aforementioned clauses at any time, in our sole discretion. MyETPWallet is distributed under the protection of the MIT open source protocol."
   },
   "PASSWORD_WARNING": "We advise you to use a strong password for your own security.",
     "FEE": "Transaction fee",

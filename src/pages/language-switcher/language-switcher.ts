@@ -19,7 +19,9 @@ export class LanguageSwitcherPage {
     constructor(public navCtrl: NavController, public navParams: NavParams, private translate: TranslateService, private storage: Storage, private event : Events) {
         this.languages = [
             new Language('English', 'en'),
-            new Language("中文", 'zh')
+            new Language("中文", 'zh'),
+            new Language("Français", 'fr'),
+            new Language("ไทย", 'th')
         ]
     }
 
