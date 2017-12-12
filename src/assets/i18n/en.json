@@ -81,7 +81,6 @@
     "SETTINGS.WORDS_BUTTON": "Backup Words",
     "SETTINGS.WORDS_TEXT": "Your mnemonic words that correlate to your private key",
     "RESET_TITLE": "Are you sure?",
-    "RESET_MESSAGE": "All data will be erased",
     "COPIED_MNEMONIC": "Copied back-up words to clipboard",
 
     "SETTINGS.PINCODE": "Pincode Settings",
@@ -184,7 +183,13 @@
 
     "IMPORT.SHOW_QRCODE_BUTTON": "Show QR Code",
 
-    "IMPORT_MNEMONIC_TEXT_MOBILE": "Your private key will be stored encrypted via your password on your device."
+    "IMPORT_MNEMONIC_TEXT_MOBILE": "Your private key will be stored encrypted via your password on your device.",
+
+    "RESET_MESSAGE_MOBILE": "All data will be erased. To log in, you will need your backup words or scan the QR Code from your desktop Light wallet.",
+    "IMPORT.SCAN_QRCODE_TEXT": "Import my account to my phone",
+    "IMPORT.SCAN_QRCODE_BUTTON":"Scan QR Code",
+    "EXPORT.HEADLINE": "Export your Private key to your phone.",
+    "EXPORT.INTRODUCTION": "Your Private key will be encrypted with the password used for this account. Please scan this QR Code from the mobile application MyETPWallet."
 
 
 

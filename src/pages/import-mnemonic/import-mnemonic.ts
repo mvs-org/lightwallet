@@ -49,7 +49,6 @@ export class ImportMnemonicPage {
 
     // testing
     onChange() {
-        //console.log(this.all_words)
         this.displayWords(this.all_words)
         	  .then((all_words)=>this.countWords(all_words))
             .then((count) => this.compareWords(count))
@@ -74,11 +73,9 @@ export class ImportMnemonicPage {
     // returns the number of words
     // TODO: replace with regex
     countWords(words) {
-        //console.log(words)
         let w = words.trim();
         return new Promise((resolve, reject) => {
             if (words) {
-                console.log(w.split(' '))
                 resolve(w.split(' ').length);
             } else {
                 resolve(0)
