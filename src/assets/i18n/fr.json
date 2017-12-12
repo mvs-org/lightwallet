@@ -1,21 +1,20 @@
 {
-    "ACCOUNT.TITLE": "Compte",
+    "ACCOUNT.TITLE": "Portefeuille",
     "ACCOUNT.FROZEN": "Bloqué",
     "ACCOUNT.AVAILABLE": "Disponible",
     "ACCOUNT.TOTAL": "Total",
 
-    
     "WALLET_SETUP.TITLE": "Configuration",
     "REGISTER.TITLE": "Créer compte",
     "CREATE_WALLET_DISCLAIMER.TITLE": "Information",
-    "CREATE_WALLET_DISCLAIMER.TEXT": "S'il vous plait, veuillez faire très attention à votre phrase mnémotechnique. Ce conseil est général et en aucun cas un avis financier ou juridique.",
+    "CREATE_WALLET_DISCLAIMER.TEXT": "Veuillez faire très attention à votre phrase mnémotechnique. Ce conseil est général et en aucun cas un avis financier ou juridique.",
     "REGISTER.YOUR_MNEMONIC_KEY": "Votre Clé",
 
     "MNEMONIC_SHOW.TITLE": "Récupération de votre compte",
     "YOUR_MNEMONIC_WORDS": "Phrase mnémotechnique",
     "IMPORT_WALLET": "Importer compte",
     "CREATE_NEW_WALLET": "Créer nouveau compte",
-    "CREATE_WALLET": "Ok, c'est parti",
+    "CREATE_WALLET": "Ok, c'est parti!",
     "BUTTON.OK": "Ok",
 
     "PLACEHOLDER.MNEMONIC_PASSPHRASE": "Phrase mnémotechnique",
@@ -29,7 +28,7 @@
     "AVAILABLE": "Disponible",
 
     "SCAN": "Scanner",
-    
+
     "ETP_DEPOSIT": "Bloquer ETP",
 
     "SWITCH_LANGUAGE": "Changer de Langue",
@@ -43,8 +42,8 @@
     "HISTORY.NO_TXS_YET_TEXT": "Commencez à utiliser votre compte aujourd'hui !",
     "SETTINGS.RESET_TEXT": "Réinitialiser toutes les données du compte. Veuillez vérifier que vous avez la phrase mnémotechnique de votre compte.",
     "SETTINGS.RESET_BUTTON": "Réinitialiser",
-    "SETTINGS.RESYNC_TEXT": "Forcer la réinitialisation de toutes les transactions et de la balance.",
-    "SETTINGS.RESYNC_BUTTON": "Forcer réinitialisation",
+    "SETTINGS.RESYNC_TEXT": "Forcer la resynchronisation de toutes les transactions et balances.",
+    "SETTINGS.RESYNC_BUTTON": "Forcer resynchronisation",
     "DEPOSIT": "Bloquer",
     "SEND": "Envoyer",
     "RECEIVE": "Recevoir",
@@ -72,12 +71,10 @@
      "NO": "Non",
      "BACKUP_WORDS_CONFIRM_SKIP_TEXT": "Êtes vous sûr de vouloir continuer sans vérifier la phrase mnémotechnique de votre compte?",
      "I_AM_SURE": "Je suis sûr",
-    
-    "BACKUP_WORDS_WRITE_DOWN_TEXT": "Veuillez noter ces mots sur une feuille de papier, vous en aurez besoin pour restorer votre compte. Il est très important de les conserver dans un endroit sûr et privé.",
+
+    "BACKUP_WORDS_WRITE_DOWN_TEXT": "Veuillez noter ces mots sur une feuille de papier, vous en aurez besoin pour restaurer votre compte. Il est très important de les conserver dans un endroit sûr et privé.",
     "MESSAGE.ERROR_CONNECT_BLOCKCHAIN": "Echec de la connection à la blockchain",
-     "SUCCESS_SEND_TEXT" : "La transaction à été envoyée. Veuillez patienter pour confirmation."
-    
-    
+    "SUCCESS_SEND_TEXT" : "La transaction à été envoyée. Veuillez patienter pour confirmation.",
     "BACK": "Retour",
     "SETTINGS.WORDS_BUTTON": "Clé",
     "SETTINGS.WORDS_TEXT": "Votre phrase mnémoniques qui correspondent à votre clé privée",
@@ -97,43 +94,43 @@
     "BUTTON.DOWNLOAD": "Télécharger la clé",
 
     "BUTTON.NEXT": "Suivant",
-    "IMPORT_WORDS": "entrer manuellement",
+    "IMPORT_WORDS": "Entrer manuellement",
     "IMPORT_WORDS_TITLE": "Deux façons d'entrer votre clé",
     "IMPORT_WORDS_BAR": "Importer clé",
     "IMPORT_FILE": "Veuillez ouvrir votre fichier de compte",
-    "UPLOAD_KEYSTORE": "Importer votre fichier de clé",
+    "UPLOAD_KEYSTORE": "Importer votre fichier de compte",
     "PASSWORD": "Mot de passe",
     "CANCEL": "Annuler",
     "ENTER": "Entrer",
-    "CREATE_NEW_WALLET_BUTTON": "Créer nouveau compte",
+    "CREATE_NEW_WALLET_BUTTON": "Créer un nouveau compte",
     "OPEN_WALLET_FILE": "Ouvrir le compte à partir du fichier",
-    "CREATE_FROM_BACKUP_WORDS": "Créer fichier à partir de la clé",
+    "CREATE_FROM_BACKUP_WORDS": "Créer fichier à partir de la phrase mnémotechnique",
     "WRONG_FILE": "Mauvais fichier",
     "CONFIRM_PASSWORD": "Confirmer mot de passe",
-    "LIGHT_WALLET_INFO_TEXT": "Sachez que myetpwallet.com n'a pas accès aux clés de votre compte. Si vous perdez vos mots de sauvegarde ou votre fichier de clé, nous ne pourrons pas accorder l'accès à vos fonds.",
-    "HEIGHT": "Taille",
-    "SELECT_CHANGE_ADDRESS": "Specifier le changement d'adresse (facultatif)",
+    "LIGHT_WALLET_INFO_TEXT": "Sachez que myetpwallet.com n'a pas accès aux clés de votre compte. Si vous perdez votre phrase mnémotechnique ou votre fichier de compte, nous ne pourrons pas accorder l'accès à vos fonds.",
+    "HEIGHT": "Blocs",
+    "SELECT_CHANGE_ADDRESS": "Spécifier l'adresse recevant la monnaie (facultatif)",
     "SELECT_FROM_ADDRESS": "Sélectionner l'adresse source (facultatif)",
-    "SHOW_ADVANCED": "Montrer options avancées",
+    "SHOW_ADVANCED": "Montrer les options avancées",
     "AUTO": "Automatique",
     "SELECT_DEPOSIT_OPTION": "Durée du dépot",
     "DEPOSIT_PROFIT": "Votre profit",
     "TRANSACTION_PREVIEW_TEXT": "Votre transaction encodée sera:",
     "MESSAGE.SUCCESS": "Génial!!",
     "MESSAGE.LOGOUT_CONFIRM": "Êtes-vous sûr de vouloir vous déconnecter?",
-    "SUCCESS_SEND_TEXT": "La transaction a été envoyée au réseau. Veuillez attendre les confirmations. Votre identifiant de transaction est:",
+    "SUCCESS_SEND_TEXT": "La transaction a été envoyée au réseau. Veuillez attendre les confirmations. Votre identifiant de transaction est: ",
     "IMPORT_MNEMONIC_TEXT": "Un fichier de compte sera créé pour vous. Ce fichier vous permettra d'accéder à votre compte.",
     "ENTER_PASSWORD_HEADLINE": "Entrez le mot de passe pour le fichier",
     "CHOOSE_A_FILE": "Choisir un fichier",
-    "BACKUP_WORDS_WRITE_DOWN_TEXT": "Veuillez écrire les 24 mots suivants sur une feuille de papier. Vous aurez besoin de ces 24 mots afin de récupérer votre compte. Il est trés important de les garder dans un endroit prive et sécurisé. Ne les montrez pas à quelqu'un.",
+    "BACKUP_WORDS_WRITE_DOWN_TEXT": "Veuillez écrire les 24 mots suivants sur une feuille de papier. Vous aurez besoin de ces 24 mots afin de récupérer votre compte. Il est trés important de les garder dans un endroit privé et sécurisé. Ne les montrez pas à quelqu'un.",
     "RESET_MESSAGE": "Toutes les données de connexion seront effacées",
     "SHOW_ALL_ASSET_BALANCES": "Afficher les soldes de tous les actifs",
     "THEME_SETTINGS": "Changer de thème",
-    "LOGIN_MENU_INFO_TEXT": "Avis pour les utilisateurs de compte existants MVS: Lors de votre première connexion à myetpwallet.com, créez un fichier de compte à partir des mots de sauvegarde, puis ouvrez le compte à partir du fichier.",
+    "LOGIN_MENU_INFO_TEXT": "A l'attention des utilisateurs du Full-node Wallet: Lors de votre première connexion à myetpwallet.com, veuillez crer un fichier de compte à partir de votre phrase mnémotechnique, puis ouvrir le compte à partir du fichier.",
     "PASTE_WORDS": "Utiliser la zone de texte",
     "RESET": "Réinitialiser",
     "OR": "OU",
-    "DISCLAIMER": {  
+    "DISCLAIMER": {
         "HEADLINE": "Avertissement",
         "INTRODUCTION": "Ce portefeuille est développé et basé sur la technologie Blockchain. Toutes les informations de compte et l'activité de transactions sont stockées sur des blockchains publiques. Le fournisseur de services de portefeuille ne stockera pas les clés privées, les mots de passe mnémotechniques ou les mots de sauvegarde des utilisateurs (collectivement, les «informations sur les clés privées») dans une base de données centralisée. Les informations de clé privée des utilisateurs et les fichiers générés par l'importation de clés privées appartiennent uniquement à la personne qui a créé le compte portefeuille. L'utilisateur a la responsabilité de sauvegarder ses fichiers de clés privées et son mot de passe et est seul responsable de l'utilisation de son compte, de son mot de passe et de ses informations de clé privée.",
         "LIST_INTRODUCTION": "Vous acceptez que le fournisseur de services de portefeuille ne porte aucune responsabilité dans les situations suivantes:",
@@ -144,7 +141,7 @@
         "READ_AND_AGREE": "J'ai lu et j'accepte l'intégralité de la clause de non-responsabilité et j'assume volontairement les risques et les responsabilités communiqués."
     },
   "LOGOUT": "Déconnexion",
-  "RESYNC": "Re-synchronisation",
+  "RESYNC": "Re-synchroniser",
   "SYNCING": "Synchronisation en cours",
   "TRANSFER": "Transfert",
   "OK": "OK",
@@ -165,11 +162,11 @@
   },
   "PASSWORD_WARNING": "Nous vous conseillons d'utiliser un mot de passe complexe pour votre propre sécurité.",
     "FEE": "Frais de transaction",
-    "NOTICE_TRANSACTION_FEE_UNCOVERED": "S'il vous plaît assurez-vous que vous avez assez ETP pour couvrir les frais de transaction.",
+    "NOTICE_TRANSACTION_FEE_UNCOVERED": "Veuillez vous assurer que vous avez assez d'ETP pour couvrir les frais de transaction.",
 
     "SELECT_RECIPIENT_ADDRESS": "Sélectionnez l'adresse du destinataire (facultatif)",
-    "CUSTOM": "Personalisé",
-    "CUSTOM_RECIPIENT_ADDRESS": "Adresse du destinataire personnalisée",
+    "CUSTOM": "Personnalisée",
+    "CUSTOM_RECIPIENT_ADDRESS": "Adresse personnalisée du destinataire",
     "BLOCKS": "Blocs",
-    "INTEREST_RATE": "Taux d'intérets"
+    "INTEREST_RATE": "Taux d'intérêts"
 }
