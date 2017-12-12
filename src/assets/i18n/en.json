@@ -32,7 +32,7 @@
 
     "ETP_DEPOSIT": "ETP Deposit",
 
-    "SWITCH_LANGUAGE": "Change Language",
+    "SWITCH_LANGUAGE": "Language",
     "LANGUAGE_SETTINGS": "Language settings",
     "SETTINGS": "Settings",
     "INFORMATION": "Legal Disclaimer",
@@ -169,5 +169,27 @@
     "CUSTOM": "Custom",
     "CUSTOM_RECIPIENT_ADDRESS": "Custom recipient address",
     "BLOCKS": "Blocks",
-    "INTEREST_RATE": "Interest rates"
+    "INTEREST_RATE": "Interest rates",
+
+    "OPEN_FROM_QRCODE": "Open Wallet from QR Code",
+    "OPEN_FROM_BACKUP_WORDS": "Open Wallet from Backup words",
+    "ENTER_PASSWORD_HEADLINE_MOBILE": "Enter your password to decode your private key",
+    "SETTINGS.SHOW_QRCODE_BUTTON": "Connect phone",
+    "SETTINGS.SHOW_QRCODE_TEXT": "Export your private key to the mobile application MyETPWallet.",
+
+    "LOGOUT_TEXT": "Log out of the wallet",
+    "EXPORT_ACCOUNT": "Export account",
+
+    "IMPORT.SHOW_QRCODE_BUTTON": "Show QR Code",
+
+    "IMPORT_MNEMONIC_TEXT_MOBILE": "Your private key will be stored encrypted via your password on your device.",
+
+    "RESET_MESSAGE_MOBILE": "All data will be erased. To log in, you will need your backup words or scan the QR Code from your desktop Light wallet.",
+    "IMPORT.SCAN_QRCODE_TEXT": "Import my account to my phone",
+    "IMPORT.SCAN_QRCODE_BUTTON":"Scan QR Code",
+    "EXPORT.HEADLINE": "Export your Private key to your phone.",
+    "EXPORT.INTRODUCTION": "Your Private key will be encrypted with the password used for this account. Please scan this QR Code from the mobile application MyETPWallet."
+
+
+
 }

@@ -1,0 +1,32 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>{{"IMPORT_WALLET"|translate}} Mobile</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <h2>{{"DISCLAIMER.HEADLINE"|translate}}</h2>
+    <p>{{"DISCLAIMER.INTRODUCTION"|translate}}</p>
+    <p>{{"DISCLAIMER.LIST_INTRODUCTION"|translate}}</p>
+    <ol>
+        <li>{{"DISCLAIMER.LIST_ITEM_1"|translate}}</li>
+        <li>{{"DISCLAIMER.LIST_ITEM_2"|translate}}</li>
+        <li>{{"DISCLAIMER.LIST_ITEM_3"|translate}}</li>
+        <li>{{"DISCLAIMER.LIST_ITEM_4"|translate}}</li>
+    </ol>
+    <ion-item>
+        <ion-label text-wrap>{{"DISCLAIMER.READ_AND_AGREE"|translate}}</ion-label>
+        <ion-checkbox [(ngModel)]="disclaimer_agreed"></ion-checkbox>
+    </ion-item>
+    <form *ngIf="disclaimer_agreed" (ngSubmit)="import()" #importForm="ngForm" no-lines>
+        <ion-item class="center-text" no-lines>
+            <h1>{{"IMPORT.SCAN_QRCODE_TEXT"|translate}}</h1>
+        </ion-item>
+        <ion-row>
+            <button ion-button full icon-left class="large-btn" id="open-wallet-button" color="secondary" (click)="scan()">
+                <ion-icon name="qr-scanner"></ion-icon>
+                {{"IMPORT.SCAN_QRCODE_BUTTON"|translate}}
+            </button>
+        </ion-row>
+    </form>
+</ion-content>
