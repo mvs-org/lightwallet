@@ -16,6 +16,7 @@
         <ion-checkbox [(ngModel)]="disclaimer_agreed"></ion-checkbox>
     </ion-item>
     <form *ngIf="disclaimer_agreed" (ngSubmit)="gencode()" #importForm="ngForm" no-lines>
+        <br>
         <ion-row>
             <button offset-md-4 col-md-4 ion-button full icon-left class="large-btn" id="open-wallet-button" color="danger" (click)="showQRCode = true">
                 <ion-icon name="qr-scanner"></ion-icon>

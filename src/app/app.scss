@@ -49,6 +49,10 @@ ion-menu ion-content .scroll-content{
     color: color($colors, light);
 }
 */
+
+.scroll-content {
+    padding-bottom: 0 !important;
+}
 // ███▄    █  ▒█████   ▄████▄  ▄▄▄█████▓ ██▓ ██▓     █    ██ ▒██   ██▒
 // ██ ▀█   █ ▒██▒  ██▒▒██▀ ▀█  ▓  ██▒ ▓▒▓██▒▓██▒     ██  ▓██▒▒▒ █ █ ▒░
 // ▓██  ▀█ ██▒▒██░  ██▒▒▓█    ▄ ▒ ▓██░ ▒░▒██▒▒██░    ▓██  ▒██░░░  █   ░
@@ -80,7 +84,7 @@ ion-menu ion-content .scroll-content{
 
     page-login .banner {
         margin: 20px auto !important;
-        background:url(../../assets/logo1.png) no-repeat !important;
+        background:url(../assets/logo1.png) no-repeat !important;
         width: 100% !important;
         max-width: 334px !important;
         height: 80px !important;
@@ -255,7 +259,7 @@ ion-menu ion-content .scroll-content{
 
     page-login .banner {
         margin: 20px auto !important;
-        background:url(../../assets/logo1.png) no-repeat !important;
+        background:url(../assets/logo1.png) no-repeat !important;
         width: 100% !important;
         max-width: 334px !important;
         height: 80px !important;
