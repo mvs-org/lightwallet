@@ -18,9 +18,10 @@
         <ion-label text-wrap>{{"DISCLAIMER.READ_AND_AGREE"|translate}}</ion-label>
         <ion-checkbox [(ngModel)]="disclaimer_agreed"></ion-checkbox>
     </ion-item>
+    <br>
     <form *ngIf="disclaimer_agreed" (ngSubmit)="import()" #importForm="ngForm" no-lines>
         <ion-item class="center-text" no-lines>
-            <h1>{{"IMPORT.SCAN_QRCODE_TEXT"|translate}}</h1>
+            <h2>{{"IMPORT.SCAN_QRCODE_TEXT"|translate}}</h2>
         </ion-item>
         <ion-row>
             <button ion-button full icon-left class="large-btn" id="open-wallet-button" color="secondary" (click)="scan()">
@@ -29,4 +30,8 @@
             </button>
         </ion-row>
     </form>
+    <ion-row *ngIf="!disclaimer_agreed" class="blank">
+    </ion-row>
+    <br>
+    <br>
 </ion-content>

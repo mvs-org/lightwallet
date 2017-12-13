@@ -24,9 +24,6 @@ page-import-wallet-mobile {
         z-index: -1;
 
     }
-    .scroll-content {
-        padding-bottom: 200px !important;
-    }
     .inputfile + label {
         font-size: 1.25em !important;
         font-weight: 700;
@@ -66,7 +63,9 @@ page-import-wallet-mobile {
         margin-top: 10px;
     }
 
-    ion-content{
-        margin-top: 70px;
+
+    .blank {
+        margin-bottom:70px;
     }
+
 }

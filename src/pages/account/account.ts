@@ -92,40 +92,6 @@ export class AccountPage {
         })
     }
 
-    logoutMobile() {
-        this.translate.get('RESET_TITLE').subscribe(title => {
-            this.translate.get('RESET_MESSAGE_MOBILE').subscribe(message => {
-                this.translate.get('CONFIRM').subscribe(yes => {
-                    this.translate.get('BACK').subscribe(no => {
-                        let confirm = this.alertCtrl.create({
-                            title: title,
-                            message: message,
-                            buttons: [
-                                {
-                                    text: no,
-                                    handler: () => {
-                                        console.log('Disagree clicked')
-                                    }
-                                },
-                                {
-                                    text: yes,
-                                    handler: () => {
-                                        this.mvs.hardReset().then(() => {
-                                            confirm.dismiss()
-                                            this.nav.setRoot(LoginPage)
-                                            window.location.reload()
-                                        })
-                                    }
-                                }
-                            ]
-                        });
-                        confirm.present()
-                    })
-                })
-            })
-        })
-    }
-
     private sync() {      //Sync for desktop
 
         //Only allow a single sync process
