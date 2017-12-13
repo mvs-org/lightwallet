@@ -22,10 +22,23 @@ You can then just use ionic to generate a live preview.
 $ ionic serve
 ```
 
+Or on your android phone. Make sure you have an android development environment with build-tools and sdk with accepted licenses.
+
+
+```bash
+$ ionic cordova run android --device
+```
+
 ## How to build it?
 
 ```bash
 $ ionic cordova build browser --prod --release
+```
+
+To build it for android use the following command. 
+
+```bash
+$ ionic cordova build --release android
 ```
 
 ## Contribution
