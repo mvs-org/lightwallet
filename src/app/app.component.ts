@@ -67,6 +67,7 @@ export class MyApp {
             { title: 'LANGUAGE_SETTINGS', component: LanguageSwitcherPage, icon: 'flag' },
             { title: 'THEME_SETTINGS', component: ThemeSwitcherPage, icon: 'color-palette' },
             { title: 'SETTINGS', component: SettingsPage, icon: 'settings' },
+	    { title: 'REPORT_BUG', newtab: 'https://github.com/mvs-org/lightwallet/issues', icon: 'bug' },
             { title: 'INFORMATION', component: InformationPage, icon: 'information-circle' }
         ].map((entry) => this.addToMenu(entry)))
     }
@@ -86,8 +87,9 @@ export class MyApp {
     }
 
     openPage(page) {
-        // Reset the content nav to have just this page
-        // we wouldn't want the back button to show in this scenario
-        this.nav.push(page.component);
+	if(page.component)
+	  this.nav.push(page.component);
+	else if(page.newtab)  
+	  window.open(page.newtab, '_blank');
     }
 }

@@ -188,7 +188,8 @@
     "IMPORT.SCAN_QRCODE_TEXT": "Import my account to my phone",
     "IMPORT.SCAN_QRCODE_BUTTON":"Scan QR Code",
     "EXPORT.HEADLINE": "Export your Private key to your phone.",
-    "EXPORT.INTRODUCTION": "Your Private key will be encrypted with the password used for this account. Please scan this QR Code from the mobile application MyETPWallet."
+    "EXPORT.INTRODUCTION": "Your Private key will be encrypted with the password used for this account. Please scan this QR Code from the mobile application MyETPWallet.",
+    "REPORT_BUG": "Report bug"
 
 
 
