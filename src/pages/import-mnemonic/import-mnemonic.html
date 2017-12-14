@@ -7,19 +7,19 @@
 <ion-content padding>
     <ion-row>
         <ion-item no-lines>
-            <h1 class="center-text info">{{'IMPORT_WORDS_TITLE'|translate}}</h1>
-            <h1 class="center-text info">{{'PASTE_WORDS'|translate}}</h1>
+            <h2 class="center-text info">{{'IMPORT_WORDS_TITLE'|translate}}</h2>
+            <h2 class="center-text info">{{'PASTE_WORDS'|translate}}</h2>
         </ion-item>
         <ion-card>
             <h4 class="center">
                 <ion-textarea ion-input rows="3" full type="text" value="" class="textbox" style="" [(ngModel)]="all_words" (ngModelChange)="onChange()" [ngModelOptions]="{standalone: true}"></ion-textarea>
             </h4>
         </ion-card>
-        <h1 class="center-text info">-{{"OR"|translate}}-</h1>
+        <h2 class="center-text info">-{{"OR"|translate}}-</h2>
     </ion-row>
     <ion-row>
         <ion-item>
-            <h1 item-center class="center-text">{{"IMPORT_WORDS"|translate}}</h1>
+            <h2 item-center class="center-text">{{"IMPORT_WORDS"|translate}}</h2>
         </ion-item>
     </ion-row>
     <form (ngSubmit)="import()" #importForm="ngForm">

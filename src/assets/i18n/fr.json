@@ -31,7 +31,7 @@
 
     "ETP_DEPOSIT": "Bloquer ETP",
 
-    "SWITCH_LANGUAGE": "Changer de Langue",
+    "SWITCH_LANGUAGE": "Langue",
     "LANGUAGE_SETTINGS": "Langues",
     "SETTINGS": "Paramètres",
     "INFORMATION": "Avertissement légal",
@@ -170,5 +170,26 @@
     "CUSTOM": "Personnalisée",
     "CUSTOM_RECIPIENT_ADDRESS": "Adresse personnalisée du destinataire",
     "BLOCKS": "Blocs",
-    "INTEREST_RATE": "Taux d'intérêts"
+    "INTEREST_RATE": "Taux d'intérêts",
+
+
+    "OPEN_FROM_QRCODE": "Ouvrir avec QR Code",
+    "OPEN_FROM_BACKUP_WORDS": "Ouvrir avec phrase mnémotechnique",
+    "ENTER_PASSWORD_HEADLINE_MOBILE": "Veuillez entrer votre mot de passe pour décrypter votre clé privée",
+    "SETTINGS.SHOW_QRCODE_BUTTON": "Connecter téléphone",
+    "SETTINGS.SHOW_QRCODE_TEXT": "Exporter votre clé privée vers l'application mobile MyETPWallet.",
+
+    "LOGOUT_TEXT": "Déconnecter mon compte",
+    "EXPORT_ACCOUNT": "Exporter compte",
+
+    "IMPORT.SHOW_QRCODE_BUTTON": "Afficher QR Code",
+
+    "IMPORT_MNEMONIC_TEXT_MOBILE": "Votre clé privée sera cryptée avec votre mot de passe et enregistrée sur votre appareil.",
+
+    "RESET_MESSAGE_MOBILE": "Toutes les données seront supprimées. Afin de vous reconnecter, vous aurez besoin de votre phrase mnémotechnique ou de scanner le QR Code optenu via MyETPWallet sur ordinateur de bureau.",
+    "IMPORT.SCAN_QRCODE_TEXT": "Importer mon compte sur mon téléphone",
+    "IMPORT.SCAN_QRCODE_BUTTON":"Scanner QR Code",
+    "EXPORT.HEADLINE": "Exporter votre clé privée sur votre téléphone.",
+    "EXPORT.INTRODUCTION": "Votre clé privée sura cryptée avec le mot de passe utilisé pour ce compte. Veuillez scanner ce QR Code avec l'applicatiom mobile MyETPWallet."
+
 }

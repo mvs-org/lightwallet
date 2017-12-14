@@ -20,7 +20,7 @@
             <ion-input type="password" placeholder="" [(ngModel)]="password_repeat"></ion-input>
         </ion-item>
     </ion-row>
-    <ion-row class="button">
+    <ion-row class="button more-bottom-padding">
         <button *ngIf="!platform.is('mobile')" ion-button full [disabled]="!complete(password, password_repeat)" (click)="encrypt(password)">{{'BUTTON.NEXT'|translate}}</button>
         <button *ngIf="platform.is('mobile')" ion-button full [disabled]="!complete(password, password_repeat)" (click)="encryptMobile(password)">{{'BUTTON.NEXT'|translate}}</button>
     </ion-row>
