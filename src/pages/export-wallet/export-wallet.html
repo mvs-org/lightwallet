@@ -11,11 +11,13 @@
 <ion-content padding>
     <h2>{{"EXPORT.HEADLINE"|translate}}</h2>
     <p>{{"EXPORT.INTRODUCTION"|translate}}</p>
+    <p>{{"EXPORT.TEXT"|translate}}</p>
     <ion-item>
         <ion-label text-wrap>{{"DISCLAIMER.READ_AND_AGREE"|translate}}</ion-label>
         <ion-checkbox [(ngModel)]="disclaimer_agreed"></ion-checkbox>
     </ion-item>
     <form *ngIf="disclaimer_agreed" (ngSubmit)="gencode()" #importForm="ngForm" no-lines>
+        <br>
         <ion-row>
             <button offset-md-4 col-md-4 ion-button full icon-left class="large-btn" id="open-wallet-button" color="danger" (click)="showQRCode = true">
                 <ion-icon name="qr-scanner"></ion-icon>
@@ -23,6 +25,7 @@
             </button>
         </ion-row>
         <div>
+            <br>
             <qr-code class="center" *ngIf="showQRCode" [value]="connectcode" [size]="300" class="center"></qr-code>
         </div>
     </form>

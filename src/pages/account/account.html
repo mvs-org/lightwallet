@@ -8,9 +8,9 @@
       <button ion-button icon-left>
         <span>{{"HEIGHT" |translate}}: {{height}}</span>
       </button>
-      <button ion-button icon-left (click)="logout()">
+      <button *ngIf="!platform.is('mobile')" ion-button icon-left (click)="logout()">
         <ion-icon name="log-out"></ion-icon>
-        <span *ngIf="!platform.is('mobile')">{{"LOGOUT" |translate}}</span>
+        <span>{{"LOGOUT" |translate}}</span>
       </button>
       <button *ngIf="syncing&&!platform.is('mobile')" ion-button icon-left>
         <ion-icon name="refresh"></ion-icon>

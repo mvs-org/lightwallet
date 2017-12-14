@@ -5,6 +5,7 @@
 </ion-header>
 
 <ion-content padding>
+    <br>
     <h2>{{"DISCLAIMER.HEADLINE"|translate}}</h2>
     <p>{{"DISCLAIMER.INTRODUCTION"|translate}}</p>
     <p>{{"DISCLAIMER.LIST_INTRODUCTION"|translate}}</p>
@@ -27,4 +28,8 @@
             <label for="file"> <ion-icon name="download"></ion-icon> {{"CHOOSE_A_FILE"|translate}}</label>
         </ion-row>
     </form>
+    <ion-row *ngIf="!disclaimer_agreed" class="blank">
+    </ion-row>
+    <br>
+    <br>
 </ion-content>
