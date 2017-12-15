@@ -9,6 +9,7 @@ import { LanguageSwitcherPage } from '../pages/language-switcher/language-switch
 import { ThemeSwitcherPage } from '../pages/theme-switcher/theme-switcher';
 import { InformationPage } from '../pages/information/information';
 import { SettingsPage } from '../pages/settings/settings';
+import { AssetIssuePage } from '../pages/asset-issue/asset-issue';
 
 import { Storage } from '@ionic/storage';
 
@@ -64,6 +65,7 @@ export class MyApp {
     setMenu() {
         return Promise.all([
             { title: 'ETP_DEPOSIT', component: DepositPage, icon: 'log-in' },
+            { title: 'ASSET_ISSUE', component: AssetIssuePage, icon: 'globe' },
             { title: 'LANGUAGE_SETTINGS', component: LanguageSwitcherPage, icon: 'flag' },
             { title: 'THEME_SETTINGS', component: ThemeSwitcherPage, icon: 'color-palette' },
             { title: 'SETTINGS', component: SettingsPage, icon: 'settings' },
