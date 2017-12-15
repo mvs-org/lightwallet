@@ -19,14 +19,30 @@
         <ion-label text-wrap>{{"DISCLAIMER.READ_AND_AGREE"|translate}}</ion-label>
         <ion-checkbox [(ngModel)]="disclaimer_agreed"></ion-checkbox>
     </ion-item>
-    <form *ngIf="disclaimer_agreed" (ngSubmit)="import()" #importForm="ngForm" no-lines>
+    <form  *ngIf="disclaimer_agreed" offset-md-3 col-md-6 (ngSubmit)="decrypt(password)" #importForm="ngForm" no-lines>
         <ion-item class="center-text" no-lines>
             <h1>{{"IMPORT_FILE"|translate}}</h1>
         </ion-item>
-        <ion-row>
-            <input type="file" name="file" id="file" class="inputfile" (change)="open($event)" />
+        <ion-row *ngIf="!fileLoaded">
+            <input type="file" name="file" id="file" class="inputfile" accept=".json" (change)="open($event)" />
             <label for="file"> <ion-icon name="download"></ion-icon> {{"CHOOSE_A_FILE"|translate}}</label>
         </ion-row>
+        <ion-row *ngIf="fileLoaded">
+            <ion-icon name="md-checkmark-circle" class="verifiedFile"></ion-icon>
+        </ion-row>
+        <ion-row class="top-padding">
+          <ion-item class="center-psw">
+            <ion-label color="primary" floating>{{"PASSWORD" | translate}}</ion-label>
+            <ion-input name="password" type="password" [(ngModel)]="password" required></ion-input>
+          </ion-item>
+        </ion-row>
+        <ion-row>
+          <button ion-button full [disabled]="!importForm.form.valid||!fileLoaded" color="primary">
+              {{"IMPORT" | translate}}
+          </button>
+        </ion-row>
+
+
     </form>
     <ion-row *ngIf="!disclaimer_agreed" class="blank">
     </ion-row>
