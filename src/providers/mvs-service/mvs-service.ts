@@ -359,7 +359,7 @@ export class MvsServiceProvider {
         return this.getBalances()
             .then(_ => {
                 balances = _;
-                return Promise.all([this.getMvsAddresses(), this.getLastMvsTxXHeight(), this.updateMvsHeight(), this.getMvsTxs()])
+                return Promise.all([this.getMvsAddresses(), this.getLastMvsTxXHeight(), this.getMvsHeight(), this.getMvsTxs()])
             })
             .then(results => { return this.getNewTxs(results[0], results[1], results[3]) })
             .then(() => this.calculateMvsBalances())
