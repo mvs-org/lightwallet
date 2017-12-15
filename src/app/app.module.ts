@@ -26,6 +26,7 @@ import { SettingsPage } from '../pages/settings/settings';
 import { DepositPage } from '../pages/deposit/deposit';
 import { PassphrasePage } from '../pages/passphrase/passphrase';
 import { ExportWalletPage } from '../pages/export-wallet/export-wallet';
+import { AssetIssuePage } from '../pages/asset-issue/asset-issue';
 
 
 import { GenerateKeyPage } from '../pages/generate-key/generate-key';
@@ -57,7 +58,8 @@ export function HttpLoaderFactory(http: Http) {
         SettingsPage,
         PassphrasePage,
         ImportMnemonicPage,
-        ExportWalletPage
+        ExportWalletPage,
+        AssetIssuePage
     ],
     imports: [
         BrowserModule,
@@ -95,7 +97,8 @@ export function HttpLoaderFactory(http: Http) {
         SettingsPage,
         PassphrasePage,
         ImportMnemonicPage,
-        ExportWalletPage
+        ExportWalletPage,
+        AssetIssuePage
     ],
     providers: [
         AppGlobals,
