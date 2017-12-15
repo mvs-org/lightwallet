@@ -114,7 +114,8 @@ export class MvsServiceProvider {
     }
 
     createTx(passphrase, asset, recipient_address, quantity, from_address, change_address) {
-        return this.getUtxoFrom(from_address)
+        return this.updateInOuts()
+            .then(()=>this.getUtxoFrom(from_address))
             .then((utxo) => {
                 if (change_address == undefined) {
                     //Set change address to first utxo's address
@@ -144,7 +145,8 @@ export class MvsServiceProvider {
     }
 
     createDepositTx(passphrase, recipient_address, quantity, locktime, from_address, change_address) {
-        return this.getUtxoFrom(from_address)
+        return this.updateInOuts()
+            .then(()=>this.getUtxoFrom(from_address))
             .then((utxo) => {
                 if (change_address == undefined) {
                     //Set change address to first utxo's address
@@ -297,7 +299,6 @@ export class MvsServiceProvider {
                     nb[asset]=newBalances[asset];
                 })
                 if (JSON.stringify(balances) != JSON.stringify(nb)) {
-                    this.updateInOuts();
                     return this.storage.set('balances', newBalances)
                 }
             })
