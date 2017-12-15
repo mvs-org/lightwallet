@@ -16,6 +16,7 @@
             <p class="right">{{"FEE"|translate}}:<br *ngIf="platform.is('mobile')"> 10 ETP</p>
         </ion-col>
     </ion-row>
+    <h2 align="center" *ngIf="etpBalance<1000000000">{{"ISSUE.NOTICE_TRANSACTION_FEE_UNCOVERED"|translate}}</h2>
     <form #sendForm="ngForm" style="padding-bottom: 0;">
         <ion-list style="padding-bottom: 0;">
 
@@ -31,7 +32,7 @@
             <br>
             <ion-item>
                 <ion-label color="primary">{{"ISSUE.DECIMALS"|translate}}</ion-label>
-                <ion-select [(ngModel)]="asset_decimals" name="asset_decimals" okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}">
+                <ion-select [(ngModel)]="asset_decimals" name="asset_decimals" okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}" required>
                     <ion-option *ngFor="let item of decimalsList" value="{{item}}">{{item}}</ion-option>
                 </ion-select>
             </ion-item>
@@ -86,7 +87,7 @@
 
         <ion-row>
             <ion-col>
-                <button ion-button full [disabled]="!sendForm.form.valid||!validSymbol(symbol)||!validName(issuer_name)||!validDescription(description)||(issue_address=='custom' && !validIssueAddress(custom_issue_address))" icon-left color="secondary">
+                <button ion-button full [disabled]="!sendForm.form.valid||!validSymbol(symbol)||!validName(issuer_name)||!validDescription(description)||(issue_address=='custom' && !validIssueAddress(custom_issue_address))" (click)="confirm()" icon-left color="secondary">
                     <ion-icon disabled="checked" name="send"></ion-icon>
                     {{"SEND" | translate}}
                 </button>

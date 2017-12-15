@@ -144,6 +144,38 @@ export class AssetIssuePage {
             .then((addresses) => this.mvs.createDepositTx(this.passphrase, (this.recipient_address == 'auto') ? null : (this.recipient_address == 'custom') ? this.custom_recipient : this.recipient_address, Math.floor(parseFloat(this.quantity) * Math.pow(10, this.decimals)), 0, (this.sendFrom != 'auto') ? this.sendFrom : null, 0))
     }
 
+    confirm() {
+        this.translate.get('ISSUE.CONFIRMATION_TITLE').subscribe((txt_title: string) => {
+            this.translate.get('ISSUE.CONFIRMATION_SUBTITLE').subscribe((txt_subtitle: string) => {
+                this.translate.get('ISSUE.CREATE').subscribe((txt_create: string) => {
+                    this.translate.get('CANCEL').subscribe((txt_cancel: string) => {
+                    const alert = this.alertCtrl.create({
+                        title: txt_title,
+                        subTitle: txt_subtitle,
+                        buttons: [
+                            {
+                                text: txt_cancel,
+                                role: 'cancel',
+                                handler: data => {
+                                    this.navCtrl.pop()
+                                }
+                            },
+                            {
+                                text: txt_create,
+                                handler: data => {
+                                    // need error handling
+                                    this.send()
+                                }
+                            }
+                        ]
+                    });
+                    alert.present(prompt)
+                  });
+              });
+          });
+      });
+    }
+
     send() {
         this.create()
             .then((tx) => this.mvs.broadcast(tx.encode().toString('hex')))

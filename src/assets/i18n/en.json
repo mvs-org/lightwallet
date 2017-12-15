@@ -194,6 +194,7 @@
     "ASSET_ISSUE": "Create Asset",
     "NOTICE_ASSET_ISSUE_FEE": "Please be aware that the creation of a new asset cost 10 ETP.",
 
+    "ISSUE.NOTICE_TRANSACTION_FEE_UNCOVERED": "You need at least 10 ETP to create an asset",
     "ISSUE.SYMBOL": "Symbol",
     "ISSUE.ISSUER_NAME": "Issuer name",
     "ISSUE.MAX_SUPPLY": "Maximum supply",
@@ -201,7 +202,11 @@
     "ISSUE.DESCRIPTION": "Description",
     "ISSUE.ISSUE_ADDRESS": "Issue address (address receiving the new token)",
     "ISSUE.FEE_ADDRESS": "Fee address (address paying 10 ETP)",
-    "ISSUE.CUSTOM_ISSUE_ADDRESS": "Custom issue address"
+    "ISSUE.CUSTOM_ISSUE_ADDRESS": "Custom issue address",
+
+    "ISSUE.CONFIRMATION_TITLE": "Issue an asset cost 10 ETP.",
+    "ISSUE.CONFIRMATION_SUBTITLE": "Are you sure you want to create an asset?",
+    "ISSUE.CREATE": "Create Asset"
 
 
 
