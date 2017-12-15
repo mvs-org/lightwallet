@@ -28,6 +28,8 @@ export class AssetIssuePage {
     etpBalance: number
     decimalsList: number[]
     symbol: string
+    max_supply: string;
+    asset_decimals: number;
     issuer_name: string
     custom_issue_address: string
     description: string
@@ -48,6 +50,7 @@ export class AssetIssuePage {
         this.feeAddress = 'auto'
         this.custom_recipient = ''
         this.decimalsList = [0,1,2,3,4,5,6,7,8]
+        this.max_supply = '';
         this.symbol = ''
         this.issuer_name = ''
         this.custom_issue_address = ''
@@ -140,8 +143,17 @@ export class AssetIssuePage {
     create() {
         return this.showLoading()
             .then(() => this.toUpperCase(this.symbol))
-            .then((symbol) => console.log(symbol))
-            .then((addresses) => this.mvs.createDepositTx(this.passphrase, (this.recipient_address == 'auto') ? null : (this.recipient_address == 'custom') ? this.custom_recipient : this.recipient_address, Math.floor(parseFloat(this.quantity) * Math.pow(10, this.decimals)), 0, (this.sendFrom != 'auto') ? this.sendFrom : null, 0))
+            .then((addresses) => this.mvs.createIssueAssetTx(
+                this.passphrase,
+                this.symbol,
+                this.issuer_name,
+                Math.floor(parseFloat(this.max_supply) * Math.pow(10, this.asset_decimals)),
+                this.asset_decimals,
+                this.description,
+                (this.issue_address == 'auto') ? null : (this.issue_address == 'custom') ? this.custom_issue_address : this.issue_address,
+                (this.sendFrom != 'auto') ? this.sendFrom : null,
+                undefined
+            ))
     }
 
     confirm() {
@@ -178,7 +190,7 @@ export class AssetIssuePage {
 
     send() {
         this.create()
-            .then((tx) => this.mvs.broadcast(tx.encode().toString('hex')))
+            .then((tx) => this.mvs.broadcast(tx.encode().toString('hex'), 1000000000))
             .then((result: any) => {
                 this.navCtrl.pop()
                 this.translate.get('SUCCESS_SEND_TEXT').subscribe((message: string) => {

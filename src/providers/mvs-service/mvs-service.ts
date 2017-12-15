@@ -140,6 +140,7 @@ export class MvsServiceProvider {
             })
             .then((results) => results[0].sign(results[1]))
             .catch((error) => {
+                console.error(error)
                 throw error.message;
             })
     }
@@ -174,6 +175,45 @@ export class MvsServiceProvider {
             })
             .then((results) => results[0].sign(results[1]))
             .catch((error) => {
+                console.error(error)
+                throw error.message;
+            })
+    }
+
+    createIssueAssetTx(passphrase, symbol, issuer, max_supply, precision, description, issue_address, fee_address, change_address) {
+        console.log(passphrase, symbol, issuer, max_supply, precision, description, issue_address, fee_address, change_address)
+        return this.updateInOuts()
+            .then(()=>this.getUtxoFrom(fee_address))
+            .then((utxo) => {
+                if (change_address == undefined) {
+                    //Set change address to first utxo's address
+                    change_address = utxo[0].address;
+                }
+                return Metaverse.transaction_builder.findUtxo(utxo, 'ETP', 0, 10*100000000)
+            })
+            .then((transfer_info: any) => {
+                //Create new TX
+                var transaction = new Metaverse.transaction();
+                //Get recipient address
+                if((issue_address==undefined||issue_address=='auto')&&transfer_info.outputs.length)
+                    issue_address=transfer_info.outputs[0].address
+                //Set recipient output
+                transaction.addAssetIssueOutput(symbol, parseInt(max_supply), parseInt(precision), issuer, issue_address, description);
+                //Add changes
+                let changes = Object.keys(transfer_info.change);
+                console.log(transfer_info)
+                if (changes.length) {
+                    changes.forEach((change_asset) => {
+                        if (transfer_info.change[change_asset] != 0)
+                            transaction.addOutput(change_address, change_asset, -transfer_info.change[change_asset])
+                    })
+                }
+                console.log(transaction)
+                return Promise.all([this.getWallet(passphrase), transaction, this.addTxInputs(transaction, transfer_info.outputs)]);
+            })
+            .then((results) => results[0].sign(results[1]))
+            .catch((error) => {
+                console.error(error)
                 throw error.message;
             })
     }
@@ -591,7 +631,7 @@ export class MvsServiceProvider {
             .then(() => this.assetOrder())
     }
 
-    broadcast(rawtx) {
+    broadcast(rawtx, max_fee=undefined) {
         return new Promise((resolve, reject) => {
             this._post(this.globals.host + '/broadcast', { "tx": rawtx }).then(resolve, _ => reject(_))
         })
