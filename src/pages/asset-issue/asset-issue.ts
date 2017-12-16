@@ -115,7 +115,7 @@ export class AssetIssuePage {
 
     validQuantity = (quantity) => quantity != undefined && this.showBalance >= parseFloat(quantity) * Math.pow(10, this.decimals)
 
-    validIssueAddress = (custom_issue_address) => (custom_issue_address.length == 34) && ((custom_issue_address.charAt(0) == 'M') || (custom_issue_address.charAt(0) == '3'))
+    validIssueAddress = this.mvs.validAddress
 
     customIssueAddressChanged = () => {if(this.custom_recipient) this.custom_recipient = this.custom_recipient.trim()}
 

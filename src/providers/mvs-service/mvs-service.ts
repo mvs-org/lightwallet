@@ -218,6 +218,24 @@ export class MvsServiceProvider {
             })
     }
 
+
+    validAddress = (address) => {
+        if(address.length!=34)
+            return false
+        let valid=false
+        switch(address.charAt(0)){
+         case this.globals.ADDRESS_PREFIX_MAINNET:
+             valid=this.globals.network=="mainnet"
+             break
+         case this.globals.ADDRESS_PREFIX_TESTNET:
+             valid = this.globals.network=="testnet"
+             break
+         case this.globals.ADDRESS_PREFIX_P2SH:
+             valid = true
+        }
+        return valid
+    }
+
     private addTxInputs(transaction, inputs) {
         return Promise.all(inputs.map((output: any) => {
             return this.findAddress(output.hash, output.index).then((address) => {

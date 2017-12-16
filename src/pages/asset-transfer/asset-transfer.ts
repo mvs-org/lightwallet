@@ -129,7 +129,7 @@ export class AssetTransferPage {
 
     format = (quantity, decimals) => quantity / Math.pow(10, decimals)
 
-    validrecipient = (recipient_address) => (recipient_address.length == 34) && ((recipient_address.charAt(0) == 'M') || (recipient_address.charAt(0) == '3'))
+    validrecipient = this.mvs.validAddress
 
     recipientChanged = () => {if(this.recipient_address) this.recipient_address=this.recipient_address.trim()}
 
