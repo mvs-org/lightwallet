@@ -13,7 +13,8 @@
     </ion-row>
     <div class="login-box">
         <div class="info-text">
-            <h1 style="text-align: center;">Beta Version</h1>
+            <h1 style="text-align: center;" *ngIf="globals.network=='mainnet'">Beta Version</h1>
+            <h1 style="text-align: center;" *ngIf="globals.network=='testnet'">Testnet</h1>
         </div>
         <ion-row *ngIf="!platform.is('mobile')" class="browser-button">
             <button ion-button full icon-left class="large-btn" id="open-wallet-button" color="secondary" (click)="login()">

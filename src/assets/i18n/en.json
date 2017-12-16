@@ -187,6 +187,23 @@
     "RESET_MESSAGE_MOBILE": "All data will be erased. To log in, you will need your backup words or scan the QR Code from your desktop Light wallet.",
     "IMPORT.SCAN_QRCODE_TEXT": "Import my account to my phone",
     "IMPORT.SCAN_QRCODE_BUTTON":"Scan QR Code",
+  
+    "ASSET_ISSUE": "Create Asset",
+    "NOTICE_ASSET_ISSUE_FEE": "Please be aware that the creation of a new asset cost 10 ETP.",
+
+    "ISSUE.NOTICE_TRANSACTION_FEE_UNCOVERED": "You need at least 10 ETP to create an asset",
+    "ISSUE.SYMBOL": "Symbol",
+    "ISSUE.ISSUER_NAME": "Issuer name",
+    "ISSUE.MAX_SUPPLY": "Maximum supply",
+    "ISSUE.DECIMALS": "Number of decimals",
+    "ISSUE.DESCRIPTION": "Description",
+    "ISSUE.ISSUE_ADDRESS": "Issue address (address receiving the new token)",
+    "ISSUE.FEE_ADDRESS": "Fee address (address paying 10 ETP)",
+    "ISSUE.CUSTOM_ISSUE_ADDRESS": "Custom issue address",
+
+    "ISSUE.CONFIRMATION_TITLE": "Issue an asset cost 10 ETP.",
+    "ISSUE.CONFIRMATION_SUBTITLE": "Are you sure you want to create an asset?",
+    "ISSUE.CREATE": "Create Asset",
 
     "EXPORT.HEADLINE": "Connect your phone",
     "EXPORT.INTRODUCTION": "To download the MyETPWallet on your phone, please visit MyETPWallet.com and clock on 'Download Wallet'.",
