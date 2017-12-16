@@ -8,8 +8,7 @@ import { GenerateKeyPage } from '../generate-key/generate-key';
 import { ImportMnemonicPage } from '../import-mnemonic/import-mnemonic';
 import { ThemeSwitcherPage } from '../theme-switcher/theme-switcher';
 import { Storage } from '@ionic/storage';
-
-
+import { AppGlobals } from '../../app/app.global';
 
 @Component({
     selector: 'page-login',
@@ -22,7 +21,7 @@ export class LoginPage {
     seed: string
 
 
-    constructor(private nav: NavController, public platform: Platform, private storage: Storage) {
+    constructor(private nav: NavController, public platform: Platform, private storage: Storage, public globals: AppGlobals) {
         this.nav = nav;
         this.storage.get('seed')
             .then((seed)=>{
