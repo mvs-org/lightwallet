@@ -256,7 +256,7 @@ export class MvsServiceProvider {
 
     fetchMvsHeight() {
         return new Promise((resolve, reject) => {
-            this._get(this.globals.host + '/height', {}).then(resolve, _ => reject(_))
+            this._get(this.globals.host[this.globals.network] + '/height', {}).then(resolve, _ => reject(_))
         })
     }
 
@@ -313,11 +313,11 @@ export class MvsServiceProvider {
     }
 
     getMvsInOuts(addresses) {
-        return this._get(this.globals.host + '/inouts', { addresses: addresses })
+        return this._get(this.globals.host[this.globals.network] + '/inouts', { addresses: addresses })
     }
 
     getNewMvsTxs(addresses, start) {
-        return this._get(this.globals.host + '/txs', { addresses: addresses, start: start })
+        return this._get(this.globals.host[this.globals.network] + '/txs', { addresses: addresses, start: start })
     }
 
     getAddressBalances() {
@@ -633,7 +633,7 @@ export class MvsServiceProvider {
 
     broadcast(rawtx, max_fee=undefined) {
         return new Promise((resolve, reject) => {
-            this._post(this.globals.host + '/broadcast', { "tx": rawtx }).then(resolve, _ => reject(_))
+            this._post(this.globals.host[this.globals.network] + '/broadcast', { "tx": rawtx, "max_fee": max_fee }).then(resolve, _ => reject(_))
         })
     }
 
