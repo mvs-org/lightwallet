@@ -11,10 +11,13 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class ImportWalletPage {
 
-    selectedFiles;
     loading: Loading;
+    data: Array<any>
+    fileLoaded: boolean
 
     constructor(public nav: NavController, public navParams: NavParams, public mvs: MvsServiceProvider, private alertCtrl: AlertController, private loadingCtrl: LoadingController, private translate: TranslateService) {
+        this.fileLoaded = false;
+
     }
 
     open(e) {
@@ -22,10 +25,10 @@ export class ImportWalletPage {
         let reader = new FileReader();
         reader.onload = (e: any) => {
             let content = e.target.result;
-            let data = {};
+
             try {
-                data = JSON.parse(content)
-                this.mvs.setWallet(data).then(()=>this.showPrompt(data))
+                this.data = JSON.parse(content)
+                this.mvs.setWallet(this.data).then(()=> this.fileLoaded = true)
 
             } catch (e) {
                 console.error(e);
@@ -50,51 +53,6 @@ export class ImportWalletPage {
                     console.error(e);
                     this.showError(message);
                 });
-        });
-    }
-
-
-    // Uploads file but is init in constructor
-    // Empty options to avoid having a target URL
-    // uploader: FileUploader = new FileUploader({});
-    // reader: FileReader = new FileReader();
-    showPrompt(result) {
-        this.translate.get('PASSWORD').subscribe((txt_password: string) => {
-            this.translate.get('CANCEL').subscribe((txt_cancel: string) => {
-                this.translate.get('ENTER_PASSWORD_HEADLINE').subscribe((txt_headline: string) => {
-                    this.translate.get('ENTER').subscribe((txt_enter: string) => {
-
-                        const alert = this.alertCtrl.create({
-                            title: txt_headline,
-                            inputs: [
-                                {
-                                    name: 'password',
-                                    placeholder: '',
-                                    type: 'password'
-                                }
-                            ],
-                            buttons: [
-                                {
-                                    text: txt_cancel,
-                                    role: 'cancel',
-                                    handler: data => {
-                                        this.nav.pop();
-                                    }
-                                },
-                                {
-                                    text: txt_enter,
-                                    handler: data => {
-                                        // need error handling
-                                        this.decrypt(data.password)
-                                    }
-                                }
-                            ]
-                        });
-                        alert.present()
-
-                    });
-                });
-            });
         });
     }
 

@@ -66,7 +66,14 @@ page-import-wallet {
         margin-top: 10px;
     }
 
-    ion-content{
-        margin-top: 70px;
+    .blank {
+        margin-bottom:140px;
     }
+
+    .verifiedFile {
+        color: #32db64;
+        font-size: 100px;
+        margin-left: calc(50% - 50px);
+    }
+
 }

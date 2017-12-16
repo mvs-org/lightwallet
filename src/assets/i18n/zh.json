@@ -166,5 +166,7 @@
     "CUSTOM": "手动输入",
     "CUSTOM_RECIPIENT_ADDRESS": "手动输入发送地址",
     "BLOCKS": "区块",
-    "INTEREST_RATE": "利率"
+    "INTEREST_RATE": "利率",
+
+    "REPORT_BUG": "报告漏洞"
 }

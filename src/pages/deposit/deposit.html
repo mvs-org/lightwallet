@@ -84,7 +84,7 @@
         </div>
       </ion-list>
     </div>
-    <ion-row>
+    <ion-row class="padding-bottom">
       <ion-col>
         <button ion-button full icon-left [disabled]="!sendForm.form.valid||!validQuantity(quantity)||(recipient_address == 'custom' && !validrecipient(custom_recipient))" (click)="send()" color="secondary">
           <ion-icon disabled="checked" name="send"></ion-icon>
