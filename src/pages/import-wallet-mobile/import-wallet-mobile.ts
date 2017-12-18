@@ -5,23 +5,23 @@ import { AccountPage } from '../account/account';
 import { AppGlobals } from '../../app/app.global';
 import { TranslateService } from '@ngx-translate/core';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
 
 @Component({
     selector: 'page-import-wallet-mobile',
     templateUrl: 'import-wallet-mobile.html',
-
 })
 export class ImportWalletMobilePage {
 
     selectedFiles;
 
-    constructor(public nav: NavController, private globals: AppGlobals, public navParams: NavParams, public mvs: MvsServiceProvider, private alertCtrl: AlertController, private translate: TranslateService, private barcodeScanner: BarcodeScanner) {
+    constructor(public nav: NavController, private globals: AppGlobals, public navParams: NavParams, private mvs: MvsServiceProvider, private wallet: WalletServiceProvider, private alertCtrl: AlertController, private translate: TranslateService, private barcodeScanner: BarcodeScanner) {
     }
 
     scan() {
         let wallet = {};
         wallet = { "index": 10 }
-        this.mvs.setWallet(wallet)
+        this.wallet.setWallet(wallet)
         this.barcodeScanner.scan({ formats: 'QR_CODE' }).then((result) => {
             if (!result.cancelled) {
                 let content = result.text.toString().split('&')
@@ -30,15 +30,15 @@ export class ImportWalletMobilePage {
                 else if (content[1] != this.globals.network.charAt(0))
                     this.showError('MESSAGE.NETWORK_MISMATCH')
                 else
-                    this.mvs.setMobileWallet(content[0]).then(() => this.showPrompt(content[0]))
+                    this.wallet.setMobileWallet(content[0]).then(() => this.showPrompt(content[0]))
 
             }
         })
     }
 
     decrypt(password, seed) {
-        this.mvs.setMobileWallet(seed)
-            .then(() => Promise.all([this.mvs.getWallet(password), this.mvs.getAddressIndex()]))
+        this.wallet.setMobileWallet(seed)
+            .then(() => Promise.all([this.wallet.getWallet(password), this.mvs.getAddressIndex()]))
             .then((results) => this.mvs.generateAddresses(results[0], 0, results[1]))
             .then((addresses) => this.mvs.addMvsAddresses(addresses))
             .then(() => this.nav.setRoot(AccountPage))

@@ -3,8 +3,8 @@ import { Http, Headers, RequestOptions } from '@angular/http';
 import { AppGlobals } from '../../app/app.global';
 import 'rxjs/add/operator/map';
 import { Storage } from '@ionic/storage';
+import { WalletServiceProvider } from '../wallet-service/wallet-service';
 import * as Metaverse from 'metaversejs/dist/metaverse.js';
-import * as CryptoJS from 'crypto-js';
 
 
 @Injectable()
@@ -23,6 +23,7 @@ export class MvsServiceProvider {
     constructor(
         public http: Http,
         public globals: AppGlobals,
+        private wallet: WalletServiceProvider,
         private storage: Storage
     ) {
         this.headers = new Headers();
@@ -47,66 +48,9 @@ export class MvsServiceProvider {
             })
     }
 
-    getHDNodeFromMnemonic(mnemonic) {
-        return Metaverse.wallet.fromMnemonic(mnemonic)
-    }
-
-    getHDNodeFromSeed(seed) {
-        Metaverse.wallet.fromSeed(seed)
-        return Metaverse.wallet.fromSeed(seed, Metaverse.networks[this.globals.network])
-    }
-
-    setWallet(wallet) {
-        return this.storage.set('wallet', wallet)
-    }
-
-    setMobileWallet(seed) {
-        return this.storage.set('seed', seed)
-    }
-
-    setSeed(passphrase){
-    return this.getMnemonic(passphrase)
-      .then((mnemonic)=>Metaverse.wallet.mnemonicToSeed(mnemonic, Metaverse.networks[this.globals.network]))
-      .then((seed)=>this.encrypt(seed.toString('hex'),passphrase))
-      .then((encseed)=>this.storage.set('seed',encseed))
-    }
-
-    setSeedMobile(passphrase, mnemonic){
-    return Metaverse.wallet.mnemonicToSeed(mnemonic, Metaverse.networks[this.globals.network])
-        .then((seed)=>this.encrypt(seed.toString('hex'),passphrase))
-        .then((encseed)=> this.storage.set('seed',encseed))
-    }
-
-    getMnemonic(passphrase) {
-    console.info('loading menmonic')
-        return this.storage.get('wallet')
-            .then((wallet) => this.decrypt(wallet.mnemonic, passphrase))
-            .catch(() => {
-                throw Error('ERR_DECRYPT_WALLET')
-            })
-    }
-
-    getSeed(passphrase) {
-    console.info('loading seed')
-        return this.storage.get('seed')
-            .then((seed) => this.decrypt(seed, passphrase))
-            .catch((error) => {
-                console.error(error)
-                throw Error('ERR_DECRYPT_WALLET_FROM_SEED')
-            })
-    }
-
     getAddressIndex() {
         return this.storage.get('wallet')
             .then((wallet) => wallet.index)
-    }
-
-    decrypt(ec, pincode) {
-        return new Promise(resolve => resolve(JSON.parse(CryptoJS.AES.decrypt(ec, pincode).toString(CryptoJS.enc.Utf8))))
-    }
-
-    encrypt(ec, pincode) {
-        return new Promise(resolve => resolve(CryptoJS.AES.encrypt(JSON.stringify(ec), pincode).toString()))
     }
 
     createTx(passphrase, asset, recipient_address, quantity, from_address, change_address) {
@@ -132,7 +76,7 @@ export class MvsServiceProvider {
                             transaction.addOutput(change_address, change_asset, -transfer_info.change[change_asset])
                     })
                 }
-                return Promise.all([this.getWallet(passphrase), transaction, this.addTxInputs(transaction, transfer_info.outputs)]);
+                return Promise.all([this.wallet.getWallet(passphrase), transaction, this.addTxInputs(transaction, transfer_info.outputs)]);
             })
             .then((results) => results[0].sign(results[1]))
             .catch((error) => {
@@ -167,7 +111,7 @@ export class MvsServiceProvider {
                             transaction.addOutput(change_address, change_asset, -transfer_info.change[change_asset])
                     })
                 }
-                return Promise.all([this.getWallet(passphrase), transaction, this.addTxInputs(transaction, transfer_info.outputs)]);
+                return Promise.all([this.wallet.getWallet(passphrase), transaction, this.addTxInputs(transaction, transfer_info.outputs)]);
             })
             .then((results) => results[0].sign(results[1]))
             .catch((error) => {
@@ -205,7 +149,7 @@ export class MvsServiceProvider {
                     })
                 }
                 console.log(transaction)
-                return Promise.all([this.getWallet(passphrase), transaction, this.addTxInputs(transaction, transfer_info.outputs)]);
+                return Promise.all([this.wallet.getWallet(passphrase), transaction, this.addTxInputs(transaction, transfer_info.outputs)]);
             })
             .then((results) => results[0].sign(results[1]))
             .catch((error) => {
@@ -256,16 +200,6 @@ export class MvsServiceProvider {
         })
     }
 
-
-    getWallet(passphrase) {
-        return this.getSeed(passphrase)
-            .then((seed:string) => this.getHDNodeFromSeed(Buffer.from(seed,'hex')))
-            .catch((error)=>{
-                console.error(error)
-                return this.getMnemonic(passphrase)
-                    .then((mnemonic) => this.getHDNodeFromMnemonic(mnemonic))
-                })
-    }
 
 
     fetchMvsHeight() {

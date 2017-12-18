@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController, LoadingController, Loading } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
+import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
 import { AccountPage } from '../account/account';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'page-import-wallet',
     templateUrl: 'import-wallet.html',
-
 })
 export class ImportWalletPage {
 
@@ -15,7 +15,7 @@ export class ImportWalletPage {
     data: Array<any>
     fileLoaded: boolean
 
-    constructor(public nav: NavController, public navParams: NavParams, public mvs: MvsServiceProvider, private alertCtrl: AlertController, private loadingCtrl: LoadingController, private translate: TranslateService) {
+    constructor(public nav: NavController, public navParams: NavParams, public mvs: MvsServiceProvider, private wallet: WalletServiceProvider, private alertCtrl: AlertController, private loadingCtrl: LoadingController, private translate: TranslateService) {
         this.fileLoaded = false;
 
     }
@@ -28,7 +28,7 @@ export class ImportWalletPage {
 
             try {
                 this.data = JSON.parse(content)
-                this.mvs.setWallet(this.data).then(()=> this.fileLoaded = true)
+                this.wallet.setWallet(this.data).then(()=> this.fileLoaded = true)
 
             } catch (e) {
                 console.error(e);
@@ -42,8 +42,8 @@ export class ImportWalletPage {
 
 
     decrypt(password) {
-            this.mvs.setSeed(password)
-                .then(()=>Promise.all([this.mvs.getWallet(password), this.mvs.getAddressIndex()]))
+            this.wallet.setSeed(password)
+                .then(()=>Promise.all([this.wallet.getWallet(password), this.mvs.getAddressIndex()]))
                 .then((results) => this.mvs.generateAddresses(results[0], 0, results[1]))
                 .then((addresses) => this.mvs.addMvsAddresses(addresses))
                 .then(() => this.nav.setRoot(AccountPage))

@@ -7,6 +7,7 @@ import { AppGlobals } from '../../app/app.global';
 import { TranslateService } from '@ngx-translate/core';
 import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
+import { CryptoServiceProvider } from '../../providers/crypto-service/crypto-service';
 
 @Component({
     selector: 'page-passphrase',
@@ -20,6 +21,7 @@ export class PassphrasePage {
         public navParams: NavParams,
         public globals: AppGlobals,
         public translate: TranslateService,
+        private crypto: CryptoServiceProvider,
         public platform: Platform,
         public mvs: MvsServiceProvider,
         public wallet: WalletServiceProvider) {
@@ -32,7 +34,7 @@ export class PassphrasePage {
      */
     encrypt(password) {
         this.nav.push(LoginPage, {});
-        this.wallet.encrypt(this.mnemonic, password)
+        this.crypto.encrypt(this.mnemonic, password)
             .then((res) => this.dataToKeystoreJson(res))
             .then((encrypted) => this.downloadFile('mvs_keystore.json', JSON.stringify(encrypted)))
             .catch((error) => {
@@ -43,12 +45,12 @@ export class PassphrasePage {
     encryptMobile(password) {
         this.nav.push(AccountPage, {});
         let wallet = {};
-        wallet = {"index": 10}
+        wallet = { "index": 10 }
         console.log('wallet set 10')
-        this.mvs.setWallet(wallet)
-            .then((wallet) => this.mvs.setSeedMobile(password, this.mnemonic))
-            .then((seed) => this.mvs.setMobileWallet(seed))
-            .then(() => Promise.all([this.mvs.getWallet(password), this.mvs.getAddressIndex()]))
+        this.wallet.setWallet(wallet)
+            .then((wallet) => this.wallet.setSeedMobile(password, this.mnemonic))
+            .then((seed) => this.wallet.setMobileWallet(seed))
+            .then(() => Promise.all([this.wallet.getWallet(password), this.mvs.getAddressIndex()]))
             .then((results) => this.mvs.generateAddresses(results[0], 0, results[1]))
             .then((addresses) => this.mvs.addMvsAddresses(addresses))
             .then(() => this.nav.setRoot(AccountPage))

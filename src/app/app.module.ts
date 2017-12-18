@@ -35,6 +35,7 @@ import { ClipboardModule } from 'ngx-clipboard/dist';
 import { QRCodeModule } from 'angular2-qrcode';
 import { MvsServiceProvider } from '../providers/mvs-service/mvs-service';
 import { WalletServiceProvider } from '../providers/wallet-service/wallet-service';
+import { CryptoServiceProvider } from '../providers/crypto-service/crypto-service';
 
 export function HttpLoaderFactory(http: Http) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -105,6 +106,7 @@ export function HttpLoaderFactory(http: Http) {
         { provide: ErrorHandler, useClass: IonicErrorHandler },
         MvsServiceProvider,
         WalletServiceProvider,
+        CryptoServiceProvider,
         BarcodeScanner,
     ]
 })
