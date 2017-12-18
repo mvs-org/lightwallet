@@ -213,6 +213,8 @@
     "REPORT_BUG": "Report bug",
 
     "MESSAGE.NETWORK_MISMATCH": "Network does not match",
-    "MESSAGE.PASSWORD_WRONG": "Unable to decrypt wallet using given passphrase"
+    "MESSAGE.PASSWORD_WRONG": "Unable to decrypt wallet using given passphrase",
+    "MESSAGE.CREATE_TRANSACTION" : "Unable to create transaction.",
+    "MESSAGE.BROADCAST_ERROR": "Unable to broadcast transaction."
 
 }

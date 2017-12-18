@@ -137,7 +137,7 @@ export class MvsServiceProvider {
             .then((results) => results[0].sign(results[1]))
             .catch((error) => {
                 console.error(error)
-                throw error.message;
+                throw Error(error.message);
             })
     }
 
@@ -172,7 +172,7 @@ export class MvsServiceProvider {
             .then((results) => results[0].sign(results[1]))
             .catch((error) => {
                 console.error(error)
-                throw error.message;
+                throw Error(error.message);
             })
     }
 
@@ -210,7 +210,7 @@ export class MvsServiceProvider {
             .then((results) => results[0].sign(results[1]))
             .catch((error) => {
                 console.error(error)
-                throw error.message;
+                throw Error(error.message);
             })
     }
 
@@ -646,15 +646,28 @@ export class MvsServiceProvider {
     }
 
     broadcast(rawtx, max_fee=undefined) {
-        return new Promise((resolve, reject) => {
-            this._post(this.globals.host[this.globals.network] + '/broadcast', { "tx": rawtx, "max_fee": max_fee }).then(resolve, _ => reject(_))
-        })
+        this._post(this.globals.host[this.globals.network] + '/broadcast', { "tx": rawtx, "max_fee": max_fee })
+            .catch((error)=>{
+                if(error.message=='ERR_CONNECTION')
+                    throw Error(error.message)
+                else
+                    throw Error('ERR_BROADCAST')
+            })
     }
 
     private _post(url, data) {
         return new Promise((resolve, reject) => {
             this.http.post(url, data, this.options)
-                .subscribe(_ => resolve(_.json().result), _ => reject(_))
+                .subscribe(_ => resolve(_.json().result), _ => {
+                    try{
+                        let message = _.json().code
+                        console.error(message)
+                        reject(Error(message))
+                    } catch(error){
+                        console.log(error)
+                        reject(Error('ERR_CONNECTION'))
+                    }
+                })
         });
     }
 

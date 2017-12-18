@@ -131,13 +131,6 @@ export class AssetIssuePage {
                 this.rawtx = tx.encode().toString('hex')
                 this.loading.dismiss()
             })
-            .catch((error) => {
-                console.error(error)
-                this.loading.dismiss()
-                this.translate.get('ERROR_SEND_TEXT').subscribe((message: string) => {
-                    this.showAlert(message)
-                })
-            })
     }
 
     create() {
@@ -154,6 +147,15 @@ export class AssetIssuePage {
                 (this.sendFrom != 'auto') ? this.sendFrom : null,
                 undefined
             ))
+            .catch((error) => {
+                console.error(error.message)
+                this.loading.dismiss()
+                if (error.message == "ERR_DECRYPT_WALLET")
+                    this.showError('MESSAGE.PASSWORD_WRONG')
+                else
+                    this.showError('MESSAGE.CREATE_TRANSACTION')
+                throw Error('ERR_CREATE_TX')
+            })
     }
 
     confirm() {
@@ -197,11 +199,12 @@ export class AssetIssuePage {
                     this.showSent(message, result.hash)
                 })
             })
-            .catch(() => {
+            .catch((error) => {
                 this.loading.dismiss()
-                this.translate.get('ERROR_SEND_TEXT').subscribe((message: string) => {
-                    this.showAlert(message)
-                })
+                if(error.message=='ERR_CONNECTION')
+                    this.showError('ERROR_SEND_TEXT')
+                else if(error.message=='ERR_BROADCAST')
+                    this.showError('MESSAGE.BROADCAST_ERROR')
             })
     }
 
@@ -254,6 +257,19 @@ export class AssetIssuePage {
             textUpperCase = textUpperCase + text.charAt(i).toUpperCase()
         }
         return textUpperCase
+    }
+
+    showError(message_key) {
+        this.translate.get(['MESSAGE.ERROR_TITLE', message_key, 'OK']).subscribe((translations: any) => {
+            let alert = this.alertCtrl.create({
+                title: translations['MESSAGE.ERROR_TITLE'],
+                message: translations[message_key],
+                buttons: [{
+                    text: translations['OK']
+                }]
+            });
+            alert.present(alert);
+        })
     }
 
 }
