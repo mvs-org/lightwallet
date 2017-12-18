@@ -42,7 +42,6 @@ export class ImportWalletPage {
 
 
     decrypt(password) {
-        this.translate.get('WRONG_PASSWORD').subscribe((message: string) => {
             this.mvs.setSeed(password)
                 .then(()=>Promise.all([this.mvs.getWallet(password), this.mvs.getAddressIndex()]))
                 .then((results) => this.mvs.generateAddresses(results[0], 0, results[1]))
@@ -51,9 +50,8 @@ export class ImportWalletPage {
                 .then(() => this.nav.setRoot(AccountPage))
                 .catch((e) => {
                     console.error(e);
-                    this.showError(message);
+                    this.showError('MESSAGE.PASSWORD_WRONG');
                 });
-        });
     }
 
     showLoading() {
@@ -66,18 +64,19 @@ export class ImportWalletPage {
         })
     }
 
-    showError(text) {
+    showError(message_key, pop=false) {
         if (this.loading) {
             this.loading.dismiss();
         }
-        this.translate.get('MESSAGE.ERROR_TITLE').subscribe((title: string) => {
+        this.translate.get(['MESSAGE.ERROR_TITLE',message_key]).subscribe((translations: any) => {
             let alert = this.alertCtrl.create({
-                title: title,
-                subTitle: text,
+                title: translations['MESSAGE.ERROR_TITLE'],
+                message: translations[message_key],
                 buttons: [{
                     text: 'OK',
                     handler: (() => {
-                        this.nav.pop();
+                        if(pop)
+                            this.nav.pop();
                     })
                 }]
             });

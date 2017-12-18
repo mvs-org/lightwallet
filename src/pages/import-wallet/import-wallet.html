@@ -27,7 +27,8 @@
             <input type="file" name="file" id="file" class="inputfile" accept=".json" (change)="open($event)" />
             <label for="file"> <ion-icon name="download"></ion-icon> {{"CHOOSE_A_FILE"|translate}}</label>
         </ion-row>
-        <ion-row *ngIf="fileLoaded">
+        <div *ngIf="fileLoaded">
+        <ion-row>
             <ion-icon name="md-checkmark-circle" class="verifiedFile"></ion-icon>
         </ion-row>
         <ion-row class="top-padding">
@@ -41,6 +42,7 @@
               {{"IMPORT" | translate}}
           </button>
         </ion-row>
+        </div>
 
 
     </form>
