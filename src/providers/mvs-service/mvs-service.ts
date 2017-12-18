@@ -646,7 +646,7 @@ export class MvsServiceProvider {
     }
 
     broadcast(rawtx, max_fee=undefined) {
-        this._post(this.globals.host[this.globals.network] + '/broadcast', { "tx": rawtx, "max_fee": max_fee })
+        return this._post(this.globals.host[this.globals.network] + '/broadcast', { "tx": rawtx, "max_fee": max_fee })
             .catch((error)=>{
                 if(error.message=='ERR_CONNECTION')
                     throw Error(error.message)

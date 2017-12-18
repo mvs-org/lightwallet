@@ -131,6 +131,9 @@ export class AssetIssuePage {
                 this.rawtx = tx.encode().toString('hex')
                 this.loading.dismiss()
             })
+            .catch((error)=>{
+                this.loading.dismiss()
+            })
     }
 
     create() {
@@ -148,8 +151,6 @@ export class AssetIssuePage {
                 undefined
             ))
             .catch((error) => {
-                console.error(error.message)
-                this.loading.dismiss()
                 if (error.message == "ERR_DECRYPT_WALLET")
                     this.showError('MESSAGE.PASSWORD_WRONG')
                 else

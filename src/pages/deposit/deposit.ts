@@ -115,6 +115,9 @@ export class DepositPage {
                 this.rawtx = tx.encode().toString('hex')
                 this.loading.dismiss()
             })
+            .catch((error)=>{
+                this.loading.dismiss()
+            })
     }
 
     create() {
@@ -122,8 +125,6 @@ export class DepositPage {
             .then(() => this.mvs.getMvsAddresses())
             .then((addresses) => this.mvs.createDepositTx(this.passphrase, (this.recipient_address == 'auto') ? null : (this.recipient_address == 'custom') ? this.custom_recipient : this.recipient_address, Math.floor(parseFloat(this.quantity) * Math.pow(10, this.decimals)), this.locktime, (this.sendFrom != 'auto') ? this.sendFrom : null, (this.changeAddress != 'auto') ? this.changeAddress : undefined))
             .catch((error) => {
-                console.error(error.message)
-                this.loading.dismiss()
                 if (error.message == "ERR_DECRYPT_WALLET")
                     this.showError('MESSAGE.PASSWORD_WRONG')
                 else

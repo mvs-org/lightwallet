@@ -95,6 +95,9 @@ export class AssetTransferPage {
                 this.rawtx = tx.encode().toString('hex')
                 this.loading.dismiss()
             })
+            .catch((error)=>{
+                this.loading.dismiss()
+            })
     }
 
     create() {
@@ -110,12 +113,10 @@ export class AssetTransferPage {
             ))
             .catch((error) => {
                 console.error(error.message)
-                this.loading.dismiss()
                 if (error.message == "ERR_DECRYPT_WALLET")
                     this.showError('MESSAGE.PASSWORD_WRONG')
                 else
                     this.showError('MESSAGE.CREATE_TRANSACTION')
-                throw Error('ERR_CREATE_TX')
             })
     }
 
