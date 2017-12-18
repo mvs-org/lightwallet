@@ -102,7 +102,7 @@ export class MvsServiceProvider {
                 if((recipient_address==undefined||recipient_address=='auto')&&transfer_info.outputs.length)
                     recipient_address=transfer_info.outputs[0].address
                 //Set recipient output
-                transaction.addLockOutput(recipient_address, quantity, parseInt(locktime));
+                transaction.addLockOutput(recipient_address, quantity, parseInt(locktime), Metaverse.networks[this.globals.network]);
                 //Add changes
                 let changes = Object.keys(transfer_info.change);
                 if (changes.length) {

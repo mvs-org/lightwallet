@@ -2,8 +2,6 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
 
-
-
 @Component({
     selector: 'page-export-wallet',
     templateUrl: 'export-wallet.html',

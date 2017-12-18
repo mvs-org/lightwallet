@@ -17,7 +17,7 @@ export class WalletServiceProvider {
         .then((seed)=>this.crypto.encrypt(seed.toString('hex'),passphrase))
     }
 
-    public exportMemonic(){
+    exportMemonic(){
         return this.storage.get('wallet')
     }
 

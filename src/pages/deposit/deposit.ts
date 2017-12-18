@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, AlertController, LoadingController, Loading, NavParams, Platform } from 'ionic-angular';
+import { AppGlobals } from '../../app/app.global';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -34,6 +35,7 @@ export class DepositPage {
     constructor(
         public navCtrl: NavController,
         private alertCtrl: AlertController,
+        private globals: AppGlobals,
         private loadingCtrl: LoadingController,
         public navParams: NavParams,
         private mvs: MvsServiceProvider,
@@ -46,7 +48,23 @@ export class DepositPage {
         this.feeAddress = 'auto'
         this.locktime = 0
         this.custom_recipient = ''
-        this.deposit_options=[{option:7, locktime: 25200, rate: 0.0009589},{option:30, locktime: 108000, rate: 0.0066667},{option:90, locktime: 331200, rate: 0.032},{option:182, locktime: 655200, rate: 0.08},{option:365, locktime: 1314000, rate: 0.2}]
+
+        if (this.globals.network == 'mainnet')
+            this.deposit_options = [
+                { option: 7, locktime: 25200, rate: 0.0009589 },
+                { option: 30, locktime: 108000, rate: 0.0066667 },
+                { option: 90, locktime: 331200, rate: 0.032 },
+                { option: 182, locktime: 655200, rate: 0.08 },
+                { option: 365, locktime: 1314000, rate: 0.2 }
+            ]
+        else
+            this.deposit_options = [
+                { option: 7, locktime: 10, rate: 0.0009589 },
+                { option: 30, locktime: 20, rate: 0.0066667 },
+                { option: 90, locktime: 30, rate: 0.032 },
+                { option: 182, locktime: 40, rate: 0.08 },
+                { option: 365, locktime: 50, rate: 0.2 }
+            ]
 
         //Load addresses
         mvs.getMvsAddresses()
@@ -101,7 +119,7 @@ export class DepositPage {
 
     validrecipient = this.mvs.validAddress
 
-    customRecipientChanged = () => {if(this.custom_recipient) this.custom_recipient = this.custom_recipient.trim()}
+    customRecipientChanged = () => { if (this.custom_recipient) this.custom_recipient = this.custom_recipient.trim() }
 
     cancel(e) {
         e.preventDefault()
@@ -111,11 +129,11 @@ export class DepositPage {
     preview() {
         this.create()
             .then((tx) => {
-            console.log('transaction details: '+tx)
+                console.log('transaction details: ' + tx)
                 this.rawtx = tx.encode().toString('hex')
                 this.loading.dismiss()
             })
-            .catch((error)=>{
+            .catch((error) => {
                 this.loading.dismiss()
             })
     }
@@ -144,16 +162,16 @@ export class DepositPage {
             })
             .catch((error) => {
                 this.loading.dismiss()
-                if(error.message=='ERR_CONNECTION')
+                if (error.message == 'ERR_CONNECTION')
                     this.showError('ERROR_SEND_TEXT')
-                else if(error.message=='ERR_BROADCAST')
+                else if (error.message == 'ERR_BROADCAST')
                     this.showError('MESSAGE.BROADCAST_ERROR')
             })
     }
 
     format = (quantity, decimals) => quantity / Math.pow(10, decimals)
 
-    round = (val:number) => Math.round(val*100000000)/100000000
+    round = (val: number) => Math.round(val * 100000000) / 100000000
 
     showLoading() {
         return new Promise((resolve, reject) => {
