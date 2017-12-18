@@ -41,7 +41,7 @@ To build it for android use the following command.
 $ ionic cordova build --release android
 ```
 
-## Contiguration
+## Configuration
 
 By default the configuration should be set to use the testnet. This is the best way for development and testing and you should only switch to mainnet if you really have to. In order to change the setting you can find it in src/app/app.global.ts. If you need testnet tokens you can download the fullnode wallet, start it in testnet mode and mine coins yourself or contact us on our common channels.
 
