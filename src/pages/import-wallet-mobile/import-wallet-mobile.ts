@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController, LoadingController, Loading } from 'ionic-angular';
+import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { AccountPage } from '../account/account';
+import { AppGlobals } from '../../app/app.global';
 import { TranslateService } from '@ngx-translate/core';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
@@ -13,41 +14,40 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 export class ImportWalletMobilePage {
 
     selectedFiles;
-    loading: Loading;
 
-    constructor(public nav: NavController, public navParams: NavParams, public mvs: MvsServiceProvider, private alertCtrl: AlertController, private loadingCtrl: LoadingController, private translate: TranslateService, private barcodeScanner: BarcodeScanner) {
+    constructor(public nav: NavController, private globals: AppGlobals, public navParams: NavParams, public mvs: MvsServiceProvider, private alertCtrl: AlertController, private translate: TranslateService, private barcodeScanner: BarcodeScanner) {
     }
 
     scan() {
         let wallet = {};
-        wallet = {"index": 10}
+        wallet = { "index": 10 }
         this.mvs.setWallet(wallet)
-        this.barcodeScanner.scan({formats: 'QR_CODE'}).then((result) => {
-            if(!result.cancelled) {
-                var seed = result.text
-                this.mvs.setMobileWallet(seed).then(()=>this.showPrompt(seed))
+        this.barcodeScanner.scan({ formats: 'QR_CODE' }).then((result) => {
+            if (!result.cancelled) {
+                let content = result.text.toString().split('&')
+                if (content.length != 2)
+                    this.showError('IMPORT_FILE')
+                else if (content[1] != this.globals.network.charAt(0))
+                    this.showError('MESSAGE.NETWORK_MISMATCH')
+                else
+                    this.mvs.setMobileWallet(content[0]).then(() => this.showPrompt(content[0]))
+
             }
         })
     }
 
     decrypt(password, seed) {
-        this.translate.get('WRONG_PASSWORD').subscribe((message: string) => {
-            this.mvs.setMobileWallet(seed)
-                .then(()=>Promise.all([this.mvs.getWallet(password), this.mvs.getAddressIndex()]))
-                .then((results) => this.mvs.generateAddresses(results[0], 0, results[1]))
-                .then((addresses) => this.mvs.addMvsAddresses(addresses))
-                .then(() => this.nav.setRoot(AccountPage))
-                .catch((e) => {
-                    console.error(e);
-                    this.showError(message);
-                });
-        });
+        this.mvs.setMobileWallet(seed)
+            .then(() => Promise.all([this.mvs.getWallet(password), this.mvs.getAddressIndex()]))
+            .then((results) => this.mvs.generateAddresses(results[0], 0, results[1]))
+            .then((addresses) => this.mvs.addMvsAddresses(addresses))
+            .then(() => this.nav.setRoot(AccountPage))
+            .catch((e) => {
+                console.error(e);
+                this.showError('MESSAGE.PASSWORD_WRONG');
+            });
     }
 
-    // Uploads file but is init in constructor
-    // Empty options to avoid having a target URL
-    // uploader: FileUploader = new FileUploader({});
-    // reader: FileReader = new FileReader();
     showPrompt(seed) {
         this.translate.get('PASSWORD').subscribe((txt_password: string) => {
             this.translate.get('CANCEL').subscribe((txt_cancel: string) => {
@@ -88,28 +88,16 @@ export class ImportWalletMobilePage {
         });
     }
 
-    showLoading() {
-        this.translate.get('MESSAGE.LOADING').subscribe((loading: string) => {
-            this.loading = this.loadingCtrl.create({
-                content: loading,
-                dismissOnPageChange: true
-            });
-            this.loading.present();
-        })
-    }
-
-    showError(text) {
-        if (this.loading) {
-            this.loading.dismiss();
-        }
-        this.translate.get('MESSAGE.ERROR_TITLE').subscribe((title: string) => {
+    showError(message_key, pop = false) {
+        this.translate.get(['MESSAGE.ERROR_TITLE', message_key]).subscribe((translations: any) => {
             let alert = this.alertCtrl.create({
-                title: title,
-                subTitle: text,
+                title: translations['MESSAGE.ERROR_TITLE'],
+                subTitle: translations[message_key],
                 buttons: [{
                     text: 'OK',
                     handler: (() => {
-                        this.nav.pop();
+                        if (pop)
+                            this.nav.pop();
                     })
                 }]
             });

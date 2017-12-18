@@ -96,10 +96,6 @@ export class MvsServiceProvider {
             })
     }
 
-    getEncSeed() {
-        return this.storage.get('seed')
-    }
-
     getAddressIndex() {
         return this.storage.get('wallet')
             .then((wallet) => wallet.index)

@@ -19,7 +19,7 @@
         <ion-checkbox [(ngModel)]="disclaimer_agreed"></ion-checkbox>
     </ion-item>
     <br>
-    <form *ngIf="disclaimer_agreed" (ngSubmit)="import()" #importForm="ngForm" no-lines>
+    <form *ngIf="disclaimer_agreed" #importForm="ngForm" no-lines>
         <ion-item class="center-text" no-lines>
             <h2>{{"IMPORT.SCAN_QRCODE_TEXT"|translate}}</h2>
         </ion-item>

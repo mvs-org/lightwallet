@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, AlertController, Platform } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
-import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
 import { ExportWalletPage } from '../export-wallet/export-wallet';
 import { TranslateService } from '@ngx-translate/core';
 import { LoginPage } from '../login/login';
@@ -15,24 +14,13 @@ export class SettingsPage {
 
     connectcode: any;
 
-    constructor(public nav: NavController,  private mvs: MvsServiceProvider, private walletService: WalletServiceProvider, public translate: TranslateService, private alertCtrl: AlertController, public platform: Platform) {
-
-      this.gencode();
-      this.connectcode = "";
+    constructor(public nav: NavController,  private mvs: MvsServiceProvider, public translate: TranslateService, private alertCtrl: AlertController, public platform: Platform) {
 
     }
 
     reset = () => this.mvs.dataReset();
 
     ExportWalletPage = e => this.nav.push(ExportWalletPage)
-
-    gencode = () =>{
-        this.walletService.getEncSeed()
-        .then((content)=>{
-        this.connectcode=content;
-        });
-    }
-
 
     /**
      * Logout dialog

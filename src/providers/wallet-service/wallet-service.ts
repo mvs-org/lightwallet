@@ -5,21 +5,11 @@ import 'rxjs/add/operator/map';
 import { Storage } from '@ionic/storage';
 import * as Metaverse from 'metaversejs/dist/metaverse.js';
 import * as CryptoJS from 'crypto-js';
-/*
-  Generated class for the WalletServiceProvider provider.
 
-  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
-  for more info on providers and Angular DI.
-*/
 @Injectable()
 export class WalletServiceProvider {
 
-    public globals: AppGlobals
-
-    constructor(public http: Http, private storage: Storage) {
-        console.log('Hello WalletServiceProvider Provider');
-    }
-
+    constructor(public http: Http, private storage: Storage, private globals: AppGlobals) {}
 
     public decrypt(ec,pincode){
         return new Promise(resolve=>resolve(JSON.parse(CryptoJS.AES.decrypt(ec, pincode).toString(CryptoJS.enc.Utf8))))
@@ -57,13 +47,15 @@ export class WalletServiceProvider {
             })
     }
 
-    getEncSeed() {
+    exportWallet() {
         return this.storage.get('seed')
+            .then((seed)=>{
+                return seed+"&"+this.globals.network.charAt(0);
+            })
             .catch((error) => {
                 console.error(error)
                 throw Error('ERR_DECRYPT_WALLET')
             })
     }
-
 
 }

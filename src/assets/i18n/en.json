@@ -210,6 +210,9 @@
     "EXPORT.TEXT": "This action will export your Private key to your phone. Your Private key will be encrypted with the password used for this account and saved on your mobile device. Please scan this QR Code from the mobile application MyETPWallet.",
 
     "LOGIN_MENU_INFO_TEXT_MOBILE": "Notice: To create an account, please use your desktop and go to MyETPWallet.com. You will then be able to link your account with your phone.",
-    "REPORT_BUG": "Report bug"
+    "REPORT_BUG": "Report bug",
+
+    "MESSAGE.NETWORK_MISMATCH": "Network does not match",
+    "MESSAGE.PASSWORD_WRONG": "Unable to decrypt wallet using given passphrase"
 
 }

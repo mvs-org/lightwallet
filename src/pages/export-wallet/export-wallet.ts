@@ -14,15 +14,13 @@ export class ExportWalletPage {
     showQRCode: boolean;
 
     constructor(public nav: NavController, private walletService: WalletServiceProvider) {
-
-      this.gencode();
       this.connectcode = "";
+      this.gencode();
       this.showQRCode = false;
-
     }
 
     gencode = () =>{
-        this.walletService.getEncSeed()
+        this.walletService.exportWallet()
         .then((content)=>{
             this.connectcode=content;
         });
