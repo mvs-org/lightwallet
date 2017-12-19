@@ -3,8 +3,7 @@
     <img src="https://mvs.org/images/metaverselogo.png" alt="">
   </a>
 </p>
-
-# Metaverse Lightwallet
+<h1 align="center">lightwallet</h1>
 
 This is the Metaverse lightwallet. Main focus so far is to have a wallet that does not need to download the full Metaverse blockchain. The private key gets generated and encrypted in the browser and gets never exposed to any server. Transactions get signed locally and only the signed, encoded transactions get broadcasted to the network. The lightwallet can also be build as a mobile app.
 
