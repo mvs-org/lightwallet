@@ -4,12 +4,29 @@ page-login {
             padding-top: 10px;
         }
 
+        .logo-row {
+            height: 25%;
+            min-height: 120px;
+        }
+
+        .logo {
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
         .banner {
+            margin: 20px auto;
+            background:url(../assets/logo.png) no-repeat;
             width: 100%;
-            max-width: 500px;
-            display: block;
-            margin: 0 auto;
-            content:url(../../assets/logo.png);
+            max-width: 334px;
+            height: 80px;
+            outline: 0;
+            background-size: 100%;
+        }
+
+        .login-box {
+           margin-left: 10px;
+           margin-right: 20px;
         }
 
 
@@ -24,10 +41,7 @@ page-login {
             padding-bottom: 22px;
         }
 
-        .logo {
-            padding-top: 55px;
-            padding-bottom: 30px;
-        }
+
 
         @media (max-width: 992px) {
             .browser-button, .info-text {
@@ -42,4 +56,3 @@ page-login {
         }
     }
 }
-

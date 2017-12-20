@@ -8,15 +8,15 @@
       <button ion-button icon-left>
         <span>{{"HEIGHT" |translate}}: {{height}}</span>
       </button>
-      <button ion-button icon-left (click)="logout()">
-        <ion-icon name="off"></ion-icon>
+      <button *ngIf="!platform.is('mobile')" ion-button icon-left (click)="logout()">
+        <ion-icon name="log-out"></ion-icon>
         <span>{{"LOGOUT" |translate}}</span>
       </button>
-      <button *ngIf="syncing" ion-button icon-left>
+      <button *ngIf="syncing&&!platform.is('mobile')" ion-button icon-left>
         <ion-icon name="refresh"></ion-icon>
         <span>{{"SYNCING" |translate}}</span>
       </button>
-      <button *ngIf="!syncing" ion-button (click)="sync()" icon-left>
+      <button *ngIf="!syncing&&!platform.is('mobile')" ion-button (click)="sync()" icon-left>
         <ion-icon name="refresh"></ion-icon>
         <span>{{"RESYNC" |translate}}</span>
       </button>
@@ -25,6 +25,9 @@
 </ion-header>
 
 <ion-content class="center spread-out">
+  <ion-refresher *ngIf="platform.is('mobile')" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content class="mini-loader mini-loader-mobile"></ion-refresher-content>
+  </ion-refresher>
   <div class="mini-loader" *ngIf="syncing&&balances==undefined">Loading</div>
   <ion-list no-lines *ngIf="!syncing||balances!=undefined">
     <ion-grid>
@@ -54,20 +57,20 @@
                 </ion-row>
               </ion-grid>
             </ion-card>
-            <ion-row class="row-buttons">
-              <ion-col>
+            <ion-row col-12 class="row-buttons">
+              <ion-col col-4>
                 <button ion-button full clear color="secondary" icon-left (click)="gotoReceive($event, asset)">
                   <ion-icon name="download"></ion-icon>
                   {{ "RECEIVE" | translate }}
                 </button>
               </ion-col>
-              <ion-col>
+              <ion-col col-4>
                 <button ion-button full clear color="danger" icon-left (click)="gotoTransfer($event, asset)">
                   <ion-icon name="send"></ion-icon>
                   {{ "SEND" | translate }}
                 </button>
               </ion-col>
-              <ion-col center text-center>
+              <ion-col col-4>
                 <button ion-button full clear color="primary" icon-left (click)="gotoTransactions($event, asset)">
                   <ion-icon name="time"></ion-icon>
                   {{ "HISTORY" | translate }}

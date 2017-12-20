@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController, LoadingController, Loading, NavParams } from 'ionic-angular';
+import { NavController, AlertController, LoadingController, Loading, NavParams, Platform } from 'ionic-angular';
+import { AppGlobals } from '../../app/app.global';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -34,9 +35,11 @@ export class DepositPage {
     constructor(
         public navCtrl: NavController,
         private alertCtrl: AlertController,
+        private globals: AppGlobals,
         private loadingCtrl: LoadingController,
         public navParams: NavParams,
         private mvs: MvsServiceProvider,
+        public platform: Platform,
         private translate: TranslateService) {
 
         this.selectedAsset = "ETP"
@@ -45,7 +48,23 @@ export class DepositPage {
         this.feeAddress = 'auto'
         this.locktime = 0
         this.custom_recipient = ''
-        this.deposit_options=[{option:7, locktime: 25200, rate: 0.0009589},{option:30, locktime: 108000, rate: 0.0066667},{option:90, locktime: 331200, rate: 0.032},{option:182, locktime: 655200, rate: 0.08},{option:365, locktime: 1314000, rate: 0.2}]
+
+        if (this.globals.network == 'mainnet')
+            this.deposit_options = [
+                { option: 7, locktime: 25200, rate: 0.0009589 },
+                { option: 30, locktime: 108000, rate: 0.0066667 },
+                { option: 90, locktime: 331200, rate: 0.032 },
+                { option: 182, locktime: 655200, rate: 0.08 },
+                { option: 365, locktime: 1314000, rate: 0.2 }
+            ]
+        else
+            this.deposit_options = [
+                { option: 7, locktime: 10, rate: 0.0009589 },
+                { option: 30, locktime: 20, rate: 0.0066667 },
+                { option: 90, locktime: 30, rate: 0.032 },
+                { option: 182, locktime: 40, rate: 0.08 },
+                { option: 365, locktime: 50, rate: 0.2 }
+            ]
 
         //Load addresses
         mvs.getMvsAddresses()
@@ -98,9 +117,9 @@ export class DepositPage {
 
     validQuantity = (quantity) => quantity != undefined && this.showBalance >= parseFloat(quantity) * Math.pow(10, this.decimals)
 
-    validrecipient = (custom_recipient) => (custom_recipient.length == 34) && ((custom_recipient.charAt(0) == 'M') || (custom_recipient.charAt(0) == '3'))
+    validrecipient = this.mvs.validAddress
 
-    customRecipientChanged = () => {if(this.custom_recipient) this.custom_recipient = this.custom_recipient.trim()}
+    customRecipientChanged = () => { if (this.custom_recipient) this.custom_recipient = this.custom_recipient.trim() }
 
     cancel(e) {
         e.preventDefault()
@@ -110,16 +129,12 @@ export class DepositPage {
     preview() {
         this.create()
             .then((tx) => {
-            console.log('transaction details: '+tx)
+                console.log('transaction details: ' + tx)
                 this.rawtx = tx.encode().toString('hex')
                 this.loading.dismiss()
             })
             .catch((error) => {
-                console.error(error)
                 this.loading.dismiss()
-                this.translate.get('ERROR_SEND_TEXT').subscribe((message: string) => {
-                    this.showAlert(message)
-                })
             })
     }
 
@@ -127,6 +142,13 @@ export class DepositPage {
         return this.showLoading()
             .then(() => this.mvs.getMvsAddresses())
             .then((addresses) => this.mvs.createDepositTx(this.passphrase, (this.recipient_address == 'auto') ? null : (this.recipient_address == 'custom') ? this.custom_recipient : this.recipient_address, Math.floor(parseFloat(this.quantity) * Math.pow(10, this.decimals)), this.locktime, (this.sendFrom != 'auto') ? this.sendFrom : null, (this.changeAddress != 'auto') ? this.changeAddress : undefined))
+            .catch((error) => {
+                if (error.message == "ERR_DECRYPT_WALLET")
+                    this.showError('MESSAGE.PASSWORD_WRONG')
+                else
+                    this.showError('MESSAGE.CREATE_TRANSACTION')
+                throw Error('ERR_CREATE_TX')
+            })
     }
 
     send() {
@@ -138,17 +160,18 @@ export class DepositPage {
                     this.showSent(message, result.hash)
                 })
             })
-            .catch(() => {
+            .catch((error) => {
                 this.loading.dismiss()
-                this.translate.get('ERROR_SEND_TEXT').subscribe((message: string) => {
-                    this.showAlert(message)
-                })
+                if (error.message == 'ERR_CONNECTION')
+                    this.showError('ERROR_SEND_TEXT')
+                else if (error.message == 'ERR_BROADCAST')
+                    this.showError('MESSAGE.BROADCAST_ERROR')
             })
     }
 
     format = (quantity, decimals) => quantity / Math.pow(10, decimals)
 
-    round = (val:number) => Math.round(val*100000000)/100000000
+    round = (val: number) => Math.round(val * 100000000) / 100000000
 
     showLoading() {
         return new Promise((resolve, reject) => {
@@ -186,6 +209,19 @@ export class DepositPage {
                 })
                 alert.present(prompt)
             })
+        })
+    }
+
+    showError(message_key) {
+        this.translate.get(['MESSAGE.ERROR_TITLE', message_key]).subscribe((translations: any) => {
+            let alert = this.alertCtrl.create({
+                title: translations['MESSAGE.ERROR_TITLE'],
+                message: translations[message_key],
+                buttons: [{
+                    text: 'OK'
+                }]
+            });
+            alert.present(alert);
         })
     }
 

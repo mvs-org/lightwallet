@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, AlertController, Platform } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
+import { ExportWalletPage } from '../export-wallet/export-wallet';
+import { TranslateService } from '@ngx-translate/core';
+import { LoginPage } from '../login/login';
+
 
 @Component({
     selector: 'page-settings',
@@ -8,8 +12,85 @@ import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 })
 export class SettingsPage {
 
-    constructor(public nav: NavController,  private mvs: MvsServiceProvider) {}
+    connectcode: any;
+
+    constructor(public nav: NavController,  private mvs: MvsServiceProvider, public translate: TranslateService, private alertCtrl: AlertController, public platform: Platform) {
+
+    }
 
     reset = () => this.mvs.dataReset();
+
+    ExportWalletPage = e => this.nav.push(ExportWalletPage)
+
+    /**
+     * Logout dialog
+     */
+    logout() {
+        this.translate.get('RESET_TITLE').subscribe(title => {
+            this.translate.get('RESET_MESSAGE').subscribe(message => {
+                this.translate.get('CONFIRM').subscribe(yes => {
+                    this.translate.get('BACK').subscribe(no => {
+                        let confirm = this.alertCtrl.create({
+                            title: title,
+                            message: message,
+                            buttons: [
+                                {
+                                    text: no,
+                                    handler: () => {
+                                        console.log('Disagree clicked')
+                                    }
+                                },
+                                {
+                                    text: yes,
+                                    handler: () => {
+                                        this.mvs.hardReset().then(() => {
+                                            confirm.dismiss()
+                                            this.nav.setRoot(LoginPage)
+                                            window.location.reload()
+                                        })
+                                    }
+                                }
+                            ]
+                        });
+                        confirm.present()
+                    })
+                })
+            })
+        })
+    }
+
+    logoutMobile() {
+        this.translate.get('RESET_TITLE').subscribe(title => {
+            this.translate.get('RESET_MESSAGE_MOBILE').subscribe(message => {
+                this.translate.get('CONFIRM').subscribe(yes => {
+                    this.translate.get('BACK').subscribe(no => {
+                        let confirm = this.alertCtrl.create({
+                            title: title,
+                            message: message,
+                            buttons: [
+                                {
+                                    text: no,
+                                    handler: () => {
+                                        console.log('Disagree clicked')
+                                    }
+                                },
+                                {
+                                    text: yes,
+                                    handler: () => {
+                                        this.mvs.hardReset().then(() => {
+                                            confirm.dismiss()
+                                            this.nav.setRoot(LoginPage)
+                                            window.location.reload()
+                                        })
+                                    }
+                                }
+                            ]
+                        });
+                        confirm.present()
+                    })
+                })
+            })
+        })
+    }
 
 }
