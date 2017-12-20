@@ -4,6 +4,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { HttpModule, Http } from '@angular/http';
 import { IonicStorageModule } from '@ionic/storage';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -13,6 +14,7 @@ import { AppGlobals } from './app.global';
 import { AccountPage } from '../pages/account/account';
 import { LoginPage } from '../pages/login/login';
 import { ImportWalletPage } from '../pages/import-wallet/import-wallet';
+import { ImportWalletMobilePage } from '../pages/import-wallet-mobile/import-wallet-mobile';
 import { TransactionsPage } from '../pages/transactions/transactions';
 import { AssetTransferPage } from '../pages/asset-transfer/asset-transfer';
 import { ReceivePage } from '../pages/receive/receive';
@@ -23,6 +25,8 @@ import { InformationPage } from '../pages/information/information';
 import { SettingsPage } from '../pages/settings/settings';
 import { DepositPage } from '../pages/deposit/deposit';
 import { PassphrasePage } from '../pages/passphrase/passphrase';
+import { ExportWalletPage } from '../pages/export-wallet/export-wallet';
+import { AssetIssuePage } from '../pages/asset-issue/asset-issue';
 
 
 import { GenerateKeyPage } from '../pages/generate-key/generate-key';
@@ -31,6 +35,7 @@ import { ClipboardModule } from 'ngx-clipboard/dist';
 import { QRCodeModule } from 'angular2-qrcode';
 import { MvsServiceProvider } from '../providers/mvs-service/mvs-service';
 import { WalletServiceProvider } from '../providers/wallet-service/wallet-service';
+import { CryptoServiceProvider } from '../providers/crypto-service/crypto-service';
 
 export function HttpLoaderFactory(http: Http) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -43,6 +48,7 @@ export function HttpLoaderFactory(http: Http) {
         LoginPage,
         DepositPage,
         ImportWalletPage,
+        ImportWalletMobilePage,
         LanguageSwitcherPage,
         ThemeSwitcherPage,
         TransactionsPage,
@@ -52,7 +58,9 @@ export function HttpLoaderFactory(http: Http) {
         ReceivePage,
         SettingsPage,
         PassphrasePage,
-        ImportMnemonicPage
+        ImportMnemonicPage,
+        ExportWalletPage,
+        AssetIssuePage
     ],
     imports: [
         BrowserModule,
@@ -78,6 +86,7 @@ export function HttpLoaderFactory(http: Http) {
         AccountPage,
         LoginPage,
         ImportWalletPage,
+        ImportWalletMobilePage,
         LanguageSwitcherPage,
         ThemeSwitcherPage,
         TransactionsPage,
@@ -88,13 +97,17 @@ export function HttpLoaderFactory(http: Http) {
         ReceivePage,
         SettingsPage,
         PassphrasePage,
-        ImportMnemonicPage
+        ImportMnemonicPage,
+        ExportWalletPage,
+        AssetIssuePage
     ],
     providers: [
         AppGlobals,
         { provide: ErrorHandler, useClass: IonicErrorHandler },
         MvsServiceProvider,
         WalletServiceProvider,
+        CryptoServiceProvider,
+        BarcodeScanner,
     ]
 })
 export class AppModule {

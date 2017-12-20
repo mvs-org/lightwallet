@@ -7,18 +7,18 @@
     </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content padding style="padding-bottom: 0;">
     <p align="center" *ngIf="etpBalance<10000">{{"NOTICE_TRANSACTION_FEE_UNCOVERED"|translate}}</p>
     <ion-row>
         <ion-col>
-            <p>{{"AVAILABLE_BALANCE" | translate}}: {{format(showBalance,decimals)}} {{selectedAsset}}</p>
+            <p>{{"AVAILABLE_BALANCE" | translate}}: <br *ngIf="platform.is('mobile')">{{format(showBalance,decimals)}} {{selectedAsset}}</p>
         </ion-col>
         <ion-col>
-            <p class="right">{{"FEE"|translate}}: {{10000/100000000}} ETP</p>
+            <p class="right">{{"FEE"|translate}}:<br *ngIf="platform.is('mobile')"> {{10000/100000000}} ETP</p>
         </ion-col>
     </ion-row>
-    <form #sendForm="ngForm">
-        <ion-list>
+    <form #sendForm="ngForm" style="padding-bottom: 0;">
+        <ion-list style="padding-bottom: 0;">
             <ion-item [ngClass]="{'error-border':!validrecipient(recipient_address)}">
                 <ion-label color="primary" floating>{{"RECIPIENT_ADDRESS"|translate}}</ion-label>
                 <ion-input name="recipient_address" [(ngModel)]="recipient_address" (ngModelChange)="recipientChanged($event)" required></ion-input>
@@ -56,7 +56,7 @@
                 </ion-item>
                 <button ion-button full [disabled]="!sendForm.form.valid||!validQuantity(quantity)||!validrecipient(recipient_address)" (click)="preview()" color="primary">
                     {{"PREVIEW" | translate}}
-        </button>
+                </button>
                 <div *ngIf="rawtx">
                     <br><br>
                     <h2>{{"TRANSACTION_PREVIEW_TEXT"|translate}}</h2>
@@ -65,7 +65,7 @@
                 </div>
             </ion-list>
         </div>
-        <ion-row>
+        <ion-row class="padding-bottom">
             <ion-col>
                 <button ion-button full icon-left [disabled]="!sendForm.form.valid||!validQuantity(quantity)||!validrecipient(recipient_address)" (click)="send()" color="secondary">
                     <ion-icon disabled="checked" name="send"></ion-icon>

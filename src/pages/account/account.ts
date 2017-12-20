@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController } from 'ionic-angular';
+import { NavController, AlertController, Platform } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { DepositPage } from '../deposit/deposit';
@@ -27,7 +27,7 @@ export class AccountPage {
 
     private syncinterval: any;
 
-    constructor(public nav: NavController, public translate: TranslateService, private mvs: MvsServiceProvider, private alertCtrl: AlertController) {
+    constructor(public nav: NavController, public translate: TranslateService, private mvs: MvsServiceProvider, private alertCtrl: AlertController, public platform: Platform) {
         this.loading = true;
         this.sync()
     }
@@ -92,7 +92,7 @@ export class AccountPage {
         })
     }
 
-    private sync() {
+    private sync() {      //Sync for desktop
 
         //Only allow a single sync process
         if (this.syncing)
@@ -118,6 +118,37 @@ export class AccountPage {
                     this.syncing = false
                 })
         }
+    }
+
+    doRefresh(refresher) {        //Sync for mobile
+
+        //Only allow a single sync process
+        if (this.syncing)
+            return Promise.resolve()
+        else {
+            this.syncing = true
+
+            //Update height
+            this.mvs.updateMvsHeight()
+                .then((height: number) => {
+                    this.height = height
+                })
+
+            //Update tx data and balances
+            return this.mvs.getData()
+                .then(() => this.loadBalances())
+                .then(() => this.mvs.setUpdateTime())
+                .then(() => {
+                    this.syncing = false
+                    refresher.complete()
+                })
+                .catch((error) => {
+                    console.error(error)
+                    this.syncing = false
+                    refresher.complete()
+                })
+        }
+
     }
 
     private loadBalances() {

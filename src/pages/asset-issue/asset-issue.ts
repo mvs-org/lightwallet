@@ -4,10 +4,10 @@ import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-    selector: 'page-asset-transfer',
-    templateUrl: 'asset-transfer.html',
+    selector: 'page-asset-issue',
+    templateUrl: 'asset-issue.html',
 })
-export class AssetTransferPage {
+export class AssetIssuePage {
 
     selectedAsset: any
     addresses: Array<string>
@@ -15,17 +15,25 @@ export class AssetTransferPage {
     decimals: number
     showBalance: number
     loading: Loading
-    recipient_address: string
     quantity: string
-    builtFor: string
     rawtx: string
     passcodeSet: any
     addressbalances: Array<any>
     sendFrom: string
-    changeAddress: string
+    recipient_address: string
+    custom_recipient: string
+    issuerAddress: string
     feeAddress: string
     passphrase: string
     etpBalance: number
+    decimalsList: number[]
+    symbol: string
+    max_supply: string;
+    asset_decimals: number;
+    issuer_name: string
+    custom_issue_address: string
+    description: string
+    issue_address: string
 
     constructor(
         public navCtrl: NavController,
@@ -36,10 +44,18 @@ export class AssetTransferPage {
         public platform: Platform,
         private translate: TranslateService) {
 
-        this.selectedAsset = navParams.get('asset')
+        this.selectedAsset = "ETP"
         this.sendFrom = 'auto'
+        this.recipient_address = 'auto'
         this.feeAddress = 'auto'
-        this.recipient_address = ''
+        this.custom_recipient = ''
+        this.decimalsList = [0,1,2,3,4,5,6,7,8]
+        this.max_supply = '';
+        this.symbol = ''
+        this.issuer_name = ''
+        this.custom_issue_address = ''
+        this.description = ''
+        this.issue_address = 'auto'
 
         //Load addresses
         mvs.getMvsAddresses()
@@ -68,6 +84,11 @@ export class AssetTransferPage {
                         this.addressbalances = addrblncs
                     })
             })
+
+    }
+
+    onDepositOptionChange(event) {
+
     }
 
     onFromAddressChange(event) {
@@ -82,7 +103,21 @@ export class AssetTransferPage {
         }
     }
 
+    onSendToAddressChange(event) {
+
+    }
+
+    validSymbol = (symbol) => (symbol.length > 2) && (symbol.length < 64) && (!/[^A-Za-z0-9]/g.test(symbol))
+
+    validName = (issuer_name) => (issuer_name.length > 0) && (issuer_name.length < 64) && (!/[^A-Za-z0-9]/g.test(issuer_name))
+
+    validDescription = (description) => (description.length > 0) && (description.length < 64)
+
     validQuantity = (quantity) => quantity != undefined && this.showBalance >= parseFloat(quantity) * Math.pow(10, this.decimals)
+
+    validIssueAddress = this.mvs.validAddress
+
+    customIssueAddressChanged = () => {if(this.custom_recipient) this.custom_recipient = this.custom_recipient.trim()}
 
     cancel(e) {
         e.preventDefault()
@@ -92,6 +127,7 @@ export class AssetTransferPage {
     preview() {
         this.create()
             .then((tx) => {
+            console.log('transaction details: '+tx)
                 this.rawtx = tx.encode().toString('hex')
                 this.loading.dismiss()
             })
@@ -102,34 +138,69 @@ export class AssetTransferPage {
 
     create() {
         return this.showLoading()
-            .then(() => this.mvs.getMvsAddresses())
-            .then((addresses) => this.mvs.createTx(
+            .then(() => this.toUpperCase(this.symbol))
+            .then((addresses) => this.mvs.createIssueAssetTx(
                 this.passphrase,
-                this.selectedAsset,
-                this.recipient_address,
-                Math.floor(parseFloat(this.quantity) * Math.pow(10, this.decimals)),
+                this.symbol,
+                this.issuer_name,
+                Math.floor(parseFloat(this.max_supply) * Math.pow(10, this.asset_decimals)),
+                this.asset_decimals,
+                this.description,
+                (this.issue_address == 'auto') ? null : (this.issue_address == 'custom') ? this.custom_issue_address : this.issue_address,
                 (this.sendFrom != 'auto') ? this.sendFrom : null,
-                (this.changeAddress != 'auto') ? this.changeAddress : undefined
+                undefined
             ))
             .catch((error) => {
-                console.error(error.message)
                 if (error.message == "ERR_DECRYPT_WALLET")
                     this.showError('MESSAGE.PASSWORD_WRONG')
                 else
                     this.showError('MESSAGE.CREATE_TRANSACTION')
+                throw Error('ERR_CREATE_TX')
             })
+    }
+
+    confirm() {
+        this.translate.get('ISSUE.CONFIRMATION_TITLE').subscribe((txt_title: string) => {
+            this.translate.get('ISSUE.CONFIRMATION_SUBTITLE').subscribe((txt_subtitle: string) => {
+                this.translate.get('ISSUE.CREATE').subscribe((txt_create: string) => {
+                    this.translate.get('CANCEL').subscribe((txt_cancel: string) => {
+                    const alert = this.alertCtrl.create({
+                        title: txt_title,
+                        subTitle: txt_subtitle,
+                        buttons: [
+                            {
+                                text: txt_cancel,
+                                role: 'cancel',
+                                handler: data => {
+                                    this.navCtrl.pop()
+                                }
+                            },
+                            {
+                                text: txt_create,
+                                handler: data => {
+                                    // need error handling
+                                    this.send()
+                                }
+                            }
+                        ]
+                    });
+                    alert.present(prompt)
+                  });
+              });
+          });
+      });
     }
 
     send() {
         this.create()
-            .then((tx) => this.mvs.broadcast(tx.encode().toString('hex')))
+            .then((tx) => this.mvs.broadcast(tx.encode().toString('hex'), 1000000000))
             .then((result: any) => {
                 this.navCtrl.pop()
                 this.translate.get('SUCCESS_SEND_TEXT').subscribe((message: string) => {
                     this.showSent(message, result.hash)
                 })
             })
-            .catch((error)=>{
+            .catch((error) => {
                 this.loading.dismiss()
                 if(error.message=='ERR_CONNECTION')
                     this.showError('ERROR_SEND_TEXT')
@@ -140,9 +211,7 @@ export class AssetTransferPage {
 
     format = (quantity, decimals) => quantity / Math.pow(10, decimals)
 
-    validrecipient = this.mvs.validAddress
-
-    recipientChanged = () => { if (this.recipient_address) this.recipient_address = this.recipient_address.trim() }
+    round = (val:number) => Math.round(val*100000000)/100000000
 
     showLoading() {
         return new Promise((resolve, reject) => {
@@ -168,6 +237,27 @@ export class AssetTransferPage {
                 alert.present(prompt)
             })
         })
+    }
+
+    showAlert(text) {
+        this.translate.get('MESSAGE.ERROR_TITLE').subscribe((title: string) => {
+            this.translate.get('OK').subscribe((ok: string) => {
+                let alert = this.alertCtrl.create({
+                    title: title,
+                    subTitle: text,
+                    buttons: [ok]
+                })
+                alert.present(prompt)
+            })
+        })
+    }
+
+    toUpperCase(text) {
+        let textUpperCase: string = ''
+        for(let i=0;i<text.length;i++){
+            textUpperCase = textUpperCase + text.charAt(i).toUpperCase()
+        }
+        return textUpperCase
     }
 
     showError(message_key) {

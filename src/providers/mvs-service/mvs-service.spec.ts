@@ -21,7 +21,7 @@ describe('Metaverse Provider', () => {
 
     it('getHDNode should return wallet object', ()=> {
         let test_mnemonic = "test string for mnemonic"
-        let result = mvs.getHDNode(test_mnemonic);
+        let result = mvs.getHDNodeFromMnemonic(test_mnemonic);
         console.log(result)
         expect(result).toBeTruthy;
     });

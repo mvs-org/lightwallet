@@ -20,6 +20,8 @@ export class LanguageSwitcherPage {
         this.languages = [
             new Language('English', 'en'),
             new Language("中文", 'zh'),
+            new Language("한국어", 'kr'),
+            new Language("Français", 'fr'),
             new Language("ไทย", 'th')
         ]
     }
