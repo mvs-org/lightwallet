@@ -82,7 +82,13 @@ export class AssetTransferPage {
         }
     }
 
-    validQuantity = (quantity) => quantity != undefined && this.showBalance >= parseFloat(quantity) * Math.pow(10, this.decimals)
+    validQuantity = (quantity) => quantity != undefined && this.showBalance >= parseFloat(quantity) * Math.pow(10, this.decimals) && this.countDecimals(quantity) <= this.decimals
+
+    countDecimals(value) {
+        if (Math.floor(value) !== value && value.toString().split(".").length > 1)
+            return value.toString().split(".")[1].length || 0;
+        return 0;
+    }
 
     cancel(e) {
         e.preventDefault()
