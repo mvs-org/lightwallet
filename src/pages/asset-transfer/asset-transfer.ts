@@ -81,7 +81,13 @@ export class AssetTransferPage {
         }
     }
 
-    validQuantity = (quantity) => quantity != undefined && this.showBalance >= parseFloat(quantity) * Math.pow(10, this.decimals)
+    validQuantity = (quantity) => quantity != undefined && this.showBalance >= parseFloat(quantity) * Math.pow(10, this.decimals) && this.countDecimals(quantity) <= this.decimals
+
+    countDecimals(value) {
+        if (Math.floor(value) !== value && value.toString().split(".").length > 1)
+            return value.toString().split(".")[1].length || 0;
+        return 0;
+    }
 
     cancel(e) {
         e.preventDefault()
@@ -130,7 +136,7 @@ export class AssetTransferPage {
 
     validrecipient = (recipient_address) => (recipient_address.length == 34) && ((recipient_address.charAt(0) == 'M') || (recipient_address.charAt(0) == '3'))
 
-    recipientChanged = () => {if(this.recipient_address) this.recipient_address=this.recipient_address.trim()}
+    recipientChanged = () => { if (this.recipient_address) this.recipient_address = this.recipient_address.trim() }
 
     showLoading() {
         return new Promise((resolve, reject) => {
