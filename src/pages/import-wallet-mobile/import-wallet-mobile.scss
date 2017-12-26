@@ -1,4 +1,4 @@
-page-import-wallet {
+page-import-wallet-mobile {
 
     .button {
         margin: auto;
@@ -23,9 +23,6 @@ page-import-wallet {
         position: absolute;
         z-index: -1;
 
-    }
-    .scroll-content {
-        padding-bottom: 200px !important;
     }
     .inputfile + label {
         font-size: 1.25em !important;
@@ -66,14 +63,9 @@ page-import-wallet {
         margin-top: 10px;
     }
 
-    .blank {
-        margin-bottom:140px;
-    }
 
-    .verifiedFile {
-        color: #32db64;
-        font-size: 100px;
-        margin-left: calc(50% - 50px);
+    .blank {
+        margin-bottom:70px;
     }
 
 }

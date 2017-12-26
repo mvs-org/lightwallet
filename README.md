@@ -4,9 +4,7 @@
   </a>
 </p>
 
-# Metaverse Lightwallet
-
-This is the Metaverse lightwallet. It is currently in beta stage and only provides basic transfer and receive functionality. Metaverse specific ETP deposit functionality will follow soon. Main focus so far is to have a wallet that does not need to download the full Metaverse blockchain. The private key gets generated and encrypted in the browser and gets never exposed to any server. Transactions get signed locally and only the signed, encoded transactions get broadcasted to the network.
+This is the Metaverse lightwallet. Main focus so far is to have a wallet that does not need to download the full Metaverse blockchain. The private key gets generated and encrypted in the browser and gets never exposed to any server. Transactions get signed locally and only the signed, encoded transactions get broadcasted to the network. The lightwallet can also be build as a mobile app.
 
 ## How to start it?
 
@@ -22,11 +20,28 @@ You can then just use ionic to generate a live preview.
 $ ionic serve
 ```
 
+Or on your android phone. Make sure you have an android development environment with build-tools and sdk with accepted licenses.
+
+
+```bash
+$ ionic cordova run android --device
+```
+
 ## How to build it?
 
 ```bash
 $ ionic cordova build browser --prod --release
 ```
+
+To build it for android use the following command. 
+
+```bash
+$ ionic cordova build --release android
+```
+
+## Configuration
+
+By default the configuration should be set to use the testnet. This is the best way for development and testing and you should only switch to mainnet if you really have to. In order to change the setting you can find it in src/app/app.global.ts. If you need testnet tokens you can download the fullnode wallet, start it in testnet mode and mine coins yourself or contact us on our common channels.
 
 ## Contribution
 

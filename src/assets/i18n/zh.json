@@ -78,7 +78,6 @@
       "SETTINGS.WORDS_BUTTON": "备份",
       "SETTINGS.WORDS_TEXT": "与你私钥相关联的助记符",
       "RESET_TITLE": "您确定要退出？",
-      "RESET_MESSAGE": "所有数据将被删除",
       "COPIED_MNEMONIC": "将备份的文字复制到剪贴板",
 
       "SETTINGS.PINCODE": "PIN码设置",
@@ -167,5 +166,7 @@
     "CUSTOM": "手动输入",
     "CUSTOM_RECIPIENT_ADDRESS": "手动输入发送地址",
     "BLOCKS": "区块",
-    "INTEREST_RATE": "利率"
+    "INTEREST_RATE": "利率",
+
+    "REPORT_BUG": "报告漏洞"
 }
