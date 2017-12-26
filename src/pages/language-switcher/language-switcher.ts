@@ -21,6 +21,7 @@ export class LanguageSwitcherPage {
             new Language('English', 'en'),
             new Language("中文", 'zh'),
             new Language("Français", 'fr'),
+            new Language("한국어", 'kr'),
             new Language("ไทย", 'th')
         ]
     }

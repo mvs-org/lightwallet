@@ -1,8 +1,8 @@
 {
   "name": "mvs-lightwallet",
-  "version": "0.1.1",
+  "version": "0.1.3",
   "author": "Sven Mutzl",
-  "homepage": "http://myetpwallet.com/",
+  "homepage": "https://www.myetpwallet.com/",
   "private": true,
   "scripts": {
     "clean": "ionic-app-scripts clean",
