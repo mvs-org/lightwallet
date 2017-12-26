@@ -21,6 +21,14 @@ export class WalletServiceProvider {
         return this.storage.get('wallet')
     }
 
+    setA(){
+        console.log(this.storage)
+        return this.storage.set('A',1)
+    }
+    getA(){
+        return this.storage.get('A')
+    }
+
     getMnemonic(passphrase) {
         return this.storage.get('wallet')
             .then((wallet) => this.crypto.decrypt(wallet.mnemonic, passphrase))
