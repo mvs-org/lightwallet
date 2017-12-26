@@ -23,6 +23,7 @@ export class LanguageSwitcherPage {
             new Language("한국어", 'kr'),
             new Language("Français", 'fr'),
             new Language("Deutsch", 'de'),
+            new Language("한국어", 'kr'),
             new Language("ไทย", 'th')
         ]
     }
