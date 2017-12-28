@@ -20,7 +20,6 @@ import { LanguageSwitcherPage } from '../pages/language-switcher/language-switch
 import { ThemeSwitcherPage } from '../pages/theme-switcher/theme-switcher';
 import { ImportMnemonicPage } from '../pages/import-mnemonic/import-mnemonic';
 import { InformationPage } from '../pages/information/information';
-import { DepositPage } from '../pages/deposit/deposit';
 import { PassphrasePage } from '../pages/passphrase/passphrase';
 import { ExportWalletPage } from '../pages/export-wallet/export-wallet';
 import { AssetIssuePage } from '../pages/asset-issue/asset-issue';
@@ -41,7 +40,6 @@ export function HttpLoaderFactory(http: Http) {
 @NgModule({
     declarations: [
         MyApp,
-        DepositPage,
         ImportWalletPage,
         ImportWalletMobilePage,
         LanguageSwitcherPage,
@@ -84,7 +82,6 @@ export function HttpLoaderFactory(http: Http) {
         TransactionsPage,
         GenerateKeyPage,
         AssetTransferPage,
-        DepositPage,
         InformationPage,
         ReceivePage,
         PassphrasePage,
