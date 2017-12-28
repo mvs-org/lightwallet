@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
-import { AccountPage } from '../account/account';
 import { AppGlobals } from '../../app/app.global';
 import { TranslateService } from '@ngx-translate/core';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
 
+@IonicPage()
 @Component({
     selector: 'page-import-wallet-mobile',
     templateUrl: 'import-wallet-mobile.html',
@@ -40,13 +40,15 @@ export class ImportWalletMobilePage {
         this.wallet.setMobileWallet(seed)
             .then(() => Promise.all([this.wallet.getWallet(password), this.mvs.getAddressIndex()]))
             .then((results) => this.mvs.generateAddresses(results[0], 0, results[1]))
-            .then((addresses) => this.mvs.addMvsAddresses(addresses))
-            .then(() => this.nav.setRoot(AccountPage))
+            .then((addresses) => this.mvs.setMvsAddresses(addresses))
+            .then(() => this.nav.setRoot("AccountPage"))
             .catch((e) => {
                 console.error(e);
                 this.showError('MESSAGE.PASSWORD_WRONG');
             });
     }
+
+    howToMobile = () => this.nav.push("HowToMobilePage")
 
     showPrompt(seed) {
         this.translate.get('PASSWORD').subscribe((txt_password: string) => {

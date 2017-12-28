@@ -4,15 +4,11 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { HttpModule, Http } from '@angular/http';
 import { IonicStorageModule } from '@ionic/storage';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { BarcodeScanner } from '@ionic-native/barcode-scanner';
-
-
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { MyApp } from './app.component';
 import { AppGlobals } from './app.global';
 import { ImportWalletPage } from '../pages/import-wallet/import-wallet';
-import { ImportWalletMobilePage } from '../pages/import-wallet-mobile/import-wallet-mobile';
 import { TransactionsPage } from '../pages/transactions/transactions';
 import { AssetTransferPage } from '../pages/asset-transfer/asset-transfer';
 import { ReceivePage } from '../pages/receive/receive';
@@ -40,7 +36,6 @@ export function HttpLoaderFactory(http: Http) {
     declarations: [
         MyApp,
         ImportWalletPage,
-        ImportWalletMobilePage,
         LanguageSwitcherPage,
         ThemeSwitcherPage,
         TransactionsPage,
@@ -74,7 +69,6 @@ export function HttpLoaderFactory(http: Http) {
     entryComponents: [
         MyApp,
         ImportWalletPage,
-        ImportWalletMobilePage,
         LanguageSwitcherPage,
         ThemeSwitcherPage,
         TransactionsPage,
@@ -92,11 +86,9 @@ export function HttpLoaderFactory(http: Http) {
         MvsServiceProvider,
         WalletServiceProvider,
         CryptoServiceProvider,
-        BarcodeScanner,
     ]
 })
 export class AppModule {
     constructor() {
-        //console.log(myGlobals.version);
     }
 }
