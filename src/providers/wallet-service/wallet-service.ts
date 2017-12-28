@@ -9,24 +9,21 @@ import { CryptoServiceProvider } from '../crypto-service/crypto-service';
 @Injectable()
 export class WalletServiceProvider {
 
-    constructor(public http: Http, private storage: Storage, private globals: AppGlobals, private crypto: CryptoServiceProvider) {}
+    constructor(public http: Http, private storage: Storage, private globals: AppGlobals, private crypto: CryptoServiceProvider) { }
 
-    public export(passphrase){
+    public export(passphrase) {
         return this.getMnemonic(passphrase)
-        .then((mnemonic)=>Metaverse.wallet.mnemonicToSeed(mnemonic, Metaverse.networks[this.globals.network]))
-        .then((seed)=>this.crypto.encrypt(seed.toString('hex'),passphrase))
+            .then((mnemonic) => Metaverse.wallet.mnemonicToSeed(mnemonic, Metaverse.networks[this.globals.network]))
+            .then((seed) => this.crypto.encrypt(seed.toString('hex'), passphrase))
     }
 
-    exportMemonic(){
+    exportMemonic() {
         return this.storage.get('wallet')
     }
 
-    setA(){
-        console.log(this.storage)
-        return this.storage.set('A',1)
-    }
-    getA(){
-        return this.storage.get('A')
+    isSetup = () => {
+        return this.storage.get('wallet')
+            .then((wallet) => (wallet != undefined && wallet.index))
     }
 
     getMnemonic(passphrase) {
@@ -44,12 +41,12 @@ export class WalletServiceProvider {
 
     getWallet(passphrase) {
         return this.getSeed(passphrase)
-            .then((seed:string) => this.getHDNodeFromSeed(Buffer.from(seed,'hex')))
-            .catch((error)=>{
+            .then((seed: string) => this.getHDNodeFromSeed(Buffer.from(seed, 'hex')))
+            .catch((error) => {
                 console.error(error)
                 return this.getMnemonic(passphrase)
                     .then((mnemonic) => this.getHDNodeFromMnemonic(mnemonic))
-                })
+            })
     }
 
     getHDNodeFromMnemonic(mnemonic) {
@@ -64,21 +61,21 @@ export class WalletServiceProvider {
         return this.storage.set('seed', seed)
     }
 
-    setSeed(passphrase){
-    return this.getMnemonic(passphrase)
-      .then((mnemonic)=>Metaverse.wallet.mnemonicToSeed(mnemonic, Metaverse.networks[this.globals.network]))
-      .then((seed)=>this.crypto.encrypt(seed.toString('hex'),passphrase))
-      .then((encseed)=>this.storage.set('seed',encseed))
+    setSeed(passphrase) {
+        return this.getMnemonic(passphrase)
+            .then((mnemonic) => Metaverse.wallet.mnemonicToSeed(mnemonic, Metaverse.networks[this.globals.network]))
+            .then((seed) => this.crypto.encrypt(seed.toString('hex'), passphrase))
+            .then((encseed) => this.storage.set('seed', encseed))
     }
 
-    setSeedMobile(passphrase, mnemonic){
-    return Metaverse.wallet.mnemonicToSeed(mnemonic, Metaverse.networks[this.globals.network])
-        .then((seed)=>this.crypto.encrypt(seed.toString('hex'),passphrase))
-        .then((encseed)=> this.storage.set('seed',encseed))
+    setSeedMobile(passphrase, mnemonic) {
+        return Metaverse.wallet.mnemonicToSeed(mnemonic, Metaverse.networks[this.globals.network])
+            .then((seed) => this.crypto.encrypt(seed.toString('hex'), passphrase))
+            .then((encseed) => this.storage.set('seed', encseed))
     }
 
     getSeed(passphrase) {
-    console.info('loading seed')
+        console.info('loading seed')
         return this.storage.get('seed')
             .then((seed) => this.crypto.decrypt(seed, passphrase))
             .catch((error) => {
@@ -90,8 +87,8 @@ export class WalletServiceProvider {
 
     exportWallet() {
         return this.storage.get('seed')
-            .then((seed)=>{
-                return seed+"&"+this.globals.network.charAt(0);
+            .then((seed) => {
+                return seed + "&" + this.globals.network.charAt(0);
             })
             .catch((error) => {
                 console.error(error)

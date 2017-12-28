@@ -8,11 +8,8 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { MyApp } from './app.component';
 import { AppGlobals } from './app.global';
-import { ImportWalletPage } from '../pages/import-wallet/import-wallet';
 import { TransactionsPage } from '../pages/transactions/transactions';
-import { ImportMnemonicPage } from '../pages/import-mnemonic/import-mnemonic';
 import { PassphrasePage } from '../pages/passphrase/passphrase';
-import { GenerateKeyPage } from '../pages/generate-key/generate-key';
 import { MvsServiceProvider } from '../providers/mvs-service/mvs-service';
 import { WalletServiceProvider } from '../providers/wallet-service/wallet-service';
 import { CryptoServiceProvider } from '../providers/crypto-service/crypto-service';
@@ -24,11 +21,8 @@ export function HttpLoaderFactory(http: Http) {
 @NgModule({
     declarations: [
         MyApp,
-        ImportWalletPage,
         TransactionsPage,
-        GenerateKeyPage,
         PassphrasePage,
-        ImportMnemonicPage,
     ],
     imports: [
         BrowserModule,
@@ -49,11 +43,8 @@ export function HttpLoaderFactory(http: Http) {
     bootstrap: [IonicApp],
     entryComponents: [
         MyApp,
-        ImportWalletPage,
         TransactionsPage,
-        GenerateKeyPage,
         PassphrasePage,
-        ImportMnemonicPage,
     ],
     providers: [
         AppGlobals,

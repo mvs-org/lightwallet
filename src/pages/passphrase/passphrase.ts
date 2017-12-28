@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, Platform } from 'ionic-angular';
+import { App, NavController, NavParams, Platform } from 'ionic-angular';
 
 import { LoginPage } from '../login/login';
 import { AccountPage } from '../account/account';
@@ -20,6 +20,7 @@ export class PassphrasePage {
     constructor(public nav: NavController,
         public navParams: NavParams,
         public globals: AppGlobals,
+        private app: App,
         public translate: TranslateService,
         private crypto: CryptoServiceProvider,
         public platform: Platform,
@@ -53,7 +54,7 @@ export class PassphrasePage {
             .then(() => Promise.all([this.wallet.getWallet(password), this.mvs.getAddressIndex()]))
             .then((results) => this.mvs.generateAddresses(results[0], 0, results[1]))
             .then((addresses) => this.mvs.addMvsAddresses(addresses))
-            .then(() => this.nav.setRoot(AccountPage))
+            .then(() => this.app.getRootNav().setRoot(AccountPage))
             .catch((e) => {
                 console.error(e);
             });
