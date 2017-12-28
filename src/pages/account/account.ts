@@ -6,7 +6,6 @@ import { DepositPage } from '../deposit/deposit';
 import { TransactionsPage } from '../transactions/transactions';
 import { AssetTransferPage } from '../asset-transfer/asset-transfer';
 import { ReceivePage } from '../receive/receive';
-import { LoginPage } from '../login/login';
 
 @Component({
     selector: 'page-account',
