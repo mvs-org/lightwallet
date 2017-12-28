@@ -10,7 +10,6 @@ import { MyApp } from './app.component';
 import { AppGlobals } from './app.global';
 import { ImportWalletPage } from '../pages/import-wallet/import-wallet';
 import { TransactionsPage } from '../pages/transactions/transactions';
-import { AssetTransferPage } from '../pages/asset-transfer/asset-transfer';
 import { ReceivePage } from '../pages/receive/receive';
 import { ImportMnemonicPage } from '../pages/import-mnemonic/import-mnemonic';
 import { PassphrasePage } from '../pages/passphrase/passphrase';
@@ -32,7 +31,6 @@ export function HttpLoaderFactory(http: Http) {
         ImportWalletPage,
         TransactionsPage,
         GenerateKeyPage,
-        AssetTransferPage,
         ReceivePage,
         PassphrasePage,
         ImportMnemonicPage,
@@ -62,7 +60,6 @@ export function HttpLoaderFactory(http: Http) {
         ImportWalletPage,
         TransactionsPage,
         GenerateKeyPage,
-        AssetTransferPage,
         ReceivePage,
         PassphrasePage,
         ImportMnemonicPage,

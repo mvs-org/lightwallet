@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController, LoadingController, Loading, NavParams, Platform } from 'ionic-angular';
+import { IonicPage, NavController, AlertController, LoadingController, Loading, NavParams, Platform } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { TranslateService } from '@ngx-translate/core';
 
+@IonicPage()
 @Component({
     selector: 'page-asset-transfer',
     templateUrl: 'asset-transfer.html',
@@ -67,6 +68,15 @@ export class AssetTransferPage {
                         }
                         this.addressbalances = addrblncs
                     })
+            })
+    }
+
+    ionViewDidEnter() {
+        console.log('Asset transfer page loaded')
+        this.mvs.getMvsAddresses()
+            .then((addresses) => {
+                if (!Array.isArray(addresses) || !addresses.length)
+                    this.navCtrl.setRoot("LoginPage")
             })
     }
 
