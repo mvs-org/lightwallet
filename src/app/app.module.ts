@@ -12,16 +12,10 @@ import { ImportWalletPage } from '../pages/import-wallet/import-wallet';
 import { TransactionsPage } from '../pages/transactions/transactions';
 import { AssetTransferPage } from '../pages/asset-transfer/asset-transfer';
 import { ReceivePage } from '../pages/receive/receive';
-import { LanguageSwitcherPage } from '../pages/language-switcher/language-switcher';
-import { ThemeSwitcherPage } from '../pages/theme-switcher/theme-switcher';
 import { ImportMnemonicPage } from '../pages/import-mnemonic/import-mnemonic';
-import { InformationPage } from '../pages/information/information';
 import { PassphrasePage } from '../pages/passphrase/passphrase';
 import { ExportWalletPage } from '../pages/export-wallet/export-wallet';
-
-
 import { GenerateKeyPage } from '../pages/generate-key/generate-key';
-
 import { ClipboardModule } from 'ngx-clipboard/dist';
 import { QRCodeModule } from 'angular2-qrcode';
 import { MvsServiceProvider } from '../providers/mvs-service/mvs-service';
@@ -36,12 +30,9 @@ export function HttpLoaderFactory(http: Http) {
     declarations: [
         MyApp,
         ImportWalletPage,
-        LanguageSwitcherPage,
-        ThemeSwitcherPage,
         TransactionsPage,
         GenerateKeyPage,
         AssetTransferPage,
-        InformationPage,
         ReceivePage,
         PassphrasePage,
         ImportMnemonicPage,
@@ -69,12 +60,9 @@ export function HttpLoaderFactory(http: Http) {
     entryComponents: [
         MyApp,
         ImportWalletPage,
-        LanguageSwitcherPage,
-        ThemeSwitcherPage,
         TransactionsPage,
         GenerateKeyPage,
         AssetTransferPage,
-        InformationPage,
         ReceivePage,
         PassphrasePage,
         ImportMnemonicPage,
