@@ -29,6 +29,12 @@
                 {{"IMPORT.SCAN_QRCODE_BUTTON"|translate}}
             </button>
         </ion-row>
+        <ion-row class="browser-button">
+            <button ion-button full icon-left class="large-btn" id="open-howto-mobile-button" color="primary" (click)="howToMobile()">
+                <ion-icon name="information-circle"></ion-icon>
+                {{"HOW_TO_IMPORT_WALLET_MOBILE"|translate}}
+            </button>
+        </ion-row>
     </form>
     <ion-row *ngIf="!disclaimer_agreed" class="blank">
     </ion-row>
