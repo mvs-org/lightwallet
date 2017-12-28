@@ -12,8 +12,10 @@ import { MvsServiceProvider } from '../providers/mvs-service/mvs-service';
 import { WalletServiceProvider } from '../providers/wallet-service/wallet-service';
 import { CryptoServiceProvider } from '../providers/crypto-service/crypto-service';
 
+var pckg = require('../../package.json');
+
 export function HttpLoaderFactory(http: Http) {
-    return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+    return new TranslateHttpLoader(http, './assets/i18n/', '.json?v='+pckg.version);
 }
 
 @NgModule({
