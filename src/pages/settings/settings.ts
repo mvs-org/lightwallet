@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController, Platform } from 'ionic-angular';
+import { IonicPage, NavController, AlertController, Platform } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
-import { ExportWalletPage } from '../export-wallet/export-wallet';
 import { TranslateService } from '@ngx-translate/core';
-import { LoginPage } from '../login/login';
 
-
+@IonicPage()
 @Component({
     selector: 'page-settings',
     templateUrl: 'settings.html',
@@ -18,9 +16,18 @@ export class SettingsPage {
 
     }
 
+    ionViewDidEnter() {
+        console.log('Settings page loaded')
+        this.mvs.getMvsAddresses()
+            .then((addresses) => {
+                if (!Array.isArray(addresses) || !addresses.length)
+                    this.nav.setRoot("LoginPage")
+            })
+    }
+
     reset = () => this.mvs.dataReset();
 
-    ExportWalletPage = e => this.nav.push(ExportWalletPage)
+    ExportWalletPage = e => this.nav.push("ExportWalletPage")
 
     /**
      * Logout dialog
@@ -45,7 +52,7 @@ export class SettingsPage {
                                     handler: () => {
                                         this.mvs.hardReset().then(() => {
                                             confirm.dismiss()
-                                            this.nav.setRoot(LoginPage)
+                                            this.nav.setRoot("LoginPage")
                                             window.location.reload()
                                         })
                                     }
@@ -79,7 +86,7 @@ export class SettingsPage {
                                     handler: () => {
                                         this.mvs.hardReset().then(() => {
                                             confirm.dismiss()
-                                            this.nav.setRoot(LoginPage)
+                                            this.nav.setRoot("LoginPage")
                                             window.location.reload()
                                         })
                                     }

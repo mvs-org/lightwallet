@@ -7,7 +7,6 @@ import { DepositPage } from '../pages/deposit/deposit';
 import { LanguageSwitcherPage } from '../pages/language-switcher/language-switcher';
 import { ThemeSwitcherPage } from '../pages/theme-switcher/theme-switcher';
 import { InformationPage } from '../pages/information/information';
-import { SettingsPage } from '../pages/settings/settings';
 import { AssetIssuePage } from '../pages/asset-issue/asset-issue';
 
 import { Storage } from '@ionic/storage';
