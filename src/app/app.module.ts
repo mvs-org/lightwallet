@@ -5,10 +5,8 @@ import { HttpModule, Http } from '@angular/http';
 import { IonicStorageModule } from '@ionic/storage';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-
 import { MyApp } from './app.component';
 import { AppGlobals } from './app.global';
-import { TransactionsPage } from '../pages/transactions/transactions';
 import { PassphrasePage } from '../pages/passphrase/passphrase';
 import { MvsServiceProvider } from '../providers/mvs-service/mvs-service';
 import { WalletServiceProvider } from '../providers/wallet-service/wallet-service';
@@ -21,7 +19,6 @@ export function HttpLoaderFactory(http: Http) {
 @NgModule({
     declarations: [
         MyApp,
-        TransactionsPage,
         PassphrasePage,
     ],
     imports: [
@@ -43,7 +40,6 @@ export function HttpLoaderFactory(http: Http) {
     bootstrap: [IonicApp],
     entryComponents: [
         MyApp,
-        TransactionsPage,
         PassphrasePage,
     ],
     providers: [
