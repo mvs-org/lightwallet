@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 
+@IonicPage()
 @Component({
     selector: 'page-receive',
     templateUrl: 'receive.html',
@@ -35,6 +36,15 @@ export class ReceivePage {
                         })
                     })
 
+            })
+    }
+
+    ionViewDidEnter() {
+        console.log('Receive page loaded')
+        this.mvs.getMvsAddresses()
+            .then((addresses) => {
+                if (!Array.isArray(addresses) || !addresses.length)
+                    this.navCtrl.setRoot("LoginPage")
             })
     }
 

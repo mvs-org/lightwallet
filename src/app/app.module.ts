@@ -10,13 +10,9 @@ import { MyApp } from './app.component';
 import { AppGlobals } from './app.global';
 import { ImportWalletPage } from '../pages/import-wallet/import-wallet';
 import { TransactionsPage } from '../pages/transactions/transactions';
-import { ReceivePage } from '../pages/receive/receive';
 import { ImportMnemonicPage } from '../pages/import-mnemonic/import-mnemonic';
 import { PassphrasePage } from '../pages/passphrase/passphrase';
-import { ExportWalletPage } from '../pages/export-wallet/export-wallet';
 import { GenerateKeyPage } from '../pages/generate-key/generate-key';
-import { ClipboardModule } from 'ngx-clipboard/dist';
-import { QRCodeModule } from 'angular2-qrcode';
 import { MvsServiceProvider } from '../providers/mvs-service/mvs-service';
 import { WalletServiceProvider } from '../providers/wallet-service/wallet-service';
 import { CryptoServiceProvider } from '../providers/crypto-service/crypto-service';
@@ -31,16 +27,12 @@ export function HttpLoaderFactory(http: Http) {
         ImportWalletPage,
         TransactionsPage,
         GenerateKeyPage,
-        ReceivePage,
         PassphrasePage,
         ImportMnemonicPage,
-        ExportWalletPage,
     ],
     imports: [
         BrowserModule,
-        QRCodeModule,
         HttpModule,
-        ClipboardModule,
         IonicModule.forRoot(MyApp),
         TranslateModule.forRoot({
             loader: {
@@ -60,10 +52,8 @@ export function HttpLoaderFactory(http: Http) {
         ImportWalletPage,
         TransactionsPage,
         GenerateKeyPage,
-        ReceivePage,
         PassphrasePage,
         ImportMnemonicPage,
-        ExportWalletPage,
     ],
     providers: [
         AppGlobals,
