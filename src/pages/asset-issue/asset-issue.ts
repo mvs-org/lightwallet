@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController, LoadingController, Loading, NavParams, Platform } from 'ionic-angular';
+import { IonicPage, NavController, AlertController, LoadingController, Loading, NavParams, Platform } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { TranslateService } from '@ngx-translate/core';
 
+@IonicPage()
 @Component({
     selector: 'page-asset-issue',
     templateUrl: 'asset-issue.html',
@@ -63,6 +64,9 @@ export class AssetIssuePage {
                 this.addresses = _
             })
 
+        if(!(this.selectedAsset && this.selectedAsset.length))
+            this.navCtrl.setRoot('AccountPage')
+
         //Load balances
         mvs.getBalances()
             .then((balances) => {
@@ -87,8 +91,13 @@ export class AssetIssuePage {
 
     }
 
-    onDepositOptionChange(event) {
-
+    ionViewDidEnter() {
+        console.log('Asset issue page loaded')
+        this.mvs.getMvsAddresses()
+            .then((addresses) => {
+                if (!Array.isArray(addresses) || !addresses.length)
+                    this.navCtrl.setRoot("LoginPage")
+            })
     }
 
     onFromAddressChange(event) {

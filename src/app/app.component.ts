@@ -5,7 +5,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { LanguageSwitcherPage } from '../pages/language-switcher/language-switcher';
 import { ThemeSwitcherPage } from '../pages/theme-switcher/theme-switcher';
 import { InformationPage } from '../pages/information/information';
-import { AssetIssuePage } from '../pages/asset-issue/asset-issue';
 
 import { Storage } from '@ionic/storage';
 
