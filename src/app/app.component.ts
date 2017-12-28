@@ -2,7 +2,6 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform, Events } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 
-import { AccountPage } from '../pages/account/account';
 import { DepositPage } from '../pages/deposit/deposit';
 import { LanguageSwitcherPage } from '../pages/language-switcher/language-switcher';
 import { ThemeSwitcherPage } from '../pages/theme-switcher/theme-switcher';

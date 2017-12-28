@@ -11,7 +11,6 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { MyApp } from './app.component';
 import { AppGlobals } from './app.global';
-import { AccountPage } from '../pages/account/account';
 import { ImportWalletPage } from '../pages/import-wallet/import-wallet';
 import { ImportWalletMobilePage } from '../pages/import-wallet-mobile/import-wallet-mobile';
 import { TransactionsPage } from '../pages/transactions/transactions';
@@ -42,7 +41,6 @@ export function HttpLoaderFactory(http: Http) {
 @NgModule({
     declarations: [
         MyApp,
-        AccountPage,
         DepositPage,
         ImportWalletPage,
         ImportWalletMobilePage,
@@ -79,7 +77,6 @@ export function HttpLoaderFactory(http: Http) {
     bootstrap: [IonicApp],
     entryComponents: [
         MyApp,
-        AccountPage,
         ImportWalletPage,
         ImportWalletMobilePage,
         LanguageSwitcherPage,

@@ -1,12 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController, Platform } from 'ionic-angular';
+import { IonicPage, NavController, AlertController, Platform } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
-import { DepositPage } from '../deposit/deposit';
-import { TransactionsPage } from '../transactions/transactions';
-import { AssetTransferPage } from '../asset-transfer/asset-transfer';
-import { ReceivePage } from '../receive/receive';
 
+@IonicPage()
 @Component({
     selector: 'page-account',
     templateUrl: 'account.html'
@@ -28,29 +25,48 @@ export class AccountPage {
 
     constructor(public nav: NavController, public translate: TranslateService, private mvs: MvsServiceProvider, private alertCtrl: AlertController, public platform: Platform) {
         this.loading = true;
-        this.sync()
+
+        //Reset last update time
+        var lastupdate = new Date()
+        lastupdate.setDate(0)
+        this.mvs.setUpdateTime(lastupdate)
     }
 
     format = (quantity, decimals) => quantity / Math.pow(10, decimals)
 
     ionViewDidEnter() {
-        this.syncinterval = setInterval(() => {
-            this.mvs.getUpdateNeeded().then((update_needed) => {
-                if (update_needed)
-                    this.mvs.setUpdateTime().then(() => this.sync())
+        console.log('Account page loaded')
+        this.mvs.getMvsAddresses()
+            .then((addresses) => {
+                if (Array.isArray(addresses) && addresses.length)
+                    this.initialize()
+                else
+                    this.nav.setRoot("LoginPage")
             })
-        }, 20000)
+    }
+
+    initialize = () => {
+        this.update()
+        this.syncinterval = setInterval(() => this.update(), 5000)
+    }
+
+    update = () => {
+        return this.mvs.getUpdateNeeded()
+            .then((update_needed) => {
+                if (update_needed)
+                    return this.sync().then(()=>this.mvs.setUpdateTime())
+            })
     }
 
     ionViewWillLeave = () => clearInterval(this.syncinterval)
 
-    gotoDeposit = (event, asset) => this.nav.push(DepositPage, { asset: asset })
+    gotoDeposit = (event, asset) => this.nav.push("DepositPage", { asset: asset })
 
-    gotoTransactions = (event, asset) => this.nav.push(TransactionsPage, { asset: asset })
+    gotoTransactions = (event, asset) => this.nav.push("TransactionsPage", { asset: asset })
 
-    gotoTransfer = (event, asset) => this.nav.push(AssetTransferPage, { asset: asset })
+    gotoTransfer = (event, asset) => this.nav.push("AssetTransferPage", { asset: asset })
 
-    gotoReceive = (even, asset) => this.nav.push(ReceivePage, { asset: asset })
+    gotoReceive = (even, asset) => this.nav.push("ReceivePage", { asset: asset })
 
     errorImg = e => e.target.remove()
 
@@ -77,7 +93,7 @@ export class AccountPage {
                                     handler: () => {
                                         this.mvs.hardReset().then(() => {
                                             confirm.dismiss()
-                                            this.nav.setRoot(LoginPage)
+                                            this.nav.setRoot("LoginPage")
                                             window.location.reload()
                                         })
                                     }
@@ -91,25 +107,16 @@ export class AccountPage {
         })
     }
 
-    private sync() {      //Sync for desktop
-
+    private sync() {
         //Only allow a single sync process
         if (this.syncing)
             return Promise.resolve()
         else {
             this.syncing = true
 
-            //Update height
-            this.mvs.updateMvsHeight()
-                .then((height: number) => {
-                    this.height = height
-                })
-
-            //Update tx data and balances
-            return this.mvs.getData()
-                .then(() => this.loadBalances())
-                .then(() => this.mvs.setUpdateTime())
-                .then(() => {
+            return Promise.all([this.updateHeight(), this.updateBalances()])
+                .then((results) => {
+                    this.height = results[0]
                     this.syncing = false
                 })
                 .catch((error) => {
@@ -117,6 +124,15 @@ export class AccountPage {
                     this.syncing = false
                 })
         }
+    }
+
+    private updateHeight = () => this.mvs.updateMvsHeight()
+
+    private updateBalances = () => {
+        //Update tx data and balances
+        return this.mvs.getData()
+            .then(() => this.loadBalances())
+            .then(() => this.mvs.setUpdateTime())
     }
 
     doRefresh(refresher) {        //Sync for mobile
