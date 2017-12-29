@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform, Events } from 'ionic-angular';
+import { SplashScreen } from '@ionic-native/splash-screen';
 import { TranslateService } from '@ngx-translate/core';
 
 import { Storage } from '@ionic/storage';
@@ -13,7 +14,7 @@ export class MyApp {
     rootPage: any
     pages: Array<{ title: string, component: any }> = [];
 
-    constructor(public platform: Platform, private storage: Storage, public translate: TranslateService, private event: Events) {
+    constructor(private splashScreen: SplashScreen, public platform: Platform, private storage: Storage, public translate: TranslateService, private event: Events) {
 
         this.initializeApp()
             .then(() => this.storage.get('language'))
@@ -27,6 +28,7 @@ export class MyApp {
                 }
                 return;
             })
+            .then(()=>this.splashScreen.hide())
             .catch((e) => console.error(e));
 
         this.setTheme();
@@ -109,8 +111,8 @@ export class MyApp {
     }
 
     initializeApp() {
-        this.initLanguage('en');
-        return this.platform.ready();
+        this.initLanguage('en')
+        return this.platform.ready()
     }
 
     openPage(page) {

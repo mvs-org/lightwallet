@@ -11,6 +11,7 @@ import { PassphrasePage } from '../pages/passphrase/passphrase';
 import { MvsServiceProvider } from '../providers/mvs-service/mvs-service';
 import { WalletServiceProvider } from '../providers/wallet-service/wallet-service';
 import { CryptoServiceProvider } from '../providers/crypto-service/crypto-service';
+import { SplashScreen } from '@ionic-native/splash-screen';
 
 var pckg = require('../../package.json');
 
@@ -48,6 +49,7 @@ export function HttpLoaderFactory(http: Http) {
         AppGlobals,
         { provide: ErrorHandler, useClass: IonicErrorHandler },
         MvsServiceProvider,
+        SplashScreen,
         WalletServiceProvider,
         CryptoServiceProvider,
     ]

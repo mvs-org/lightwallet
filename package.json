@@ -33,7 +33,7 @@
     "@ionic-native/core": "3.12.1",
     "@ionic-native/pin-check": "^4.1.0",
     "@ionic-native/pin-dialog": "^4.1.0",
-    "@ionic-native/splash-screen": "3.12.1",
+    "@ionic-native/splash-screen": "^3.12.1",
     "@ionic-native/status-bar": "3.12.1",
     "@ionic/storage": "^2.0.1",
     "@ngx-translate/core": "^7.2.0",
@@ -42,7 +42,6 @@
     "cordova-android": "6.4.0",
     "cordova-browser": "5.0.1",
     "cordova-clipboard": "^1.1.0",
-    "cordova-ios": "^4.4.0",
     "cordova-plugin-splashscreen": "^4.1.0",
     "cordova-plugin-whitelist": "^1.3.2",
     "crypto-js": "^3.1.9-1",
@@ -101,7 +100,6 @@
     },
     "platforms": [
       "android",
-      "ios",
       "browser"
     ]
   }
