@@ -148,10 +148,9 @@ export class AssetIssuePage {
 
     create() {
         return this.showLoading()
-            .then(() => this.toUpperCase(this.symbol))
             .then((addresses) => this.mvs.createIssueAssetTx(
                 this.passphrase,
-                this.symbol,
+                this.toUpperCase(this.symbol),
                 this.issuer_name,
                 Math.floor(parseFloat(this.max_supply) * Math.pow(10, this.asset_decimals)),
                 this.asset_decimals,
