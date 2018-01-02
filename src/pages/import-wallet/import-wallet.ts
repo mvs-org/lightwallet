@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController, LoadingController, Loading } from 'ionic-angular';
+import { IonicPage, NavController, AlertController, LoadingController, Loading } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
-import { AccountPage } from '../account/account';
+import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
 import { TranslateService } from '@ngx-translate/core';
 
+@IonicPage()
 @Component({
     selector: 'page-import-wallet',
     templateUrl: 'import-wallet.html',
-
 })
 export class ImportWalletPage {
 
@@ -15,7 +15,7 @@ export class ImportWalletPage {
     data: Array<any>
     fileLoaded: boolean
 
-    constructor(public nav: NavController, public navParams: NavParams, public mvs: MvsServiceProvider, private alertCtrl: AlertController, private loadingCtrl: LoadingController, private translate: TranslateService) {
+    constructor(public nav: NavController, public mvs: MvsServiceProvider, private wallet: WalletServiceProvider, private alertCtrl: AlertController, private loadingCtrl: LoadingController, private translate: TranslateService) {
         this.fileLoaded = false;
 
     }
@@ -28,7 +28,7 @@ export class ImportWalletPage {
 
             try {
                 this.data = JSON.parse(content)
-                this.mvs.setWallet(this.data).then(()=> this.fileLoaded = true)
+                this.wallet.setWallet(this.data).then(() => this.fileLoaded = true)
 
             } catch (e) {
                 console.error(e);
@@ -42,18 +42,16 @@ export class ImportWalletPage {
 
 
     decrypt(password) {
-        this.translate.get('WRONG_PASSWORD').subscribe((message: string) => {
-            this.mvs.setSeed(password)
-                .then(()=>Promise.all([this.mvs.getWallet(password), this.mvs.getAddressIndex()]))
-                .then((results) => this.mvs.generateAddresses(results[0], 0, results[1]))
-                .then((addresses) => this.mvs.addMvsAddresses(addresses))
-                .then(() => this.nav.setRoot(AccountPage))
-                .then(() => this.nav.setRoot(AccountPage))
-                .catch((e) => {
-                    console.error(e);
-                    this.showError(message);
-                });
-        });
+        this.mvs.dataReset()
+            .then(() => this.wallet.setSeed(password))
+            .then(() => Promise.all([this.wallet.getWallet(password), this.mvs.getAddressIndex()]))
+            .then((results) => this.mvs.generateAddresses(results[0], 0, results[1]))
+            .then((addresses) => this.mvs.setMvsAddresses(addresses))
+            .then(() => this.nav.setRoot("AccountPage", { reset: true }))
+            .catch((e) => {
+                console.error(e);
+                this.showError('MESSAGE.PASSWORD_WRONG');
+            });
     }
 
     showLoading() {
@@ -66,18 +64,19 @@ export class ImportWalletPage {
         })
     }
 
-    showError(text) {
+    showError(message_key, pop = false) {
         if (this.loading) {
             this.loading.dismiss();
         }
-        this.translate.get('MESSAGE.ERROR_TITLE').subscribe((title: string) => {
+        this.translate.get(['MESSAGE.ERROR_TITLE', message_key]).subscribe((translations: any) => {
             let alert = this.alertCtrl.create({
-                title: title,
-                subTitle: text,
+                title: translations['MESSAGE.ERROR_TITLE'],
+                message: translations[message_key],
                 buttons: [{
                     text: 'OK',
                     handler: (() => {
-                        this.nav.pop();
+                        if (pop)
+                            this.nav.pop();
                     })
                 }]
             });

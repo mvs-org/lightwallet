@@ -1,7 +1,11 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 
+@IonicPage({
+    name: 'transactions-page',
+    segment: 'transactions/:asset'
+})
 @Component({
     selector: 'page-transactions',
     templateUrl: 'transactions.html',
@@ -16,6 +20,15 @@ export class TransactionsPage {
     constructor(public navCtrl: NavController, public navParams: NavParams, private mvsServiceProvider: MvsServiceProvider) {
         this.asset = navParams.get('asset');
         this.showTxs({ symbol: this.asset })
+    }
+
+    ionViewDidEnter() {
+        console.log('Transactions page loaded')
+        this.mvsServiceProvider.getMvsAddresses()
+            .then((addresses) => {
+                if (!Array.isArray(addresses) || !addresses.length)
+                    this.navCtrl.setRoot("LoginPage")
+            })
     }
 
     private orderTxs(txs) {

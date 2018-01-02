@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { IonicPage, NavController } from 'ionic-angular';
 import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
 
-
-
+@IonicPage()
 @Component({
     selector: 'page-export-wallet',
     templateUrl: 'export-wallet.html',
@@ -14,15 +13,22 @@ export class ExportWalletPage {
     showQRCode: boolean;
 
     constructor(public nav: NavController, private walletService: WalletServiceProvider) {
-
-      this.gencode();
       this.connectcode = "";
+      this.gencode();
       this.showQRCode = false;
+    }
 
+    ionViewDidEnter() {
+        console.log('Export wallet page loaded')
+        this.walletService.isSetup()
+            .then((result) => {
+                if (!result)
+                    this.nav.setRoot("LoginPage")
+            })
     }
 
     gencode = () =>{
-        this.walletService.getEncSeed()
+        this.walletService.exportWallet()
         .then((content)=>{
             this.connectcode=content;
         });

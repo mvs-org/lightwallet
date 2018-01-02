@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController, LoadingController, Loading, Platform } from 'ionic-angular';
+import { IonicPage, NavController, AlertController, LoadingController, Loading, Platform } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { PassphrasePage } from '../passphrase/passphrase';
 import { AppGlobals } from '../../app/app.global';
 
+@IonicPage()
 @Component({
     selector: 'page-import-mnemonic',
     templateUrl: 'import-mnemonic.html',
@@ -18,7 +19,6 @@ export class ImportMnemonicPage {
     passed: boolean;
 
     constructor(public nav: NavController,
-        public navParams: NavParams,
         public mvs: MvsServiceProvider,
         private alertCtrl: AlertController,
         private loadingCtrl: LoadingController,

@@ -1,8 +1,12 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController, LoadingController, Loading, NavParams, Platform } from 'ionic-angular';
+import { IonicPage, NavController, AlertController, LoadingController, Loading, NavParams, Platform } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { TranslateService } from '@ngx-translate/core';
 
+@IonicPage({
+    name: 'transfer-page',
+    segment: 'send/:asset'
+})
 @Component({
     selector: 'page-asset-transfer',
     templateUrl: 'asset-transfer.html',
@@ -70,6 +74,15 @@ export class AssetTransferPage {
             })
     }
 
+    ionViewDidEnter() {
+        console.log('Asset transfer page loaded')
+        this.mvs.getMvsAddresses()
+            .then((addresses) => {
+                if (!Array.isArray(addresses) || !addresses.length)
+                    this.navCtrl.setRoot("LoginPage")
+            })
+    }
+
     onFromAddressChange(event) {
         if (this.sendFrom == 'auto') {
             this.showBalance = this.balance
@@ -82,7 +95,13 @@ export class AssetTransferPage {
         }
     }
 
-    validQuantity = (quantity) => quantity != undefined && this.showBalance >= parseFloat(quantity) * Math.pow(10, this.decimals)
+    validQuantity = (quantity) => quantity != undefined && this.showBalance >= parseFloat(quantity) * Math.pow(10, this.decimals) && this.countDecimals(quantity) <= this.decimals
+
+    countDecimals(value) {
+        if (Math.floor(value) !== value && value.toString().split(".").length > 1)
+            return value.toString().split(".")[1].length || 0;
+        return 0;
+    }
 
     cancel(e) {
         e.preventDefault()
@@ -96,18 +115,28 @@ export class AssetTransferPage {
                 this.loading.dismiss()
             })
             .catch((error) => {
-                console.error(error)
                 this.loading.dismiss()
-                this.translate.get('ERROR_SEND_TEXT').subscribe((message: string) => {
-                    this.showAlert(message)
-                })
             })
     }
 
     create() {
         return this.showLoading()
             .then(() => this.mvs.getMvsAddresses())
-            .then((addresses) => this.mvs.createTx(this.passphrase, this.selectedAsset, this.recipient_address, Math.floor(parseFloat(this.quantity) * Math.pow(10, this.decimals)), (this.sendFrom != 'auto') ? this.sendFrom : null, (this.changeAddress != 'auto') ? this.changeAddress : undefined))
+            .then((addresses) => this.mvs.createTx(
+                this.passphrase,
+                this.selectedAsset,
+                this.recipient_address,
+                Math.floor(parseFloat(this.quantity) * Math.pow(10, this.decimals)),
+                (this.sendFrom != 'auto') ? this.sendFrom : null,
+                (this.changeAddress != 'auto') ? this.changeAddress : undefined
+            ))
+            .catch((error) => {
+                console.error(error.message)
+                if (error.message == "ERR_DECRYPT_WALLET")
+                    this.showError('MESSAGE.PASSWORD_WRONG')
+                else
+                    this.showError('MESSAGE.CREATE_TRANSACTION')
+            })
     }
 
     send() {
@@ -119,11 +148,12 @@ export class AssetTransferPage {
                     this.showSent(message, result.hash)
                 })
             })
-            .catch(() => {
+            .catch((error) => {
                 this.loading.dismiss()
-                this.translate.get('ERROR_SEND_TEXT').subscribe((message: string) => {
-                    this.showAlert(message)
-                })
+                if (error.message == 'ERR_CONNECTION')
+                    this.showError('ERROR_SEND_TEXT')
+                else if (error.message == 'ERR_BROADCAST')
+                    this.showError('MESSAGE.BROADCAST_ERROR')
             })
     }
 
@@ -131,7 +161,7 @@ export class AssetTransferPage {
 
     validrecipient = this.mvs.validAddress
 
-    recipientChanged = () => {if(this.recipient_address) this.recipient_address=this.recipient_address.trim()}
+    recipientChanged = () => { if (this.recipient_address) this.recipient_address = this.recipient_address.trim() }
 
     showLoading() {
         return new Promise((resolve, reject) => {
@@ -159,16 +189,16 @@ export class AssetTransferPage {
         })
     }
 
-    showAlert(text) {
-        this.translate.get('MESSAGE.ERROR_TITLE').subscribe((title: string) => {
-            this.translate.get('OK').subscribe((ok: string) => {
-                let alert = this.alertCtrl.create({
-                    title: title,
-                    subTitle: text,
-                    buttons: [ok]
-                })
-                alert.present(prompt)
-            })
+    showError(message_key) {
+        this.translate.get(['MESSAGE.ERROR_TITLE', message_key, 'OK']).subscribe((translations: any) => {
+            let alert = this.alertCtrl.create({
+                title: translations['MESSAGE.ERROR_TITLE'],
+                message: translations[message_key],
+                buttons: [{
+                    text: translations['OK']
+                }]
+            });
+            alert.present(alert);
         })
     }
 

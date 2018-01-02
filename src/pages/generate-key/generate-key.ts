@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController, Loading, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, Loading, LoadingController } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { PassphrasePage } from '../passphrase/passphrase';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 
+@IonicPage()
 @Component({
     selector: 'page-generate-key',
     templateUrl: 'generate-key.html',

@@ -1,12 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController, Platform } from 'ionic-angular';
+import { IonicPage, NavController, AlertController, Platform } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
-import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
-import { ExportWalletPage } from '../export-wallet/export-wallet';
 import { TranslateService } from '@ngx-translate/core';
-import { LoginPage } from '../login/login';
 
-
+@IonicPage()
 @Component({
     selector: 'page-settings',
     templateUrl: 'settings.html',
@@ -15,24 +12,22 @@ export class SettingsPage {
 
     connectcode: any;
 
-    constructor(public nav: NavController,  private mvs: MvsServiceProvider, private walletService: WalletServiceProvider, public translate: TranslateService, private alertCtrl: AlertController, public platform: Platform) {
+    constructor(public nav: NavController,  private mvs: MvsServiceProvider, public translate: TranslateService, private alertCtrl: AlertController, public platform: Platform) {
 
-      this.gencode();
-      this.connectcode = "";
+    }
 
+    ionViewDidEnter() {
+        console.log('Settings page loaded')
+        this.mvs.getMvsAddresses()
+            .then((addresses) => {
+                if (!Array.isArray(addresses) || !addresses.length)
+                    this.nav.setRoot("LoginPage")
+            })
     }
 
     reset = () => this.mvs.dataReset();
 
-    ExportWalletPage = e => this.nav.push(ExportWalletPage)
-
-    gencode = () =>{
-        this.walletService.getEncSeed()
-        .then((content)=>{
-        this.connectcode=content;
-        });
-    }
-
+    ExportWalletPage = e => this.nav.push("ExportWalletPage")
 
     /**
      * Logout dialog
@@ -57,7 +52,7 @@ export class SettingsPage {
                                     handler: () => {
                                         this.mvs.hardReset().then(() => {
                                             confirm.dismiss()
-                                            this.nav.setRoot(LoginPage)
+                                            this.nav.setRoot("LoginPage")
                                             window.location.reload()
                                         })
                                     }
@@ -91,7 +86,7 @@ export class SettingsPage {
                                     handler: () => {
                                         this.mvs.hardReset().then(() => {
                                             confirm.dismiss()
-                                            this.nav.setRoot(LoginPage)
+                                            this.nav.setRoot("LoginPage")
                                             window.location.reload()
                                         })
                                     }

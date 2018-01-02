@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
+import { Events } from 'ionic-angular';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { AppGlobals } from '../../app/app.global';
 import 'rxjs/add/operator/map';
 import { Storage } from '@ionic/storage';
+import { WalletServiceProvider } from '../wallet-service/wallet-service';
 import * as Metaverse from 'metaversejs/dist/metaverse.js';
-import * as CryptoJS from 'crypto-js';
 
 
 @Injectable()
@@ -23,6 +24,8 @@ export class MvsServiceProvider {
     constructor(
         public http: Http,
         public globals: AppGlobals,
+        private wallet: WalletServiceProvider,
+        private event: Events,
         private storage: Storage
     ) {
         this.headers = new Headers();
@@ -47,75 +50,14 @@ export class MvsServiceProvider {
             })
     }
 
-    getHDNodeFromMnemonic(mnemonic) {
-        return Metaverse.wallet.fromMnemonic(mnemonic)
-    }
-
-    getHDNodeFromSeed(seed) {
-        Metaverse.wallet.fromSeed(seed)
-        return Metaverse.wallet.fromSeed(seed, Metaverse.networks[this.globals.network])
-    }
-
-    setWallet(wallet) {
-        return this.storage.set('wallet', wallet)
-    }
-
-    setMobileWallet(seed) {
-        return this.storage.set('seed', seed)
-    }
-
-    setSeed(passphrase){
-    return this.getMnemonic(passphrase)
-      .then((mnemonic)=>Metaverse.wallet.mnemonicToSeed(mnemonic, Metaverse.networks[this.globals.network]))
-      .then((seed)=>this.encrypt(seed.toString('hex'),passphrase))
-      .then((encseed)=>this.storage.set('seed',encseed))
-    }
-
-    setSeedMobile(passphrase, mnemonic){
-    return Metaverse.wallet.mnemonicToSeed(mnemonic, Metaverse.networks[this.globals.network])
-        .then((seed)=>this.encrypt(seed.toString('hex'),passphrase))
-        .then((encseed)=> this.storage.set('seed',encseed))
-    }
-
-    getMnemonic(passphrase) {
-    console.info('loading menmonic')
-        return this.storage.get('wallet')
-            .then((wallet) => this.decrypt(wallet.mnemonic, passphrase))
-            .catch(() => {
-                throw Error('ERR_DECRYPT_WALLET')
-            })
-    }
-
-    getSeed(passphrase) {
-    console.info('loading seed')
-        return this.storage.get('seed')
-            .then((seed) => this.decrypt(seed, passphrase))
-            .catch((error) => {
-                console.error(error)
-                throw Error('ERR_DECRYPT_WALLET_FROM_SEED')
-            })
-    }
-
-    getEncSeed() {
-        return this.storage.get('seed')
-    }
-
     getAddressIndex() {
         return this.storage.get('wallet')
             .then((wallet) => wallet.index)
     }
 
-    decrypt(ec, pincode) {
-        return new Promise(resolve => resolve(JSON.parse(CryptoJS.AES.decrypt(ec, pincode).toString(CryptoJS.enc.Utf8))))
-    }
-
-    encrypt(ec, pincode) {
-        return new Promise(resolve => resolve(CryptoJS.AES.encrypt(JSON.stringify(ec), pincode).toString()))
-    }
-
     createTx(passphrase, asset, recipient_address, quantity, from_address, change_address) {
         return this.updateInOuts()
-            .then(()=>this.getUtxoFrom(from_address))
+            .then(() => this.getUtxoFrom(from_address))
             .then((utxo) => {
                 if (change_address == undefined) {
                     //Set change address to first utxo's address
@@ -136,18 +78,18 @@ export class MvsServiceProvider {
                             transaction.addOutput(change_address, change_asset, -transfer_info.change[change_asset])
                     })
                 }
-                return Promise.all([this.getWallet(passphrase), transaction, this.addTxInputs(transaction, transfer_info.outputs)]);
+                return Promise.all([this.wallet.getWallet(passphrase), transaction, this.addTxInputs(transaction, transfer_info.outputs)]);
             })
             .then((results) => results[0].sign(results[1]))
             .catch((error) => {
                 console.error(error)
-                throw error.message;
+                throw Error(error.message);
             })
     }
 
     createDepositTx(passphrase, recipient_address, quantity, locktime, from_address, change_address) {
         return this.updateInOuts()
-            .then(()=>this.getUtxoFrom(from_address))
+            .then(() => this.getUtxoFrom(from_address))
             .then((utxo) => {
                 if (change_address == undefined) {
                     //Set change address to first utxo's address
@@ -159,10 +101,10 @@ export class MvsServiceProvider {
                 //Create new TX
                 var transaction = new Metaverse.transaction();
                 //Get recipient address
-                if((recipient_address==undefined||recipient_address=='auto')&&transfer_info.outputs.length)
-                    recipient_address=transfer_info.outputs[0].address
+                if ((recipient_address == undefined || recipient_address == 'auto') && transfer_info.outputs.length)
+                    recipient_address = transfer_info.outputs[0].address
                 //Set recipient output
-                transaction.addLockOutput(recipient_address, quantity, parseInt(locktime));
+                transaction.addLockOutput(recipient_address, quantity, parseInt(locktime), Metaverse.networks[this.globals.network]);
                 //Add changes
                 let changes = Object.keys(transfer_info.change);
                 if (changes.length) {
@@ -171,32 +113,32 @@ export class MvsServiceProvider {
                             transaction.addOutput(change_address, change_asset, -transfer_info.change[change_asset])
                     })
                 }
-                return Promise.all([this.getWallet(passphrase), transaction, this.addTxInputs(transaction, transfer_info.outputs)]);
+                return Promise.all([this.wallet.getWallet(passphrase), transaction, this.addTxInputs(transaction, transfer_info.outputs)]);
             })
             .then((results) => results[0].sign(results[1]))
             .catch((error) => {
                 console.error(error)
-                throw error.message;
+                throw Error(error.message);
             })
     }
 
     createIssueAssetTx(passphrase, symbol, issuer, max_supply, precision, description, issue_address, fee_address, change_address) {
         console.log(passphrase, symbol, issuer, max_supply, precision, description, issue_address, fee_address, change_address)
         return this.updateInOuts()
-            .then(()=>this.getUtxoFrom(fee_address))
+            .then(() => this.getUtxoFrom(fee_address))
             .then((utxo) => {
                 if (change_address == undefined) {
                     //Set change address to first utxo's address
                     change_address = utxo[0].address;
                 }
-                return Metaverse.transaction_builder.findUtxo(utxo, 'ETP', 0, 10*100000000)
+                return Metaverse.transaction_builder.findUtxo(utxo, 'ETP', 0, 10 * 100000000)
             })
             .then((transfer_info: any) => {
                 //Create new TX
                 var transaction = new Metaverse.transaction();
                 //Get recipient address
-                if((issue_address==undefined||issue_address=='auto')&&transfer_info.outputs.length)
-                    issue_address=transfer_info.outputs[0].address
+                if ((issue_address == undefined || issue_address == 'auto') && transfer_info.outputs.length)
+                    issue_address = transfer_info.outputs[0].address
                 //Set recipient output
                 transaction.addAssetIssueOutput(symbol, parseInt(max_supply), parseInt(precision), issuer, issue_address, description);
                 //Add changes
@@ -209,29 +151,29 @@ export class MvsServiceProvider {
                     })
                 }
                 console.log(transaction)
-                return Promise.all([this.getWallet(passphrase), transaction, this.addTxInputs(transaction, transfer_info.outputs)]);
+                return Promise.all([this.wallet.getWallet(passphrase), transaction, this.addTxInputs(transaction, transfer_info.outputs)]);
             })
             .then((results) => results[0].sign(results[1]))
             .catch((error) => {
                 console.error(error)
-                throw error.message;
+                throw Error(error.message);
             })
     }
 
 
     validAddress = (address) => {
-        if(address.length!=34)
+        if (address.length != 34)
             return false
-        let valid=false
-        switch(address.charAt(0)){
-         case this.globals.ADDRESS_PREFIX_MAINNET:
-             valid=this.globals.network=="mainnet"
-             break
-         case this.globals.ADDRESS_PREFIX_TESTNET:
-             valid = this.globals.network=="testnet"
-             break
-         case this.globals.ADDRESS_PREFIX_P2SH:
-             valid = true
+        let valid = false
+        switch (address.charAt(0)) {
+            case this.globals.ADDRESS_PREFIX_MAINNET:
+                valid = this.globals.network == "mainnet"
+                break
+            case this.globals.ADDRESS_PREFIX_TESTNET:
+                valid = this.globals.network == "testnet"
+                break
+            case this.globals.ADDRESS_PREFIX_P2SH:
+                valid = true
         }
         return valid
     }
@@ -260,16 +202,6 @@ export class MvsServiceProvider {
         })
     }
 
-
-    getWallet(passphrase) {
-        return this.getSeed(passphrase)
-            .then((seed:string) => this.getHDNodeFromSeed(Buffer.from(seed,'hex')))
-            .catch((error)=>{
-                console.error(error)
-                return this.getMnemonic(passphrase)
-                    .then((mnemonic) => this.getHDNodeFromMnemonic(mnemonic))
-                })
-    }
 
 
     fetchMvsHeight() {
@@ -321,7 +253,7 @@ export class MvsServiceProvider {
     getBalances() {
         return this.storage.get('balances')
             .then((balances: Array<any>) => {
-                let b = this.DEFAULT_BALANCES;
+                let b = JSON.parse(JSON.stringify(this.DEFAULT_BALANCES));
                 if (balances && Object.keys(balances).length)
                     Object.keys(balances).forEach((asset) => {
                         b[asset] = balances[asset];
@@ -347,14 +279,12 @@ export class MvsServiceProvider {
     }
 
     setBalances(newBalances) {
-        if (Object.keys(newBalances).length == 0)
-            newBalances = this.DEFAULT_BALANCES
         return this.getBalances()
             .then((balances) => {
                 //Check if balance has been changed
                 let nb = JSON.parse(JSON.stringify(this.DEFAULT_BALANCES));
-                Object.keys(newBalances).forEach((asset)=>{
-                    nb[asset]=newBalances[asset];
+                Object.keys(newBalances).forEach((asset) => {
+                    nb[asset] = newBalances[asset];
                 })
                 if (JSON.stringify(balances) != JSON.stringify(nb)) {
                     return this.storage.set('balances', newBalances)
@@ -427,10 +357,11 @@ export class MvsServiceProvider {
     getUpdateNeeded() {
         return new Promise((resolve, reject) => {
             var UPDATE_INTERVAL = 20
-            this.getUpdateTime().then((date: Date) => {
-                var now = new Date()
-                resolve(typeof date === 'undefined' || (+now - +date) / 1000 > UPDATE_INTERVAL)
-            }, reject)
+            this.getUpdateTime()
+                .then((date: Date) => {
+                    var now = new Date()
+                    resolve(typeof date === 'undefined' || (+now - +date) / 1000 > UPDATE_INTERVAL)
+                }, reject)
         })
     }
 
@@ -443,8 +374,10 @@ export class MvsServiceProvider {
             .then(() => this.setAddressBalances(addressbalances))
     }
 
-    setUpdateTime() {
-        return this.storage.set('last_update', new Date())
+    setUpdateTime(lastupdate=undefined) {
+        if(lastupdate==undefined)
+            lastupdate=new Date()
+        return this.storage.set('last_update', lastupdate)
     }
 
     getUpdateTime() {
@@ -583,7 +516,13 @@ export class MvsServiceProvider {
     addMvsAddresses(addresses) {
         return this.getMvsAddresses()
             .then((addr: any[]) => this.storage.set('mvs_addresses', addr.concat(addresses)))
-            .then(() => this.getMvsAddresses() )
+            .then(() => this.getMvsAddresses())
+    }
+
+    setMvsAddresses(addresses) {
+        return this.storage.set('mvs_addresses', addresses)
+            .then(() => this.getMvsAddresses())
+            .then(() => this.event.publish('settings_update', {}))
     }
 
     addMvsTxs(newtxs) {
@@ -649,16 +588,29 @@ export class MvsServiceProvider {
             .then(() => this.assetOrder())
     }
 
-    broadcast(rawtx, max_fee=undefined) {
-        return new Promise((resolve, reject) => {
-            this._post(this.globals.host[this.globals.network] + '/broadcast', { "tx": rawtx, "max_fee": max_fee }).then(resolve, _ => reject(_))
-        })
+    broadcast(rawtx, max_fee = undefined) {
+        return this._post(this.globals.host[this.globals.network] + '/broadcast', { "tx": rawtx, "max_fee": max_fee })
+            .catch((error) => {
+                if (error.message == 'ERR_CONNECTION')
+                    throw Error(error.message)
+                else
+                    throw Error('ERR_BROADCAST')
+            })
     }
 
     private _post(url, data) {
         return new Promise((resolve, reject) => {
             this.http.post(url, data, this.options)
-                .subscribe(_ => resolve(_.json().result), _ => reject(_))
+                .subscribe(_ => resolve(_.json().result), _ => {
+                    try {
+                        let message = _.json().code
+                        console.error(message)
+                        reject(Error(message))
+                    } catch (error) {
+                        console.log(error)
+                        reject(Error('ERR_CONNECTION'))
+                    }
+                })
         });
     }
 

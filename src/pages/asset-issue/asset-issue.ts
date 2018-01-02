@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController, LoadingController, Loading, NavParams, Platform } from 'ionic-angular';
+import { IonicPage, NavController, AlertController, LoadingController, Loading, NavParams, Platform } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { TranslateService } from '@ngx-translate/core';
 
+@IonicPage()
 @Component({
     selector: 'page-asset-issue',
     templateUrl: 'asset-issue.html',
@@ -63,6 +64,9 @@ export class AssetIssuePage {
                 this.addresses = _
             })
 
+        if(!(this.selectedAsset && this.selectedAsset.length))
+            this.navCtrl.setRoot('AccountPage')
+
         //Load balances
         mvs.getBalances()
             .then((balances) => {
@@ -87,8 +91,13 @@ export class AssetIssuePage {
 
     }
 
-    onDepositOptionChange(event) {
-
+    ionViewDidEnter() {
+        console.log('Asset issue page loaded')
+        this.mvs.getMvsAddresses()
+            .then((addresses) => {
+                if (!Array.isArray(addresses) || !addresses.length)
+                    this.navCtrl.setRoot("LoginPage")
+            })
     }
 
     onFromAddressChange(event) {
@@ -107,9 +116,10 @@ export class AssetIssuePage {
 
     }
 
-    validSymbol = (symbol) => (symbol.length > 2) && (symbol.length < 64) && (!/[^A-Za-z0-9]/g.test(symbol))
+    validSymbol = (symbol) => (symbol.length > 2) && (symbol.length < 64) && (!/[^A-Za-z0-9.]/g.test(symbol))
 
-    validName = (issuer_name) => (issuer_name.length > 0) && (issuer_name.length < 64) && (!/[^A-Za-z0-9]/g.test(issuer_name))
+    validName = (issuer_name) => (issuer_name.length > 0) && (issuer_name.length < 64) && (!/[^A-Za-z0-9.]/g.test(issuer_name))
+
 
     validDescription = (description) => (description.length > 0) && (description.length < 64)
 
@@ -131,12 +141,8 @@ export class AssetIssuePage {
                 this.rawtx = tx.encode().toString('hex')
                 this.loading.dismiss()
             })
-            .catch((error) => {
-                console.error(error)
+            .catch((error)=>{
                 this.loading.dismiss()
-                this.translate.get('ERROR_SEND_TEXT').subscribe((message: string) => {
-                    this.showAlert(message)
-                })
             })
     }
 
@@ -154,6 +160,13 @@ export class AssetIssuePage {
                 (this.sendFrom != 'auto') ? this.sendFrom : null,
                 undefined
             ))
+            .catch((error) => {
+                if (error.message == "ERR_DECRYPT_WALLET")
+                    this.showError('MESSAGE.PASSWORD_WRONG')
+                else
+                    this.showError('MESSAGE.CREATE_TRANSACTION')
+                throw Error('ERR_CREATE_TX')
+            })
     }
 
     confirm() {
@@ -197,11 +210,12 @@ export class AssetIssuePage {
                     this.showSent(message, result.hash)
                 })
             })
-            .catch(() => {
+            .catch((error) => {
                 this.loading.dismiss()
-                this.translate.get('ERROR_SEND_TEXT').subscribe((message: string) => {
-                    this.showAlert(message)
-                })
+                if(error.message=='ERR_CONNECTION')
+                    this.showError('ERROR_SEND_TEXT')
+                else if(error.message=='ERR_BROADCAST')
+                    this.showError('MESSAGE.BROADCAST_ERROR')
             })
     }
 
@@ -254,6 +268,19 @@ export class AssetIssuePage {
             textUpperCase = textUpperCase + text.charAt(i).toUpperCase()
         }
         return textUpperCase
+    }
+
+    showError(message_key) {
+        this.translate.get(['MESSAGE.ERROR_TITLE', message_key, 'OK']).subscribe((translations: any) => {
+            let alert = this.alertCtrl.create({
+                title: translations['MESSAGE.ERROR_TITLE'],
+                message: translations[message_key],
+                buttons: [{
+                    text: translations['OK']
+                }]
+            });
+            alert.present(alert);
+        })
     }
 
 }
