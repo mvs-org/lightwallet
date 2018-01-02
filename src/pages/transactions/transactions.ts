@@ -2,7 +2,10 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 
-@IonicPage()
+@IonicPage({
+    name: 'transactions-page',
+    segment: 'transactions/:asset'
+})
 @Component({
     selector: 'page-transactions',
     templateUrl: 'transactions.html',

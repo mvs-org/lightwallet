@@ -3,7 +3,10 @@ import { IonicPage, NavController, AlertController, LoadingController, Loading, 
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { TranslateService } from '@ngx-translate/core';
 
-@IonicPage()
+@IonicPage({
+    name: 'transfer-page',
+    segment: 'send/:asset'
+})
 @Component({
     selector: 'page-asset-transfer',
     templateUrl: 'asset-transfer.html',
@@ -111,7 +114,7 @@ export class AssetTransferPage {
                 this.rawtx = tx.encode().toString('hex')
                 this.loading.dismiss()
             })
-            .catch((error)=>{
+            .catch((error) => {
                 this.loading.dismiss()
             })
     }
@@ -145,11 +148,11 @@ export class AssetTransferPage {
                     this.showSent(message, result.hash)
                 })
             })
-            .catch((error)=>{
+            .catch((error) => {
                 this.loading.dismiss()
-                if(error.message=='ERR_CONNECTION')
+                if (error.message == 'ERR_CONNECTION')
                     this.showError('ERROR_SEND_TEXT')
-                else if(error.message=='ERR_BROADCAST')
+                else if (error.message == 'ERR_BROADCAST')
                     this.showError('MESSAGE.BROADCAST_ERROR')
             })
     }

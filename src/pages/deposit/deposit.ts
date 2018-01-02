@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, AlertController, LoadingController, Loading, NavParams, Platform } from 'ionic-angular';
+import { IonicPage, NavController, AlertController, LoadingController, Loading, Platform } from 'ionic-angular';
 import { AppGlobals } from '../../app/app.global';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { TranslateService } from '@ngx-translate/core';
@@ -38,7 +38,6 @@ export class DepositPage {
         private alertCtrl: AlertController,
         private globals: AppGlobals,
         private loadingCtrl: LoadingController,
-        public navParams: NavParams,
         private mvs: MvsServiceProvider,
         public platform: Platform,
         private translate: TranslateService) {

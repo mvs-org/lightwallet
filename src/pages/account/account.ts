@@ -60,13 +60,13 @@ export class AccountPage {
 
     ionViewWillLeave = () => clearInterval(this.syncinterval)
 
-    gotoDeposit = (event, asset) => this.nav.push("DepositPage", { asset: asset })
+    gotoDeposit = (event, asset) => this.nav.push("DepositPage")
 
-    gotoTransactions = (event, asset) => this.nav.push("TransactionsPage", { asset: asset })
+    gotoTransactions = (event, asset) => this.nav.push("transactions-page", { asset: asset })
 
-    gotoTransfer = (event, asset) => this.nav.push("AssetTransferPage", { asset: asset })
+    gotoTransfer = (event, asset) => this.nav.push("transfer-page", { asset: asset })
 
-    gotoReceive = (even, asset) => this.nav.push("ReceivePage", { asset: asset })
+    gotoReceive = (even, asset) => this.nav.push("receive-page", { asset: asset })
 
     errorImg = e => e.target.remove()
 
