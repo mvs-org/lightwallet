@@ -187,7 +187,7 @@
     "RESET_MESSAGE_MOBILE": "All data will be erased. To log in, you will need your backup words or scan the QR Code from your desktop Light wallet.",
     "IMPORT.SCAN_QRCODE_TEXT": "Import my account to my phone",
     "IMPORT.SCAN_QRCODE_BUTTON":"Scan QR Code",
-  
+
     "ASSET_ISSUE": "Create Asset",
     "NOTICE_ASSET_ISSUE_FEE": "Please be aware that the creation of a new asset cost 10 ETP.",
 
@@ -218,6 +218,8 @@
     "MESSAGE.BROADCAST_ERROR": "Unable to broadcast transaction.",
 
     "LOGIN": "Login",
-    "HOW_TO_IMPORT_WALLET_MOBILE" : "Howto Import"
+    "HOW_TO_IMPORT_WALLET_MOBILE" : "Howto Import",
+
+    "MESSAGE.ISSUE_INSUFFICIENT_BALANCE" : "You need at least 10 ETP to create an Asset."
 
 }

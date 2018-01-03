@@ -162,6 +162,8 @@ export class AssetIssuePage {
             .catch((error) => {
                 if (error.message == "ERR_DECRYPT_WALLET")
                     this.showError('MESSAGE.PASSWORD_WRONG')
+                else if (error.message == "ERR_INSUFFICIENT_BALANCE")
+                    this.showError('MESSAGE.ISSUE_INSUFFICIENT_BALANCE')
                 else
                     this.showError('MESSAGE.CREATE_TRANSACTION')
                 throw Error('ERR_CREATE_TX')

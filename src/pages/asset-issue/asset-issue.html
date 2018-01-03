@@ -93,7 +93,7 @@
             <ion-col>
                 <button ion-button full [disabled]="!sendForm.form.valid||!validSymbol(symbol)||!validName(issuer_name)||!validDescription(description)||(issue_address=='custom' && !validIssueAddress(custom_issue_address))" (click)="confirm()" icon-left color="secondary">
                     <ion-icon disabled="checked" name="send"></ion-icon>
-                    {{"SEND" | translate}}
+                    {{"ISSUE.CREATE" | translate}}
                 </button>
             </ion-col>
             <ion-col>
