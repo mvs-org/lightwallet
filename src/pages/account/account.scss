@@ -74,6 +74,12 @@ page-account {
       margin-top: -4px !important;
     }
 
+    //specificity mobile refresh
+    .mini-loader-mobile-offline {
+      margin-top: 0px !important;
+      margin-bottom: 30px !important;
+    }
+
     // loading animation
     .mini-loader,
     .mini-loader:before,
@@ -149,5 +155,10 @@ page-account {
 
     .asset-container {
       height: 200px;
+    }
+
+    .offlineIcon {
+      color: red;
+      padding-right: 10px;
     }
 }
