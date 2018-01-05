@@ -8,7 +8,8 @@ import { TranslateModule} from '@ngx-translate/core';
         PassphrasePage,
     ],
     imports: [
-        IonicPageModule.forChild(PassphrasePage),TranslateModule
+        IonicPageModule.forChild(PassphrasePage),
+        TranslateModule
     ],
     entryComponents: [
     ],

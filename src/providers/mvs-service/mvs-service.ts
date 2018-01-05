@@ -522,6 +522,7 @@ export class MvsServiceProvider {
         return this.getMvsAddresses()
             .then((addr: any[]) => this.storage.set('mvs_addresses', addr.concat(addresses)))
             .then(() => this.getMvsAddresses())
+            .then(() => this.event.publish('settings_update', {}))
     }
 
     setMvsAddresses(addresses) {
