@@ -50,11 +50,6 @@ export class MvsServiceProvider {
             })
     }
 
-    getAddressIndex() {
-        return this.storage.get('wallet')
-            .then((wallet) => wallet.index)
-    }
-
     createTx(passphrase, asset, recipient_address, quantity, from_address, change_address) {
         return this.updateInOuts()
             .then(() => this.getUtxoFrom(from_address))
