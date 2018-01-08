@@ -148,10 +148,9 @@ export class AssetIssuePage {
 
     create() {
         return this.showLoading()
-            .then(() => this.toUpperCase(this.symbol))
             .then((addresses) => this.mvs.createIssueAssetTx(
                 this.passphrase,
-                this.symbol,
+                this.toUpperCase(this.symbol),
                 this.issuer_name,
                 Math.floor(parseFloat(this.max_supply) * Math.pow(10, this.asset_decimals)),
                 this.asset_decimals,
@@ -163,6 +162,8 @@ export class AssetIssuePage {
             .catch((error) => {
                 if (error.message == "ERR_DECRYPT_WALLET")
                     this.showError('MESSAGE.PASSWORD_WRONG')
+                else if (error.message == "ERR_INSUFFICIENT_BALANCE")
+                    this.showError('MESSAGE.ISSUE_INSUFFICIENT_BALANCE')
                 else
                     this.showError('MESSAGE.CREATE_TRANSACTION')
                 throw Error('ERR_CREATE_TX')
