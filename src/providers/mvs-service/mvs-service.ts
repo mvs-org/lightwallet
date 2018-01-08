@@ -636,10 +636,16 @@ export class MvsServiceProvider {
                     }
                 });
             this.http.get(url, options)
-                .subscribe(
-                    _ => resolve(_.json().result),
-                    (error) => reject(error)
-                )
+                .subscribe(_ => resolve(_.json().result), _ => {
+                    try {
+                        let message = _.json().code
+                        console.error(message)
+                        reject(Error(message))
+                    } catch (error) {
+                        console.log(error)
+                        reject(Error('ERR_CONNECTION'))
+                    }
+                })
         });
     }
 }

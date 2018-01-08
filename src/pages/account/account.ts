@@ -13,7 +13,7 @@ export class AccountPage {
     user: string
     pass: string
     syncing = false
-    syncingOffline = false
+    syncingSmall = false
     offline = false
     balances: any
     height: number
@@ -61,7 +61,6 @@ export class AccountPage {
 
     loadFromCache = () => {
         this.syncing = false
-        this.syncingOffline = true
         this.loadBalances()
         //Update height
         this.mvs.getMvsHeight()
@@ -129,22 +128,23 @@ export class AccountPage {
 
     private sync() {
         //Only allow a single sync process
-        if (this.syncing)
+        if (this.syncing) {
+            this.syncingSmall = false
             return Promise.resolve()
-        else {
+        } else {
             this.syncing = true
-            this.syncingOffline = true
+            this.syncingSmall = true
             return Promise.all([this.updateHeight(), this.updateBalances()])
                 .then((results) => {
                     this.height = results[0]
                     this.syncing = false
-                    this.syncingOffline = false
+                    this.syncingSmall = false
                     this.offline = false
                 })
                 .catch((error) => {
                     console.error(error)
                     this.syncing = false
-                    this.syncingOffline = false
+                    this.syncingSmall = false
                     this.offline = true
                 })
         }
