@@ -8,11 +8,13 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class HowToMobilePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private nav: NavController) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad HowToMobilePage');
   }
+
+  loginFromMobile = () => this.nav.push("ImportWalletMobilePage")
 
 }

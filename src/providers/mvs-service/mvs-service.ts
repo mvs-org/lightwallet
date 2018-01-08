@@ -50,11 +50,6 @@ export class MvsServiceProvider {
             })
     }
 
-    getAddressIndex() {
-        return this.storage.get('wallet')
-            .then((wallet) => wallet.index)
-    }
-
     createTx(passphrase, asset, recipient_address, quantity, from_address, change_address) {
         return this.updateInOuts()
             .then(() => this.getUtxoFrom(from_address))
@@ -123,7 +118,6 @@ export class MvsServiceProvider {
     }
 
     createIssueAssetTx(passphrase, symbol, issuer, max_supply, precision, description, issue_address, fee_address, change_address) {
-        console.log(passphrase, symbol, issuer, max_supply, precision, description, issue_address, fee_address, change_address)
         return this.updateInOuts()
             .then(() => this.getUtxoFrom(fee_address))
             .then((utxo) => {
@@ -204,11 +198,7 @@ export class MvsServiceProvider {
 
 
 
-    fetchMvsHeight() {
-        return new Promise((resolve, reject) => {
-            this._get(this.globals.host[this.globals.network] + '/height', {}).then(resolve, _ => reject(_))
-        })
-    }
+    fetchMvsHeight = () => this._get(this.globals.host[this.globals.network] + '/height', {})
 
     updateMvsHeight() {
         return new Promise((resolve, reject) => {
@@ -217,8 +207,8 @@ export class MvsServiceProvider {
                     return this.setMvsHeight(height)
                 })
                 .then(() => this.getMvsHeight())
-                .then(resolve)
-                .catch(reject)
+                .then(_ => resolve((_)))
+                .catch(() => reject())
         })
     }
 
@@ -394,6 +384,16 @@ export class MvsServiceProvider {
         })
     }
 
+    setLoaded(bool) {
+        return this.storage.set('loaded', bool)
+    }
+
+    getLoaded() {
+        return new Promise((resolve, reject) => {
+            this.storage.get('loaded').then((loaded) => resolve((loaded) ? loaded : false))
+        })
+    }
+
     addTxToBalance(tx, balances, addressbalances, height) {
         return this.getMvsAddresses()
             .then((addresses) => {
@@ -517,6 +517,7 @@ export class MvsServiceProvider {
         return this.getMvsAddresses()
             .then((addr: any[]) => this.storage.set('mvs_addresses', addr.concat(addresses)))
             .then(() => this.getMvsAddresses())
+            .then(() => this.event.publish('settings_update', {}))
     }
 
     setMvsAddresses(addresses) {
@@ -629,10 +630,16 @@ export class MvsServiceProvider {
                         options.search.set(key, String(data[key]))
                     }
                 });
-
             this.http.get(url, options)
-                .subscribe(_ => {
-                    resolve(_.json().result)
+                .subscribe(_ => resolve(_.json().result), _ => {
+                    try {
+                        let message = _.json().code
+                        console.error(message)
+                        reject(Error(message))
+                    } catch (error) {
+                        console.log(error)
+                        reject(Error('ERR_CONNECTION'))
+                    }
                 })
         });
     }

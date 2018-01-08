@@ -206,8 +206,9 @@
     "ISSUE.CREATE": "Create Asset",
 
     "EXPORT.HEADLINE": "Connect your phone",
-    "EXPORT.INTRODUCTION": "To download the MyETPWallet on your phone, please visit MyETPWallet.com and clock on 'Download Wallet'.",
+    "EXPORT.INTRODUCTION": "To download the MyETPWallet on your phone, please visit MyETPWallet.com and click on 'Download Wallet'.",
     "EXPORT.TEXT": "This action will export your Private key to your phone. Your Private key will be encrypted with the password used for this account and saved on your mobile device. Please scan this QR Code from the mobile application MyETPWallet.",
+    "EXPORT.REMINDER_LOGOUT": "Please logout from the app if you switch your phone.",
 
     "LOGIN_MENU_INFO_TEXT_MOBILE": "Notice: To create an account, please use your desktop and go to MyETPWallet.com. You will then be able to link your account with your phone.",
     "REPORT_BUG": "Report bug",
@@ -218,8 +219,12 @@
     "MESSAGE.BROADCAST_ERROR": "Unable to broadcast transaction.",
 
     "LOGIN": "Login",
-    "HOW_TO_IMPORT_WALLET_MOBILE" : "Howto Import",
-
+    "HOW_TO_IMPORT_WALLET_MOBILE": "How to Import",
+    "HOW_TO_IMPORT_WALLET_MOBILE_TITLE": "How to import your Private Key?",
+    "HOW_TO_IMPORT_WALLET_MOBILE_STEP1": "Open the Light wallet on your desktop go to Settings, and then Connect phone",
+    "HOW_TO_IMPORT_WALLET_MOBILE_STEP2": "Scan the QR Code",
+    "HOW_TO_IMPORT_WALLET_MOBILE_STEP3": "Enjoy your wallet on your phone!",
+  
     "MESSAGE.ISSUE_INSUFFICIENT_BALANCE" : "You need at least 10 ETP to create an Asset."
 
 }

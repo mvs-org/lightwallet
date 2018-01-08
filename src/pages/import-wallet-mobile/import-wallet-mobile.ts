@@ -20,16 +20,16 @@ export class ImportWalletMobilePage {
 
     scan() {
         let wallet = {};
-        wallet = { "index": 10 }
-        this.wallet.setWallet(wallet)
         this.barcodeScanner.scan({ formats: 'QR_CODE' }).then((result) => {
             if (!result.cancelled) {
                 let content = result.text.toString().split('&')
-                if (content.length != 2)
+                if (content.length != 3)
                     this.showError('IMPORT_FILE')
                 else if (content[1] != this.globals.network.charAt(0))
                     this.showError('MESSAGE.NETWORK_MISMATCH')
                 else
+                    wallet = { "index": content[2] }
+                    this.wallet.setWallet(wallet)
                     this.wallet.setMobileWallet(content[0]).then(() => this.showPrompt(content[0]))
 
             }
@@ -38,7 +38,7 @@ export class ImportWalletMobilePage {
 
     decrypt(password, seed) {
         this.wallet.setMobileWallet(seed)
-            .then(() => Promise.all([this.wallet.getWallet(password), this.mvs.getAddressIndex()]))
+            .then(() => Promise.all([this.wallet.getWallet(password), this.wallet.getAddressIndex()]))
             .then((results) => this.mvs.generateAddresses(results[0], 0, results[1]))
             .then((addresses) => this.mvs.setMvsAddresses(addresses))
             .then(() => this.nav.setRoot("AccountPage"))

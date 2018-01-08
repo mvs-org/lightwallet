@@ -44,7 +44,7 @@ export class ImportWalletPage {
     decrypt(password) {
         this.mvs.dataReset()
             .then(() => this.wallet.setSeed(password))
-            .then(() => Promise.all([this.wallet.getWallet(password), this.mvs.getAddressIndex()]))
+            .then(() => Promise.all([this.wallet.getWallet(password), this.wallet.getAddressIndex()]))
             .then((results) => this.mvs.generateAddresses(results[0], 0, results[1]))
             .then((addresses) => this.mvs.setMvsAddresses(addresses))
             .then(() => this.nav.setRoot("AccountPage", { reset: true }))
