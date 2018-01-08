@@ -86,14 +86,20 @@ export class WalletServiceProvider {
 
 
     exportWallet() {
-        return this.storage.get('seed')
-            .then((seed) => {
-                return seed + "&" + this.globals.network.charAt(0);
+        return Promise.all([this.storage.get('seed'), this.getAddressIndex()])
+            .then((results) => {
+                return results[0] + "&" +  this.globals.network.charAt(0) + "&" + results[1]
             })
             .catch((error) => {
                 console.error(error)
                 throw Error('ERR_DECRYPT_WALLET')
             })
+    }
+
+
+    getAddressIndex() {
+        return this.storage.get('wallet')
+            .then((wallet) => wallet.index)
     }
 
 }
