@@ -75,6 +75,7 @@ export class AccountPage {
                 if (update_needed)
                     return this.sync().then(()=>this.mvs.setUpdateTime())
             })
+            .catch(() => console.log("Can't update"))
     }
 
     ionViewWillLeave = () => clearInterval(this.syncinterval)
@@ -158,6 +159,7 @@ export class AccountPage {
             .then(() => this.loadBalances())
             .then(() => this.mvs.setUpdateTime())
             .then(() => this.mvs.setLoaded(true))
+            .catch(() => console.log("Can't update balances"))
     }
 
     doRefresh(refresher) {        //Sync for mobile
@@ -212,6 +214,7 @@ export class AccountPage {
                 this.balancesKeys = order
                 return order
             })
+            .catch(() => console.log("Can't load balances"))
     }
 
 }
