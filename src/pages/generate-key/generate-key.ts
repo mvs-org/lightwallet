@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, Loading, LoadingController } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
-import { PassphrasePage } from '../passphrase/passphrase';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 
 @IonicPage()
@@ -89,7 +88,7 @@ export class GenerateKeyPage {
                                 {
                                     text: BACKUP_WORDS_BACKED_UP_YES,
                                     handler: data => {
-                                        this.nav.push(PassphrasePage, this.wallet)
+                                        this.nav.push("PassphrasePage", this.wallet)
                                     }
                                 }, {
                                     text: NO

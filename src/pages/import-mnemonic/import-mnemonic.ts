@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, AlertController, LoadingController, Loading, Platform } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
-import { PassphrasePage } from '../passphrase/passphrase';
 import { AppGlobals } from '../../app/app.global';
 
 @IonicPage()
@@ -44,7 +43,7 @@ export class ImportMnemonicPage {
             mnemonic += String(this.words[index]).toLowerCase() + ' '
         });
         mnemonic = mnemonic.trim()
-        this.nav.push(PassphrasePage, { mnemonic: mnemonic })
+        this.nav.push("PassphrasePage", { mnemonic: mnemonic })
     }
 
     // testing

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, Platform, LoadingController, Loading } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, LoadingController, Loading } from 'ionic-angular';
 
 import { AppGlobals } from '../../app/app.global';
 import { TranslateService } from '@ngx-translate/core';
@@ -7,6 +7,7 @@ import { WalletServiceProvider } from '../../providers/wallet-service/wallet-ser
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { CryptoServiceProvider } from '../../providers/crypto-service/crypto-service';
 
+@IonicPage()
 @Component({
     selector: 'page-passphrase',
     templateUrl: 'passphrase.html',
