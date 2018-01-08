@@ -5,10 +5,14 @@
 </ion-header>
 
 <ion-content padding>
+    <p>{{"HOW_TO_IMPORT_WALLET_MOBILE_TITLE"| translate}}</p>
     <img src="../assets/images/mobile_import_1.jpeg" class="mobile-import-image">
-    <p>Open export settings on desktop</p>
+    <p>{{"HOW_TO_IMPORT_WALLET_MOBILE_STEP1"| translate}}</p>
     <img src="../assets/images/mobile_import_2.jpeg" class="mobile-import-image">
-    <p>Scan the QR code</p>
+    <button ion-button full icon-left color="secondary" (click)="loginFromMobile()">
+      <ion-icon name="qr-scanner"></ion-icon>
+      {{"HOW_TO_IMPORT_WALLET_MOBILE_STEP2"| translate}}
+    </button>
     <img src="../assets/images/mobile_import_3.jpeg" class="mobile-import-image">
-    <p>Enjoy your wallet</p>
+    <p>{{"HOW_TO_IMPORT_WALLET_MOBILE_STEP3"| translate}}</p>
 </ion-content>
