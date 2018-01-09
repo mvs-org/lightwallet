@@ -131,7 +131,7 @@
     "OR": "OR",
     "DISCLAIMER": {
         "HEADLINE": "Disclaimer",
-        "INTRODUCTION": "This light wallet is developed based on blockchain technology design. All account information and transaction activity is stored on public blockchains. The wallet service provider will not store users’ wallet private keys, mnemonics or backup words (collectively, “private key information”)  in any centralized database. Users’ private key information and files generated through importing private keys belong solely to the person who created the wallet account. The user bears the responsibility to safeguard his/her private key files and password and is solely responsible for the use of his/her account, password and private key information.",
+        "INTRODUCTION": "This lightwallet is developed based on blockchain technology design. All account information and transaction activity is stored on public blockchains. The wallet service provider will not store users’ wallet private keys, mnemonics or backup words (collectively, “private key information”)  in any centralized database. Users’ private key information and files generated through importing private keys belong solely to the person who created the wallet account. The user bears the responsibility to safeguard his/her private key files and password and is solely responsible for the use of his/her account, password and private key information.",
         "LIST_INTRODUCTION": "You agree that the wallet service provider will not bear any responsibility in the following situations:",
         "LIST_ITEM_1": "Leaks of personal information due to the user having made known his wallet password/private key information to others, the user not having safeguarded his/her password/private key information, the user having shared his/her wallet account, or any other mistakes that are not committed by the wallet service provider.",
         "LIST_ITEM_2": "The use of this service involves internet services and may be affected by unstable connections. The use of this service entails the risk of service disruptions or services being unable to meet the demands of users due to the following: events of force majeure, malware, viruses and other malicious software, attacks by hackers, unstable operating systems, users’ geographical location, users shutting down their devices and other reasons related to the Internet, technology and telecommunication lines. Users must understand and undertake the above risks. The wallet service provider will not be responsible for any consequences resulting from the use of this service.",
@@ -184,7 +184,7 @@
 
     "IMPORT_MNEMONIC_TEXT_MOBILE": "Your private key will be stored encrypted via your password on your device.",
 
-    "RESET_MESSAGE_MOBILE": "All data will be erased. To log in, you will need your backup words or scan the QR Code from your desktop Light wallet.",
+    "RESET_MESSAGE_MOBILE": "All data will be erased. To log in, you will need your backup words or scan the QR Code from your desktop lightwallet.",
     "IMPORT.SCAN_QRCODE_TEXT": "Import my account to my phone",
     "IMPORT.SCAN_QRCODE_BUTTON":"Scan QR Code",
 
@@ -221,7 +221,7 @@
     "LOGIN": "Login",
     "HOW_TO_IMPORT_WALLET_MOBILE": "How to Import",
     "HOW_TO_IMPORT_WALLET_MOBILE_TITLE": "How to import your Private Key?",
-    "HOW_TO_IMPORT_WALLET_MOBILE_STEP1": "Open the Light wallet on your desktop go to Settings, and then Connect phone",
+    "HOW_TO_IMPORT_WALLET_MOBILE_STEP1": "Open the lightwallet on your desktop go to Settings, and then Connect phone",
     "HOW_TO_IMPORT_WALLET_MOBILE_STEP2": "Scan the QR Code",
     "HOW_TO_IMPORT_WALLET_MOBILE_STEP3": "Enjoy your wallet on your phone!",
   
