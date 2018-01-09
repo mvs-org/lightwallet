@@ -4,6 +4,7 @@
     "ACCOUNT.AVAILABLE": "Disponible",
     "ACCOUNT.TOTAL": "Total",
 
+
     "WALLET_SETUP.TITLE": "Configuration",
     "REGISTER.TITLE": "Créer compte",
     "CREATE_WALLET_DISCLAIMER.TITLE": "Information",
@@ -56,14 +57,12 @@
      "REORDER": "Réordonner",
      "FINISH": "Terminer",
      "ERROR_SEND_TEXT" : "Échec de la transaction. Veuillez vérifier les paramètres et réessayer.",
-     "CREATE_NEW_WALLET_BUTTON": "Créer nouveau",
      "MNEMONIC_CONFIRM_HEAD": "Confirmer phrase mnémotechnique",
      "MNEMONIC_CONFIRM_TEXT": "Afin de confirmer votre phrase mnémotechnique, veuillez réorganiser les mots dans le bon ordre.",
 
      "CONFIRM": "Confirmer",
      "SKIP": "Ignorer",
      "COPY": "Copier",
-     "FINISH": "Terminer",
 
      "WARNING": "Attention",
      "BACKUP_WORDS_BACKED_UP_TEXT": "Veuillez confirmer que vous avez bien noté votre phrase mnémotechnique",
@@ -72,14 +71,13 @@
      "BACKUP_WORDS_CONFIRM_SKIP_TEXT": "Êtes vous sûr de vouloir continuer sans vérifier la phrase mnémotechnique de votre compte?",
      "I_AM_SURE": "Je suis sûr",
 
-    "BACKUP_WORDS_WRITE_DOWN_TEXT": "Veuillez noter ces mots sur une feuille de papier, vous en aurez besoin pour restaurer votre compte. Il est très important de les conserver dans un endroit sûr et privé.",
     "MESSAGE.ERROR_CONNECT_BLOCKCHAIN": "Echec de la connection à la blockchain",
-    "SUCCESS_SEND_TEXT" : "La transaction à été envoyée. Veuillez patienter pour confirmation.",
+
+
     "BACK": "Retour",
     "SETTINGS.WORDS_BUTTON": "Clé",
     "SETTINGS.WORDS_TEXT": "Votre phrase mnémoniques qui correspondent à votre clé privée",
     "RESET_TITLE": "Etes vous sur?",
-    "RESET_MESSAGE": "Toutes les données seront effacées",
     "COPIED_MNEMONIC": "Clé copiée dans le presse-papiers",
 
     "SETTINGS.PINCODE": "Paramètres du code PIN",
@@ -109,6 +107,7 @@
     "CONFIRM_PASSWORD": "Confirmer mot de passe",
     "LIGHT_WALLET_INFO_TEXT": "Sachez que myetpwallet.com n'a pas accès aux clés de votre compte. Si vous perdez votre phrase mnémotechnique ou votre fichier de compte, nous ne pourrons pas accorder l'accès à vos fonds.",
     "HEIGHT": "Blocs",
+    "TRANSACTION.INNER_WALLET": "Intra-portefeuille transaction",
     "SELECT_CHANGE_ADDRESS": "Spécifier l'adresse recevant la monnaie (facultatif)",
     "SELECT_FROM_ADDRESS": "Sélectionner l'adresse source (facultatif)",
     "SHOW_ADVANCED": "Montrer les options avancées",
@@ -172,7 +171,6 @@
     "BLOCKS": "Blocs",
     "INTEREST_RATE": "Taux d'intérêts",
 
-
     "OPEN_FROM_QRCODE": "Ouvrir avec QR Code",
     "OPEN_FROM_BACKUP_WORDS": "Ouvrir avec phrase mnémotechnique",
     "ENTER_PASSWORD_HEADLINE_MOBILE": "Veuillez entrer votre mot de passe pour décrypter votre clé privée",
@@ -189,7 +187,44 @@
     "RESET_MESSAGE_MOBILE": "Toutes les données seront supprimées. Afin de vous reconnecter, vous aurez besoin de votre phrase mnémotechnique ou de scanner le QR Code optenu via MyETPWallet sur ordinateur de bureau.",
     "IMPORT.SCAN_QRCODE_TEXT": "Importer mon compte sur mon téléphone",
     "IMPORT.SCAN_QRCODE_BUTTON":"Scanner QR Code",
-    "EXPORT.HEADLINE": "Exporter votre clé privée sur votre téléphone.",
-    "EXPORT.INTRODUCTION": "Votre clé privée sura cryptée avec le mot de passe utilisé pour ce compte. Veuillez scanner ce QR Code avec l'applicatiom mobile MyETPWallet."
+
+    "ASSET_ISSUE": "Créer actif",
+    "NOTICE_ASSET_ISSUE_FEE": "Veuillez noter que la création d'un actif coûte 10 ETP.",
+
+    "ISSUE.NOTICE_TRANSACTION_FEE_UNCOVERED": "Vous devez avoir au moins 10 ETP pour pouvoir créer un actif",
+    "ISSUE.SYMBOL": "Symbole",
+    "ISSUE.ISSUER_NAME": "Nom de l'issuer",
+    "ISSUE.MAX_SUPPLY": "Quantité totale",
+    "ISSUE.DECIMALS": "Nombre de décimales",
+    "ISSUE.DESCRIPTION": "Description",
+    "ISSUE.ISSUE_ADDRESS": "Addresse de distribution (addresse qui recevra l'actif créé)",
+    "ISSUE.FEE_ADDRESS": "Addresse de payement (addresse payant 10 ETP)",
+    "ISSUE.CUSTOM_ISSUE_ADDRESS": "Entrer manuellement l'addresse de distribution",
+
+    "ISSUE.CONFIRMATION_TITLE": "Créer un actif coûte 10 ETP.",
+    "ISSUE.CONFIRMATION_SUBTITLE": "Etes-vous sûr de vouloir créer cet actif ?",
+    "ISSUE.CREATE": "Créer actif",
+
+    "EXPORT.HEADLINE": "Connecter votre téléphone",
+    "EXPORT.INTRODUCTION": "Pour télécharger l'application MyETPWallet sur votre téléphone, rendez vous sur MyETPWallet.com et cliquez sur 'Download Wallet'.",
+    "EXPORT.TEXT": "Cette action va exporter votre Clé privée sur votre téléphone. Votre clé privée sera encryptée via le mot de passe utilisé pour ce compte, et sauvegardée sur votre mobile. Veuillez scanner ce QR Code via l'application mobile MyETPWallet.",
+    "EXPORT.REMINDER_LOGOUT": "Veuillez vous déconnecter de l'application si vous changez votre téléphon.",
+
+    "LOGIN_MENU_INFO_TEXT_MOBILE": "Information: Pour créer un compte, veuillez utiliser votre ordinateur et aller sur MyETPWallet.com. Vous pourrez ensuite lier votre compte avec votre téléphone.",
+    "REPORT_BUG": "Signaler un bug",
+
+    "MESSAGE.NETWORK_MISMATCH": "Le réseau utilisé ne correspond pas",
+    "MESSAGE.PASSWORD_WRONG": "Impossible de décrypter votre portefeuille à partir du mot de passe fournit",
+    "MESSAGE.CREATE_TRANSACTION" : "Impossible de créer la transaction.",
+    "MESSAGE.BROADCAST_ERROR": "Impossible de diffuser la transaction.",
+
+    "LOGIN": "Connexion",
+    "HOW_TO_IMPORT_WALLET_MOBILE": "Comment importer",
+    "HOW_TO_IMPORT_WALLET_MOBILE_TITLE": "Comment importer votre clé privée ?",
+    "HOW_TO_IMPORT_WALLET_MOBILE_STEP1": "Ouvrez MyETPWallet.com sur votre ordinateur et allez dans Paramètres, puis Connecter téléphone",
+    "HOW_TO_IMPORT_WALLET_MOBILE_STEP2": "Scannez le QR Code",
+    "HOW_TO_IMPORT_WALLET_MOBILE_STEP3": "Utilisez votre portefeuille depuis sur votre téléphone!",
+
+    "MESSAGE.ISSUE_INSUFFICIENT_BALANCE" : "Vous avez besoin d'au moins 10 ETP pour créer un actif."
 
 }
