@@ -98,15 +98,15 @@
     "IMPORT_FILE": "Please open your wallet file",
     "UPLOAD_KEYSTORE": "Upload Keystore File",
     "PASSWORD": "Password",
-    "CANCEL": "cancel",
+    "CANCEL": "Cancel",
     "ENTER": "Enter",
     "CREATE_NEW_WALLET_BUTTON": "Create new wallet",
     "OPEN_WALLET_FILE": "Open Wallet From file",
     "CREATE_FROM_BACKUP_WORDS": "Create File From Backup Words",
     "WRONG_FILE": "Wrong File",
     "CONFIRM_PASSWORD": "Confirm Password",
-    "LIGHT_WALLET_INFO_TEXT": "Please be aware that myetpwallet.com does not have access to your wallet keys. If you loose your backup words or key file, and we will not be able to grant access to your funds.",
-    "TRANSACTION.INNER_WALLET": "Inner wallet transaction",
+    "LIGHT_WALLET_INFO_TEXT": "Please be aware that myetpwallet.com does not have access to your wallet keys. If you lose your backup words or key file, and we will not be able to grant access to your funds.",
+    "TRANSACTION.INNER_WALLET": "Intra-wallet transaction",
     "HEIGHT": "Height",
     "SELECT_CHANGE_ADDRESS": "Specify change address (optional)",
     "SELECT_FROM_ADDRESS": "Select the source address (optional)",
@@ -121,11 +121,11 @@
     "IMPORT_MNEMONIC_TEXT": "A wallet file will be created for you. This file will enable you to access your wallet.",
     "ENTER_PASSWORD_HEADLINE": "Enter password for the file",
     "CHOOSE_A_FILE": "Choose a file",
-    "BACKUP_WORDS_WRITE_DOWN_TEXT": "Please write down the following 24 words on a piece of paper. You will need them in order to retrieve the wallet. It is very important that you keep them safe and private. Dont show them to someone.",
+    "BACKUP_WORDS_WRITE_DOWN_TEXT": "Please write down the following 24 words on a piece of paper. You will need them in order to retrieve the wallet. It is very important that you keep them safe and private. Don't show them to someone.",
     "RESET_MESSAGE": "All login data will be cleared",
     "SHOW_ALL_ASSET_BALANCES": "Show balances for all assets",
   	"THEME_SETTINGS": "Theme Switcher",
-    "LOGIN_MENU_INFO_TEXT": "Notice for existing MVS wallet users: On your first login to myetpwallet.com, please create a wallet file from backup words and then open the wallet from the file.",
+    "LOGIN_MENU_INFO_TEXT": "Notice for existing MVS wallet users: On your first login to myetpwallet.com, please create a wallet file from your backup words and then open the wallet from the file.",
     "PASTE_WORDS": "use the textbox",
     "RESET": "Reset",
     "OR": "OR",
@@ -152,7 +152,7 @@
     "WARNING": "Before using this wallet, please be aware that there are important risks associated with cryptocurrency and blockchain-based open-source software such as large exchange rate fluctuations and software bugs. By registering an account through MyETPWallet.com or MVSD, you agree that you have read, understood and accept all of the terms and conditions contained in this Disclaimer.",
     "I_TITLE": "I. Accessing and Controlling Wallet Information",
     "I_INFO": "1.1 When you create a Wallet account, it generates a mnemonic passphrase (‘backup words’) consisting of 24 English words and a Public and Private keypair used to send and receive digital currency. You must backup your mnemonic passphrase and Private Key information and keep it secure; failure to do so may result in the loss of control of the assets within your Wallet.",
-    "I_INFO_2": "1.2 The Wallet does not collect or store any of our Users’ private information, including as your password and the private keys. This information is stored locally on the User’s own device. Hence, we cannot assist you with Wallet retrieval. The Development Team is only responsible for guaranteeing wallet access and fixing software bugs, and is unable to restore encrypted private keys or otherwise recover private keys. If you use MyETPWallet.com, you acknowledge that Metaverse is not responsible for safeguarding or maintaining private keys associated with the wallet. We strongly advise you to back up your wallet files to best protect your property rights.",
+    "I_INFO_2": "1.2 The Wallet does not collect or store any of our Users’ private information, including your password and private keys. This information is stored locally on the User’s own device. Hence, we cannot assist you with Wallet retrieval. The Development Team is only responsible for guaranteeing wallet access and fixing software bugs, and is unable to restore encrypted private keys or otherwise recover private keys. If you use MyETPWallet.com, you acknowledge that Metaverse is not responsible for safeguarding or maintaining private keys associated with the wallet. We strongly advise you to back up your wallet files to best protect your property rights.",
     "II_TITLE": "II. Wallet Security",
     "II_INFO_1": "2.1 The Metaverse Team will implement appropriate security measures to protect Users against data loss, inappropriate use, unauthorized access and/or disclosure. For example, we implement high-standard encryption techniques such as SSL to protect your personal information. Please be advised that we cannot guarantee the absolute security of any data you disclose online, due to technical limitations and unforeseeable hostile actions against the platform. By using our service, the User acknowledges the possibility that the system and telecommunication network they use to access our service can be compromised, which is out of our control. For instance, the software the User has downloaded or websites visited may contain viruses or malwares that threaten the security of the wallet information. Therefore, it is imperative that Users ensure the security of their personal information and data. You accept the inherent security risks of providing information and dealing online over the Internet and will not hold us responsible for any breach of security unless this is due to our negligence. The development team recommends that Users pay special attention to backing up password and private keys offline (e.g. writing them on a piece of paper).",
     "II_INFO_2": "2.2 Under no circumstances should Users trust information originating from non-official sources. Any wallet operation should only take place after the User has completed due diligence and assessed the counterparty’s identity.",
@@ -182,14 +182,14 @@
 
     "IMPORT.SHOW_QRCODE_BUTTON": "Show QR Code",
 
-    "IMPORT_MNEMONIC_TEXT_MOBILE": "Your private key will be stored encrypted via your password on your device.",
+    "IMPORT_MNEMONIC_TEXT_MOBILE": "Your private key will be stored and encrypted via your password on your device.",
 
     "RESET_MESSAGE_MOBILE": "All data will be erased. To log in, you will need your backup words or scan the QR Code from your desktop lightwallet.",
     "IMPORT.SCAN_QRCODE_TEXT": "Import my account to my phone",
     "IMPORT.SCAN_QRCODE_BUTTON":"Scan QR Code",
 
     "ASSET_ISSUE": "Create Asset",
-    "NOTICE_ASSET_ISSUE_FEE": "Please be aware that the creation of a new asset cost 10 ETP.",
+    "NOTICE_ASSET_ISSUE_FEE": "Please be aware that the creation of a new asset costs 10 ETP.",
 
     "ISSUE.NOTICE_TRANSACTION_FEE_UNCOVERED": "You need at least 10 ETP to create an asset",
     "ISSUE.SYMBOL": "Symbol",
@@ -201,12 +201,12 @@
     "ISSUE.FEE_ADDRESS": "Fee address (address paying 10 ETP)",
     "ISSUE.CUSTOM_ISSUE_ADDRESS": "Custom issue address",
 
-    "ISSUE.CONFIRMATION_TITLE": "Issue an asset cost 10 ETP.",
+    "ISSUE.CONFIRMATION_TITLE": "Issuing an asset will cost 10 ETP.",
     "ISSUE.CONFIRMATION_SUBTITLE": "Are you sure you want to create an asset?",
     "ISSUE.CREATE": "Create Asset",
 
     "EXPORT.HEADLINE": "Connect your phone",
-    "EXPORT.INTRODUCTION": "To download the MyETPWallet on your phone, please visit MyETPWallet.com and click on 'Download Wallet'.",
+    "EXPORT.INTRODUCTION": "To download MyETPWallet on your phone, please visit MyETPWallet.com and click on 'Download Wallet'.",
     "EXPORT.TEXT": "This action will export your Private key to your phone. Your Private key will be encrypted with the password used for this account and saved on your mobile device. Please scan this QR Code from the mobile application MyETPWallet.",
     "EXPORT.REMINDER_LOGOUT": "Please logout from the app if you switch your phone.",
 
@@ -224,7 +224,7 @@
     "HOW_TO_IMPORT_WALLET_MOBILE_STEP1": "Open the lightwallet on your desktop go to Settings, and then Connect phone",
     "HOW_TO_IMPORT_WALLET_MOBILE_STEP2": "Scan the QR Code",
     "HOW_TO_IMPORT_WALLET_MOBILE_STEP3": "Enjoy your wallet on your phone!",
-  
+
     "MESSAGE.ISSUE_INSUFFICIENT_BALANCE" : "You need at least 10 ETP to create an Asset."
 
 }

@@ -6,7 +6,24 @@ page-how-to-mobile {
     }
 
     .mobile-import-image {
-        max-width: 50%;
+        width: 200px;
+        height: 170px;
+        margin: 0 auto;
+    }
+
+    .pic-description1 {
+      background:url(../assets/images/mobile_import_1.jpeg) no-repeat;
+      background-size: 100%;
+    }
+
+    .pic-description2 {
+      background:url(../assets/images/mobile_import_2.jpeg) no-repeat;
+      background-size: 100%;
+    }
+
+    .pic-description3 {
+      background:url(../assets/images/mobile_import_3.jpeg) no-repeat;
+      background-size: 100%;
     }
 
 }
