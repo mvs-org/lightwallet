@@ -168,5 +168,21 @@
     "BLOCKS": "区块",
     "INTEREST_RATE": "利率",
 
-    "REPORT_BUG": "报告漏洞"
+    "REPORT_BUG": "报告漏洞",
+
+    "MESSAGE.NETWORK_MISMATCH": "网络不匹配",
+    "MESSAGE.PASSWORD_WRONG": "无法用给到的助记词解密",
+    "MESSAGE.CREATE_TRANSACTION" : "无法创建交易.",
+    "MESSAGE.BROADCAST_ERROR": "无法广播交易.",
+
+    "LOGIN": "登入",
+    "HOW_TO_IMPORT_WALLET_MOBILE": "如何导入",
+    "HOW_TO_IMPORT_WALLET_MOBILE_TITLE": "如何倒入您的私钥?",
+    "HOW_TO_IMPORT_WALLET_MOBILE_STEP1": "打开桌面端轻钱包,进入设置,然后连接手机",
+    "HOW_TO_IMPORT_WALLET_MOBILE_STEP2": "扫描二维码",
+    "HOW_TO_IMPORT_WALLET_MOBILE_STEP3": "用手机开启你的钱包之旅!",
+
+    "MESSAGE.ISSUE_INSUFFICIENT_BALANCE" : "你需要至少10 ETP 来创建资产",
+
+    "PLACEHOLDER.MNEMONIC_PASSPHRASE": "助记词"
 }
