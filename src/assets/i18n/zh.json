@@ -175,7 +175,7 @@
     "OPEN_FROM_BACKUP_WORDS": "输入助记词进入钱包",
     "ENTER_PASSWORD_HEADLINE_MOBILE": "输入密码",
     "SETTINGS.SHOW_QRCODE_BUTTON": "连接手机",
-    "SETTINGS.SHOW_QRCODE_TEXT": "导出助记词到MyETPWallet的手机应用",
+    "SETTINGS.SHOW_QRCODE_TEXT": "导出助记词到MyETPWallet的手机应用",
 
     "LOGOUT_TEXT": "登出钱包",
     "EXPORT_ACCOUNT": "连接手机",
