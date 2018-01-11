@@ -184,7 +184,7 @@
 
     "IMPORT_MNEMONIC_TEXT_MOBILE": "Dein privater Schlüssel wird mit dem Passwort auf deinem Gerät verschlüsselt gespeichert.",
 
-    "RESET_MESSAGE_MOBILE": "Alle Daten werden gelöscht. Zum Anmelden benötigst du deine Backup-Wörter oder einen Scan des QR-Codes von deinem Desktop Light Wallet.",
+    "RESET_MESSAGE_MOBILE": "Alle Daten werden gelöscht. Zum Anmelden benötigst du deine Backup-Wörter oder einen Scan des QR-Codes von deinem Desktop Lightwallet.",
     "IMPORT.SCAN_QRCODE_TEXT": "Importiere meinen Account auf mein Mobilgerät",
     "IMPORT.SCAN_QRCODE_BUTTON":"Scanne QR-Code",
   
@@ -217,4 +217,12 @@
     "MESSAGE.CREATE_TRANSACTION" : "Erstellen der Transaktion nicht möglich.",
     "MESSAGE.BROADCAST_ERROR": "Übertragen der Transaktion nicht möglich."
 
+    "LOGIN": "Login",
+    "HOW_TO_IMPORT_WALLET_MOBILE": "Hilfe zum Import",
+    "HOW_TO_IMPORT_WALLET_MOBILE_TITLE": "Hilfe zum Import?",
+    "HOW_TO_IMPORT_WALLET_MOBILE_STEP1": "Öffne das lightwallet auf einem Desktop PC und wähle die Einstellungen und dann \"Mobilgerät verbinden\"\"",
+    "HOW_TO_IMPORT_WALLET_MOBILE_STEP2": "QR Code scannen",
+    "HOW_TO_IMPORT_WALLET_MOBILE_STEP3": "Viel spaẞ mit deinem mobilen Wallet!",
+  
+    "MESSAGE.ISSUE_INSUFFICIENT_BALANCE" : "You need at least 10 ETP to create an Asset."
 }
