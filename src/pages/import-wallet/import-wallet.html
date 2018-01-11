@@ -28,20 +28,20 @@
             <label for="file"> <ion-icon name="download"></ion-icon> {{"CHOOSE_A_FILE"|translate}}</label>
         </ion-row>
         <div *ngIf="fileLoaded">
-        <ion-row>
-            <ion-icon name="md-checkmark-circle" class="verifiedFile"></ion-icon>
-        </ion-row>
-        <ion-row class="top-padding">
-          <ion-item class="center-psw">
-            <ion-label color="primary" floating>{{"PASSWORD" | translate}}</ion-label>
-            <ion-input name="password" type="password" [(ngModel)]="password" required></ion-input>
-          </ion-item>
-        </ion-row>
-        <ion-row>
-          <button ion-button full [disabled]="!importForm.form.valid||!fileLoaded" color="primary">
-              {{"IMPORT" | translate}}
-          </button>
-        </ion-row>
+            <ion-row>
+                <ion-icon name="md-checkmark-circle" class="verifiedFile"></ion-icon>
+            </ion-row>
+            <ion-row class="top-padding">
+              <ion-item class="center-psw">
+                <ion-label color="primary" floating>{{"PASSWORD" | translate}}</ion-label>
+                <ion-input name="password" type="password" [(ngModel)]="password" required></ion-input>
+              </ion-item>
+            </ion-row>
+            <ion-row>
+              <button ion-button full [disabled]="!importForm.form.valid||!fileLoaded" color="primary">
+                  {{"IMPORT" | translate}}
+              </button>
+            </ion-row>
         </div>
 
 

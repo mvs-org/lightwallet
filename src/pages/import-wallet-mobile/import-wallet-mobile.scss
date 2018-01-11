@@ -59,13 +59,19 @@ page-import-wallet-mobile {
 
     }
 
-    .row {
-        margin-top: 10px;
-    }
-
 
     .blank {
-        margin-bottom:120px;
+        margin-bottom:165px;
+    }
+
+    .buttons-container {
+        height: 170px;
+    }
+
+    .verifiedQRCode {
+        color: #32db64;
+        font-size: 50px;
+        margin-left: calc(50% - 25px);
     }
 
 }
