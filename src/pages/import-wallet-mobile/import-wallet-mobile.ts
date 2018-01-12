@@ -25,20 +25,30 @@ export class ImportWalletMobilePage {
 
     scan() {
         let wallet = {};
-        this.barcodeScanner.scan({ formats: 'QR_CODE' }).then((result) => {
-            if (!result.cancelled) {
-                let content = result.text.toString().split('&')
-                this.seed = content[0]
-                if (content.length != 3)
-                    this.showError('IMPORT_FILE')
-                else if (content[1] != this.globals.network.charAt(0))
-                    this.showError('MESSAGE.NETWORK_MISMATCH')
-                else
-                    wallet = { "index": content[2] }
-                    this.wallet.setWallet(wallet)
-                    this.wallet.setMobileWallet(content[0]).then(() => this.qrCodeLoaded = true)
-
-            }
+        this.translate.get(['SCANNING.MESSAGE']).subscribe((translations: any) => {
+            this.barcodeScanner.scan(
+            {
+                preferFrontCamera : false, // iOS and Android
+                showFlipCameraButton : false, // iOS and Android
+                showTorchButton : false, // iOS and Android
+                torchOn: false, // Android, launch with the torch switched on (if available)
+                prompt : translations['SCANNING.MESSAGE'], // Android
+                resultDisplayDuration: 0, // Android, display scanned text for X ms. 0 suppresses it entirely, default 1500
+                formats : "QR_CODE", // default: all but PDF_417 and RSS_EXPANDED
+            }).then((result) => {
+                if (!result.cancelled) {
+                    let content = result.text.toString().split('&')
+                    this.seed = content[0]
+                    if (content.length != 3)
+                        this.showError('IMPORT_FILE')
+                    else if (content[1] != this.globals.network.charAt(0))
+                        this.showError('MESSAGE.NETWORK_MISMATCH')
+                    else
+                        wallet = { "index": content[2] }
+                        this.wallet.setWallet(wallet)
+                        this.wallet.setMobileWallet(content[0]).then(() => this.qrCodeLoaded = true)
+                }
+            })
         })
     }
 
