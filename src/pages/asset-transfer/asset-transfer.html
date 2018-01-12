@@ -17,15 +17,19 @@
             <p class="right">{{"FEE"|translate}}:<br *ngIf="platform.is('mobile')"> {{10000/100000000}} ETP</p>
         </ion-col>
     </ion-row>
+
     <form #sendForm="ngForm" style="padding-bottom: 0;">
         <ion-list style="padding-bottom: 0;">
             <ion-item [ngClass]="{'error-border':!validrecipient(recipient_address)}">
                 <ion-label color="primary" floating>{{"RECIPIENT_ADDRESS"|translate}}</ion-label>
-                <ion-input name="recipient_address" [(ngModel)]="recipient_address" (ngModelChange)="recipientChanged($event)" required></ion-input>
+                <ion-input #recipientAddressInput name="recipient_address" [(ngModel)]="recipient_address" (ngModelChange)="recipientChanged($event)" required></ion-input>
+                <button id="scanButton" *ngIf="platform.is('mobile')" ion-button item-right (click)="scan()">
+                    <ion-icon name="qr-scanner"></ion-icon>
+                </button>
             </ion-item>
             <ion-item [ngClass]="{'error-border':!validQuantity(quantity)}">
                 <ion-label color="primary" floating>{{"AMOUNT" | translate}}</ion-label>
-                <ion-input name="quantity" type="number" min="0" [(ngModel)]="quantity" required></ion-input>
+                <ion-input #quantityInput name="quantity" type="number" min="0" [(ngModel)]="quantity" required></ion-input>
             </ion-item>
             <ion-item [ngClass]="{'error-border': false}">
                 <ion-label color="primary" floating>{{"PASSWORD" | translate}}</ion-label>
@@ -74,9 +78,9 @@
             </ion-col>
             <ion-col>
                 <button ion-button color="danger" full item-right icon-left (click)="cancel($event)">
-                <ion-icon name="cancel"></ion-icon>
-                {{'CANCEL'|translate}}
-            </button>
+                    <ion-icon name="cancel"></ion-icon>
+                    {{'CANCEL'|translate}}
+                </button>
             </ion-col>
         </ion-row>
     </form>

@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, AlertController, LoadingController, Loading, NavParams, Platform } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { TranslateService } from '@ngx-translate/core';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 @IonicPage({
     name: 'transfer-page',
@@ -30,6 +31,8 @@ export class AssetTransferPage {
     feeAddress: string
     passphrase: string
     etpBalance: number
+    @ViewChild('recipientAddressInput') recipientAddressInput;
+    @ViewChild('quantityInput') quantityInput;
 
     constructor(
         public navCtrl: NavController,
@@ -38,6 +41,7 @@ export class AssetTransferPage {
         public navParams: NavParams,
         private mvs: MvsServiceProvider,
         public platform: Platform,
+        private barcodeScanner: BarcodeScanner,
         private translate: TranslateService) {
 
         this.selectedAsset = navParams.get('asset')
@@ -199,6 +203,29 @@ export class AssetTransferPage {
                 }]
             });
             alert.present(alert);
+        })
+    }
+
+    scan() {
+        this.translate.get(['SCANNING.MESSAGE']).subscribe((translations: any) => {
+            this.barcodeScanner.scan(
+            {
+                preferFrontCamera : false, // iOS and Android
+                showFlipCameraButton : false, // iOS and Android
+                showTorchButton : false, // iOS and Android
+                torchOn: false, // Android, launch with the torch switched on (if available)
+                prompt : translations['SCANNING.MESSAGE'], // Android
+                resultDisplayDuration: 0, // Android, display scanned text for X ms. 0 suppresses it entirely, default 1500
+                formats : "QR_CODE", // default: all but PDF_417 and RSS_EXPANDED
+            }).then((result) => {
+                if (!result.cancelled) {
+                    let content = result.text.toString().split('&')
+                    this.recipient_address = content[0]
+                    this.recipientAddressInput.setFocus();
+                } else {
+
+                }
+            })
         })
     }
 
