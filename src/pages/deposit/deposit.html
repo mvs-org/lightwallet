@@ -71,7 +71,10 @@
         </ion-item>
         <ion-item *ngIf="recipient_address == 'custom'" [ngClass]="{'error-border':!validrecipient(custom_recipient)}">
           <ion-label floating>{{"CUSTOM_RECIPIENT_ADDRESS" | translate}}</ion-label>
-          <ion-input name="custom_recipient" [(ngModel)]="custom_recipient" (ngModelChange)="customRecipientChanged($event)"></ion-input>
+          <ion-input #customInput name="custom_recipient" [(ngModel)]="custom_recipient" (ngModelChange)="customRecipientChanged($event)"></ion-input>
+          <button id="scanButton" *ngIf="platform.is('mobile')" ion-button item-right (click)="scan()">
+              <ion-icon name="qr-scanner"></ion-icon>
+          </button>
         </ion-item>
         <button ion-button full [disabled]="!sendForm.form.valid||!validQuantity(quantity)||(recipient_address == 'custom' && !validrecipient(custom_recipient))" (click)="preview()" color="primary">
           {{"PREVIEW" | translate}}

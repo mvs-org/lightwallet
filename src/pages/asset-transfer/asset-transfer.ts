@@ -3,6 +3,7 @@ import { IonicPage, NavController, AlertController, LoadingController, Loading, 
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { TranslateService } from '@ngx-translate/core';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import { Keyboard } from '@ionic-native/keyboard';
 
 @IonicPage({
     name: 'transfer-page',
@@ -42,6 +43,7 @@ export class AssetTransferPage {
         private mvs: MvsServiceProvider,
         public platform: Platform,
         private barcodeScanner: BarcodeScanner,
+        private keyboard: Keyboard,
         private translate: TranslateService) {
 
         this.selectedAsset = navParams.get('asset')
@@ -207,14 +209,14 @@ export class AssetTransferPage {
     }
 
     scan() {
-        this.translate.get(['SCANNING.MESSAGE']).subscribe((translations: any) => {
+        this.translate.get(['SCANNING.MESSAGE_ADDRESS']).subscribe((translations: any) => {
             this.barcodeScanner.scan(
             {
                 preferFrontCamera : false, // iOS and Android
                 showFlipCameraButton : false, // iOS and Android
                 showTorchButton : false, // iOS and Android
                 torchOn: false, // Android, launch with the torch switched on (if available)
-                prompt : translations['SCANNING.MESSAGE'], // Android
+                prompt : translations['SCANNING.MESSAGE_ADDRESS'], // Android
                 resultDisplayDuration: 0, // Android, display scanned text for X ms. 0 suppresses it entirely, default 1500
                 formats : "QR_CODE", // default: all but PDF_417 and RSS_EXPANDED
             }).then((result) => {
@@ -222,6 +224,7 @@ export class AssetTransferPage {
                     let content = result.text.toString().split('&')
                     this.recipient_address = content[0]
                     this.recipientAddressInput.setFocus();
+                    this.keyboard.close()
                 } else {
 
                 }

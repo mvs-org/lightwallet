@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, AlertController, LoadingController, Loading, Platform } from 'ionic-angular';
 import { AppGlobals } from '../../app/app.global';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { TranslateService } from '@ngx-translate/core';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import { Keyboard } from '@ionic-native/keyboard';
 
 @IonicPage()
 @Component({
@@ -32,6 +34,7 @@ export class DepositPage {
     feeAddress: string
     passphrase: string
     etpBalance: number
+    @ViewChild('customInput') customInput;
 
     constructor(
         public navCtrl: NavController,
@@ -40,6 +43,8 @@ export class DepositPage {
         private loadingCtrl: LoadingController,
         private mvs: MvsServiceProvider,
         public platform: Platform,
+        private barcodeScanner: BarcodeScanner,
+        private keyboard: Keyboard,
         private translate: TranslateService) {
 
         this.selectedAsset = "ETP"
@@ -231,6 +236,31 @@ export class DepositPage {
                 }]
             });
             alert.present(alert);
+        })
+    }
+
+
+    scan() {
+        this.translate.get(['SCANNING.MESSAGE_ADDRESS']).subscribe((translations: any) => {
+            this.barcodeScanner.scan(
+            {
+                preferFrontCamera : false, // iOS and Android
+                showFlipCameraButton : false, // iOS and Android
+                showTorchButton : false, // iOS and Android
+                torchOn: false, // Android, launch with the torch switched on (if available)
+                prompt : translations['SCANNING.MESSAGE_ADDRESS'], // Android
+                resultDisplayDuration: 0, // Android, display scanned text for X ms. 0 suppresses it entirely, default 1500
+                formats : "QR_CODE", // default: all but PDF_417 and RSS_EXPANDED
+            }).then((result) => {
+                if (!result.cancelled) {
+                    let content = result.text.toString().split('&')
+                    this.custom_recipient = content[0]
+                    this.customInput.setFocus();
+                    this.keyboard.close()
+                } else {
+
+                }
+            })
         })
     }
 

@@ -25,14 +25,14 @@ export class ImportWalletMobilePage {
 
     scan() {
         let wallet = {};
-        this.translate.get(['SCANNING.MESSAGE']).subscribe((translations: any) => {
+        this.translate.get(['SCANNING.MESSAGE_ACCOUNT']).subscribe((translations: any) => {
             this.barcodeScanner.scan(
             {
                 preferFrontCamera : false, // iOS and Android
                 showFlipCameraButton : false, // iOS and Android
                 showTorchButton : false, // iOS and Android
                 torchOn: false, // Android, launch with the torch switched on (if available)
-                prompt : translations['SCANNING.MESSAGE'], // Android
+                prompt : translations['SCANNING.MESSAGE_ACCOUNT'], // Android
                 resultDisplayDuration: 0, // Android, display scanned text for X ms. 0 suppresses it entirely, default 1500
                 formats : "QR_CODE", // default: all but PDF_417 and RSS_EXPANDED
             }).then((result) => {
