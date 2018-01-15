@@ -111,7 +111,6 @@ export class MyApp {
     }
 
     initializeApp() {
-        this.initLanguage('en')
         return this.platform.ready()
     }
 
