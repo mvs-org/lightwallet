@@ -231,7 +231,9 @@
     "SCANNING.MESSAGE_ADDRESS": "Scan the ETP Address",
 
     "MESSAGE.NOT_ETP_ADDRESS_TITLE": "Wrong address",
-    "MESSAGE.NOT_ETP_ADDRESS_TEXT": "This is not a correct ETP address. Please scan an ETP address."
+    "MESSAGE.NOT_ETP_ADDRESS_TEXT": "This is not a correct ETP address. Please scan an ETP address.",
+
+    "SEND_ALL_BUTTON": "Send all"
 
 
 

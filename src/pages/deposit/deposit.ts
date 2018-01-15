@@ -35,6 +35,7 @@ export class DepositPage {
     passphrase: string
     etpBalance: number
     @ViewChild('customInput') customInput;
+    @ViewChild('quantityInput') quantityInput;
 
     constructor(
         public navCtrl: NavController,
@@ -187,6 +188,15 @@ export class DepositPage {
                 else if (error.message == 'ERR_BROADCAST')
                     this.showError('MESSAGE.BROADCAST_ERROR')
             })
+    }
+
+    sendAll() {
+        if(this.selectedAsset == 'ETP') {
+            this.quantity = (this.showBalance/Math.pow(10, this.decimals) - 10000/100000000) + ""
+        } else {
+            this.quantity = (this.showBalance/Math.pow(10, this.decimals)) + ""
+        }
+        this.quantityInput.setFocus()
     }
 
     format = (quantity, decimals) => quantity / Math.pow(10, decimals)

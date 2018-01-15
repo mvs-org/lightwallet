@@ -50,6 +50,7 @@ export class AssetTransferPage {
         this.sendFrom = 'auto'
         this.feeAddress = 'auto'
         this.recipient_address = ''
+        this.quantity = ''
 
         //Load addresses
         mvs.getMvsAddresses()
@@ -161,6 +162,15 @@ export class AssetTransferPage {
                 else if (error.message == 'ERR_BROADCAST')
                     this.showError('MESSAGE.BROADCAST_ERROR')
             })
+    }
+
+    sendAll() {
+        if(this.selectedAsset == 'ETP') {
+            this.quantity = (this.showBalance/Math.pow(10, this.decimals) - 10000/100000000) + ""
+        } else {
+            this.quantity = (this.showBalance/Math.pow(10, this.decimals)) + ""
+        }
+        this.quantityInput.setFocus()
     }
 
     format = (quantity, decimals) => quantity / Math.pow(10, decimals)

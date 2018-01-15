@@ -30,6 +30,9 @@
             <ion-item [ngClass]="{'error-border':!validQuantity(quantity)}">
                 <ion-label color="primary" floating>{{"AMOUNT" | translate}}</ion-label>
                 <ion-input #quantityInput name="quantity" type="number" min="0" [(ngModel)]="quantity" required></ion-input>
+                <button id="sendAll" ion-button item-right (click)="sendAll()">
+                    {{"SEND_ALL_BUTTON"|translate}}
+                </button>
             </ion-item>
             <ion-item [ngClass]="{'error-border': false}">
                 <ion-label color="primary" floating>{{"PASSWORD" | translate}}</ion-label>
