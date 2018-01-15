@@ -129,7 +129,13 @@ export class DepositPage {
 
     }
 
-    validQuantity = (quantity) => quantity != undefined && this.showBalance >= parseFloat(quantity) * Math.pow(10, this.decimals)
+    validQuantity = (quantity) => quantity != undefined && this.showBalance >= parseFloat(quantity) * Math.pow(10, this.decimals) && this.countDecimals(quantity) <= this.decimals && quantity >= 10000/100000000
+
+    countDecimals(value) {
+        if (Math.floor(value) !== value && value.toString().split(".").length > 1)
+            return value.toString().split(".")[1].length || 0;
+        return 0;
+    }
 
     validrecipient = this.mvs.validAddress
 
