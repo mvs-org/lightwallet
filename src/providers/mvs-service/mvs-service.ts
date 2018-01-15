@@ -464,8 +464,10 @@ export class MvsServiceProvider {
             .then((theme: any) => {
                 return this.storage.get('language')
                     .then((language: any) => {
-                        this.storage.clear();
-                        return Promise.all([this.storage.set('language', language), this.storage.set('theme', theme)]);
+                        this.storage.clear()
+                            .then(() => {
+                                return Promise.all([this.storage.set('language', language), this.storage.set('theme', theme)]);
+                            })
                     })
             });
     }

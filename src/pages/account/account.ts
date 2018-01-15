@@ -112,9 +112,7 @@ export class AccountPage {
                                     text: yes,
                                     handler: () => {
                                         this.mvs.hardReset().then(() => {
-                                            confirm.dismiss()
                                             this.nav.setRoot("LoginPage")
-                                            window.location.reload()
                                         })
                                     }
                                 }
