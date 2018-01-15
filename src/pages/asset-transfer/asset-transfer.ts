@@ -208,6 +208,19 @@ export class AssetTransferPage {
         })
     }
 
+    showWrongAddress() {
+        this.translate.get(['MESSAGE.NOT_ETP_ADDRESS_TITLE', 'MESSAGE.NOT_ETP_ADDRESS_TEXT', 'OK']).subscribe((translations: any) => {
+            let alert = this.alertCtrl.create({
+                title: translations['MESSAGE.NOT_ETP_ADDRESS_TITLE'],
+                message: translations['MESSAGE.NOT_ETP_ADDRESS_TEXT'],
+                buttons: [{
+                    text: translations['OK']
+                }]
+            });
+            alert.present(alert);
+        })
+    }
+
     scan() {
         this.translate.get(['SCANNING.MESSAGE_ADDRESS']).subscribe((translations: any) => {
             this.barcodeScanner.scan(
@@ -222,9 +235,13 @@ export class AssetTransferPage {
             }).then((result) => {
                 if (!result.cancelled) {
                     let content = result.text.toString().split('&')
-                    this.recipient_address = content[0]
-                    this.recipientAddressInput.setFocus();
-                    this.keyboard.close()
+                    if(this.mvs.validAddress(content[0]) == true) {
+                        this.recipient_address = content[0]
+                        this.recipientAddressInput.setFocus();
+                        this.keyboard.close()
+                    } else {
+                        this.showWrongAddress()
+                    }
                 } else {
 
                 }

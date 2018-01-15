@@ -228,7 +228,11 @@
     "MESSAGE.ISSUE_INSUFFICIENT_BALANCE" : "You need at least 10 ETP to create an Asset.",
 
     "SCANNING.MESSAGE_ACCOUNT": "Scan the QRCode from your Desktop Light Wallet",
-    "SCANNING.MESSAGE_ADDRESS": "Scan the ETP Address"
+    "SCANNING.MESSAGE_ADDRESS": "Scan the ETP Address",
+
+    "MESSAGE.NOT_ETP_ADDRESS_TITLE": "Wrong address",
+    "MESSAGE.NOT_ETP_ADDRESS_TEXT": "This is not a correct ETP address. Please scan an ETP address."
+
 
 
 }

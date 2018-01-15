@@ -239,6 +239,19 @@ export class DepositPage {
         })
     }
 
+    showWrongAddress() {
+        this.translate.get(['MESSAGE.NOT_ETP_ADDRESS_TITLE', 'MESSAGE.NOT_ETP_ADDRESS_TEXT', 'OK']).subscribe((translations: any) => {
+            let alert = this.alertCtrl.create({
+                title: translations['MESSAGE.NOT_ETP_ADDRESS_TITLE'],
+                message: translations['MESSAGE.NOT_ETP_ADDRESS_TEXT'],
+                buttons: [{
+                    text: translations['OK']
+                }]
+            });
+            alert.present(alert);
+        })
+    }
+
 
     scan() {
         this.translate.get(['SCANNING.MESSAGE_ADDRESS']).subscribe((translations: any) => {
@@ -254,9 +267,13 @@ export class DepositPage {
             }).then((result) => {
                 if (!result.cancelled) {
                     let content = result.text.toString().split('&')
-                    this.custom_recipient = content[0]
-                    this.customInput.setFocus();
-                    this.keyboard.close()
+                    if(this.mvs.validAddress(content[0]) == true) {
+                        this.custom_recipient = content[0]
+                        this.customInput.setFocus();
+                        this.keyboard.close()
+                    } else {
+                        this.showWrongAddress()
+                    }
                 } else {
 
                 }

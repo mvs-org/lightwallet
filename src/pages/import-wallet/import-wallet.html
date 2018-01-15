@@ -39,12 +39,10 @@
             </ion-row>
             <ion-row>
               <button ion-button full [disabled]="!importForm.form.valid||!fileLoaded" color="primary">
-                  {{"IMPORT" | translate}}
+                  {{"IMPORT_WALLET" | translate}}
               </button>
             </ion-row>
         </div>
-
-
     </form>
     <ion-row *ngIf="!disclaimer_agreed" class="blank">
     </ion-row>
