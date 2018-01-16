@@ -4,6 +4,7 @@ import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { TranslateService } from '@ngx-translate/core';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { Keyboard } from '@ionic-native/keyboard';
+import { Clipboard } from '@ionic-native/clipboard';
 
 @IonicPage({
     name: 'transfer-page',
@@ -44,6 +45,7 @@ export class AssetTransferPage {
         public platform: Platform,
         private barcodeScanner: BarcodeScanner,
         private keyboard: Keyboard,
+        private clipboard: Clipboard,
         private translate: TranslateService) {
 
         this.selectedAsset = navParams.get('asset')
@@ -152,7 +154,12 @@ export class AssetTransferPage {
             .then((result: any) => {
                 this.navCtrl.pop()
                 this.translate.get('SUCCESS_SEND_TEXT').subscribe((message: string) => {
-                    this.showSent(message, result.hash)
+                    if(this.platform.is('mobile')) {
+                        this.showSentMobile(message, result.hash)
+                    } else {
+                        this.showSent(message, result.hash)
+                    }
+
                 })
             })
             .catch((error) => {
@@ -193,15 +200,46 @@ export class AssetTransferPage {
     }
 
     showSent(text, hash) {
-        this.translate.get('MESSAGE.SUCCESS').subscribe((title: string) => {
-            this.translate.get('OK').subscribe((ok: string) => {
-                let alert = this.alertCtrl.create({
-                    title: title,
-                    subTitle: text + hash,
-                    buttons: [ok]
-                })
-                alert.present(prompt)
+        this.translate.get(['MESSAGE.SUCCESS','OK']).subscribe((translations: any) => {
+            let alert = this.alertCtrl.create({
+                title: translations['MESSAGE.SUCCESS'],
+                subTitle: text + hash,
+                buttons: [
+                    {
+                        text: translations['OK'],
+                    }
+                ]
             })
+            alert.present(prompt)
+        })
+    }
+
+
+    showSentMobile(text, hash) {
+        this.translate.get(['MESSAGE.SUCCESS','OK','COPY']).subscribe((translations: any) => {
+            let alert = this.alertCtrl.create({
+                title: translations['MESSAGE.SUCCESS'],
+                subTitle: text + hash,
+                buttons: [
+                    {
+                        text: translations['COPY'],
+                        role: 'copy',
+                        handler: () => {
+                            this.clipboard.copy(hash).then(
+                                (resolve: string) => {
+                                  console.log(resolve);
+                                },
+                                (reject: string) => {
+                                  console.error('Error: ' + reject);
+                                })
+                        }
+                    },
+                    {
+                        text: translations['OK'],
+                    }
+                ]
+            })
+            alert.present(prompt)
         })
     }
 
@@ -252,8 +290,6 @@ export class AssetTransferPage {
                     } else {
                         this.showWrongAddress()
                     }
-                } else {
-
                 }
             })
         })
