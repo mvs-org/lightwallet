@@ -233,7 +233,9 @@
     "MESSAGE.NOT_ETP_ADDRESS_TITLE": "Wrong address",
     "MESSAGE.NOT_ETP_ADDRESS_TEXT": "This is not a correct ETP address. Please scan an ETP address.",
 
-    "SEND_ALL_BUTTON": "Send all"
+    "SEND_ALL_BUTTON": "Send all",
+
+    "IMPORT_QRCODE": "Please use the QRCode in app.myetpwallet.com, in Settings, then Connect phone"
 
 
 
