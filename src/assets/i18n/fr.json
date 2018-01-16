@@ -124,7 +124,7 @@
     "BACKUP_WORDS_WRITE_DOWN_TEXT": "Veuillez écrire les 24 mots suivants sur une feuille de papier. Vous aurez besoin de ces 24 mots afin de récupérer votre compte. Il est trés important de les garder dans un endroit privé et sécurisé. Ne les montrez pas à quelqu'un.",
     "RESET_MESSAGE": "Toutes les données de connexion seront effacées",
     "SHOW_ALL_ASSET_BALANCES": "Afficher les soldes de tous les actifs",
-    "THEME_SETTINGS": "Changer de thème",
+    "THEME_SETTINGS": "Thème",
     "LOGIN_MENU_INFO_TEXT": "A l'attention des utilisateurs du Full-node Wallet: Lors de votre première connexion à myetpwallet.com, veuillez crer un fichier de compte à partir de votre phrase mnémotechnique, puis ouvrir le compte à partir du fichier.",
     "PASTE_WORDS": "Utiliser la zone de texte",
     "RESET": "Réinitialiser",

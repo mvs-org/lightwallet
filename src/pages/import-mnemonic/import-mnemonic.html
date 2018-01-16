@@ -34,12 +34,14 @@
             </ion-col>
         </ion-row>
         <ion-row class="button">
-            <ion-col col-sm-12 offset-md-1 col-md-10 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6>
-                <button col-6 ion-button icon-left color="secondary" type="submit" [disabled]="!importForm.form.valid && !passed">
+            <ion-col col-sm-6 offset-md-1 col-md-5 offset-lg-2 col-lg-4 offset-xl-3 col-xl-3>
+                <button ion-button full icon-left color="secondary" type="submit" class="clear" [disabled]="!importForm.form.valid && !passed">
                     <ion-icon name="download"></ion-icon>
                     {{"IMPORT_WALLET"|translate}}
                 </button>
-                <button col-6 ion-button icon-left color="danger" type="button" class="clear button-width" (click)="clear()">
+            </ion-col>
+            <ion-col col-sm-6 col-md-5 col-lg-4 col-xl-3>
+                <button ion-button full icon-left color="danger" type="button" class="clear" (click)="clear()">
                     <ion-icon name="trash"></ion-icon>
                     {{"RESET"|translate}}
                 </button>
