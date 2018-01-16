@@ -42,6 +42,7 @@ export class ImportWalletPage {
 
 
     decrypt(password) {
+        this.showLoading()
         this.mvs.dataReset()
             .then(() => this.wallet.setSeed(password))
             .then(() => Promise.all([this.wallet.getWallet(password), this.wallet.getAddressIndex()]))

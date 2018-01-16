@@ -62,18 +62,14 @@ page-import-wallet {
 
     }
 
-    .row {
-        margin-top: 10px;
-    }
-
-    .blank {
-        margin-bottom:140px;
+    .buttons-container {
+        height: 220px;
     }
 
     .verifiedFile {
         color: #32db64;
-        font-size: 100px;
-        margin-left: calc(50% - 50px);
+        font-size: 50px;
+        margin-left: calc(50% - 25px);
     }
 
 }

@@ -69,7 +69,6 @@ export class ImportWalletMobilePage {
     howToMobile = () => this.nav.push("HowToMobilePage")
 
     showLoading() {
-        console.log("In show loading")
         this.translate.get('MESSAGE.LOADING').subscribe((loading: string) => {
             this.loading = this.loadingCtrl.create({
                 content: loading,
