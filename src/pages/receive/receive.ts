@@ -23,7 +23,7 @@ export class ReceivePage {
         this.selectedAsset = navParams.get('asset')
         this.mvs.getMvsAddresses()
             .then((_: string[]) => {
-                this.address = _[_.length - 1];
+                this.address = _[0];
                 this.addresses = _;
                 return this.mvs.getAddressBalances()
                     .then((addressbalances) => {
