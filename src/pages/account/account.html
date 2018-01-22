@@ -25,7 +25,7 @@
 </ion-header>
 
 <ion-content class="center spread-out">
-  <ion-refresher *ngIf="platform.is('mobile')" (ionRefresh)="doRefresh($event)">
+  <ion-refresher *ngIf="platform.is('mobile') && !offline&&!syncingSmall" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content class="mini-loader mini-loader-mobile"></ion-refresher-content>
   </ion-refresher>
   <div class="mini-loader" *ngIf="syncing&&balances==undefined"></div>
