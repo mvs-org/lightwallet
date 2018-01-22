@@ -76,7 +76,7 @@
                   <ion-label floating>{{"ISSUE.CUSTOM_ISSUE_ADDRESS" | translate}}</ion-label>
                   <ion-input name="custom_issue_address" [(ngModel)]="custom_issue_address" (ngModelChange)="customIssueAddressChanged($event)"></ion-input>
                 </ion-item>
-                <button ion-button full [disabled]="!sendForm.form.valid||!validSymbol(symbol)||validMaxSupply(max_supply)||!validName(issuer_name)||!validDescription(description)||(issue_address=='custom' && !validIssueAddress(custom_issue_address))" (click)="preview()" color="primary">
+                <button ion-button full [disabled]="!sendForm.form.valid||!validSymbol(symbol)||!validMaxSupply(max_supply)||!validName(issuer_name)||!validDescription(description)||(issue_address=='custom' && !validIssueAddress(custom_issue_address))" (click)="preview()" color="primary">
                     {{"PREVIEW" | translate}}
                 </button>
                 <div *ngIf="rawtx">

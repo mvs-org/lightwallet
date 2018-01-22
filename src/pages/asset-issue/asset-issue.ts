@@ -181,10 +181,7 @@ export class AssetIssuePage {
                         buttons: [
                             {
                                 text: txt_cancel,
-                                role: 'cancel',
-                                handler: data => {
-                                    this.navCtrl.pop()
-                                }
+                                role: 'cancel'
                             },
                             {
                                 text: txt_create,
