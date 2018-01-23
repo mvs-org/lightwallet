@@ -25,7 +25,10 @@ export class SettingsPage {
             })
     }
 
-    reset = () => this.mvs.dataReset();
+    reset() {
+        this.mvs.dataReset()
+            .then(() => this.nav.setRoot("AccountPage"))
+    }
 
     ExportWalletPage = e => this.nav.push("ExportWalletPage")
 
