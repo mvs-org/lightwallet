@@ -142,9 +142,11 @@ export class AssetTransferPage {
             .catch((error) => {
                 console.error(error.message)
                 if (error.message == "ERR_DECRYPT_WALLET")
-                    this.showError('MESSAGE.PASSWORD_WRONG')
+                    this.showError('MESSAGE.PASSWORD_WRONG','')
+                else if (error.message == "ERR_INSUFFICIENT_BALANCE")
+                    this.showError('MESSAGE.INSUFFICIENT_BALANCE','')
                 else
-                    this.showError('MESSAGE.CREATE_TRANSACTION')
+                    this.showError('MESSAGE.CREATE_TRANSACTION',error.message)
             })
     }
 
@@ -165,9 +167,9 @@ export class AssetTransferPage {
             .catch((error) => {
                 this.loading.dismiss()
                 if (error.message == 'ERR_CONNECTION')
-                    this.showError('ERROR_SEND_TEXT')
+                    this.showError('ERROR_SEND_TEXT','')
                 else if (error.message == 'ERR_BROADCAST')
-                    this.showError('MESSAGE.BROADCAST_ERROR')
+                    this.showError('MESSAGE.BROADCAST_ERROR','MESSAGE.ONE_TX_PER_BLOCK')
             })
     }
 
@@ -243,11 +245,12 @@ export class AssetTransferPage {
         })
     }
 
-    showError(message_key) {
+    showError(message_key, error) {
         this.translate.get(['MESSAGE.ERROR_TITLE', message_key, 'OK']).subscribe((translations: any) => {
             let alert = this.alertCtrl.create({
                 title: translations['MESSAGE.ERROR_TITLE'],
-                message: translations[message_key],
+                subTitle: translations[message_key],
+                message: error,
                 buttons: [{
                     text: translations['OK']
                 }]
