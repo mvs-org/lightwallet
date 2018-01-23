@@ -104,7 +104,10 @@ export class AssetTransferPage {
         }
     }
 
-    validQuantity = (quantity) => quantity != undefined && this.showBalance >= parseFloat(quantity) * Math.pow(10, this.decimals) && this.countDecimals(quantity) <= this.decimals && ((this.selectedAsset == 'ETP' && quantity >= 10000/100000000) || (this.selectedAsset != 'ETP' && quantity > 0))
+    validQuantity = (quantity) => quantity != undefined
+        && this.countDecimals(quantity) <= this.decimals
+        && ((this.selectedAsset == 'ETP' && this.showBalance >= (parseFloat(quantity) * Math.pow(10, this.decimals) + 10000)) || (this.selectedAsset != 'ETP' && this.showBalance >= parseFloat(quantity) * Math.pow(10, this.decimals)))
+        && ((this.selectedAsset == 'ETP' && quantity >= 10000/100000000) || (this.selectedAsset != 'ETP' && quantity > 0))
 
     countDecimals(value) {
         if (Math.floor(value) !== value && value.toString().split(".").length > 1)
