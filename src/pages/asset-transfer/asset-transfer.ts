@@ -173,9 +173,9 @@ export class AssetTransferPage {
 
     sendAll() {
         if(this.selectedAsset == 'ETP') {
-            this.quantity = (this.showBalance/Math.pow(10, this.decimals) - 10000/100000000) + ""
+            this.quantity = ((this.showBalance/Math.pow(10, this.decimals) - 10000/100000000).toFixed(this.decimals)) + ""
         } else {
-            this.quantity = (this.showBalance/Math.pow(10, this.decimals)) + ""
+            this.quantity = (this.showBalance/Math.pow(10, this.decimals)).toFixed(this.decimals) + ""
         }
         this.quantityInput.setFocus()
     }
