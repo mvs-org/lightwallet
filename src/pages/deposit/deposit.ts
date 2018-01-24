@@ -5,6 +5,7 @@ import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { TranslateService } from '@ngx-translate/core';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { Keyboard } from '@ionic-native/keyboard';
+import { Clipboard } from '@ionic-native/clipboard';
 
 @IonicPage()
 @Component({
@@ -46,6 +47,7 @@ export class DepositPage {
         public platform: Platform,
         private barcodeScanner: BarcodeScanner,
         private keyboard: Keyboard,
+        private clipboard: Clipboard,
         private translate: TranslateService) {
 
         this.selectedAsset = "ETP"
@@ -170,7 +172,7 @@ export class DepositPage {
                 if (error.message == "ERR_DECRYPT_WALLET")
                     this.showError('MESSAGE.PASSWORD_WRONG','')
                 else if (error.message == "ERR_INSUFFICIENT_BALANCE")
-                    this.showError('MESSAGE.ISSUE_INSUFFICIENT_BALANCE','')
+                    this.showError('MESSAGE.INSUFFICIENT_BALANCE','')
                 else
                     this.showError('MESSAGE.CREATE_TRANSACTION',error)
                 throw Error('ERR_CREATE_TX')
@@ -183,7 +185,11 @@ export class DepositPage {
             .then((result: any) => {
                 this.navCtrl.pop()
                 this.translate.get('SUCCESS_SEND_TEXT').subscribe((message: string) => {
-                    this.showSent(message, result.hash)
+                    if(this.platform.is('mobile')) {
+                        this.showSentMobile(message, result.hash)
+                    } else {
+                        this.showSent(message, result.hash)
+                    }
                 })
             })
             .catch((error) => {
@@ -230,6 +236,34 @@ export class DepositPage {
                 })
                 alert.present(prompt)
             })
+        })
+    }
+
+    showSentMobile(text, hash) {
+        this.translate.get(['MESSAGE.SUCCESS','OK','COPY']).subscribe((translations: any) => {
+            let alert = this.alertCtrl.create({
+                title: translations['MESSAGE.SUCCESS'],
+                subTitle: text + hash,
+                buttons: [
+                    {
+                        text: translations['COPY'],
+                        role: 'copy',
+                        handler: () => {
+                            this.clipboard.copy(hash).then(
+                                (resolve: string) => {
+                                  console.log(resolve);
+                                },
+                                (reject: string) => {
+                                  console.error('Error: ' + reject);
+                                })
+                        }
+                    },
+                    {
+                        text: translations['OK'],
+                    }
+                ]
+            })
+            alert.present(prompt)
         })
     }
 
