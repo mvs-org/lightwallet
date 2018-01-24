@@ -225,6 +225,19 @@
     "HOW_TO_IMPORT_WALLET_MOBILE_STEP2": "Scannez le QR Code",
     "HOW_TO_IMPORT_WALLET_MOBILE_STEP3": "Utilisez votre portefeuille depuis sur votre téléphone!",
 
-    "MESSAGE.ISSUE_INSUFFICIENT_BALANCE" : "Vous avez besoin d'au moins 10 ETP pour créer un actif."
+    "MESSAGE.ISSUE_INSUFFICIENT_BALANCE" : "Vous avez besoin d'au moins 10 ETP pour créer un actif.",
+
+    "SCANNING.MESSAGE_ACCOUNT": "Scannez votre QRCode sur votre ordinateur",
+    "SCANNING.MESSAGE_ADDRESS": "Scannez l'adresse ETP",
+
+    "MESSAGE.NOT_ETP_ADDRESS_TITLE": "Adresse incorrecte",
+    "MESSAGE.NOT_ETP_ADDRESS_TEXT": "Ceci n'est pas une adresse ETP correcte. Veuillez scanner une adresse ETP.",
+
+    "SEND_ALL_BUTTON": "Max.",
+
+    "IMPORT_QRCODE": "Veuillez utiliser le QRCode disponible sur app.myetpwallet.com, dans Paramètres, puis Connecter téléphone",
+
+    "MESSAGE.ONE_TX_PER_BLOCK": "Veuillez noter qu'actuellement chaque compte ne peut soumettre qu'une transaction par bloc",
+    "MESSAGE.INSUFFICIENT_BALANCE": "Balance insuffisante. Veuillez vérifier votre balance disponible"
 
 }

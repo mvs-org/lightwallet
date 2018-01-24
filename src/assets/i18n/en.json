@@ -238,7 +238,6 @@
     "IMPORT_QRCODE": "Please use the QRCode in app.myetpwallet.com, in Settings, then Connect phone",
 
     "MESSAGE.ONE_TX_PER_BLOCK": "Please note currently each account can only broadcast 1 transaction per block",
-    "MESSAGE.INSUFFICIENT_BALANCE": "Insufficient balance. Please double check your available balance",
-    "MESSAGE.CONNECTION_ERROR": "Connection error. Please check you Internet connection"
-
+    "MESSAGE.INSUFFICIENT_BALANCE": "Insufficient balance. Please double check your available balance"
+    
 }
