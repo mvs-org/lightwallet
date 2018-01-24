@@ -211,9 +211,12 @@ export class AssetIssuePage {
             .catch((error) => {
                 this.loading.dismiss()
                 if(error.message=='ERR_CONNECTION')
-                    this.showError('MESSAGE.CONNECTION_ERROR','')
-                else if(error.message=='ERR_BROADCAST')
-                    this.showError('MESSAGE.BROADCAST_ERROR','')
+                    this.showError('ERROR_SEND_TEXT','')
+                else if (error.message == 'ERR_BROADCAST') {
+                    this.translate.get('MESSAGE.ONE_TX_PER_BLOCK').subscribe((message: string) => {
+                        this.showError('MESSAGE.BROADCAST_ERROR',message)
+                    })
+                }
             })
     }
 

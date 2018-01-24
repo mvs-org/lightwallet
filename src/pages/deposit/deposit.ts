@@ -130,7 +130,10 @@ export class DepositPage {
 
     }
 
-    validQuantity = (quantity) => quantity != undefined && this.showBalance >= parseFloat(quantity) * Math.pow(10, this.decimals) && this.countDecimals(quantity) <= this.decimals && quantity >= 10000/100000000
+    validQuantity = (quantity) => quantity != undefined
+        && this.countDecimals(quantity) <= this.decimals
+        && this.showBalance >= (Math.round(parseFloat(quantity) * Math.pow(10, this.decimals)) + 10000)
+        && quantity >= 10000/100000000
 
     countDecimals(value) {
         if (Math.floor(value) !== value && value.toString().split(".").length > 1)
@@ -186,18 +189,17 @@ export class DepositPage {
             .catch((error) => {
                 this.loading.dismiss()
                 if (error.message == 'ERR_CONNECTION')
-                    this.showError('MESSAGE.CONNECTION_ERROR','')
-                else if (error.message == 'ERR_BROADCAST')
-                    this.showError('MESSAGE.BROADCAST_ERROR',error)
+                    this.showError('ERROR_SEND_TEXT','')
+                else if (error.message == 'ERR_BROADCAST') {
+                    this.translate.get('MESSAGE.ONE_TX_PER_BLOCK').subscribe((message: string) => {
+                        this.showError('MESSAGE.BROADCAST_ERROR',message)
+                    })
+                }
             })
     }
 
     sendAll() {
-        if(this.selectedAsset == 'ETP') {
-            this.quantity = (this.showBalance/Math.pow(10, this.decimals) - 10000/100000000) + ""
-        } else {
-            this.quantity = (this.showBalance/Math.pow(10, this.decimals)) + ""
-        }
+        this.quantity = parseFloat(((this.showBalance/100000000 - 10000/100000000).toFixed(this.decimals)) + "") + ""
         this.quantityInput.setFocus()
     }
 
