@@ -56,6 +56,7 @@ export class DepositPage {
         this.feeAddress = 'auto'
         this.locktime = 0
         this.custom_recipient = ''
+        this.passphrase = ''
 
         if (this.globals.network == 'mainnet')
             this.deposit_options = [
@@ -143,9 +144,13 @@ export class DepositPage {
         return 0;
     }
 
+    validLocktime = (locktime) => locktime != 0
+
     validrecipient = this.mvs.validAddress
 
     customRecipientChanged = () => { if (this.custom_recipient) this.custom_recipient = this.custom_recipient.trim() }
+
+    validPassword = (passphrase) => (passphrase.length > 0)
 
     cancel(e) {
         e.preventDefault()

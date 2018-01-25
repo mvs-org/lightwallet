@@ -53,6 +53,7 @@ export class AssetTransferPage {
         this.feeAddress = 'auto'
         this.recipient_address = ''
         this.quantity = ''
+        this.passphrase = ''
 
         //Load addresses
         mvs.getMvsAddresses()
@@ -194,6 +195,8 @@ export class AssetTransferPage {
     validrecipient = this.mvs.validAddress
 
     recipientChanged = () => { if (this.recipient_address) this.recipient_address = this.recipient_address.trim() }
+
+    validPassword = (passphrase) => (passphrase.length > 0)
 
     showLoading() {
         return new Promise((resolve, reject) => {

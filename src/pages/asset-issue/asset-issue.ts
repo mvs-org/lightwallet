@@ -57,6 +57,7 @@ export class AssetIssuePage {
         this.custom_issue_address = ''
         this.description = ''
         this.issue_address = 'auto'
+        this.passphrase = ''
 
         //Load addresses
         mvs.getMvsAddresses()
@@ -116,7 +117,9 @@ export class AssetIssuePage {
 
     }
 
-    validMaxSupply = (max_supply) => max_supply > 0
+    validMaxSupply = (max_supply, asset_decimals) => max_supply > 0 && ((asset_decimals == undefined)||(Math.floor(parseFloat(max_supply) * Math.pow(10, asset_decimals))) <= 10000000000000000)
+
+    validDecimals = (asset_decimals) => asset_decimals >= 0 && asset_decimals <= 8
 
     validSymbol = (symbol) => (symbol.length > 2) && (symbol.length < 64) && (!/[^A-Za-z0-9.]/g.test(symbol))
 
@@ -124,6 +127,8 @@ export class AssetIssuePage {
 
 
     validDescription = (description) => (description.length > 0) && (description.length < 64)
+
+    validPassword = (passphrase) => (passphrase.length > 0)
 
     validIssueAddress = this.mvs.validAddress
 

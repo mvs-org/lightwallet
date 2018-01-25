@@ -34,7 +34,7 @@
                     {{"SEND_ALL_BUTTON"|translate}}
                 </button>
             </ion-item>
-            <ion-item [ngClass]="{'error-border': false}">
+            <ion-item [ngClass]="{'error-border': !validPassword(passphrase)}">
                 <ion-label color="primary" floating>{{"PASSWORD" | translate}}</ion-label>
                 <ion-input name="passphrase" type="password" [(ngModel)]="passphrase" required></ion-input>
             </ion-item>
@@ -61,7 +61,7 @@
                         <ion-option *ngFor="let address of addresses" value="{{address}}">{{address}}</ion-option>
                     </ion-select>
                 </ion-item>
-                <button ion-button full [disabled]="!sendForm.form.valid||!validQuantity(quantity)||!validrecipient(recipient_address)" (click)="preview()" color="primary">
+                <button ion-button full [disabled]="!sendForm.form.valid||!validrecipient(recipient_address)||!validQuantity(quantity)||!validPassword(passphrase)" (click)="preview()" color="primary">
                     {{"PREVIEW" | translate}}
                 </button>
                 <div *ngIf="rawtx">
@@ -74,7 +74,7 @@
         </div>
         <ion-row class="padding-bottom">
             <ion-col>
-                <button ion-button full icon-left [disabled]="!sendForm.form.valid||!validQuantity(quantity)||!validrecipient(recipient_address)" (click)="send()" color="secondary">
+                <button ion-button full icon-left [disabled]="!sendForm.form.valid||!validrecipient(recipient_address)||!validQuantity(quantity)||!validPassword(passphrase)" (click)="send()" color="secondary">
                     <ion-icon disabled="checked" name="send"></ion-icon>
                     {{"SEND" | translate}}
                 </button>
