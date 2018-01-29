@@ -1,6 +1,6 @@
 {
   "name": "mvs-lightwallet",
-  "version": "0.2.1b3",
+  "version": "0.2.1b7",
   "author": "Sven Mutzl",
   "homepage": "https://www.myetpwallet.com/",
   "private": true,
@@ -64,7 +64,7 @@
     "@types/node": "^8.0.52",
     "angular2-template-loader": "^0.6.2",
     "html-loader": "^0.5.1",
-    "ionic": "3.9.2",
+    "ionic": "^3.19.1",
     "istanbul-instrumenter-loader": "^3.0.0",
     "jasmine": "^2.8.0",
     "jasmine-as-promised": "0.0.8",
