@@ -224,7 +224,7 @@
     "HOW_TO_IMPORT_WALLET_MOBILE_STEP2": "QR Code scannen",
     "HOW_TO_IMPORT_WALLET_MOBILE_STEP3": "Viel spaẞ mit deinem mobilen Wallet!",
 
-    "MESSAGE.ISSUE_INSUFFICIENT_BALANCE" : "Es werden 10 ETP für die Asset Erstellung benötigt."
+    "MESSAGE.ISSUE_INSUFFICIENT_BALANCE" : "Es werden 10 ETP für die Asset Erstellung benötigt.",
 
   "SCANNING.MESSAGE_ACCOUNT": "Scanne den QR Code der Web-Version",
   "SCANNING.MESSAGE_ADDRESS": "Scanne die ETP Adresse",
