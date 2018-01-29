@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController, LoadingController, Loading } from 'ionic-angular';
+import { IonicPage, NavController, AlertController, LoadingController, Loading, Platform } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
-import { PassphrasePage } from '../passphrase/passphrase';
 import { AppGlobals } from '../../app/app.global';
 
+@IonicPage()
 @Component({
     selector: 'page-import-mnemonic',
     templateUrl: 'import-mnemonic.html',
@@ -18,11 +18,11 @@ export class ImportMnemonicPage {
     passed: boolean;
 
     constructor(public nav: NavController,
-        public navParams: NavParams,
         public mvs: MvsServiceProvider,
         private alertCtrl: AlertController,
         private loadingCtrl: LoadingController,
         private translate: TranslateService,
+        public platform: Platform,
         private global: AppGlobals) {
         for (var i = 0; i < 24; i++)
             this.words[i] = '';
@@ -43,12 +43,11 @@ export class ImportMnemonicPage {
             mnemonic += String(this.words[index]).toLowerCase() + ' '
         });
         mnemonic = mnemonic.trim()
-        this.nav.push(PassphrasePage, { mnemonic: mnemonic })
+        this.nav.push("PassphrasePage", { mnemonic: mnemonic })
     }
 
     // testing
     onChange() {
-        console.log(this.all_words)
         this.displayWords(this.all_words)
         	  .then((all_words)=>this.countWords(all_words))
             .then((count) => this.compareWords(count))
@@ -73,11 +72,9 @@ export class ImportMnemonicPage {
     // returns the number of words
     // TODO: replace with regex
     countWords(words) {
-        console.log(words)
         let w = words.trim();
         return new Promise((resolve, reject) => {
             if (words) {
-                console.log(w.split(' '))
                 resolve(w.split(' ').length);
             } else {
                 resolve(0)

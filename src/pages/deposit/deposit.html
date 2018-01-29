@@ -11,16 +11,16 @@
   <p align="center" *ngIf="etpBalance<10000">{{"NOTICE_TRANSACTION_FEE_UNCOVERED"|translate}}</p>
   <ion-row>
     <ion-col>
-      <p>{{"AVAILABLE_BALANCE" | translate}}: {{format(showBalance,decimals)}} {{selectedAsset}}</p>
+      <p>{{"AVAILABLE_BALANCE" | translate}}: <br *ngIf="platform.is('mobile')">{{format(showBalance,decimals)}} {{selectedAsset}}</p>
     </ion-col>
     <ion-col>
-      <p class="right">{{"FEE"|translate}}: {{10000/100000000}} ETP</p>
+      <p class="right">{{"FEE"|translate}}:<br *ngIf="platform.is('mobile')"> {{10000/100000000}} ETP</p>
     </ion-col>
   </ion-row>
   <form #sendForm="ngForm">
     <ion-list>
       <br><br>
-      <ion-item [ngClass]="{'error-border': false}">
+      <ion-item [ngClass]="{'error-border': !validLocktime(locktime)}">
         <ion-label color="primary">{{"SELECT_DEPOSIT_OPTION"|translate}}</ion-label>
         <ion-select [(ngModel)]="locktime" name="locktime" multiple="false" (ngModelChange)="onDepositOptionChange($event)" okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}" required>
           <ion-option *ngFor="let deposit_option of deposit_options" value="{{deposit_option.locktime}}">{{deposit_option.locktime}} {{'BLOCKS'|translate}}, {{'INTEREST_RATE'|translate}}: {{deposit_option.rate*100}}%</ion-option>
@@ -28,7 +28,10 @@
       </ion-item>
       <ion-item [ngClass]="{'error-border':!validQuantity(quantity)}">
         <ion-label color="primary" floating>{{"AMOUNT" | translate}}</ion-label>
-        <ion-input name="quantity" type="number" min="0" [(ngModel)]="quantity" required></ion-input>
+        <ion-input #quantityInput name="quantity" type="number" min="0" [(ngModel)]="quantity" required></ion-input>
+        <!--<button id="sendAll" ion-button item-right (click)="sendAll()">
+            {{"SEND_ALL_BUTTON"|translate}}
+        </button>-->
       </ion-item>
       <ion-row *ngFor="let deposit_option of deposit_options">
         <ion-item *ngIf="deposit_option.locktime == locktime && quantity > 0">
@@ -40,7 +43,7 @@
           </ion-label>
         </ion-item>
       </ion-row>
-      <ion-item [ngClass]="{'error-border': false}">
+      <ion-item [ngClass]="{'error-border': !validPassword(passphrase)}">
         <ion-label color="primary" floating>{{"PASSWORD" | translate}}</ion-label>
         <ion-input name="passphrase" type="password" [(ngModel)]="passphrase" required></ion-input>
       </ion-item>
@@ -71,9 +74,12 @@
         </ion-item>
         <ion-item *ngIf="recipient_address == 'custom'" [ngClass]="{'error-border':!validrecipient(custom_recipient)}">
           <ion-label floating>{{"CUSTOM_RECIPIENT_ADDRESS" | translate}}</ion-label>
-          <ion-input name="custom_recipient" [(ngModel)]="custom_recipient" (ngModelChange)="customRecipientChanged($event)"></ion-input>
+          <ion-input #customInput name="custom_recipient" [(ngModel)]="custom_recipient" (ngModelChange)="customRecipientChanged($event)"></ion-input>
+          <button id="scanButton" *ngIf="platform.is('mobile')" ion-button item-right (click)="scan()">
+              <ion-icon name="qr-scanner"></ion-icon>
+          </button>
         </ion-item>
-        <button ion-button full [disabled]="!sendForm.form.valid||!validQuantity(quantity)||(recipient_address == 'custom' && !validrecipient(custom_recipient))" (click)="preview()" color="primary">
+        <button ion-button full [disabled]="!sendForm.form.valid||!validLocktime(locktime)||!validQuantity(quantity)||!validPassword(passphrase)||(recipient_address == 'custom' && !validrecipient(custom_recipient))" (click)="preview()" color="primary">
           {{"PREVIEW" | translate}}
         </button>
         <div *ngIf="rawtx">
@@ -84,9 +90,9 @@
         </div>
       </ion-list>
     </div>
-    <ion-row>
+    <ion-row class="padding-bottom">
       <ion-col>
-        <button ion-button full icon-left [disabled]="!sendForm.form.valid||!validQuantity(quantity)||(recipient_address == 'custom' && !validrecipient(custom_recipient))" (click)="send()" color="secondary">
+        <button ion-button full icon-left [disabled]="!sendForm.form.valid||!validLocktime(locktime)||!validQuantity(quantity)||!validPassword(passphrase)||(recipient_address == 'custom' && !validrecipient(custom_recipient))" (click)="send()" color="secondary">
           <ion-icon disabled="checked" name="send"></ion-icon>
           {{"SEND" | translate}}
         </button>

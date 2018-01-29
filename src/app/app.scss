@@ -49,6 +49,12 @@ ion-menu ion-content .scroll-content{
     color: color($colors, light);
 }
 */
+
+.scroll-content {
+    padding-bottom: 0 !important;
+    top: -5px;
+    padding-top: 21px !important;
+}
 // ███▄    █  ▒█████   ▄████▄  ▄▄▄█████▓ ██▓ ██▓     █    ██ ▒██   ██▒
 // ██ ▀█   █ ▒██▒  ██▒▒██▀ ▀█  ▓  ██▒ ▓▒▓██▒▓██▒     ██  ▓██▒▒▒ █ █ ▒░
 // ▓██  ▀█ ██▒▒██░  ██▒▒▓█    ▄ ▒ ▓██░ ▒░▒██▒▒██░    ▓██  ▒██░░░  █   ░
@@ -76,10 +82,16 @@ ion-menu ion-content .scroll-content{
         .item-md,h1,h2, h3, h4, p {
             background-color: #383838;
         }
-
     }
+
     page-login .banner {
-        content:url(../../assets/logo1.png) !important;
+        margin: 20px auto !important;
+        background:url(../assets/logo1.png) no-repeat !important;
+        width: 100% !important;
+        max-width: 334px !important;
+        height: 80px !important;
+        outline: 0 !important;
+        background-size: 100% !important;
     }
 
     ion-alert ion-backdrop{
@@ -248,7 +260,13 @@ ion-menu ion-content .scroll-content{
 
 
     page-login .banner {
-        content:url(../../assets/logo1.png) !important;
+        margin: 20px auto !important;
+        background:url(../assets/logo1.png) no-repeat !important;
+        width: 100% !important;
+        max-width: 334px !important;
+        height: 80px !important;
+        outline: 0 !important;
+        background-size: 100% !important;
     }
 
     textarea {

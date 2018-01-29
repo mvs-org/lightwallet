@@ -167,5 +167,75 @@
   "CUSTOM": "กำหนดเอง",
   "CUSTOM_RECIPIENT_ADDRESS": "ที่อยู่ผู้รับกำหนดเอง",
   "BLOCKS": "บล็อก",
-  "INTEREST_RATE": "อัตราดอกเบี้ย"
+  "INTEREST_RATE": "อัตราดอกเบี้ย",
+  
+  "OPEN_FROM_QRCODE": "เปิดกระเป๋าเหรียญจากโค้ด QR",
+  "OPEN_FROM_BACKUP_WORDS": "เปิดกระเป๋าเหรียญจากคำสำรอง",
+  "ENTER_PASSWORD_HEADLINE_MOBILE": "ใส่รหัสผ่านของคุณเพื่อถอดรหัสไพร์เวทคีย์ของคุณ",
+  "SETTINGS.SHOW_QRCODE_BUTTON": "ติดต่อมือถือ",
+  "SETTINGS.SHOW_QRCODE_TEXT": "ส่งออกไพร์เวทคีย์ของคุณไปยังแอป MyETPWallet",
+
+  "LOGOUT_TEXT": "ออกจากกระเป๋าเหรียญ",
+  "EXPORT_ACCOUNT": "ติดต่อมือถือ",
+
+  "IMPORT.SHOW_QRCODE_BUTTON": "แสดงโค้ด QR",
+
+  "IMPORT_MNEMONIC_TEXT_MOBILE": "ไพร์เวทคีย์ของคุณจะถูกเข้ารหัสด้วยรหัสผ่านของคุณและบันทึกบนเครื่องของคุณ",
+
+  "RESET_MESSAGE_MOBILE": "ข้อมูลทุกอย่างจะถูกลบทิ้ง คุณจะต้องใช้คำสำรองหรือแสกนโค้ด QR จากกระเป๋าเหรียญบนเครื่องเดสก์ทอปหากต้องการเข้าสู่ระบบ",
+  "IMPORT.SCAN_QRCODE_TEXT": "นำเข้าบัญชีไปยังมือถือของฉัน",
+  "IMPORT.SCAN_QRCODE_BUTTON":"สแกนโค้ด QR",
+
+  "ASSET_ISSUE": "สร้างสินทรัพย์",
+  "NOTICE_ASSET_ISSUE_FEE": "โปรดรับทราบว่า จะต้องใช้ 10 ETP ในการสร้างสินทรัพย์ใหม่",
+
+  "ISSUE.NOTICE_TRANSACTION_FEE_UNCOVERED": "คุณต้องการอย่างน้อย 10 ETP ในการสร้างสินทรัพย์",
+  "ISSUE.SYMBOL": "สัญลักษณ์",
+  "ISSUE.ISSUER_NAME": "ชื่อผู้ออกสินทรัพย์",
+  "ISSUE.MAX_SUPPLY": "ปริมาณสูงสุด",
+  "ISSUE.DECIMALS": "จำนวนทศนิยม",
+  "ISSUE.DESCRIPTION": "ลักษณะสินทรัพย์",
+  "ISSUE.ISSUE_ADDRESS": "ที่อยู๋ผู้ออกสินทรัพย์ (ที่อยู่ที่จะได้รับเหรียญใหม่นี้)",
+  "ISSUE.FEE_ADDRESS": "ที่อยู่สำหรับค่าธรรมเนียม (ที่อยู่ที่ต้องชำระ 10 ETP)",
+  "ISSUE.CUSTOM_ISSUE_ADDRESS": "ที่อยู่ผู้ออกสินทรัพย์กำหนดเอง",
+
+  "ISSUE.CONFIRMATION_TITLE": "จะต้องชำระ 10 ETP ในการออกสินทรัพย์",
+  "ISSUE.CONFIRMATION_SUBTITLE": "คุณแน่ใจที่จะสร้างสินทรัพย์?",
+  "ISSUE.CREATE": "สร้างสินทรัพย์",
+
+  "EXPORT.HEADLINE": "ต่อมืถือของคุณone",
+  "EXPORT.INTRODUCTION": "หากคุณต้องการดาวน์โหลด MyETPWallet ไปยังมือถือของคุณ โปรดเข้าเว็บ MyETPWallet.com แล้วกด 'ดาวน์โหลดกระเป๋าเหรียญ'",
+  "EXPORT.TEXT": "การกระทำนี้จะส่งออกไพร์เวทคีย์ของคุณไปยังมือถือของคุณ ไพร์เวทคีย์นี้จะถูกเข้ารหัสด้วยรหัสผ่านที่ใช้โดยบัญชีนี้และบันทึกอยู่บนมือถือของคุณ โปรดสแกนโค้ด QR นี้จากแอป MyETPWallet บนมือถือ",
+  "EXPORT.REMINDER_LOGOUT": "โปรดออกจากแอปถ้าคุณต้องการเปลี่ยนมือถือของคุณ",
+
+  "LOGIN_MENU_INFO_TEXT_MOBILE": "หมายเหตุ: หากคุณต้องการสร้างบัญชี โปรดใช้เครื่องเดสก์ทอป แล้วไปที่ MyETPWallet.com จากที่นี่คุณจะสามารถเชื่อมบัญชีของคุณกับโทรศัพท์ของคุณ",
+  "REPORT_BUG": "รายงานบั๊ก",
+
+  "MESSAGE.NETWORK_MISMATCH": "เครือข่ายไม่ตรงกัน",
+  "MESSAGE.PASSWORD_WRONG": "ไม่สามารถถอดรหัสกระเป๋าเหรียญด้วยรหัสที่คุณให้ไว้",
+  "MESSAGE.CREATE_TRANSACTION" : "ไม่สามารถสร้างธุรกรรมได้",
+  "MESSAGE.BROADCAST_ERROR": "ไม่สามารถบอร์ดแคสธุรกรรมได้",
+
+  "LOGIN": "เข้าสู่ระบบ",
+  "HOW_TO_IMPORT_WALLET_MOBILE": "จะนำเข้าอย่างไร",
+  "HOW_TO_IMPORT_WALLET_MOBILE_TITLE": "จะนำเข้าไพร์เวคีย์ของคุณ?",
+  "HOW_TO_IMPORT_WALLET_MOBILE_STEP1": "เปิดกระเป๋าเหรียญบนเดสก์ทอป แล้วไปที่ 'การตั้งค่า' หลังจากนั้น ให้เลือก 'ติดต่อมือถือ'",
+  "HOW_TO_IMPORT_WALLET_MOBILE_STEP2": "สแกนโค้ด QR",
+  "HOW_TO_IMPORT_WALLET_MOBILE_STEP3": "สนุกกับกระเป๋าเหรียญของคุณบนมือถือของคุณ!",
+
+  "MESSAGE.ISSUE_INSUFFICIENT_BALANCE" : "คุณต้องการอย่างน้อย 10 ETP ในการสร้างสินทรัพย์",
+
+  "SCANNING.MESSAGE": "สแกนโค้ด QR จากกระเป๋าเหรียญบนเดสก์ทอป",
+  "SCANNING.MESSAGE_ADDRESS": "สแกนที่อยู่ของ ETP",
+
+  "MESSAGE.NOT_ETP_ADDRESS_TITLE": "ที่อยู่ผิด",
+  "MESSAGE.NOT_ETP_ADDRESS_TEXT": "นี่ไม่ใช่ที่อยู่ ETP ที่ถูกต้อง โปรดแสกนที่อยู่ของ ETP",
+
+  "SEND_ALL_BUTTON": "ส่งทั้งหมด",
+
+  "IMPORT_QRCODE": "โปรดใช้ QRCode ใน app.myetpwallet.com ในส่วนการตั้งค่า หลังจากนั้นให้เชื่อมกับโทรศัพท์",
+
+  "MESSAGE.ONE_TX_PER_BLOCK": "โปรดรับทราบว่า ปัจจุบันบัญชีหนึ่งๆจะสามารถบอร์ดแคสได้เพียง 1 ธุรกรรมต่อบล็อก",
+  "MESSAGE.INSUFFICIENT_BALANCE": "ยอดคงเหลือไม่เพียงพอ โปรดตรวจสอบยอดคงเหลือของคุณอีกครั้ง"
+
 }

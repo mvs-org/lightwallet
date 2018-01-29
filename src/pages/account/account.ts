@@ -1,13 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, AlertController, Platform } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
-import { DepositPage } from '../deposit/deposit';
-import { TransactionsPage } from '../transactions/transactions';
-import { AssetTransferPage } from '../asset-transfer/asset-transfer';
-import { ReceivePage } from '../receive/receive';
-import { LoginPage } from '../login/login';
 
+@IonicPage()
 @Component({
     selector: 'page-account',
     templateUrl: 'account.html'
@@ -17,6 +13,8 @@ export class AccountPage {
     user: string
     pass: string
     syncing = false
+    syncingSmall = false
+    offline = false
     balances: any
     height: number
     loading: boolean
@@ -27,31 +25,68 @@ export class AccountPage {
 
     private syncinterval: any;
 
-    constructor(public nav: NavController, public translate: TranslateService, private mvs: MvsServiceProvider, private alertCtrl: AlertController) {
+    constructor(public nav: NavController, public translate: TranslateService, private mvs: MvsServiceProvider, private alertCtrl: AlertController, public platform: Platform) {
         this.loading = true;
-        this.sync()
+
+        //Reset last update time
+        var lastupdate = new Date()
+        lastupdate.setDate(0)
+        this.mvs.setUpdateTime(lastupdate)
     }
 
     format = (quantity, decimals) => quantity / Math.pow(10, decimals)
 
     ionViewDidEnter() {
-        this.syncinterval = setInterval(() => {
-            this.mvs.getUpdateNeeded().then((update_needed) => {
-                if (update_needed)
-                    this.mvs.setUpdateTime().then(() => this.sync())
+        this.mvs.getMvsAddresses()
+            .then((addresses) => {
+                if (Array.isArray(addresses) && addresses.length)
+                    this.initialize()
+                else
+                    this.nav.setRoot("LoginPage")
             })
-        }, 20000)
+    }
+
+    initialize = () => {
+        this.mvs.getLoaded()
+            .then((loaded) => {
+                if(loaded == true){
+                    this.loadFromCache()
+                } else {
+                    //console.log("To load")
+                }
+            })
+            .then(() => this.update())
+            .then(() => this.syncinterval = setInterval(() => this.update(), 5000))
+    }
+
+    loadFromCache = () => {
+        this.syncing = false
+        this.loadBalances()
+        //Update height
+        this.mvs.getMvsHeight()
+            .then((height: number) => {
+                this.height = height
+            })
+    }
+
+    update = () => {
+        return this.mvs.getUpdateNeeded()
+            .then((update_needed) => {
+                if (update_needed)
+                    return this.sync().then(()=>this.mvs.setUpdateTime())
+            })
+            .catch(() => console.log("Can't update"))
     }
 
     ionViewWillLeave = () => clearInterval(this.syncinterval)
 
-    gotoDeposit = (event, asset) => this.nav.push(DepositPage, { asset: asset })
+    gotoDeposit = (event, asset) => this.nav.push("DepositPage")
 
-    gotoTransactions = (event, asset) => this.nav.push(TransactionsPage, { asset: asset })
+    gotoTransactions = (event, asset) => this.nav.push("transactions-page", { asset: asset })
 
-    gotoTransfer = (event, asset) => this.nav.push(AssetTransferPage, { asset: asset })
+    gotoTransfer = (event, asset) => this.nav.push("transfer-page", { asset: asset })
 
-    gotoReceive = (even, asset) => this.nav.push(ReceivePage, { asset: asset })
+    gotoReceive = (even, asset) => this.nav.push("receive-page", { asset: asset })
 
     errorImg = e => e.target.remove()
 
@@ -77,9 +112,7 @@ export class AccountPage {
                                     text: yes,
                                     handler: () => {
                                         this.mvs.hardReset().then(() => {
-                                            confirm.dismiss()
-                                            this.nav.setRoot(LoginPage)
-                                            window.location.reload()
+                                            this.nav.setRoot("LoginPage")
                                         })
                                     }
                                 }
@@ -93,6 +126,41 @@ export class AccountPage {
     }
 
     private sync() {
+        //Only allow a single sync process
+        if (this.syncing) {
+            this.syncingSmall = false
+            return Promise.resolve()
+        } else {
+            this.syncing = true
+            this.syncingSmall = true
+            return Promise.all([this.updateHeight(), this.updateBalances()])
+                .then((results) => {
+                    this.height = results[0]
+                    this.syncing = false
+                    this.syncingSmall = false
+                    this.offline = false
+                })
+                .catch((error) => {
+                    console.error(error)
+                    this.syncing = false
+                    this.syncingSmall = false
+                    this.offline = true
+                })
+        }
+    }
+
+    private updateHeight = () => this.mvs.updateMvsHeight()
+
+    private updateBalances = () => {
+        //Update tx data and balances
+        return this.mvs.getData()
+            .then(() => this.loadBalances())
+            .then(() => this.mvs.setUpdateTime())
+            .then(() => this.mvs.setLoaded(true))
+            .catch(() => console.log("Can't update balances"))
+    }
+
+    doRefresh(refresher) {        //Sync for mobile
 
         //Only allow a single sync process
         if (this.syncing)
@@ -104,6 +172,13 @@ export class AccountPage {
             this.mvs.updateMvsHeight()
                 .then((height: number) => {
                     this.height = height
+                    this.offline = false
+                })
+                .catch((error) => {
+                    console.error(error)
+                    this.syncing = false
+                    refresher.complete()
+                    this.offline = true
                 })
 
             //Update tx data and balances
@@ -112,12 +187,17 @@ export class AccountPage {
                 .then(() => this.mvs.setUpdateTime())
                 .then(() => {
                     this.syncing = false
+                    refresher.complete()
+                    this.offline = false
                 })
                 .catch((error) => {
                     console.error(error)
                     this.syncing = false
+                    refresher.complete()
+                    this.offline = true
                 })
         }
+
     }
 
     private loadBalances() {
@@ -132,6 +212,7 @@ export class AccountPage {
                 this.balancesKeys = order
                 return order
             })
+            .catch(() => console.log("Can't load balances"))
     }
 
 }

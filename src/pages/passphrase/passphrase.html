@@ -6,11 +6,7 @@
 
 <ion-content padding>
     <ion-row class="top-padding">
-        <ion-item class="center-info" no-lines>
-            <div>
-                <h2>{{"PASSWORD_WARNING"|translate}}</h2>
-            </div>
-        </ion-item>
+        <h2 class="center-info">{{"PASSWORD_WARNING"|translate}}</h2>
     </ion-row>
     <ion-row class="top-padding">
         <ion-item class="center-psw">
@@ -24,7 +20,8 @@
             <ion-input type="password" placeholder="" [(ngModel)]="password_repeat"></ion-input>
         </ion-item>
     </ion-row>
-    <ion-row class="button">
-        <button ion-button full [disabled]="!complete(password, password_repeat)" (click)="encrypt(password)">{{'BUTTON.NEXT'|translate}}</button>
+    <ion-row class="button more-bottom-padding">
+        <button *ngIf="!platform.is('mobile')" ion-button full [disabled]="!complete(password, password_repeat)" (click)="encrypt(password)">{{'BUTTON.NEXT'|translate}}</button>
+        <button *ngIf="platform.is('mobile')" ion-button full [disabled]="!complete(password, password_repeat)" (click)="encryptMobile(password)">{{'BUTTON.NEXT'|translate}}</button>
     </ion-row>
 </ion-content>

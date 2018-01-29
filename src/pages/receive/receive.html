@@ -18,7 +18,7 @@
                         <qr-code [value]="address" [size]="550" class="center"></qr-code>
                     </div>
                     <ion-card-content>
-                        <h4 class="center"><textarea ion-input full type="text" #copy value="{{address}}" class="center" style="" readonly>{{address}}</textarea></h4>
+                        <h1 class="center"><textarea ion-input full type="text" #copy value="{{address}}" class="center" style="" readonly>{{address}}</textarea></h1>
                     </ion-card-content>
                     <ion-row>
                         <button ion-button full item-right icon-left [ngxClipboard]="copy">

@@ -1,5 +1,8 @@
 <ion-header>
     <ion-navbar>
+        <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
         <ion-title>Metaverse Lightwallet</ion-title>
     </ion-navbar>
 </ion-header>
@@ -7,47 +10,72 @@
 
 <ion-content class="login-content">
     <ion-row class="logo-row">
-        <ion-col width-70 class="logo">
+        <ion-col class="logo">
             <div class="banner"></div>
         </ion-col>
     </ion-row>
     <div class="login-box">
         <div class="info-text">
-            <h1 style="text-align: center;">Beta Version</h1>
+            <h1 style="text-align: center;" *ngIf="globals.network=='mainnet'">Beta Version</h1>
+            <h1 style="text-align: center;" *ngIf="globals.network=='testnet'">Testnet</h1>
         </div>
-        <ion-row class="browser-button">
+        <ion-row *ngIf="!platform.is('mobile')" class="browser-button">
             <button ion-button full icon-left class="large-btn" id="open-wallet-button" color="secondary" (click)="login()">
                 <ion-icon name="download"></ion-icon>
-                {{"OPEN_WALLET_FILE"|translate}}</button>
+                {{"OPEN_WALLET_FILE"|translate}}
+            </button>
         </ion-row>
-        <ion-row class="browser-button">
+        <ion-row *ngIf="!platform.is('mobile')" class="browser-button">
             <button ion-button class="large-btn" block full icon-left (click)="ImportMnemonicPage();">
                 <ion-icon name="download"></ion-icon>
-                {{"CREATE_FROM_BACKUP_WORDS"|translate}}</button>
+                {{"CREATE_FROM_BACKUP_WORDS"|translate}}
+            </button>
         </ion-row>
-
-        <ion-row class="browser-button">
+        <ion-row *ngIf="!platform.is('mobile')" class="browser-button">
             <button ion-button class="large-btn" block full icon-left (click)="GenerateKeyPage();">
                 <ion-icon name="add"></ion-icon>
-                {{"CREATE_NEW_WALLET_BUTTON"|translate}}</button>
+                {{"CREATE_NEW_WALLET_BUTTON"|translate}}
+            </button>
+        </ion-row>
+
+        <ion-row *ngIf="platform.is('mobile')"  class="browser-button">
+            <button ion-button full icon-left class="large-btn" id="open-wallet-button" color="secondary" (click)="loginFromMobile()">
+                <ion-icon name="qr-scanner"></ion-icon>
+                {{"OPEN_FROM_QRCODE"|translate}}
+            </button>
+        </ion-row>
+        <ion-row *ngIf="platform.is('mobile')"  class="browser-button">
+            <button ion-button full icon-left class="large-btn" id="open-howto-mobile-button" color="primary" (click)="howToMobile()">
+                <ion-icon name="information-circle"></ion-icon>
+                {{"HOW_TO_IMPORT_WALLET_MOBILE"|translate}}
+            </button>
+        </ion-row>
+        <ion-row *ngIf="platform.is('mobile')" class="browser-button">
+            <button ion-button class="large-btn" block full icon-left (click)="ImportMnemonicPage();">
+                <ion-icon name="list-box"></ion-icon>
+                {{"OPEN_FROM_BACKUP_WORDS"|translate}}
+            </button>
         </ion-row>
 	<ion-row class="info-text">
-		<p>{{"LOGIN_MENU_INFO_TEXT"|translate}}</p>
+		<p *ngIf="!platform.is('mobile')">{{"LOGIN_MENU_INFO_TEXT"|translate}}</p>
+    <p *ngIf="platform.is('mobile')">{{"LOGIN_MENU_INFO_TEXT_MOBILE"|translate}}</p>
 	</ion-row>
     </div>
 </ion-content>
 
 <ion-footer>
     <ion-row>
-    <ion-col>
-    <button ion-button block clear icon-left (click)="switchTheme()">
-        <ion-icon name="color-palette"></ion-icon>
-        {{"THEME_SETTINGS"|translate}}</button>
-    </ion-col>
-    <ion-col>
-    <button ion-button block clear icon-left (click)="switchLanguage()">
-        <ion-icon name="flag"></ion-icon>
-        {{"SWITCH_LANGUAGE"|translate}}</button>
-    </ion-col>
+      <ion-col>
+        <button ion-button block clear icon-left (click)="switchTheme()">
+            <ion-icon name="color-palette"></ion-icon>
+            {{"THEME_SETTINGS"|translate}}
+        </button>
+      </ion-col>
+      <ion-col>
+        <button ion-button block clear icon-left (click)="switchLanguage()">
+            <ion-icon name="flag"></ion-icon>
+            {{"SWITCH_LANGUAGE"|translate}}
+          </button>
+      </ion-col>
     </ion-row>
 </ion-footer>

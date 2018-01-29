@@ -1,20 +1,23 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController, LoadingController, Loading } from 'ionic-angular';
+import { IonicPage, NavController, AlertController, LoadingController, Loading } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
-import { AccountPage } from '../account/account';
+import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
 import { TranslateService } from '@ngx-translate/core';
 
+@IonicPage()
 @Component({
     selector: 'page-import-wallet',
     templateUrl: 'import-wallet.html',
-
 })
 export class ImportWalletPage {
 
-    selectedFiles;
     loading: Loading;
+    data: Array<any>
+    fileLoaded: boolean
 
-    constructor(public nav: NavController, public navParams: NavParams, public mvs: MvsServiceProvider, private alertCtrl: AlertController, private loadingCtrl: LoadingController, private translate: TranslateService) {
+    constructor(public nav: NavController, public mvs: MvsServiceProvider, private wallet: WalletServiceProvider, private alertCtrl: AlertController, private loadingCtrl: LoadingController, private translate: TranslateService) {
+        this.fileLoaded = false;
+
     }
 
     open(e) {
@@ -22,11 +25,11 @@ export class ImportWalletPage {
         let reader = new FileReader();
         reader.onload = (e: any) => {
             let content = e.target.result;
-            let data = {};
+
             try {
-                data = JSON.parse(content)
-                this.mvs.setWallet(data)
-                this.showPrompt(data);
+                this.data = JSON.parse(content)
+                this.wallet.setWallet(this.data).then(() => this.fileLoaded = true)
+
             } catch (e) {
                 console.error(e);
                 this.translate.get('WRONG_FILE').subscribe((message: string) => {
@@ -39,71 +42,17 @@ export class ImportWalletPage {
 
 
     decrypt(password) {
-        this.translate.get('WRONG_PASSWORD').subscribe((message: string) => {
-            this.mvs.getMnemonic(password)
-                .then((mnemonic) => Promise.all([this.mvs.getWallet(password), this.mvs.getAddressIndex()]))
-                .then((results) => this.generateAddresses(results[0], 0, results[1]))
-                .then((addresses) => this.mvs.addMvsAddresses(addresses))
-                .then(() => this.nav.setRoot(AccountPage))
-                .then(() => this.nav.setRoot(AccountPage))
-                .catch((e) => {
-                    console.error(e);
-                    this.showError(message);
-                });
-        });
-    }
-
-    private generateAddresses(wallet, from_index, to_index) {
-        var addresses = [];
-        for (let i = from_index; i < to_index; i++) {
-            addresses.push(this.mvs.generateNewAddress(wallet, i));
-        }
-        return addresses;
-    }
-
-
-    // Uploads file but is init in constructor
-    // Empty options to avoid having a target URL
-    // uploader: FileUploader = new FileUploader({});
-    // reader: FileReader = new FileReader();
-    showPrompt(result) {
-        this.translate.get('PASSWORD').subscribe((txt_password: string) => {
-            this.translate.get('CANCEL').subscribe((txt_cancel: string) => {
-                this.translate.get('ENTER_PASSWORD_HEADLINE').subscribe((txt_headline: string) => {
-                    this.translate.get('ENTER').subscribe((txt_enter: string) => {
-
-                        const alert = this.alertCtrl.create({
-                            title: txt_headline,
-                            inputs: [
-                                {
-                                    name: 'password',
-                                    placeholder: '',
-                                    type: 'password'
-                                }
-                            ],
-                            buttons: [
-                                {
-                                    text: txt_cancel,
-                                    role: 'cancel',
-                                    handler: data => {
-                                        this.nav.pop();
-                                    }
-                                },
-                                {
-                                    text: txt_enter,
-                                    handler: data => {
-                                        // need error handling
-                                        this.decrypt(data.password)
-                                    }
-                                }
-                            ]
-                        });
-                        alert.present()
-
-                    });
-                });
+        this.showLoading()
+        this.mvs.dataReset()
+            .then(() => this.wallet.setSeed(password))
+            .then(() => Promise.all([this.wallet.getWallet(password), this.wallet.getAddressIndex()]))
+            .then((results) => this.mvs.generateAddresses(results[0], 0, results[1]))
+            .then((addresses) => this.mvs.setMvsAddresses(addresses))
+            .then(() => this.nav.setRoot("AccountPage", { reset: true }))
+            .catch((e) => {
+                console.error(e);
+                this.showError('MESSAGE.PASSWORD_WRONG');
             });
-        });
     }
 
     showLoading() {
@@ -116,18 +65,19 @@ export class ImportWalletPage {
         })
     }
 
-    showError(text) {
+    showError(message_key, pop = false) {
         if (this.loading) {
             this.loading.dismiss();
         }
-        this.translate.get('MESSAGE.ERROR_TITLE').subscribe((title: string) => {
+        this.translate.get(['MESSAGE.ERROR_TITLE', message_key]).subscribe((translations: any) => {
             let alert = this.alertCtrl.create({
-                title: title,
-                subTitle: text,
+                title: translations['MESSAGE.ERROR_TITLE'],
+                message: translations[message_key],
                 buttons: [{
                     text: 'OK',
                     handler: (() => {
-                        this.nav.pop();
+                        if (pop)
+                            this.nav.pop();
                     })
                 }]
             });

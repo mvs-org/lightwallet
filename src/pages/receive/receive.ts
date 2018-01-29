@@ -1,7 +1,11 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 
+@IonicPage({
+    name: 'receive-page',
+    segment: 'receive/:asset'
+})
 @Component({
     selector: 'page-receive',
     templateUrl: 'receive.html',
@@ -19,7 +23,7 @@ export class ReceivePage {
         this.selectedAsset = navParams.get('asset')
         this.mvs.getMvsAddresses()
             .then((_: string[]) => {
-                this.address = _[_.length - 1];
+                this.address = _[0];
                 this.addresses = _;
                 return this.mvs.getAddressBalances()
                     .then((addressbalances) => {
@@ -35,6 +39,15 @@ export class ReceivePage {
                         })
                     })
 
+            })
+    }
+
+    ionViewDidEnter() {
+        console.log('Receive page loaded')
+        this.mvs.getMvsAddresses()
+            .then((addresses) => {
+                if (!Array.isArray(addresses) || !addresses.length)
+                    this.navCtrl.setRoot("LoginPage")
             })
     }
 
