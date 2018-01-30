@@ -40,7 +40,7 @@
     "@ngx-translate/core": "^7.2.0",
     "@ngx-translate/http-loader": "^0.1.0",
     "angular2-qrcode": "^2.0.1",
-    "cordova-android": "6.4.0",
+    "cordova-android": "^7.0.0",
     "cordova-browser": "5.0.1",
     "cordova-clipboard": "^1.1.0",
     "cordova-plugin-splashscreen": "^4.1.0",
@@ -56,7 +56,8 @@
     "phonegap-plugin-barcodescanner": "^7.0.0",
     "rxjs": "5.4.0",
     "sw-toolbox": "3.6.0",
-    "zone.js": "0.8.12"
+    "zone.js": "0.8.12",
+    "cordova-plugin-crosswalk-webview": "~2.4.0"
   },
   "devDependencies": {
     "@ionic/app-scripts": "2.0.0",
@@ -98,11 +99,12 @@
         "CAMERA_USAGE_DESCRIPTION": " "
       },
       "cordova-plugin-splashscreen": {},
-      "ionic-plugin-keyboard": {}
+      "ionic-plugin-keyboard": {},
+      "cordova-plugin-crosswalk-webview": {}
     },
     "platforms": [
-      "android",
-      "browser"
+      "browser",
+      "android"
     ]
   }
 }
