@@ -21,7 +21,7 @@ export class ImportWalletMobilePage {
         this.qrCodeLoaded = false;
     }
 
-    passwordValid = (password) => (password) ? password.length > 5 : false;
+    passwordValid = (password) => (password) ? password.length > 0 : false;
 
     scan() {
         let wallet = {};
