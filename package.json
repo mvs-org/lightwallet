@@ -1,6 +1,6 @@
 {
   "name": "mvs-lightwallet",
-  "version": "0.2.1b7",
+  "version": "0.2.1r3",
   "author": "Sven Mutzl",
   "homepage": "https://www.myetpwallet.com/",
   "private": true,
@@ -57,7 +57,8 @@
     "phonegap-plugin-barcodescanner": "^7.0.0",
     "rxjs": "5.4.0",
     "sw-toolbox": "3.6.0",
-    "zone.js": "0.8.12"
+    "zone.js": "0.8.12",
+    "ionic-plugin-keyboard": "~2.2.1"
   },
   "devDependencies": {
     "@ionic/app-scripts": "2.0.0",
