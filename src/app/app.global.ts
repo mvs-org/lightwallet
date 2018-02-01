@@ -9,7 +9,7 @@ export class AppGlobals {
         mainnet: "https://app.myetpwallet.com/api",
         testnet: "https://testnet.myetpwallet.com/api"
     };
-    readonly network: string = "mainnet";
+    readonly network: string = "testnet";
     readonly ADDRESS_PREFIX_MAINNET = 'M'
     readonly ADDRESS_PREFIX_P2SH = '3'
     readonly ADDRESS_PREFIX_TESTNET = 't'
