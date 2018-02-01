@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget android-versionCode="210" id="com.myetpwallet.app" version="0.2.1r3" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>MyETPWallet</name>
-    <description>The Metaverse lightwallet.</description>
+<widget android-versionCode="211" id="com.myetpwallet.testnet" version="0.2.1b11" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>MyETPWallet Testnet</name>
+    <description>The Metaverse testnet lightwallet.</description>
     <author email="info@mvs.org" href="https://www.myetpwallet.com/">My ETP Wallet</author>
     <content src="index.html" />
     <access origin="*" />
@@ -87,14 +87,14 @@
     <allow-navigation href="http://192.168.11.97:8101" />
     <allow-navigation href="http://172.100.0.126:8100" />
     <allow-navigation href="http://192.168.1.116:8100" />
+    <engine name="browser" spec="5.0.1" />
+    <engine name="android" spec="7.0.0" />
     <plugin name="cordova-plugin-whitelist" spec="^1.3.2" />
     <plugin name="cordova-clipboard" spec="^1.1.0" />
     <plugin name="phonegap-plugin-barcodescanner" spec="^7.0.0">
         <variable name="CAMERA_USAGE_DESCRIPTION" value=" " />
     </plugin>
     <plugin name="cordova-plugin-splashscreen" spec="^4.1.0" />
-    <plugin name="ionic-plugin-keyboard" />
+    <plugin name="ionic-plugin-keyboard" spec="~2.2.1" />
     <plugin name="cordova-plugin-crosswalk-webview" spec="~2.4.0" />
-    <engine name="browser" spec="5.0.1" />
-    <engine name="android" spec="7.0.0" />
 </widget>
