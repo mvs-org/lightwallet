@@ -33,7 +33,7 @@
   "ETP_DEPOSIT": "ETP Deposit",
 
   "SWITCH_LANGUAGE": "Language",
-  "LANGUAGE_SETTINGS": "Language settings",
+  "LANGUAGE_SETTINGS": "Language Settings",
   "SETTINGS": "Settings",
   "INFORMATION": "Legal Disclaimer",
   "MESSAGE.ERROR_TITLE": "Oops",
@@ -220,7 +220,7 @@
 
   "LOGIN": "Login",
   "HOW_TO_IMPORT_WALLET_MOBILE": "How to Import",
-  "HOW_TO_IMPORT_WALLET_MOBILE_TITLE": "How to import your private Key?",
+  "HOW_TO_IMPORT_WALLET_MOBILE_TITLE": "How to import your private key?",
   "HOW_TO_IMPORT_WALLET_MOBILE_STEP1": "Open the web lightwallet, go to Settings, and then Connect phone",
   "HOW_TO_IMPORT_WALLET_MOBILE_STEP2": "Scan the QR Code",
   "HOW_TO_IMPORT_WALLET_MOBILE_STEP3": "Enjoy your wallet on your phone!",
