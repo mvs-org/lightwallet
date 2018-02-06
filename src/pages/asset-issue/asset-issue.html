@@ -24,13 +24,13 @@
                 <ion-label color="primary" floating>{{"ISSUE.SYMBOL"|translate}}</ion-label>
                 <ion-input class="uppercase" name="symbol" [(ngModel)]="symbol" maxlength="63" required></ion-input>
             </ion-item>
-            <ion-item [ngClass]="{'error-border':!validMaxSupply(max_supply)}">
+            <ion-item [ngClass]="{'error-border':!validMaxSupply(max_supply, asset_decimals)}">
                 <ion-label color="primary" floating>{{"ISSUE.MAX_SUPPLY" | translate}}</ion-label>
                 <ion-input name="max_supply" type="number" min="0" [(ngModel)]="max_supply" required></ion-input>
             </ion-item>
             <br>
             <br>
-            <ion-item>
+            <ion-item [ngClass]="{'error-border':!validDecimals(asset_decimals)}">
                 <ion-label color="primary">{{"ISSUE.DECIMALS"|translate}}</ion-label>
                 <ion-select [(ngModel)]="asset_decimals" name="asset_decimals" okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}" required>
                     <ion-option *ngFor="let item of decimalsList" value="{{item}}">{{item}}</ion-option>
@@ -44,7 +44,7 @@
                 <ion-label color="primary" floating>{{"ISSUE.DESCRIPTION"|translate}}</ion-label>
                 <ion-input name="description" [(ngModel)]="description" maxlength="63" required></ion-input>
             </ion-item>
-            <ion-item [ngClass]="{'error-border': false}">
+            <ion-item [ngClass]="{'error-border': !validPassword(passphrase)}">
                 <ion-label color="primary" floating>{{"PASSWORD" | translate}}</ion-label>
                 <ion-input name="passphrase" type="password" [(ngModel)]="passphrase" required></ion-input>
             </ion-item>
@@ -76,7 +76,7 @@
                   <ion-label floating>{{"ISSUE.CUSTOM_ISSUE_ADDRESS" | translate}}</ion-label>
                   <ion-input name="custom_issue_address" [(ngModel)]="custom_issue_address" (ngModelChange)="customIssueAddressChanged($event)"></ion-input>
                 </ion-item>
-                <button ion-button full [disabled]="!sendForm.form.valid||!validSymbol(symbol)||validMaxSupply(max_supply)||!validName(issuer_name)||!validDescription(description)||(issue_address=='custom' && !validIssueAddress(custom_issue_address))" (click)="preview()" color="primary">
+                <button ion-button full [disabled]="!sendForm.form.valid||!validSymbol(symbol)||!validMaxSupply(max_supply, asset_decimals)||!validDecimals(asset_decimals)||!validName(issuer_name)||!validDescription(description)||(issue_address=='custom' && !validIssueAddress(custom_issue_address))||!validPassword(passphrase)" (click)="preview()" color="primary">
                     {{"PREVIEW" | translate}}
                 </button>
                 <div *ngIf="rawtx">
@@ -91,7 +91,7 @@
 
         <ion-row>
             <ion-col>
-                <button ion-button full [disabled]="!sendForm.form.valid||!validSymbol(symbol)||!validMaxSupply(max_supply)||!validName(issuer_name)||!validDescription(description)||(issue_address=='custom' && !validIssueAddress(custom_issue_address))" (click)="confirm()" icon-left color="secondary">
+                <button ion-button full [disabled]="!sendForm.form.valid||!validSymbol(symbol)||!validMaxSupply(max_supply, asset_decimals)||!validDecimals(asset_decimals)||!validName(issuer_name)||!validDescription(description)||(issue_address=='custom' && !validIssueAddress(custom_issue_address))||!validPassword(passphrase)" (click)="confirm()" icon-left color="secondary">
                     <ion-icon disabled="checked" name="send"></ion-icon>
                     {{"ISSUE.CREATE" | translate}}
                 </button>

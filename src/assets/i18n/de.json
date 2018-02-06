@@ -187,7 +187,7 @@
     "RESET_MESSAGE_MOBILE": "Alle Daten werden gelöscht. Zum Anmelden benötigst du deine Backup-Wörter oder einen Scan des QR-Codes von deinem Desktop Lightwallet.",
     "IMPORT.SCAN_QRCODE_TEXT": "Importiere meinen Account auf mein Mobilgerät",
     "IMPORT.SCAN_QRCODE_BUTTON":"Scanne QR-Code",
-  
+
     "ASSET_ISSUE": "Asset erstellen",
     "NOTICE_ASSET_ISSUE_FEE": "Bitte nehme zur Kenntnis, dass die Erstellung eines Assets 10 ETP kostet.",
 
@@ -215,7 +215,7 @@
     "MESSAGE.NETWORK_MISMATCH": "Netzwerk stimmt nicht überein",
     "MESSAGE.PASSWORD_WRONG": "Entschlüsseln des Wallets anhand des Passworts nicht möglich",
     "MESSAGE.CREATE_TRANSACTION" : "Erstellen der Transaktion nicht möglich.",
-    "MESSAGE.BROADCAST_ERROR": "Übertragen der Transaktion nicht möglich."
+    "MESSAGE.BROADCAST_ERROR": "Übertragen der Transaktion nicht möglich.",
 
     "LOGIN": "Login",
     "HOW_TO_IMPORT_WALLET_MOBILE": "Hilfe zum Import",
@@ -223,6 +223,20 @@
     "HOW_TO_IMPORT_WALLET_MOBILE_STEP1": "Öffne das lightwallet auf einem Desktop PC und wähle die Einstellungen und dann \"Mobilgerät verbinden\"\"",
     "HOW_TO_IMPORT_WALLET_MOBILE_STEP2": "QR Code scannen",
     "HOW_TO_IMPORT_WALLET_MOBILE_STEP3": "Viel spaẞ mit deinem mobilen Wallet!",
-  
-    "MESSAGE.ISSUE_INSUFFICIENT_BALANCE" : "You need at least 10 ETP to create an Asset."
+
+    "MESSAGE.ISSUE_INSUFFICIENT_BALANCE" : "Es werden 10 ETP für die Asset Erstellung benötigt.",
+
+  "SCANNING.MESSAGE_ACCOUNT": "Scanne den QR Code der Web-Version",
+  "SCANNING.MESSAGE_ADDRESS": "Scanne die ETP Adresse",
+
+  "MESSAGE.NOT_ETP_ADDRESS_TITLE": "Ungültige Adresse",
+  "MESSAGE.NOT_ETP_ADDRESS_TEXT": "Dies ist keine gültige Metaverse Adresse. Bitte versuchen Sie es erneut.",
+
+  "SEND_ALL_BUTTON": "Max",
+
+  "IMPORT_QRCODE": "Der Import QRCode kann im Wallet unter app.myetpwallet.com im Menüpunkt Einstllungen unter \"Mobilgerät verbinden\" abgerufen werden",
+
+  "MESSAGE.ONE_TX_PER_BLOCK": "Es kann momentan nur eine Transaktion gleichzeitig verarbeitet werden. Bitte warten Sie einen Moment.",
+  "MESSAGE.INSUFFICIENT_BALANCE": "Kein ausreichendes Guthaben. Bitte Eingabe überprüfen."
+
 }

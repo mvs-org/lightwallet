@@ -5,6 +5,7 @@ import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { TranslateService } from '@ngx-translate/core';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { Keyboard } from '@ionic-native/keyboard';
+import { Clipboard } from '@ionic-native/clipboard';
 
 @IonicPage()
 @Component({
@@ -46,6 +47,7 @@ export class DepositPage {
         public platform: Platform,
         private barcodeScanner: BarcodeScanner,
         private keyboard: Keyboard,
+        private clipboard: Clipboard,
         private translate: TranslateService) {
 
         this.selectedAsset = "ETP"
@@ -54,6 +56,7 @@ export class DepositPage {
         this.feeAddress = 'auto'
         this.locktime = 0
         this.custom_recipient = ''
+        this.passphrase = ''
 
         if (this.globals.network == 'mainnet')
             this.deposit_options = [
@@ -130,7 +133,10 @@ export class DepositPage {
 
     }
 
-    validQuantity = (quantity) => quantity != undefined && this.showBalance >= parseFloat(quantity) * Math.pow(10, this.decimals) && this.countDecimals(quantity) <= this.decimals && quantity >= 10000/100000000
+    validQuantity = (quantity) => quantity != undefined
+        && this.countDecimals(quantity) <= this.decimals
+        && this.showBalance >= (Math.round(parseFloat(quantity) * Math.pow(10, this.decimals)) + 10000)
+        && quantity >= 10000/100000000
 
     countDecimals(value) {
         if (Math.floor(value) !== value && value.toString().split(".").length > 1)
@@ -138,9 +144,13 @@ export class DepositPage {
         return 0;
     }
 
+    validLocktime = (locktime) => locktime != 0
+
     validrecipient = this.mvs.validAddress
 
     customRecipientChanged = () => { if (this.custom_recipient) this.custom_recipient = this.custom_recipient.trim() }
+
+    validPassword = (passphrase) => (passphrase.length > 0)
 
     cancel(e) {
         e.preventDefault()
@@ -165,9 +175,11 @@ export class DepositPage {
             .then((addresses) => this.mvs.createDepositTx(this.passphrase, (this.recipient_address == 'auto') ? null : (this.recipient_address == 'custom') ? this.custom_recipient : this.recipient_address, Math.floor(parseFloat(this.quantity) * Math.pow(10, this.decimals)), this.locktime, (this.sendFrom != 'auto') ? this.sendFrom : null, (this.changeAddress != 'auto') ? this.changeAddress : undefined))
             .catch((error) => {
                 if (error.message == "ERR_DECRYPT_WALLET")
-                    this.showError('MESSAGE.PASSWORD_WRONG')
+                    this.showError('MESSAGE.PASSWORD_WRONG','')
+                else if (error.message == "ERR_INSUFFICIENT_BALANCE")
+                    this.showError('MESSAGE.INSUFFICIENT_BALANCE','')
                 else
-                    this.showError('MESSAGE.CREATE_TRANSACTION')
+                    this.showError('MESSAGE.CREATE_TRANSACTION',error)
                 throw Error('ERR_CREATE_TX')
             })
     }
@@ -178,24 +190,27 @@ export class DepositPage {
             .then((result: any) => {
                 this.navCtrl.pop()
                 this.translate.get('SUCCESS_SEND_TEXT').subscribe((message: string) => {
-                    this.showSent(message, result.hash)
+                    if(this.platform.is('mobile')) {
+                        this.showSentMobile(message, result.hash)
+                    } else {
+                        this.showSent(message, result.hash)
+                    }
                 })
             })
             .catch((error) => {
                 this.loading.dismiss()
                 if (error.message == 'ERR_CONNECTION')
-                    this.showError('ERROR_SEND_TEXT')
-                else if (error.message == 'ERR_BROADCAST')
-                    this.showError('MESSAGE.BROADCAST_ERROR')
+                    this.showError('ERROR_SEND_TEXT','')
+                else if (error.message == 'ERR_BROADCAST') {
+                    this.translate.get('MESSAGE.ONE_TX_PER_BLOCK').subscribe((message: string) => {
+                        this.showError('MESSAGE.BROADCAST_ERROR',message)
+                    })
+                }
             })
     }
 
     sendAll() {
-        if(this.selectedAsset == 'ETP') {
-            this.quantity = (this.showBalance/Math.pow(10, this.decimals) - 10000/100000000) + ""
-        } else {
-            this.quantity = (this.showBalance/Math.pow(10, this.decimals)) + ""
-        }
+        this.quantity = parseFloat(((this.showBalance/100000000 - 10000/100000000).toFixed(this.decimals)) + "") + ""
         this.quantityInput.setFocus()
     }
 
@@ -229,6 +244,34 @@ export class DepositPage {
         })
     }
 
+    showSentMobile(text, hash) {
+        this.translate.get(['MESSAGE.SUCCESS','OK','COPY']).subscribe((translations: any) => {
+            let alert = this.alertCtrl.create({
+                title: translations['MESSAGE.SUCCESS'],
+                subTitle: text + hash,
+                buttons: [
+                    {
+                        text: translations['COPY'],
+                        role: 'copy',
+                        handler: () => {
+                            this.clipboard.copy(hash).then(
+                                (resolve: string) => {
+                                  console.log(resolve);
+                                },
+                                (reject: string) => {
+                                  console.error('Error: ' + reject);
+                                })
+                        }
+                    },
+                    {
+                        text: translations['OK'],
+                    }
+                ]
+            })
+            alert.present(prompt)
+        })
+    }
+
     showAlert(text) {
         this.translate.get('MESSAGE.ERROR_TITLE').subscribe((title: string) => {
             this.translate.get('OK').subscribe((ok: string) => {
@@ -242,13 +285,14 @@ export class DepositPage {
         })
     }
 
-    showError(message_key) {
-        this.translate.get(['MESSAGE.ERROR_TITLE', message_key]).subscribe((translations: any) => {
+    showError(message_key, error) {
+        this.translate.get(['MESSAGE.ERROR_TITLE', message_key, 'OK']).subscribe((translations: any) => {
             let alert = this.alertCtrl.create({
                 title: translations['MESSAGE.ERROR_TITLE'],
-                message: translations[message_key],
+                subTitle: translations[message_key],
+                message: error,
                 buttons: [{
-                    text: 'OK'
+                    text: translations['OK']
                 }]
             });
             alert.present(alert);

@@ -20,7 +20,7 @@
   <form #sendForm="ngForm">
     <ion-list>
       <br><br>
-      <ion-item [ngClass]="{'error-border': false}">
+      <ion-item [ngClass]="{'error-border': !validLocktime(locktime)}">
         <ion-label color="primary">{{"SELECT_DEPOSIT_OPTION"|translate}}</ion-label>
         <ion-select [(ngModel)]="locktime" name="locktime" multiple="false" (ngModelChange)="onDepositOptionChange($event)" okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}" required>
           <ion-option *ngFor="let deposit_option of deposit_options" value="{{deposit_option.locktime}}">{{deposit_option.locktime}} {{'BLOCKS'|translate}}, {{'INTEREST_RATE'|translate}}: {{deposit_option.rate*100}}%</ion-option>
@@ -29,9 +29,9 @@
       <ion-item [ngClass]="{'error-border':!validQuantity(quantity)}">
         <ion-label color="primary" floating>{{"AMOUNT" | translate}}</ion-label>
         <ion-input #quantityInput name="quantity" type="number" min="0" [(ngModel)]="quantity" required></ion-input>
-        <button id="sendAll" ion-button item-right (click)="sendAll()">
+        <!--<button id="sendAll" ion-button item-right (click)="sendAll()">
             {{"SEND_ALL_BUTTON"|translate}}
-        </button>
+        </button>-->
       </ion-item>
       <ion-row *ngFor="let deposit_option of deposit_options">
         <ion-item *ngIf="deposit_option.locktime == locktime && quantity > 0">
@@ -43,7 +43,7 @@
           </ion-label>
         </ion-item>
       </ion-row>
-      <ion-item [ngClass]="{'error-border': false}">
+      <ion-item [ngClass]="{'error-border': !validPassword(passphrase)}">
         <ion-label color="primary" floating>{{"PASSWORD" | translate}}</ion-label>
         <ion-input name="passphrase" type="password" [(ngModel)]="passphrase" required></ion-input>
       </ion-item>
@@ -79,7 +79,7 @@
               <ion-icon name="qr-scanner"></ion-icon>
           </button>
         </ion-item>
-        <button ion-button full [disabled]="!sendForm.form.valid||!validQuantity(quantity)||(recipient_address == 'custom' && !validrecipient(custom_recipient))" (click)="preview()" color="primary">
+        <button ion-button full [disabled]="!sendForm.form.valid||!validLocktime(locktime)||!validQuantity(quantity)||!validPassword(passphrase)||(recipient_address == 'custom' && !validrecipient(custom_recipient))" (click)="preview()" color="primary">
           {{"PREVIEW" | translate}}
         </button>
         <div *ngIf="rawtx">
@@ -92,7 +92,7 @@
     </div>
     <ion-row class="padding-bottom">
       <ion-col>
-        <button ion-button full icon-left [disabled]="!sendForm.form.valid||!validQuantity(quantity)||(recipient_address == 'custom' && !validrecipient(custom_recipient))" (click)="send()" color="secondary">
+        <button ion-button full icon-left [disabled]="!sendForm.form.valid||!validLocktime(locktime)||!validQuantity(quantity)||!validPassword(passphrase)||(recipient_address == 'custom' && !validrecipient(custom_recipient))" (click)="send()" color="secondary">
           <ion-icon disabled="checked" name="send"></ion-icon>
           {{"SEND" | translate}}
         </button>
