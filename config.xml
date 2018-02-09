@@ -82,6 +82,11 @@
         <splash height="1024" src="resources/ios/splash/Default-Portrait~ipad.png" width="768" />
         <splash height="960" src="resources/ios/splash/Default@2x~iphone.png" width="640" />
         <splash height="480" src="resources/ios/splash/Default~iphone.png" width="320" />
+        <splash height="1334" src="resources/ios/splash/Default@2x~iphone~anyany.png" width="1334" />
+        <splash height="1334" src="resources/ios/splash/Default@2x~iphone~comcom.png" width="750" />
+        <splash height="2208" src="resources/ios/splash/Default@3x~iphone~anyany.png" width="2208" />
+        <splash height="1278" src="resources/ios/splash/Default@2x~ipad~comany.png" width="2732" />
+        <splash height="2732" src="resources/ios/splash/Default@2x~universal~anyany.png" width="2732" />
         <preference name="StatusBarOverlaysWebView" value="false" />
     </platform>
     <allow-navigation href="http://192.168.11.97:8100" />
@@ -94,6 +99,7 @@
         <variable name="CAMERA_USAGE_DESCRIPTION" value=" " />
     </plugin>
     <plugin name="cordova-plugin-splashscreen" spec="^4.1.0" />
+    <plugin name="ionic-plugin-keyboard" />
     <plugin name="cordova-plugin-crosswalk-webview" spec="~2.4.0" />
     <engine name="browser" spec="5.0.1" />
     <plugin name="cordova-plugin-statusbar" spec="^2.4.1" />
