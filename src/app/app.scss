@@ -66,13 +66,14 @@ ion-menu ion-content .scroll-content{
 // ░     ░ ░  ░ ░                ░      ░  ░   ░      ░    ░
 
 .theme-noctilux{
+  background-color: #383838;
     .content{
         background-color: #202020;
     }
     .item-md,
     .bar-button,
     h1,h2, h3, h4, p, li,
-    ion-card-title,ion-item,button,.item-ios,
+    ion-card-title,ion-item,button
     .toolbar-title{
         background: transparent;
         color: white;
@@ -82,6 +83,11 @@ ion-menu ion-content .scroll-content{
         .item-md,h1,h2, h3, h4, p {
             background-color: #383838;
         }
+    }
+
+    .item-ios {
+        background-color: transparent !important;
+        color: white;
     }
 
     page-login .banner {
@@ -155,7 +161,7 @@ ion-menu ion-content .scroll-content{
     .item-md,
     .bar-button,
     h1,h2, h3, h4,
-    ion-card-title,ion-item,button,.item-ios,
+    ion-card-title,ion-item,button
     .toolbar-title{
         background: transparent;
         color: #ff1493;
@@ -172,6 +178,11 @@ ion-menu ion-content .scroll-content{
             background-color: #383838;
         }
 
+    }
+
+    .item-ios {
+        background-color: transparent !important;
+        color: #ff1493;
     }
 
     ion-alert ion-backdrop{
@@ -223,7 +234,7 @@ ion-menu ion-content .scroll-content{
     .item-md,
     .bar-button,
     h1,h2, h3, h4,
-    ion-card-title,ion-item,button,.item-ios,
+    ion-card-title,ion-item,button
     .toolbar-title{
         background: transparent;
         color: #586e75;
@@ -234,6 +245,11 @@ ion-menu ion-content .scroll-content{
             background-color: #002b36;
         }
 
+    }
+
+    .item-ios {
+        background-color: transparent !important;
+        color: #586e75;
     }
 
     ion-alert ion-backdrop{
@@ -288,7 +304,7 @@ ion-menu ion-content .scroll-content{
     .item-md,
     .bar-button,
     h1,h2, h3, h4,
-    ion-card-title,ion-item,button,.item-ios,
+    ion-card-title,ion-item,button
     .toolbar-title{
         background: transparent;
     }
@@ -299,6 +315,12 @@ ion-menu ion-content .scroll-content{
         }
 
     }
+
+    .item-ios {
+        background-color: transparent !important;
+        color: white;
+    }
+
     .button-md, page-import-wallet .inputfile + label{
         background-color: pink !important;
     }
