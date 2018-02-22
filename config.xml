@@ -3,7 +3,7 @@
     <name>MyETPWallet Testnet</name>
     <description>The Metaverse lightwallet.</description>
     <author email="info@mvs.org" href="https://www.myetpwallet.com/">My ETP Wallet</author>
-    <content src="index.html" />
+    <content original-src="index.html" src="http://172.100.0.127:8100" />
     <access origin="*" />
     <allow-navigation href="http://ionic.local/*" />
     <allow-navigation href="http://172.31.36.87:8101" />
@@ -70,6 +70,7 @@
         <icon height="29" src="resources/ios/icon/icon-small.png" width="29" />
         <icon height="58" src="resources/ios/icon/icon-small@2x.png" width="58" />
         <icon height="87" src="resources/ios/icon/icon-small@3x.png" width="87" />
+        <icon height="1024" src="resources/ios/icon/icon-1024.png" width="1024" />
         <splash height="1136" src="resources/ios/splash/Default-568h@2x~iphone.png" width="640" />
         <splash height="1334" src="resources/ios/splash/Default-667h.png" width="750" />
         <splash height="2208" src="resources/ios/splash/Default-736h.png" width="1242" />
@@ -87,21 +88,22 @@
         <splash height="2208" src="resources/ios/splash/Default@3x~iphone~anyany.png" width="2208" />
         <splash height="1278" src="resources/ios/splash/Default@2x~ipad~comany.png" width="2732" />
         <splash height="2732" src="resources/ios/splash/Default@2x~universal~anyany.png" width="2732" />
-        <preference name="StatusBarOverlaysWebView" value="false" />
+        <preference name="StatusBarStyle" value="default" />
     </platform>
     <allow-navigation href="http://192.168.11.97:8100" />
     <allow-navigation href="http://192.168.11.97:8101" />
     <allow-navigation href="http://172.100.0.126:8100" />
     <allow-navigation href="http://192.168.1.116:8100" />
+    <allow-navigation href="http://172.100.0.127:8100" />
     <plugin name="cordova-plugin-whitelist" spec="^1.3.2" />
     <plugin name="cordova-clipboard" spec="^1.1.0" />
     <plugin name="phonegap-plugin-barcodescanner" spec="^7.0.0">
         <variable name="CAMERA_USAGE_DESCRIPTION" value=" " />
     </plugin>
     <plugin name="cordova-plugin-splashscreen" spec="^4.1.0" />
-    <plugin name="ionic-plugin-keyboard" />
+    <plugin name="ionic-plugin-keyboard" spec="~2.2.1" />
     <plugin name="cordova-plugin-crosswalk-webview" spec="~2.4.0" />
+    <plugin name="cordova-plugin-statusbar" spec="^2.4.1" />
     <engine name="browser" spec="5.0.1" />
-    <engine name="ios" spec="~4.5.4" />
-    <allow-navigation href="http://172.100.0.127:8100" />
+    <engine name="ios" spec="^4.5.4" />
 </widget>
