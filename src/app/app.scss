@@ -15,41 +15,6 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 
-/*
-.content{
-    background: color($colors,dark);
-}
-
-.toolbar-background {
-    background-color: color($colors,dark);
-}
-
-.toolbar-title{
-    color: color($colors,primary);
-}
-
-.item.item-input {
-    background-color: transparent;
-    color: color($colors,primary);
-}
-
-ion-menu ion-content .scroll-content{
-    overflow: hidden; //no scrollbar in slidebra
-}
-.item-md{
-    background-color: transparent;
-    color: color($colors, light);
-}
-.list-md .item-block .item-inner {
-    border-bottom: 0px;
-}
-
-
-.content-md{
-    color: color($colors, light);
-}
-*/
-
 .scroll-content {
     padding-bottom: 0 !important;
     top: -5px;

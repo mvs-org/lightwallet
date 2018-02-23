@@ -105,10 +105,16 @@ export class MyApp {
     }
 
     setHeaderColor(key) {
-        if((key == 'noctilux') || (key == 'solarized')) {
-            this.statusBar.styleLightContent();
-        } else {
-            this.statusBar.styleDefault();
+        // Status bar theme for android
+        if (this.platform.is('android')) {
+          this.statusBar.styleLightContent();
+          this.statusBar.backgroundColorByHexString('#000000');
+        } else if (this.platform.is('ios')) {    // Status bar theme for iOS
+            if((key == 'noctilux') || (key == 'solarized')) {
+                this.statusBar.styleLightContent();
+            } else {
+                this.statusBar.styleDefault();
+            }
         }
     }
 
