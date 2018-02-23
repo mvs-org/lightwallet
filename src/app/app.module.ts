@@ -11,6 +11,7 @@ import { MvsServiceProvider } from '../providers/mvs-service/mvs-service';
 import { WalletServiceProvider } from '../providers/wallet-service/wallet-service';
 import { CryptoServiceProvider } from '../providers/crypto-service/crypto-service';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { StatusBar } from '@ionic-native/status-bar';
 
 var pckg = require('../../package.json');
 
@@ -49,6 +50,7 @@ export function HttpLoaderFactory(http: Http) {
         SplashScreen,
         WalletServiceProvider,
         CryptoServiceProvider,
+        StatusBar
     ]
 })
 export class AppModule {

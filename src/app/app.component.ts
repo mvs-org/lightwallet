@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform, Events } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { TranslateService } from '@ngx-translate/core';
+import { StatusBar } from '@ionic-native/status-bar';
 
 import { Storage } from '@ionic/storage';
 
@@ -14,7 +15,7 @@ export class MyApp {
     rootPage: any
     pages: Array<{ title: string, component: any }> = [];
 
-    constructor(private splashScreen: SplashScreen, public platform: Platform, private storage: Storage, public translate: TranslateService, private event: Events) {
+    constructor(private splashScreen: SplashScreen, public platform: Platform, private storage: Storage, public translate: TranslateService, private event: Events, public statusBar: StatusBar) {
 
         this.initializeApp()
             .then(() => this.storage.get('language'))
@@ -33,6 +34,7 @@ export class MyApp {
 
         this.setTheme();
         this.event.subscribe("theme_changed", (theme) => {
+            this.setHeaderColor(theme);
             this.storage.set('theme', theme)
                 .then(() => this.setTheme())
         });
@@ -66,6 +68,7 @@ export class MyApp {
         this.storage.get('theme')
             .then((theme) => {
                 document.getElementById('theme').className = 'theme-' + ((theme) ? theme : 'default');
+                this.setHeaderColor(theme);
             })
     }
 
@@ -99,6 +102,14 @@ export class MyApp {
             { title: 'REPORT_BUG', newtab: 'https://github.com/mvs-org/lightwallet/issues', icon: 'bug' },
             { title: 'INFORMATION', component: "InformationPage", icon: 'information-circle' }
         ].map((entry) => this.addToMenu(entry)))
+    }
+
+    setHeaderColor(key) {
+        if((key == 'noctilux') || (key == 'solarized')) {
+            this.statusBar.styleLightContent();
+        } else {
+            this.statusBar.styleDefault();
+        }
     }
 
     private addToMenu(menu_entry) {
