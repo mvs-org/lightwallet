@@ -59,7 +59,10 @@
     "phonegap-plugin-barcodescanner": "^7.0.2",
     "rxjs": "5.4.0",
     "sw-toolbox": "3.6.0",
-    "zone.js": "0.8.12"
+    "zone.js": "0.8.12",
+    "cordova-plugin-device": "^2.0.1",
+    "cordova-plugin-ionic-webview": "^1.1.16",
+    "cordova-plugin-ionic-keyboard": "^2.0.5"
   },
   "devDependencies": {
     "@ionic/app-scripts": "2.0.0",
@@ -103,7 +106,10 @@
       "cordova-plugin-splashscreen": {},
       "cordova-plugin-crosswalk-webview": {},
       "ionic-plugin-keyboard": {},
-      "cordova-plugin-statusbar": {}
+      "cordova-plugin-statusbar": {},
+      "cordova-plugin-device": {},
+      "cordova-plugin-ionic-webview": {},
+      "cordova-plugin-ionic-keyboard": {}
     },
     "platforms": [
       "ios"

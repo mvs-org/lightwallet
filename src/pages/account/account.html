@@ -6,7 +6,8 @@
     <ion-title>{{"ACCOUNT.TITLE"|translate}}</ion-title>
     <ion-buttons end>
       <button ion-button icon-left>
-        <span>{{"HEIGHT" |translate}}: {{height}}</span>
+        <span *ngIf="platform.is('mobile')&&platform.is('ios')">{{height}}</span>
+        <span *ngIf="!(platform.is('mobile')&&platform.is('ios'))">{{"HEIGHT" |translate}}: {{height}}</span>
       </button>
       <button *ngIf="!platform.is('mobile')" ion-button icon-left (click)="logout()">
         <ion-icon name="log-out"></ion-icon>
