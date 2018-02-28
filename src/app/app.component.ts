@@ -3,6 +3,7 @@ import { Nav, Platform, Events } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { TranslateService } from '@ngx-translate/core';
 import { StatusBar } from '@ionic-native/status-bar';
+import { Keyboard } from '@ionic-native/keyboard';
 
 import { Storage } from '@ionic/storage';
 
@@ -15,7 +16,7 @@ export class MyApp {
     rootPage: any
     pages: Array<{ title: string, component: any }> = [];
 
-    constructor(private splashScreen: SplashScreen, public platform: Platform, private storage: Storage, public translate: TranslateService, private event: Events, public statusBar: StatusBar) {
+    constructor(private splashScreen: SplashScreen, public platform: Platform, private storage: Storage, public translate: TranslateService, private event: Events, public statusBar: StatusBar, public keyboard: Keyboard) {
 
         this.initializeApp()
             .then(() => this.storage.get('language'))
@@ -29,6 +30,7 @@ export class MyApp {
                 }
                 return;
             })
+            .then(()=>this.keyboard.hideKeyboardAccessoryBar(false))
             .then(()=>this.splashScreen.hide())
             .catch((e) => console.error(e));
 

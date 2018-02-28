@@ -185,15 +185,15 @@ export class AssetIssuePage {
                         subTitle: txt_subtitle,
                         buttons: [
                             {
-                                text: txt_cancel,
-                                role: 'cancel'
-                            },
-                            {
                                 text: txt_create,
                                 handler: data => {
                                     // need error handling
                                     this.send()
                                 }
+                            },
+                            {
+                                  text: txt_cancel,
+                                  role: 'cancel'
                             }
                         ]
                     });
