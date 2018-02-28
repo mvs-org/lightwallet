@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content padding>
-    <h2>{{"DISCLAIMER.HEADLINE"|translate}}</h2>
+    <h2 class="pageHeadline">{{"DISCLAIMER.HEADLINE"|translate}}</h2>
     <p>{{"DISCLAIMER.INTRODUCTION"|translate}}</p>
     <p>{{"DISCLAIMER.LIST_INTRODUCTION"|translate}}</p>
     <ol>
@@ -22,7 +22,7 @@
     <form *ngIf="disclaimer_agreed" #importForm="ngForm" no-lines class="buttons-container">
         <div *ngIf="!qrCodeLoaded">
             <ion-item class="center-text" no-lines>
-                <h2>{{"IMPORT.SCAN_QRCODE_TEXT"|translate}}</h2>
+                <h3>{{"IMPORT.SCAN_QRCODE_TEXT"|translate}}</h3>
             </ion-item>
             <ion-row>
                 <button ion-button full icon-left class="large-btn" id="open-wallet-button" color="secondary" (click)="scan()">
