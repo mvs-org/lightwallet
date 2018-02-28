@@ -139,6 +139,11 @@ export class MyApp {
                 this.nav.push(page.component);
         }
         else if (page.newtab)
-            window.open(page.newtab, '_blank');
+            if (this.platform.is('mobile')&&this.platform.is('ios'))
+                window.open(page.newtab, '_self');
+            else
+                window.open(page.newtab, '_blank');
+
+
     }
 }
