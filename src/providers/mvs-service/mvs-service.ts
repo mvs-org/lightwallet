@@ -19,6 +19,7 @@ export class MvsServiceProvider {
         "MVS.ZGC": { total: 0, available: 0, decimals: 8, spent: 0 },
         "MVS.ZDC": { total: 0, available: 0, decimals: 6, spent: 0 },
         "CSD": { total: 0, available: 0, decimals: 8, spent: 0 },
+        "PARCELX.GPX": { total: 0, available: 0, decimals: 8, spent: 0 },
         "SDG": { total: 0, available: 0, decimals: 8, spent: 0 },
     }
 
