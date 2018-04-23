@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, AlertController, Platform } from 'ionic-angular';
+import { IonicPage, NavController, AlertController, Platform, Events } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 
@@ -22,19 +22,26 @@ export class AccountPage {
     reorderable = false
     images: Array<string>
     grid: Array<Array<string>>
+    theme: string
 
     private syncinterval: any;
 
-    constructor(public nav: NavController, public translate: TranslateService, private mvs: MvsServiceProvider, private alertCtrl: AlertController, public platform: Platform) {
+    constructor(public nav: NavController, public translate: TranslateService, private mvs: MvsServiceProvider, private alertCtrl: AlertController, public platform: Platform, private event: Events) {
         this.loading = true;
 
         //Reset last update time
         var lastupdate = new Date()
         lastupdate.setDate(0)
         this.mvs.setUpdateTime(lastupdate)
+        this.theme = document.getElementById('theme').className
+        this.event.subscribe("theme_changed", (theme) => {
+          this.theme = ('theme-' + theme)
+        });
     }
 
     format = (quantity, decimals) => quantity / Math.pow(10, decimals)
+
+    //theme = document.getElementById('theme').className
 
     ionViewDidEnter() {
         this.mvs.getMvsAddresses()
