@@ -16,10 +16,12 @@ export class TransactionsPage {
     asset: any
     addresses: string[]
     txs: any[]
+    loading: boolean
 
     constructor(public navCtrl: NavController, public navParams: NavParams, private mvsServiceProvider: MvsServiceProvider) {
         this.asset = navParams.get('asset');
-        this.showTxs({ symbol: this.asset })
+        this.showTxs({ symbol: this.asset });
+        this.loading = true;
     }
 
     ionViewDidEnter() {
@@ -60,6 +62,7 @@ export class TransactionsPage {
             .then((txs) => this.filterTxs(txs, filter))
             .then((txs: any) => {
                 this.txs = txs
+                this.loading = false;
                 return txs
             })
     }
@@ -156,4 +159,3 @@ export class TransactionsPage {
     }
 
 }
-
