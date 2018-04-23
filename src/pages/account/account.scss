@@ -162,4 +162,9 @@ page-account {
       color: red;
       padding-right: 10px;
     }
+
+    .csdLogoDefault {
+      //filter: invert(100%);
+      filter: brightness(0.50);
+    }
 }
