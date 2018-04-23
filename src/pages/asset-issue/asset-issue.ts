@@ -29,8 +29,9 @@ export class AssetIssuePage {
     etpBalance: number
     decimalsList: number[]
     symbol: string
-    max_supply: string;
-    asset_decimals: number;
+    max_supply: string
+    custom_max_supply: string;
+    asset_decimals: number
     issuer_name: string
     custom_issue_address: string
     description: string
@@ -51,7 +52,8 @@ export class AssetIssuePage {
         this.feeAddress = 'auto'
         this.custom_recipient = ''
         this.decimalsList = [0,1,2,3,4,5,6,7,8]
-        this.max_supply = '';
+        this.max_supply = ''
+        this.custom_max_supply = ''
         this.symbol = ''
         this.issuer_name = ''
         this.custom_issue_address = ''
@@ -117,7 +119,9 @@ export class AssetIssuePage {
 
     }
 
-    validMaxSupply = (max_supply, asset_decimals) => max_supply > 0 && ((asset_decimals == undefined)||(Math.floor(parseFloat(max_supply) * Math.pow(10, asset_decimals))) <= 10000000000000000)
+    validMaxSupply = (max_supply, asset_decimals) => max_supply == 'custom' || (max_supply > 0 && ((asset_decimals == undefined)||(Math.floor(parseFloat(max_supply) * Math.pow(10, asset_decimals))) <= 10000000000000000))
+
+    validMaxSupplyCustom = (max_supply_custom, asset_decimals) => max_supply_custom > 0 && ((asset_decimals == undefined)||(Math.floor(parseFloat(max_supply_custom) * Math.pow(10, asset_decimals))) <= 10000000000000000)
 
     validDecimals = (asset_decimals) => asset_decimals >= 0 && asset_decimals <= 8
 
@@ -157,7 +161,7 @@ export class AssetIssuePage {
                 this.passphrase,
                 this.toUpperCase(this.symbol),
                 this.issuer_name,
-                Math.floor(parseFloat(this.max_supply) * Math.pow(10, this.asset_decimals)),
+                Math.floor(parseFloat(this.max_supply == 'custom' ? this.custom_max_supply : this.max_supply) * Math.pow(10, this.asset_decimals)),
                 this.asset_decimals,
                 this.description,
                 (this.issue_address == 'auto') ? null : (this.issue_address == 'custom') ? this.custom_issue_address : this.issue_address,

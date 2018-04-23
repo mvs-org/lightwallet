@@ -243,6 +243,14 @@
   "LOGIN.MOBILEWEB_ANDROID1": "Download MyETPWallet App on Google Play Store (recommended):",
   "LOGIN.MOBILEWEB_ANDROID2": "Or directly download the application:",
   "LOGIN.MOBILEWEB_IOS": "The IOS App is currently in development. Please use the Web version of MyETPWallet on your computer.",
-  "LOGIN.MOBILEWEB_OTHER": "MyETPWallet is currently only available on Computer and Android phones."
+  "LOGIN.MOBILEWEB_OTHER": "MyETPWallet is currently only available on Computer and Android phones.",
+
+  "ISSUE.MAX_SUPPLY_CUSTOM": "Custom Maximum supply",
+
+  "ISSUE.ONE_MILLION": "One million",
+  "ISSUE.TEN_MILLION": "Ten million",
+  "ISSUE.ONE_HUNDRED_MILLION": "One hundred million",
+  "ISSUE.ONE_BILLION": "One billion",
+  "ISSUE.TEN_BILLION": "Ten billion"
 
 }
