@@ -468,6 +468,7 @@ export class MvsServiceProvider {
                     .then((language: any) => {
                         this.storage.clear()
                             .then(() => {
+                                this.event.publish('settings_update', {});
                                 return Promise.all([this.storage.set('language', language), this.storage.set('theme', theme)]);
                             })
                     })

@@ -47,8 +47,7 @@
         <ion-label color="primary" floating>{{"PASSWORD" | translate}}</ion-label>
         <ion-input name="passphrase" type="password" [(ngModel)]="passphrase" required></ion-input>
       </ion-item>
-
-      <br><br>
+      <br>
       <ion-item>
         <ion-label>{{"SELECT_FROM_ADDRESS"|translate}}</ion-label>
         <ion-select [(ngModel)]="sendFrom" name="sendfrom" multiple="false" (ngModelChange)="onFromAddressChange($event)" okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}">
@@ -56,14 +55,13 @@
           <ion-option *ngFor="let addressbalance of addressbalances" value="{{addressbalance.address}}">{{addressbalance.address}} - {{format(addressbalance.balance, decimals)}} {{selectedAsset}}</ion-option>
         </ion-select>
       </ion-item>
+      <br>
       <ion-item>
         <ion-label>{{"SHOW_ADVANCED"|translate}}</ion-label>
         <ion-toggle [(ngModel)]="showAdvanced" name="showAdvanced" checked="false"></ion-toggle>
       </ion-item>
-    </ion-list>
-    <br>
     <div *ngIf="showAdvanced">
-      <ion-list>
+        <br>
         <ion-item>
           <ion-label>{{"SELECT_RECIPIENT_ADDRESS" |translate}}</ion-label>
           <ion-select [(ngModel)]="recipient_address" name="recipient_address" multiple="false" (ngModelChange)="onSendToAddressChange($event)" okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}">
@@ -88,8 +86,8 @@
           <p>{{rawtx}}</p>
           <br><br>
         </div>
-      </ion-list>
-    </div>
+      </div>
+    </ion-list>
     <ion-row class="padding-bottom">
       <ion-col>
         <button ion-button full icon-left [disabled]="!sendForm.form.valid||!validLocktime(locktime)||!validQuantity(quantity)||!validPassword(passphrase)||(recipient_address == 'custom' && !validrecipient(custom_recipient))" (click)="send()" color="secondary">
