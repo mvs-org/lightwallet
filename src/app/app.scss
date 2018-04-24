@@ -241,6 +241,12 @@
         }
     }
 
+    .alert-md [aria-checked=false]{
+        .alert-radio-label{
+          color: #0f8082;
+        }
+    }
+
 
     page-login .banner {
         margin: 20px auto !important;

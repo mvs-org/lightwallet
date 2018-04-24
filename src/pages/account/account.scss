@@ -168,8 +168,14 @@ page-account {
       padding-right: 10px;
     }
 
+
     .block-iPhone {
       line-height: 8;
       font-size: 14px;
+    }  
+
+    .csdLogoDefault {
+      //filter: invert(100%);
+      filter: brightness(0.50);
     }
 }

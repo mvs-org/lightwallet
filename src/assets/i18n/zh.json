@@ -48,7 +48,7 @@
   "DEPOSIT": "存款",
   "SEND": "转账",
   "RECEIVE": "收款",
-  "HISTORY": "交易记录",
+  "HISTORY": "历史记录",
   "IMPORT_WALLET_ERROR_MESSAGE": "钱包导入错误，请重新输入",
   "IMPORT_WALLET_CONNECTION_MESSAGE": "钱包连接区块链网络失败",
 
@@ -214,7 +214,7 @@
   "REPORT_BUG": "报告漏洞",
 
   "MESSAGE.NETWORK_MISMATCH": "网络不匹配",
-  "MESSAGE.PASSWORD_WRONG": "无法用给到的助记词解密",
+  "MESSAGE.PASSWORD_WRONG": "无法用给到的密码解密",
   "MESSAGE.CREATE_TRANSACTION" : "无法创建交易.",
   "MESSAGE.BROADCAST_ERROR": "无法广播交易.",
 
@@ -238,6 +238,19 @@
   "IMPORT_QRCODE": "请使用网页版轻钱包https://app.myetpwallet.com 里的二维码.登陆钱包账户前往设置,扫描后便可登陆手机端",
 
   "MESSAGE.ONE_TX_PER_BLOCK": "请注意:目前一个账户在一个区块里只能广播一次交易",
-  "MESSAGE.INSUFFICIENT_BALANCE": "余额不足,请再次确认你的可用余额"
+  "MESSAGE.INSUFFICIENT_BALANCE": "余额不足,请再次确认你的可用余额",
+
+  "LOGIN.MOBILEWEB_ANDROID1": "Download MyETPWallet App on Google Play Store (recommended):",
+  "LOGIN.MOBILEWEB_ANDROID2": "Or directly download the application:",
+  "LOGIN.MOBILEWEB_IOS": "The IOS App is currently in development. Please use the Web version of MyETPWallet on your computer.",
+  "LOGIN.MOBILEWEB_OTHER": "MyETPWallet is currently only available on Computer and Android phones.",
+
+  "ISSUE.MAX_SUPPLY_CUSTOM": "Custom Maximum supply",
+
+  "ISSUE.ONE_MILLION": "一百万",
+  "ISSUE.TEN_MILLION": "一千万",
+  "ISSUE.ONE_HUNDRED_MILLION": "一亿",
+  "ISSUE.ONE_BILLION": "十亿",
+  "ISSUE.TEN_BILLION": "一百亿"
 
 }
