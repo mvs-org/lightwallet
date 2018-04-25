@@ -1,6 +1,6 @@
 {
   "name": "mvs-lightwallet",
-  "version": "0.2.1b12",
+  "version": "0.2.1r6",
   "author": "Sven Mutzl",
   "homepage": "https://www.myetpwallet.com/",
   "private": true,
@@ -8,7 +8,7 @@
     "clean": "ionic-app-scripts clean",
     "build": "ionic-app-scripts build",
     "lint": "ionic-app-scripts lint",
-    "ionic:build:after": "node scripts/prevent_cache.js",
+    "ionic:build:after": "node scripts/prevent_cache.js && sh scripts/rename.sh",
     "ionic:build": "ionic-app-scripts build",
     "ionic:serve": "ionic-app-scripts serve",
     "test": "karma start ./karma.conf.js",
@@ -17,7 +17,8 @@
     "e2e-update": "webdriver-manager update --standalone false --gecko false"
   },
   "config": {
-    "ionic_uglifyjs": "./config/uglifyjs.config.js"
+    "ionic_uglifyjs": "./config/uglifyjs.config.js",
+    "ionic_webpack": "./config/ionic-webpack.config.js"
   },
   "dependencies": {
     "@angular/common": "4.1.3",
