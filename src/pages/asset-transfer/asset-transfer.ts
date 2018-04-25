@@ -4,7 +4,7 @@ import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { TranslateService } from '@ngx-translate/core';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { Keyboard } from '@ionic-native/keyboard';
-import { Clipboard } from '@ionic-native/clipboard';
+//import { Clipboard } from '@ionic-native/clipboard';
 
 @IonicPage({
     name: 'transfer-page',
@@ -45,7 +45,7 @@ export class AssetTransferPage {
         public platform: Platform,
         private barcodeScanner: BarcodeScanner,
         private keyboard: Keyboard,
-        private clipboard: Clipboard,
+        //private clipboard: Clipboard,
         private translate: TranslateService) {
 
         this.selectedAsset = navParams.get('asset')
@@ -233,7 +233,7 @@ export class AssetTransferPage {
                 title: translations['MESSAGE.SUCCESS'],
                 subTitle: text + hash,
                 buttons: [
-                    {
+                    /*{
                         text: translations['COPY'],
                         role: 'copy',
                         handler: () => {
@@ -245,7 +245,7 @@ export class AssetTransferPage {
                                   console.error('Error: ' + reject);
                                 })
                         }
-                    },
+                    },*/
                     {
                         text: translations['OK'],
                     }

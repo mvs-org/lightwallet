@@ -5,7 +5,7 @@ import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { TranslateService } from '@ngx-translate/core';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { Keyboard } from '@ionic-native/keyboard';
-import { Clipboard } from '@ionic-native/clipboard';
+//import { Clipboard } from '@ionic-native/clipboard';
 
 @IonicPage()
 @Component({
@@ -47,7 +47,7 @@ export class DepositPage {
         public platform: Platform,
         private barcodeScanner: BarcodeScanner,
         private keyboard: Keyboard,
-        private clipboard: Clipboard,
+        //private clipboard: Clipboard,
         private translate: TranslateService) {
 
         this.selectedAsset = "ETP"
@@ -250,7 +250,7 @@ export class DepositPage {
                 title: translations['MESSAGE.SUCCESS'],
                 subTitle: text + hash,
                 buttons: [
-                    {
+                    /*{
                         text: translations['COPY'],
                         role: 'copy',
                         handler: () => {
@@ -262,7 +262,7 @@ export class DepositPage {
                                   console.error('Error: ' + reject);
                                 })
                         }
-                    },
+                    },*/
                     {
                         text: translations['OK'],
                     }
