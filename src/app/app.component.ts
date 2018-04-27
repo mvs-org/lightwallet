@@ -2,6 +2,8 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform, Events } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { TranslateService } from '@ngx-translate/core';
+import { StatusBar } from '@ionic-native/status-bar';
+import { Keyboard } from '@ionic-native/keyboard';
 
 import { Storage } from '@ionic/storage';
 
@@ -14,7 +16,7 @@ export class MyApp {
     rootPage: any
     pages: Array<{ title: string, component: any }> = [];
 
-    constructor(private splashScreen: SplashScreen, public platform: Platform, private storage: Storage, public translate: TranslateService, private event: Events) {
+    constructor(private splashScreen: SplashScreen, public platform: Platform, private storage: Storage, public translate: TranslateService, private event: Events, public statusBar: StatusBar, public keyboard: Keyboard) {
 
         this.initializeApp()
             .then(() => this.storage.get('language'))
@@ -28,11 +30,13 @@ export class MyApp {
                 }
                 return;
             })
+            .then(()=>this.keyboard.hideKeyboardAccessoryBar(false))
             .then(()=>this.splashScreen.hide())
             .catch((e) => console.error(e));
 
         this.setTheme();
         this.event.subscribe("theme_changed", (theme) => {
+            this.setHeaderColor(theme);
             this.storage.set('theme', theme)
                 .then(() => this.setTheme())
         });
@@ -66,6 +70,7 @@ export class MyApp {
         this.storage.get('theme')
             .then((theme) => {
                 document.getElementById('theme').className = 'theme-' + ((theme) ? theme : 'default');
+                this.setHeaderColor(theme);
             })
     }
 
@@ -101,6 +106,20 @@ export class MyApp {
         ].map((entry) => this.addToMenu(entry)))
     }
 
+    setHeaderColor(key) {
+        // Status bar theme for android
+        if (this.platform.is('android')) {
+          this.statusBar.styleLightContent();
+          this.statusBar.backgroundColorByHexString('#000000');
+        } else if (this.platform.is('ios')) {    // Status bar theme for iOS
+            if((key == 'noctilux') || (key == 'solarized')) {
+                this.statusBar.styleLightContent();
+            } else {
+                this.statusBar.styleDefault();
+            }
+        }
+    }
+
     private addToMenu(menu_entry) {
         return new Promise((resolve, reject) => {
             this.translate.get(menu_entry.title).subscribe((lang) => {
@@ -122,6 +141,11 @@ export class MyApp {
                 this.nav.push(page.component);
         }
         else if (page.newtab)
-            window.open(page.newtab, '_blank');
+            if (this.platform.is('mobile')&&this.platform.is('ios'))
+                window.open(page.newtab, '_self');
+            else
+                window.open(page.newtab, '_blank');
+
+
     }
 }

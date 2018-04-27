@@ -1,0 +1,243 @@
+{
+  "ACCOUNT.TITLE": "アカウント",
+  "ACCOUNT.FROZEN": "フリーズ",
+  "ACCOUNT.AVAILABLE": "利用可能",
+  "ACCOUNT.TOTAL": "総額",
+
+
+  "WALLET_SETUP.TITLE": "ウォレットの設定",
+  "REGISTER.TITLE": "ウォレットの作成",
+  "CREATE_WALLET_DISCLAIMER.TITLE": "アラート",
+  "CREATE_WALLET_DISCLAIMER.TEXT": "必ずニーモニックを保管してください、紛失したり不適切に保管したりした場合、元界は法的責任を負いません。",
+  "REGISTER.YOUR_MNEMONIC_KEY": "あなたのニーモニック",
+
+  "MNEMONIC_SHOW.TITLE": "あなたのウォレットのニーモニック",
+  "YOUR_MNEMONIC_WORDS": "あなたのニーモニック",
+  "IMPORT_WALLET": "ニーモニックを入力する",
+  "CREATE_NEW_WALLET": "ウォレットを新規作成する",
+  "CREATE_WALLET": "おめでとうございます！ウォレットが成功にに作成されました",
+  "BUTTON.OK": "確認",
+
+  "PLACEHOLDER.MNEMONIC_PASSPHRASE": "ニーモニック",
+
+  "TRANSACTIONS": "取引",
+  "DATE": "日付",
+  "AMOUNT": "数量",
+  "RECIPIENT_ADDRESS": "受取人のアドレス",
+
+  "AVAILABLE_BALANCE": "残高",
+  "AVAILABLE": "利用可能",
+
+  "SCAN": "QRコードをスキャンします",
+
+  "ETP_DEPOSIT": "ETP預金",
+
+  "SWITCH_LANGUAGE": "言語設定",
+  "LANGUAGE_SETTINGS": "言語設定",
+  "SETTINGS": "設定",
+  "INFORMATION": "免責事項",
+  "MESSAGE.ERROR_TITLE": "悪い、間違ってしまった...",
+  "MESSAGE.LOADING": "ちょっと待って，すぐにできます...",
+
+  "HISTORY.NO_TXS_YET": "取引履歴はありません",
+  "HISTORY.NO_TXS_YET_TEXT": "今すぐあなたのウォレットを使い始めます",
+  "SETTINGS.RESET_TEXT": "ウォレットのデータをリセットします. あなたのニーモニックを保存したことを確認してください",
+  "SETTINGS.RESET_BUTTON": "リセット",
+  "SETTINGS.RESYNC_TEXT": "ウォレット内のすべての取引レコードとデータを再同期化します",
+  "SETTINGS.RESYNC_BUTTON": "再同期化",
+  "DEPOSIT": "預金",
+  "SEND": "振込",
+  "RECEIVE": "受取",
+  "HISTORY": "履歴",
+  "IMPORT_WALLET_ERROR_MESSAGE": "ウォレットのインポートにエラーが発生しました、もう一度入力してください",
+  "IMPORT_WALLET_CONNECTION_MESSAGE": "ブロックチェーンネットワークに接続できませんでした",
+
+  "MENU": "メニュー",
+
+  "REORDER": "ソート",
+  "FINISH": "完了",
+  "ERROR_SEND_TEXT": "購入手続きに失敗しましたので、もう一度入力してください",
+  "MNEMONIC_CONFIRM_HEAD": "ニーモニックの確認",
+  "MNEMONIC_CONFIRM_TEXT": "もう一度順番にニートモックをドラッグしてください",
+
+  "CONFIRM": "確定",
+  "SKIP": "スキップ",
+  "COPY": "コピー",
+
+  "WARNING": "ウォーニング",
+  "BACKUP_WORDS_BACKED_UP_TEXT": "あなたのニーモニックを保存したことを確認してください",
+  "BACKUP_WORDS_BACKED_UP_YES": " はい、自分のニーモニックをバックアップしました",
+  "NO": "いいえ、まだです",
+  "BACKUP_WORDS_CONFIRM_SKIP_TEXT": "ニーモニックをバックアップせずにウォレットにログインしてもよろしいですか？",
+  "I_AM_SURE": "確認",
+
+  "MESSAGE.ERROR_CONNECT_BLOCKCHAIN": "ブロックチェーンノードの接続中に問題が発生しました。しばらくしてからもう一度お試しください",
+
+
+  "BACK": "取消",
+  "SETTINGS.WORDS_BUTTON": "バックアップ",
+  "SETTINGS.WORDS_TEXT": "秘密鍵に関連付けられているニーモニック",
+  "RESET_TITLE": "本当にログアウトしてもよろしいですか？",
+  "COPIED_MNEMONIC": "バックアップした文字をクリップボードにコピーします",
+
+  "SETTINGS.PINCODE": "PINの設定",
+  "SETTINGS.PINCODE_BUTTON": "設定",
+  "SECURITY_WARNING": "セキュリティウォーニング",
+  "SET_PIN_FIRST": "お先にPINを設定してください",
+
+  "PLEASE_AUTHORIZE": "承認してください",
+  "CONFIRM_PINCODE": "PINの確認",
+
+
+  "BUTTON.DOWNLOAD": "キーのダウンロード",
+
+  "BUTTON.NEXT": "次へ",
+  "IMPORT_WORDS": "以下のテーブルに、ニーモニックを入力してください",
+  "IMPORT_WORDS_TITLE": "ニーモニックを入力する2つの方法",
+  "IMPORT_WORDS_BAR": "ウォレットのインポート",
+  "IMPORT_FILE": "ウォレットファイルを開く",
+  "UPLOAD_KEYSTORE": "ウォレットファイルをアップロードします",
+  "PASSWORD": "パスワード",
+  "CANCEL": "取消",
+  "ENTER": "入力",
+  "CREATE_NEW_WALLET_BUTTON": "ウォレットを新規作成",
+  "OPEN_WALLET_FILE": "ファイルからウォレットにログインする",
+  "CREATE_FROM_BACKUP_WORDS": "ニーモニックを使用してファイルを作成します",
+  "WRONG_FILE": "正しいファイルではありません",
+  "CONFIRM_PASSWORD": "パスワード（再入力）",
+  "LIGHT_WALLET_INFO_TEXT": "myetpwallet.comはあなたのキーを入手する権利はありませんのでご注意ください。バックアップファイルや鍵ファイルを紛失した場合、私たちはあなたの資金にアクセスすることはできません。",
+  "TRANSACTION.INNER_WALLET": "内部ウォレット取引",
+  "HEIGHT": "高さ",
+  "SELECT_CHANGE_ADDRESS": "おつりの出すアドレスを指定してください（オプション）",
+  "SELECT_FROM_ADDRESS": "选定从地址发送 (可选)",
+  "SHOW_ADVANCED": "詳細オプションの表示",
+  "AUTO": "オート",
+  "SELECT_DEPOSIT_OPTION": "ブロック数",
+  "DEPOSIT_PROFIT": "収益",
+  "TRANSACTION_PREVIEW_TEXT": "あなたの取引コード：",
+  "MESSAGE.SUCCESS": "素晴らしい",
+  "MESSAGE.LOGOUT_CONFIRM": "本当にログアウトしてもよろしいですか?",
+  "SUCCESS_SEND_TEXT": "取引がネットワークに送信されました。 確認をお待ちください。 取引ハッシュ: ",
+  "IMPORT_MNEMONIC_TEXT": "ウォレットファイルを作成します。このファイルを使用するとあなたのウォレットにログインすることができます。",
+  "ENTER_PASSWORD_HEADLINE": "ファイルのパスワードを入力する",
+  "CHOOSE_A_FILE": "ファイルを選択する",
+  "BACKUP_WORDS_WRITE_DOWN_TEXT": "ウォレットは自動的に24個の英単語のニーモニックを生成します、必ずあなたのニーモニックを保管し、他人に見せないようにしてください。秘密鍵を使ってすべてのアカウント情報を取得するのに役立ちます。",
+  "RESET_MESSAGE": "すべてのログインデータがクリアされます",
+  "SHOW_ALL_ASSET_BALANCES": "すべての資産の残高を表示します",
+	"THEME_SETTINGS": "スキンを切り替える",
+  "LOGIN_MENU_INFO_TEXT": "既存の元界ウォレットアカウントを持つユーザーは次の点に注意してください。初めてmyetpwallet.comにログインする際、あなたのニーモニックでウォレットファイルを作成して、このファイルでウォレットを開いてください。",
+  "PASTE_WORDS": "ニーモニックをコピーして以下ののボックスに貼り付ける",
+  "RESET": "リセット",
+  "OR": "或いは",
+  "DISCLAIMER": {
+    "HEADLINE": "免責事項",
+    "INTRODUCTION": "ライトウォレットはブロックチェーンテクノロジに基づいて設計されています。ユーザーのアカウント情報および振込動作はすべて、パブリックブロックチェーンに格納されます。このウォレットサービスプロバイダは、ユーザーのウォレットキー（ニーモニック）をデータベースに格納しません。ユーザーのキー（ニーモニック）とキー（ニーモニック）によって生成されたファイルは、作成者自身のみ属します。ユーザーはキー（ニーモニック）ファイルとパスワードを保管する責任を負い、そして、アカウント及びパスワード\\キー（ニーモニック）にあるすべての活動について全責任を負います。",
+    "LIST_INTRODUCTION": "お客様は、当社のサービスプロバイダが以下のいずれの状況についても責任を負わないことに同意するものとします。",
+    "LIST_ITEM_1": "由于您将自己的ウォレット密码\\密钥（ニーモニック）告知他人或未保管好自己的密码\\密钥（ニーモニック）或与他人共享ウォレット账户或任何其他非服务提供商过错，导致资料泄露。",
+    "LIST_ITEM_2": "このサービスの使用には、不可抗力、コンピュータウイルス、ハッカーの攻撃、システムの不安定性、ユーザーの位置、ユーザーのシャットダウン、その他のネットワーク、テクノロジ、通信回線など、さまざまな不安定要因によって、サービスが中断したり、ユーザーの要求を満たなかったりすることがあります、上記のリスクを理解し、負う必要があります。当社のサービスプロバイダは一切の責任を負いません。",
+    "LIST_ITEM_3": "振替サービスを使用するには相手方の完全な理解することが必要です（相手の本当の身分など、ただし、これに限定されものではありません）振替が一度発生した場合、撤退、元に戻す、回復を行うことは不可能です、あなたは、自分の操作から生じるすべてのリスクに対して責任を負うべきです、振替に起因する紛争はすべて、受領当事者および支払当事者によって解決され、本ウォレットのプロバイダはこれに関する法的責任は負いません。",
+    "LIST_ITEM_4": "サービスプロバイダはテクニカルサポートのみを提供します、技術サポート以外のサービスは提供されていません。",
+    "READ_AND_AGREE": "私は上記の声明を読み、同意し、自発的にリスクと責任を引き受ける。"
+  },
+  "LOGOUT": "ログアウト",
+  "RESYNC": "再同期化",
+  "SYNCING": "同期化",
+  "TRANSFER": "振込",
+  "OK": "はい",
+
+  "PREVIEW": "プレビュー",
+  "LEGAL_DISCLAIMER": {
+    "TITLE": "免責事項",
+    "BRIEF_EXPLAIN": "MyETPWallet.comウォレットでは個人情報を簡単に作成、保存、アクセスし、ブロックチェーンとやりとりすることができます。私たちはあなたの資産を管理する権利を持っていません、あなたはあなたの個人資産のセキュリティを担う唯一の人です。",
+    "WARNING": "このウォレットを使用する前に、暗号通貨及びブロックチェーンオープンソースソフトウェアに関連する重大なリスクに注意してください，例えは大きな為替変動やその他の脆弱性など",
+    "I_TITLE": "一、ウォレット情報のアクセスと管理",
+    "I_INFO": "1.1 アカウントを作成すると、24英単語のニーモニックと、デジタル通貨を送受信するための公開鍵と秘密鍵のペアが生成されます。ニーモニックと秘密鍵情報を正しく保管する必要があります、それを正しく保管しないと、すべての資産を失う可能性があります。",
+    "I_INFO_2": "1.2 ライトウォレットは、パスワードや秘密鍵などのユーザーの個人情報を収集または保管することはありません、この情報はユーザーのローカルデバイスに保存されるため、アセットリカバリをサポートすることはできません。開発チームはソフトウェアのログインの安全ンとソフトウェアの脆弱性の修復のみを担当します。暗号化された秘密鍵やその他の秘密鍵に関連する回復には責任を負いません。ライトウォレットを使用する場合、元界が個人的な私有鍵を維持する責任を負うことに同意しました。資産のセキュリティを最大限に高めるには、ファイルをバックアップすることを強くお勧めします。",
+    "II_TITLE": "二、ウォレットのセキュリティ",
+    "II_INFO_1": "1、元界チームは、さまざまなセキュリティ技術とプログラムを使用して、ユーザーのデータが紛失、不当に使用されないよう、許可されていないアクセスまたは開示を確保する。たとえば、SSL標準の暗号化技術を使用して個人情報を保護します。現時点でのセキュリティ対策は、技術的な制限や予期せぬ悪意のある攻撃により比較的完了していますが、情報が100％安全であることを保証するものではありません。ウォレットを使用する前に、ウォレット接続用のシステムとネットワークが壊れている可能性があることを認める必要があります。たとえば、ユーザーがダウンロードしたソフトウェアや訪問したWebサイトには、情報のセキュリティを脅かすウイルスやマルウェアが含まれている可能性があります。元界開発チームは、パスワードと秘密鍵のバックアップをユーザーに推奨しています。",
+    "II_INFO_2": "2、いかなる場合でも非公式な情報を信じないようにしてください。ユーザが調査を完了した、取引当事者の身元情報を評価した上で、様々な操作を行います。",
+    "II_INFO_3": "3、個人ウォレットのセキュリティを保護するのはユーザーの唯一の責任です。元界チームは、ユーザーのデバイス上のデータセキュリティを保護するための業界標準のテクノロジと対策を採用しますが、データや資産の損失については責任を負いません。したがって、ユーザーはウォレットを使用前にユーザー同意書を読み、同意する必要があります。",
+    "III_TITLE": "三、お問合せ",
+    "III_INFO": "上記のプライバシーポリシーについてご質問がございましたら、info@mvs.orgまでご連絡ください。",
+    "FOOTER": "元界チームは、上記の条件を解釈し変更する権利を留保します。これはMITのオープンソースコード契約により保護されています。"
+  },
+  "PASSWORD_WARNING": "アカウントのセキュリティを確保するために、我々はあなたが強力なパスワードを設定することをお勧めします",
+  "FEE": "取引手数料",
+  "NOTICE_TRANSACTION_FEE_UNCOVERED": "十分なETSで取引コストを支払うことを確保してください。",
+
+  "SELECT_RECIPIENT_ADDRESS": "元金と利息の返却アドレスを指定します（オプション）",
+  "CUSTOM": "手動入力",
+  "CUSTOM_RECIPIENT_ADDRESS": "手動で送信アドレスを入力する",
+  "BLOCKS": "ブロック",
+  "INTEREST_RATE": "金利",
+
+  "OPEN_FROM_QRCODE": "QRコードを使ってウォレットにログインする",
+  "OPEN_FROM_BACKUP_WORDS": "ニーモニックを入力してウォレットにログインする",
+  "ENTER_PASSWORD_HEADLINE_MOBILE": "パスワードを入力する",
+  "SETTINGS.SHOW_QRCODE_BUTTON": "スマートフォンを接続する",
+  "SETTINGS.SHOW_QRCODE_TEXT": "ニーモニックをMyETPWalletのモバイルアプリにエクスポートします",
+
+  "LOGOUT_TEXT": "ログアウト",
+  "EXPORT_ACCOUNT": "スマートフォンを接続します",
+
+  "IMPORT.SHOW_QRCODE_BUTTON": "QRコードの表示",
+
+  "IMPORT_MNEMONIC_TEXT_MOBILE": "あなたの秘密鍵は設定したパスワードで暗号化されます、そして、あなたのスマートフォンに保存します",
+
+  "RESET_MESSAGE_MOBILE": "すべてのデータが消去されます。もう一度ログインするには、あなたのニーモニックを入力するかデスクトップからQRコードをスキャンする必要があります。",
+  "IMPORT.SCAN_QRCODE_TEXT": "ウォレットアカウントを自分のスマートフォンにインポートします",
+  "IMPORT.SCAN_QRCODE_BUTTON":"QRコードのスキャン",
+
+  "ASSET_ISSUE": "資産作成",
+  "NOTICE_ASSET_ISSUE_FEE": "新しい資産を作るのに10 ETPがかかります",
+
+  "ISSUE.NOTICE_TRANSACTION_FEE_UNCOVERED": "資産を作成するには少なくとも10個のETPが必要です",
+  "ISSUE.SYMBOL": "資産マーク",
+  "ISSUE.ISSUER_NAME": "発行者",
+  "ISSUE.MAX_SUPPLY": "最大の供給量",
+  "ISSUE.DECIMALS": "小数桁数",
+  "ISSUE.DESCRIPTION": "説明",
+  "ISSUE.ISSUE_ADDRESS": "発行アドレス(新しいトークンを受取するアドレス)",
+  "ISSUE.FEE_ADDRESS": "支払アドレス(10ETPを支払うアドレス)",
+  "ISSUE.CUSTOM_ISSUE_ADDRESS": "別のアドレスを指定します",
+
+  "ISSUE.CONFIRMATION_TITLE": "資産を発行すると10ETPが差し引かれます.",
+  "ISSUE.CONFIRMATION_SUBTITLE": "資産を新規作成してもよろしいですか?",
+  "ISSUE.CREATE": "資産を新規作成する",
+
+  "EXPORT.HEADLINE": "スマートフォンを接続する",
+  "EXPORT.INTRODUCTION": "MyETPWallet.comにアクセスし、[ライトウォレットダウンロード]をクリックしてアプリをスマートフォンにダウンロードしてください.",
+  "EXPORT.TEXT": "QRコードをスキャンして、秘密鍵を携帯電話にインポートできます。あなたの秘密鍵はパスワードで暗号化され、スマートフォンに保存されます。スマートフォンでQRコードをスキャンしてください.",
+  "EXPORT.REMINDER_LOGOUT": "スマートフォンを変更する場合、ログアウトしてください.",
+
+  "LOGIN_MENU_INFO_TEXT_MOBILE": "ご注意：新しいユーザーはスマートフォ版のライトウォレットを使用する前に、PC版のライトウォレットを使ってウォレットアカウントを作成する必要があります.",
+  "REPORT_BUG": "バグのレポート",
+
+  "MESSAGE.NETWORK_MISMATCH": "ネットワークが一致しません",
+  "MESSAGE.PASSWORD_WRONG": "指定されたパスワードで復号化できません",
+  "MESSAGE.CREATE_TRANSACTION" : "取引の作成に失敗しました.",
+  "MESSAGE.BROADCAST_ERROR": "取引がブロードキャストできません.",
+
+  "LOGIN": "ログイン",
+  "HOW_TO_IMPORT_WALLET_MOBILE": "インポートする方法",
+  "HOW_TO_IMPORT_WALLET_MOBILE_TITLE": "秘密鍵のインポート方法",
+  "HOW_TO_IMPORT_WALLET_MOBILE_STEP1": "スクトップのライトウォレットを開いて、設定に入って、スマートフォンを接続してください",
+  "HOW_TO_IMPORT_WALLET_MOBILE_STEP2": "QRコードをスキャンしてください",
+  "HOW_TO_IMPORT_WALLET_MOBILE_STEP3": "スマートフォンでウォレットの旅を開きましょう!",
+
+  "MESSAGE.ISSUE_INSUFFICIENT_BALANCE" : "資産を作成するには少なくとも10個のETPが必要です",
+
+  "SCANNING.MESSAGE_ACCOUNT": "ウェブ版に行き、QRコードをスキャンしてください。",
+  "SCANNING.MESSAGE_ADDRESS": "ETPアドレスをスキャンします",
+
+  "MESSAGE.NOT_ETP_ADDRESS_TITLE": "アドレスエラー",
+  "MESSAGE.NOT_ETP_ADDRESS_TEXT": "正しいETPアドレスではありませんので、正しいETPアドレスをスキャンしてください。",
+
+  "SEND_ALL_BUTTON": "資産をすべて送ります",
+
+  "IMPORT_QRCODE": "ウェブ版のライトウォレットhttps://app.myetpwallet.comにあるQRコードをご利用ください。ウォレットアカウントにログインして設定に行きます。スキャンした後、スマートフォンにログインできます。",
+
+  "MESSAGE.ONE_TX_PER_BLOCK": "ご注意：現在、アカウントは1つのブロックの中で1つの取引のみをブロードキャストできます",
+  "MESSAGE.INSUFFICIENT_BALANCE": "残額が足りないので、再確認してください"
+
+}

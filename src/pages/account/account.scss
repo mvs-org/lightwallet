@@ -148,9 +148,14 @@ page-account {
       position: absolute;
       bottom: 20px;
       left: -1px;
+      padding-right: 10px;
+      padding-left: 10px;
     }
 
     .card-block {
+      padding-top: 10px;
+      padding-left: 20px;
+      padding-right: 20px;
       padding-bottom: 50px;
     }
 
@@ -162,6 +167,12 @@ page-account {
       color: red;
       padding-right: 10px;
     }
+
+
+    .block-iPhone {
+      line-height: 8;
+      font-size: 14px;
+    }  
 
     .csdLogoDefault {
       //filter: invert(100%);
