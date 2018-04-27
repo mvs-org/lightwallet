@@ -238,4 +238,16 @@
   "MESSAGE.ONE_TX_PER_BLOCK": "โปรดรับทราบว่า ปัจจุบันบัญชีหนึ่งๆจะสามารถบอร์ดแคสได้เพียง 1 ธุรกรรมต่อบล็อก",
   "MESSAGE.INSUFFICIENT_BALANCE": "ยอดคงเหลือไม่เพียงพอ โปรดตรวจสอบยอดคงเหลือของคุณอีกครั้ง"
 
+    "LOGIN.MOBILEWEB_ANDROID1": "ดาวน์โหลดแอป MyETPWallet บน Google Play Store (แนะนำ):",
+  "LOGIN.MOBILEWEB_ANDROID2": "หรือดาวน์โหลดแอปจากที่นี่โดยตรง:",
+  "LOGIN.MOBILEWEB_IOS": "แอปสำหรับ IOS กำลังอยู่ภายใต้การพัฒนา โปรดใช้เว็บเวอร์ชั่นบนคอมพิวเตอร์ของคุณ",
+  "LOGIN.MOBILEWEB_OTHER": "MyETPWallet ตอนนี้มีเฉพาะบนคอมพิวเตอร์พีซีและโทรศัพท์แอนดรอยด์",
+
+  "ISSUE.MAX_SUPPLY_CUSTOM": "จำนวนซับพลายสูงสุดกำหนดเอง",
+
+  "ISSUE.ONE_MILLION": "หนึ่งล้าน",
+  "ISSUE.TEN_MILLION": "สืบล้าน",
+  "ISSUE.ONE_HUNDRED_MILLION": "หนึ่งร้อยล้าน",
+  "ISSUE.ONE_BILLION": "หนึ่งพันล้าน",
+  "ISSUE.TEN_BILLION": "สิบพันล้าน"
 }
