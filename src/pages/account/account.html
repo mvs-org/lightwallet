@@ -47,7 +47,7 @@
                         <h1 [translate]="asset"></h1>
                         <h3>{{"AVAILABLE"|translate}}: {{format((balances[asset] && balances[asset].available) ? balances[asset].available : 0, balances[asset].decimals)}}</h3>
                         <p *ngIf="asset=='ETP'">
-                          {{"ACCOUNT.FROZEN"|translate}}: {{format((balances[asset]) ? ((balances[asset].total-balances[asset].spent-balances[asset].available)) : 0, balances[asset].decimals)}}
+                          {{"ACCOUNT.FROZEN"|translate}}: {{format(balances[asset].frozen, balances[asset].decimals)}}
                           <button ion-button clear color="primary" icon-left (click)="gotoDeposit($event, asset)" class="deposit-button">
                             <ion-icon name="log-in"></ion-icon>
                           </button>

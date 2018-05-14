@@ -6,6 +6,7 @@ import 'rxjs/add/operator/map';
 import { Storage } from '@ionic/storage';
 import { WalletServiceProvider } from '../wallet-service/wallet-service';
 import * as Metaverse from 'metaversejs/dist/metaverse.js';
+import * as Blockchain from 'mvs-blockchain/dist/index.js';
 
 
 @Injectable()
@@ -13,6 +14,7 @@ export class MvsServiceProvider {
 
     private headers = new Headers();
     private options
+    private blockchain = Blockchain();
 
     DEFAULT_BALANCES = {
         "ETP": { total: 0, available: 0, decimals: 8, spent: 0 },
@@ -198,13 +200,9 @@ export class MvsServiceProvider {
         })
     }
 
-
-
-    fetchMvsHeight = () => this._get(this.globals.host[this.globals.network] + '/height', {})
-
     updateMvsHeight() {
         return new Promise((resolve, reject) => {
-            this.fetchMvsHeight()
+            this.blockchain.height()
                 .then((height) => {
                     return this.setMvsHeight(height)
                 })
@@ -259,7 +257,7 @@ export class MvsServiceProvider {
     }
 
     getNewMvsTxs(addresses, start) {
-        return this._get(this.globals.host[this.globals.network] + '/txs', { addresses: addresses, start: start })
+        return this.blockchain.addresses.txs(addresses, { min_height: start })
     }
 
     getAddressBalances() {
@@ -358,17 +356,20 @@ export class MvsServiceProvider {
     }
 
     calculateMvsBalances() {
-        var balances = {}
-        var addressbalances = {}
-        return Promise.all([this.getMvsTxs(), this.getMvsHeight()])
-            .then((results: any) => Promise.all(results[0].map(tx => this.addTxToBalance(tx, balances, addressbalances, results[1]))))
-            .then(() => this.setBalances(balances))
-            .then(() => this.setAddressBalances(addressbalances))
+        return Promise.all([this.getMvsTxs(), this.getMvsHeight(), this.getMvsAddresses()])
+            .then((results: any) => Promise.all([
+                this.blockchain.balance.all(results[0], results[2], results[1]),
+                this.blockchain.balance.addresses(results[0], results[2], results[1])
+            ]))
+            .then((balances) => Promise.all([
+                this.setBalances(balances[0]),
+                this.setAddressBalances(balances[1])
+            ]))
     }
 
-    setUpdateTime(lastupdate=undefined) {
-        if(lastupdate==undefined)
-            lastupdate=new Date()
+    setUpdateTime(lastupdate = undefined) {
+        if (lastupdate == undefined)
+            lastupdate = new Date()
         return this.storage.set('last_update', lastupdate)
     }
 
@@ -394,52 +395,6 @@ export class MvsServiceProvider {
         return new Promise((resolve, reject) => {
             this.storage.get('loaded').then((loaded) => resolve((loaded) ? loaded : false))
         })
-    }
-
-    addTxToBalance(tx, balances, addressbalances, height) {
-        return this.getMvsAddresses()
-            .then((addresses) => {
-                return Promise.all([Promise.all((tx.inputs || []).map((input) => {
-                    if (this.inArray(addresses || [], input.address)) {
-                        //Initialize if needed
-                        if (typeof balances[input.asset.symbol] === 'undefined')
-                            balances[input.asset.symbol] = { total: 0, available: 0, spent: 0, decimals: input.asset.decimals };
-                        balances[input.asset.symbol].spent += input.quantity;
-                        balances[input.asset.symbol].available -= input.quantity
-                        //Sum inputs for addresses
-                        if (typeof addressbalances[input.address] === 'undefined')
-                            addressbalances[input.address] = {};
-                        if (typeof addressbalances[input.address][input.asset.symbol] === 'undefined')
-                            addressbalances[input.address][input.asset.symbol] = { total: 0, available: 0, decimals: input.asset.decimals, spent: 0 };
-                        addressbalances[input.address][input.asset.symbol].spent += input.quantity;
-                        addressbalances[input.address][input.asset.symbol].available -= input.quantity;
-                    }
-                    return input;
-                })), Promise.all((tx.outputs || []).map((output) => {
-                    if (this.inArray(addresses || [], output.address)) {
-                        //Initialize if needed
-                        if (typeof balances[output.asset.symbol] === 'undefined')
-                            balances[output.asset.symbol] = { total: 0, available: 0, spent: 0, decimals: output.asset.decimals };
-                        balances[output.asset.symbol].total += output.quantity;
-
-                        //Sum outputs for addresses
-                        if (typeof addressbalances[output.address] === 'undefined')
-                            addressbalances[output.address] = {};
-                        if (typeof addressbalances[output.address][output.asset.symbol] === 'undefined')
-                            addressbalances[output.address][output.asset.symbol] = { total: 0, available: 0, decimals: output.asset.decimals, spent: 0 }
-                        addressbalances[output.address][output.asset.symbol].total += output.quantity;
-
-                        //Sum available quantities
-                        if (output.lock_height + tx.height <= height) {
-                            balances[output.asset.symbol].available += output.quantity
-                            addressbalances[output.address][output.asset.symbol].available += output.quantity
-                        }
-                    }
-                    return output;
-                }))])
-            }).then(() => {
-                return balances;
-            })
     }
 
     getLastMvsTxXHeight() {
@@ -485,16 +440,10 @@ export class MvsServiceProvider {
                 txs = []
             this.getNewMvsTxs(addresses, lastKnownHeight)
                 .then((newTxs: any) => {
-                    txs = txs.concat(newTxs.txs)
-                    if (newTxs.txs.length < 100) {
-                        this.addMvsTxs(txs).then(() => {
-                            resolve(txs)
-                        })
-                    }
-                    else {
-                        let height = newTxs.txs[newTxs.txs.length - 1].height
-                        resolve(this.getNewTxs(addresses, height, txs))
-                    }
+                    txs = txs.concat(newTxs.transactions)
+                    this.addMvsTxs(txs).then(() => {
+                        resolve(txs)
+                    })
                 })
         })
     }
