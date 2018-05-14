@@ -438,7 +438,7 @@ export class MvsServiceProvider {
         return new Promise((resolve, reject) => {
             if (typeof txs == 'undefined')
                 txs = []
-            this.getNewMvsTxs(addresses, lastKnownHeight)
+            this.getNewMvsTxs(addresses, lastKnownHeight+1)
                 .then((newTxs: any) => {
                     txs = txs.concat(newTxs.transactions)
                     this.addMvsTxs(txs).then(() => {
@@ -498,7 +498,7 @@ export class MvsServiceProvider {
             })
             .then(() => {
                 if (newtxs.length)
-                    this.setLastMvsTxHeight(newtxs[newtxs.length - 1].height)
+                    this.setLastMvsTxHeight(newtxs[0].height)
                 return this.getMvsTxs()
             })
     }
