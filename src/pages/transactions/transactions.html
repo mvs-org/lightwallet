@@ -10,14 +10,14 @@
 <ion-content>
     <ion-list *ngIf="!loading">
         <ion-item [hidden]="!txs.length" *ngFor="let tx of txs">
-            <ion-icon name="{{(tx.side=='in')?'arrow-down':'arrow-up'}}" item-start large color="{{(tx.side=='in')?'secondary':'danger'}}"></ion-icon>
+            <!-- <ion-icon name="{{(tx.side=='in')?'arrow-down':'arrow-up'}}" item-start large color="{{(tx.side=='in')?'secondary':'danger'}}"></ion-icon> -->
             <ion-avatar>
-                <img class="coinlogo" [src]="'assets/icon/'+tx.asset.symbol+'.png'" onerror="this.src='assets/icon/default.png'">
-                <h2>{{tx.asset.symbol|translate}}</h2>
+                <img class="coinlogo" [src]="'assets/icon/'+asset+'.png'" onerror="this.src='assets/icon/default.png'">
+                <h2>{{symbol|translate}}</h2>
             </ion-avatar>
             <h3 *ngIf="tx.quantity>0">{{'AMOUNT'|translate}}: {{formatQuantity((tx.quantity)?tx.quantity:0,tx.asset.decimals)}}</h3>
-            <h3 *ngIf="!tx.quantity">{{'TRANSACTION.INNER_WALLET'|translate}}</h3>
-            <h3>{{'DATE'|translate}}: {{tx.timestamp*1000|date : 'medium'}}</h3>
+            <!-- <h3 *ngIf="!tx.quantity">{{'TRANSACTION.INNER_WALLET'|translate}}</h3> -->
+            <h3>{{'DATE'|translate}}: {{tx.confirmed_at*1000|date : 'medium'}}</h3>
             <a href="https://explorer.mvs.org/#!/tx/{{tx.hash}}" target="_blank">{{tx.hash}}</a>
         </ion-item>
     </ion-list>
