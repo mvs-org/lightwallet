@@ -56,7 +56,7 @@ export class AssetTransferPage {
         this.passphrase = ''
 
         //Load addresses
-        mvs.getMvsAddresses()
+        mvs.getAddresses()
             .then((_: Array<string>) => {
                 this.addresses = _
             })
@@ -86,7 +86,7 @@ export class AssetTransferPage {
 
     ionViewDidEnter() {
         console.log('Asset transfer page loaded')
-        this.mvs.getMvsAddresses()
+        this.mvs.getAddresses()
             .then((addresses) => {
                 if (!Array.isArray(addresses) || !addresses.length)
                     this.navCtrl.setRoot("LoginPage")
@@ -134,8 +134,8 @@ export class AssetTransferPage {
 
     create() {
         return this.showLoading()
-            .then(() => this.mvs.getMvsAddresses())
-            .then((addresses) => this.mvs.createTx(
+            .then(() => this.mvs.getAddresses())
+            .then((addresses) => this.mvs.createSendTx(
                 this.passphrase,
                 this.selectedAsset,
                 this.recipient_address,

@@ -21,7 +21,7 @@ export class ReceivePage {
     constructor(public navCtrl: NavController, public navParams: NavParams, private mvs: MvsServiceProvider) {
         this.addressbalances = {};
         this.selectedAsset = navParams.get('asset')
-        this.mvs.getMvsAddresses()
+        this.mvs.getAddresses()
             .then((_: string[]) => {
                 this.address = _[0];
                 this.addresses = _;
@@ -44,7 +44,7 @@ export class ReceivePage {
 
     ionViewDidEnter() {
         console.log('Receive page loaded')
-        this.mvs.getMvsAddresses()
+        this.mvs.getAddresses()
             .then((addresses) => {
                 if (!Array.isArray(addresses) || !addresses.length)
                     this.navCtrl.setRoot("LoginPage")

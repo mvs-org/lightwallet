@@ -44,7 +44,7 @@ export class AccountPage {
     //theme = document.getElementById('theme').className
 
     ionViewDidEnter() {
-        this.mvs.getMvsAddresses()
+        this.mvs.getAddresses()
             .then((addresses) => {
                 if (Array.isArray(addresses) && addresses.length)
                     this.initialize()
@@ -70,7 +70,7 @@ export class AccountPage {
         this.syncing = false
         this.loadBalances()
         //Update height
-        this.mvs.getMvsHeight()
+        this.mvs.getHeight()
             .then((height: number) => {
                 this.height = height
             })
@@ -156,7 +156,7 @@ export class AccountPage {
         }
     }
 
-    private updateHeight = () => this.mvs.updateMvsHeight()
+    private updateHeight = () => this.mvs.updateHeight()
 
     private updateBalances = () => {
         //Update tx data and balances
@@ -176,7 +176,7 @@ export class AccountPage {
             this.syncing = true
 
             //Update height
-            this.mvs.updateMvsHeight()
+            this.mvs.updateHeight()
                 .then((height: number) => {
                     this.height = height
                     this.offline = false

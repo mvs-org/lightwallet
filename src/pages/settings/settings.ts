@@ -18,7 +18,7 @@ export class SettingsPage {
 
     ionViewDidEnter() {
         console.log('Settings page loaded')
-        this.mvs.getMvsAddresses()
+        this.mvs.getAddresses()
             .then((addresses) => {
                 if (!Array.isArray(addresses) || !addresses.length)
                     this.nav.setRoot("LoginPage")

@@ -25,7 +25,7 @@ export class TransactionsPage {
 
     ionViewDidEnter() {
         console.log('Transactions page loaded')
-        this.mvsServiceProvider.getMvsAddresses()
+        this.mvsServiceProvider.getAddresses()
             .then((addresses) => {
                 if (!Array.isArray(addresses) || !addresses.length)
                     this.navCtrl.setRoot("LoginPage")
@@ -33,9 +33,9 @@ export class TransactionsPage {
     }
 
     private showTxs(filter) {
-        return this.mvsServiceProvider.getMvsAddresses()
+        return this.mvsServiceProvider.getAddresses()
             .then((addresses: string[]) => {
-                return this.mvsServiceProvider.getMvsTxs()
+                return this.mvsServiceProvider.getTxs()
                     .then((txs: any[]) => this.filterTxs(txs,filter.symbol, addresses))
             })
             .then((txs: any) => {

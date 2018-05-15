@@ -49,6 +49,22 @@ export class WalletServiceProvider {
             })
     }
 
+    createWallet() {
+        let wallet: any = {};
+        return Metaverse.wallet.generateMnemonic()
+            .then((mnemonic) => {
+                wallet.mnemonic = mnemonic;
+                return Metaverse.wallet.mnemonicToSeed(mnemonic, Metaverse.networks[this.globals.network]);
+            })
+            .then((seed) => {
+                wallet.seed = seed.toString('hex');
+                return wallet;
+            })
+            .catch((error) => {
+                return Error(error.message);
+            })
+    }
+
     getHDNodeFromMnemonic(mnemonic) {
         return Metaverse.wallet.fromMnemonic(mnemonic)
     }
@@ -100,6 +116,18 @@ export class WalletServiceProvider {
     getAddressIndex() {
         return this.storage.get('wallet')
             .then((wallet) => wallet.index)
+    }
+
+    generateNewAddress(wallet: any, index: number) {
+        return wallet.getAddress(index);
+    }
+
+    generateAddresses(wallet: any, from_index: number, to_index: number) {
+        var addresses = [];
+        for (let i = from_index; i < to_index; i++) {
+            addresses.push(this.generateNewAddress(wallet, i));
+        }
+        return addresses;
     }
 
 }

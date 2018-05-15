@@ -76,7 +76,7 @@ export class DepositPage {
             ]
 
         //Load addresses
-        mvs.getMvsAddresses()
+        mvs.getAddresses()
             .then((_: Array<string>) => {
                 this.addresses = _
             })
@@ -106,7 +106,7 @@ export class DepositPage {
 
     ionViewDidEnter() {
         console.log('Deposit page loaded')
-        this.mvs.getMvsAddresses()
+        this.mvs.getAddresses()
             .then((addresses) => {
                 if (!Array.isArray(addresses) || !addresses.length)
                     this.navCtrl.setRoot("LoginPage")
@@ -171,7 +171,7 @@ export class DepositPage {
 
     create() {
         return this.showLoading()
-            .then(() => this.mvs.getMvsAddresses())
+            .then(() => this.mvs.getAddresses())
             .then((addresses) => this.mvs.createDepositTx(this.passphrase, (this.recipient_address == 'auto') ? null : (this.recipient_address == 'custom') ? this.custom_recipient : this.recipient_address, Math.floor(parseFloat(this.quantity) * Math.pow(10, this.decimals)), this.locktime, (this.sendFrom != 'auto') ? this.sendFrom : null, (this.changeAddress != 'auto') ? this.changeAddress : undefined))
             .catch((error) => {
                 if (error.message == "ERR_DECRYPT_WALLET")
