@@ -30,7 +30,7 @@ export class CreateAvatarPage {
                 let addrblncs = []
                 if (Object.keys(addressbalances).length) {
                     Object.keys(addressbalances).forEach((address) => {
-                        if (addressbalances[address].ETP && addressbalances[address].ETP.available>100000000) {
+                        if (addressbalances[address].ETP && addressbalances[address].ETP.available>=100000000) {
                             addrblncs.push({ "address": address, "available": addressbalances[address].ETP.available })
                             this.avatars.forEach((avatar)=>{
                                 if(avatar.address==address)
@@ -49,7 +49,7 @@ export class CreateAvatarPage {
 
     create() {
         return this.showLoading()
-            .then(() => this.mvs.createAvatarTx(this.passphrase, this.avatar_address, this.symbol, undefined, undefined))
+            .then(() => this.mvs.createAvatarTx(this.passphrase, this.avatar_address, this.symbol, undefined))
             .then(tx => {
                 console.log(tx)
                 return tx
