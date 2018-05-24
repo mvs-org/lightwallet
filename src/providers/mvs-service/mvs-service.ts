@@ -27,7 +27,7 @@ export class MvsServiceProvider {
         private event: Events,
         private storage: Storage
     ) {
-        this.blockchain = Blockchain({network: globals.network})
+        this.blockchain = Blockchain({ network: globals.network })
     }
 
     createSendTx(passphrase, asset, recipient_address, quantity, from_address, change_address) {
@@ -121,6 +121,12 @@ export class MvsServiceProvider {
                     return utxo;
                 }
             })
+    }
+
+    listAvatars() {
+        return this.getUtxo()
+            .then((outputs) => Metaverse.output.filter(outputs, { type: "did-issue" }))
+            .then((outputs) => this.blockchain.avatar.extract(outputs))
     }
 
     getBalances() {

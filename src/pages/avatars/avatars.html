@@ -1,0 +1,12 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>avatars</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-card *ngFor="let avatar of avatars">
+        <h3>{{avatar.symbol}}</h3>
+        {{avatar.address}}
+    </ion-card>
+</ion-content>
