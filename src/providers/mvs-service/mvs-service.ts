@@ -27,7 +27,7 @@ export class MvsServiceProvider {
         private event: Events,
         private storage: Storage
     ) {
-        this.blockchain = Blockchain(globals.host[globals.network])
+        this.blockchain = Blockchain({network: globals.network})
     }
 
     createSendTx(passphrase, asset, recipient_address, quantity, from_address, change_address) {
@@ -35,7 +35,7 @@ export class MvsServiceProvider {
         target[asset] = quantity;
         return this.wallet.getWallet(passphrase)
             .then(wallet => this.getUtxoFrom(from_address)
-                .then((utxo) => this.getHeight().then(height => Metaverse.transaction_builder.findUtxo(utxo, target, height)))
+                .then((utxo) => this.getHeight().then(height => Metaverse.output.findUtxo(utxo, target, height)))
                 .then((result) => {
                     //Set change address to first utxo's address
                     if (change_address == undefined)
@@ -53,7 +53,7 @@ export class MvsServiceProvider {
         let target = { ETP: quantity };
         return this.wallet.getWallet(passphrase)
             .then(wallet => this.getUtxoFrom(from_address)
-                .then((utxo) => this.getHeight().then(height => Metaverse.transaction_builder.findUtxo(utxo, target, height)))
+                .then((utxo) => this.getHeight().then(height => Metaverse.output.findUtxo(utxo, target, height)))
                 .then((result) => {
                     //Set change address to first utxo's address
                     if (change_address == undefined)
@@ -103,7 +103,7 @@ export class MvsServiceProvider {
                 return b.height - a.height;
             }))
             .then(txs => this.getAddresses()
-                .then(addresses => Metaverse.transaction_builder.calculateUtxo(txs, addresses)));
+                .then(addresses => Metaverse.output.calculateUtxo(txs, addresses)));
     }
 
     getUtxoFrom(address) {
