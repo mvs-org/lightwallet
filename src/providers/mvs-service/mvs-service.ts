@@ -7,19 +7,18 @@ import { WalletServiceProvider } from '../wallet-service/wallet-service';
 import * as Metaverse from 'metaversejs/dist/metaverse.js';
 import * as Blockchain from 'mvs-blockchain/dist/index.js';
 
-
 @Injectable()
 export class MvsServiceProvider {
 
-    private blockchain = Blockchain();
+    private blockchain;
 
     DEFAULT_BALANCES = {
-        "ETP": { total: 0, available: 0, decimals: 8, spent: 0 },
-        "MVS.ZGC": { total: 0, available: 0, decimals: 8, spent: 0 },
-        "MVS.ZDC": { total: 0, available: 0, decimals: 6, spent: 0 },
-        "CSD.CSD": { total: 0, available: 0, decimals: 8, spent: 0 },
-        "PARCELX.GPX": { total: 0, available: 0, decimals: 8, spent: 0 },
-        "SDG": { total: 0, available: 0, decimals: 8, spent: 0 },
+        "ETP": { frozen: 0, available: 0, decimals: 8, spent: 0 },
+        "MVS.ZGC": { frozen: 0, available: 0, decimals: 8, spent: 0 },
+        "MVS.ZDC": { frozen: 0, available: 0, decimals: 6, spent: 0 },
+        "CSD.CSD": { frozen: 0, available: 0, decimals: 8, spent: 0 },
+        "PARCELX.GPX": { frozen: 0, available: 0, decimals: 8, spent: 0 },
+        "SDG": { frozen: 0, available: 0, decimals: 8, spent: 0 },
     }
 
     constructor(
@@ -27,7 +26,9 @@ export class MvsServiceProvider {
         private wallet: WalletServiceProvider,
         private event: Events,
         private storage: Storage
-    ) { }
+    ) {
+        this.blockchain = Blockchain(globals.host[globals.network])
+    }
 
     createSendTx(passphrase, asset, recipient_address, quantity, from_address, change_address) {
         let target = {};

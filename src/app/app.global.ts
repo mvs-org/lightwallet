@@ -6,8 +6,8 @@ export class AppGlobals {
     readonly algo: string = 'aes';
     readonly index: number = 10;
     readonly host = {
-        mainnet: "https://app.myetpwallet.com/api",
-        testnet: "https://testnet.myetpwallet.com/api"
+        mainnet: "https://explorer.mvs.org/api",
+        testnet: "https://explorer-testnet.mvs.org/api"
     };
     readonly network: string = "testnet";
     readonly ADDRESS_PREFIX_MAINNET = 'M'
