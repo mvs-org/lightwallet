@@ -14,6 +14,10 @@ export class AvatarsPage {
     constructor(public navCtrl: NavController, public navParams: NavParams, private mvs: MvsServiceProvider) {
     }
 
+    create(){
+        this.navCtrl.push("CreateAvatarPage")
+    }
+
     ionViewDidLoad() {
         console.log('ionViewDidLoad AvatarsPage');
         this.mvs.listAvatars()

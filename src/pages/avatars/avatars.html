@@ -5,6 +5,7 @@
 </ion-header>
 
 <ion-content padding>
+    <button ion-button clear color="primary" icon-left (click)="create()">Create</button>
     <ion-card *ngFor="let avatar of avatars">
         <h3>{{avatar.symbol}}</h3>
         {{avatar.address}}
