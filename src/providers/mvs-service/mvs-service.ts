@@ -5,7 +5,7 @@ import 'rxjs/add/operator/map';
 import { Storage } from '@ionic/storage';
 import { WalletServiceProvider } from '../wallet-service/wallet-service';
 import * as Metaverse from 'metaversejs/dist/metaverse.js';
-import * as Blockchain from 'mvs-blockchain/dist/index.js';
+import * as Blockchain from 'mvs-blockchain';
 
 @Injectable()
 export class MvsServiceProvider {
@@ -61,6 +61,23 @@ export class MvsServiceProvider {
                     if (recipient_address == undefined)
                         recipient_address = result.utxo[0].address;
                     return Metaverse.transaction_builder.deposit(result.utxo, recipient_address, parseInt(quantity), parseInt(locktime), change_address, result.change, undefined, Metaverse.networks[this.globals.network]);
+                })
+                .then((tx) => wallet.sign(tx)))
+            .catch((error) => {
+                console.error(error)
+                throw Error(error.message);
+            })
+    }
+
+    createAvatarTx(passphrase, avatar_address, symbol, from_address, change_address) {
+        return this.wallet.getWallet(passphrase)
+            .then(wallet => this.getUtxoFrom(from_address)
+                  .then((utxo) => this.getHeight().then(height => Metaverse.output.findUtxo(utxo, {}, height, Metaverse.transaction.AVATAR_CREATE_DEFAULT_FEE)))
+                .then((result) => {
+                    //Set change address to first utxo's address
+                    if (change_address == undefined)
+                        change_address = result.utxo[0].address;
+                    return Metaverse.transaction_builder.issueDid(result.utxo, avatar_address, symbol, change_address, result.change);
                 })
                 .then((tx) => wallet.sign(tx)))
             .catch((error) => {

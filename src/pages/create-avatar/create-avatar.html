@@ -1,18 +1,42 @@
-<!--
-  Generated template for the CreateAvatarPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
-  <ion-navbar>
-    <ion-title>create-avatar</ion-title>
-  </ion-navbar>
-
+    <ion-navbar>
+        <ion-title>create-avatar</ion-title>
+    </ion-navbar>
 </ion-header>
 
 
 <ion-content padding>
 
+    <form #sendForm="ngForm" style="padding-bottom: 0;">
+        <ion-list style="padding-bottom: 0;">
+            <ion-item [ngClass]="{'error-border':!validSymbol(symbol)}">
+                <ion-label color="primary" floating>{{"SYMBOL" | translate}}</ion-label>
+                <ion-input name="symbol" [(ngModel)]="symbol" maxlength="63" required></ion-input>
+            </ion-item>
+            <ion-item [ngClass]="{'error-border': !validPassword(passphrase)}">
+                <ion-label color="primary" floating>{{"PASSWORD" | translate}}</ion-label>
+                <ion-input name="passphrase" type="password" [(ngModel)]="passphrase" required></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label>{{"AVATAR_ADDRESS"|translate}}</ion-label>
+                <ion-select [(ngModel)]="avatar_address" name="avatar_address" multiple="false" okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}">
+                    <ion-option *ngFor="let addressbalance of addressbalances" value="{{addressbalance.address}}">{{addressbalance.address}} - {{format(addressbalance.available, decimals) | number : '1.0-8'}}</ion-option>
+                </ion-select>
+            </ion-item>
+        </ion-list>
+        <ion-row>
+            <ion-col>
+                <button ion-button full [disabled]="!sendForm.form.valid||!validSymbol(symbol)||!validPassword(passphrase)" (click)="create()" icon-left color="secondary">
+                <ion-icon disabled="checked" name="send"></ion-icon>
+                {{"AVATAR.CREATE" | translate}}
+            </button>
+            </ion-col>
+            <ion-col>
+                <button ion-button color="danger" full item-right icon-left (click)="cancel($event)">
+                <ion-icon name="cancel"></ion-icon>
+                {{'CANCEL'|translate}}
+            </button>
+            </ion-col>
+        </ion-row>
+    </form>
 </ion-content>
