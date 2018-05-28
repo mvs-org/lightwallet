@@ -146,6 +146,12 @@ export class MvsServiceProvider {
             .then((outputs) => this.blockchain.avatar.extract(outputs))
     }
 
+    listCerts() {
+        return this.getUtxo()
+            .then((outputs) => Metaverse.output.filter(outputs, { type: "asset-cert" }))
+            .then((outputs) => this.blockchain.avatar.extract(outputs))
+    }
+
     getBalances() {
         return this.storage.get('balances')
             .then((balances: Array<any>) => {
