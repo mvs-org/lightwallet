@@ -1,13 +1,17 @@
 <ion-header>
     <ion-navbar>
-        <ion-title>avatars</ion-title>
+        <ion-title>{{"AVATARS" | translate}}</ion-title>
     </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-    <button ion-button clear color="primary" icon-left (click)="create()">Create</button>
-    <ion-card *ngFor="let avatar of avatars">
-        <h3>{{avatar.symbol}}</h3>
+    <ion-row class="no-avatar" ng-show="avatars.length === 0">{{"AVATARS.NO_AVATARS" | translate}}</ion-row>
+    <ion-card class="avatar-card" *ngFor="let avatar of avatars">
+        <h2>{{avatar.symbol}}</h2>
         {{avatar.address}}
     </ion-card>
+    <button ion-button icon-left color="primary" icon-left (click)="create()">
+        <ion-icon name="person-add"></ion-icon>
+        {{"AVATARS.CREATE_AVATAR_BTN" | translate}}
+    </button>
 </ion-content>

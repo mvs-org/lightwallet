@@ -251,6 +251,15 @@
   "ISSUE.TEN_MILLION": "Ten million",
   "ISSUE.ONE_HUNDRED_MILLION": "One hundred million",
   "ISSUE.ONE_BILLION": "One billion",
-  "ISSUE.TEN_BILLION": "Ten billion"
+  "ISSUE.TEN_BILLION": "Ten billion",
+
+  "AVATARS": "Avatars",
+  "AVATARS.CREATE_AVATAR_BTN": "Create",
+  "AVATARS.NO_AVATARS": "You do not have any avatar yet. Click on Create to create your first Avatar!",
+
+  "CREATE_AVATAR": "Create Avatar",
+  "CREATE_AVATAR.CREATE_BTN": "Create Avatar",
+  "CREATE_AVATAR.SYMBOL": "Symbol",
+  "CREATE_AVATAR.ADDRESS": "Address"
 
 }
