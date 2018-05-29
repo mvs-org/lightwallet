@@ -11,18 +11,19 @@ import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 export class CreateAvatarPage {
 
     symbol: string = ""
-    avatar_address: string
+    avatar_address: string = ""
     passphrase: string = ""
     addressbalances: Array<any>
     avatars: Array<any>
     loading: Loading
 
-    constructor(public navCtrl: NavController,
+    constructor(
+        public navCtrl: NavController,
         private alertCtrl: AlertController,
         private loadingCtrl: LoadingController,
         private translate: TranslateService,
         private mvs: MvsServiceProvider) {
-        
+
         Promise.all([this.mvs.getAddressBalances(),this.mvs.listAvatars()])
             .then((results) => {
                 this.avatars=results[1]
@@ -77,6 +78,8 @@ export class CreateAvatarPage {
 
     validPassword = (passphrase) => (passphrase.length > 0)
 
+    validAddress = (avatar_address) => (avatar_address != '')
+
     validSymbol = (symbol) => (symbol.length > 2) && (symbol.length < 64) && (!/[^A-Za-z0-9.-]/g.test(symbol))
 
     format = (quantity, decimals) => quantity / Math.pow(10, decimals)
@@ -122,14 +125,6 @@ export class CreateAvatarPage {
                 alert.present(prompt)
             })
         })
-    }
-
-    toUpperCase(text) {
-        let textUpperCase: string = ''
-        for (let i = 0; i < text.length; i++) {
-            textUpperCase = textUpperCase + text.charAt(i).toUpperCase()
-        }
-        return textUpperCase
     }
 
     showError(message_key, error) {
