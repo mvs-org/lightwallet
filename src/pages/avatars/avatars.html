@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content padding>
-    <ion-row class="no-avatar" ng-show="avatars.length === 0">{{"AVATARS.NO_AVATARS" | translate}}</ion-row>
+    <div class="no-avatar" *ngIf="no_avatar">{{"AVATARS.NO_AVATARS" | translate}}</div>
     <ion-card class="avatar-card" *ngFor="let avatar of avatars">
         <h2>{{avatar.symbol}}</h2>
         {{avatar.address}}

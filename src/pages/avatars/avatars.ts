@@ -10,8 +10,10 @@ import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 export class AvatarsPage {
 
     avatars: Array<any>;
+    no_avatar: boolean = false;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, private mvs: MvsServiceProvider) {
+        this.no_avatar = false;
     }
 
     create(){
@@ -23,6 +25,9 @@ export class AvatarsPage {
         this.mvs.listAvatars()
             .then((avatars) => {
                 this.avatars = avatars;
+                if(this.avatars.length === 0) {
+                    this.no_avatar = true;
+                }
             })
             .catch(console.error);
     }

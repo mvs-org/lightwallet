@@ -164,7 +164,7 @@ export class AccountPage {
             .then(() => this.loadBalances())
             .then(() => this.mvs.setUpdateTime())
             .then(() => this.mvs.setLoaded(true))
-            .catch(() => console.log("Can't update balances"))
+            .catch((error) => console.error("Can't update balances: " + error))
     }
 
     doRefresh(refresher) {        //Sync for mobile
