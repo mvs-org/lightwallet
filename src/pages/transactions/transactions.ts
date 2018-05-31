@@ -36,7 +36,7 @@ export class TransactionsPage {
         return this.mvsServiceProvider.getAddresses()
             .then((addresses: string[]) => {
                 return this.mvsServiceProvider.getTxs()
-                    .then((txs: any[]) => this.filterTxs(txs,filter.symbol, addresses))
+                    .then((txs: any[]) => this.filterTxs(txs, filter.symbol, addresses))
             })
             .then((txs: any) => {
                 this.txs = txs
@@ -50,32 +50,32 @@ export class TransactionsPage {
 
 
     private filterTx(tx: any, asset: string, addresses: Array<string>) {
-        let result=false;
-        tx.inputs.forEach((input)=>{
-            if(this.isMineTXIO(input,addresses)){
-            if(input.attachment.type=='asset-transfer'&&input.attachment.symbol==asset)
-                result=true;
-                else if(asset=='ETP' && input.value)
-                    result=true;
-                    }
+        let result = false;
+        tx.inputs.forEach((input) => {
+            if (this.isMineTXIO(input, addresses)) {
+                if ( ['asset-transfer', 'asset-issue'].indexOf(input.attachment.type) !== -1 && input.attachment.symbol == asset)
+                    result = true;
+                else if (asset == 'ETP' && input.value)
+                    result = true;
+            }
         });
-        if(result) return tx;
-        tx.outputs.forEach((output)=>{
-            if(this.isMineTXIO(output,addresses)){
-            if(output.attachment.type=='asset-transfer'&&output.attachment.symbol==asset)
-                result=true;
-                else if(asset=='ETP' && output.value)
-                    result=true;
-                    }
+        if (result) return tx;
+        tx.outputs.forEach((output) => {
+            if (this.isMineTXIO(output, addresses)) {
+                if ( ['asset-transfer', 'asset-issue'].indexOf(output.attachment.type) !== -1 && output.attachment.symbol == asset)
+                    result = true;
+                else if (asset == 'ETP' && output.value)
+                    result = true;
+            }
         });
-        if(result) return tx;
+        if (result) return tx;
     }
 
     public formatQuantity(quantity, decimals) {
         return quantity / Math.pow(10, decimals)
     }
 
-    private isMineTXIO = (txio, addresses)=>(addresses.indexOf(txio.address) !== -1)
+    private isMineTXIO = (txio, addresses) => (addresses.indexOf(txio.address) !== -1)
 
     format(quantity, decimals) {
         return quantity / Math.pow(10, decimals);

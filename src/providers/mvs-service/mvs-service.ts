@@ -136,7 +136,7 @@ export class MvsServiceProvider {
 
     updateHeight() {
         return this.blockchain.height()
-            .then((height) => this.setHeight(height))
+            .then((height: number) => this.setHeight(height))
             .then(() => this.getHeight())
     }
 
@@ -145,8 +145,8 @@ export class MvsServiceProvider {
             .then((txs: Array<any>) => txs.sort(function(a, b) {
                 return b.height - a.height;
             }))
-            .then(txs => this.getAddresses()
-                .then(addresses => Metaverse.output.calculateUtxo(txs, addresses)));
+            .then((txs: Array<any>) => this.getAddresses()
+                  .then((addresses: Array<string>) => Metaverse.output.calculateUtxo(txs, addresses)));
     }
 
     getUtxoFrom(address: string) {
