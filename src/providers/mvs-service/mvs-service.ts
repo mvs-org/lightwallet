@@ -30,7 +30,7 @@ export class MvsServiceProvider {
         this.blockchain = Blockchain({ network: globals.network })
     }
 
-    createSendTx(passphrase, asset, recipient_address, quantity, from_address, change_address) {
+    createSendTx(passphrase: string, asset: string, recipient_address: string, quantity: number, from_address: string, change_address: string) {
         let target = {};
         target[asset] = quantity;
         return this.wallet.getWallet(passphrase)
@@ -49,7 +49,7 @@ export class MvsServiceProvider {
             })
     }
 
-    createDepositTx(passphrase, recipient_address, quantity, locktime, from_address, change_address) {
+    createDepositTx(passphrase: string, recipient_address: string, quantity: number, locktime: number, from_address: string, change_address: string) {
         let target = { ETP: quantity };
         return this.wallet.getWallet(passphrase)
             .then(wallet => this.getUtxoFrom(from_address)
@@ -60,7 +60,7 @@ export class MvsServiceProvider {
                         change_address = result.utxo[0].address;
                     if (recipient_address == undefined)
                         recipient_address = result.utxo[0].address;
-                    return Metaverse.transaction_builder.deposit(result.utxo, recipient_address, parseInt(quantity), parseInt(locktime), change_address, result.change, undefined, Metaverse.networks[this.globals.network]);
+                    return Metaverse.transaction_builder.deposit(result.utxo, recipient_address, quantity, locktime, change_address, result.change, undefined, Metaverse.networks[this.globals.network]);
                 })
                 .then((tx) => wallet.sign(tx)))
             .catch((error) => {
@@ -69,10 +69,10 @@ export class MvsServiceProvider {
             })
     }
 
-    createAvatarTx(passphrase, avatar_address, symbol, change_address) {
+    createAvatarTx(passphrase: string, avatar_address: string, symbol: string, change_address: string) {
         return this.wallet.getWallet(passphrase)
             .then(wallet => this.getUtxoFrom(avatar_address)
-                  .then((utxo) => this.getHeight().then(height => Metaverse.output.findUtxo(utxo, {}, height, Metaverse.transaction.AVATAR_CREATE_DEFAULT_FEE)))
+                .then((utxo) => this.getHeight().then(height => Metaverse.output.findUtxo(utxo, {}, height, Metaverse.transaction.AVATAR_CREATE_DEFAULT_FEE)))
                 .then((result) => {
                     //Set change address to first utxo's address
                     if (change_address == undefined)
@@ -117,7 +117,7 @@ export class MvsServiceProvider {
     }
 
 
-    validAddress = (address) => {
+    validAddress = (address: string) => {
         if (address.length != 34)
             return false
         let valid = false
@@ -149,7 +149,7 @@ export class MvsServiceProvider {
                 .then(addresses => Metaverse.output.calculateUtxo(txs, addresses)));
     }
 
-    getUtxoFrom(address) {
+    getUtxoFrom(address: string) {
         return this.getUtxo()
             .then((utxo: Array<any>) => {
                 if (address) {
@@ -190,7 +190,7 @@ export class MvsServiceProvider {
             })
     }
 
-    loadNewTxs(addresses, start) {
+    loadNewTxs(addresses: Array<string>, start: number) {
         return this.blockchain.addresses.txs(addresses, { min_height: start })
     }
 
@@ -308,7 +308,7 @@ export class MvsServiceProvider {
         return Promise.all(['mvs_last_tx_height', 'mvs_height', 'utxo', 'last_update', 'addressbalances', 'balances', 'mvs_txs'].map((key) => this.storage.remove(key)))
     }
 
-    getNewTxs(addresses, lastKnownHeight, txs): Promise<any> {
+    getNewTxs(addresses: Array<string>, lastKnownHeight: number, txs: any): Promise<any> {
         if (typeof txs == 'undefined')
             txs = []
         return this.loadNewTxs(addresses, lastKnownHeight + 1)
@@ -323,20 +323,20 @@ export class MvsServiceProvider {
             .then((txs) => (txs) ? txs : [])
     }
 
-    addAddresses(addresses) {
+    addAddresses(addresses: Array<string>) {
         return this.getAddresses()
-            .then((addr: any[]) => this.storage.set('mvs_addresses', addr.concat(addresses)))
+            .then((addr: Array<string>) => this.storage.set('mvs_addresses', addr.concat(addresses)))
             .then(() => this.getAddresses())
             .then(() => this.event.publish('settings_update', {}))
     }
 
-    setAddresses(addresses) {
+    setAddresses(addresses: Array<string>) {
         return this.storage.set('mvs_addresses', addresses)
             .then(() => this.getAddresses())
             .then(() => this.event.publish('settings_update', {}))
     }
 
-    addTxs(newtxs) {
+    addTxs(newtxs: Array<any>) {
         return this.getTxs()
             .then((txs: any[]) => {
                 if (newtxs.length)
@@ -379,7 +379,7 @@ export class MvsServiceProvider {
             .then(() => this.assetOrder())
     }
 
-    addAssetToAssetOrder(name) {
+    addAssetToAssetOrder(name: string) {
         this.assetOrder()
             .then((_: string[]) => {
                 if (_.indexOf(name) === -1)
@@ -389,7 +389,7 @@ export class MvsServiceProvider {
             .then(() => this.assetOrder())
     }
 
-    broadcast(rawtx, max_fee = undefined) {
+    broadcast(rawtx: string, max_fee: number = undefined) {
         return this.blockchain.transaction.broadcast(rawtx)
             .catch((error) => {
                 if (error.message == 'ERR_CONNECTION')
