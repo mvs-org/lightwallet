@@ -22,6 +22,7 @@ export class AssetIssuePage {
     addressbalances: Array<any>
     sendFrom: string
     recipient_address: string
+    secondaryissue_threshold: number;
     custom_recipient: string
     issuerAddress: string
     feeAddress: string
@@ -119,6 +120,8 @@ export class AssetIssuePage {
 
     }
 
+    validSecondaryissueThreshold = (threshold) => (threshold>=-1&&threshold<=100)
+
     validMaxSupply = (max_supply, asset_decimals) => max_supply == 'custom' || (max_supply > 0 && ((asset_decimals == undefined)||(Math.floor(parseFloat(max_supply) * Math.pow(10, asset_decimals))) <= 10000000000000000))
 
     validMaxSupplyCustom = (max_supply_custom, asset_decimals) => max_supply_custom > 0 && ((asset_decimals == undefined)||(Math.floor(parseFloat(max_supply_custom) * Math.pow(10, asset_decimals))) <= 10000000000000000)
@@ -128,7 +131,6 @@ export class AssetIssuePage {
     validSymbol = (symbol) => (symbol.length > 2) && (symbol.length < 64) && (!/[^A-Za-z0-9.]/g.test(symbol))
 
     validName = (issuer_name) => (issuer_name.length > 0) && (issuer_name.length < 64) && (!/[^A-Za-z0-9.]/g.test(issuer_name))
-
 
     validDescription = (description) => (description.length > 0) && (description.length < 64)
 
@@ -144,40 +146,43 @@ export class AssetIssuePage {
     }
 
     preview() {
-        // this.create()
-        //     .then((tx) => {
-        //     console.log('transaction details: '+tx)
-        //         this.rawtx = tx.encode().toString('hex')
-        //         this.loading.dismiss()
-        //     })
-        //     .catch((error)=>{
-        //         this.loading.dismiss()
-        //     })
+        this.create()
+            .then((tx) => {
+            console.log('transaction details: '+tx)
+                this.rawtx = tx.encode().toString('hex')
+                this.loading.dismiss()
+            })
+            .catch((error)=>{
+                this.loading.dismiss()
+            })
     }
 
-    // create() {
-    //     return this.showLoading()
-    //         .then((addresses) => this.mvs.createIssueAssetTx(
-    //             this.passphrase,
-    //             this.toUpperCase(this.symbol),
-    //             this.issuer_name,
-    //             Math.floor(parseFloat(this.max_supply == 'custom' ? this.custom_max_supply : this.max_supply) * Math.pow(10, this.asset_decimals)),
-    //             this.asset_decimals,
-    //             this.description,
-    //             (this.issue_address == 'auto') ? null : (this.issue_address == 'custom') ? this.custom_issue_address : this.issue_address,
-    //             (this.sendFrom != 'auto') ? this.sendFrom : null,
-    //             undefined
-    //         ))
-    //         .catch((error) => {
-    //             if (error.message == "ERR_DECRYPT_WALLET")
-    //                 this.showError('MESSAGE.PASSWORD_WRONG','')
-    //             else if (error.message == "ERR_INSUFFICIENT_BALANCE")
-    //                 this.showError('MESSAGE.ISSUE_INSUFFICIENT_BALANCE','')
-    //             else
-    //                 this.showError('MESSAGE.CREATE_TRANSACTION',error.message)
-    //             throw Error('ERR_CREATE_TX')
-    //         })
-    // }
+    create() {
+        return this.showLoading()
+            .then((addresses) => this.mvs.createIssueAssetTx(
+                this.passphrase,
+                this.toUpperCase(this.symbol),
+                Math.floor(parseFloat(this.max_supply == 'custom' ? this.custom_max_supply : this.max_supply) * Math.pow(10, this.asset_decimals)),
+                this.asset_decimals,
+                this.issuer_name,
+                this.description,
+                this.secondaryissue_threshold,
+                false,
+                (this.issue_address == 'auto') ? null : (this.issue_address == 'custom') ? this.custom_issue_address : this.issue_address,
+                (this.sendFrom != 'auto') ? this.sendFrom : null,
+                undefined
+            ))
+            .catch((error) => {
+                console.error(error)
+                if (error.message == "ERR_DECRYPT_WALLET")
+                    this.showError('MESSAGE.PASSWORD_WRONG','')
+                else if (error.message == "ERR_INSUFFICIENT_BALANCE")
+                    this.showError('MESSAGE.ISSUE_INSUFFICIENT_BALANCE','')
+                else
+                    this.showError('MESSAGE.CREATE_TRANSACTION',error.message)
+                throw Error('ERR_CREATE_TX')
+            })
+    }
 
     confirm() {
         this.translate.get('ISSUE.CONFIRMATION_TITLE').subscribe((txt_title: string) => {
@@ -209,24 +214,24 @@ export class AssetIssuePage {
     }
 
     send() {
-        // this.create()
-        //     .then((tx) => this.mvs.broadcast(tx.encode().toString('hex'), 1000000000))
-        //     .then((result: any) => {
-        //         this.navCtrl.pop()
-        //         this.translate.get('SUCCESS_SEND_TEXT').subscribe((message: string) => {
-        //             this.showSent(message, result.hash)
-        //         })
-        //     })
-        //     .catch((error) => {
-        //         this.loading.dismiss()
-        //         if(error.message=='ERR_CONNECTION')
-        //             this.showError('ERROR_SEND_TEXT','')
-        //         else if (error.message == 'ERR_BROADCAST') {
-        //             this.translate.get('MESSAGE.ONE_TX_PER_BLOCK').subscribe((message: string) => {
-        //                 this.showError('MESSAGE.BROADCAST_ERROR',message)
-        //             })
-        //         }
-        //     })
+        this.create()
+            .then((tx) => this.mvs.broadcast(tx.encode().toString('hex'), 1000000000))
+            .then((result: any) => {
+                this.navCtrl.pop()
+                this.translate.get('SUCCESS_SEND_TEXT').subscribe((message: string) => {
+                    this.showSent(message, result.hash)
+                })
+            })
+            .catch((error) => {
+                this.loading.dismiss()
+                if(error.message=='ERR_CONNECTION')
+                    this.showError('ERROR_SEND_TEXT','')
+                else if (error.message == 'ERR_BROADCAST') {
+                    this.translate.get('MESSAGE.ONE_TX_PER_BLOCK').subscribe((message: string) => {
+                        this.showError('MESSAGE.BROADCAST_ERROR',message)
+                    })
+                }
+            })
     }
 
     format = (quantity, decimals) => quantity / Math.pow(10, decimals)

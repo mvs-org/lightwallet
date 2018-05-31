@@ -47,6 +47,10 @@
                     <ion-option *ngFor="let item of decimalsList" value="{{item}}">{{item}}</ion-option>
                 </ion-select>
             </ion-item>
+            <ion-item [ngClass]="{'error-border':!validSecondaryissueThreshold(secondaryissue_threshold)}">
+                <ion-label color="primary" floating>{{"ISSUE.SECONDARYISSUE_THRESHOLD" | translate}}</ion-label>
+                <ion-input name="secondaryissue_threshold" [(ngModel)]="secondaryissue_threshold" maxlength="3" required></ion-input>
+            </ion-item>
             <ion-item [ngClass]="{'error-border':!validName(issuer_name)}">
                 <ion-label color="primary" floating>{{"ISSUE.ISSUER_NAME" | translate}}</ion-label>
                 <ion-input name="issuer_name" [(ngModel)]="issuer_name" maxlength="63" required></ion-input>

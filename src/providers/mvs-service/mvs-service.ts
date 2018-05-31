@@ -86,8 +86,34 @@ export class MvsServiceProvider {
             })
     }
 
-    createIssueAssetTx(passphrase, symbol, issuer, max_supply, precision, description, issue_address, fee_address, change_address) {
-        throw Error('Not implemented');
+    createIssueAssetTx(passphrase: string, symbol: string, quantity: number, precision: number, issuer: string, description: string, secondaryissue_threshold: number, is_secondaryissue: boolean, issue_address: string, fee_address: string, change_address: string) {
+        return ((fee_address) ? this.getUtxoFrom(fee_address) : this.getUtxo())
+            .then(utxo => {
+                return this.wallet.getWallet(passphrase)
+                    .then((wallet) => {
+                        return this.getHeight().then(height => Metaverse.output.findUtxo(utxo, {}, height, Metaverse.transaction.ASSET_ISSUE_DEFAULT_FEE))
+                            .then((result) => {
+                                //Set change address to first utxo's address
+                                if (change_address == undefined)
+                                    change_address = result.utxo[0].address;
+                                let certs = Metaverse.output.filter(utxo, { type: "asset-cert", symbol: [symbol,] })
+                                    .concat(utxo.filter(output => {
+                                        if (output.attachment.type == "asset-cert" && output.attachment.symbol == symbol.split('.')[0] && output.attachment.cert == 'domain')
+                                            return true;
+                                        else if (output.attachment.type == "asset-cert" && output.attachment.symbol == symbol && ['naming','issue'].indexOf(output.attachment.cert)!==-1)
+                                            return true;
+                                        return false;
+                                    }))
+                                console.log(result.utxo.concat(certs))
+                                return Metaverse.transaction_builder.issueAsset(result.utxo.concat(certs), issue_address, symbol, quantity, precision, issuer, description, secondaryissue_threshold, is_secondaryissue, change_address, result.change)
+                            })
+                            .then((tx) => wallet.sign(tx))
+                    })
+            })
+            .catch((error) => {
+                console.error(error)
+                throw Error(error.message);
+            })
     }
 
 
