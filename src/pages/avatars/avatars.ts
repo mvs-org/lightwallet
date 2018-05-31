@@ -20,6 +20,10 @@ export class AvatarsPage {
         this.navCtrl.push("CreateAvatarPage")
     }
 
+    createAsset(avatar_name: string, avatar_address: string){
+        this.navCtrl.push("AssetIssuePage", {avatar_name: avatar_name, avatar_address: avatar_address})
+    }
+
     ionViewDidLoad() {
         console.log('ionViewDidLoad AvatarsPage');
         this.mvs.listAvatars()

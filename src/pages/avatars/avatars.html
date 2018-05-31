@@ -9,6 +9,10 @@
     <ion-card class="avatar-card" *ngFor="let avatar of avatars">
         <h2>{{avatar.symbol}}</h2>
         {{avatar.address}}
+        <button ion-button icon-left color="primary" icon-left (click)="createAsset(avatar.symbol, avatar.address)">
+            <ion-icon name="person-add"></ion-icon>
+            {{"AVATARS.CREATE_ASSET_BTN" | translate}}
+        </button>
     </ion-card>
     <button ion-button icon-left color="primary" icon-left (click)="create()">
         <ion-icon name="person-add"></ion-icon>

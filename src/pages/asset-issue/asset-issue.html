@@ -51,9 +51,13 @@
                 <ion-label color="primary" floating>{{"ISSUE.SECONDARYISSUE_THRESHOLD" | translate}}</ion-label>
                 <ion-input name="secondaryissue_threshold" [(ngModel)]="secondaryissue_threshold" maxlength="3" required></ion-input>
             </ion-item>
-            <ion-item [ngClass]="{'error-border':!validName(issuer_name)}">
+            <ion-item>
                 <ion-label color="primary" floating>{{"ISSUE.ISSUER_NAME" | translate}}</ion-label>
-                <ion-input name="issuer_name" [(ngModel)]="issuer_name" maxlength="63" required></ion-input>
+                <ion-input name="issuer_name" [(ngModel)]="issuer_name" disabled></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label color="primary" floating>{{"ISSUE.ISSUE_ADDRESS" | translate}}</ion-label>
+                <ion-input name="issue_address" [(ngModel)]="issue_address" disabled></ion-input>
             </ion-item>
             <ion-item [ngClass]="{'error-border':!validDescription(description)}">
                 <ion-label color="primary" floating>{{"ISSUE.DESCRIPTION"|translate}}</ion-label>
@@ -79,18 +83,6 @@
                     </ion-select>
                 </ion-item>
                 <br>
-                <ion-item>
-                  <ion-label>{{"ISSUE.ISSUE_ADDRESS" |translate}}</ion-label>
-                  <ion-select [(ngModel)]="issue_address" name="issue_address" multiple="false" okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}">
-                    <ion-option selected="true" value="auto">{{"AUTO"| translate}}</ion-option>
-                    <ion-option value="custom">{{"CUSTOM"| translate}}</ion-option>
-                    <ion-option *ngFor="let address of addresses" value="{{address}}">{{address}}</ion-option>
-                  </ion-select>
-                </ion-item>
-                <ion-item *ngIf="issue_address == 'custom'" [ngClass]="{'error-border':!validIssueAddress(custom_issue_address)}">
-                  <ion-label floating>{{"ISSUE.CUSTOM_ISSUE_ADDRESS" | translate}}</ion-label>
-                  <ion-input name="custom_issue_address" [(ngModel)]="custom_issue_address" (ngModelChange)="customIssueAddressChanged($event)"></ion-input>
-                </ion-item>
                 <button ion-button full [disabled]="!sendForm.form.valid||!validSymbol(symbol)||!validMaxSupply(max_supply, asset_decimals)||(max_supply=='custom' && !validMaxSupplyCustom(custom_max_supply, asset_decimals))||!validDecimals(asset_decimals)||!validName(issuer_name)||!validDescription(description)||(issue_address=='custom' && !validIssueAddress(custom_issue_address))||!validPassword(passphrase)" (click)="preview()" color="primary">
                     {{"PREVIEW" | translate}}
                 </button>

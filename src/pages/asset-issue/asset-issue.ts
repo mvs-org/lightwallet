@@ -21,10 +21,7 @@ export class AssetIssuePage {
     passcodeSet: any
     addressbalances: Array<any>
     sendFrom: string
-    recipient_address: string
     secondaryissue_threshold: number;
-    custom_recipient: string
-    issuerAddress: string
     feeAddress: string
     passphrase: string
     etpBalance: number
@@ -34,7 +31,6 @@ export class AssetIssuePage {
     custom_max_supply: string;
     asset_decimals: number
     issuer_name: string
-    custom_issue_address: string
     description: string
     issue_address: string
 
@@ -49,17 +45,14 @@ export class AssetIssuePage {
 
         this.selectedAsset = "ETP"
         this.sendFrom = 'auto'
-        this.recipient_address = 'auto'
+        this.issue_address = navParams.get('avatar_address')
         this.feeAddress = 'auto'
-        this.custom_recipient = ''
         this.decimalsList = [0,1,2,3,4,5,6,7,8]
         this.max_supply = ''
         this.custom_max_supply = ''
         this.symbol = ''
-        this.issuer_name = ''
-        this.custom_issue_address = ''
+        this.issuer_name = navParams.get('avatar_name')
         this.description = ''
-        this.issue_address = 'auto'
         this.passphrase = ''
 
         //Load addresses
@@ -138,8 +131,6 @@ export class AssetIssuePage {
 
     validIssueAddress = this.mvs.validAddress
 
-    customIssueAddressChanged = () => {if(this.custom_recipient) this.custom_recipient = this.custom_recipient.trim()}
-
     cancel(e) {
         e.preventDefault()
         this.navCtrl.pop()
@@ -168,7 +159,7 @@ export class AssetIssuePage {
                 this.description,
                 this.secondaryissue_threshold,
                 false,
-                (this.issue_address == 'auto') ? null : (this.issue_address == 'custom') ? this.custom_issue_address : this.issue_address,
+                this.issue_address,
                 (this.sendFrom != 'auto') ? this.sendFrom : null,
                 undefined
             ))
