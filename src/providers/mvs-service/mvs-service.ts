@@ -106,7 +106,6 @@ export class MvsServiceProvider {
                                             return true;
                                         return false;
                                     }))
-                                console.log(result.utxo.concat(certs))
                                 return Metaverse.transaction_builder.issueAsset(result.utxo.concat(certs), issue_address, symbol, quantity, precision, issuer, description, secondaryissue_threshold, is_secondaryissue, change_address, result.change)
                             })
                             .then((tx) => wallet.sign(tx))
@@ -182,7 +181,6 @@ export class MvsServiceProvider {
     getBalances() {
         return this.storage.get('balances')
             .then((balances: any) => {
-                console.log(balances)
                 let b = JSON.parse(JSON.stringify(this.DEFAULT_BALANCES));
                 if (balances) {
                     if (balances.ETP)

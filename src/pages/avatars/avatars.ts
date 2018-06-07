@@ -25,10 +25,8 @@ export class AvatarsPage {
     }
 
     ionViewDidLoad() {
-        console.log('ionViewDidLoad AvatarsPage');
         this.mvs.listAvatars()
             .then((avatars) => {
-                console.log(avatars)
                 this.avatars = avatars;
                 if(this.avatars.length === 0) {
                     this.no_avatar = true;

@@ -91,7 +91,6 @@ export class AssetTransferPage {
     }
 
     ionViewDidEnter() {
-        console.log('Asset transfer page loaded')
         this.mvs.getAddresses()
             .then((addresses) => {
                 if (!Array.isArray(addresses) || !addresses.length)
