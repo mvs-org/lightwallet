@@ -1,86 +1,128 @@
 <ion-header>
-  <ion-navbar>
-    <button ion-button menuToggle>
+    <ion-navbar>
+        <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>{{"ACCOUNT.TITLE"|translate}}</ion-title>
-    <ion-buttons end>
-      <button ion-button icon-left>
+        <ion-title>{{"ACCOUNT.TITLE"|translate}}</ion-title>
+        <ion-buttons end>
+            <button ion-button icon-left>
         <span *ngIf="platform.is('mobile')&&platform.is('ios')&&!syncingSmall" class="block-iPhone">{{height}} <ion-icon name="cube"></ion-icon></span>
         <span *ngIf="!(platform.is('mobile')&&platform.is('ios'))">{{"HEIGHT" |translate}}: {{height}}</span>
       </button>
-      <button *ngIf="!platform.is('mobile')" ion-button icon-left (click)="logout()">
+            <button *ngIf="!platform.is('mobile')" ion-button icon-left (click)="logout()">
         <ion-icon name="log-out"></ion-icon>
         <span>{{"LOGOUT" |translate}}</span>
       </button>
-      <button *ngIf="!syncingSmall&&!platform.is('mobile')" ion-button (click)="sync()" icon-left>
+            <button *ngIf="!syncingSmall&&!platform.is('mobile')" ion-button (click)="sync()" icon-left>
         <ion-icon name="refresh"></ion-icon>
         <span>{{"RESYNC" |translate}}</span>
       </button>
-    </ion-buttons>
-    <ion-buttons end>
-      <ion-spinner *ngIf="syncingSmall"></ion-spinner>
-      <ion-icon *ngIf="offline&&!syncingSmall" name="flash" class="offlineIcon"></ion-icon>
-    </ion-buttons>
-  </ion-navbar>
+        </ion-buttons>
+        <ion-buttons end>
+            <ion-spinner *ngIf="syncingSmall"></ion-spinner>
+            <ion-icon *ngIf="offline&&!syncingSmall" name="flash" class="offlineIcon"></ion-icon>
+        </ion-buttons>
+    </ion-navbar>
 </ion-header>
 
 <ion-content class="center spread-out">
-  <ion-refresher *ngIf="platform.is('mobile')&&!syncingSmall" (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content class="mini-loader mini-loader-mobile"></ion-refresher-content>
-  </ion-refresher>
-  <div class="mini-loader" *ngIf="syncing&&balances==undefined"></div>
-  <ion-list no-lines *ngIf="!syncing||balances!=undefined">
-    <ion-grid>
-      <ion-row>
-        <ng-container *ngFor="let asset of balancesKeys" class="asset-container">
-          <ion-col class="asset-container"*ngIf="balances[asset]!=undefined">
-            <ion-card class="card-block">
-              <ion-grid>
-                <ion-row>
-                  <ion-col>
-                    <ion-item class="grid-info">
-                      <ion-avatar item-start>
-                        <img class="coinlogo" [src]="'assets/icon/'+asset+'.png'" (error)="errorImg($event)" [ngClass]="{'csdLogoDefault':asset == 'CSD.CSD' && theme == 'theme-default'}">
-                      </ion-avatar>
-                      <div>
-                        <h1 [translate]="asset"></h1>
-                        <h3>{{"AVAILABLE"|translate}}: {{format((balances[asset] && balances[asset].available) ? balances[asset].available : 0, balances[asset].decimals)}}</h3>
-                        <p *ngIf="asset=='ETP'">
-                          {{"ACCOUNT.FROZEN"|translate}}: {{format(balances[asset].frozen, balances[asset].decimals)}}
-                          <button ion-button clear color="primary" icon-left (click)="gotoDeposit($event, asset)" class="deposit-button">
-                            <ion-icon name="log-in"></ion-icon>
+    <ion-refresher *ngIf="platform.is('mobile')&&!syncingSmall" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content class="mini-loader mini-loader-mobile"></ion-refresher-content>
+    </ion-refresher>
+    <div class="mini-loader" *ngIf="syncing&&balances==undefined"></div>
+    <ion-list no-lines *ngIf="!syncing||balances!=undefined">
+        <ion-grid>
+            <ion-row>
+                <ng-container class="asset-container" *ngIf="balances!=undefined">
+                    <ion-col class="asset-container">
+                        <ion-card class="card-block">
+                            <ion-grid>
+                                <ion-row>
+                                    <ion-col>
+                                        <ion-item class="grid-info">
+                                            <ion-avatar item-start>
+                                                <img class="coinlogo" [src]="'assets/icon/ETP.png'" (error)="errorImg($event)">
+                                            </ion-avatar>
+                                            <div>
+                                                <h1>ETP</h1>
+                                                <h3>{{"AVAILABLE"|translate}}: {{format((balances.ETP && balances.ETP.available) ? balances.ETP.available : 0, balances.ETP.decimals)}}</h3>
+                                                <p>
+                                                    {{"ACCOUNT.FROZEN"|translate}}: {{format(balances.ETP.frozen, balances.ETP.decimals)}}
+                                                    <button ion-button clear color="primary" icon-left (click)="gotoDeposit($event, asset)" class="deposit-button">
+                                                  <ion-icon name="log-in"></ion-icon>
+                                              </button>
+                                                </p>
+                                            </div>
+
+                                        </ion-item>
+                                    </ion-col>
+                                </ion-row>
+                            </ion-grid>
+                        </ion-card>
+                        <ion-row col-12 class="row-buttons">
+                            <ion-col col-4>
+                                <button ion-button full clear color="secondary" icon-left (click)="gotoReceive($event, 'ETP')">
+                              <ion-icon name="download"></ion-icon>
+                              {{ "RECEIVE" | translate }}
                           </button>
-                        </p>
-                      </div>
-                    </ion-item>
-                  </ion-col>
-                </ion-row>
-              </ion-grid>
-            </ion-card>
-            <ion-row col-12 class="row-buttons">
-              <ion-col col-4>
-                <button ion-button full clear color="secondary" icon-left (click)="gotoReceive($event, asset)">
+                            </ion-col>
+                            <ion-col col-4>
+                                <button ion-button full clear color="danger" icon-left (click)="gotoTransfer($event, 'ETP')">
+                              <ion-icon name="send"></ion-icon>
+                              {{ "SEND" | translate }}
+                          </button>
+                            </ion-col>
+                            <ion-col col-4>
+                                <button ion-button full clear color="primary" icon-left (click)="gotoTransactions($event, 'ETP')">
+                              <ion-icon name="time"></ion-icon>
+                              {{ "HISTORY" | translate }}
+                          </button>
+                            </ion-col>
+                        </ion-row>
+                    </ion-col>
+                </ng-container>
+                <ng-container *ngFor="let asset of balancesKeys" class="asset-container">
+                    <ion-col class="asset-container" *ngIf="balances.MST[asset]!=undefined">
+                        <ion-card class="card-block">
+                            <ion-grid>
+                                <ion-row>
+                                    <ion-col>
+                                        <ion-item class="grid-info">
+                                            <ion-avatar item-start>
+                                                <img class="coinlogo" [src]="'assets/icon/'+asset+'.png'" (error)="errorImg($event)" [ngClass]="{'csdLogoDefault':asset == 'CSD.CSD' && theme == 'theme-default'}">
+                                            </ion-avatar>
+                                            <div>
+                                                <h1 [translate]="asset"></h1>
+                                                <h3>{{"AVAILABLE"|translate}}: {{format((balances.MST[asset] && balances.MST[asset].available) ? balances.MST[asset].available : 0, balances.MST[asset].decimals)}}</h3>
+                                            </div>
+                                        </ion-item>
+                                    </ion-col>
+                                </ion-row>
+                            </ion-grid>
+                        </ion-card>
+                        <ion-row col-12 class="row-buttons">
+                            <ion-col col-4>
+                                <button ion-button full clear color="secondary" icon-left (click)="gotoReceive($event, asset)">
                   <ion-icon name="download"></ion-icon>
                   {{ "RECEIVE" | translate }}
                 </button>
-              </ion-col>
-              <ion-col col-4>
-                <button ion-button full clear color="danger" icon-left (click)="gotoTransfer($event, asset)">
+                            </ion-col>
+                            <ion-col col-4>
+                                <button ion-button full clear color="danger" icon-left (click)="gotoTransfer($event, asset)">
                   <ion-icon name="send"></ion-icon>
                   {{ "SEND" | translate }}
                 </button>
-              </ion-col>
-              <ion-col col-4>
-                <button ion-button full clear color="primary" icon-left (click)="gotoTransactions($event, asset)">
+                            </ion-col>
+                            <ion-col col-4>
+                                <button ion-button full clear color="primary" icon-left (click)="gotoTransactions($event, asset)">
                   <ion-icon name="time"></ion-icon>
                   {{ "HISTORY" | translate }}
                 </button>
-              </ion-col>
+                            </ion-col>
+                        </ion-row>
+                    </ion-col>
+                </ng-container>
             </ion-row>
-          </ion-col>
-        </ng-container>
-      </ion-row>
-    </ion-grid>
-  </ion-list>
+        </ion-grid>
+    </ion-list>
 </ion-content>

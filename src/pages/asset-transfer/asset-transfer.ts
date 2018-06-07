@@ -64,20 +64,26 @@ export class AssetTransferPage {
         //Load balances
         mvs.getBalances()
             .then((balances) => {
-                let balance: any = balances[this.selectedAsset]
+                let balance = (this.selectedAsset == 'ETP') ? balances.ETP : balances.MST[this.selectedAsset]
                 this.balance = (balance && balance.available) ? balance.available : 0
                 this.decimals = balance.decimals
-                this.etpBalance = balances['ETP'].available
+                this.etpBalance = balances.ETP.available
                 this.showBalance = this.balance
                 return this.mvs.getAddressBalances()
                     .then((addressbalances) => {
                         let addrblncs = []
                         if (Object.keys(addressbalances).length) {
                             Object.keys(addressbalances).forEach((address) => {
-                                if (addressbalances[address][this.selectedAsset] && addressbalances[address][this.selectedAsset].available) {
-                                    addrblncs.push({ "address": address, "balance": addressbalances[address][this.selectedAsset].available })
+                                if (this.selectedAsset == 'ETP') {
+                                    if (addressbalances[address].ETP.available > 0) {
+                                        addrblncs.push({ "address": address, "balance": addressbalances[address].ETP.available })
+                                    }
+                                } else{
+                                    if (addressbalances[address].MST[this.selectedAsset] && addressbalances[address].MST[this.selectedAsset].available) {
+                                        addrblncs.push({ "address": address, "balance": addressbalances[address].MST[this.selectedAsset].available })
+                                    }
                                 }
-                            })
+                                })
                         }
                         this.addressbalances = addrblncs
                     })
@@ -108,7 +114,7 @@ export class AssetTransferPage {
     validQuantity = (quantity) => quantity != undefined
         && this.countDecimals(quantity) <= this.decimals
         && ((this.selectedAsset == 'ETP' && this.showBalance >= (Math.round(parseFloat(quantity) * Math.pow(10, this.decimals)) + 10000)) || (this.selectedAsset != 'ETP' && this.showBalance >= parseFloat(quantity) * Math.pow(10, this.decimals)))
-        && ((this.selectedAsset == 'ETP' && quantity >= 10000/100000000) || (this.selectedAsset != 'ETP' && quantity > 0))
+        && ((this.selectedAsset == 'ETP' && quantity >= 10000 / 100000000) || (this.selectedAsset != 'ETP' && quantity > 0))
 
     countDecimals(value) {
         if (Math.floor(value) !== value && value.toString().split(".").length > 1)
@@ -146,11 +152,11 @@ export class AssetTransferPage {
             .catch((error) => {
                 console.error(error.message)
                 if (error.message == "ERR_DECRYPT_WALLET")
-                    this.showError('MESSAGE.PASSWORD_WRONG','')
+                    this.showError('MESSAGE.PASSWORD_WRONG', '')
                 else if (error.message == "ERR_INSUFFICIENT_BALANCE")
-                    this.showError('MESSAGE.INSUFFICIENT_BALANCE','')
+                    this.showError('MESSAGE.INSUFFICIENT_BALANCE', '')
                 else
-                    this.showError('MESSAGE.CREATE_TRANSACTION',error.message)
+                    this.showError('MESSAGE.CREATE_TRANSACTION', error.message)
             })
     }
 
@@ -160,7 +166,7 @@ export class AssetTransferPage {
             .then((result: any) => {
                 this.navCtrl.pop()
                 this.translate.get('SUCCESS_SEND_TEXT').subscribe((message: string) => {
-                    if(this.platform.is('mobile')) {
+                    if (this.platform.is('mobile')) {
                         this.showSentMobile(message, result.hash)
                     } else {
                         this.showSent(message, result.hash)
@@ -171,10 +177,10 @@ export class AssetTransferPage {
             .catch((error) => {
                 this.loading.dismiss()
                 if (error.message == 'ERR_CONNECTION')
-                    this.showError('ERROR_SEND_TEXT','')
+                    this.showError('ERROR_SEND_TEXT', '')
                 else if (error.message == 'ERR_BROADCAST') {
                     this.translate.get('MESSAGE.ONE_TX_PER_BLOCK').subscribe((message: string) => {
-                        this.showError('MESSAGE.BROADCAST_ERROR',message)
+                        this.showError('MESSAGE.BROADCAST_ERROR', message)
                     })
                 }
 
@@ -182,10 +188,10 @@ export class AssetTransferPage {
     }
 
     sendAll() {
-        if(this.selectedAsset == 'ETP') {
-            this.quantity = parseFloat(((this.showBalance/100000000 - 10000/100000000).toFixed(this.decimals)) + "") + ""
+        if (this.selectedAsset == 'ETP') {
+            this.quantity = parseFloat(((this.showBalance / 100000000 - 10000 / 100000000).toFixed(this.decimals)) + "") + ""
         } else {
-            this.quantity = parseFloat((this.showBalance/Math.pow(10, this.decimals)).toFixed(this.decimals) + "") + ""
+            this.quantity = parseFloat((this.showBalance / Math.pow(10, this.decimals)).toFixed(this.decimals) + "") + ""
         }
         this.quantityInput.setFocus()
     }
@@ -212,7 +218,7 @@ export class AssetTransferPage {
     }
 
     showSent(text, hash) {
-        this.translate.get(['MESSAGE.SUCCESS','OK']).subscribe((translations: any) => {
+        this.translate.get(['MESSAGE.SUCCESS', 'OK']).subscribe((translations: any) => {
             let alert = this.alertCtrl.create({
                 title: translations['MESSAGE.SUCCESS'],
                 subTitle: text + hash,
@@ -228,7 +234,7 @@ export class AssetTransferPage {
 
 
     showSentMobile(text, hash) {
-        this.translate.get(['MESSAGE.SUCCESS','OK','COPY']).subscribe((translations: any) => {
+        this.translate.get(['MESSAGE.SUCCESS', 'OK', 'COPY']).subscribe((translations: any) => {
             let alert = this.alertCtrl.create({
                 title: translations['MESSAGE.SUCCESS'],
                 subTitle: text + hash,
@@ -285,26 +291,26 @@ export class AssetTransferPage {
     scan() {
         this.translate.get(['SCANNING.MESSAGE_ADDRESS']).subscribe((translations: any) => {
             this.barcodeScanner.scan(
-            {
-                preferFrontCamera : false, // iOS and Android
-                showFlipCameraButton : false, // iOS and Android
-                showTorchButton : false, // iOS and Android
-                torchOn: false, // Android, launch with the torch switched on (if available)
-                prompt : translations['SCANNING.MESSAGE_ADDRESS'], // Android
-                resultDisplayDuration: 0, // Android, display scanned text for X ms. 0 suppresses it entirely, default 1500
-                formats : "QR_CODE", // default: all but PDF_417 and RSS_EXPANDED
-            }).then((result) => {
-                if (!result.cancelled) {
-                    let content = result.text.toString().split('&')
-                    if(this.mvs.validAddress(content[0]) == true) {
-                        this.recipient_address = content[0]
-                        this.recipientAddressInput.setFocus();
-                        this.keyboard.close()
-                    } else {
-                        this.showWrongAddress()
+                {
+                    preferFrontCamera: false, // iOS and Android
+                    showFlipCameraButton: false, // iOS and Android
+                    showTorchButton: false, // iOS and Android
+                    torchOn: false, // Android, launch with the torch switched on (if available)
+                    prompt: translations['SCANNING.MESSAGE_ADDRESS'], // Android
+                    resultDisplayDuration: 0, // Android, display scanned text for X ms. 0 suppresses it entirely, default 1500
+                    formats: "QR_CODE", // default: all but PDF_417 and RSS_EXPANDED
+                }).then((result) => {
+                    if (!result.cancelled) {
+                        let content = result.text.toString().split('&')
+                        if (this.mvs.validAddress(content[0]) == true) {
+                            this.recipient_address = content[0]
+                            this.recipientAddressInput.setFocus();
+                            this.keyboard.close()
+                        } else {
+                            this.showWrongAddress()
+                        }
                     }
-                }
-            })
+                })
         })
     }
 

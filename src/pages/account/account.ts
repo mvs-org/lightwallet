@@ -211,12 +211,13 @@ export class AccountPage {
         return this.mvs.getBalances()
             .then((_) => {
                 this.balances = _
-                return Promise.all(Object.keys(_).map((asset) => this.mvs.addAssetToAssetOrder(asset)))
+                return Promise.all(Object.keys(_.MST).map((symbol) => this.mvs.addAssetToAssetOrder(symbol)))
             })
             .then(() => this.mvs.assetOrder())
             .then((order) => {
                 this.loading = false
                 this.balancesKeys = order
+                console.log(this.balancesKeys)
                 return order
             })
             .catch(() => console.log("Can't load balances"))

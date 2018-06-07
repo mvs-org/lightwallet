@@ -14,11 +14,13 @@ export class MvsServiceProvider {
 
     DEFAULT_BALANCES = {
         "ETP": { frozen: 0, available: 0, decimals: 8 },
-        "MVS.ZGC": { frozen: 0, available: 0, decimals: 8 },
-        "MVS.ZDC": { frozen: 0, available: 0, decimals: 6 },
-        "CSD.CSD": { frozen: 0, available: 0, decimals: 8 },
-        "PARCELX.GPX": { frozen: 0, available: 0, decimals: 8 },
-        "SDG": { frozen: 0, available: 0, decimals: 8 },
+        "MST": {
+            "MVS.ZGC": { frozen: 0, available: 0, decimals: 8 },
+            "MVS.ZDC": { frozen: 0, available: 0, decimals: 6 },
+            "CSD.CSD": { frozen: 0, available: 0, decimals: 8 },
+            "PARCELX.GPX": { frozen: 0, available: 0, decimals: 8 },
+            "SDG": { frozen: 0, available: 0, decimals: 8 }
+        }
     }
 
     constructor(
@@ -100,7 +102,7 @@ export class MvsServiceProvider {
                                     .concat(utxo.filter(output => {
                                         if (output.attachment.type == "asset-cert" && output.attachment.symbol == symbol.split('.')[0] && output.attachment.cert == 'domain')
                                             return true;
-                                        else if (output.attachment.type == "asset-cert" && output.attachment.symbol == symbol && ['naming','issue'].indexOf(output.attachment.cert)!==-1)
+                                        else if (output.attachment.type == "asset-cert" && output.attachment.symbol == symbol && ['naming', 'issue'].indexOf(output.attachment.cert) !== -1)
                                             return true;
                                         return false;
                                     }))
@@ -146,7 +148,7 @@ export class MvsServiceProvider {
                 return b.height - a.height;
             }))
             .then((txs: Array<any>) => this.getAddresses()
-                  .then((addresses: Array<string>) => Metaverse.output.calculateUtxo(txs, addresses)));
+                .then((addresses: Array<string>) => Metaverse.output.calculateUtxo(txs, addresses)));
     }
 
     getUtxoFrom(address: string) {
@@ -180,12 +182,17 @@ export class MvsServiceProvider {
 
     getBalances() {
         return this.storage.get('balances')
-            .then((balances: Array<any>) => {
+            .then((balances: any) => {
+                console.log(balances)
                 let b = JSON.parse(JSON.stringify(this.DEFAULT_BALANCES));
-                if (balances && Object.keys(balances).length)
-                    Object.keys(balances).forEach((asset) => {
-                        b[asset] = balances[asset];
-                    })
+                if (balances) {
+                    if (balances.ETP)
+                        b.ETP = balances.ETP;
+                    if (balances.MST)
+                        Object.keys(balances.MST).forEach((symbol) => {
+                            b.MST[symbol] = balances.MST[symbol];
+                        })
+                }
                 return b;
             })
     }
@@ -367,7 +374,7 @@ export class MvsServiceProvider {
                     return Promise.resolve(_)
                 else {
                     return this.getBalances().then((balances: any) => {
-                        let order: string[] = Object.keys(balances)
+                        let order: string[] = Object.keys(balances.MST)
                         return this.setAssetOrder(order);
                     })
                 }
