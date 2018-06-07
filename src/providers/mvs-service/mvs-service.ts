@@ -170,7 +170,6 @@ export class MvsServiceProvider {
 
     listAvatars() {
         return this.getUtxo()
-            .then((outputs) => Metaverse.output.filter(outputs, { type: "did-issue" }))
             .then((outputs) => this.blockchain.avatar.extract(outputs))
     }
 
