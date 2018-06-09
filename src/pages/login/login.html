@@ -14,15 +14,16 @@
             <div class="banner"></div>
         </ion-col>
     </ion-row>
-    <div class="login-box" *ngIf="!platform.is('mobileweb')">
+    <!--div class="login-box" *ngIf="!platform.is('mobileweb')"-->
+    <div class="login-box">
         <div class="info-text">
             <h1 style="text-align: center;" *ngIf="globals.network=='mainnet'">Mainnet</h1>
             <h1 style="text-align: center;" *ngIf="globals.network=='testnet'">Testnet</h1>
         </div>
-        <ion-row *ngIf="!platform.is('mobile')" class="browser-button">
-            <button ion-button full icon-left class="large-btn" id="open-wallet-button" color="secondary" (click)="login()">
-                <ion-icon name="download"></ion-icon>
-                {{"OPEN_WALLET_FILE"|translate}}
+        <ion-row class="browser-button">
+            <button ion-button class="large-btn" block full icon-left (click)="GenerateKeyPage();">
+                <ion-icon name="add"></ion-icon>
+                {{"CREATE_NEW_WALLET_BUTTON"|translate}}
             </button>
         </ion-row>
         <ion-row *ngIf="!platform.is('mobile')" class="browser-button">
@@ -32,9 +33,9 @@
             </button>
         </ion-row>
         <ion-row *ngIf="!platform.is('mobile')" class="browser-button">
-            <button ion-button class="large-btn" block full icon-left (click)="GenerateKeyPage();">
-                <ion-icon name="add"></ion-icon>
-                {{"CREATE_NEW_WALLET_BUTTON"|translate}}
+            <button ion-button full icon-left class="large-btn" id="open-wallet-button" color="secondary" (click)="login()">
+                <ion-icon name="download"></ion-icon>
+                {{"OPEN_WALLET_FILE"|translate}}
             </button>
         </ion-row>
 
@@ -44,24 +45,24 @@
                 {{"OPEN_FROM_QRCODE"|translate}}
             </button>
         </ion-row>
+        <ion-row *ngIf="platform.is('mobile')" class="browser-button">
+            <button ion-button class="large-btn" block full icon-left color="secondary" (click)="ImportMnemonicPage();">
+                <ion-icon name="list-box"></ion-icon>
+                {{"OPEN_FROM_BACKUP_WORDS"|translate}}
+            </button>
+        </ion-row>
         <ion-row *ngIf="platform.is('mobile')"  class="browser-button">
             <button ion-button full icon-left class="large-btn" id="open-howto-mobile-button" color="primary" (click)="howToMobile()">
                 <ion-icon name="information-circle"></ion-icon>
                 {{"HOW_TO_IMPORT_WALLET_MOBILE"|translate}}
             </button>
         </ion-row>
-        <ion-row *ngIf="platform.is('mobile')" class="browser-button">
-            <button ion-button class="large-btn" block full icon-left (click)="ImportMnemonicPage();">
-                <ion-icon name="list-box"></ion-icon>
-                {{"OPEN_FROM_BACKUP_WORDS"|translate}}
-            </button>
-        </ion-row>
       	<ion-row class="info-text">
-        		<p *ngIf="!platform.is('mobile')">{{"LOGIN_MENU_INFO_TEXT"|translate}}</p>
-            <p *ngIf="platform.is('mobile')">{{"LOGIN_MENU_INFO_TEXT_MOBILE"|translate}}</p>
+        		<p>{{"LOGIN_MENU_INFO_TEXT"|translate}}</p>
+            <!--p *ngIf="platform.is('mobile')">{{"LOGIN_MENU_INFO_TEXT_MOBILE"|translate}}</p-->
       	</ion-row>
     </div>
-    <div class="login-box" *ngIf="platform.is('mobileweb')&&platform.is('android')">
+    <!--div class="login-box" *ngIf="platform.is('mobileweb')&&platform.is('android')">
         <h3>{{"LOGIN.MOBILEWEB_ANDROID1"|translate}}</h3>
         <a href="https://play.google.com/store/apps/details?id=com.myetpwallet.app&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1"><img class="google-play-icon" alt="Get it on Google Play" src="../assets/images/get-it-on-google-play.png"/></a>
         <h3>{{"LOGIN.MOBILEWEB_ANDROID2"|translate}}</h3>
@@ -73,7 +74,7 @@
     </div>
     <div class="login-box" *ngIf="platform.is('mobileweb')&&!platform.is('ios')&&!platform.is('android')">
         <h3>{{"LOGIN.MOBILEWEB_OTHER"|translate}}</h3>
-    </div>
+    </div-->
 </ion-content>
 
 <ion-footer>
