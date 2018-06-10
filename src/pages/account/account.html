@@ -5,22 +5,22 @@
     </button>
         <ion-title>{{"ACCOUNT.TITLE"|translate}}</ion-title>
         <ion-buttons end>
-            <button ion-button icon-left>
-        <span *ngIf="platform.is('mobile')&&platform.is('ios')&&!syncingSmall" class="block-iPhone">{{height}} <ion-icon name="cube"></ion-icon></span>
-        <span *ngIf="!(platform.is('mobile')&&platform.is('ios'))">{{"HEIGHT" |translate}}: {{height}}</span>
-      </button>
-            <button *ngIf="!platform.is('mobile')" ion-button icon-left (click)="logout()">
-        <ion-icon name="log-out"></ion-icon>
-        <span>{{"LOGOUT" |translate}}</span>
-      </button>
+            <ion-spinner *ngIf="syncingSmall"></ion-spinner>
+            <ion-icon *ngIf="offline&&!syncingSmall" name="flash" class="offlineIcon"></ion-icon>
+        </ion-buttons>
+        <ion-buttons end>
             <button *ngIf="!syncingSmall&&!platform.is('mobile')" ion-button (click)="sync()" icon-left>
         <ion-icon name="refresh"></ion-icon>
         <span>{{"RESYNC" |translate}}</span>
       </button>
-        </ion-buttons>
-        <ion-buttons end>
-            <ion-spinner *ngIf="syncingSmall"></ion-spinner>
-            <ion-icon *ngIf="offline&&!syncingSmall" name="flash" class="offlineIcon"></ion-icon>
+      <button *ngIf="!platform.is('mobile')" ion-button icon-left (click)="logout()">
+          <ion-icon name="log-out"></ion-icon>
+          <span>{{"LOGOUT" |translate}}</span>
+      </button>
+      <button ion-button icon-left>
+          <span *ngIf="platform.is('mobile')&&platform.is('ios')&&!syncingSmall" class="block-iPhone">{{height}} <ion-icon name="cube"></ion-icon></span>
+          <span *ngIf="!(platform.is('mobile')&&platform.is('ios'))">{{"HEIGHT" |translate}}: {{height}}</span>
+      </button>
         </ion-buttons>
     </ion-navbar>
 </ion-header>
