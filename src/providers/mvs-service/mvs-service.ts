@@ -74,7 +74,7 @@ export class MvsServiceProvider {
     createAvatarTx(passphrase: string, avatar_address: string, symbol: string, change_address: string) {
         return this.wallet.getWallet(passphrase)
             .then(wallet => this.getUtxoFrom(avatar_address)
-                .then((utxo) => this.getHeight().then(height => Metaverse.output.findUtxo(utxo, {}, height, Metaverse.transaction.AVATAR_CREATE_DEFAULT_FEE)))
+                .then((utxo) => this.getHeight().then(height => Metaverse.output.findUtxo(utxo, {}, height, Metaverse.constants.FEE.AVATAR_REGISTER)))
                 .then((result) => {
                     //Set change address to first utxo's address
                     if (change_address == undefined)

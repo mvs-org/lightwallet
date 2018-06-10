@@ -217,7 +217,6 @@ export class AccountPage {
             .then((order) => {
                 this.loading = false
                 this.balancesKeys = order
-                console.log(this.balancesKeys)
                 return order
             })
             .catch(() => console.log("Can't load balances"))
