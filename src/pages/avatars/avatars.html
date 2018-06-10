@@ -11,14 +11,18 @@
         {{avatar.address}}
         <button ion-button icon-left color="primary" icon-left (click)="createAsset(avatar.symbol, avatar.address)">
             <ion-icon name="person-add"></ion-icon>
-            {{"AVATARS.CREATE_ASSET_BTN" | translate}}
+            {{"ISSUE.REGISTER_MST" | translate}}
         </button>
-        <div  *ngFor="let cert of avatar.certs">
+        <button ion-button icon-left color="primary" icon-left (click)="registerMIT(avatar.symbol, avatar.address)">
+            <ion-icon name="person-add"></ion-icon>
+            {{"MIT_REGISTER.REGISTER_BUTTON" | translate}}
+        </button>
+        <div *ngFor="let cert of avatar.certs">
             {{cert.cert_type}} {{cert.symbol}}
         </div>
     </ion-card>
     <button ion-button icon-left color="primary" icon-left (click)="create()">
         <ion-icon name="person-add"></ion-icon>
-        {{"AVATARS.CREATE_AVATAR_BTN" | translate}}
+        {{"CREATE_AVATAR" | translate}}
     </button>
 </ion-content>

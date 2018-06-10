@@ -266,5 +266,9 @@
     "SEND_TO_AVATAR": "Send to avatar",
     "HEADLINE_MST": "Metaverse Smart Token",
     "HEADLINE_MIT": "Metaverse Identifiable Token",
-    "NO_MIT_TEXT": "You don't have any MIT yet. In order to create MIT you first have to create an avatar."
+    "NO_MIT_TEXT": "You don't have any MIT yet. In order to create MIT you first have to create an avatar.",
+    "MIT_REGISTER.SYMBOL": "Symbol",
+    "MIT_REGISTER.CONTENT": "Content",
+    "MIT_REGISTER.REGISTER_BUTTON": "Register MIT",
+    "ISSUE.REGISTER_MST": "Register MST"
 }

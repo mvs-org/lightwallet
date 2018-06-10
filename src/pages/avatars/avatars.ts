@@ -25,6 +25,10 @@ export class AvatarsPage {
         this.navCtrl.push("AssetIssuePage", {avatar_name: avatar_name, avatar_address: avatar_address})
     }
 
+    registerMIT(avatar_name: string, avatar_address: string){
+        this.navCtrl.push("MITRegisterPage", {avatar_name: avatar_name, avatar_address: avatar_address})
+    }
+
     ionViewDidLoad() {
         this.loadAvatars()
             .then(()=>this.loadCerts())
