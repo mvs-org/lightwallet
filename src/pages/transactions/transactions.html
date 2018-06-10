@@ -18,7 +18,7 @@
             <h3 *ngIf="tx.quantity>0">{{'AMOUNT'|translate}}: {{formatQuantity((tx.quantity)?tx.quantity:0,tx.asset.decimals)}}</h3>
             <!-- <h3 *ngIf="!tx.quantity">{{'TRANSACTION.INNER_WALLET'|translate}}</h3> -->
             <h3>{{'DATE'|translate}}: {{tx.confirmed_at*1000|date : 'medium'}}</h3>
-            <a href="https://explorer.mvs.org/#!/tx/{{tx.hash}}" target="_blank">{{tx.hash}}</a>
+            <a href="{{explorerURL(tx.hash)}}" target="_blank">{{tx.hash}}</a>
         </ion-item>
     </ion-list>
     <div [hidden]="txs && txs.length" *ngIf="!loading">

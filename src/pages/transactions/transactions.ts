@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AppGlobals } from '../../app/app.global';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 
@@ -17,7 +18,12 @@ export class TransactionsPage {
     txs: any[]
     loading: boolean
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, private mvsServiceProvider: MvsServiceProvider) {
+    constructor(
+        public navCtrl: NavController,
+        private globals: AppGlobals,
+        public navParams: NavParams,
+        private mvsServiceProvider: MvsServiceProvider
+    ) {
         this.asset = navParams.get('asset');
         this.showTxs({ symbol: this.asset });
         this.loading = true;
@@ -44,6 +50,8 @@ export class TransactionsPage {
             })
     }
 
+    explorerURL = (tx) => (this.globals.network == 'mainnet') ? 'https://explorer.mvs.org/#!/tx/' + tx : 'https://explorer-testnet.mvs.org/#!/tx/' + tx;
+
     private filterTxs(txs: any[], symbol, addresses) {
         return Promise.all(txs.filter((tx) => this.filterTx(tx, symbol, addresses)))
     }
@@ -53,7 +61,7 @@ export class TransactionsPage {
         let result = false;
         tx.inputs.forEach((input) => {
             if (this.isMineTXIO(input, addresses)) {
-                if ( ['asset-transfer', 'asset-issue'].indexOf(input.attachment.type) !== -1 && input.attachment.symbol == asset)
+                if (['asset-transfer', 'asset-issue'].indexOf(input.attachment.type) !== -1 && input.attachment.symbol == asset)
                     result = true;
                 else if (asset == 'ETP' && input.value)
                     result = true;
@@ -62,7 +70,7 @@ export class TransactionsPage {
         if (result) return tx;
         tx.outputs.forEach((output) => {
             if (this.isMineTXIO(output, addresses)) {
-                if ( ['asset-transfer', 'asset-issue'].indexOf(output.attachment.type) !== -1 && output.attachment.symbol == asset)
+                if (['asset-transfer', 'asset-issue'].indexOf(output.attachment.type) !== -1 && output.attachment.symbol == asset)
                     result = true;
                 else if (asset == 'ETP' && output.value)
                     result = true;
