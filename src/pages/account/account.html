@@ -96,6 +96,9 @@
                                             <div>
                                                 <h1 [translate]="asset"></h1>
                                                 <h3>{{"AVAILABLE"|translate}}: {{format((balances.MST[asset] && balances.MST[asset].available) ? balances.MST[asset].available : 0, balances.MST[asset].decimals)}}</h3>
+                                                <p>
+                                                    {{"ACCOUNT.FROZEN"|translate}}: {{format(balances.MST[asset].frozen, balances.MST[asset].decimals)}}
+                                                </p>
                                             </div>
                                         </ion-item>
                                     </ion-col>
@@ -138,7 +141,8 @@
                                             </ion-avatar>
                                             <div>
                                                 <h1 [translate]="mit.symbol"></h1>
-                                                <h3>{{"AVAILABLE"|translate}}: 1</h3>
+                                                <p>{{"CONTENT"|translate}}: {{mit.content}}</p>
+                                                <p>{{"OWNER"|translate}}: {{mit.owner}}</p>
                                             </div>
                                         </ion-item>
                                     </ion-col>
