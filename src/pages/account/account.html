@@ -81,6 +81,8 @@
                         </ion-row>
                     </ion-col>
                 </ng-container>
+            </ion-row>
+            <ion-row *ngIf="balances!=undefined">
                 <ng-container *ngFor="let asset of balancesKeys" class="asset-container">
                     <ion-col class="asset-container" *ngIf="balances.MST[asset]!=undefined">
                         <ion-card class="card-block">
@@ -118,6 +120,39 @@
                   <ion-icon name="time"></ion-icon>
                   {{ "HISTORY" | translate }}
                 </button>
+                            </ion-col>
+                        </ion-row>
+                    </ion-col>
+                </ng-container>
+            </ion-row>
+            <ion-row *ngIf="balances!=undefined">
+                <ng-container *ngFor="let mit of balances.MIT" class="asset-container">
+                    <ion-col class="asset-container">
+                        <ion-card class="card-block">
+                            <ion-grid>
+                                <ion-row>
+                                    <ion-col>
+                                        <ion-item class="grid-info">
+                                            <ion-avatar item-start>
+                                                <img class="coinlogo" [src]="'assets/icon/'+mit.symbol+'.png'" (error)="errorImg($event)">
+                                            </ion-avatar>
+                                            <div>
+                                                <h1 [translate]="mit.symbol"></h1>
+                                                <h3>{{"AVAILABLE"|translate}}: 1</h3>
+                                            </div>
+                                        </ion-item>
+                                    </ion-col>
+                                </ion-row>
+                            </ion-grid>
+                        </ion-card>
+                        <ion-row col-12 class="row-buttons">
+                            <ion-col col-4></ion-col>
+                            <ion-col col-4></ion-col>
+                            <ion-col col-4>
+                                <button ion-button full clear color="danger" icon-left (click)="gotoTransfer($event, asset)">
+                                    <ion-icon name="send"></ion-icon>
+                                    {{ "SEND" | translate }}
+                                </button>
                             </ion-col>
                         </ion-row>
                     </ion-col>

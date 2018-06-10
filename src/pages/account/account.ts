@@ -219,7 +219,10 @@ export class AccountPage {
                 this.balancesKeys = order
                 return order
             })
-            .catch(() => console.log("Can't load balances"))
+            .catch((e) => {
+                console.error(e)
+                console.log("Can't load balances")
+            })
     }
 
 }

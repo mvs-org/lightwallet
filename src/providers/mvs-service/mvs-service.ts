@@ -13,14 +13,15 @@ export class MvsServiceProvider {
     private blockchain;
 
     DEFAULT_BALANCES = {
-        "ETP": { frozen: 0, available: 0, decimals: 8 },
-        "MST": {
+        ETP: { frozen: 0, available: 0, decimals: 8 },
+        MST: {
             "MVS.ZGC": { frozen: 0, available: 0, decimals: 8 },
             "MVS.ZDC": { frozen: 0, available: 0, decimals: 6 },
             "CSD.CSD": { frozen: 0, available: 0, decimals: 8 },
             "PARCELX.GPX": { frozen: 0, available: 0, decimals: 8 },
             "SDG": { frozen: 0, available: 0, decimals: 8 }
-        }
+        },
+        MIT: []
     }
 
     constructor(
@@ -189,6 +190,8 @@ export class MvsServiceProvider {
                         Object.keys(balances.MST).forEach((symbol) => {
                             b.MST[symbol] = balances.MST[symbol];
                         })
+                    if (balances.MIT)
+                        b.MIT=balances.MIT
                 }
                 return b;
             })
@@ -244,15 +247,19 @@ export class MvsServiceProvider {
     }
 
     calculateBalances() {
-        return Promise.all([this.getTxs(), this.getHeight(), this.getAddresses()])
-            .then((results: any) => Promise.all([
-                this.blockchain.balance.all(results[0], results[2], results[1]),
-                this.blockchain.balance.addresses(results[0], results[2], results[1])
-            ]))
-            .then((balances) => Promise.all([
-                this.setBalances(balances[0]),
-                this.setAddressBalances(balances[1])
-            ]))
+        return this.getHeight()
+            .then(height => this.getAddresses()
+                .then(addresses => this.getTxs()
+                    .then(txs => Metaverse.output.calculateUtxo(txs, addresses))
+                    .then(utxos => Promise.all([
+                        this.blockchain.balance.all(utxos, addresses, height),
+                        this.blockchain.balance.addresses(utxos, addresses, height)
+                    ]))
+                    .then((balances) => Promise.all([
+                        this.setBalances(balances[0]),
+                        this.setAddressBalances(balances[1])
+                    ]))
+                ))
     }
 
     setUpdateTime(lastupdate = undefined) {
