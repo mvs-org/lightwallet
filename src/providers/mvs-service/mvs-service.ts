@@ -170,6 +170,10 @@ export class MvsServiceProvider {
 
     listAvatars() {
         return this.getUtxo()
+            .then((utxo) => {
+                console.log(utxo)
+                return utxo
+            })
             .then((outputs) => this.blockchain.avatar.extract(outputs))
     }
 
@@ -193,7 +197,7 @@ export class MvsServiceProvider {
                             b.MST[symbol] = balances.MST[symbol];
                         })
                     if (balances.MIT)
-                        b.MIT=balances.MIT
+                        b.MIT = balances.MIT
                 }
                 return b;
             })
@@ -356,9 +360,9 @@ export class MvsServiceProvider {
                     newtxs.forEach((newtx) => {
                         let found = 0;
                         txs.forEach((oldtx, index) => {
-                            if (newtx.hash == oldtx.hash){
+                            if (newtx.hash == oldtx.hash) {
                                 found = 1;
-                                txs[index]=newtx;
+                                txs[index] = newtx;
                             }
                         })
                         if (found == 0) {
@@ -402,6 +406,23 @@ export class MvsServiceProvider {
                 return this.setAssetOrder(_)
             })
             .then(() => this.assetOrder())
+    }
+
+    send = (tx) => {
+        return this.broadcast(tx.encode().toString('hex'))
+            .then((result: any) => this.getHeight()
+                .then(height => {
+                    tx.height = height
+                    tx.hash = result.hash
+                    tx.outputs.forEach((output, index) => {
+                        output.index = index;
+                    })
+                    tx.unconfirmed = true
+                    return this.addTxs([tx])
+                        .then(() => this.getData())
+                        .then(()=>tx)
+                })
+            )
     }
 
     broadcast(rawtx: string, max_fee: number = undefined) {

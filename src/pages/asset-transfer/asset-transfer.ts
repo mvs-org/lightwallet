@@ -164,27 +164,18 @@ export class AssetTransferPage {
 
     send() {
         this.create()
-            .then(tx => this.mvs.broadcast(tx.encode().toString('hex'))
-                .then((result: any) => {
-                    return this.mvs.getHeight().then(height => {
-                        tx.height = height
-                        tx.hash = result.hash
-                        tx.unconfirmed=true
-                        return this.mvs.addTxs([tx])
-                            .then(() => this.mvs.getData())
-                            .then(() => {
-                                this.navCtrl.pop()
-                                this.translate.get('SUCCESS_SEND_TEXT').subscribe((message: string) => {
-                                    if (this.platform.is('mobile')) {
-                                        this.showSentMobile(message, result.hash)
-                                    } else {
-                                        this.showSent(message, result.hash)
-                                    }
+            .then(tx => this.mvs.send(tx))
+            .then((result) => {
+                this.navCtrl.pop()
+                this.translate.get('SUCCESS_SEND_TEXT').subscribe((message: string) => {
+                    if (this.platform.is('mobile')) {
+                        this.showSentMobile(message, result.hash)
+                    } else {
+                        this.showSent(message, result.hash)
+                    }
 
-                                })
-                            })
-                    })
-                }))
+                })
+            })
             .catch((error) => {
                 console.error(error)
                 this.loading.dismiss()

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, AlertController, LoadingController, Loading } from 'ionic-angular';
+import { IonicPage, NavController, AlertController, Platform, LoadingController, Loading } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 
@@ -20,21 +20,22 @@ export class CreateAvatarPage {
     constructor(
         public navCtrl: NavController,
         private alertCtrl: AlertController,
+        public platform: Platform,
         private loadingCtrl: LoadingController,
         private translate: TranslateService,
         private mvs: MvsServiceProvider) {
 
-        Promise.all([this.mvs.getAddressBalances(),this.mvs.listAvatars()])
+        Promise.all([this.mvs.getAddressBalances(), this.mvs.listAvatars()])
             .then((results) => {
-                this.avatars=results[1]
-                let addressbalances=results[0]
+                this.avatars = results[1]
+                let addressbalances = results[0]
                 let addrblncs = []
                 if (Object.keys(addressbalances).length) {
                     Object.keys(addressbalances).forEach((address) => {
-                        if (addressbalances[address].ETP && addressbalances[address].ETP.available>=100000000) {
+                        if (addressbalances[address].ETP && addressbalances[address].ETP.available >= 100000000) {
                             addrblncs.push({ "address": address, "available": addressbalances[address].ETP.available })
-                            this.avatars.forEach((avatar)=>{
-                                if(avatar.address==address)
+                            this.avatars.forEach((avatar) => {
+                                if (avatar.address == address)
                                     addrblncs.pop();
                             })
                         }
@@ -51,16 +52,18 @@ export class CreateAvatarPage {
     create() {
         return this.showLoading()
             .then(() => this.mvs.createAvatarTx(this.passphrase, this.avatar_address, this.symbol, undefined))
-            .then(tx => {
-                console.log(tx)
-                return tx
-            })
-            .then((tx) => this.mvs.broadcast(tx.encode().toString('hex'), 1000000000))
-            .then((result: any) => {
-                console.log(result)
+            .then(tx => this.mvs.send(tx))
+            .then((result) => {
                 this.navCtrl.pop()
+                this.navCtrl.pop()
+                this.navCtrl.push('AvatarsPage')
                 this.translate.get('SUCCESS_SEND_TEXT').subscribe((message: string) => {
-                    this.showSent(message, result.hash)
+                    if (this.platform.is('mobile')) {
+                        this.showSentMobile(message, result.hash)
+                    } else {
+                        this.showSent(message, result.hash)
+                    }
+
                 })
             })
             .catch((error) => {
@@ -111,6 +114,21 @@ export class CreateAvatarPage {
                 })
                 alert.present(prompt)
             })
+        })
+    }
+
+    showSentMobile(text, hash) {
+        this.translate.get(['MESSAGE.SUCCESS', 'OK', 'COPY']).subscribe((translations: any) => {
+            let alert = this.alertCtrl.create({
+                title: translations['MESSAGE.SUCCESS'],
+                subTitle: text + hash,
+                buttons: [
+                    {
+                        text: translations['OK'],
+                    }
+                ]
+            })
+            alert.present(prompt)
         })
     }
 
