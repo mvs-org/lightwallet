@@ -260,6 +260,9 @@
   "CREATE_AVATAR": "Create Avatar",
   "CREATE_AVATAR.CREATE_BTN": "Create Avatar",
   "CREATE_AVATAR.SYMBOL": "Symbol",
-  "CREATE_AVATAR.ADDRESS": "Address"
+    "CREATE_AVATAR.ADDRESS": "Address",
+
+    "RECIPIENT_AVATAR": "Recipient avatar",
+    "SEND_TO_AVATAR": "Send to avatar"
 
 }

@@ -14,12 +14,21 @@
             <p>{{"AVAILABLE_BALANCE" | translate}}: <br *ngIf="platform.is('mobile')">{{format(showBalance,decimals)}} {{selectedAsset}}</p>
         </ion-col>
         <ion-col>
-            <p class="right">{{"FEE"|translate}}:<br *ngIf="platform.is('mobile')"> {{10000/100000000}} ETP</p>
+            <p class="right">{{"FEE"|translate}}:<br *ngIf="platform.is('mobile')"> {{format(10000,8)}} ETP</p>
         </ion-col>
     </ion-row>
 
     <form #sendForm="ngForm" style="padding-bottom: 0;">
         <ion-list style="padding-bottom: 0;">
+
+            <ion-item>
+                <ion-label>{{"SEND_TO_AVATAR"|translate}}</ion-label>
+                <ion-toggle [(ngModel)]="sendToAvatar" name="sendToAvatar" checked="false"></ion-toggle>
+            </ion-item>
+            <ion-item *ngIf="sendToAvatar" [ngClass]="{'error-border':!validAvatar(recipient_avatar)}">
+                <ion-label color="primary" floating>{{"RECIPIENT_AVATAR"|translate}}</ion-label>
+                <ion-input #recipientAvatarInput name="recipient_avatar" [(ngModel)]="recipient_avatar" (ngModelChange)="recipientAvatarChanged($event)" required></ion-input>
+            </ion-item>
             <ion-item [ngClass]="{'error-border':!validrecipient(recipient_address)}">
                 <ion-label color="primary" floating>{{"RECIPIENT_ADDRESS"|translate}}</ion-label>
                 <ion-input #recipientAddressInput name="recipient_address" [(ngModel)]="recipient_address" (ngModelChange)="recipientChanged($event)" required></ion-input>
@@ -60,7 +69,7 @@
                         <ion-option *ngFor="let address of addresses" value="{{address}}">{{address}}</ion-option>
                     </ion-select>
                 </ion-item>
-                <button ion-button full [disabled]="!sendForm.form.valid||!validrecipient(recipient_address)||!validQuantity(quantity)||!validPassword(passphrase)" (click)="preview()" color="primary">
+                <button ion-button full [disabled]="!sendForm.form.valid||!validrecipient(recipient_address)||!(sendToAvatar&&validAvatar(recipient_avatar))||!validQuantity(quantity)||!validPassword(passphrase)" (click)="preview()" color="primary">
                     {{"PREVIEW" | translate}}
                 </button>
                 <div *ngIf="rawtx">

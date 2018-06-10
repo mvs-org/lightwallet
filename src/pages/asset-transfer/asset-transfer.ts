@@ -23,6 +23,8 @@ export class AssetTransferPage {
     showBalance: number
     loading: Loading
     recipient_address: string
+    recipient_avatar: string
+    recipient_avatar_valid: boolean
     quantity: string
     builtFor: string
     rawtx: string
@@ -78,12 +80,12 @@ export class AssetTransferPage {
                                     if (addressbalances[address].ETP.available > 0) {
                                         addrblncs.push({ "address": address, "balance": addressbalances[address].ETP.available })
                                     }
-                                } else{
+                                } else {
                                     if (addressbalances[address].MST[this.selectedAsset] && addressbalances[address].MST[this.selectedAsset].available) {
                                         addrblncs.push({ "address": address, "balance": addressbalances[address].MST[this.selectedAsset].available })
                                     }
                                 }
-                                })
+                            })
                         }
                         this.addressbalances = addrblncs
                     })
@@ -144,7 +146,7 @@ export class AssetTransferPage {
                 this.passphrase,
                 this.selectedAsset,
                 this.recipient_address,
-                undefined,
+                (this.recipient_avatar && this.recipient_avatar_valid) ? this.recipient_avatar : undefined,
                 Math.floor(parseFloat(this.quantity) * Math.pow(10, this.decimals)),
                 (this.sendFrom != 'auto') ? this.sendFrom : null,
                 (this.changeAddress != 'auto') ? this.changeAddress : undefined
@@ -200,7 +202,29 @@ export class AssetTransferPage {
 
     validrecipient = this.mvs.validAddress
 
-    recipientChanged = () => { if (this.recipient_address) this.recipient_address = this.recipient_address.trim() }
+    validAvatar = (input: string) => /[A-Za-z0-9.-]/.test(input) && this.recipient_avatar_valid
+
+    recipientChanged = () => {
+        if (this.recipient_address) {
+            this.recipient_address = this.recipient_address.trim()
+        }
+    }
+    recipientAvatarChanged = () => {
+        if (this.recipient_avatar) {
+            this.recipient_avatar = this.recipient_avatar.trim()
+            Promise.all([this.mvs.getGlobalAvatar(this.recipient_avatar), this.recipient_avatar])
+                .then(result => {
+                    if(this.recipient_avatar!=result[1])
+                        throw ''
+                    this.recipient_avatar_valid = true
+                    this.recipient_address = result[0].address
+                })
+                .catch((e) => {
+                    this.recipient_avatar_valid = false
+                    this.recipient_address = ""
+                })
+        }
+    }
 
     validPassword = (passphrase) => (passphrase.length > 0)
 
