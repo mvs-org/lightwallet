@@ -179,7 +179,7 @@ export class MvsServiceProvider {
             .then((outputs) => this.blockchain.avatar.extract(outputs))
     }
 
-    getGlobalAvatar(symbol) => this.blockchain.avatar.get(symbol)
+    getGlobalAvatar = (symbol) => this.blockchain.avatar.get(symbol)
 
     getBalances() {
         return this.storage.get('balances')
