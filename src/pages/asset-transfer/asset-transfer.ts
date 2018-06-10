@@ -144,6 +144,7 @@ export class AssetTransferPage {
                 this.passphrase,
                 this.selectedAsset,
                 this.recipient_address,
+                undefined,
                 Math.floor(parseFloat(this.quantity) * Math.pow(10, this.decimals)),
                 (this.sendFrom != 'auto') ? this.sendFrom : null,
                 (this.changeAddress != 'auto') ? this.changeAddress : undefined
