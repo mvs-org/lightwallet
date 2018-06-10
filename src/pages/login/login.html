@@ -19,6 +19,7 @@
         <div class="info-text">
             <h1 style="text-align: center;" *ngIf="globals.network=='mainnet'">Mainnet</h1>
             <h1 style="text-align: center;" *ngIf="globals.network=='testnet'">Testnet</h1>
+            <div style="text-align: center;">{{version()}}</div>
         </div>
         <ion-row class="browser-button">
             <button ion-button class="large-btn" block full icon-left (click)="GenerateKeyPage();">

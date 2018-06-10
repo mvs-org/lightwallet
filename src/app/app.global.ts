@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class AppGlobals {
-    readonly version: string = '0.2.1';
+    readonly version: string = '0.3.1';
+    readonly name: string = 'supernova';
     readonly algo: string = 'aes';
     readonly index: number = 10;
     readonly network: string = "testnet";
