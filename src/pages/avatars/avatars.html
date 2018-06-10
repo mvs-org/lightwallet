@@ -13,6 +13,9 @@
             <ion-icon name="person-add"></ion-icon>
             {{"AVATARS.CREATE_ASSET_BTN" | translate}}
         </button>
+        <div  *ngFor="let cert of avatar.certs">
+            {{cert.cert_type}} {{cert.symbol}}
+        </div>
     </ion-card>
     <button ion-button icon-left color="primary" icon-left (click)="create()">
         <ion-icon name="person-add"></ion-icon>

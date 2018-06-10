@@ -10,6 +10,7 @@ import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 export class AvatarsPage {
 
     avatars: Array<any>;
+    certs: Array<any>;
     no_avatar: boolean = false;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, private mvs: MvsServiceProvider) {
@@ -25,14 +26,37 @@ export class AvatarsPage {
     }
 
     ionViewDidLoad() {
-        this.mvs.listAvatars()
+        this.loadAvatars()
+            .then(()=>this.loadCerts())
+            .catch(console.error);
+    }
+
+    loadAvatars(){
+        return this.mvs.listAvatars()
             .then((avatars) => {
                 this.avatars = avatars;
                 if(this.avatars.length === 0) {
                     this.no_avatar = true;
                 }
             })
-            .catch(console.error);
+    }
+
+    loadCerts(){
+        return this.mvs.listCerts()
+            .then((certs) => {
+                this.certs = certs;
+                certs.forEach(cert=>{
+                    this.avatars.forEach(avatar=>{
+                        if(avatar.certs==undefined)
+                            avatar.certs=[]
+                        if(avatar.address==cert.address)
+                            avatar.certs.push({
+                                cert_type: cert.attachment.cert,
+                                symbol: cert.attachment.symbol
+                            })
+                    })
+                })
+            })
     }
 
 }

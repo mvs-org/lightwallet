@@ -171,7 +171,6 @@ export class MvsServiceProvider {
     listAvatars() {
         return this.getUtxo()
             .then((utxo) => {
-                console.log(utxo)
                 return utxo
             })
             .then((outputs) => this.blockchain.avatar.extract(outputs))
@@ -180,7 +179,6 @@ export class MvsServiceProvider {
     listCerts() {
         return this.getUtxo()
             .then((outputs) => Metaverse.output.filter(outputs, { type: "asset-cert" }))
-            .then((outputs) => this.blockchain.avatar.extract(outputs))
     }
 
     getGlobalAvatar = (symbol) => this.blockchain.avatar.get(symbol)
