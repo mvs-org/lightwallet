@@ -31,8 +31,8 @@ export class ReceivePage {
                         Object.keys(addressbalances).map((address) => {
                             if (this.addressbalances[address] == undefined)
                                 this.addressbalances[address] = []
-                            Object.keys(addressbalances[address]).map((asset) => {
-                                let balance = addressbalances[address][asset];
+                            Object.keys(addressbalances[address]['MST']).map((asset) => {
+                                let balance = addressbalances[address]['MST'][asset];
                                 balance.name = asset;
                                 this.addressbalances[address].push(balance)
                             })
