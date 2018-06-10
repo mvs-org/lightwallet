@@ -18,7 +18,9 @@
             <h3 *ngIf="tx.quantity>0">{{'AMOUNT'|translate}}: {{formatQuantity((tx.quantity)?tx.quantity:0,tx.asset.decimals)}}</h3>
             <!-- <h3 *ngIf="!tx.quantity">{{'TRANSACTION.INNER_WALLET'|translate}}</h3> -->
             <h3>{{'DATE'|translate}}: {{tx.confirmed_at*1000|date : 'medium'}}</h3>
-            <a href="{{explorerURL(tx.hash)}}" target="_blank">{{tx.hash}}</a>
+            <p>{{'HASH'|translate}}: <a *ngIf="!tx.unconfirmed" href="{{explorerURL(tx.hash)}}" target="_blank">{{tx.hash}}</a>
+                <span *ngIf="tx.unconfirmed">{{tx.hash}}</span>
+            </p>
         </ion-item>
     </ion-list>
     <div [hidden]="txs && txs.length" *ngIf="!loading">

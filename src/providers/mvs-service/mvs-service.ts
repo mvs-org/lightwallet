@@ -355,9 +355,11 @@ export class MvsServiceProvider {
                 if (newtxs.length)
                     newtxs.forEach((newtx) => {
                         let found = 0;
-                        txs.forEach((oldtx) => {
-                            if (newtx.hash == oldtx.hash)
+                        txs.forEach((oldtx, index) => {
+                            if (newtx.hash == oldtx.hash){
                                 found = 1;
+                                txs[index]=newtx;
+                            }
                         })
                         if (found == 0) {
                             txs.push(newtx)

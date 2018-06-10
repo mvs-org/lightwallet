@@ -82,7 +82,7 @@
                     </ion-col>
                 </ng-container>
             </ion-row>
-            <h2>Metaverse Smart Token</h2>
+            <h2>{{"HEADLINE_MST"|translate}}</h2>
             <ion-row *ngIf="balances!=undefined">
                 <ng-container *ngFor="let asset of balancesKeys" class="asset-container">
                     <ion-col class="asset-container" *ngIf="balances.MST[asset]!=undefined">
@@ -130,8 +130,8 @@
                 </ng-container>
             </ion-row>
             <br>
-            <h2>Metaverse Identifiable Token</h2>
-            <div *ngIf="balances!=undefined&&balances.MIT.length==0">You dont have no MIT. Some link to create one.</div>
+            <h2>{{"HEADLINE_MIT"|translate}}</h2>
+            <div *ngIf="balances!=undefined&&balances.MIT.length==0">{{"NO_MIT_TEXT" | translate}}</div>
             <ion-row *ngIf="balances!=undefined">
                 <ng-container *ngFor="let mit of balances.MIT" class="asset-container">
                     <ion-col class="asset-container">

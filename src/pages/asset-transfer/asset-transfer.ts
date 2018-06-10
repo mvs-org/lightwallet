@@ -164,19 +164,29 @@ export class AssetTransferPage {
 
     send() {
         this.create()
-            .then((tx) => this.mvs.broadcast(tx.encode().toString('hex')))
-            .then((result: any) => {
-                this.navCtrl.pop()
-                this.translate.get('SUCCESS_SEND_TEXT').subscribe((message: string) => {
-                    if (this.platform.is('mobile')) {
-                        this.showSentMobile(message, result.hash)
-                    } else {
-                        this.showSent(message, result.hash)
-                    }
+            .then(tx => this.mvs.broadcast(tx.encode().toString('hex'))
+                .then((result: any) => {
+                    return this.mvs.getHeight().then(height => {
+                        tx.height = height
+                        tx.hash = result.hash
+                        tx.unconfirmed=true
+                        return this.mvs.addTxs([tx])
+                            .then(() => this.mvs.getData())
+                            .then(() => {
+                                this.navCtrl.pop()
+                                this.translate.get('SUCCESS_SEND_TEXT').subscribe((message: string) => {
+                                    if (this.platform.is('mobile')) {
+                                        this.showSentMobile(message, result.hash)
+                                    } else {
+                                        this.showSent(message, result.hash)
+                                    }
 
-                })
-            })
+                                })
+                            })
+                    })
+                }))
             .catch((error) => {
+                console.error(error)
                 this.loading.dismiss()
                 if (error.message == 'ERR_CONNECTION')
                     this.showError('ERROR_SEND_TEXT', '')
@@ -214,7 +224,7 @@ export class AssetTransferPage {
             this.recipient_avatar = this.recipient_avatar.trim()
             Promise.all([this.mvs.getGlobalAvatar(this.recipient_avatar), this.recipient_avatar])
                 .then(result => {
-                    if(this.recipient_avatar!=result[1])
+                    if (this.recipient_avatar != result[1])
                         throw ''
                     this.recipient_avatar_valid = true
                     this.recipient_address = result[0].address

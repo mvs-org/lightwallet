@@ -36,7 +36,8 @@
                 <ion-card *ngFor="let address of addresses" (click)="show(address)" class="font-mono">
                     <ion-card-content>
                         <h1>{{address}}</h1>
-                        <p *ngIf="!showAll"><b>{{selectedAsset}}: </b>{{(addressBalancesObject[address] && addressBalancesObject[address]['MST'] && addressBalancesObject[address]['MST'][selectedAsset])?format(addressBalancesObject[address]['MST'][selectedAsset].available,addressBalancesObject[address]['MST'][selectedAsset].decimals):0}}</p>
+                        <p *ngIf="selectedAsset!='ETP'&&!showAll"><b>{{selectedAsset}}: </b>{{(addressBalancesObject[address] && addressBalancesObject[address]['MST'] && addressBalancesObject[address]['MST'][selectedAsset])?format(addressBalancesObject[address]['MST'][selectedAsset].available,addressBalancesObject[address]['MST'][selectedAsset].decimals):0}}</p>
+                        <p *ngIf="selectedAsset=='ETP'&&!showAll"><b>{{selectedAsset}}: </b>{{(addressBalancesObject[address] && addressBalancesObject[address].ETP )?format(addressBalancesObject[address].ETP.available,addressBalancesObject[address].ETP.decimals):0}}</p>
                         <ng-container *ngIf="showAll">
                             <p *ngFor="let balance of addressbalances[address]"><b>{{balance.name}}: </b> {{format(balance.available, balance.decimals)}}</p>
                         </ng-container>

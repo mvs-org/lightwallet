@@ -61,10 +61,12 @@ export class TransactionsPage {
         let result = false;
         tx.inputs.forEach((input) => {
             if (this.isMineTXIO(input, addresses)) {
-                if (['asset-transfer', 'asset-issue'].indexOf(input.attachment.type) !== -1 && input.attachment.symbol == asset)
-                    result = true;
-                else if (asset == 'ETP' && input.value)
-                    result = true;
+                if (!tx.unconfirmed) {
+                    if (['asset-transfer', 'asset-issue'].indexOf(input.attachment.type) !== -1 && input.attachment.symbol == asset)
+                        result = true;
+                    else if (asset == 'ETP' && input.value)
+                        result = true;
+                }
             }
         });
         if (result) return tx;

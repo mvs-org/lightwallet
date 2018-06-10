@@ -263,6 +263,8 @@
     "CREATE_AVATAR.ADDRESS": "Address",
 
     "RECIPIENT_AVATAR": "Recipient avatar",
-    "SEND_TO_AVATAR": "Send to avatar"
-
+    "SEND_TO_AVATAR": "Send to avatar",
+    "HEADLINE_MST": "Metaverse Smart Token",
+    "HEADLINE_MIT": "Metaverse Identifiable Token",
+    "NO_MIT_TEXT": "You don't have any MIT yet. In order to create MIT you first have to create an avatar."
 }
