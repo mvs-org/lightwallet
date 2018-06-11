@@ -1,0 +1,44 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>{{"MIT_TRANSFER" | translate}}</ion-title>
+    </ion-navbar>
+</ion-header>
+
+
+
+<ion-content padding style="padding-bottom: 0;">
+    <p align="center" *ngIf="etpBalance<10000">{{"NOTICE_TRANSACTION_FEE_UNCOVERED"|translate}}</p>
+            <p class="right">{{"FEE"|translate}}:<br *ngIf="platform.is('mobile')"> {{format(10000,8)}} ETP</p>
+
+    <form #sendForm="ngForm" style="padding-bottom: 0;">
+        <ion-list style="padding-bottom: 0;">
+            <ion-item [ngClass]="{'error-border':!validAvatar(recipient_avatar)}">
+                <ion-label color="primary" floating>{{"RECIPIENT_AVATAR"|translate}}</ion-label>
+                <ion-input #recipientAvatarInput name="recipient_avatar" [(ngModel)]="recipient_avatar" (ngModelChange)="recipientAvatarChanged($event)" required></ion-input>
+            </ion-item>
+            <ion-item [ngClass]="{'error-border':!validrecipient(recipient_address)}">
+                <ion-label color="primary" floating>{{"RECIPIENT_ADDRESS"|translate}}</ion-label>
+            <ion-input #recipientAddressInput name="recipient_address" [(ngModel)]="recipient_address" (ngModelChange)="recipientChanged($event)" required></ion-input>
+            </ion-item>
+            <ion-item [ngClass]="{'error-border': !validPassword(passphrase)}">
+                <ion-label color="primary" floating>{{"PASSWORD" | translate}}</ion-label>
+                <ion-input name="passphrase" type="password" [(ngModel)]="passphrase" required></ion-input>
+            </ion-item>
+            <br>
+        </ion-list>
+        <ion-row class="padding-bottom">
+            <ion-col>
+                <button ion-button full [disabled]="!sendForm.form.valid||!validrecipient(recipient_address)||!validAvatar(recipient_avatar)||!validPassword(passphrase)" (click)="send()" icon-left color="secondary">
+                    <ion-icon disabled="checked" name="send"></ion-icon>
+                    {{"MIT_REGISTER.REGISTER_BUTTON" | translate}}
+                </button>
+            </ion-col>
+            <ion-col>
+                <button ion-button color="danger" full item-right icon-left (click)="cancel($event)">
+                <ion-icon name="cancel"></ion-icon>
+                {{"CANCEL" | translate}}
+            </button>
+            </ion-col>
+        </ion-row>
+    </form>
+</ion-content>

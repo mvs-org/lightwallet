@@ -93,6 +93,8 @@ export class AccountPage {
 
     gotoTransfer = (event, asset) => this.nav.push("transfer-page", { asset: asset })
 
+    MITTransfer = (event, mit) => this.nav.push("MITTransferPage", { mit: mit })
+
     gotoReceive = (even, asset) => this.nav.push("receive-page", { asset: asset })
 
     errorImg = e => e.target.remove()

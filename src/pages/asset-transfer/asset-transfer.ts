@@ -48,7 +48,8 @@ export class AssetTransferPage {
         private barcodeScanner: BarcodeScanner,
         private keyboard: Keyboard,
         //private clipboard: Clipboard,
-        private translate: TranslateService) {
+        private translate: TranslateService
+    ) {
 
         this.selectedAsset = navParams.get('asset')
         this.sendFrom = 'auto'
