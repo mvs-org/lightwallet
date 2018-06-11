@@ -454,7 +454,7 @@ export class MvsServiceProvider {
         return Metaverse.wallet.wordlists[lang]
     }
 
-    /*checkmnemonic() {
-        Metaverse.wallet.validateMnemonic
-    }*/
+    checkmnemonic(mnemonic, wordlist) {
+        return Metaverse.wallet.validateMnemonic(mnemonic, wordlist)
+    }
 }
