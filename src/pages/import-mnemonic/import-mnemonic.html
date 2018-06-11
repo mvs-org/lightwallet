@@ -10,11 +10,25 @@
             <h2 class="center-text info">{{'IMPORT_WORDS_TITLE'|translate}}</h2>
             <h2 class="center-text info">{{'PASTE_WORDS'|translate}}</h2>
         </ion-item>
-        <ion-item class="card card-md inputWords">
+        <ion-item class="card card-md inputWords" [ngClass]="{'error-border': !validmnemonic}">
             <ion-textarea  ion-input rows="3" full type="text" value="" class="textbox" style="" [(ngModel)]="all_words" (ngModelChange)="onChange()" [ngModelOptions]="{standalone: true}"></ion-textarea>
         </ion-item>
+    </ion-row>
+
+    <ion-row>
+        <ion-item no-lines>
+            <h2 *ngIf="amount_words < 24">{{24 - amount_words}}{{'IMPORT.WORDS_REMAINING'|translate}}</h2>
+            <h2 *ngIf="validmnemonic" class="valid"><ion-icon name="checkmark"></ion-icon> {{'IMPORT.WORDS_ALL_OK'|translate}}</h2>
+            <h2 *ngIf="amount_words == 24 && (first_wrong == -1 || first_wrong >= 24) && !validmnemonic" class="invalid"><ion-icon name="close"></ion-icon> {{'IMPORT.INCORRECT_MNEMONIC'|translate}}</h2>
+            <h2 *ngIf="amount_words == 24 && first_wrong !== -1 && first_wrong < 24" class="invalid"><ion-icon name="close"></ion-icon> {{'IMPORT.INCORRECT_WORD'|translate}}{{first_wrong + 1}}</h2>
+            <h2 *ngIf="amount_words > 24" class="invalid"><ion-icon name="close"></ion-icon> {{'IMPORT.WORDS_TOO_MANY'|translate}}</h2>
+        </ion-item>
+    </ion-row>
+
+    <ion-row>
         <h2 class="center-text info">-{{"OR"|translate}}-</h2>
     </ion-row>
+
     <ion-row>
         <ion-item>
             <h2 item-center class="center-text">{{"IMPORT_WORDS"|translate}}</h2>
@@ -23,19 +37,19 @@
     <form (ngSubmit)="import()" #importForm="ngForm">
         <ion-row *ngFor="let i of [0,1,2,3,4,5,6,7,8,9,10,11]">
             <ion-col>
-                <ion-item>
-                    <ion-input type="text" name="word{{2*i}}" placeholder="{{i*2+1}}" [(ngModel)]="words[i*2]" large required></ion-input>
+                <ion-item [ngClass]="{'error-border': !validword[i*2], 'valid-border': validword[i*2]}">
+                    <ion-input type="text" name="word{{2*i}}" placeholder="{{i*2+1}}" [(ngModel)]="words[i*2]" (ngModelChange)="onChangePerWord()" large required></ion-input>
                 </ion-item>
             </ion-col>
             <ion-col>
-                <ion-item>
-                    <ion-input type="text" name="word{{2*i+1}}" placeholder="{{i*2+2}}" [(ngModel)]="words[i*2+1]" large required></ion-input>
+                <ion-item [ngClass]="{'error-border': !validword[i*2+1], 'valid-border': validword[i*2+1]}">
+                    <ion-input type="text" name="word{{2*i+1}}" placeholder="{{i*2+2}}" [(ngModel)]="words[i*2+1]" (ngModelChange)="onChangePerWord()" large required></ion-input>
                 </ion-item>
             </ion-col>
         </ion-row>
         <ion-row class="button">
             <ion-col col-sm-6 offset-md-1 col-md-5 offset-lg-2 col-lg-4 offset-xl-3 col-xl-3>
-                <button ion-button full icon-left color="secondary" type="submit" class="clear" [disabled]="!importForm.form.valid && !passed">
+                <button ion-button full icon-left color="secondary" type="submit" class="clear" [disabled]="!importForm.form.valid || !validmnemonic">
                     <ion-icon name="download"></ion-icon>
                     {{"IMPORT_WALLET"|translate}}
                 </button>

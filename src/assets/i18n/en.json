@@ -270,5 +270,11 @@
     "MIT_REGISTER.SYMBOL": "Symbol",
     "MIT_REGISTER.CONTENT": "Content",
     "MIT_REGISTER.REGISTER_BUTTON": "Register MIT",
-    "ISSUE.REGISTER_MST": "Register MST"
+    "ISSUE.REGISTER_MST": "Register MST",
+
+    "IMPORT.WORDS_REMAINING": " words remaining",
+    "IMPORT.WORDS_ALL_OK": "Ready to import",
+    "IMPORT.WORDS_TOO_MANY": "More than 24 words have been entered",
+    "IMPORT.INCORRECT_WORD": "Incorrect word No. ",
+    "IMPORT.INCORRECT_MNEMONIC": "This mnemonic is not correct. Please double check the order of the words"
 }

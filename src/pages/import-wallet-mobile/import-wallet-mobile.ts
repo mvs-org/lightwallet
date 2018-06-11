@@ -44,7 +44,7 @@ export class ImportWalletMobilePage {
                     } else if (content[1] != this.globals.network.charAt(0)) {
                         this.showError('MESSAGE.NETWORK_MISMATCH')
                     } else {
-                        wallet = { "index": content[2] }
+                        wallet = { "index": Math.max(5,Math.min(parseInt(content[2]),50)) }
                         this.wallet.setWallet(wallet)
                         this.wallet.setMobileWallet(content[0]).then(() => this.qrCodeLoaded = true)
                     }

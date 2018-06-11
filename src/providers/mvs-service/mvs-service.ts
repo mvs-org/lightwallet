@@ -470,4 +470,12 @@ export class MvsServiceProvider {
                     throw Error('ERR_BROADCAST')
             })
     }
+
+    getdictionary(lang) {
+        return Metaverse.wallet.wordlists[lang]
+    }
+
+    checkmnemonic(mnemonic, wordlist) {
+        return Metaverse.wallet.validateMnemonic(mnemonic, wordlist)
+    }
 }
