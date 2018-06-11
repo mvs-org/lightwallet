@@ -7,4 +7,23 @@ page-avatars {
         margin-top: 20px;
         margin-bottom: 20px;
     }
+
+    .right {
+        float: right;
+    }
+
+    .certificates-title {
+        margin-top: 20px;
+    }
+
+    .cert-type {
+        width: 100px;
+    }
+
+    textarea{
+        min-width: 400px;
+        width: auto;
+        border: 0px !important;
+        resize: none;
+    }
 }

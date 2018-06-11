@@ -45,7 +45,7 @@ export class CreateAvatarPage {
             })
     }
 
-    calcel() {
+    cancel() {
         this.navCtrl.pop();
     }
 

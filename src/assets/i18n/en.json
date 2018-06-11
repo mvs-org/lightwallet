@@ -276,5 +276,10 @@
     "IMPORT.WORDS_ALL_OK": "Ready to import",
     "IMPORT.WORDS_TOO_MANY": "More than 24 words have been entered",
     "IMPORT.INCORRECT_WORD": "Incorrect word No. ",
-    "IMPORT.INCORRECT_MNEMONIC": "This mnemonic is not correct. Please double check the order of the words"
+    "IMPORT.INCORRECT_MNEMONIC": "This mnemonic is not correct. Please double check the order of the words",
+
+    "AVATARS.MY_CERTS": "My certificates",
+    "AVATARS.SECONDARY_ISSUE": "Secondary Issue",
+    "AVATARS.DOMAIN": "Domain",
+    "AVATARS.NAMING": "Naming"
 }

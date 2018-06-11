@@ -7,19 +7,35 @@
 <ion-content padding>
     <div class="no-avatar" *ngIf="no_avatar">{{"AVATARS.NO_AVATARS" | translate}}</div>
     <ion-card class="avatar-card" *ngFor="let avatar of avatars">
-        <h2>{{avatar.symbol}}</h2>
-        {{avatar.address}}
-        <button ion-button icon-left color="primary" icon-left (click)="createAsset(avatar.symbol, avatar.address)">
-            <ion-icon name="person-add"></ion-icon>
-            {{"ISSUE.REGISTER_MST" | translate}}
-        </button>
-        <button ion-button icon-left color="primary" icon-left (click)="registerMIT(avatar.symbol, avatar.address)">
-            <ion-icon name="person-add"></ion-icon>
-            {{"MIT_REGISTER.REGISTER_BUTTON" | translate}}
-        </button>
-        <div *ngFor="let cert of avatar.certs">
-            {{cert.cert_type}} {{cert.symbol}}
-        </div>
+        <ion-grid>
+            <ion-row>
+                <ion-col col-6>
+                    <h1><ion-icon name="person"></ion-icon> {{avatar.symbol}}</h1>
+                    {{avatar.address}}
+                    <!--textarea ion-input type="text" #copy value="{{avatar.address}}" readonly>{{avatar.address}}</textarea>
+                    <button ion-button item-right icon-left [ngxClipboard]="copy">
+                        <ion-icon name="copy"></ion-icon>
+                    </button-->
+                </ion-col>
+                <ion-col col-6>
+                    <button class="right" ion-button clear icon-left color="primary" icon-left (click)="registerMIT(avatar.symbol, avatar.address)">
+                        <ion-icon name="add"></ion-icon>
+                        {{"MIT_REGISTER.REGISTER_BUTTON" | translate}}
+                    </button>
+                    <button class="right" ion-button clear icon-left color="danger" icon-left (click)="createAsset(avatar.symbol, avatar.address)">
+                        <ion-icon name="add"></ion-icon>
+                        {{"ISSUE.REGISTER_MST" | translate}}
+                    </button>
+                </ion-col>
+            </ion-row>
+            <h2 class="certificates-title" *ngIf="avatar.certs && avatar.certs.length > 0"><ion-icon name="paper"></ion-icon> {{"AVATARS.MY_CERTS" | translate}}:</h2>
+            <ion-row *ngFor="let cert of avatar.certs">
+                <ion-col *ngIf="cert.cert_type == 'issue'" class="cert-type">{{"AVATARS.SECONDARY_ISSUE" | translate}}</ion-col>
+                <ion-col *ngIf="cert.cert_type == 'domain'" class="cert-type">{{"AVATARS.DOMAIN" | translate}}</ion-col>
+                <ion-col *ngIf="cert.cert_type == 'naming'" class="cert-type">{{"AVATARS.NAMING" | translate}}</ion-col>
+                <ion-col>{{cert.symbol}}</ion-col>
+            </ion-row>
+        </ion-grid>
     </ion-card>
     <button ion-button icon-left color="primary" icon-left (click)="create()">
         <ion-icon name="person-add"></ion-icon>

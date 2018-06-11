@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { AvatarsPage } from './avatars';
 import { TranslateModule} from '@ngx-translate/core';
+import { ClipboardModule } from 'ngx-clipboard/dist';
 
 @NgModule({
   declarations: [
@@ -9,7 +10,8 @@ import { TranslateModule} from '@ngx-translate/core';
   ],
   imports: [
     IonicPageModule.forChild(AvatarsPage),
-    TranslateModule
+    TranslateModule,
+    ClipboardModule
   ],
 })
 export class AvatarsPageModule {}
