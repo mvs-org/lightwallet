@@ -113,10 +113,12 @@ export class MITTransferPage {
                         throw ''
                     this.recipient_avatar_valid = true
                     this.recipient_address = result[0].address
+                    this.recipientChanged()
                 })
                 .catch((e) => {
                     this.recipient_avatar_valid = false
                     this.recipient_address = ""
+                    this.recipientChanged()
                 })
         }
     }
