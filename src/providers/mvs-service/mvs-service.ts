@@ -221,6 +221,9 @@ export class MvsServiceProvider {
 
     getGlobalAvatar = (symbol) => this.blockchain.avatar.get(symbol)
 
+    getGlobalMit = (symbol) => this.blockchain.MIT.get(symbol)
+
+
     getBalances() {
         return this.storage.get('balances')
             .then((balances: any) => {

@@ -94,6 +94,7 @@ export class AccountPage {
     gotoTransfer = (event, asset) => this.nav.push("transfer-page", { asset: asset })
 
     MITTransfer = (event, mit) => this.nav.push("MITTransferPage", { mit: mit })
+    MITDetails = (event, mit) => this.nav.push("MITDetailsPage", { symbol: mit.symbol })
 
     gotoReceive = (even, asset) => this.nav.push("receive-page", { asset: asset })
 

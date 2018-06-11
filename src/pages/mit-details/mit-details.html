@@ -1,0 +1,24 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{symbol}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+    <h1>{{symbol}}</h1>
+
+    <h2>{{content}}</h2>
+
+    <p>Owner: {{owner}}</p>
+    <p>Creator: {{creator}}</p>
+    <p>Created in: {{create_tx}}</p>
+
+    <p *ngFor="let step of history">
+        {{step.from_did}} {{step.to_did}} {{step.status}} {{step.height}}
+    </p>
+
+</ion-content>
