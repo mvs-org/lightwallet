@@ -48,24 +48,28 @@ export class AccountPage {
             })
     }
 
-    private loadFromCache(){
+    private loadFromCache() {
         return this.showBalances()
-            .then(()=>this.mvs.getHeight())
+            .then(() => this.mvs.getHeight())
             .then((height: number) => {
                 this.height = height
+                return height
             })
     }
 
     private initialize = () => {
-        this.mvs.getTxs()
-            .then(txs => {
-                if (txs && txs.length)
-                    return this.loadFromCache()
-                return
+
+        this.syncinterval = setInterval(() => this.update(), 5000)
+
+        this.mvs.getDbUpdateNeeded()
+            .then((target: any) => {
+                if (target)
+                    return this.mvs.dataReset()
+                        .then(() => this.mvs.setDbVersion(target))
+                return this.loadFromCache()
             })
             .then(() => this.update())
 
-        this.syncinterval = setInterval(() => this.update(), 5000)
     }
 
     private update = () => {

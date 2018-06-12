@@ -325,14 +325,6 @@ export class MvsServiceProvider {
         return this.storage.get('mvs_height').then((height) => (height) ? height : 0)
     }
 
-    setLoaded(bool) {
-        return this.storage.set('loaded', bool)
-    }
-
-    getLoaded() {
-        return this.storage.get('loaded').then((loaded) => (loaded) ? loaded : false)
-    }
-
     getLastTxHeight() {
         return this.storage.get('mvs_last_tx_height').then((height) => (height) ? height : 0)
     }
@@ -361,6 +353,7 @@ export class MvsServiceProvider {
     }
 
     dataReset() {
+        console.info('reset data')
         return Promise.all(['mvs_last_tx_height', 'mvs_height', 'utxo', 'last_update', 'addressbalances', 'balances', 'mvs_txs'].map((key) => this.storage.remove(key)))
     }
 
@@ -371,6 +364,24 @@ export class MvsServiceProvider {
             .then((newTxs: any) => {
                 txs = txs.concat(newTxs.transactions)
                 return this.addTxs(txs).then(() => txs)
+            })
+    }
+
+    getDbVersion() {
+        return this.storage.get('db_version')
+    }
+
+    setDbVersion(version) {
+        return this.storage.set('db_version', version)
+            .then(() => this.getDbVersion())
+    }
+
+    getDbUpdateNeeded(): any {
+        return this.getDbVersion()
+            .then(version => {
+                if (version && this.globals.db_version === version)
+                    return false
+                return this.globals.db_version
             })
     }
 
