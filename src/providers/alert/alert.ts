@@ -32,6 +32,22 @@ export class AlertProvider {
         })
     }
 
+    showLogout(onLogout) {
+        this.translate.get(['RESET_TITLE', 'RESET_MESSAGE', 'CONFIRM', 'BACK']).subscribe(translations => {
+            this.alertCtrl.create({
+                title: translations.RESET_TITLE,
+                message: translations.RESET_MESSAGE,
+                buttons: [
+                    { text: translations.BACK },
+                    {
+                        text: translations.CONFIRM,
+                        handler: onLogout
+                    }
+                ]
+            }).present()
+        })
+    }
+
     showSent(message_key, hash) {
         this.translate.get(['MESSAGE.SUCCESS', 'OK', message_key]).subscribe((translations: any) => {
             let alert = this.alertCtrl.create({

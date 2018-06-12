@@ -3,16 +3,16 @@ import { IonicPageModule } from 'ionic-angular';
 import { CreateAvatarPage } from './create-avatar';
 import { TranslateModule } from '@ngx-translate/core';
 import { AlertProvider } from '../../providers/alert/alert';
-import { FormatPipe } from '../../pipes/format/format';
+import { PipesModule } from '../../pipes/pipes.module';
 
 @NgModule({
     declarations: [
         CreateAvatarPage,
-        FormatPipe
     ],
     imports: [
         IonicPageModule.forChild(CreateAvatarPage),
         TranslateModule,
+        PipesModule
     ],
     providers: [
         AlertProvider

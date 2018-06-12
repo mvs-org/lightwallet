@@ -1,4 +1,4 @@
-            <ion-card class="card-block">
+<ion-card class="card-block">
     <ion-grid>
         <ion-row>
             <ion-col>
@@ -7,7 +7,7 @@
                         <img class="coinlogo" [src]="'assets/icon/'+symbol+'.png'" (error)="errorImg($event)" [ngClass]="{'csdLogoDefault':symbol == 'CSD.CSD' && theme == 'theme-default'}">
                     </ion-avatar>
                     <div>
-                        <h1 [translate]="symbol"></h1>
+                        <h1>{{symbol}}</h1>
                         <h3>{{"AVAILABLE"|translate}}: {{balance.available | format : balance.decimals}}</h3>
                         <p>
                             {{"ACCOUNT.FROZEN"|translate}}: {{balance.frozen | format : balance.decimals}}
@@ -20,21 +20,15 @@
 </ion-card>
 <ion-row col-12 class="row-buttons">
     <ion-col col-4>
-        <button ion-button full clear color="secondary" icon-left (click)="gotoReceive($event, symbol)">
-                                    <ion-icon name="download"></ion-icon>
-                                    {{ "RECEIVE" | translate }}
-                                </button>
+        <button ion-button full clear color="secondary" icon-left (click)="gotoReceive()">
+            <ion-icon name="download"></ion-icon>{{"RECEIVE" | translate}}</button>
     </ion-col>
     <ion-col col-4>
-        <button ion-button full clear color="danger" icon-left (click)="gotoTransfer($event, symbol)">
-                                    <ion-icon name="send"></ion-icon>
-                                    {{ "SEND" | translate }}
-                                </button>
+        <button ion-button full clear color="danger" icon-left (click)="gotoTransfer()">
+            <ion-icon name="send"></ion-icon>{{ "SEND" | translate }}</button>
     </ion-col>
     <ion-col col-4>
-        <button ion-button full clear color="primary" icon-left (click)="gotoTransactions($event, symbol)">
-                                    <ion-icon name="time"></ion-icon>
-                                    {{ "HISTORY" | translate }}
-                                </button>
+        <button ion-button full clear color="primary" icon-left (click)="gotoTransactions()">
+            <ion-icon name="time"></ion-icon>{{ "HISTORY" | translate }}</button>
     </ion-col>
 </ion-row>

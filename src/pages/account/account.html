@@ -26,7 +26,7 @@
 </ion-header>
 
 <ion-content class="center spread-out">
-    <ion-refresher *ngIf="platform.is('mobile')&&!syncingSmall" (ionRefresh)="doRefresh($event)">
+    <ion-refresher *ngIf="platform.is('mobile')&&!syncingSmall" (ionRefresh)="sync($event)">
         <ion-refresher-content class="mini-loader mini-loader-mobile"></ion-refresher-content>
     </ion-refresher>
     <div class="mini-loader" *ngIf="syncing&&balances==undefined"></div>
@@ -42,7 +42,7 @@
             <h2>{{"HEADLINE_MST"|translate}}</h2>
             <ion-row *ngIf="balances!=undefined">
                 <ng-container *ngFor="let asset of balancesKeys" class="asset-container">
-                    <ion-col class="asset-container">
+                    <ion-col *ngIf="balances.MST[asset]!==undefined" class="asset-container">
                         <mst-card [balance]="balances.MST[asset]" [symbol]="asset"></mst-card>
                     </ion-col>
                 </ng-container>

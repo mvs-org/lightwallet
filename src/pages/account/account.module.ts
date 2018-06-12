@@ -5,6 +5,7 @@ import { TranslateModule} from '@ngx-translate/core';
 import { EtpCardComponent } from '../../components/etp-card/etp-card';
 import { MSTCardComponent } from '../../components/mst-card/mst-card';
 import { MITCardComponent } from '../../components/mit-card/mit-card';
+import { AlertProvider } from '../../providers/alert/alert';
 import { PipesModule } from '../../pipes/pipes.module';
 
 @NgModule({
@@ -18,6 +19,9 @@ import { PipesModule } from '../../pipes/pipes.module';
         IonicPageModule.forChild(AccountPage),
         PipesModule,
         TranslateModule,
+    ],
+    providers:[
+        AlertProvider
     ],
     exports: [
         AccountPage

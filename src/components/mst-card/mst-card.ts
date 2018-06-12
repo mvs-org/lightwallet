@@ -12,14 +12,13 @@ export class MSTCardComponent {
 
     constructor(
         private nav: NavController
-    ) {
-    }
+    ) {}
 
     errorImg = e => e.target.remove()
 
-    gotoTransactions = (event, symbol) => this.nav.push("transactions-page", { asset: symbol })
+    gotoTransactions = () => this.nav.push("transactions-page", { asset: this.symbol })
 
-    gotoTransfer = (event, symbol) => this.nav.push("transfer-page", { asset: symbol })
+    gotoTransfer = () => this.nav.push("transfer-page", { asset: this.symbol })
 
-    gotoReceive = (even, asset) => this.nav.push("receive-page", { asset: asset })
+    gotoReceive = () => this.nav.push("receive-page", { asset: this.symbol })
 }

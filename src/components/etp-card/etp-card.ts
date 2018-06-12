@@ -21,4 +21,6 @@ export class EtpCardComponent {
     gotoTransactions = (event) => this.nav.push("transactions-page", { asset: 'ETP' })
 
     gotoTransfer = (event) => this.nav.push("transfer-page", { asset: 'ETP' })
+    
+    gotoReceive = (even) => this.nav.push("receive-page", { asset: 'ETP' })
 }
