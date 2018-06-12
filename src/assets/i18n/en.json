@@ -281,5 +281,8 @@
     "AVATARS.MY_CERTS": "My certificates",
     "AVATARS.SECONDARY_ISSUE": "Secondary Issue",
     "AVATARS.DOMAIN": "Domain",
-    "AVATARS.NAMING": "Naming"
+    "AVATARS.NAMING": "Naming",
+    "OWNER": "Owner",
+    "HASH": "Hash",
+    "RECEIVE.ADDRESS_NO_MST": "This address doesn't have any MST"
 }

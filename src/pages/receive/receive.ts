@@ -17,10 +17,12 @@ export class ReceivePage {
     addressbalances: any;
     addressBalancesObject: any = {};
     addresses: Array<string>;
+    displayType: string;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, private mvs: MvsServiceProvider) {
         this.addressbalances = {};
         this.selectedAsset = navParams.get('asset')
+        this.displayType = this.selectedAsset == 'ETP' ? 'ETP' : 'asset'
         this.mvs.getAddresses()
             .then((_: string[]) => {
                 this.address = _[0];
