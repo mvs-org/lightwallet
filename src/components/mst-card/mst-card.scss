@@ -1,4 +1,6 @@
-page-account {
+mst-card {
+
+    width: 100%;
 
     .asset-container {
        max-width: 100%;
@@ -63,6 +65,11 @@ page-account {
             max-width: 100% !important;
             border-color: transparent;
         }
+    }
+
+    //Browser
+    .card-md{
+        padding: 10px 20px;
     }
 
     //specificity mobile refresh
@@ -145,6 +152,13 @@ page-account {
       left: -1px;
       padding-right: 10px;
       padding-left: 10px;
+    }
+
+    .card-block {
+      padding-top: 10px;
+      padding-left: 20px;
+      padding-right: 20px;
+      padding-bottom: 80px;
     }
 
     .asset-container {

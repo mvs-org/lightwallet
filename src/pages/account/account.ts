@@ -19,9 +19,6 @@ export class AccountPage {
     height: number
     loading: boolean
     balancesKeys: any
-    reorderable = false
-    images: Array<string>
-    grid: Array<Array<string>>
     theme: string
 
     private syncinterval: any;
@@ -35,13 +32,9 @@ export class AccountPage {
         this.mvs.setUpdateTime(lastupdate)
         this.theme = document.getElementById('theme').className
         this.event.subscribe("theme_changed", (theme) => {
-          this.theme = ('theme-' + theme)
+            this.theme = ('theme-' + theme)
         });
     }
-
-    format = (quantity, decimals) => quantity / Math.pow(10, decimals)
-
-    //theme = document.getElementById('theme').className
 
     ionViewDidEnter() {
         this.mvs.getAddresses()
@@ -56,7 +49,7 @@ export class AccountPage {
     initialize = () => {
         this.mvs.getLoaded()
             .then((loaded) => {
-                if(loaded == true){
+                if (loaded == true) {
                     this.loadFromCache()
                 } else {
                     //console.log("To load")
@@ -68,8 +61,8 @@ export class AccountPage {
 
     loadFromCache = () => {
         this.syncing = false
-        this.loadBalances()
         //Update height
+        this.loadBalances()
         this.mvs.getHeight()
             .then((height: number) => {
                 this.height = height
@@ -80,25 +73,12 @@ export class AccountPage {
         return this.mvs.getUpdateNeeded()
             .then((update_needed) => {
                 if (update_needed)
-                    return this.sync().then(()=>this.mvs.setUpdateTime())
+                    return this.sync().then(() => this.mvs.setUpdateTime())
             })
             .catch(() => console.log("Can't update"))
     }
 
     ionViewWillLeave = () => clearInterval(this.syncinterval)
-
-    gotoDeposit = (event, asset) => this.nav.push("DepositPage")
-
-    gotoTransactions = (event, asset) => this.nav.push("transactions-page", { asset: asset })
-
-    gotoTransfer = (event, asset) => this.nav.push("transfer-page", { asset: asset })
-
-    MITTransfer = (event, mit) => this.nav.push("MITTransferPage", { mit: mit })
-    MITDetails = (event, mit) => this.nav.push("MITDetailsPage", { symbol: mit.symbol })
-
-    gotoReceive = (even, asset) => this.nav.push("receive-page", { asset: asset })
-
-    errorImg = e => e.target.remove()
 
     /**
      * Logout dialog

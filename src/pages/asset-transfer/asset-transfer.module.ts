@@ -4,16 +4,16 @@ import { AssetTransferPage } from './asset-transfer';
 import { TranslateModule} from '@ngx-translate/core';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { Keyboard } from '@ionic-native/keyboard';
-import { FormatPipe } from '../../pipes/format/format';
 import { AlertProvider } from '../../providers/alert/alert';
+import { PipesModule } from '../../pipes/pipes.module';
 
 @NgModule({
     declarations: [
-        AssetTransferPage,
-        FormatPipe
+        AssetTransferPage
     ],
     imports: [
         IonicPageModule.forChild(AssetTransferPage),
+        PipesModule,
         TranslateModule
     ],
     providers:[

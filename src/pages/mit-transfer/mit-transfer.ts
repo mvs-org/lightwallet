@@ -30,7 +30,7 @@ export class MITTransferPage {
         private loadingCtrl: LoadingController,
         public navParams: NavParams
     ) {
-        this.symbol = this.navParams.get('mit').symbol
+        this.symbol = this.navParams.get('symbol')
         mvs.getBalances()
             .then((balances) => {
                 this.etpBalance = balances.ETP.available
