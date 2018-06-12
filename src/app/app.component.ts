@@ -10,7 +10,7 @@ import { Storage } from '@ionic/storage';
 @Component({
     templateUrl: 'app.html'
 })
-export class MyApp {
+export class MyETPWallet {
     @ViewChild(Nav) nav: Nav;
 
     rootPage: any

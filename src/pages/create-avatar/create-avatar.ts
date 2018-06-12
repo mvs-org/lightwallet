@@ -1,8 +1,15 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, AlertController, Platform, LoadingController, Loading } from 'ionic-angular';
+import { IonicPage, NavController } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
+import { AlertProvider } from '../../providers/alert/alert';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 
+class AddressBalance{
+    constructor(
+        public address: string,
+        public available: number
+    ) {}
+}
 @IonicPage()
 @Component({
     selector: 'page-create-avatar',
@@ -13,36 +20,29 @@ export class CreateAvatarPage {
     symbol: string = ""
     avatar_address: string = ""
     passphrase: string = ""
-    addressbalances: Array<any>
-    avatars: Array<any>
-    loading: Loading
+    addressbalances: Array<AddressBalance> = []
 
     constructor(
         public navCtrl: NavController,
-        private alertCtrl: AlertController,
-        public platform: Platform,
-        private loadingCtrl: LoadingController,
+        private alert: AlertProvider,
         private translate: TranslateService,
         private mvs: MvsServiceProvider) {
 
-        Promise.all([this.mvs.getAddressBalances(), this.mvs.listAvatars()])
-            .then((results) => {
-                this.avatars = results[1]
-                let addressbalances = results[0]
-                let addrblncs = []
-                if (Object.keys(addressbalances).length) {
-                    Object.keys(addressbalances).forEach((address) => {
-                        if (addressbalances[address].ETP && addressbalances[address].ETP.available >= 100000000) {
-                            addrblncs.push({ "address": address, "available": addressbalances[address].ETP.available })
-                            this.avatars.forEach((avatar) => {
-                                if (avatar.address == address)
-                                    addrblncs.pop();
-                            })
-                        }
-                    })
-                }
-                this.addressbalances = addrblncs
-            })
+        this.mvs.listAvatars()
+            .then(avatars => this.mvs.getAddressBalances()
+                .then(addressbalances => {
+                    if (Object.keys(addressbalances).length) {
+                        Object.keys(addressbalances).forEach((address) => {
+                            if (addressbalances[address].ETP && addressbalances[address].ETP.available >= 100000000) {
+                                this.addressbalances.push(new AddressBalance(address, addressbalances[address].ETP.available))
+                                avatars.forEach((avatar) => {
+                                    if (avatar.address == address)
+                                        this.addressbalances.pop();
+                                })
+                            }
+                        })
+                    }
+                }))
     }
 
     cancel() {
@@ -50,30 +50,23 @@ export class CreateAvatarPage {
     }
 
     create() {
-        return this.showLoading()
+        return this.alert.showLoading()
             .then(() => this.mvs.createAvatarTx(this.passphrase, this.avatar_address, this.symbol, undefined))
             .then(tx => this.mvs.send(tx))
             .then((result) => {
                 this.navCtrl.pop()
                 this.navCtrl.pop()
                 this.navCtrl.push('AvatarsPage')
-                this.translate.get('SUCCESS_SEND_TEXT').subscribe((message: string) => {
-                    if (this.platform.is('mobile')) {
-                        this.showSentMobile(message, result.hash)
-                    } else {
-                        this.showSent(message, result.hash)
-                    }
-
-                })
+                this.alert.showSent('SUCCESS_SEND_TEXT', result.hash)
             })
             .catch((error) => {
                 console.error(error)
-                this.loading.dismiss()
+                this.alert.stopLoading()
                 if (error.message == 'ERR_CONNECTION')
-                    this.showError('ERROR_SEND_TEXT', '')
+                    this.alert.showError('ERROR_SEND_TEXT', '')
                 else if (error.message == 'ERR_BROADCAST') {
                     this.translate.get('MESSAGE.ONE_TX_PER_BLOCK').subscribe((message: string) => {
-                        this.showError('MESSAGE.BROADCAST_ERROR', message)
+                        this.alert.showError('MESSAGE.BROADCAST_ERROR', message)
                     })
                 }
             })
@@ -85,77 +78,4 @@ export class CreateAvatarPage {
 
     validSymbol = (symbol) => (symbol.length > 2) && (symbol.length < 64) && (!/[^A-Za-z0-9.-]/g.test(symbol))
 
-    format = (quantity, decimals) => quantity / Math.pow(10, decimals)
-
-    ionViewDidLoad() {
-        console.log('ionViewDidLoad CreateAvatarPage');
-    }
-
-    showLoading() {
-        return new Promise((resolve, reject) => {
-            this.translate.get('MESSAGE.LOADING').subscribe((loading: string) => {
-                this.loading = this.loadingCtrl.create({
-                    content: loading,
-                    dismissOnPageChange: true
-                })
-                this.loading.present()
-                resolve()
-            })
-        })
-    }
-
-    showSent(text, hash) {
-        this.translate.get('MESSAGE.SUCCESS').subscribe((title: string) => {
-            this.translate.get('OK').subscribe((ok: string) => {
-                let alert = this.alertCtrl.create({
-                    title: title,
-                    subTitle: text + hash,
-                    buttons: [ok]
-                })
-                alert.present(prompt)
-            })
-        })
-    }
-
-    showSentMobile(text, hash) {
-        this.translate.get(['MESSAGE.SUCCESS', 'OK', 'COPY']).subscribe((translations: any) => {
-            let alert = this.alertCtrl.create({
-                title: translations['MESSAGE.SUCCESS'],
-                subTitle: text + hash,
-                buttons: [
-                    {
-                        text: translations['OK'],
-                    }
-                ]
-            })
-            alert.present(prompt)
-        })
-    }
-
-    showAlert(text) {
-        this.translate.get('MESSAGE.ERROR_TITLE').subscribe((title: string) => {
-            this.translate.get('OK').subscribe((ok: string) => {
-                let alert = this.alertCtrl.create({
-                    title: title,
-                    subTitle: text,
-                    buttons: [ok]
-                })
-                alert.present(prompt)
-            })
-        })
-    }
-
-    showError(message_key, error) {
-        this.translate.get(['MESSAGE.ERROR_TITLE', message_key, 'OK']).subscribe((translations: any) => {
-            let alert = this.alertCtrl.create({
-                title: translations['MESSAGE.ERROR_TITLE'],
-                subTitle: translations[message_key],
-                message: error,
-                buttons: [{
-                    text: translations['OK']
-                }]
-            });
-            alert.present(alert);
-        })
-    }
 }

@@ -4,11 +4,13 @@ import { AssetTransferPage } from './asset-transfer';
 import { TranslateModule} from '@ngx-translate/core';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { Keyboard } from '@ionic-native/keyboard';
-//import { Clipboard } from '@ionic-native/clipboard';
+import { FormatPipe } from '../../pipes/format/format';
+import { AlertProvider } from '../../providers/alert/alert';
 
 @NgModule({
     declarations: [
         AssetTransferPage,
+        FormatPipe
     ],
     imports: [
         IonicPageModule.forChild(AssetTransferPage),
@@ -16,8 +18,8 @@ import { Keyboard } from '@ionic-native/keyboard';
     ],
     providers:[
         BarcodeScanner,
-        Keyboard//,
-        //Clipboard
+        Keyboard,
+        AlertProvider
     ],
     exports: [
         AssetTransferPage

@@ -62,8 +62,6 @@ export class MITRegisterPage {
 
     validContent = (content) => content.length<64
 
-    format = (quantity, decimals) => quantity / Math.pow(10, decimals)
-
     create() {
         return this.showLoading()
             .then(() => this.mvs.createRegisterMITTx(this.passphrase, this.recipient_address, this.recipient_avatar, this.symbol, this.content, undefined))

@@ -1,10 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, AlertController, LoadingController, Loading, NavParams, Platform } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { TranslateService } from '@ngx-translate/core';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import { AlertProvider } from '../../providers/alert/alert';
 import { Keyboard } from '@ionic-native/keyboard';
-//import { Clipboard } from '@ionic-native/clipboard';
 
 @IonicPage({
     name: 'transfer-page',
@@ -21,42 +21,34 @@ export class AssetTransferPage {
     balance: number
     decimals: number
     showBalance: number
-    loading: Loading
-    recipient_address: string
+    recipient_address: string = ""
     recipient_avatar: string
     recipient_avatar_valid: boolean
-    quantity: string
+    quantity: string = ""
     builtFor: string
     rawtx: string
     passcodeSet: any
     addressbalances: Array<any>
-    sendFrom: string
+    sendFrom: string = "auto"
     changeAddress: string
-    feeAddress: string
-    passphrase: string
+    feeAddress: string = "auto"
+    passphrase: string = ""
     etpBalance: number
     @ViewChild('recipientAddressInput') recipientAddressInput;
     @ViewChild('quantityInput') quantityInput;
 
     constructor(
         public navCtrl: NavController,
-        private alertCtrl: AlertController,
-        private loadingCtrl: LoadingController,
         public navParams: NavParams,
         private mvs: MvsServiceProvider,
         public platform: Platform,
+        private alert: AlertProvider,
         private barcodeScanner: BarcodeScanner,
         private keyboard: Keyboard,
-        //private clipboard: Clipboard,
         private translate: TranslateService
     ) {
 
         this.selectedAsset = navParams.get('asset')
-        this.sendFrom = 'auto'
-        this.feeAddress = 'auto'
-        this.recipient_address = ''
-        this.quantity = ''
-        this.passphrase = ''
 
         //Load addresses
         mvs.getAddresses()
@@ -133,15 +125,15 @@ export class AssetTransferPage {
         this.create()
             .then((tx) => {
                 this.rawtx = tx.encode().toString('hex')
-                this.loading.dismiss()
+                this.alert.stopLoading()
             })
             .catch((error) => {
-                this.loading.dismiss()
+                this.alert.stopLoading()
             })
     }
 
     create() {
-        return this.showLoading()
+        return this.alert.showLoading()
             .then(() => this.mvs.getAddresses())
             .then((addresses) => this.mvs.createSendTx(
                 this.passphrase,
@@ -154,12 +146,16 @@ export class AssetTransferPage {
             ))
             .catch((error) => {
                 console.error(error.message)
-                if (error.message == "ERR_DECRYPT_WALLET")
-                    this.showError('MESSAGE.PASSWORD_WRONG', '')
-                else if (error.message == "ERR_INSUFFICIENT_BALANCE")
-                    this.showError('MESSAGE.INSUFFICIENT_BALANCE', '')
-                else
-                    this.showError('MESSAGE.CREATE_TRANSACTION', error.message)
+                switch(error.message){
+                    case "ERR_DECRYPT_WALLET":
+                        this.alert.showError('MESSAGE.PASSWORD_WRONG', '')
+                        break;
+                    case "ERR_INSUFFICIENT_BALANCE":
+                        this.alert.showError('MESSAGE.INSUFFICIENT_BALANCE', '')
+                        break;
+                    default:
+                        this.alert.showError('MESSAGE.CREATE_TRANSACTION', error.message)
+                }
             })
     }
 
@@ -168,23 +164,16 @@ export class AssetTransferPage {
             .then(tx => this.mvs.send(tx))
             .then((result) => {
                 this.navCtrl.pop()
-                this.translate.get('SUCCESS_SEND_TEXT').subscribe((message: string) => {
-                    if (this.platform.is('mobile')) {
-                        this.showSentMobile(message, result.hash)
-                    } else {
-                        this.showSent(message, result.hash)
-                    }
-
-                })
+                this.alert.showSent('SUCCESS_SEND_TEXT', result.hash)
             })
             .catch((error) => {
                 console.error(error)
-                this.loading.dismiss()
+                this.alert.stopLoading()
                 if (error.message == 'ERR_CONNECTION')
-                    this.showError('ERROR_SEND_TEXT', '')
+                    this.alert.showError('ERROR_SEND_TEXT', '')
                 else if (error.message == 'ERR_BROADCAST') {
                     this.translate.get('MESSAGE.ONE_TX_PER_BLOCK').subscribe((message: string) => {
-                        this.showError('MESSAGE.BROADCAST_ERROR', message)
+                        this.alert.showError('MESSAGE.BROADCAST_ERROR', message)
                     })
                 }
 
@@ -199,8 +188,6 @@ export class AssetTransferPage {
         }
         this.quantityInput.setFocus()
     }
-
-    format = (quantity, decimals) => quantity / Math.pow(10, decimals)
 
     validrecipient = this.mvs.validAddress
 
@@ -232,101 +219,17 @@ export class AssetTransferPage {
 
     validPassword = (passphrase) => (passphrase.length > 0)
 
-    showLoading() {
-        return new Promise((resolve, reject) => {
-            this.translate.get('MESSAGE.LOADING').subscribe((loading: string) => {
-                this.loading = this.loadingCtrl.create({
-                    content: loading,
-                    dismissOnPageChange: true
-                })
-                this.loading.present()
-                resolve()
-            })
-        })
-    }
-
-    showSent(text, hash) {
-        this.translate.get(['MESSAGE.SUCCESS', 'OK']).subscribe((translations: any) => {
-            let alert = this.alertCtrl.create({
-                title: translations['MESSAGE.SUCCESS'],
-                subTitle: text + hash,
-                buttons: [
-                    {
-                        text: translations['OK'],
-                    }
-                ]
-            })
-            alert.present(prompt)
-        })
-    }
-
-
-    showSentMobile(text, hash) {
-        this.translate.get(['MESSAGE.SUCCESS', 'OK', 'COPY']).subscribe((translations: any) => {
-            let alert = this.alertCtrl.create({
-                title: translations['MESSAGE.SUCCESS'],
-                subTitle: text + hash,
-                buttons: [
-                    /*{
-                        text: translations['COPY'],
-                        role: 'copy',
-                        handler: () => {
-                            this.clipboard.copy(hash).then(
-                                (resolve: string) => {
-                                  console.log(resolve);
-                                },
-                                (reject: string) => {
-                                  console.error('Error: ' + reject);
-                                })
-                        }
-                    },*/
-                    {
-                        text: translations['OK'],
-                    }
-                ]
-            })
-            alert.present(prompt)
-        })
-    }
-
-    showError(message_key, error) {
-        this.translate.get(['MESSAGE.ERROR_TITLE', message_key, 'OK']).subscribe((translations: any) => {
-            let alert = this.alertCtrl.create({
-                title: translations['MESSAGE.ERROR_TITLE'],
-                subTitle: translations[message_key],
-                message: error,
-                buttons: [{
-                    text: translations['OK']
-                }]
-            });
-            alert.present(alert);
-        })
-    }
-
-    showWrongAddress() {
-        this.translate.get(['MESSAGE.NOT_ETP_ADDRESS_TITLE', 'MESSAGE.NOT_ETP_ADDRESS_TEXT', 'OK']).subscribe((translations: any) => {
-            let alert = this.alertCtrl.create({
-                title: translations['MESSAGE.NOT_ETP_ADDRESS_TITLE'],
-                message: translations['MESSAGE.NOT_ETP_ADDRESS_TEXT'],
-                buttons: [{
-                    text: translations['OK']
-                }]
-            });
-            alert.present(alert);
-        })
-    }
-
     scan() {
         this.translate.get(['SCANNING.MESSAGE_ADDRESS']).subscribe((translations: any) => {
             this.barcodeScanner.scan(
                 {
-                    preferFrontCamera: false, // iOS and Android
-                    showFlipCameraButton: false, // iOS and Android
-                    showTorchButton: false, // iOS and Android
-                    torchOn: false, // Android, launch with the torch switched on (if available)
-                    prompt: translations['SCANNING.MESSAGE_ADDRESS'], // Android
-                    resultDisplayDuration: 0, // Android, display scanned text for X ms. 0 suppresses it entirely, default 1500
-                    formats: "QR_CODE", // default: all but PDF_417 and RSS_EXPANDED
+                    preferFrontCamera: false,
+                    showFlipCameraButton: false,
+                    showTorchButton: false,
+                    torchOn: false,
+                    prompt: translations['SCANNING.MESSAGE_ADDRESS'],
+                    resultDisplayDuration: 0,
+                    formats: "QR_CODE",
                 }).then((result) => {
                     if (!result.cancelled) {
                         let content = result.text.toString().split('&')
@@ -335,7 +238,7 @@ export class AssetTransferPage {
                             this.recipientAddressInput.setFocus();
                             this.keyboard.close()
                         } else {
-                            this.showWrongAddress()
+                            this.alert.showWrongAddress()
                         }
                     }
                 })

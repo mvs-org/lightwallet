@@ -5,7 +5,7 @@ import { HttpModule, Http } from '@angular/http';
 import { IonicStorageModule } from '@ionic/storage';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { MyApp } from './app.component';
+import { MyETPWallet } from './app.component';
 import { AppGlobals } from './app.global';
 import { MvsServiceProvider } from '../providers/mvs-service/mvs-service';
 import { WalletServiceProvider } from '../providers/wallet-service/wallet-service';
@@ -17,17 +17,17 @@ import { Keyboard } from '@ionic-native/keyboard';
 var pckg = require('../../package.json');
 
 export function HttpLoaderFactory(http: Http) {
-    return new TranslateHttpLoader(http, './assets/i18n/', '.json?v='+pckg.version);
+    return new TranslateHttpLoader(http, './assets/i18n/', '.json?v=' + pckg.version);
 }
 
 @NgModule({
     declarations: [
-        MyApp
+        MyETPWallet,
     ],
     imports: [
         BrowserModule,
         HttpModule,
-        IonicModule.forRoot(MyApp),
+        IonicModule.forRoot(MyETPWallet),
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
@@ -42,7 +42,7 @@ export function HttpLoaderFactory(http: Http) {
     ],
     bootstrap: [IonicApp],
     entryComponents: [
-        MyApp
+        MyETPWallet
     ],
     providers: [
         AppGlobals,
@@ -52,7 +52,7 @@ export function HttpLoaderFactory(http: Http) {
         WalletServiceProvider,
         CryptoServiceProvider,
         StatusBar,
-        Keyboard
+        Keyboard,
     ]
 })
 export class AppModule {
