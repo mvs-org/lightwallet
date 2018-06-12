@@ -12,12 +12,10 @@ export class MITCardComponent {
 
     constructor(
         private nav: NavController
-    ) {
-    }
+    ) {}
 
-    MITTransfer = (event) => this.nav.push("MITTransferPage", { symbol: this.symbol, owner: this.avatar })
-    MITDetails = (event) => this.nav.push("MITDetailsPage", { symbol: this.symbol })
+    MITTransfer = () => this.nav.push("MITTransferPage", { symbol: this.symbol, owner: this.avatar })
 
-
+    MITDetails = () => this.nav.push("MITDetailsPage", { symbol: this.symbol })
     errorImg = e => e.target.remove()
 }

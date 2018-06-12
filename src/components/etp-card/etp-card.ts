@@ -11,16 +11,13 @@ export class EtpCardComponent {
 
     constructor(
         private nav: NavController
-    ) {
-    }
+    ) { }
 
-    errorImg = e => e.target.remove()
+    gotoDeposit = () => this.nav.push("DepositPage")
 
-    gotoDeposit = (event) => this.nav.push("DepositPage")
+    gotoTransactions = () => this.nav.push("transactions-page", { asset: 'ETP' })
 
-    gotoTransactions = (event) => this.nav.push("transactions-page", { asset: 'ETP' })
+    gotoTransfer = () => this.nav.push("transfer-page", { asset: 'ETP' })
 
-    gotoTransfer = (event) => this.nav.push("transfer-page", { asset: 'ETP' })
-    
-    gotoReceive = (even) => this.nav.push("receive-page", { asset: 'ETP' })
+    gotoReceive = () => this.nav.push("receive-page", { asset: 'ETP' })
 }

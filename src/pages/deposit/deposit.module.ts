@@ -4,7 +4,7 @@ import { DepositPage } from './deposit';
 import { TranslateModule} from '@ngx-translate/core';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { Keyboard } from '@ionic-native/keyboard';
-//import { Clipboard } from '@ionic-native/clipboard';
+import { PipesModule } from '../../pipes/pipes.module';
 
 @NgModule({
     declarations: [
@@ -12,12 +12,12 @@ import { Keyboard } from '@ionic-native/keyboard';
     ],
     imports: [
         IonicPageModule.forChild(DepositPage),
+        PipesModule,
         TranslateModule
     ],
     providers:[
         BarcodeScanner,
-        Keyboard//,
-        //Clipboard
+        Keyboard,
     ],
     exports: [
         DepositPage

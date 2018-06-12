@@ -8,7 +8,7 @@
 
 <ion-content padding style="padding-bottom: 0;">
     <p align="center" *ngIf="etpBalance<10000">{{"NOTICE_TRANSACTION_FEE_UNCOVERED"|translate}}</p>
-            <p class="right">{{"FEE"|translate}}:<br *ngIf="platform.is('mobile')"> {{format(10000,8)}} ETP</p>
+            <p class="right">{{"FEE"|translate}}:<br *ngIf="platform.is('mobile')"> {{10000| format : 8}} ETP</p>
 
     <form #sendForm="ngForm" style="padding-bottom: 0;">
         <ion-list style="padding-bottom: 0;">

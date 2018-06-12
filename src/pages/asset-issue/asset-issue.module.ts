@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { AssetIssuePage } from './asset-issue';
 import { TranslateModule} from '@ngx-translate/core';
+import { PipesModule } from '../../pipes/pipes.module';
 
 @NgModule({
     declarations: [
@@ -9,6 +10,7 @@ import { TranslateModule} from '@ngx-translate/core';
     ],
     imports: [
         IonicPageModule.forChild(AssetIssuePage),
+        PipesModule,
         TranslateModule
     ],
     exports: [

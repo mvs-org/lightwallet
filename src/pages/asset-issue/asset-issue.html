@@ -10,7 +10,7 @@
 <ion-content padding style="padding-bottom: 0;">
     <ion-row>
         <ion-col>
-            <p>{{"AVAILABLE_BALANCE" | translate}}: <br *ngIf="platform.is('mobile')">{{format(showBalance,decimals)  | number : '1.0-8'}} {{selectedAsset}}</p>
+            <p>{{"AVAILABLE_BALANCE" | translate}}: <br *ngIf="platform.is('mobile')">{{showBalance| format : decimals}} {{selectedAsset}}</p>
         </ion-col>
         <ion-col>
             <p class="right">{{"FEE"|translate}}:<br *ngIf="platform.is('mobile')"> 10 ETP</p>
@@ -79,7 +79,7 @@
                     <ion-label>{{"ISSUE.FEE_ADDRESS"|translate}}</ion-label>
                     <ion-select [(ngModel)]="sendFrom" name="sendfrom" multiple="false" okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}">
                         <ion-option selected="true" value="auto">{{"AUTO"| translate}}</ion-option>
-                        <ion-option *ngFor="let addressbalance of addressbalances" value="{{addressbalance.address}}">{{addressbalance.address}} - {{format(addressbalance.balance, decimals) | number : '1.0-8'}} {{selectedAsset}}</ion-option>
+                        <ion-option *ngFor="let addressbalance of addressbalances" value="{{addressbalance.address}}">{{addressbalance.address}} - {{addressbalance.balance | format : decimals }} {{selectedAsset}}</ion-option>
                     </ion-select>
                 </ion-item>
                 <br>
