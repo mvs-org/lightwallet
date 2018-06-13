@@ -9,6 +9,7 @@ export class MSTCardComponent {
 
     @Input() balance: any;
     @Input() symbol: string;
+    @Input() theme: string;
 
     constructor(
         private nav: NavController
