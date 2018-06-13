@@ -465,7 +465,8 @@ export class MvsServiceProvider {
                     tx.height = height
                     tx.hash = result.hash
                     tx.outputs.forEach((output, index) => {
-                        output.index = index;
+                        output.index = index
+                        output.locked_height_range = (output.locktime)?output.locktime:0
                     })
                     tx.unconfirmed = true
                     return this.addTxs([tx])
