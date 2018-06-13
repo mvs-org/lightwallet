@@ -3,23 +3,23 @@
         <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-        <ion-title>{{"ACCOUNT.TITLE"|translate}}</ion-title>
+        <ion-title>{{'ACCOUNT.TITLE'|translate}}</ion-title>
         <ion-buttons end>
-            <ion-spinner *ngIf="syncingSmall"></ion-spinner>
-            <ion-icon *ngIf="offline&&!syncingSmall" name="flash" class="offlineIcon"></ion-icon>
+            <ion-spinner *ngIf="isSyncing()"></ion-spinner>
+            <ion-icon *ngIf="isOffline()" name="flash" class="offlineIcon"></ion-icon>
         </ion-buttons>
         <ion-buttons end>
-            <button *ngIf="!syncingSmall&&!platform.is('mobile')" ion-button (click)="sync()" icon-left>
+            <button *ngIf="!isSyncing() && !platform.is('mobile')" ion-button (click)="sync()" icon-left>
         <ion-icon name="refresh"></ion-icon>
-        <span>{{"RESYNC" |translate}}</span>
+        <span [translate]="'RESYNC'"></span>
       </button>
             <button *ngIf="!platform.is('mobile')" ion-button icon-left (click)="logout()">
           <ion-icon name="log-out"></ion-icon>
-          <span>{{"LOGOUT" |translate}}</span>
+          <span [translate]="'LOGOUT'"></span>
       </button>
             <button ion-button icon-left>
-          <span *ngIf="platform.is('mobile')&&platform.is('ios')&&!syncingSmall" class="block-iPhone">{{height}} <ion-icon name="cube"></ion-icon></span>
-          <span *ngIf="!(platform.is('mobile')&&platform.is('ios'))">{{"HEIGHT" |translate}}: {{height}}</span>
+          <span *ngIf="platform.is('mobile')&&platform.is('ios')&&!isSyncing()" class="block-iPhone">{{height}} <ion-icon name="cube"></ion-icon></span>
+          <span *ngIf="!(platform.is('mobile')&&platform.is('ios'))"><span [translate]="'HEIGHT'"></span>: {{height}}</span>
       </button>
         </ion-buttons>
     </ion-navbar>
@@ -35,11 +35,11 @@
             <ion-row>
                 <ng-container class="asset-container">
                     <ion-col class="asset-container">
-                <etp-card *ngIf="balances!=undefined" [balance]="balances.ETP"></etp-card>
+                        <etp-card *ngIf="balances!=undefined" [balance]="balances.ETP"></etp-card>
                     </ion-col>
                 </ng-container>
             </ion-row>
-            <h2>{{"HEADLINE_MST"|translate}}</h2>
+            <h2 [translate]="'HEADLINE_MST'"></h2>
             <ion-row *ngIf="balances!=undefined">
                 <ng-container *ngFor="let asset of balancesKeys" class="asset-container">
                     <ion-col *ngIf="balances.MST[asset]!==undefined" class="asset-container">
@@ -48,8 +48,8 @@
                 </ng-container>
             </ion-row>
             <br>
-            <h2>{{"HEADLINE_MIT"|translate}}</h2>
-            <div *ngIf="balances!=undefined&&balances.MIT.length==0">{{"NO_MIT_TEXT" | translate}}</div>
+            <h2 [translate]="'HEADLINE_MIT'"></h2>
+            <div *ngIf="balances!=undefined&&balances.MIT.length==0" [translate]="'NO_MIT_TEXT'"></div>
             <ion-row *ngIf="balances!=undefined">
                 <ng-container *ngFor="let mit of balances.MIT" class="asset-container">
                     <ion-col class="asset-container">

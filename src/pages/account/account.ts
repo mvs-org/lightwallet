@@ -11,8 +11,6 @@ import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 })
 export class AccountPage {
 
-    user: string
-    pass: string
     syncing = false
     syncingSmall = false
     offline = false
@@ -38,6 +36,9 @@ export class AccountPage {
         });
     }
 
+    isOffline = () => !this.syncingSmall && this.offline
+    isSyncing = () => this.syncingSmall
+
     ionViewDidEnter() {
         this.mvs.getAddresses()
             .then((addresses) => {
@@ -61,7 +62,7 @@ export class AccountPage {
 
         this.syncinterval = setInterval(() => this.update(), 5000)
 
-        this.mvs.getDbUpdateNeeded()
+        return this.mvs.getDbUpdateNeeded()
             .then((target: any) => {
                 if (target)
                     return this.mvs.dataReset()
