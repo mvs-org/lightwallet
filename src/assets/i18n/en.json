@@ -284,5 +284,11 @@
     "AVATARS.NAMING": "Naming",
     "OWNER": "Owner",
     "HASH": "Hash",
-    "RECEIVE.ADDRESS_NO_MST": "This address doesn't have any MST"
+    "RECEIVE.ADDRESS_NO_MST": "This address doesn't have any MST",
+
+    "ISSUE.SECONDARYISSUE_THRESHOLD": "Secondary Issue threshold",
+    "ISSUE.SECONDARYISSUE_TYPE": "Secondary Issue",
+    "ISSUE.SECONDARYISSUE_DISABLED": "No Secondary Issue possible",
+    "ISSUE.SECONDARYISSUE_UNLIMITED": "Secondary Issue possible with certificate only",
+    "ISSUE.SECONDARYISSUE_RATE": "Secondary Issue possible with certificate and Stacking condition"
 }

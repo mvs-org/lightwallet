@@ -10,7 +10,10 @@
 <ion-content padding style="padding-bottom: 0;">
     <ion-row>
         <ion-col>
-            <p>{{"AVAILABLE_BALANCE" | translate}}: <br *ngIf="platform.is('mobile')">{{showBalance| format : decimals}} {{selectedAsset}}</p>
+            <p *ngIf="addressbalances && addressbalances[issue_address] && addressbalances[issue_address][selectedAsset]">
+          THIS.AVATAR: {{addressbalances[issue_address][selectedAsset].available}}
+        </p>
+            <p>{{"AVAILABLE_BALANCE" | translate}}: <br *ngIf="platform.is('mobile')">TOTAL:{{showBalance| format : decimals}} {{selectedAsset}}</p>
         </ion-col>
         <ion-col>
             <p class="right">{{"FEE"|translate}}:<br *ngIf="platform.is('mobile')"> 10 ETP</p>
@@ -47,15 +50,32 @@
                     <ion-option *ngFor="let item of decimalsList" value="{{item}}">{{item}}</ion-option>
                 </ion-select>
             </ion-item>
-            <ion-item [ngClass]="{'error-border':!validSecondaryissueThreshold(secondaryissue_threshold)}">
+            <!--ion-item [ngClass]="{'error-border':!validSecondaryissueThreshold(secondaryissue_threshold)}">
                 <ion-label color="primary" floating>{{"ISSUE.SECONDARYISSUE_THRESHOLD" | translate}}</ion-label>
                 <ion-input name="secondaryissue_threshold" [(ngModel)]="secondaryissue_threshold" maxlength="3" required></ion-input>
-            </ion-item>
+            </ion-item-->
+            <br>
             <ion-item>
+                <ion-label>{{"ISSUE.SECONDARYISSUE_TYPE" | translate}}</ion-label>
+                <ion-toggle [(ngModel)]="secondaryissue" name="secondaryissue" checked="false"></ion-toggle>
+            </ion-item>
+
+            <ion-item *ngIf="secondaryissue" no-lines>
+              {{"ISSUE.SECONDARYISSUE_THRESHOLD" | translate}}
+              <ion-badge item-end color="primary">{{secondaryissue_threshold}}</ion-badge>
+            </ion-item>
+            <ion-item *ngIf="secondaryissue">
+                <ion-range min="0" max="100" step="1" pin="true" color="primary" [(ngModel)]="secondaryissue_threshold" name="secondaryissue_threshold">
+                    <ion-label range-left>0%</ion-label>
+                    <ion-label range-right>100%</ion-label>
+                </ion-range>
+            </ion-item>
+
+            <ion-item [ngClass]="{'valid-border':true}">
                 <ion-label color="primary" floating>{{"ISSUE.ISSUER_NAME" | translate}}</ion-label>
                 <ion-input name="issuer_name" [(ngModel)]="issuer_name" disabled></ion-input>
             </ion-item>
-            <ion-item>
+            <ion-item [ngClass]="{'valid-border':true}">
                 <ion-label color="primary" floating>{{"ISSUE.ISSUE_ADDRESS" | translate}}</ion-label>
                 <ion-input name="issue_address" [(ngModel)]="issue_address" disabled></ion-input>
             </ion-item>
@@ -83,7 +103,7 @@
                     </ion-select>
                 </ion-item>
                 <br>
-                <button ion-button full [disabled]="!sendForm.form.valid||!validSymbol(symbol)||!validMaxSupply(max_supply, asset_decimals)||(max_supply=='custom' && !validMaxSupplyCustom(custom_max_supply, asset_decimals))||!validDecimals(asset_decimals)||!validName(issuer_name)||!validDescription(description)||(issue_address=='custom' && !validIssueAddress(custom_issue_address))||!validPassword(passphrase)" (click)="preview()" color="primary">
+                <button ion-button full [disabled]="!sendForm.form.valid||!validSymbol(symbol)||!validMaxSupply(max_supply, asset_decimals)||(max_supply=='custom' && !validMaxSupplyCustom(custom_max_supply, asset_decimals))||!validDecimals(asset_decimals)||!validDescription(description)||(issue_address=='custom' && !validIssueAddress(custom_issue_address))||!validPassword(passphrase)" (click)="preview()" color="primary">
                     {{"PREVIEW" | translate}}
                 </button>
                 <div *ngIf="rawtx">
@@ -95,10 +115,9 @@
             </div>
         </ion-list>
 
-
         <ion-row>
             <ion-col>
-                <button ion-button full [disabled]="!sendForm.form.valid||!validSymbol(symbol)||!validMaxSupply(max_supply, asset_decimals)||(max_supply=='custom' && !validMaxSupplyCustom(custom_max_supply, asset_decimals))||!validDecimals(asset_decimals)||!validName(issuer_name)||!validDescription(description)||(issue_address=='custom' && !validIssueAddress(custom_issue_address))||!validPassword(passphrase)" (click)="confirm()" icon-left color="secondary">
+                <button ion-button full [disabled]="!sendForm.form.valid||!validSymbol(symbol)||!validMaxSupply(max_supply, asset_decimals)||(max_supply=='custom' && !validMaxSupplyCustom(custom_max_supply, asset_decimals))||!validDecimals(asset_decimals)||!validDescription(description)||(issue_address=='custom' && !validIssueAddress(custom_issue_address))||!validPassword(passphrase)" (click)="confirm()" icon-left color="secondary">
                     <ion-icon disabled="checked" name="send"></ion-icon>
                     {{"ISSUE.CREATE" | translate}}
                 </button>

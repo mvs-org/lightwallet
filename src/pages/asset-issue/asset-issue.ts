@@ -21,6 +21,7 @@ export class AssetIssuePage {
     passcodeSet: any
     addressbalances: Array<any>
     sendFrom: string
+    secondaryissue: boolean
     secondaryissue_threshold: number;
     feeAddress: string
     passphrase: string
@@ -54,6 +55,8 @@ export class AssetIssuePage {
         this.issuer_name = navParams.get('avatar_name')
         this.description = ''
         this.passphrase = ''
+        this.secondaryissue = false
+        this.secondaryissue_threshold = 51
 
         //Load addresses
         mvs.getAddresses()
@@ -113,7 +116,7 @@ export class AssetIssuePage {
 
     }
 
-    validSecondaryissueThreshold = (threshold) => (threshold>=-1&&threshold<=100)
+    //validSecondaryissueThreshold = (threshold) => (threshold>=-1&&threshold<=100)
 
     validMaxSupply = (max_supply, asset_decimals) => max_supply == 'custom' || (max_supply > 0 && ((asset_decimals == undefined)||(Math.floor(parseFloat(max_supply) * Math.pow(10, asset_decimals))) <= 10000000000000000))
 
@@ -123,7 +126,7 @@ export class AssetIssuePage {
 
     validSymbol = (symbol) => (symbol.length > 2) && (symbol.length < 64) && (!/[^A-Za-z0-9.]/g.test(symbol))
 
-    validName = (issuer_name) => (issuer_name.length > 0) && (issuer_name.length < 64) && (!/[^A-Za-z0-9.]/g.test(issuer_name))
+    //validName = (issuer_name) => (issuer_name.length > 0) && (issuer_name.length < 64) && (!/[^A-Za-z0-9.]/g.test(issuer_name))
 
     validDescription = (description) => (description.length > 0) && (description.length < 64)
 
@@ -149,6 +152,7 @@ export class AssetIssuePage {
     }
 
     create() {
+        console.log(this.secondaryissue)
         return this.showLoading()
             .then((addresses) => this.mvs.createIssueAssetTx(
                 this.passphrase,
@@ -157,7 +161,7 @@ export class AssetIssuePage {
                 this.asset_decimals,
                 this.issuer_name,
                 this.description,
-                this.secondaryissue_threshold,
+                (this.secondaryissue) ? (this.secondaryissue_threshold == 0) ? -1 : this.secondaryissue_threshold : 0,
                 false,
                 this.issue_address,
                 (this.sendFrom != 'auto') ? this.sendFrom : null,
