@@ -132,7 +132,7 @@ export class MvsServiceProvider {
             .then(utxo => {
                 return this.wallet.getWallet(passphrase)
                     .then((wallet) => {
-                        return this.getHeight().then(height => Metaverse.output.findUtxo(utxo, {}, height, Metaverse.transaction.ASSET_ISSUE_DEFAULT_FEE))
+                        return this.getHeight().then(height => Metaverse.output.findUtxo(utxo, {}, height, Metaverse.constants.FEE.AVATAR_REGISTER))
                             .then((result) => {
                                 //Set change address to first utxo's address
                                 if (change_address == undefined)
