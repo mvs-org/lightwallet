@@ -26,14 +26,22 @@ export class AssetIssuePage {
     feeAddress: string
     passphrase: string
     etpBalance: number
-    decimalsList: number[]
     symbol: string
     max_supply: string
     custom_max_supply: string;
-    asset_decimals: number
+    asset_decimals: number = 8
     issuer_name: string
     description: string
     issue_address: string
+    certs: Array<any>;
+    list_domain_certs: Array<any> = [];
+    list_my_domain_certs: Array<any> = [];
+    list_my_naming_certs: Array<any> = [];
+    msts: Array<any>;
+    list_msts: Array<any> = [];
+    symbol_check: string;
+    error_loading_msts: boolean = false
+    error_loading_certs: boolean = false
 
     constructor(
         public navCtrl: NavController,
@@ -48,7 +56,6 @@ export class AssetIssuePage {
         this.sendFrom = 'auto'
         this.issue_address = navParams.get('avatar_address')
         this.feeAddress = 'auto'
-        this.decimalsList = [0,1,2,3,4,5,6,7,8]
         this.max_supply = ''
         this.custom_max_supply = ''
         this.symbol = ''
@@ -77,15 +84,7 @@ export class AssetIssuePage {
                 this.showBalance = this.balance
                 return this.mvs.getAddressBalances()
                     .then((addressbalances) => {
-                        let addrblncs = []
-                        if (Object.keys(addressbalances).length) {
-                            Object.keys(addressbalances).forEach((address) => {
-                                if (addressbalances[address][this.selectedAsset] && addressbalances[address][this.selectedAsset].available) {
-                                    addrblncs.push({ "address": address, "balance": addressbalances[address][this.selectedAsset].available })
-                                }
-                            })
-                        }
-                        this.addressbalances = addrblncs
+                        this.addressbalances = addressbalances
                     })
             })
 
@@ -98,6 +97,13 @@ export class AssetIssuePage {
                 if (!Array.isArray(addresses) || !addresses.length)
                     this.navCtrl.setRoot("LoginPage")
             })
+    }
+
+    ionViewDidLoad() {
+        this.loadCerts()
+            .then(()=>this.loadMsts())
+            .then(()=>this.symbolChanged())
+            .catch(console.error);
     }
 
     onFromAddressChange(event) {
@@ -152,7 +158,6 @@ export class AssetIssuePage {
     }
 
     create() {
-        console.log(this.secondaryissue)
         return this.showLoading()
             .then((addresses) => this.mvs.createIssueAssetTx(
                 this.passphrase,
@@ -165,7 +170,8 @@ export class AssetIssuePage {
                 false,
                 this.issue_address,
                 (this.sendFrom != 'auto') ? this.sendFrom : null,
-                undefined
+                undefined,
+                (this.symbol_check == "available")
             ))
             .catch((error) => {
                 console.error(error)
@@ -292,6 +298,60 @@ export class AssetIssuePage {
             });
             alert.present(alert);
         })
+    }
+
+    loadCerts(){
+        return this.mvs.listCerts()
+            .then((certs) => {
+                this.certs = certs;
+                certs.forEach(cert=>{
+                    if(cert.attachment.cert == 'domain') {
+                        if(cert.attachment.owner == this.issuer_name) {
+                            this.list_my_domain_certs.push(cert.attachment.symbol)
+                        } else {
+                            this.list_domain_certs.push(cert.attachment.symbol)
+                        }
+                    } else if((cert.attachment.cert == 'naming') && (cert.attachment.owner == this.issuer_name)) {
+                        this.list_my_naming_certs.push(cert.attachment.symbol)
+                    }
+                })
+            })
+            .catch((error) => {
+                console.error(error)
+                this.error_loading_certs = true;
+            })
+    }
+
+    loadMsts(){
+        return this.mvs.getListMst()
+            .then((msts) => {
+                this.msts = msts;
+                msts.forEach(mst=>{
+                    this.list_msts.push(mst.symbol)
+                })
+            })
+            .catch((error) => {
+                console.error(error)
+                this.error_loading_msts = true;
+            })
+    }
+
+    symbolChanged = () => {
+        if (this.symbol) {
+            let symbol = this.symbol.toUpperCase()
+            let domain = symbol.split('.')[0]
+            if(this.list_msts && this.list_msts.indexOf(symbol) !== -1) {
+                this.symbol_check = "exist"
+            } else if(this.list_my_naming_certs && this.list_my_naming_certs.indexOf(symbol) !== -1) {
+                this.symbol_check = "naming_owner"
+            } else if(this.list_my_domain_certs && this.list_my_domain_certs.indexOf(domain) !== -1) {
+                this.symbol_check = "domain_owner"
+            } else if(this.list_my_domain_certs && this.list_domain_certs.indexOf(domain) !== -1) {
+                this.symbol_check = "not_domain_owner"
+            } else {
+                this.symbol_check = "available"
+            }
+        }
     }
 
 }

@@ -46,7 +46,6 @@ export class TransactionsPage {
             })
             .then((txs: any) => {
                 this.txs = txs
-                console.log(txs)
                 this.loading = false;
             })
     }

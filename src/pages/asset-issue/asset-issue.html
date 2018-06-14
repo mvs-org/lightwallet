@@ -10,50 +10,59 @@
 <ion-content padding style="padding-bottom: 0;">
     <ion-row>
         <ion-col>
+            <p>
+                {{"TOTAL_AVAILABLE_BALANCE" | translate}}: <br *ngIf="platform.is('mobile')">{{showBalance| format : decimals}} {{selectedAsset}}
+            </p>
             <p *ngIf="addressbalances && addressbalances[issue_address] && addressbalances[issue_address][selectedAsset]">
-          THIS.AVATAR: {{addressbalances[issue_address][selectedAsset].available}}
-        </p>
-            <p>{{"AVAILABLE_BALANCE" | translate}}: <br *ngIf="platform.is('mobile')">TOTAL:{{showBalance| format : decimals}} {{selectedAsset}}</p>
+                {{issuer_name}} {{"AVATAR_AVAILABLE_BALANCE" | translate}}: <br *ngIf="platform.is('mobile')">{{addressbalances[issue_address][selectedAsset].available| format : decimals}} {{selectedAsset}}
+            </p>
         </ion-col>
         <ion-col>
             <p class="right">{{"FEE"|translate}}:<br *ngIf="platform.is('mobile')"> 10 ETP</p>
         </ion-col>
     </ion-row>
-    <h2 align="center" *ngIf="etpBalance<1000000000">{{"ISSUE.NOTICE_TRANSACTION_FEE_UNCOVERED"|translate}}</h2>
+    <h2 align="center" *ngIf="!addressbalances || !addressbalances[issue_address] || !addressbalances[issue_address][selectedAsset] || addressbalances[issue_address][selectedAsset].available<1000000000">{{"ISSUE.NOTICE_TRANSACTION_FEE_UNCOVERED"|translate}}</h2>
     <form #sendForm="ngForm" style="padding-bottom: 0;">
         <ion-list style="padding-bottom: 0;">
 
-            <ion-item [ngClass]="{'error-border':!validSymbol(symbol)}">
+            <ion-item [ngClass]="{'error-border':!validSymbol(symbol) || symbol_check == 'exist' || symbol_check == 'not_cert_owner'}">
                 <ion-label color="primary" floating>{{"ISSUE.SYMBOL"|translate}}</ion-label>
-                <ion-input class="uppercase" name="symbol" [(ngModel)]="symbol" maxlength="63" required></ion-input>
+                <ion-input class="uppercase" name="symbol" [(ngModel)]="symbol" (ngModelChange)="symbolChanged($event)" maxlength="63" required></ion-input>
             </ion-item>
+            <ion-item *ngIf="symbol_check == 'available'" no-lines class="valid-input">{{"ISSUE.SYMBOL_AVAILABLE" | translate}}</ion-item>
+            <ion-item *ngIf="symbol_check == 'domain_owner'" no-lines class="valid-input">{{"ISSUE.SYMBOL_DOMAIN_OWNER" | translate}}</ion-item>
+            <ion-item *ngIf="symbol_check == 'naming_owner'" no-lines class="valid-input">{{"ISSUE.SYMBOL_NAMING_OWNER" | translate}}</ion-item>
+            <ion-item *ngIf="symbol_check == 'exist'" no-lines class="wrong-input">{{"ISSUE.SYMBOL_ALREADY_EXIST" | translate}}</ion-item>
+            <ion-item *ngIf="symbol_check == 'not_domain_owner'" no-lines class="wrong-input">{{"ISSUE.SYMBOL_NOT_CERT_OWNER" | translate}}</ion-item>
+            <ion-item *ngIf="error_loading_msts" no-lines class="wrong-input">{{"ISSUE.SYMBOL_ERROR_LOADING_MSTS" | translate}}</ion-item>
+            <ion-item *ngIf="error_loading_certs" no-lines class="wrong-input">{{"ISSUE.SYMBOL_ERROR_LOADING_CERTS" | translate}}</ion-item>
+
             <ion-item [ngClass]="{'error-border':!validMaxSupply(max_supply, asset_decimals)}">
-              <ion-label color="primary" floating>{{"ISSUE.MAX_SUPPLY" | translate}}</ion-label>
-              <ion-select [(ngModel)]="max_supply" name="max_supply" multiple="false" okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}" required>
-                <ion-option value="1000000">{{1000000 | number : fractionSize}} ({{"ISSUE.ONE_MILLION" | translate}})</ion-option>
-                <ion-option value="10000000">{{10000000 | number : fractionSize}} ({{"ISSUE.TEN_MILLION" | translate}})</ion-option>
-                <ion-option value="100000000">{{100000000 | number : fractionSize}} ({{"ISSUE.ONE_HUNDRED_MILLION" | translate}})</ion-option>
-                <ion-option value="1000000000">{{1000000000 | number : fractionSize}} ({{"ISSUE.ONE_BILLION" | translate}})</ion-option>
-                <ion-option value="10000000000">{{10000000000 | number : fractionSize}} ({{"ISSUE.TEN_BILLION" | translate}})</ion-option>
-                <ion-option value="custom">{{"CUSTOM"| translate}}</ion-option>
-              </ion-select>
+                <ion-label color="primary" floating>{{"ISSUE.MAX_SUPPLY" | translate}}</ion-label>
+                <ion-select [(ngModel)]="max_supply" name="max_supply" multiple="false" okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}" required>
+                    <ion-option value="1000000">{{1000000 | number : fractionSize}} ({{"ISSUE.ONE_MILLION" | translate}})</ion-option>
+                    <ion-option value="10000000">{{10000000 | number : fractionSize}} ({{"ISSUE.TEN_MILLION" | translate}})</ion-option>
+                    <ion-option value="100000000">{{100000000 | number : fractionSize}} ({{"ISSUE.ONE_HUNDRED_MILLION" | translate}})</ion-option>
+                    <ion-option value="1000000000">{{1000000000 | number : fractionSize}} ({{"ISSUE.ONE_BILLION" | translate}})</ion-option>
+                    <ion-option value="10000000000">{{10000000000 | number : fractionSize}} ({{"ISSUE.TEN_BILLION" | translate}})</ion-option>
+                    <ion-option value="custom">{{"CUSTOM"| translate}}</ion-option>
+                </ion-select>
             </ion-item>
             <ion-item *ngIf="max_supply == 'custom'" [ngClass]="{'error-border':!validMaxSupplyCustom(custom_max_supply, asset_decimals)}">
                 <ion-label color="primary" floating>{{"ISSUE.MAX_SUPPLY_CUSTOM" | translate}}</ion-label>
                 <ion-input name="custom_max_supply" type="tel" min="0" [(ngModel)]="custom_max_supply"></ion-input>
             </ion-item>
             <br>
-            <br>
-            <ion-item [ngClass]="{'error-border':!validDecimals(asset_decimals)}">
-                <ion-label color="primary">{{"ISSUE.DECIMALS"|translate}}</ion-label>
-                <ion-select [(ngModel)]="asset_decimals" name="asset_decimals" okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}" required>
-                    <ion-option *ngFor="let item of decimalsList" value="{{item}}">{{item}}</ion-option>
-                </ion-select>
+            <ion-item no-lines>
+                <ion-label color="primary">{{"ISSUE.DECIMALS" | translate}}</ion-label>
+                <ion-badge item-end color="primary">{{asset_decimals}}</ion-badge>
             </ion-item>
-            <!--ion-item [ngClass]="{'error-border':!validSecondaryissueThreshold(secondaryissue_threshold)}">
-                <ion-label color="primary" floating>{{"ISSUE.SECONDARYISSUE_THRESHOLD" | translate}}</ion-label>
-                <ion-input name="secondaryissue_threshold" [(ngModel)]="secondaryissue_threshold" maxlength="3" required></ion-input>
-            </ion-item-->
+            <ion-item>
+                <ion-range min="0" max="8" step="1" pin="true" color="primary" [(ngModel)]="asset_decimals" name="asset_decimals">
+                    <ion-label range-left>0</ion-label>
+                    <ion-label range-right>8</ion-label>
+                </ion-range>
+            </ion-item>
             <br>
             <ion-item>
                 <ion-label>{{"ISSUE.SECONDARYISSUE_TYPE" | translate}}</ion-label>
@@ -61,8 +70,8 @@
             </ion-item>
 
             <ion-item *ngIf="secondaryissue" no-lines>
-              {{"ISSUE.SECONDARYISSUE_THRESHOLD" | translate}}
-              <ion-badge item-end color="primary">{{secondaryissue_threshold}}</ion-badge>
+                <ion-label color="primary">{{"ISSUE.SECONDARYISSUE_THRESHOLD" | translate}}</ion-label>
+                <ion-badge item-end color="primary">{{secondaryissue_threshold}}%</ion-badge>
             </ion-item>
             <ion-item *ngIf="secondaryissue">
                 <ion-range min="0" max="100" step="1" pin="true" color="primary" [(ngModel)]="secondaryissue_threshold" name="secondaryissue_threshold">
@@ -103,7 +112,7 @@
                     </ion-select>
                 </ion-item>
                 <br>
-                <button ion-button full [disabled]="!sendForm.form.valid||!validSymbol(symbol)||!validMaxSupply(max_supply, asset_decimals)||(max_supply=='custom' && !validMaxSupplyCustom(custom_max_supply, asset_decimals))||!validDecimals(asset_decimals)||!validDescription(description)||(issue_address=='custom' && !validIssueAddress(custom_issue_address))||!validPassword(passphrase)" (click)="preview()" color="primary">
+                <button ion-button full [disabled]="!sendForm.form.valid||!validSymbol(symbol)||symbol_check=='exist'||symbol_check=='not_cert_owner'||!validMaxSupply(max_supply, asset_decimals)||(max_supply=='custom' && !validMaxSupplyCustom(custom_max_supply, asset_decimals))||!validDecimals(asset_decimals)||!validDescription(description)||(issue_address=='custom' && !validIssueAddress(custom_issue_address))||!validPassword(passphrase)" (click)="preview()" color="primary">
                     {{"PREVIEW" | translate}}
                 </button>
                 <div *ngIf="rawtx">
@@ -117,7 +126,7 @@
 
         <ion-row>
             <ion-col>
-                <button ion-button full [disabled]="!sendForm.form.valid||!validSymbol(symbol)||!validMaxSupply(max_supply, asset_decimals)||(max_supply=='custom' && !validMaxSupplyCustom(custom_max_supply, asset_decimals))||!validDecimals(asset_decimals)||!validDescription(description)||(issue_address=='custom' && !validIssueAddress(custom_issue_address))||!validPassword(passphrase)" (click)="confirm()" icon-left color="secondary">
+                <button ion-button full [disabled]="!sendForm.form.valid||!validSymbol(symbol)||symbol_check=='exist'||symbol_check=='not_cert_owner'||!validMaxSupply(max_supply, asset_decimals)||(max_supply=='custom' && !validMaxSupplyCustom(custom_max_supply, asset_decimals))||!validDecimals(asset_decimals)||!validDescription(description)||(issue_address=='custom' && !validIssueAddress(custom_issue_address))||!validPassword(passphrase)" (click)="confirm()" icon-left color="secondary">
                     <ion-icon disabled="checked" name="send"></ion-icon>
                     {{"ISSUE.CREATE" | translate}}
                 </button>

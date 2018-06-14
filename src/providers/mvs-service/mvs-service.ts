@@ -15,10 +15,10 @@ export class MvsServiceProvider {
     DEFAULT_BALANCES = {
         ETP: { frozen: 0, available: 0, decimals: 8 },
         MST: {
+            "PARCELX.GPX": { frozen: 0, available: 0, decimals: 8 },
             "MVS.ZGC": { frozen: 0, available: 0, decimals: 8 },
             "MVS.ZDC": { frozen: 0, available: 0, decimals: 6 },
             "CSD.CSD": { frozen: 0, available: 0, decimals: 8 },
-            "PARCELX.GPX": { frozen: 0, available: 0, decimals: 8 },
             "SDG": { frozen: 0, available: 0, decimals: 8 }
         },
         MIT: []
@@ -127,12 +127,12 @@ export class MvsServiceProvider {
             })
     }
 
-    createIssueAssetTx(passphrase: string, symbol: string, quantity: number, precision: number, issuer: string, description: string, secondaryissue_threshold: number, is_secondaryissue: boolean, issue_address: string, fee_address: string, change_address: string) {
+    createIssueAssetTx(passphrase: string, symbol: string, quantity: number, precision: number, issuer: string, description: string, secondaryissue_threshold: number, is_secondaryissue: boolean, issue_address: string, fee_address: string, change_address: string, create_new_domain_cert: boolean) {
         return ((fee_address) ? this.getUtxoFrom(fee_address) : this.getUtxo())
             .then(utxo => {
                 return this.wallet.getWallet(passphrase)
                     .then((wallet) => {
-                        return this.getHeight().then(height => Metaverse.output.findUtxo(utxo, {}, height, Metaverse.constants.FEE.AVATAR_REGISTER))
+                        return this.getHeight().then(height => Metaverse.output.findUtxo(utxo, {}, height, Metaverse.constants.FEE.MST_REGISTER))
                             .then((result) => {
                                 //Set change address to first utxo's address
                                 if (change_address == undefined)
@@ -145,7 +145,7 @@ export class MvsServiceProvider {
                                             return true;
                                         return false;
                                     }))
-                                return Metaverse.transaction_builder.issueAsset(result.utxo.concat(certs), issue_address, symbol, quantity, precision, issuer, description, secondaryissue_threshold, is_secondaryissue, change_address, result.change)
+                                return Metaverse.transaction_builder.issueAsset(result.utxo.concat(certs), issue_address, symbol, quantity, precision, issuer, description, secondaryissue_threshold, is_secondaryissue, change_address, result.change, create_new_domain_cert)
                             })
                             .then((tx) => wallet.sign(tx))
                     })
@@ -223,6 +223,7 @@ export class MvsServiceProvider {
 
     getGlobalMit = (symbol) => this.blockchain.MIT.get(symbol)
 
+    getListMst = () => this.blockchain.MST.list()
 
     getBalances() {
         return this.storage.get('balances')

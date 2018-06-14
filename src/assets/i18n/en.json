@@ -191,7 +191,7 @@
     "ASSET_ISSUE": "Create Asset",
     "NOTICE_ASSET_ISSUE_FEE": "Please be aware that the creation of a new asset costs 10 ETP.",
 
-    "ISSUE.NOTICE_TRANSACTION_FEE_UNCOVERED": "You need at least 10 ETP to create an asset",
+    "ISSUE.NOTICE_TRANSACTION_FEE_UNCOVERED": "This Avatar needs at least 10 ETP to create a MST",
     "ISSUE.SYMBOL": "Symbol",
     "ISSUE.ISSUER_NAME": "Issuer name",
     "ISSUE.MAX_SUPPLY": "Maximum supply",
@@ -290,5 +290,16 @@
     "ISSUE.SECONDARYISSUE_TYPE": "Secondary Issue",
     "ISSUE.SECONDARYISSUE_DISABLED": "No Secondary Issue possible",
     "ISSUE.SECONDARYISSUE_UNLIMITED": "Secondary Issue possible with certificate only",
-    "ISSUE.SECONDARYISSUE_RATE": "Secondary Issue possible with certificate and Stacking condition"
+    "ISSUE.SECONDARYISSUE_RATE": "Secondary Issue possible with certificate and Stacking condition",
+
+    "TOTAL_AVAILABLE_BALANCE": "Total available balance",
+    "AVATAR_AVAILABLE_BALANCE": "Avatar available balance",
+
+    "ISSUE.SYMBOL_AVAILABLE": "This Domain name is available. After issuing this MST, you will receive a Domain certificate",
+    "ISSUE.SYMBOL_DOMAIN_OWNER": "Your Avatar own the Domain certificate to create this MST",
+    "ISSUE.SYMBOL_NAMING_OWNER": "Your Avatar own the Naming certificate to create this MST",
+    "ISSUE.SYMBOL_ALREADY_EXIST": "This MST already exist",
+    "ISSUE.SYMBOL_NOT_CERT_OWNER": "Your Avatar does not own the Domain certificate to create this MST",
+    "ISSUE.SYMBOL_ERROR_LOADING_MSTS": "Error while loading MSTs. Please make sure this MST Symbol is not already used",
+    "ISSUE.SYMBOL_ERROR_LOADING_CERTS": "Error while loading the Domain certificates. Please make sure you have the right to create this Symbol"
 }

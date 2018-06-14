@@ -27,6 +27,10 @@
     box-shadow: red !important;
 }
 
+.wrong-input{
+    color: red;
+}
+
 .item-md.item-select:not(.error-border) .item-inner .ng-valid .item-cover{
     border-bottom-color: #32db64 !important;
     -webkit-box-shadow: inset 0 -1px 0 0 #32db64 !important;
@@ -39,6 +43,10 @@
     border-bottom-color: #32db64 !important;
     -webkit-box-shadow: inset 0 -1px 0 0 #32db64 !important;
     box-shadow: inset 0 -1px 0 0 #32db64 !important;
+}
+
+.valid-input{
+    color: #32db64;
 }
 
 .alert-sub-title{
