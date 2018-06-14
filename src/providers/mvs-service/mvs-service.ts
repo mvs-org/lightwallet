@@ -137,20 +137,20 @@ export class MvsServiceProvider {
                                 //Set change address to first utxo's address
                                 if (change_address == undefined)
                                     change_address = result.utxo[0].address;
-                                let certs = Metaverse.output.filter(utxo, { type: "asset-cert", symbol: [symbol, symbol.split('.')[0]] })
-                                    .concat(utxo.filter(output => {
-                                        if (use_naming_cert) {
-                                            if (output.attachment.type == "asset-cert" && output.attachment.symbol == symbol && ['naming'].indexOf(output.attachment.cert) !== -1)
-                                                return true;
-                                            return false;
-                                        } else {
-                                            if (!use_naming_cert && output.attachment.type == "asset-cert" && output.attachment.symbol == symbol.split('.')[0] && output.attachment.cert == 'domain')
-                                                return true;
-                                            else if (output.attachment.type == "asset-cert" && output.attachment.symbol == symbol && ['naming', 'issue'].indexOf(output.attachment.cert) !== -1)
-                                                return true;
-                                            return false;
+                                let certs = utxo.filter(output => {
+                                    if (use_naming_cert) {
+                                        if (output.attachment.type == "asset-cert" && output.attachment.symbol == symbol && ['naming'].indexOf(output.attachment.cert) !== -1) {
+                                            return true;
                                         }
-                                    }))
+                                        return false;
+                                    } else {
+                                        if (!use_naming_cert && output.attachment.type == "asset-cert" && output.attachment.symbol == symbol.split('.')[0] && output.attachment.cert == 'domain')
+                                            return true;
+                                        else if (output.attachment.type == "asset-cert" && output.attachment.symbol == symbol && ['naming', 'issue'].indexOf(output.attachment.cert) !== -1)
+                                            return true;
+                                        return false;
+                                    }
+                                })
                                 return Metaverse.transaction_builder.issueAsset(result.utxo.concat(certs), issue_address, symbol, quantity, precision, issuer, description, secondaryissue_threshold, is_secondaryissue, change_address, result.change, create_new_domain_cert)
                             })
                             .then((tx) => wallet.sign(tx))
@@ -162,6 +162,9 @@ export class MvsServiceProvider {
             })
     }
 
+    getNamingCert(symbol) {
+
+    }
 
     validAddress = (address: string) => {
         if (address.length != 34)
