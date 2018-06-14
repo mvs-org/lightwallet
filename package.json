@@ -53,7 +53,7 @@
     "ionic-framework": "^2.0.0-beta.2",
     "ionic-plugin-keyboard": "^2.2.1",
     "ionicons": "3.0.0",
-    "metaversejs": "^0.3.27",
+    "metaversejs": "^0.3.28",
     "mvs-blockchain": "^0.1.32",
     "ng2-file-upload": "^1.3.0",
     "ngx-clipboard": "^7.0.6",
@@ -65,7 +65,7 @@
   "devDependencies": {
     "@ionic/app-scripts": "2.0.0",
     "@types/jasmine": "^2.8.8",
-    "@types/node": "^8.10.19",
+    "@types/node": "^8.10.20",
     "angular2-template-loader": "^0.6.2",
     "html-loader": "^0.5.5",
     "ionic": "3.20.0",

@@ -171,7 +171,8 @@ export class AssetIssuePage {
                 this.issue_address,
                 (this.sendFrom != 'auto') ? this.sendFrom : null,
                 undefined,
-                (this.symbol_check == "available")
+                (this.symbol_check == "available"),
+                false
             ))
             .catch((error) => {
                 console.error(error)
