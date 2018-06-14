@@ -153,6 +153,7 @@ export class MvsServiceProvider {
                                 })
                                 return Metaverse.transaction_builder.issueAsset(result.utxo.concat(certs), issue_address, symbol, quantity, precision, issuer, description, secondaryissue_threshold, is_secondaryissue, change_address, result.change, create_new_domain_cert)
                             })
+                            .then((tx) => {console.log(use_naming_cert);console.log(tx); return tx})
                             .then((tx) => wallet.sign(tx))
                     })
             })

@@ -11,6 +11,7 @@ import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 export class MITTransferPage {
 
     recipient_address: string = ""
+    recipient_address_last_update: number = 0
     recipient_avatar: string = ""
     passphrase: string = ""
     symbol: string
@@ -113,11 +114,13 @@ export class MITTransferPage {
                         throw ''
                     this.recipient_avatar_valid = true
                     this.recipient_address = result[0].address
+                    this.recipient_address_last_update = result[0].confirmed_at
                     this.recipientChanged()
                 })
                 .catch((e) => {
                     this.recipient_avatar_valid = false
                     this.recipient_address = ""
+                    this.recipient_address_last_update = 0
                     this.recipientChanged()
                 })
         }

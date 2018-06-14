@@ -20,6 +20,7 @@ export class AssetIssuePage {
     rawtx: string
     passcodeSet: any
     addressbalances: Array<any>
+    myaddressbalances: Array<any>
     sendFrom: string
     secondaryissue: boolean
     secondaryissue_threshold: number;
@@ -85,6 +86,15 @@ export class AssetIssuePage {
                 return this.mvs.getAddressBalances()
                     .then((addressbalances) => {
                         this.addressbalances = addressbalances
+                        let addrblncs = []
+                        if (Object.keys(addressbalances).length) {
+                            Object.keys(addressbalances).forEach((address) => {
+                                if (addressbalances[address][this.selectedAsset] && addressbalances[address][this.selectedAsset].available) {
+                                    addrblncs.push({ "address": address, "balance": addressbalances[address][this.selectedAsset].available })
+                                }
+                            })
+                        }
+                        this.myaddressbalances = addrblncs
                     })
             })
 
@@ -172,7 +182,7 @@ export class AssetIssuePage {
                 (this.sendFrom != 'auto') ? this.sendFrom : null,
                 undefined,
                 (this.symbol_check == "available"),
-                false
+                (this.symbol_check == "naming_owner")
             ))
             .catch((error) => {
                 console.error(error)
