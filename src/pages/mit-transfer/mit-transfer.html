@@ -1,6 +1,6 @@
 <ion-header>
     <ion-navbar>
-        <ion-title>{{"MIT_TRANSFER" | translate}}</ion-title>
+        <ion-title>{{"TRANSFER_MIT" | translate}}</ion-title>
     </ion-navbar>
 </ion-header>
 
@@ -30,7 +30,7 @@
             <ion-col>
                 <button ion-button full [disabled]="!sendForm.form.valid||!validrecipient(recipient_address)||!validAvatar(recipient_avatar)||!validPassword(passphrase)" (click)="send()" icon-left color="secondary">
                     <ion-icon disabled="checked" name="send"></ion-icon>
-                    {{"MIT_REGISTER.REGISTER_BUTTON" | translate}}
+                    {{"TRANSFER_MIT" | translate}}
                 </button>
             </ion-col>
             <ion-col>

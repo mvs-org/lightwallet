@@ -189,7 +189,7 @@
     "IMPORT.SCAN_QRCODE_BUTTON": "Scan QR Code",
 
     "ASSET_ISSUE": "Create Asset",
-    "NOTICE_ASSET_ISSUE_FEE": "Please be aware that the creation of a new asset costs 10 ETP.",
+    "NOTICE_ASSET_ISSUE_FEE": "Please be aware that the creation of a new MST costs 10 ETP.",
 
     "ISSUE.NOTICE_TRANSACTION_FEE_UNCOVERED": "This Avatar needs at least 10 ETP to create a MST",
     "ISSUE.SYMBOL": "Symbol",
@@ -201,9 +201,9 @@
     "ISSUE.FEE_ADDRESS": "Fee address (address paying 10 ETP)",
     "ISSUE.CUSTOM_ISSUE_ADDRESS": "Custom issue address",
 
-    "ISSUE.CONFIRMATION_TITLE": "Issuing an asset will cost 10 ETP.",
-    "ISSUE.CONFIRMATION_SUBTITLE": "Are you sure you want to create an asset?",
-    "ISSUE.CREATE": "Create Asset",
+    "ISSUE.CONFIRMATION_TITLE": "Issuing a MST will cost 10 ETP.",
+    "ISSUE.CONFIRMATION_SUBTITLE": "Are you sure you want to create a MST?",
+    "ISSUE.CREATE": "Create MST",
 
     "EXPORT.HEADLINE": "Connect your phone",
     "EXPORT.INTRODUCTION": "To download MyETPWallet on your phone, please visit MyETPWallet.com and click on 'Download wallet'.",
@@ -225,7 +225,7 @@
     "HOW_TO_IMPORT_WALLET_MOBILE_STEP2": "Scan the QR Code",
     "HOW_TO_IMPORT_WALLET_MOBILE_STEP3": "Enjoy your wallet on your phone!",
 
-    "MESSAGE.ISSUE_INSUFFICIENT_BALANCE": "You need at least 10 ETP to create an asset.",
+    "MESSAGE.ISSUE_INSUFFICIENT_BALANCE": "You need at least 10 ETP to create a MST.",
 
     "SCANNING.MESSAGE_ACCOUNT": "Scan the QR code from your web lightwallet",
     "SCANNING.MESSAGE_ADDRESS": "Scan the ETP Address",
@@ -269,8 +269,6 @@
     "NO_MIT_TEXT": "You don't have any MIT yet. In order to create MIT you first have to create an avatar.",
     "MIT_REGISTER.SYMBOL": "Symbol",
     "MIT_REGISTER.CONTENT": "Content",
-    "MIT_REGISTER.REGISTER_BUTTON": "Register MIT",
-    "ISSUE.REGISTER_MST": "Register MST",
 
     "IMPORT.WORDS_REMAINING": " words remaining",
     "IMPORT.WORDS_ALL_OK": "Ready to import",
@@ -301,5 +299,9 @@
     "ISSUE.SYMBOL_ALREADY_EXIST": "This MST already exist",
     "ISSUE.SYMBOL_NOT_CERT_OWNER": "Your Avatar does not own the Domain certificate to create this MST",
     "ISSUE.SYMBOL_ERROR_LOADING_MSTS": "Error while loading MSTs. Please make sure this MST Symbol is not already used",
-    "ISSUE.SYMBOL_ERROR_LOADING_CERTS": "Error while loading the Domain certificates. Please make sure you have the right to create this Symbol"
+    "ISSUE.SYMBOL_ERROR_LOADING_CERTS": "Error while loading the Domain certificates. Please make sure you have the right to create this Symbol",
+
+    "REGISTER_MST": "Register MST",
+    "REGISTER_MIT": "Register MIT",
+    "TRANSFER_MIT": "Transfer MIT"
 }

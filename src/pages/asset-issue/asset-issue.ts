@@ -188,7 +188,7 @@ export class AssetIssuePage {
     confirm() {
         this.translate.get('ISSUE.CONFIRMATION_TITLE').subscribe((txt_title: string) => {
             this.translate.get('ISSUE.CONFIRMATION_SUBTITLE').subscribe((txt_subtitle: string) => {
-                this.translate.get('ISSUE.CREATE').subscribe((txt_create: string) => {
+                this.translate.get('REGISTER_MST').subscribe((txt_create: string) => {
                     this.translate.get('CANCEL').subscribe((txt_cancel: string) => {
                     const alert = this.alertCtrl.create({
                         title: txt_title,
@@ -337,7 +337,7 @@ export class AssetIssuePage {
     }
 
     symbolChanged = () => {
-        if (this.symbol) {
+        if (this.symbol && this.symbol.length >= 3) {
             let symbol = this.symbol.toUpperCase()
             let domain = symbol.split('.')[0]
             if(this.list_msts && this.list_msts.indexOf(symbol) !== -1) {
@@ -351,6 +351,8 @@ export class AssetIssuePage {
             } else {
                 this.symbol_check = "available"
             }
+        } else {
+            this.symbol_check = "too_short"
         }
     }
 

@@ -3,7 +3,7 @@
         <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-        <ion-title>{{ "ASSET_ISSUE" | translate}}</ion-title>
+        <ion-title>{{ "REGISTER_MST" | translate}}</ion-title>
     </ion-navbar>
 </ion-header>
 
@@ -128,7 +128,7 @@
             <ion-col>
                 <button ion-button full [disabled]="!sendForm.form.valid||!validSymbol(symbol)||symbol_check=='exist'||symbol_check=='not_cert_owner'||!validMaxSupply(max_supply, asset_decimals)||(max_supply=='custom' && !validMaxSupplyCustom(custom_max_supply, asset_decimals))||!validDecimals(asset_decimals)||!validDescription(description)||(issue_address=='custom' && !validIssueAddress(custom_issue_address))||!validPassword(passphrase)" (click)="confirm()" icon-left color="secondary">
                     <ion-icon disabled="checked" name="send"></ion-icon>
-                    {{"ISSUE.CREATE" | translate}}
+                    {{"REGISTER_MST" | translate}}
                 </button>
             </ion-col>
             <ion-col>
