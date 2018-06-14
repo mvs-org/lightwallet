@@ -17,8 +17,8 @@
     <p>Creator: {{creator}}</p>
     <p>Created in: {{create_tx}}</p>
 
-    <p *ngFor="let step of history">
+    <ion-row *ngFor="let step of history">
         {{step.from_did}} {{step.to_did}} {{step.status}} {{step.height}}
-    </p>
+    </ion-row>
 
 </ion-content>

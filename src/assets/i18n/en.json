@@ -285,7 +285,7 @@
     "RECEIVE.ADDRESS_NO_MST": "This address doesn't have any MST",
 
     "ISSUE.SECONDARYISSUE_THRESHOLD": "Secondary Issue threshold",
-    "ISSUE.SECONDARYISSUE_TYPE": "Secondary Issue",
+    "ISSUE.SECONDARYISSUE_TYPE": "Allow future Secondary Issue",
     "ISSUE.SECONDARYISSUE_DISABLED": "No Secondary Issue possible",
     "ISSUE.SECONDARYISSUE_UNLIMITED": "Secondary Issue possible with certificate only",
     "ISSUE.SECONDARYISSUE_RATE": "Secondary Issue possible with certificate and Stacking condition",
@@ -303,5 +303,7 @@
 
     "REGISTER_MST": "Register MST",
     "REGISTER_MIT": "Register MIT",
-    "TRANSFER_MIT": "Transfer MIT"
+    "TRANSFER_MIT": "Transfer MIT",
+
+    "AVATAR_RECIPIENT_ADDRESS": "The address of this Avatar is {{address}}, it was updated for the last time on {{last_update}}"
 }
