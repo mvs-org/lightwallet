@@ -3,6 +3,7 @@ import { IonicPage, NavController, Platform, Events } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { AlertProvider } from '../../providers/alert/alert';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
+import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
 
 @IonicPage()
 @Component({
@@ -19,11 +20,13 @@ export class AccountPage {
     loading: boolean
     balancesKeys: any
     theme: string
+    icons: any
 
     private syncinterval: any;
 
-    constructor(public nav: NavController, public translate: TranslateService, private mvs: MvsServiceProvider, private alert: AlertProvider, public platform: Platform, private event: Events) {
+    constructor(public nav: NavController, public translate: TranslateService, private wallet: WalletServiceProvider, private mvs: MvsServiceProvider, private alert: AlertProvider, public platform: Platform, private event: Events) {
         this.loading = true;
+        this.icons = []
 
         //Reset last update time
         var lastupdate = new Date()
@@ -135,6 +138,10 @@ export class AccountPage {
                 this.loading = false
                 this.balancesKeys = order
                 return order
+            })
+            .then((balances) => {
+                let iconsList = this.wallet.getMstIcons()
+                balances.map((symbol) => this.icons[symbol] = iconsList.indexOf(symbol) !== -1 ? symbol : 'default_mst')
             })
             .catch((e) => {
                 console.error(e)

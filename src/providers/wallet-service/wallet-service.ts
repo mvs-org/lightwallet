@@ -17,6 +17,10 @@ export class WalletServiceProvider {
             .then((seed) => this.crypto.encrypt(seed.toString('hex'), passphrase))
     }
 
+    getMstIcons() {
+        return ['ETP', 'MVS.ZGC', 'MVS.ZDC', 'CSD.CSD', 'PARCELX.GPX', 'PARCELX.TEST', 'SDG', 'META', 'MVS.HUG'];
+    }
+
     exportMemonic() {
         return this.storage.get('wallet')
     }
