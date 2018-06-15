@@ -1,6 +1,24 @@
 page-avatars {
     .avatar-card {
-        padding: 20px;
+        padding: 0px;
+    }
+
+    @media (min-width: 825px) {
+        .avatar-card {
+            padding: 5px;
+        }
+     }
+
+    @media (min-width: 1310px) {
+      .avatar-card {
+          padding: 10px;
+      }
+    }
+
+    @media (min-width: 1700px) {
+        .avatar-card {
+            padding: 20px;
+        }
     }
 
     .no-avatar {
@@ -8,12 +26,15 @@ page-avatars {
         margin-bottom: 20px;
     }
 
-    .right {
+    .right-buttons {
         float: right;
+        height: 40px;
+        margin-top: 15px;
+        margin-bottom: 15px;
     }
 
     .certificates-title {
-        margin-top: 20px;
+        padding-top: 10px;
     }
 
     .cert-type {
@@ -30,5 +51,7 @@ page-avatars {
     .create-avatar-btn {
         margin-bottom: 20px;
     }
+
+
 
 }
