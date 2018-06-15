@@ -197,9 +197,7 @@ export class DepositPage {
                 if (error.message == 'ERR_CONNECTION')
                     this.alert.showError('ERROR_SEND_TEXT', '')
                 else if (error.message == 'ERR_BROADCAST') {
-                    this.translate.get('MESSAGE.ONE_TX_PER_BLOCK').subscribe((message: string) => {
-                        this.alert.showError('MESSAGE.BROADCAST_ERROR', message)
-                    })
+                    this.alert.showError('MESSAGE.BROADCAST_ERROR', '')
                 }
             })
     }
