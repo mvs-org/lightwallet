@@ -489,12 +489,6 @@ export class MvsServiceProvider {
 
     broadcast(rawtx: string, max_fee: number = undefined) {
         return this.blockchain.transaction.broadcast(rawtx)
-            .catch((error) => {
-                if (error.message == 'ERR_CONNECTION')
-                    throw Error(error.message)
-                else
-                    throw Error('ERR_BROADCAST')
-            })
     }
 
     getdictionary(lang) {

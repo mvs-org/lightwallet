@@ -60,7 +60,7 @@ export class MITRegisterPage {
 
     validSymbol = (symbol) => /^[A-Za-z0-9._\-]{3,64}$/g.test(symbol)
 
-    validContent = (content) => content.length<64
+    validContent = (content) => content.length<253
 
     create() {
         return this.showLoading()
@@ -83,10 +83,8 @@ export class MITRegisterPage {
                 this.loading.dismiss()
                 if (error.message == 'ERR_CONNECTION')
                     this.showError('ERROR_SEND_TEXT', '')
-                else if (error.message == 'ERR_BROADCAST') {
-                    this.translate.get('MESSAGE.ONE_TX_PER_BLOCK').subscribe((message: string) => {
-                        this.showError('MESSAGE.BROADCAST_ERROR', message)
-                    })
+                else {
+                    this.showError('MESSAGE.BROADCAST_ERROR', error.message)
                 }
             })
     }

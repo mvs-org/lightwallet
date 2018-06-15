@@ -170,10 +170,12 @@ export class AssetTransferPage {
             .catch((error) => {
                 console.error(error)
                 this.alert.stopLoading()
-                if (error.message == 'ERR_CONNECTION')
+                if (error.message == 'ERR_CONNECTION') {
                     this.alert.showError('ERROR_SEND_TEXT', '')
-                else if (error.message == 'ERR_BROADCAST') {
-                    this.alert.showError('MESSAGE.BROADCAST_ERROR', '')
+                } else if (error.message == 'ERR_CREATE_TX') {
+                    //already handle in create function
+                } else {
+                    this.alert.showError('MESSAGE.BROADCAST_ERROR', error.message)
                 }
 
             })

@@ -14,7 +14,7 @@
             </ion-item>
             <ion-item [ngClass]="{'error-border':!validContent(content)}">
                 <ion-label color="primary" floating>{{"MIT_REGISTER.CONTENT" | translate}}</ion-label>
-                <ion-input name="content" [(ngModel)]="content" maxlength="63" required></ion-input>
+                <ion-input name="content" [(ngModel)]="content" maxlength="252" required></ion-input>
             </ion-item>
             <ion-item [ngClass]="{'error-border': !validPassword(passphrase)}">
                 <ion-label color="primary" floating>{{"PASSWORD" | translate}}</ion-label>
