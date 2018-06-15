@@ -39,7 +39,7 @@
             <ion-item [ngClass]="{'error-border':!validQuantity(quantity)}">
                 <ion-label color="primary" floating>{{"AMOUNT" | translate}}</ion-label>
                 <ion-input #quantityInput name="quantity" type="number" min="0" [(ngModel)]="quantity" required></ion-input>
-                <button *ngIf="etpBalance>10000" id="sendAll" ion-button item-right (click)="sendAll()">
+                <button type="button" *ngIf="etpBalance>10000" id="sendAll" ion-button item-right (click)="sendAll()">
                     {{"SEND_ALL_BUTTON"|translate}}
                 </button>
             </ion-item>
@@ -82,7 +82,7 @@
         </ion-list>
         <ion-row class="padding-bottom">
             <ion-col>
-                <button ion-button full icon-left [disabled]="!sendForm.form.valid||!validrecipient(recipient_address)||!validQuantity(quantity)||!validPassword(passphrase)" (click)="send()" color="secondary">
+                <button type="submit" ion-button full icon-left [disabled]="!sendForm.form.valid||!validrecipient(recipient_address)||!validQuantity(quantity)||!validPassword(passphrase)" (click)="send()" color="secondary">
                     <ion-icon disabled="checked" name="send"></ion-icon>
                     {{"SEND" | translate}}
                 </button>
