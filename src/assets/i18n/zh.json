@@ -245,12 +245,72 @@
   "LOGIN.MOBILEWEB_IOS": "The IOS App is currently in development. Please use the Web version of MyETPWallet on your computer.",
   "LOGIN.MOBILEWEB_OTHER": "MyETPWallet is currently only available on Computer and Android phones.",
 
-  "ISSUE.MAX_SUPPLY_CUSTOM": "Custom Maximum supply",
+  "ISSUE.MAX_SUPPLY_CUSTOM": "定义最大发行量",
 
   "ISSUE.ONE_MILLION": "一百万",
   "ISSUE.TEN_MILLION": "一千万",
   "ISSUE.ONE_HUNDRED_MILLION": "一亿",
   "ISSUE.ONE_BILLION": "十亿",
-  "ISSUE.TEN_BILLION": "一百亿"
+  "ISSUE.TEN_BILLION": "一百亿",
 
+  "AVATARS": "数字身份",
+  "AVATARS.CREATE_AVATAR_BTN": "创建",
+  "AVATARS.NO_AVATARS": "您当前没有任何数字身份。点击“创建”即可创建您的第一个数字身份",
+
+  "CREATE_AVATAR": "创建数字身份",
+  "CREATE_AVATAR.CREATE_BTN": "创建数字身份",
+  "CREATE_AVATAR.SYMBOL": "符号",
+  "CREATE_AVATAR.ADDRESS": "地址",
+
+  "RECIPIENT_AVATAR": "接收的数字身份",
+  "SEND_TO_AVATAR": "发送至数字身份",
+  "HEADLINE_MST": "MST资产",
+  "HEADLINE_MIT": "MIT资产",
+  "NO_MIT_TEXT": "您目前没有MIT资产。创建MIT资产首先需要创建您的数字身份",
+  "MIT_REGISTER.SYMBOL": "符号",
+  "MIT_REGISTER.CONTENT": "内容",
+
+  "IMPORT.WORDS_REMAINING": "剩余可导入的单词数量",
+  "IMPORT.WORDS_ALL_OK": "准备导入",
+  "IMPORT.WORDS_TOO_MANY": "超过24个单词已导入",
+  "IMPORT.INCORRECT_WORD": "单词数量不正确",
+  "IMPORT.INCORRECT_MNEMONIC": "助记词导入不正确，请检查导入助记词的顺序。",
+
+  "AVATARS.MY_CERTS": "我的证书",
+  "AVATARS.SECONDARY_ISSUE": "二次增发",
+  "AVATARS.DOMAIN": "域名",
+  "AVATARS.NAMING": "冠名",
+  "OWNER": "拥有者",
+  "HASH": "哈希",
+  "RECEIVE.ADDRESS_NO_MST": "此地址没有MST资产",
+
+  "ISSUE.SECONDARYISSUE_THRESHOLD": "二次增发域值",
+  "ISSUE.SECONDARYISSUE_TYPE": "允许将来进行二次增发",
+  "ISSUE.SECONDARYISSUE_DISABLED": "无法进行二次增发",
+  "ISSUE.SECONDARYISSUE_UNLIMITED": "拥有证书才可进行二次增发",
+  "ISSUE.SECONDARYISSUE_RATE": "拥有证书并满足规定的数字货币持有量才可进行二次增发",
+
+  "TOTAL_AVAILABLE_BALANCE": "可用资产余额总量",
+  "AVATAR_AVAILABLE_BALANCE": "数字身份链接的数字资产可用余额",
+
+  "ISSUE.SYMBOL_AVAILABLE": "此域名可用。发行MST资产之后，您将会收到一个域名证书",
+  "ISSUE.SYMBOL_DOMAIN_OWNER": "您的数字身份拥有创建此MST资产的域名证书",
+  "ISSUE.SYMBOL_NAMING_OWNER": "您的数字身份拥有创建此MST资产的冠名证书",
+  "ISSUE.SYMBOL_ALREADY_EXIST": "此MST资产已经存在",
+  "ISSUE.SYMBOL_NOT_CERT_OWNER": "你的数字身份不拥有创建此MST资产的域名证书",
+  "ISSUE.SYMBOL_ERROR_LOADING_MSTS": "未能成功加载MST资产。请确保此MST资产未被使用。",
+  "ISSUE.SYMBOL_ERROR_LOADING_CERTS": "未能成功加载域名证书。请确保您有权限创建此资产符号。",
+
+  "REGISTER_MST": "注册MST资产",
+  "REGISTER_MIT": "注册MIT资产",
+  "TRANSFER_MIT": "转移MIT资产",
+
+  "AVATAR_RECIPIENT_ADDRESS": "数字身份链接的地址是：{{address}},最后一次的更新时间是：{{last_update}}",
+  "MIT.STATUS": "状态",
+  "CREATOR": "创建者",
+  "OWNER": "当前拥有者",
+  "CONTENT": "内容",
+  "MIT.TX_HASH": "创建此MIT资产的交易哈希为",
+  "MIT.HISTORY": "交易记录",
+  "CHECK_IN_EXPLORER": "在区块浏览器中查询"
 }
