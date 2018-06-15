@@ -305,5 +305,12 @@
     "REGISTER_MIT": "Register MIT",
     "TRANSFER_MIT": "Transfer MIT",
 
-    "AVATAR_RECIPIENT_ADDRESS": "The address of this Avatar is {{address}}, it was updated for the last time on {{last_update}}"
+    "AVATAR_RECIPIENT_ADDRESS": "The address of this Avatar is {{address}}, it was updated for the last time on {{last_update}}",
+    "MIT.STATUS": "Status",
+    "CREATOR": "Creator",
+    "OWNER": "Current owner",
+    "CONTENT": "Content",
+    "MIT.TX_HASH": "Created in",
+    "MIT.HISTORY": "Transaction history",
+    "CHECK_IN_EXPLORER": "Check in Explorer"
 }

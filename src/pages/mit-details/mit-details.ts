@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
+import { AppGlobals } from '../../app/app.global';
 
 @IonicPage({
     name: 'MITDetailsPage',
@@ -22,6 +23,7 @@ export class MITDetailsPage {
     constructor(
         public navCtrl: NavController,
         private mvs: MvsServiceProvider,
+        private globals: AppGlobals,
         public navParams: NavParams
     ) {
         this.symbol = navParams.get('symbol')
@@ -37,7 +39,8 @@ export class MITDetailsPage {
                         tx: output.tx,
                         index: output.index,
                         height: output.height,
-                        status: output.attachment.status
+                        status: output.attachment.status,
+                        confirmed_at: output.confirmed_at
                     })
                     if (output.attachment.status == 'registered') {
                         this.content = output.attachment.content
@@ -49,5 +52,7 @@ export class MITDetailsPage {
     ionViewDidLoad() {
         console.log('ionViewDidLoad MitDetailsPage');
     }
+
+    explorerURL = (type, data) => (this.globals.network == 'mainnet') ? 'https://explorer.mvs.org/#!/' + type + '/' + data : 'https://explorer-testnet.mvs.org/#!/' + type + '/' + data;
 
 }
