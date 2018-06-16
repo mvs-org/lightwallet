@@ -18,6 +18,8 @@ export class LoginPage {
 
     GenerateKeyPage = e => this.nav.push("GenerateKeyPage")
 
+    version = () => "v"+this.globals.version + " " + this.globals.name
+
     ImportMnemonicPage = e => this.nav.push("ImportMnemonicPage")
 
     switchLanguage = e => this.nav.push("LanguageSwitcherPage")

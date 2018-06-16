@@ -1,0 +1,183 @@
+mst-card {
+
+    width: 100%;
+
+    .asset-container {
+       max-width: 100%;
+    }
+
+    @media (min-width: 825px) {
+        .asset-container {
+            max-width: 50%;
+        }
+     }
+
+    @media (min-width: 1310px) {
+        .asset-container {
+            max-width: 33.33%;
+        }
+    }
+
+    @media (min-width: 1700px) {
+        .asset-container {
+            max-width: 25%;
+        }
+    }
+
+    ion-list-header ion-reorder{
+        display: none !important;
+    }
+
+    ion-label.label-md{
+        margin: 0px;
+    }
+    .item-md{
+        padding-left: 0px;
+    }
+
+    ion-item ion-row{
+        position: relative;
+    }
+
+    ion-item.item-ios{
+        padding-left: 0px;
+    }
+    .item-ios.item-block .item-inner{
+        padding-right: 0px;
+    }
+    .label-ios{
+        margin: 0px;
+    }
+    .col{
+        display: flex;
+        justify-content: center;
+        width: 400px;
+    }
+    ion-list-header.item-md{
+        padding-left: 10px;
+    }
+    ion-col button.button-full{
+        padding: 0px;
+    }
+
+    .spread-out {
+        .scroll-content {
+            max-width: 100% !important;
+            border-color: transparent;
+        }
+    }
+
+    //Browser
+    .card-md{
+        padding: 10px 20px;
+    }
+
+    //specificity mobile refresh
+    .mini-loader-mobile {
+      margin-top: -4px !important;
+    }
+
+    //specificity mobile refresh
+    .mini-loader-mobile-offline {
+      margin-top: 0px !important;
+      margin-bottom: 30px !important;
+    }
+
+    // loading animation
+    .mini-loader,
+    .mini-loader:before,
+    .mini-loader:after {
+        border-radius: 50%;
+        width: 2.5em;
+        height: 2.5em;
+        -webkit-animation-fill-mode: both;
+        animation-fill-mode: both;
+        -webkit-animation: load7 1.8s infinite ease-in-out;
+        animation: load7 1.8s infinite ease-in-out;
+    }
+    .mini-loader {
+        color: #006599;
+        font-size: 10px;
+        margin: 80px auto;
+        position: relative;
+        text-indent: -9999em;
+        -webkit-transform: translateZ(0);
+        -ms-transform: translateZ(0);
+        transform: translateZ(0);
+        -webkit-animation-delay: -0.16s;
+        animation-delay: -0.16s;
+    }
+    .mini-loader:before,
+    .mini-loader:after {
+        content: '';
+        position: absolute;
+        top: 0;
+    }
+    .mini-loader:before {
+        left: -3.5em;
+        -webkit-animation-delay: -0.32s;
+        animation-delay: -0.32s;
+    }
+    .mini-loader:after {
+        left: 3.5em;
+    }
+    @-webkit-keyframes load7 {
+        0%,
+        80%,
+        100% {
+            box-shadow: 0 2.5em 0 -1.3em;
+        }
+        40% {
+            box-shadow: 0 2.5em 0 0;
+        }
+    }
+    @keyframes load7 {
+        0%,
+        80%,
+        100% {
+            box-shadow: 0 2.5em 0 -1.3em;
+        }
+        40% {
+            box-shadow: 0 2.5em 0 0;
+        }
+    }
+
+    .deposit-button {
+      top: -7px;
+    }
+
+    .row-buttons {
+      position: absolute;
+      bottom: 20px;
+      left: -1px;
+      padding-right: 10px;
+      padding-left: 10px;
+    }
+
+    .card-block {
+      padding-top: 10px;
+      padding-left: 20px;
+      padding-right: 20px;
+      padding-bottom: 80px;
+    }
+
+    .asset-container {
+      height: 200px;
+    }
+
+    .offlineIcon {
+      color: red;
+      padding-right: 10px;
+    }
+
+
+    .block-iPhone {
+      line-height: 8;
+      font-size: 14px;
+    }  
+
+    .csdLogoDefault {
+      //filter: invert(100%);
+      filter: brightness(0.50);
+    }
+}

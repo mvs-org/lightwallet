@@ -10,7 +10,7 @@ import { Storage } from '@ionic/storage';
 @Component({
     templateUrl: 'app.html'
 })
-export class MyApp {
+export class MyETPWallet {
     @ViewChild(Nav) nav: Nav;
 
     rootPage: any
@@ -97,7 +97,7 @@ export class MyApp {
         return Promise.all([
             { title: 'ACCOUNT.TITLE', component: "AccountPage", icon: 'home', root: true },
             { title: 'ETP_DEPOSIT', component: "DepositPage", icon: 'log-in' },
-            { title: 'ASSET_ISSUE', component: "AssetIssuePage", icon: 'globe' },
+            { title: 'AVATARS', component: "AvatarsPage", icon: 'person' },
             { title: 'LANGUAGE_SETTINGS', component: "LanguageSwitcherPage", icon: 'flag' },
             { title: 'THEME_SETTINGS', component: "ThemeSwitcherPage", icon: 'color-palette' },
             { title: 'SETTINGS', component: "SettingsPage", icon: 'settings' },

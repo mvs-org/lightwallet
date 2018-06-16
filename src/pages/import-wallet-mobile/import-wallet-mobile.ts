@@ -44,7 +44,7 @@ export class ImportWalletMobilePage {
                     } else if (content[1] != this.globals.network.charAt(0)) {
                         this.showError('MESSAGE.NETWORK_MISMATCH')
                     } else {
-                        wallet = { "index": content[2] }
+                        wallet = { "index": Math.max(5,Math.min(parseInt(content[2]),50)) }
                         this.wallet.setWallet(wallet)
                         this.wallet.setMobileWallet(content[0]).then(() => this.qrCodeLoaded = true)
                     }
@@ -57,8 +57,8 @@ export class ImportWalletMobilePage {
         this.showLoading()
         this.wallet.setMobileWallet(seed)
             .then(() => Promise.all([this.wallet.getWallet(password), this.wallet.getAddressIndex()]))
-            .then((results) => this.mvs.generateAddresses(results[0], 0, results[1]))
-            .then((addresses) => this.mvs.setMvsAddresses(addresses))
+            .then((results) => this.wallet.generateAddresses(results[0], 0, results[1]))
+            .then((addresses) => this.mvs.setAddresses(addresses))
             .then(() => this.nav.setRoot("AccountPage"))
             .catch((e) => {
                 console.error(e);

@@ -17,11 +17,13 @@ export class ReceivePage {
     addressbalances: any;
     addressBalancesObject: any = {};
     addresses: Array<string>;
+    displayType: string;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, private mvs: MvsServiceProvider) {
         this.addressbalances = {};
         this.selectedAsset = navParams.get('asset')
-        this.mvs.getMvsAddresses()
+        this.displayType = this.selectedAsset == 'ETP' ? 'ETP' : 'asset'
+        this.mvs.getAddresses()
             .then((_: string[]) => {
                 this.address = _[0];
                 this.addresses = _;
@@ -31,8 +33,8 @@ export class ReceivePage {
                         Object.keys(addressbalances).map((address) => {
                             if (this.addressbalances[address] == undefined)
                                 this.addressbalances[address] = []
-                            Object.keys(addressbalances[address]).map((asset) => {
-                                let balance = addressbalances[address][asset];
+                            Object.keys(addressbalances[address]['MST']).map((asset) => {
+                                let balance = addressbalances[address]['MST'][asset];
                                 balance.name = asset;
                                 this.addressbalances[address].push(balance)
                             })
@@ -43,8 +45,7 @@ export class ReceivePage {
     }
 
     ionViewDidEnter() {
-        console.log('Receive page loaded')
-        this.mvs.getMvsAddresses()
+        this.mvs.getAddresses()
             .then((addresses) => {
                 if (!Array.isArray(addresses) || !addresses.length)
                     this.navCtrl.setRoot("LoginPage")

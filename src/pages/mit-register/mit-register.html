@@ -1,0 +1,40 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>{{"REGISTER_MIT" | translate}}</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding style="padding-bottom: 0;">
+    <p class="right">{{"FEE"|translate}}:<br *ngIf="platform.is('mobile')"> {{10000 | format : 8}} ETP</p>
+    <form #sendForm="ngForm" style="padding-bottom: 0;">
+        <ion-list style="padding-bottom: 0;">
+            <ion-item [ngClass]="{'error-border':!validSymbol(symbol)}">
+                <ion-label color="primary" floating>{{"MIT_REGISTER.SYMBOL" | translate}}</ion-label>
+                <ion-input name="symbol" [(ngModel)]="symbol" maxlength="63" required></ion-input>
+            </ion-item>
+            <ion-item [ngClass]="{'error-border':!validContent(content)}">
+                <ion-label color="primary" floating>{{"MIT_REGISTER.CONTENT" | translate}}</ion-label>
+                <ion-input name="content" [(ngModel)]="content" maxlength="252" required></ion-input>
+            </ion-item>
+            <ion-item [ngClass]="{'error-border': !validPassword(passphrase)}">
+                <ion-label color="primary" floating>{{"PASSWORD" | translate}}</ion-label>
+                <ion-input name="passphrase" type="password" [(ngModel)]="passphrase" required></ion-input>
+            </ion-item>
+            <br>
+        </ion-list>
+        <ion-row class="padding-bottom">
+            <ion-col>
+                <button ion-button full [disabled]="!sendForm.form.valid||!validSymbol(symbol)||!validContent(content)||!validPassword(passphrase)" (click)="create()" icon-left color="secondary">
+                    <ion-icon disabled="checked" name="send"></ion-icon>
+                    {{"REGISTER_MIT" | translate}}
+                </button>
+            </ion-col>
+            <ion-col>
+                <button ion-button color="danger" full item-right icon-left (click)="cancel($event)">
+                <ion-icon name="cancel"></ion-icon>
+                {{"CANCEL" | translate}}
+            </button>
+            </ion-col>
+        </ion-row>
+    </form>
+</ion-content>

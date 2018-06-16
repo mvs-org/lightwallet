@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, Loading, LoadingController } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
-import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
+import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
 
 @IonicPage()
 @Component({
@@ -17,7 +17,7 @@ export class GenerateKeyPage {
     builtFor: string;
     encrypted_json: object;
 
-    constructor(private nav: NavController, public mvsServiceProvider: MvsServiceProvider, public navParams: NavParams, private alertCtrl: AlertController, private translate: TranslateService, private loadingCtrl: LoadingController) {
+    constructor(private nav: NavController, public walletService: WalletServiceProvider, public navParams: NavParams, private alertCtrl: AlertController, private translate: TranslateService, private loadingCtrl: LoadingController) {
         this.CreateWallet()
         this.builtFor = 'browser';
     }
@@ -25,14 +25,12 @@ export class GenerateKeyPage {
     // need to get hex
     CreateWallet() {
         this.showLoading()
-        return this.mvsServiceProvider.createEtpWallet()
+        return this.walletService.createWallet()
             .then((wallet) => {
                 this.wallet = wallet;
                 return this.ConfirmCreateWallet(this.wallet.mnemonic);
             });
-
     }
-
 
     showLoading() {
         this.translate.get('MESSAGE.LOADING').subscribe((loading: string) => {
@@ -43,7 +41,6 @@ export class GenerateKeyPage {
             this.loading.present()
         })
     }
-
 
     showPopup(title, text) {
         let alert = this.alertCtrl.create({

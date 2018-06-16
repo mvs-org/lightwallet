@@ -10,15 +10,18 @@
 <ion-content>
     <ion-list *ngIf="!loading">
         <ion-item [hidden]="!txs.length" *ngFor="let tx of txs">
-            <ion-icon name="{{(tx.side=='in')?'arrow-down':'arrow-up'}}" item-start large color="{{(tx.side=='in')?'secondary':'danger'}}"></ion-icon>
-            <ion-avatar>
-                <img class="coinlogo" [src]="'assets/icon/'+tx.asset.symbol+'.png'" onerror="this.src='assets/icon/default.png'">
-                <h2>{{tx.asset.symbol|translate}}</h2>
-            </ion-avatar>
-            <h3 *ngIf="tx.quantity>0">{{'AMOUNT'|translate}}: {{formatQuantity((tx.quantity)?tx.quantity:0,tx.asset.decimals)}}</h3>
-            <h3 *ngIf="!tx.quantity">{{'TRANSACTION.INNER_WALLET'|translate}}</h3>
-            <h3>{{'DATE'|translate}}: {{tx.timestamp*1000|date : 'medium'}}</h3>
-            <a href="https://explorer.mvs.org/#!/tx/{{tx.hash}}" target="_blank">{{tx.hash}}</a>
+            <!-- <ion-icon name="{{(tx.side=='in')?'arrow-down':'arrow-up'}}" item-start large color="{{(tx.side=='in')?'secondary':'danger'}}"></ion-icon> -->
+            <ion-item no-lines>
+                <ion-avatar item-start>
+                    <img class="coinlogo" [src]="'assets/icon/'+asset+'.png'" onerror="this.src='assets/icon/default.png'">
+                </ion-avatar>
+                <h1>{{asset}}</h1>
+                <!-- <h3 *ngIf="!tx.quantity">{{'TRANSACTION.INNER_WALLET'|translate}}</h3> -->
+                <h3 *ngIf="tx.outputs['0']">{{'DATE'|translate}}: {{tx.outputs['0'].confirmed_at*1000|date : 'medium'}}</h3>
+                <p>{{'HASH'|translate}}: <a *ngIf="!tx.unconfirmed" href="{{explorerURL(tx.hash)}}" target="_blank">{{tx.hash}}</a>
+                    <span *ngIf="tx.unconfirmed">{{tx.hash}}</span>
+                </p>
+            </ion-item>
         </ion-item>
     </ion-list>
     <div [hidden]="txs && txs.length" *ngIf="!loading">

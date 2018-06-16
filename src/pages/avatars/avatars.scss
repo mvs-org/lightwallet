@@ -1,0 +1,57 @@
+page-avatars {
+    .avatar-card {
+        padding: 0px;
+    }
+
+    @media (min-width: 825px) {
+        .avatar-card {
+            padding: 5px;
+        }
+     }
+
+    @media (min-width: 1310px) {
+      .avatar-card {
+          padding: 10px;
+      }
+    }
+
+    @media (min-width: 1700px) {
+        .avatar-card {
+            padding: 20px;
+        }
+    }
+
+    .no-avatar {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .right-buttons {
+        float: right;
+        height: 40px;
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+
+    .certificates-title {
+        padding-top: 10px;
+    }
+
+    .cert-type {
+        width: 100px;
+    }
+
+    textarea{
+        min-width: 400px;
+        width: auto;
+        border: 0px !important;
+        resize: none;
+    }
+
+    .create-avatar-btn {
+        margin-bottom: 20px;
+    }
+
+
+
+}
