@@ -1,6 +1,6 @@
 {
   "name": "mvs-lightwallet",
-  "version": "0.3.1b2",
+  "version": "0.3.1r1",
   "author": "Sven Mutzl",
   "homepage": "https://www.myetpwallet.com/",
   "private": true,
@@ -74,7 +74,7 @@
     "jasmine-as-promised": "0.0.8",
     "jasmine-core": "^2.99.1",
     "jasmine-spec-reporter": "^4.2.1",
-    "karma": "^2.0.2",
+    "karma": "^2.0.3",
     "karma-chai-as-promised": "^0.1.2",
     "karma-chrome-launcher": "^2.2.0",
     "karma-coverage-istanbul-reporter": "^1.4.3",
