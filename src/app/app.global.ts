@@ -7,7 +7,7 @@ export class AppGlobals {
     readonly name: string = 'supernova';
     readonly algo: string = 'aes';
     readonly index: number = 10;
-    readonly network: string = "testnet";
+    readonly network: string = "mainnet";
     readonly ADDRESS_PREFIX_MAINNET = 'M'
     readonly ADDRESS_PREFIX_P2SH = '3'
     readonly ADDRESS_PREFIX_TESTNET = 't'
