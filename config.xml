@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget android-versionCode="301" id="com.myetpwallet.app" version="0.3.1r1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>MyETPWallet</name>
-    <description>The Metaverse lightwallet.</description>
+<widget android-versionCode="302" id="com.myetpwallet.testnet" version="0.3.1t2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>MyETPWallet Testnet</name>
+    <description>The Metaverse testnet lightwallet.</description>
     <author email="info@mvs.org" href="https://www.myetpwallet.com/">My ETP Wallet</author>
     <content src="index.html" />
     <access origin="*" />
