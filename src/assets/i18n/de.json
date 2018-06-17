@@ -124,7 +124,7 @@
     "BACKUP_WORDS_WRITE_DOWN_TEXT": "Bitte schreibe die folgenden 24 Wörter auf ein Stück Papier auf. Du wirst diese benötigen, wenn du das Wallet wiederherstellen möchtest. Es ist sehr wichtig, dass du diese sicher und privat verwahrst. Zeige es niemandem.",
     "RESET_MESSAGE": "Alle Anmeldedaten werden gelöscht",
     "SHOW_ALL_ASSET_BALANCES": "Guthaben für alle Assets anzeigen",
-  	"THEME_SETTINGS": "Design anpassen",
+    "THEME_SETTINGS": "Design anpassen",
     "LOGIN_MENU_INFO_TEXT": "Hinweis für Benutzer von existierenden MVS-Wallets: Erstelle bitte beim ersten Anmelden auf myetpwallet.com eine Wallet-Datei mittels Backup-Wörter und öffne danach das Wallet von dieser Datei",
     "PASTE_WORDS": "Eingabefeld verwenden",
     "RESET": "Zurücksetzen",
@@ -139,29 +139,29 @@
         "LIST_ITEM_4": "Der Service-Provider bietet lediglich technische Hilfe für das Wallet und wird für keine anderen Dienste eine Unterstützung anbieten.",
         "READ_AND_AGREE": "Ich habe den kompletten Haftungsausschluss gelesen und bin damit einverstanden. Ich übernehme die alleinigen Verantwortungen und Risiken."
     },
-  "LOGOUT": "Abmelden",
-  "RESYNC": "synchronisieren",
-  "SYNCING": "synchronisiere",
-  "TRANSFER": "Transferieren",
-  "OK": "OK",
+    "LOGOUT": "Abmelden",
+    "RESYNC": "synchronisieren",
+    "SYNCING": "synchronisiere",
+    "TRANSFER": "Transferieren",
+    "OK": "OK",
 
-  "PREVIEW": "Vorschau",
-  "LEGAL_DISCLAIMER": {
-    "TITLE": "Haftungsausschluss",
-    "BRIEF_EXPLAIN": "MyETPWallet.com ermöglicht das einfache Erstellen, Speichern und den Zugriff auf deine Informationen und Assets und interagiert mit dem Metaverse-Blockchain. Du bist ausschließlich verantwortlich für die Verwaltung deiner Guthaben und für die Aufrechterhaltung der Sicherheit deiner privaten Schlüssel und der Backup-Wörter bezüglich deines Wallets.",
-    "WARNING": "Nehme bitte vor der Nutzung dieses Wallets zur Kenntnis, dass in Verbindung mit Cryptowährungen und auf der Blockchain basierenden Open-Source Programmen wichtige Risiken bestehen wie Volatilität an den Börsen oder Software-Fehler. Mit der Registrierung eines Accounts über MyETPWallet.com oder MVSD erklärst du dich damit einverstanden, dass du die Allgemeinen Nutzungsbedingungen aus diesem Haftungsausschluss gelesen, verstanden und akzeptiert hast.",
-    "I_TITLE": "I. Zugriff und Steuerung der Wallet-Informationen",
-    "I_INFO": "1.1 Wenn du ein Wallet-Account erstellst, werden Backup-Wörter mit 24 englischen Wörtern und ein Schlüsselpaar aus öffentlichem und privatem Schlüssel erstellt, die zum Empfangen und Versenden einer digitalen Währung verwendet wird. Du musst deine Backup-Wörter und den privaten Schlüssel speichern und sicher aufbewahren. Falls das nicht der Fall ist, kann das zum Verlust des Accounts und den enthaltenen Assets führen.",
-    "I_INFO_2": "1.2 Das Wallet sammelt oder speichert keine privaten Informationen der Benutzer, einschließlich deiner Passwörter und privaten Schlüssel. Diese Informationen sind lokal auf dem Gerät der Benutzer gespeichert. Demzufolge können wir dich dabei nicht unterstützen, das Wallet wiederherzustellen. Das Entwickler-Team ist lediglich verantwortlich für die Bereitstellung des Wallets und die Behebung von Software-Fehlern und ist nicht in der Lage, private Schlüssel zu entschlüsseln oder wiederherzustellen. Wenn du MyETPWallet.com nutzt, bestätigst du, dass Metaverse nicht verantwortlich ist für die Verwahrung und Aufrechterhaltung deiner privaten Schlüssel in Verbindung mit deinem Wallet. Wir raten dir dringend, die Wallet-Dateien zu sichern, um dein Eigentum zu schützen.",
-    "II_TITLE": "II. Wallet-Sicherheit",
-    "II_INFO_1": "2.1 Das Metaverse-Team wird adäquate Sicherheitsmaßnahmen treffen gegen Datenverlust, unsachgemäße Benutzung, unautorisierten Zugriff und/oder Veröffentlichung. Beispielsweise verwenden wir höchste Standards zur Verschlüsselung wie SSL, um die persönlichen Informationen zu schützen. Bitte nehmen sie jedoch zur Kenntnis, dass wir keinen absoluten Schutz für Daten und deren Veröffentlichung im Internet garantieren können aufgrund von technischen Begrenzungen und unvorhersehbaren feindlichen Aktionen gegen die Plattform. Der Benutzer bestätigt die Möglichkeit, dass bei der Benutzung unseres Dienstes das System und das verwendete Telekommunikations-Netzwerk kompromittiert sein kann und das außerhalb unseres Einflusses liegt. Beispielsweise kann es passieren, dass der Benutzer eine Software herunterlädt oder Webseiten besucht, die Viren, Malware oder sonstige schadhafte Programme enthalten, die die Sicherheit der Wallet-Informationen gefährden. Daher ist es unerlässlich, dass die Benutzer die Sicherheit auf ihre persönlichen Informationen und Daten gewährleisten. Du akzeptierst das immer vorhandene Sicherheitsrisiko beim Übergeben persönlicher Informationen oder bei sonstigen Handlungen über das Internet und wirst uns nicht verantwortlich für irgendeine Sicherheitslücke machen, außer wenn es aufgrund unserer Fahrlässigkeit geschieht. Das Entwickler-Team empfiehlt, dass die Benutzer darauf Acht geben, ihre Passwörter und privaten Schlüssel offline zu speichern (z.B. durch Aufschreiben auf ein Stück Papier).",
-    "II_INFO_2": "2.2 Unter keinen Umständen sollte der Benutzer irgendwelchen nicht offiziellen Quellen trauen. Jegliche Wallet-Transaktion sollte durchgeführt werden, nachdem der Benutzer die Identität der Gegenpartei untersucht und beurteilt hat.",
-    "II_INFO_3": "2.3 Es obliegt der ausschließlichen Verantwortung des Benutzers, das Wallet zu schützen. Die Entwickler von Metaverse werden gemäß den Industriestandards adäquate technische Vorkehrungen treffen, um die Datensicherheit auf dem Gerät des Benutzers zu gewährleisten, ist jedoch rechtlich nicht verantwortlich für Datenverluste oder den Verlust von Guthaben. Der Benutzer bestätigt und akzeptiert, dass das Metaverse-Team in solchen Umständen nicht den vollumfänglichen Schutz des Guthabens auf dem Wallet garantieren kann.",
-    "III_TITLE": "III. Kontakt",
-    "III_INFO": "Solltest du irgendeine Frage bezüglich der genannten Richtlinien zur Privatsphäre haben, bitte kontaktiere uns über die folgende E-Mailadresse: info@mvs.org",
-    "FOOTER": "Das Metaverse-Team behält sich das Recht vor, diese Bestimmungen nach eigenem Ermessen jederzeit zu ändern. MyETPWallet wird unter dem Schutz des Open-Source Protokolls MIT verbreitet."
-  },
-  "PASSWORD_WARNING": "Zu deiner eigenen Sicherheit empfehlen wir, ein starkes Passwort zu verwenden.",
+    "PREVIEW": "Vorschau",
+    "LEGAL_DISCLAIMER": {
+        "TITLE": "Haftungsausschluss",
+        "BRIEF_EXPLAIN": "MyETPWallet.com ermöglicht das einfache Erstellen, Speichern und den Zugriff auf deine Informationen und Assets und interagiert mit dem Metaverse-Blockchain. Du bist ausschließlich verantwortlich für die Verwaltung deiner Guthaben und für die Aufrechterhaltung der Sicherheit deiner privaten Schlüssel und der Backup-Wörter bezüglich deines Wallets.",
+        "WARNING": "Nehme bitte vor der Nutzung dieses Wallets zur Kenntnis, dass in Verbindung mit Cryptowährungen und auf der Blockchain basierenden Open-Source Programmen wichtige Risiken bestehen wie Volatilität an den Börsen oder Software-Fehler. Mit der Registrierung eines Accounts über MyETPWallet.com oder MVSD erklärst du dich damit einverstanden, dass du die Allgemeinen Nutzungsbedingungen aus diesem Haftungsausschluss gelesen, verstanden und akzeptiert hast.",
+        "I_TITLE": "I. Zugriff und Steuerung der Wallet-Informationen",
+        "I_INFO": "1.1 Wenn du ein Wallet-Account erstellst, werden Backup-Wörter mit 24 englischen Wörtern und ein Schlüsselpaar aus öffentlichem und privatem Schlüssel erstellt, die zum Empfangen und Versenden einer digitalen Währung verwendet wird. Du musst deine Backup-Wörter und den privaten Schlüssel speichern und sicher aufbewahren. Falls das nicht der Fall ist, kann das zum Verlust des Accounts und den enthaltenen Assets führen.",
+        "I_INFO_2": "1.2 Das Wallet sammelt oder speichert keine privaten Informationen der Benutzer, einschließlich deiner Passwörter und privaten Schlüssel. Diese Informationen sind lokal auf dem Gerät der Benutzer gespeichert. Demzufolge können wir dich dabei nicht unterstützen, das Wallet wiederherzustellen. Das Entwickler-Team ist lediglich verantwortlich für die Bereitstellung des Wallets und die Behebung von Software-Fehlern und ist nicht in der Lage, private Schlüssel zu entschlüsseln oder wiederherzustellen. Wenn du MyETPWallet.com nutzt, bestätigst du, dass Metaverse nicht verantwortlich ist für die Verwahrung und Aufrechterhaltung deiner privaten Schlüssel in Verbindung mit deinem Wallet. Wir raten dir dringend, die Wallet-Dateien zu sichern, um dein Eigentum zu schützen.",
+        "II_TITLE": "II. Wallet-Sicherheit",
+        "II_INFO_1": "2.1 Das Metaverse-Team wird adäquate Sicherheitsmaßnahmen treffen gegen Datenverlust, unsachgemäße Benutzung, unautorisierten Zugriff und/oder Veröffentlichung. Beispielsweise verwenden wir höchste Standards zur Verschlüsselung wie SSL, um die persönlichen Informationen zu schützen. Bitte nehmen sie jedoch zur Kenntnis, dass wir keinen absoluten Schutz für Daten und deren Veröffentlichung im Internet garantieren können aufgrund von technischen Begrenzungen und unvorhersehbaren feindlichen Aktionen gegen die Plattform. Der Benutzer bestätigt die Möglichkeit, dass bei der Benutzung unseres Dienstes das System und das verwendete Telekommunikations-Netzwerk kompromittiert sein kann und das außerhalb unseres Einflusses liegt. Beispielsweise kann es passieren, dass der Benutzer eine Software herunterlädt oder Webseiten besucht, die Viren, Malware oder sonstige schadhafte Programme enthalten, die die Sicherheit der Wallet-Informationen gefährden. Daher ist es unerlässlich, dass die Benutzer die Sicherheit auf ihre persönlichen Informationen und Daten gewährleisten. Du akzeptierst das immer vorhandene Sicherheitsrisiko beim Übergeben persönlicher Informationen oder bei sonstigen Handlungen über das Internet und wirst uns nicht verantwortlich für irgendeine Sicherheitslücke machen, außer wenn es aufgrund unserer Fahrlässigkeit geschieht. Das Entwickler-Team empfiehlt, dass die Benutzer darauf Acht geben, ihre Passwörter und privaten Schlüssel offline zu speichern (z.B. durch Aufschreiben auf ein Stück Papier).",
+        "II_INFO_2": "2.2 Unter keinen Umständen sollte der Benutzer irgendwelchen nicht offiziellen Quellen trauen. Jegliche Wallet-Transaktion sollte durchgeführt werden, nachdem der Benutzer die Identität der Gegenpartei untersucht und beurteilt hat.",
+        "II_INFO_3": "2.3 Es obliegt der ausschließlichen Verantwortung des Benutzers, das Wallet zu schützen. Die Entwickler von Metaverse werden gemäß den Industriestandards adäquate technische Vorkehrungen treffen, um die Datensicherheit auf dem Gerät des Benutzers zu gewährleisten, ist jedoch rechtlich nicht verantwortlich für Datenverluste oder den Verlust von Guthaben. Der Benutzer bestätigt und akzeptiert, dass das Metaverse-Team in solchen Umständen nicht den vollumfänglichen Schutz des Guthabens auf dem Wallet garantieren kann.",
+        "III_TITLE": "III. Kontakt",
+        "III_INFO": "Solltest du irgendeine Frage bezüglich der genannten Richtlinien zur Privatsphäre haben, bitte kontaktiere uns über die folgende E-Mailadresse: info@mvs.org",
+        "FOOTER": "Das Metaverse-Team behält sich das Recht vor, diese Bestimmungen nach eigenem Ermessen jederzeit zu ändern. MyETPWallet wird unter dem Schutz des Open-Source Protokolls MIT verbreitet."
+    },
+    "PASSWORD_WARNING": "Zu deiner eigenen Sicherheit empfehlen wir, ein starkes Passwort zu verwenden.",
     "FEE": "Transaktionsgebühr",
     "NOTICE_TRANSACTION_FEE_UNCOVERED": "Bitte stelle sicher, dass du genug ETP zum Abdecken der Transaktionsgebühr hast.",
 
@@ -186,7 +186,7 @@
 
     "RESET_MESSAGE_MOBILE": "Alle Daten werden gelöscht. Zum Anmelden benötigst du deine Backup-Wörter oder einen Scan des QR-Codes von deinem Desktop Lightwallet.",
     "IMPORT.SCAN_QRCODE_TEXT": "Importiere meinen Account auf mein Mobilgerät",
-    "IMPORT.SCAN_QRCODE_BUTTON":"Scanne QR-Code",
+    "IMPORT.SCAN_QRCODE_BUTTON": "Scanne QR-Code",
 
     "ASSET_ISSUE": "Asset erstellen",
     "NOTICE_ASSET_ISSUE_FEE": "Bitte nehme zur Kenntnis, dass die Erstellung eines Assets 10 ETP kostet.",
@@ -214,7 +214,7 @@
 
     "MESSAGE.NETWORK_MISMATCH": "Netzwerk stimmt nicht überein",
     "MESSAGE.PASSWORD_WRONG": "Entschlüsseln des Wallets anhand des Passworts nicht möglich",
-    "MESSAGE.CREATE_TRANSACTION" : "Erstellen der Transaktion nicht möglich.",
+    "MESSAGE.CREATE_TRANSACTION": "Erstellen der Transaktion nicht möglich.",
     "MESSAGE.BROADCAST_ERROR": "Übertragen der Transaktion nicht möglich.",
 
     "LOGIN": "Login",
@@ -224,19 +224,92 @@
     "HOW_TO_IMPORT_WALLET_MOBILE_STEP2": "QR Code scannen",
     "HOW_TO_IMPORT_WALLET_MOBILE_STEP3": "Viel spaẞ mit deinem mobilen Wallet!",
 
-    "MESSAGE.ISSUE_INSUFFICIENT_BALANCE" : "Es werden 10 ETP für die Asset Erstellung benötigt.",
+    "MESSAGE.ISSUE_INSUFFICIENT_BALANCE": "Es werden 10 ETP für die Asset Erstellung benötigt.",
 
-  "SCANNING.MESSAGE_ACCOUNT": "Scanne den QR Code der Web-Version",
-  "SCANNING.MESSAGE_ADDRESS": "Scanne die ETP Adresse",
+    "SCANNING.MESSAGE_ACCOUNT": "Scanne den QR Code der Web-Version",
+    "SCANNING.MESSAGE_ADDRESS": "Scanne die ETP Adresse",
 
-  "MESSAGE.NOT_ETP_ADDRESS_TITLE": "Ungültige Adresse",
-  "MESSAGE.NOT_ETP_ADDRESS_TEXT": "Dies ist keine gültige Metaverse Adresse. Bitte versuchen Sie es erneut.",
+    "MESSAGE.NOT_ETP_ADDRESS_TITLE": "Ungültige Adresse",
+    "MESSAGE.NOT_ETP_ADDRESS_TEXT": "Dies ist keine gültige Metaverse Adresse. Bitte versuchen Sie es erneut.",
 
-  "SEND_ALL_BUTTON": "Max",
+    "SEND_ALL_BUTTON": "Max",
 
-  "IMPORT_QRCODE": "Der Import QRCode kann im Wallet unter app.myetpwallet.com im Menüpunkt Einstllungen unter \"Mobilgerät verbinden\" abgerufen werden",
+    "IMPORT_QRCODE": "Der Import QRCode kann im Wallet unter app.myetpwallet.com im Menüpunkt Einstllungen unter \"Mobilgerät verbinden\" abgerufen werden",
 
-  "MESSAGE.ONE_TX_PER_BLOCK": "Es kann momentan nur eine Transaktion gleichzeitig verarbeitet werden. Bitte warten Sie einen Moment.",
-  "MESSAGE.INSUFFICIENT_BALANCE": "Kein ausreichendes Guthaben. Bitte Eingabe überprüfen."
+    "MESSAGE.ONE_TX_PER_BLOCK": "Es kann momentan nur eine Transaktion gleichzeitig verarbeitet werden. Bitte warten Sie einen Moment.",
+    "MESSAGE.INSUFFICIENT_BALANCE": "Kein ausreichendes Guthaben. Bitte Eingabe überprüfen."
 
+    "LOGIN.MOBILEWEB_ANDROID1": "Die MyETPWallet App gibt es im Google Play Store (empfohlen):",
+    "LOGIN.MOBILEWEB_ANDROID2": "Oder als direkten Download:",
+    "LOGIN.MOBILEWEB_IOS": "Die IOS App befindet sich zur Zeit in der Entwicklung. Als Alternative lässt sich die Web Version verwenden.",
+    "LOGIN.MOBILEWEB_OTHER": "MyETPWallet ist momentan nut verfügbar für Browser and Android.",
+
+    "ISSUE.MAX_SUPPLY_CUSTOM": "Fre wählbare Menge",
+
+    "ISSUE.ONE_MILLION": "Eine Million",
+    "ISSUE.TEN_MILLION": "Zehn Million",
+    "ISSUE.ONE_HUNDRED_MILLION": "Einhundert Millionen",
+    "ISSUE.ONE_BILLION": "Eine Milliarde",
+    "ISSUE.TEN_BILLION": "Zehn Milliarden",
+
+    "AVATARS": "Avatare",
+    "AVATARS.CREATE_AVATAR_BTN": "Erstellen",
+    "AVATARS.NO_AVATARS": "Du hast noch keinen Avatar registriert.",
+
+    "CREATE_AVATAR": "Avatar registrieren",
+    "CREATE_AVATAR.CREATE_BTN": "Registriere Avatar",
+    "CREATE_AVATAR.SYMBOL": "Symbol",
+    "CREATE_AVATAR.ADDRESS": "Adresse",
+
+    "RECIPIENT_AVATAR": "Empfänger Avatar",
+    "SEND_TO_AVATAR": "An Avatar senden",
+    "HEADLINE_MST": "Metaverse Smart Token",
+    "HEADLINE_MIT": "Metaverse Identifiable Token",
+    "NO_MIT_TEXT": "Du hast kein MIT. MITs lassen sich über die Avatar Funktionen erstellen und versenden.",
+    "MIT_REGISTER.SYMBOL": "Symbol",
+    "MIT_REGISTER.CONTENT": "Inhalt",
+
+    "IMPORT.WORDS_REMAINING": " Wörter verbleibend",
+    "IMPORT.WORDS_ALL_OK": "Bereit zum Import",
+    "IMPORT.WORDS_TOO_MANY": "Mehr als 24 Wörter",
+    "IMPORT.INCORRECT_WORD": "Fehlerhaftes Wort Nummer ",
+    "IMPORT.INCORRECT_MNEMONIC": "Fehlerhafte Backup Wörter. Bitte Eingabe Überprüfen.",
+
+    "AVATARS.MY_CERTS": "Eigene Zertifikate",
+    "AVATARS.SECONDARY_ISSUE": "Zweitausgabe",
+    "AVATARS.DOMAIN": "Domain",
+    "AVATARS.NAMING": "Name",
+    "OWNER": "Besitzer",
+    "HASH": "Hash",
+    "RECEIVE.ADDRESS_NO_MST": "Diese Adresse hat keine MST.",
+
+    "ISSUE.SECONDARYISSUE_THRESHOLD": "Schwelle für Zweitausgabe",
+    "ISSUE.SECONDARYISSUE_TYPE": "Spätere Zweitausgabe möglich",
+    "ISSUE.SECONDARYISSUE_DISABLED": "Keine spätere Zweitausgabe möglich",
+    "ISSUE.SECONDARYISSUE_UNLIMITED": "Zweitausgabe nur möglich bei Besitz des Zertifikats",
+    "ISSUE.SECONDARYISSUE_RATE": "Zweitausgabe möglich bei Besitz des Zertifikats und Erreichen der Schwelle für Zweitausgaben.",
+
+    "TOTAL_AVAILABLE_BALANCE": "Verfügbare Menge (gesamt)",
+    "AVATAR_AVAILABLE_BALANCE": "Verfügbare Menge (Avatar)",
+
+    "ISSUE.SYMBOL_AVAILABLE": "Domain verfügbar. Bei MST Erstellung, erhälst Du das dazugehörige Domain Zertifikat.",
+    "ISSUE.SYMBOL_DOMAIN_OWNER": "Dein Avatar besitzt das Domain Zertifikat zur Erstellung des MST.",
+    "ISSUE.SYMBOL_NAMING_OWNER": "Dein Avatar besitzt das Naming Zertifikat zur Erstellung des MST.",
+    "ISSUE.SYMBOL_ALREADY_EXIST": "MST Symbol existiert bereits",
+    "ISSUE.SYMBOL_NOT_CERT_OWNER": "Dein Avatar besitzt nicht das Domain Zertifikat zur Erstellung des MST.",
+    "ISSUE.SYMBOL_ERROR_LOADING_MSTS": "Fehler beim Laden. Stelle sicher, dass das MST Symbol verfügbar ist.",
+    "ISSUE.SYMBOL_ERROR_LOADING_CERTS": "Fehler beim Laden der Zertifikate. Stelle sicher, dass du über die nötigen Zertifikate zur Erstellung verfügst.",
+
+    "REGISTER_MST": "MST registrieren",
+    "REGISTER_MIT": "MIT registrieren",
+    "TRANSFER_MIT": "MIT senden",
+
+    "AVATAR_RECIPIENT_ADDRESS": "Die Adresse des Avatars ist {{address}}. Letztes Avatar update: {{last_update}}.",
+    "MIT.STATUS": "Status",
+    "CREATOR": "Ersteller",
+    "OWNER": "Aktueller Besitzer",
+    "CONTENT": "Inhalt",
+    "MIT.TX_HASH": "Erstellt in",
+    "MIT.HISTORY": "Transaktionshistorie",
+    "CHECK_IN_EXPLORER": "Im Explorer öffnen"
 }
