@@ -220,7 +220,7 @@
     "LOGIN": "Login",
     "HOW_TO_IMPORT_WALLET_MOBILE": "Hilfe zum Import",
     "HOW_TO_IMPORT_WALLET_MOBILE_TITLE": "Hilfe zum Import?",
-    "HOW_TO_IMPORT_WALLET_MOBILE_STEP1": "Öffne das lightwallet auf einem Desktop PC und wähle die Einstellungen und dann \"Mobilgerät verbinden\"\"",
+    "HOW_TO_IMPORT_WALLET_MOBILE_STEP1": "Öffne das lightwallet auf einem Desktop PC und wähle die Einstellungen und dann \"Mobilgerät verbinden\"",
     "HOW_TO_IMPORT_WALLET_MOBILE_STEP2": "QR Code scannen",
     "HOW_TO_IMPORT_WALLET_MOBILE_STEP3": "Viel spaẞ mit deinem mobilen Wallet!",
 
@@ -237,7 +237,7 @@
     "IMPORT_QRCODE": "Der Import QRCode kann im Wallet unter app.myetpwallet.com im Menüpunkt Einstllungen unter \"Mobilgerät verbinden\" abgerufen werden",
 
     "MESSAGE.ONE_TX_PER_BLOCK": "Es kann momentan nur eine Transaktion gleichzeitig verarbeitet werden. Bitte warten Sie einen Moment.",
-    "MESSAGE.INSUFFICIENT_BALANCE": "Kein ausreichendes Guthaben. Bitte Eingabe überprüfen."
+    "MESSAGE.INSUFFICIENT_BALANCE": "Kein ausreichendes Guthaben. Bitte Eingabe überprüfen.",
 
     "LOGIN.MOBILEWEB_ANDROID1": "Die MyETPWallet App gibt es im Google Play Store (empfohlen):",
     "LOGIN.MOBILEWEB_ANDROID2": "Oder als direkten Download:",
