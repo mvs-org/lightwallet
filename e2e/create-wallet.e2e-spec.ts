@@ -25,16 +25,22 @@ describe('Wallet creation', () => {
         });
     })
 
-    describe('Gerneate new wallet', () => {
+    describe('Generate new wallet', () => {
         beforeEach(() => {
             page.navigateTo('/');
-            page.getElementById("create-wallet-button").click()
+            page.clickId("create-wallet-button")
         });
 
-        it('Page should have backup words', () => {
-            page.hasId("backup-words").then(res => {
-                expect(res).toEqual(true);
-            });
+        it('Generation page should show 24 backup words', () => {
+            page.hasId("backup-words")
+                .then(res => {
+                    expect(res).toEqual(true);
+                    expect(true).toEqual(true);
+                })
+                .then(() => page.getElementById('backup-words').getText())
+                .then(words => {
+                    expect(words.split(' ').length).toEqual(24)
+                })
         });
     })
 
