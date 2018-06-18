@@ -1,20 +1,19 @@
 sudo: required
 addons:
   apt:
-    sources:
-      - google-chrome
     packages:
-      - google-chrome-stable
+      - chromium-chromedriver
 language: node_js
 node_js:
   - 8
 before_script:
   - export DISPLAY=:99.0
-  - ionic serve --no-open &
+  - export PATH=$PATH:/usr/lib/chromium-browser/
+  - ./node_modules/ionic/bin/ionic serve --no-open &
   - sleep 20
 install:
-  - npm install -g ionic 
   - npm install
+  - npm run e2e-update
 script:
   - npm run e2e
 
