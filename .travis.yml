@@ -10,7 +10,8 @@ node_js:
   - 8
 before_script:
   - export DISPLAY=:99.0
-  - ionic serve --no-open
+  - ionic serve --no-open &
+  - sleep 20
 install:
   - npm install -g ionic 
   - npm install
