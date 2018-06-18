@@ -17,6 +17,16 @@ export class WalletServiceProvider {
             .then((seed) => this.crypto.encrypt(seed.toString('hex'), passphrase))
     }
 
+    encryptWalletFromMnemonic(mnemonic, passphrase){
+        return this.crypto.encrypt(mnemonic, passphrase)
+            .then((res) => this.dataToKeystoreJson(res))
+    }
+
+    dataToKeystoreJson(mnemonic) {
+        let tmp = { version: this.globals.version, algo: this.globals.algo, index: this.globals.index, mnemonic: mnemonic };
+        return tmp;
+    }
+
     getMstIcons() {
         return ['ETP', 'MVS.ZGC', 'MVS.ZDC', 'CSD.CSD', 'PARCELX.GPX', 'PARCELX.TEST', 'SDG', 'META', 'MVS.HUG'];
     }
