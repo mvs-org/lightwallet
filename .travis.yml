@@ -1,9 +1,10 @@
 sudo: required
 addons:
+  addons:
+  chrome: stable
   apt:
     packages:
       - chromium-chromedriver
-      - chromium
 language: node_js
 node_js:
   - 8
