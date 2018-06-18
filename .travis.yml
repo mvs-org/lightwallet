@@ -3,6 +3,7 @@ addons:
   apt:
     packages:
       - chromium-chromedriver
+      - chromium
 language: node_js
 node_js:
   - 8
@@ -13,7 +14,7 @@ before_script:
   - export DISPLAY=:99.0
   - export PATH=$PATH:/usr/lib/chromium-browser/
   - ./node_modules/ionic/bin/ionic serve --no-open &
-  - sleep 20
+  - sleep 30
 install:
   - npm install
   - npm run e2e-update
