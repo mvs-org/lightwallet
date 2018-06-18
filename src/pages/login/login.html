@@ -20,13 +20,13 @@
             <div style="text-align: center;">{{version()}}</div>
         </div>
         <ion-row class="browser-button">
-            <button ion-button class="large-btn" block full icon-left (click)="GenerateKeyPage();">
+            <button ion-button class="large-btn" block full icon-left (click)="GenerateKeyPage();" id="create-wallet-button">
                 <ion-icon name="add"></ion-icon>
                 {{"CREATE_NEW_WALLET_BUTTON"|translate}}
             </button>
         </ion-row>
         <ion-row *ngIf="!platform.is('mobile')" class="browser-button">
-            <button ion-button class="large-btn" block full icon-left (click)="ImportMnemonicPage();">
+            <button ion-button class="large-btn" block full icon-left (click)="ImportMnemonicPage();" id="create-wallet-frombackup-button">
                 <ion-icon name="download"></ion-icon>
                 {{"CREATE_FROM_BACKUP_WORDS"|translate}}
             </button>
