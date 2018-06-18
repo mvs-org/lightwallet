@@ -5,6 +5,9 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { WalletServiceProvider } from '../providers/wallet-service/wallet-service';
 import { MvsServiceProvider } from '../providers/mvs-service/mvs-service';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { SplashScreen } from '@ionic-native/splash-screen';
+import { StatusBar } from '@ionic-native/status-bar';
+import { Keyboard } from '@ionic-native/keyboard';
 
 
 import { BrowserModule } from '@angular/platform-browser';
@@ -20,20 +23,20 @@ export function HttpLoaderFactory(http: Http) {
     return new TranslateHttpLoader(http, '/assets/i18n/', '.json');
 }
 
-describe('MyApp Component', () => {
+describe('MyETPWallet Component', () => {
     let fixture;
     let component;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [MyApp],
+            declarations: [MyETPWallet],
             imports: [
-                IonicModule.forRoot(MyApp),
+                IonicModule.forRoot(MyETPWallet),
                 BrowserModule,
                 QRCodeModule,
                 HttpModule,
                 ClipboardModule,
-                IonicModule.forRoot(MyApp),
+                IonicModule.forRoot(MyETPWallet),
                 TranslateModule.forRoot({
                     loader: {
                         provide: TranslateLoader,
@@ -50,6 +53,9 @@ describe('MyApp Component', () => {
                 AppGlobals,
                 { provide: ErrorHandler, useClass: IonicErrorHandler },
                 MvsServiceProvider,
+                Keyboard,
+                StatusBar,
+                SplashScreen,
                 WalletServiceProvider
             ]
         })
@@ -58,19 +64,13 @@ describe('MyApp Component', () => {
 
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(MyApp);
+        fixture = TestBed.createComponent(MyETPWallet);
         component = fixture.componentInstance;
     });
 
 
     it('should be created', () => {
-        expect(component instanceof MyApp).toBe(true);
-    });
-
-    it('should have two pages', () => {
-      setTimeout(()=>{
-          expect(component.pages.length).toBe(true)
-      },1000)
+        expect(component instanceof MyETPWallet).toBe(true);
     });
 
 });

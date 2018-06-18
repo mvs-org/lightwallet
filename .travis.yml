@@ -1,0 +1,24 @@
+sudo: required
+addons:
+  addons:
+  chrome: stable
+  apt:
+    packages:
+      - chromium-chromedriver
+language: node_js
+node_js:
+  - 8
+cache:
+  directories:
+    - node_modules
+before_script:
+  - export DISPLAY=:99.0
+  - export PATH=$PATH:/usr/lib/chromium-browser/
+  - ./node_modules/ionic/bin/ionic serve --no-open &
+  - sleep 30
+install:
+  - npm install
+  - npm run e2e-update
+script:
+  - npm run e2e
+
