@@ -2,6 +2,10 @@
   <a href="https://www.myetpwallet.com/">
     <img src="https://mvs.org/images/metaverselogo.png" alt="">
   </a>
+  <br>
+  <a href="https://travis-ci.org/mvs-org/lightwallet">
+     <img src="https://travis-ci.org/mvs-org/lightwallet.svg?branch=dev" alt="Build status">
+  </a>
 </p>
 
 This is the Metaverse lightwallet. Main focus so far is to have a wallet that does not need to download the full Metaverse blockchain. The private key gets generated and encrypted in the browser and gets never exposed to any server. Transactions get signed locally and only the signed, encoded transactions get broadcasted to the network. The lightwallet can also be build as a mobile app.
@@ -11,7 +15,7 @@ This is the Metaverse lightwallet. Main focus so far is to have a wallet that do
 As this webapp is made with ionic framework we recommend you to install the ionic cli
 
 ```bash
-$ sudo npm install -g ionic cordova
+$ sudo npm install -g ionic
 ```
 
 You can then just use ionic to generate a live preview.
@@ -24,7 +28,7 @@ Or on your android phone. Make sure you have an android development environment 
 
 
 ```bash
-$ ionic cordova run android --device
+$ ionic cordova run android --prod --device
 ```
 
 ## How to build it?
@@ -36,7 +40,7 @@ $ ionic cordova build browser --prod --release
 To build it for android use the following command. 
 
 ```bash
-$ ionic cordova build --release android
+$ ionic cordova build --release --prod android
 ```
 
 ## Configuration
