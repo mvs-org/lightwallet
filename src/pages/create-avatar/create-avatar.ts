@@ -4,11 +4,11 @@ import { TranslateService } from '@ngx-translate/core';
 import { AlertProvider } from '../../providers/alert/alert';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 
-class AddressBalance{
+class AddressBalance {
     constructor(
         public address: string,
         public available: number
-    ) {}
+    ) { }
 }
 @IonicPage()
 @Component({
@@ -62,12 +62,24 @@ export class CreateAvatarPage {
             .catch((error) => {
                 console.error(error)
                 this.alert.stopLoading()
-                if (error.message == 'ERR_CONNECTION')
-                    this.alert.showError('ERROR_SEND_TEXT', '')
-                else if (error.message == 'ERR_BROADCAST') {
-                    this.translate.get('MESSAGE.ONE_TX_PER_BLOCK').subscribe((message: string) => {
-                        this.alert.showError('MESSAGE.BROADCAST_ERROR', message)
-                    })
+                switch (error.message) {
+                    case 'ERR_CONNECTION':
+                        this.alert.showError('ERROR_SEND_TEXT', '')
+                        break;
+                    case 'ERR_BROADCAST':
+                        this.translate.get('MESSAGE.ONE_TX_PER_BLOCK').subscribe((message: string) => {
+                            this.alert.showError('MESSAGE.BROADCAST_ERROR', message)
+                        })
+                        break;
+                    case "ERR_DECRYPT_WALLET":
+                        this.alert.showError('MESSAGE.PASSWORD_WRONG', '')
+                        break;
+                    case "ERR_INSUFFICIENT_BALANCE":
+                        this.alert.showError('MESSAGE.INSUFFICIENT_BALANCE', '')
+                        break;
+                    default:
+                        this.alert.showError('MESSAGE.CREATE_TRANSACTION', error.message)
+
                 }
             })
     }

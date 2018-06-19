@@ -2,16 +2,14 @@ import { browser, element, by } from 'protractor';
 
 export class Page {
 
-  navigateTo(destination) {
-    return browser.get(destination);
-  }
+    navigateTo = (destination) => browser.get(destination)
 
-  getTitle() {
-    return browser.getTitle();
-  }
+    getTitle = () => browser.getTitle()
 
-    hasOpenWalletButton(){
-        return browser.isElementPresent(element(by.id("close-wallet-button")))
-    }
-  
+    getElementById = (id) => element(by.id(id))
+
+    clickId = (id) => this.getElementById(id).click()
+
+    hasId = (id) => browser.isElementPresent(this.getElementById(id))
+
 }
