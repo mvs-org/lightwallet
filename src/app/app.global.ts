@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class AppGlobals {
-    readonly version: string = '0.3.1';
+    readonly version: string = '0.3.1r2';
     readonly db_version = 3;
     readonly name: string = 'supernova';
     readonly algo: string = 'aes';
