@@ -420,8 +420,8 @@ export class MvsServiceProvider {
 
     setAddresses(addresses: Array<string>) {
         return this.storage.set('mvs_addresses', addresses)
-            .then(() => this.getAddresses())
             .then(() => this.event.publish('settings_update', {}))
+            .then(() => this.getAddresses())
     }
 
     addTxs(newtxs: Array<any>) {
@@ -453,12 +453,14 @@ export class MvsServiceProvider {
     assetOrder() {
         return this.storage.get('asset_order')
             .then((_: string[]) => {
-                if (_)
+                if (_&&_.length){
                     return Promise.resolve(_)
+                }
                 else {
                     return this.getBalances().then((balances: any) => {
                         let order: string[] = Object.keys(balances.MST)
-                        return this.setAssetOrder(order);
+                        this.setAssetOrder(order)
+                        return order;
                     })
                 }
             })
@@ -470,7 +472,7 @@ export class MvsServiceProvider {
     }
 
     addAssetToAssetOrder(name: string) {
-        this.assetOrder()
+        return this.assetOrder()
             .then((_: string[]) => {
                 if (_.indexOf(name) === -1)
                     _.push(name)
