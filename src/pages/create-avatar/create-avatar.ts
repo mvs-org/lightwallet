@@ -21,6 +21,7 @@ export class CreateAvatarPage {
     avatar_address: string = ""
     passphrase: string = ""
     addressbalances: Array<AddressBalance> = []
+    select_address_subtitle: any = {}
 
     constructor(
         public navCtrl: NavController,
@@ -39,6 +40,11 @@ export class CreateAvatarPage {
                                     if (avatar.address == address)
                                         this.addressbalances.pop();
                                 })
+                                if(this.addressbalances.length == 0) {
+                                    this.translate.get('CREATE_AVATAR.NO_ADDRESS_1ETP').subscribe((subtitle: string) => {
+                                        this.select_address_subtitle = {subTitle: subtitle}
+                                    })
+                                }
                             }
                         })
                     }

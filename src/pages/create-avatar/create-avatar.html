@@ -15,7 +15,7 @@
             </ion-item>
             <ion-item [ngClass]="{'error-border': !validAddress(avatar_address)}">
                 <ion-label color="primary" floating>{{"CREATE_AVATAR.ADDRESS"|translate}}</ion-label>
-                <ion-select [(ngModel)]="avatar_address" name="avatar_address" multiple="false" okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}">
+                <ion-select [selectOptions]="select_address_subtitle" [(ngModel)]="avatar_address" name="avatar_address" multiple="false" okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}">
                     <ion-option *ngFor="let addressbalance of addressbalances" value="{{addressbalance.address}}">{{addressbalance.address}} - {{addressbalance.available | format : 8 | number : '1.0-8'}} ETP</ion-option>
                 </ion-select>
             </ion-item>
