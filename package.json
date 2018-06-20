@@ -83,6 +83,7 @@
     "karma-opera-launcher": "^1.0.0",
     "karma-safari-launcher": "^1.0.0",
     "karma-sourcemap-loader": "^0.3.7",
+    "karma-spec-reporter": "0.0.32",
     "karma-webpack": "^2.0.13",
     "null-loader": "^0.1.1",
     "protractor": "^5.3.2",
