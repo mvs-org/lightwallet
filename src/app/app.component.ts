@@ -113,6 +113,7 @@ export class MyETPWallet {
             { title: 'ACCOUNT.TITLE', component: "AccountPage", icon: 'home', root: true },
             { title: 'ETP_DEPOSIT', component: "DepositPage", icon: 'log-in' },
             { title: 'AVATARS', component: "AvatarsPage", icon: 'person' },
+            { title: 'REGISTER_MST', component: "AssetIssuePage", icon: 'globe' },
             { title: 'LANGUAGE_SETTINGS', component: "LanguageSwitcherPage", icon: 'flag' },
             { title: 'THEME_SETTINGS', component: "ThemeSwitcherPage", icon: 'color-palette' },
             { title: 'SETTINGS', component: "SettingsPage", icon: 'settings' },

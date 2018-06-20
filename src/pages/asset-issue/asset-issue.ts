@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, AlertController, LoadingController, Loading, NavParams, Platform } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { TranslateService } from '@ngx-translate/core';
+import { AlertProvider } from '../../providers/alert/alert';
 
 @IonicPage()
 @Component({
@@ -30,7 +31,7 @@ export class AssetIssuePage {
     symbol: string
     max_supply: string
     custom_max_supply: string;
-    asset_decimals: number = 8
+    asset_decimals: number = 4
     issuer_name: string
     description: string
     issue_address: string
@@ -44,6 +45,8 @@ export class AssetIssuePage {
     error_loading_msts: boolean = false
     error_loading_certs: boolean = false
     error_too_high_max_supply: boolean = false
+    avatars: Array<any>;
+    no_avatar: boolean = false;
 
     constructor(
         public navCtrl: NavController,
@@ -52,6 +55,7 @@ export class AssetIssuePage {
         public navParams: NavParams,
         private mvs: MvsServiceProvider,
         public platform: Platform,
+        private alert: AlertProvider,
         private translate: TranslateService) {
 
         this.selectedAsset = "ETP"
@@ -111,7 +115,8 @@ export class AssetIssuePage {
     }
 
     ionViewDidLoad() {
-        this.loadCerts()
+        this.loadAvatars()
+            .then(()=>this.loadCerts())
             .then(()=>this.loadMsts())
             .then(()=>this.symbolChanged())
             .catch(console.error);
@@ -143,7 +148,9 @@ export class AssetIssuePage {
 
     validSymbol = (symbol) => (symbol.length > 2) && (symbol.length < 64) && (!/[^A-Za-z0-9.]/g.test(symbol))
 
-    //validName = (issuer_name) => (issuer_name.length > 0) && (issuer_name.length < 64) && (!/[^A-Za-z0-9.]/g.test(issuer_name))
+    validName = (issuer_name) => (issuer_name !== undefined && issuer_name.length > 0)
+
+    validAddress = (issue_address) => (issue_address !== undefined && issue_address.length > 0)
 
     validDescription = (description) => (description.length > 0) && (description.length < 64)
 
@@ -237,12 +244,23 @@ export class AssetIssuePage {
             })
             .catch((error) => {
                 this.loading.dismiss()
-                if(error.message=='ERR_CONNECTION')
-                    this.showError('ERROR_SEND_TEXT','')
-                else if (error.message == 'ERR_BROADCAST') {
-                    this.translate.get('MESSAGE.ONE_TX_PER_BLOCK').subscribe((message: string) => {
-                        this.showError('MESSAGE.BROADCAST_ERROR',message)
-                    })
+                switch (error.message) {
+                    case 'ERR_CONNECTION':
+                        this.alert.showError('ERROR_SEND_TEXT', '')
+                        break;
+                    case 'ERR_BROADCAST':
+                        this.translate.get('MESSAGE.ONE_TX_PER_BLOCK').subscribe((message: string) => {
+                            this.alert.showError('MESSAGE.BROADCAST_ERROR', message)
+                        })
+                        break;
+                    case "ERR_DECRYPT_WALLET":
+                        this.alert.showError('MESSAGE.PASSWORD_WRONG', '')
+                        break;
+                    case "ERR_INSUFFICIENT_BALANCE":
+                        this.alert.showError('MESSAGE.INSUFFICIENT_BALANCE', '')
+                        break;
+                    default:
+                        this.alert.showError('MESSAGE.CREATE_TRANSACTION', error.message)
                 }
             })
     }
@@ -348,6 +366,16 @@ export class AssetIssuePage {
             })
     }
 
+    loadAvatars(){
+        return this.mvs.listAvatars()
+            .then((avatars) => {
+                this.avatars = avatars;
+                if(this.avatars.length === 0) {
+                    this.no_avatar = true;
+                }
+            })
+    }
+
     symbolChanged = () => {
         if (this.symbol && this.symbol.length >= 3) {
             let symbol = this.symbol.toUpperCase()
@@ -376,6 +404,15 @@ export class AssetIssuePage {
             this.error_too_high_max_supply = false
         }
 
+    }
+
+    issuerChanged = () => {
+        this.avatars.forEach((avatar) => {
+            if(avatar.symbol == this.issuer_name) {
+                this.issue_address = avatar.address
+                return
+            }
+        })
     }
 
 }

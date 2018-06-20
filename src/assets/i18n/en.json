@@ -321,5 +321,6 @@
     "SELECT_NETWORK": "Select network",
 
     "CREATE_AVATAR.CONFIRMATION_TITLE": "Creating an Avatar cost 1 ETP.",
-    "CREATE_AVATAR.CONFIRMATION_SUBTITLE": "Are you sure you want to create an Avatar?"
+    "CREATE_AVATAR.CONFIRMATION_SUBTITLE": "Are you sure you want to create an Avatar?",
+    "ISSUE.NO_AVATAR": "You need an Avatar to register a MST. Please create an Avatar first"
 }
