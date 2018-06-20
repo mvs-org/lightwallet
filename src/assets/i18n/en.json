@@ -312,5 +312,7 @@
     "CONTENT": "Content",
     "MIT.TX_HASH": "Created in",
     "MIT.HISTORY": "Transaction history",
-    "CHECK_IN_EXPLORER": "Check in Explorer"
+    "CHECK_IN_EXPLORER": "Check in Explorer",
+
+    "ISSUE.MAX_SUPPLY_TOO_HIGH": "Too high Maximum supply*Number of decimals. Please decrease one of the two"
 }
