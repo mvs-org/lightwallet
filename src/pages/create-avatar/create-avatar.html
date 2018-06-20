@@ -20,10 +20,14 @@
             </ion-item>
             <ion-item [ngClass]="{'error-border': !validAddress(avatar_address)}">
                 <ion-label color="primary" floating>{{"CREATE_AVATAR.ADDRESS"|translate}}</ion-label>
-                <ion-select [selectOptions]="select_address_subtitle" [(ngModel)]="avatar_address" name="avatar_address" multiple="false" okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}">
+                <ion-select *ngIf="addressbalances.length != 0" [(ngModel)]="avatar_address" name="avatar_address" multiple="false" okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}">
                     <ion-option *ngFor="let addressbalance of addressbalances" value="{{addressbalance.address}}">{{addressbalance.address}} - {{addressbalance.available | format : 8 | number : '1.0-8'}} ETP</ion-option>
                 </ion-select>
+                <ion-input *ngIf="addressbalances.length == 0" disabled></ion-input>
             </ion-item>
+            <ion-item *ngIf="addressbalances.length == 0" no-lines class="wrong-input">{{"CREATE_AVATAR.NO_ADDRESS_1ETP" | translate}}</ion-item>
+
+
             <ion-item [ngClass]="{'error-border': !validPassword(passphrase)}">
                 <ion-label color="primary" floating>{{"PASSWORD" | translate}}</ion-label>
                 <ion-input name="passphrase" type="password" [(ngModel)]="passphrase" required></ion-input>
