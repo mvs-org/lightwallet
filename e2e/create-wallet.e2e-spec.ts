@@ -1,33 +1,16 @@
 import { Page } from './app.po';
 
-describe('Wallet creation', () => {
+describe('Wallet Generation', () => {
 
     let page: Page;
 
     beforeEach(() => {
         page = new Page();
+        page.navigateTo('/');
     });
-
-    describe('Load login page', () => {
-        beforeEach(() => {
-            page.navigateTo('/');
-        });
-
-        it('Login should have an create wallet button', () => {
-            page.hasId("create-wallet-button").then(res => {
-                expect(res).toEqual(true);
-            });
-        });
-        it('Login should have correct title', () => {
-            page.getTitle().then(title => {
-                expect(title).toEqual('Metaverse Lightwallet');
-            });
-        });
-    })
 
     describe('Generate new wallet', () => {
         beforeEach(() => {
-            page.navigateTo('/');
             page.clickId("create-wallet-button")
         });
 
