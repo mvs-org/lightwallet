@@ -30,7 +30,10 @@ export class MvsServiceProvider {
         private event: Events,
         private storage: Storage
     ) {
-        this.blockchain = Blockchain({ network: globals.network })
+        this.storage.get('network')
+            .then(network => {
+                this.blockchain = Blockchain({ network: (network) ? network : globals.network })
+            })
     }
 
     createSendTx(passphrase: string, asset: string, recipient_address: string, recipient_avatar: string, quantity: number, from_address: string, change_address: string) {
@@ -153,7 +156,7 @@ export class MvsServiceProvider {
                                 })
                                 return Metaverse.transaction_builder.issueAsset(result.utxo.concat(certs), issue_address, symbol, quantity, precision, issuer, description, secondaryissue_threshold, is_secondaryissue, change_address, result.change, create_new_domain_cert)
                             })
-                            .then((tx) => {console.log(use_naming_cert);console.log(tx); return tx})
+                            .then((tx) => { console.log(use_naming_cert); console.log(tx); return tx })
                             .then((tx) => wallet.sign(tx))
                     })
             })
