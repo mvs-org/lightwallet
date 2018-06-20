@@ -273,9 +273,16 @@ export class MvsServiceProvider {
             .then((balances) => {
                 //Check if balance has been changed
                 let nb = JSON.parse(JSON.stringify(this.DEFAULT_BALANCES));
-                Object.keys(newBalances).forEach((asset) => {
-                    nb[asset] = newBalances[asset];
-                })
+                if (newBalances) {
+                    if (newBalances.ETP)
+                        nb.ETP = newBalances.ETP;
+                    if (newBalances.MST)
+                        Object.keys(newBalances.MST).forEach((symbol) => {
+                            nb.MST[symbol] = newBalances.MST[symbol];
+                        })
+                    if (newBalances.MIT)
+                        nb.MIT = newBalances.MIT
+                }
                 if (JSON.stringify(balances) != JSON.stringify(nb)) {
                     return this.storage.set('balances', newBalances)
                 }
@@ -368,7 +375,7 @@ export class MvsServiceProvider {
 
     dataReset() {
         console.info('reset data')
-        return Promise.all(['mvs_last_tx_height', 'mvs_height', 'utxo', 'last_update', 'addressbalances', 'balances', 'mvs_txs'].map((key) => this.storage.remove(key)))
+        return Promise.all(['mvs_last_tx_height', 'mvs_height', 'utxo', 'last_update', 'addressbalances', 'balances', 'mvs_txs', 'asset_order'].map((key) => this.storage.remove(key)))
     }
 
     getNewTxs(addresses: Array<string>, lastKnownHeight: number, txs: any): Promise<any> {
