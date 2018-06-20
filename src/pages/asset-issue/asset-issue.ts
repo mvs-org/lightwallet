@@ -43,6 +43,7 @@ export class AssetIssuePage {
     symbol_check: string;
     error_loading_msts: boolean = false
     error_loading_certs: boolean = false
+    error_too_high_max_supply: boolean = false
 
     constructor(
         public navCtrl: NavController,
@@ -136,7 +137,7 @@ export class AssetIssuePage {
 
     validMaxSupply = (max_supply, asset_decimals) => max_supply == 'custom' || (max_supply > 0 && ((asset_decimals == undefined)||(Math.floor(parseFloat(max_supply) * Math.pow(10, asset_decimals))) <= 10000000000000000))
 
-    validMaxSupplyCustom = (max_supply_custom, asset_decimals) => max_supply_custom > 0 && ((asset_decimals == undefined)||(Math.floor(parseFloat(max_supply_custom) * Math.pow(10, asset_decimals))) <= 10000000000000000)
+    validMaxSupplyCustom = (custom_max_supply, asset_decimals) => custom_max_supply > 0 && ((asset_decimals == undefined)||(Math.floor(parseFloat(custom_max_supply) * Math.pow(10, asset_decimals))) <= 10000000000000000)
 
     validDecimals = (asset_decimals) => asset_decimals >= 0 && asset_decimals <= 8
 
@@ -365,6 +366,16 @@ export class AssetIssuePage {
         } else {
             this.symbol_check = "too_short"
         }
+    }
+
+    maxSupplyChanged = () => {
+        let max_supply = this.max_supply != 'custom' ? this.max_supply : this.custom_max_supply
+        if(this.asset_decimals != undefined && (Math.floor(parseFloat(max_supply) * Math.pow(10, this.asset_decimals))) > 10000000000000000) {
+            this.error_too_high_max_supply = true
+        } else {
+            this.error_too_high_max_supply = false
+        }
+
     }
 
 }
