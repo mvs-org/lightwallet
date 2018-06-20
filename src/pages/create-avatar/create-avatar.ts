@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController } from 'ionic-angular';
+import { IonicPage, NavController, Platform, AlertController } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { AlertProvider } from '../../providers/alert/alert';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
@@ -27,6 +27,8 @@ export class CreateAvatarPage {
         public navCtrl: NavController,
         private alert: AlertProvider,
         private translate: TranslateService,
+        public platform: Platform,
+        private alertCtrl: AlertController,
         private mvs: MvsServiceProvider) {
 
         this.mvs.listAvatars()
@@ -88,6 +90,35 @@ export class CreateAvatarPage {
 
                 }
             })
+    }
+
+    confirm() {
+        this.translate.get('CREATE_AVATAR.CONFIRMATION_TITLE').subscribe((txt_title: string) => {
+            this.translate.get('CREATE_AVATAR.CONFIRMATION_SUBTITLE').subscribe((txt_subtitle: string) => {
+                this.translate.get('CREATE_AVATAR.CREATE_BTN').subscribe((txt_create: string) => {
+                    this.translate.get('CANCEL').subscribe((txt_cancel: string) => {
+                    const alert = this.alertCtrl.create({
+                        title: txt_title,
+                        subTitle: txt_subtitle,
+                        buttons: [
+                            {
+                                text: txt_create,
+                                handler: data => {
+                                    // need error handling
+                                    this.create()
+                                }
+                            },
+                            {
+                                  text: txt_cancel,
+                                  role: 'cancel'
+                            }
+                        ]
+                    });
+                    alert.present(prompt)
+                  });
+              });
+          });
+      });
     }
 
     validPassword = (passphrase) => (passphrase.length > 0)

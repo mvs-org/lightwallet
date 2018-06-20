@@ -7,6 +7,11 @@
 
 
 <ion-content padding style="padding-bottom: 0;">
+    <ion-row>
+        <ion-col>
+            <p class="right">{{"FEE"|translate}}:<br *ngIf="platform.is('mobile')"> 1 ETP</p>
+        </ion-col>
+    </ion-row>
     <form #sendForm="ngForm" style="padding-bottom: 0;">
         <ion-list style="padding-bottom: 0;">
             <ion-item [ngClass]="{'error-border':!validSymbol(symbol)}">
@@ -27,7 +32,7 @@
         </ion-list>
         <ion-row class="padding-bottom">
             <ion-col>
-                <button ion-button full [disabled]="!sendForm.form.valid||!validSymbol(symbol)||!validAddress(avatar_address)||!validPassword(passphrase)" (click)="create()" icon-left color="secondary">
+                <button ion-button full [disabled]="!sendForm.form.valid||!validSymbol(symbol)||!validAddress(avatar_address)||!validPassword(passphrase)" (click)="confirm()" icon-left color="secondary">
                     <ion-icon disabled="checked" name="send"></ion-icon>
                     {{"CREATE_AVATAR.CREATE_BTN" | translate}}
                 </button>
