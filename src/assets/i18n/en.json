@@ -315,5 +315,8 @@
     "CHECK_IN_EXPLORER": "Check in Explorer",
 
     "ISSUE.MAX_SUPPLY_TOO_HIGH": "Too high Maximum supply*Number of decimals. Please decrease one of the two",
-    "CREATE_AVATAR.NO_ADDRESS_1ETP": "You do not have any available address with at least 1 ETP available. Please send at least 1 ETP to an available address (not already linked to an Avatar) to create a new Avatar"
+    "CREATE_AVATAR.NO_ADDRESS_1ETP": "You do not have any available address with at least 1 ETP available. Please send at least 1 ETP to an available address (not already linked to an Avatar) to create a new Avatar",
+    "MAINNET": "Mainnet",
+    "TESTNET": "Testnet",
+    "SELECT_NETWORK": "Select network"
 }

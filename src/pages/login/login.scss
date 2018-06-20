@@ -29,11 +29,14 @@ page-login {
            margin-right: 20px;
         }
 
-
-
         .browser-button, .info-text{
             width: 50%;
             margin: 0 auto;
+        }
+
+        .info-text.headline{
+            margin-top: 20px;
+            text-align: center;
         }
 
         .large-btn {

@@ -60,6 +60,16 @@
             <p>{{"LOGIN_MENU_INFO_TEXT"|translate}}</p>
             <!--p *ngIf="platform.is('mobile')">{{"LOGIN_MENU_INFO_TEXT_MOBILE"|translate}}</p-->
         </ion-row>
+
+        <div class="info-text headline"><b [translate]="'SELECT_NETWORK'"></b></div>
+        <ion-row class="browser-button">
+            <ion-segment [(ngModel)]="globals.network" color="primary">
+                <ion-segment-button value="mainnet" [translate]="'MAINNET'">
+                </ion-segment-button>
+                <ion-segment-button value="testnet" [translate]="'TESTNET'">
+                </ion-segment-button>
+            </ion-segment>
+        </ion-row>
     </div>
 </ion-content>
 
