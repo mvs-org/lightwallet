@@ -18,7 +18,6 @@ describe('Wallet Generation', () => {
             page.hasId("backup-words")
                 .then(res => {
                     expect(res).toEqual(true);
-                    expect(true).toEqual(true);
                 })
                 .then(() => page.getElementById('backup-words').getText())
                 .then(words => {
