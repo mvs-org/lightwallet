@@ -63,7 +63,7 @@
 
         <div class="info-text headline"><b [translate]="'SELECT_NETWORK'"></b></div>
         <ion-row class="browser-button">
-            <ion-segment [(ngModel)]="globals.network" color="primary">
+            <ion-segment [(ngModel)]="network" (ngModelChange)="switchNetwork($event)" color="primary">
                 <ion-segment-button value="mainnet" [translate]="'MAINNET'">
                 </ion-segment-button>
                 <ion-segment-button value="testnet" [translate]="'TESTNET'">
