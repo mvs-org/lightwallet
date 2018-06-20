@@ -1,62 +1,61 @@
 var webpackConfig = require('./test-config/webpack.test.js');
 
 module.exports = function(config) {
-  var _config = {
-    basePath: './',
+    var _config = {
+        basePath: './',
 
-    frameworks: ['jasmine'],
+        frameworks: ['jasmine'],
 
-    files: [
-      {
-        pattern: './test-config/karma-test-shim.js',
-        watched: true
-      },
-      {
-        pattern: './src/assets/**/*',
-        watched: false,
-        included: false,
-        served: true,
-        nocache: false
-      }
-    ],
+        files: [{
+                pattern: './test-config/karma-test-shim.js',
+                watched: true
+            },
+            {
+                pattern: './src/assets/**/*',
+                watched: false,
+                included: false,
+                served: true,
+                nocache: false
+            }
+        ],
 
-    proxies: {
-      '/assets/': '/base/src/assets/'
-    },
+        proxies: {
+            '/assets/': '/base/src/assets/'
+        },
 
-    preprocessors: {
-      './test-config/karma-test-shim.js': ['webpack', 'sourcemap']
-    },
+        preprocessors: {
+            './test-config/karma-test-shim.js': ['webpack', 'sourcemap']
+        },
 
-    webpack: webpackConfig,
+        webpack: webpackConfig,
 
-    webpackMiddleware: {
-      stats: 'errors-only'
-    },
+        webpackMiddleware: {
+            stats: 'errors-only'
+        },
 
-    webpackServer: {
-      noInfo: true
-    },
+        webpackServer: {
+            noInfo: true
+        },
 
-    browserConsoleLogOptions: {
-      level: 'log',
-      format: '%b %T: %m',
-      terminal: true
-    },
+        browserConsoleLogOptions: {
+            level: 'log',
+            format: '%b %T: %m',
+            terminal: true
+        },
 
-    coverageIstanbulReporter: {
-      reports: [ 'html', 'lcovonly' ],
-      fixWebpackSourcePaths: true
-    },
+        coverageIstanbulReporter: {
+            reports: ['html', 'lcovonly'],
+            fixWebpackSourcePaths: true
+        },
 
-    reporters: config.coverage ? ['kjhtml', 'dots', 'coverage-istanbul'] : ['kjhtml', 'dots'],
-    port: 9876,
-    colors: true,
-    logLevel: config.LOG_INFO,
-    autoWatch: true,
-    browsers: ['ChromeHeadless'],
-    singleRun: true
-  };
+        reporters: config.coverage ? ['kjhtml', 'dots', 'coverage-istanbul'] : ['kjhtml', 'dots'],
+        port: 9876,
+        colors: true,
+        logLevel: config.LOG_INFO,
+        autoWatch: true,
+        browsers: ['ChromeHeadless', 'FirefoxHeadless'],
+        singleRun: true
+    };
 
-  config.set(_config);
+    config.set(_config);
 };
