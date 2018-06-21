@@ -4,7 +4,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { TranslateService } from '@ngx-translate/core';
 import { StatusBar } from '@ionic-native/status-bar';
 import { Keyboard } from '@ionic-native/keyboard';
-
+import { AppGlobals } from './app.global';
 import { Storage } from '@ionic/storage';
 
 @Component({
@@ -16,9 +16,20 @@ export class MyETPWallet {
     rootPage: any
     pages: Array<{ title: string, component: any }> = [];
 
-    constructor(private splashScreen: SplashScreen, public platform: Platform, private storage: Storage, public translate: TranslateService, private event: Events, public statusBar: StatusBar, public keyboard: Keyboard) {
+    constructor(
+        private splashScreen: SplashScreen,
+        public platform: Platform,
+        private storage: Storage,
+        public translate: TranslateService,
+        private event: Events,
+        private globals: AppGlobals,
+        public statusBar: StatusBar,
+        public keyboard: Keyboard
+    ) {
 
         this.initializeApp()
+            .then(() => this.storage.get('network'))
+            .then((network) => this.initNetwork(network))
             .then(() => this.storage.get('language'))
             .then((language) => this.initLanguage(language))
             .then(() => this.isLoggedIn())
@@ -30,8 +41,8 @@ export class MyETPWallet {
                 }
                 return;
             })
-            .then(()=>this.keyboard.hideKeyboardAccessoryBar(false))
-            .then(()=>this.splashScreen.hide())
+            .then(() => this.keyboard.hideKeyboardAccessoryBar(false))
+            .then(() => this.splashScreen.hide())
             .catch((e) => console.error(e));
 
         this.setTheme();
@@ -74,6 +85,10 @@ export class MyETPWallet {
             })
     }
 
+    initNetwork(network) {
+        this.globals.network = (network)?network:'mainnet'
+    }
+
     initLanguage(language: string) {
         this.translate.setDefaultLang('en');
         this.translate.use((language) ? language : 'en');
@@ -98,6 +113,8 @@ export class MyETPWallet {
             { title: 'ACCOUNT.TITLE', component: "AccountPage", icon: 'home', root: true },
             { title: 'ETP_DEPOSIT', component: "DepositPage", icon: 'log-in' },
             { title: 'AVATARS', component: "AvatarsPage", icon: 'person' },
+            { title: 'REGISTER_MST', component: "AssetIssuePage", icon: 'globe' },
+            { title: 'REGISTER_MIT', component: "MITRegisterPage", icon: 'create' },
             { title: 'LANGUAGE_SETTINGS', component: "LanguageSwitcherPage", icon: 'flag' },
             { title: 'THEME_SETTINGS', component: "ThemeSwitcherPage", icon: 'color-palette' },
             { title: 'SETTINGS', component: "SettingsPage", icon: 'settings' },
@@ -109,10 +126,10 @@ export class MyETPWallet {
     setHeaderColor(key) {
         // Status bar theme for android
         if (this.platform.is('android')) {
-          this.statusBar.styleLightContent();
-          this.statusBar.backgroundColorByHexString('#000000');
+            this.statusBar.styleLightContent();
+            this.statusBar.backgroundColorByHexString('#000000');
         } else if (this.platform.is('ios')) {    // Status bar theme for iOS
-            if((key == 'noctilux') || (key == 'solarized')) {
+            if ((key == 'noctilux') || (key == 'solarized')) {
                 this.statusBar.styleLightContent();
             } else {
                 this.statusBar.styleDefault();
@@ -141,7 +158,7 @@ export class MyETPWallet {
                 this.nav.push(page.component);
         }
         else if (page.newtab)
-            if (this.platform.is('mobile')&&this.platform.is('ios'))
+            if (this.platform.is('mobile') && this.platform.is('ios'))
                 window.open(page.newtab, '_self');
             else
                 window.open(page.newtab, '_blank');

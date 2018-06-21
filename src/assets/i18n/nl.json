@@ -206,7 +206,7 @@
   "ISSUE.CREATE": "Creër Activa",
 
   "EXPORT.HEADLINE": "Verbind je telefoon",
-  "EXPORT.INTRODUCTION": ""Om de MyETPWallet te downloaden, ga naar MyETPWallet.com en klik op 'Download Wallet'.",
+  "EXPORT.INTRODUCTION": "Om de MyETPWallet te downloaden, ga naar MyETPWallet.com en klik op 'Download Wallet'.",
   "EXPORT.TEXT": "Deze actie zal je geheime sleutel naar je telefoon exporteren. Je geheime sleutel zal versleuteld zijn met het wachtwoord dat gebruikt is voor dit account en zal worden opgeslagen op je mobiele telefoon. Scan de QR-code van de mobiele applicatie MyETPWallet.",
   "EXPORT.REMINDER_LOGOUT": "Vergeet niet uit te loggen als je wisselt van telefoon.",
 
@@ -223,7 +223,7 @@
   "HOW_TO_IMPORT_WALLET_MOBILE_TITLE": "Hoe moet je je geheime sleutel importeren?",
   "HOW_TO_IMPORT_WALLET_MOBILE_STEP1": "Open de Light wallet op je computer of laptop, ga naar Instellingen en dan naar 'Verbind met je telefoon'.",
   "HOW_TO_IMPORT_WALLET_MOBILE_STEP2": "Scan de QR-Code",
-  "HOW_TO_IMPORT_WALLET_MOBILE_STEP3": Veel plezier met je mobiele Wallet!",
+  "HOW_TO_IMPORT_WALLET_MOBILE_STEP3": "Veel plezier met je mobiele Wallet!",
 
   "MESSAGE.ISSUE_INSUFFICIENT_BALANCE" : "Je hebt minimaal 10 ETP nodig om een activa te creëren.",
 
