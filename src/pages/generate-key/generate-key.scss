@@ -26,4 +26,11 @@ page-generate-key {
         padding-bottom: 80px;
     }
 
+    #backup-words{
+        -webkit-user-select: text;
+        -moz-user-select: text;
+        -ms-user-select: text;
+        user-select: text;
+    }
+
 }

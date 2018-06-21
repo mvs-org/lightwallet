@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, Platform, LoadingController, Loading } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
+import { AlertProvider } from '../../providers/alert/alert';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 
 @IonicPage()
@@ -18,11 +19,15 @@ export class MITRegisterPage {
     content: string = ""
     loading: Loading
     addressbalances: Array<any>
-    avatars: Array<any>
+    avatars: Array<any>;
+    no_avatar: boolean = false;
+    no_avatar_placeholder: string
+    list_all_mits: Array<string> = [];
 
     constructor(
         public navCtrl: NavController,
         private alertCtrl: AlertController,
+        private alert: AlertProvider,
         public platform: Platform,
         public navParams: NavParams,
         private loadingCtrl: LoadingController,
@@ -31,10 +36,21 @@ export class MITRegisterPage {
 
         this.recipient_avatar = this.navParams.get('avatar_name')
         this.recipient_address = this.navParams.get('avatar_address')
+        if(!this.recipient_address) {
+            this.translate.get('MIT_REGISTER.SELECT_AVATAR').subscribe((message: string) => {
+                this.recipient_address = message
+            })
+        }
+        this.translate.get('ISSUE.NO_AVATAR_PLACEHOLDER').subscribe((message: string) => {
+            this.no_avatar_placeholder = message
+        })
 
         Promise.all([this.mvs.getAddressBalances(), this.mvs.listAvatars()])
             .then((results) => {
                 this.avatars = results[1]
+                if(this.avatars.length === 0) {
+                    this.no_avatar = true;
+                }
                 let addressbalances = results[0]
                 let addrblncs = []
                 if (Object.keys(addressbalances).length) {
@@ -52,15 +68,24 @@ export class MITRegisterPage {
             })
     }
 
+    ionViewDidLoad() {
+        this.loadMits()
+            .catch(console.error);
+    }
+
     cancel() {
         this.navCtrl.pop();
     }
 
     validPassword = (passphrase) => (passphrase.length > 0)
 
-    validSymbol = (symbol) => /^[A-Za-z0-9._\-]{3,64}$/g.test(symbol)
+    validSymbol = (symbol) => /^[A-Za-z0-9._\-]{3,64}$/g.test(symbol) && this.list_all_mits.indexOf(symbol) == -1
 
-    validContent = (content) => content.length<253
+    validContent = (content) => content == undefined || content.length<253
+
+    validName = (recipient_avatar) => (recipient_avatar !== undefined && recipient_avatar.length > 0)
+
+    validAddress = (recipient_address) => (recipient_address !== undefined && recipient_address.length > 0)
 
     create() {
         return this.showLoading()
@@ -68,23 +93,30 @@ export class MITRegisterPage {
             .then(tx => this.mvs.send(tx))
             .then((result) => {
                 this.navCtrl.pop()
-                this.navCtrl.pop()
                 this.translate.get('SUCCESS_SEND_TEXT').subscribe((message: string) => {
-                    if (this.platform.is('mobile')) {
-                        this.showSentMobile(message, result.hash)
-                    } else {
-                        this.showSent(message, result.hash)
-                    }
-
+                    this.showSent(message, result.hash)
                 })
             })
             .catch((error) => {
                 console.error(error)
                 this.loading.dismiss()
-                if (error.message == 'ERR_CONNECTION')
-                    this.showError('ERROR_SEND_TEXT', '')
-                else {
-                    this.showError('MESSAGE.BROADCAST_ERROR', error.message)
+                switch (error.message) {
+                    case 'ERR_CONNECTION':
+                        this.alert.showError('ERROR_SEND_TEXT', '')
+                        break;
+                    case 'ERR_BROADCAST':
+                        this.translate.get('MESSAGE.ONE_TX_PER_BLOCK').subscribe((message: string) => {
+                            this.alert.showError('MESSAGE.BROADCAST_ERROR', message)
+                        })
+                        break;
+                    case "ERR_DECRYPT_WALLET":
+                        this.alert.showError('MESSAGE.PASSWORD_WRONG', '')
+                        break;
+                    case "ERR_INSUFFICIENT_BALANCE":
+                        this.alert.showError('MESSAGE.INSUFFICIENT_BALANCE', '')
+                        break;
+                    default:
+                        this.alert.showError('MESSAGE.CREATE_TRANSACTION', error.message)
                 }
             })
     }
@@ -115,21 +147,6 @@ export class MITRegisterPage {
         })
     }
 
-    showSentMobile(text, hash) {
-        this.translate.get(['MESSAGE.SUCCESS', 'OK', 'COPY']).subscribe((translations: any) => {
-            let alert = this.alertCtrl.create({
-                title: translations['MESSAGE.SUCCESS'],
-                subTitle: text + hash,
-                buttons: [
-                    {
-                        text: translations['OK'],
-                    }
-                ]
-            })
-            alert.present(prompt)
-        })
-    }
-
     showAlert(text) {
         this.translate.get('MESSAGE.ERROR_TITLE').subscribe((title: string) => {
             this.translate.get('OK').subscribe((ok: string) => {
@@ -154,6 +171,28 @@ export class MITRegisterPage {
                 }]
             });
             alert.present(alert);
+        })
+    }
+
+    loadMits(){
+        return this.mvs.getListMit()
+            .then((mits) => {
+                console.log(mits.result)
+                mits.result.forEach((mit) => {
+                    this.list_all_mits.push(mit.attachment.symbol)
+                })
+            })
+            .catch((error) => {
+                console.error(error)
+            })
+    }
+
+    avatarChanged = () => {
+        this.avatars.forEach((avatar) => {
+            if(avatar.symbol == this.recipient_avatar) {
+                this.recipient_address = avatar.address
+                return
+            }
         })
     }
 }

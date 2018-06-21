@@ -174,10 +174,20 @@ mst-card {
     .block-iPhone {
       line-height: 8;
       font-size: 14px;
-    }  
+    }
 
     .csdLogoDefault {
       //filter: invert(100%);
       filter: brightness(0.50);
+    }
+
+    .coinlogo {
+      margin-left: 4px;
+    }
+
+    .default-logo {
+      box-shadow: 0px 0px 4px 1px;
+      color: rgba(255, 255, 255, 0.6);
+      background-color: rgba(255, 255, 255, 0.6);
     }
 }
