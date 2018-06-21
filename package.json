@@ -1,6 +1,6 @@
 {
   "name": "mvs-lightwallet",
-  "version": "0.3.1r2",
+  "version": "0.3.1r3",
   "author": "Sven Mutzl",
   "homepage": "https://www.myetpwallet.com/",
   "private": true,
@@ -39,7 +39,6 @@
     "angular2-qrcode": "^2.0.1",
     "cordova-android": "7.1.0",
     "cordova-browser": "5.0.3",
-    "cordova-ios": "^4.5.4",
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-ionic-keyboard": "^2.1.2",
     "cordova-plugin-ionic-webview": "^1.2.1",
@@ -105,7 +104,6 @@
       "ionic-plugin-keyboard": {}
     },
     "platforms": [
-      "ios",
       "android",
       "browser"
     ]
