@@ -236,6 +236,8 @@ export class MvsServiceProvider {
 
     getListMst = () => this.blockchain.MST.list()
 
+    getListMit = () => this.blockchain.MIT.list()
+
     getBalances() {
         return this.storage.get('balances')
             .then((balances: any) => {

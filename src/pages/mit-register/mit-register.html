@@ -12,6 +12,8 @@
                 <ion-label color="primary" floating>{{"MIT_REGISTER.SYMBOL" | translate}}</ion-label>
                 <ion-input name="symbol" [(ngModel)]="symbol" maxlength="63" required></ion-input>
             </ion-item>
+            <ion-item *ngIf="list_all_mits.indexOf(symbol) !== -1" no-lines class="wrong-input">{{"MIT_REGISTER.MIT_ALREADY_EXIST" | translate}}</ion-item>
+
             <ion-item [ngClass]="{'error-border':!validContent(content)}">
                 <ion-label color="primary" floating>{{"MIT_REGISTER.CONTENT" | translate}}</ion-label>
                 <ion-input name="content" [(ngModel)]="content" maxlength="252"></ion-input>

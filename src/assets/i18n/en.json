@@ -296,7 +296,7 @@
     "ISSUE.SYMBOL_AVAILABLE": "This Domain name is available. After issuing this MST, you will receive a Domain certificate",
     "ISSUE.SYMBOL_DOMAIN_OWNER": "Your Avatar own the Domain certificate to create this MST",
     "ISSUE.SYMBOL_NAMING_OWNER": "Your Avatar own the Naming certificate to create this MST",
-    "ISSUE.SYMBOL_ALREADY_EXIST": "This MST already exist",
+    "ISSUE.SYMBOL_ALREADY_EXIST": "This MST symbol has already been registered",
     "ISSUE.SYMBOL_NOT_CERT_OWNER": "Your Avatar does not own the Domain certificate to create this MST",
     "ISSUE.SYMBOL_ERROR_LOADING_MSTS": "Error while loading MSTs. Please make sure this MST Symbol is not already used",
     "ISSUE.SYMBOL_ERROR_LOADING_CERTS": "Error while loading the Domain certificates. Please make sure you have the right to create this Symbol",
@@ -329,5 +329,6 @@
     "MIT_REGISTER.NO_AVATAR": "You need an Avatar to register a MIT. Please create an Avatar first",
     "MIT_REGISTER.RECIPIENT_ADDRESS": "Recipient Avatar address",
     "MIT_REGISTER.SELECT_AVATAR": "Please select a Recipient Avatar first",
-    "CREATE_AVATAR.AVATAR_ALREADY_EXIST": "This Avatar name has already been registered"
+    "CREATE_AVATAR.AVATAR_ALREADY_EXIST": "This Avatar name has already been registered",
+    "MIT_REGISTER.MIT_ALREADY_EXIST": "This MIT symbol has already been registered"
 }

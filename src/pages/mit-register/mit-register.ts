@@ -22,6 +22,7 @@ export class MITRegisterPage {
     avatars: Array<any>;
     no_avatar: boolean = false;
     no_avatar_placeholder: string
+    list_all_mits: Array<string> = [];
 
     constructor(
         public navCtrl: NavController,
@@ -67,13 +68,18 @@ export class MITRegisterPage {
             })
     }
 
+    ionViewDidLoad() {
+        this.loadMits()
+            .catch(console.error);
+    }
+
     cancel() {
         this.navCtrl.pop();
     }
 
     validPassword = (passphrase) => (passphrase.length > 0)
 
-    validSymbol = (symbol) => /^[A-Za-z0-9._\-]{3,64}$/g.test(symbol)
+    validSymbol = (symbol) => /^[A-Za-z0-9._\-]{3,64}$/g.test(symbol) && this.list_all_mits.indexOf(symbol) == -1
 
     validContent = (content) => content == undefined || content.length<253
 
@@ -166,6 +172,19 @@ export class MITRegisterPage {
             });
             alert.present(alert);
         })
+    }
+
+    loadMits(){
+        return this.mvs.getListMit()
+            .then((mits) => {
+                console.log(mits.result)
+                mits.result.forEach((mit) => {
+                    this.list_all_mits.push(mit.attachment.symbol)
+                })
+            })
+            .catch((error) => {
+                console.error(error)
+            })
     }
 
     avatarChanged = () => {
