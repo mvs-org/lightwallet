@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, Platform, LoadingController, Loading } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
+import { AlertProvider } from '../../providers/alert/alert';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 
 @IonicPage()
@@ -25,6 +26,7 @@ export class MITRegisterPage {
     constructor(
         public navCtrl: NavController,
         private alertCtrl: AlertController,
+        private alert: AlertProvider,
         public platform: Platform,
         public navParams: NavParams,
         private loadingCtrl: LoadingController,
@@ -86,21 +88,29 @@ export class MITRegisterPage {
             .then((result) => {
                 this.navCtrl.pop()
                 this.translate.get('SUCCESS_SEND_TEXT').subscribe((message: string) => {
-                    if (this.platform.is('mobile')) {
-                        this.showSentMobile(message, result.hash)
-                    } else {
-                        this.showSent(message, result.hash)
-                    }
-
+                    this.showSent(message, result.hash)
                 })
             })
             .catch((error) => {
                 console.error(error)
                 this.loading.dismiss()
-                if (error.message == 'ERR_CONNECTION')
-                    this.showError('ERROR_SEND_TEXT', '')
-                else {
-                    this.showError('MESSAGE.BROADCAST_ERROR', error.message)
+                switch (error.message) {
+                    case 'ERR_CONNECTION':
+                        this.alert.showError('ERROR_SEND_TEXT', '')
+                        break;
+                    case 'ERR_BROADCAST':
+                        this.translate.get('MESSAGE.ONE_TX_PER_BLOCK').subscribe((message: string) => {
+                            this.alert.showError('MESSAGE.BROADCAST_ERROR', message)
+                        })
+                        break;
+                    case "ERR_DECRYPT_WALLET":
+                        this.alert.showError('MESSAGE.PASSWORD_WRONG', '')
+                        break;
+                    case "ERR_INSUFFICIENT_BALANCE":
+                        this.alert.showError('MESSAGE.INSUFFICIENT_BALANCE', '')
+                        break;
+                    default:
+                        this.alert.showError('MESSAGE.CREATE_TRANSACTION', error.message)
                 }
             })
     }
@@ -128,21 +138,6 @@ export class MITRegisterPage {
                 })
                 alert.present(prompt)
             })
-        })
-    }
-
-    showSentMobile(text, hash) {
-        this.translate.get(['MESSAGE.SUCCESS', 'OK', 'COPY']).subscribe((translations: any) => {
-            let alert = this.alertCtrl.create({
-                title: translations['MESSAGE.SUCCESS'],
-                subTitle: text + hash,
-                buttons: [
-                    {
-                        text: translations['OK'],
-                    }
-                ]
-            })
-            alert.present(prompt)
         })
     }
 
