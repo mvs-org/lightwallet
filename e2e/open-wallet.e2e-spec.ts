@@ -38,7 +38,7 @@ describe('Load Wallet', () => {
                 .then(res => expect(res).toEqual(true))
         });
 
-        it('Open and detect wrond passphrase', () => {
+        it('Open file and detect wrong passphrase', () => {
             openImportPage()
                 .then(() => openWalletFile())
                 .then(() => enterPassphrase('wrongpassphrase'))
