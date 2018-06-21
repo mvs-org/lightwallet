@@ -30,10 +30,7 @@ export class MvsServiceProvider {
         private event: Events,
         private storage: Storage
     ) {
-        this.storage.get('network')
-            .then(network => {
-                this.blockchain = Blockchain({ network: (network) ? network : globals.network })
-            })
+        this.blockchain = Blockchain({ network: globals.network })
     }
 
     createSendTx(passphrase: string, asset: string, recipient_address: string, recipient_avatar: string, quantity: number, from_address: string, change_address: string) {
@@ -156,7 +153,6 @@ export class MvsServiceProvider {
                                 })
                                 return Metaverse.transaction_builder.issueAsset(result.utxo.concat(certs), issue_address, symbol, quantity, precision, issuer, description, secondaryissue_threshold, is_secondaryissue, change_address, result.change, create_new_domain_cert)
                             })
-                            .then((tx) => { console.log(use_naming_cert); console.log(tx); return tx })
                             .then((tx) => wallet.sign(tx))
                     })
             })
@@ -236,6 +232,8 @@ export class MvsServiceProvider {
 
     getGlobalMit = (symbol) => this.blockchain.MIT.get(symbol)
 
+    getListAvatar = () => this.blockchain.avatar.list()
+
     getListMst = () => this.blockchain.MST.list()
 
     getBalances() {
@@ -273,16 +271,9 @@ export class MvsServiceProvider {
             .then((balances) => {
                 //Check if balance has been changed
                 let nb = JSON.parse(JSON.stringify(this.DEFAULT_BALANCES));
-                if (newBalances) {
-                    if (newBalances.ETP)
-                        nb.ETP = newBalances.ETP;
-                    if (newBalances.MST)
-                        Object.keys(newBalances.MST).forEach((symbol) => {
-                            nb.MST[symbol] = newBalances.MST[symbol];
-                        })
-                    if (newBalances.MIT)
-                        nb.MIT = newBalances.MIT
-                }
+                Object.keys(newBalances).forEach((asset) => {
+                    nb[asset] = newBalances[asset];
+                })
                 if (JSON.stringify(balances) != JSON.stringify(nb)) {
                     return this.storage.set('balances', newBalances)
                 }
@@ -375,7 +366,7 @@ export class MvsServiceProvider {
 
     dataReset() {
         console.info('reset data')
-        return Promise.all(['mvs_last_tx_height', 'mvs_height', 'utxo', 'last_update', 'addressbalances', 'balances', 'mvs_txs', 'asset_order'].map((key) => this.storage.remove(key)))
+        return Promise.all(['mvs_last_tx_height', 'mvs_height', 'utxo', 'last_update', 'addressbalances', 'balances', 'mvs_txs'].map((key) => this.storage.remove(key)))
     }
 
     getNewTxs(addresses: Array<string>, lastKnownHeight: number, txs: any): Promise<any> {
@@ -420,8 +411,8 @@ export class MvsServiceProvider {
 
     setAddresses(addresses: Array<string>) {
         return this.storage.set('mvs_addresses', addresses)
-            .then(() => this.event.publish('settings_update', {}))
             .then(() => this.getAddresses())
+            .then(() => this.event.publish('settings_update', {}))
     }
 
     addTxs(newtxs: Array<any>) {
@@ -453,14 +444,12 @@ export class MvsServiceProvider {
     assetOrder() {
         return this.storage.get('asset_order')
             .then((_: string[]) => {
-                if (_&&_.length){
+                if (_)
                     return Promise.resolve(_)
-                }
                 else {
                     return this.getBalances().then((balances: any) => {
                         let order: string[] = Object.keys(balances.MST)
-                        this.setAssetOrder(order)
-                        return order;
+                        return this.setAssetOrder(order);
                     })
                 }
             })
@@ -472,7 +461,7 @@ export class MvsServiceProvider {
     }
 
     addAssetToAssetOrder(name: string) {
-        return this.assetOrder()
+        this.assetOrder()
             .then((_: string[]) => {
                 if (_.indexOf(name) === -1)
                     _.push(name)

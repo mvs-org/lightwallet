@@ -21,6 +21,7 @@ export class CreateAvatarPage {
     avatar_address: string = ""
     passphrase: string = ""
     addressbalances: Array<AddressBalance> = []
+    list_all_avatars: Array<string> = [];
 
     constructor(
         public navCtrl: NavController,
@@ -45,6 +46,11 @@ export class CreateAvatarPage {
                         })
                     }
                 }))
+    }
+
+    ionViewDidLoad() {
+        this.loadListAvatars()
+            .catch(console.error);
     }
 
     cancel() {
@@ -115,10 +121,22 @@ export class CreateAvatarPage {
       });
     }
 
+    loadListAvatars(){
+        return this.mvs.getListAvatar()
+            .then((avatars) => {
+                avatars.result.forEach((avatar) => {
+                    this.list_all_avatars.push(avatar.symbol)
+                })
+            })
+            .catch((error) => {
+                console.error(error)
+            })
+    }
+
     validPassword = (passphrase) => (passphrase.length > 0)
 
     validAddress = (avatar_address) => (avatar_address != '')
 
-    validSymbol = (symbol) => (symbol.length > 2) && (symbol.length < 64) && (!/[^A-Za-z0-9.-]/g.test(symbol))
+    validSymbol = (symbol) => (symbol.length > 2) && (symbol.length < 64) && (!/[^A-Za-z0-9.-]/g.test(symbol)) && (this.list_all_avatars.indexOf(symbol) == -1)
 
 }

@@ -328,5 +328,6 @@
     "MIT_REGISTER.AVATAR_NAME": "Recipient Avatar name",
     "MIT_REGISTER.NO_AVATAR": "You need an Avatar to register a MIT. Please create an Avatar first",
     "MIT_REGISTER.RECIPIENT_ADDRESS": "Recipient Avatar address",
-    "MIT_REGISTER.SELECT_AVATAR": "Please select a Recipient Avatar first"
+    "MIT_REGISTER.SELECT_AVATAR": "Please select a Recipient Avatar first",
+    "CREATE_AVATAR.AVATAR_ALREADY_EXIST": "This Avatar name has already been registered"
 }
