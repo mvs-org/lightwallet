@@ -47,6 +47,7 @@ export class AssetIssuePage {
     error_too_high_max_supply: boolean = false
     avatars: Array<any>;
     no_avatar: boolean = false;
+    no_avatar_placeholder: string
 
     constructor(
         public navCtrl: NavController,
@@ -60,12 +61,20 @@ export class AssetIssuePage {
 
         this.selectedAsset = "ETP"
         this.sendFrom = 'auto'
-        this.issue_address = navParams.get('avatar_address')
         this.feeAddress = 'auto'
         this.max_supply = ''
         this.custom_max_supply = ''
         this.symbol = ''
         this.issuer_name = navParams.get('avatar_name')
+        this.issue_address = navParams.get('avatar_address')
+        if(!this.issue_address) {
+            this.translate.get('ISSUE.SELECT_AVATAR').subscribe((message: string) => {
+                this.issue_address = message
+            })
+        }
+        this.translate.get('ISSUE.NO_AVATAR_PLACEHOLDER').subscribe((message: string) => {
+            this.no_avatar_placeholder = message
+        })
         this.description = ''
         this.passphrase = ''
         this.secondaryissue = false
@@ -106,7 +115,6 @@ export class AssetIssuePage {
     }
 
     ionViewDidEnter() {
-        console.log('Asset issue page loaded')
         this.mvs.getAddresses()
             .then((addresses) => {
                 if (!Array.isArray(addresses) || !addresses.length)

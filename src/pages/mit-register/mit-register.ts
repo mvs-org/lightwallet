@@ -18,7 +18,9 @@ export class MITRegisterPage {
     content: string = ""
     loading: Loading
     addressbalances: Array<any>
-    avatars: Array<any>
+    avatars: Array<any>;
+    no_avatar: boolean = false;
+    no_avatar_placeholder: string
 
     constructor(
         public navCtrl: NavController,
@@ -31,10 +33,21 @@ export class MITRegisterPage {
 
         this.recipient_avatar = this.navParams.get('avatar_name')
         this.recipient_address = this.navParams.get('avatar_address')
+        if(!this.recipient_address) {
+            this.translate.get('MIT_REGISTER.SELECT_AVATAR').subscribe((message: string) => {
+                this.recipient_address = message
+            })
+        }
+        this.translate.get('ISSUE.NO_AVATAR_PLACEHOLDER').subscribe((message: string) => {
+            this.no_avatar_placeholder = message
+        })
 
         Promise.all([this.mvs.getAddressBalances(), this.mvs.listAvatars()])
             .then((results) => {
                 this.avatars = results[1]
+                if(this.avatars.length === 0) {
+                    this.no_avatar = true;
+                }
                 let addressbalances = results[0]
                 let addrblncs = []
                 if (Object.keys(addressbalances).length) {
@@ -60,14 +73,17 @@ export class MITRegisterPage {
 
     validSymbol = (symbol) => /^[A-Za-z0-9._\-]{3,64}$/g.test(symbol)
 
-    validContent = (content) => content.length<253
+    validContent = (content) => content == undefined || content.length<253
+
+    validName = (recipient_avatar) => (recipient_avatar !== undefined && recipient_avatar.length > 0)
+
+    validAddress = (recipient_address) => (recipient_address !== undefined && recipient_address.length > 0)
 
     create() {
         return this.showLoading()
             .then(() => this.mvs.createRegisterMITTx(this.passphrase, this.recipient_address, this.recipient_avatar, this.symbol, this.content, undefined))
             .then(tx => this.mvs.send(tx))
             .then((result) => {
-                this.navCtrl.pop()
                 this.navCtrl.pop()
                 this.translate.get('SUCCESS_SEND_TEXT').subscribe((message: string) => {
                     if (this.platform.is('mobile')) {
@@ -154,6 +170,15 @@ export class MITRegisterPage {
                 }]
             });
             alert.present(alert);
+        })
+    }
+
+    avatarChanged = () => {
+        this.avatars.forEach((avatar) => {
+            if(avatar.symbol == this.recipient_avatar) {
+                this.recipient_address = avatar.address
+                return
+            }
         })
     }
 }

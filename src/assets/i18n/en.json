@@ -322,5 +322,11 @@
 
     "CREATE_AVATAR.CONFIRMATION_TITLE": "Creating an Avatar cost 1 ETP.",
     "CREATE_AVATAR.CONFIRMATION_SUBTITLE": "Are you sure you want to create an Avatar?",
-    "ISSUE.NO_AVATAR": "You need an Avatar to register a MST. Please create an Avatar first"
+    "ISSUE.NO_AVATAR": "You need an Avatar to register a MST. Please create an Avatar first",
+    "ISSUE.SELECT_AVATAR": "Please select an Issuer first",
+    "ISSUE.NO_AVATAR_PLACEHOLDER": "No Avatar",
+    "MIT_REGISTER.AVATAR_NAME": "Recipient Avatar name",
+    "MIT_REGISTER.NO_AVATAR": "You need an Avatar to register a MIT. Please create an Avatar first",
+    "MIT_REGISTER.RECIPIENT_ADDRESS": "Recipient Avatar address",
+    "MIT_REGISTER.SELECT_AVATAR": "Please select a Recipient Avatar first"
 }

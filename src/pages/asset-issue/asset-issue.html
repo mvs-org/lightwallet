@@ -21,7 +21,7 @@
             <p class="right">{{"FEE"|translate}}:<br *ngIf="platform.is('mobile')"> 10 ETP</p>
         </ion-col>
     </ion-row>
-    <h2 align="center" *ngIf="issue_address && (!addressbalances || !addressbalances[issue_address] || !addressbalances[issue_address][selectedAsset] || addressbalances[issue_address][selectedAsset].available<1000000000)">{{"ISSUE.NOTICE_TRANSACTION_FEE_UNCOVERED"|translate}}</h2>
+    <h2 align="center" *ngIf="issuer_name && (!addressbalances || !addressbalances[issue_address] || !addressbalances[issue_address][selectedAsset] || addressbalances[issue_address][selectedAsset].available<1000000000)">{{"ISSUE.NOTICE_TRANSACTION_FEE_UNCOVERED"|translate}}</h2>
     <form #sendForm="ngForm" style="padding-bottom: 0;">
         <ion-list style="padding-bottom: 0;">
 
@@ -86,7 +86,7 @@
                 <ion-select *ngIf="!no_avatar" [(ngModel)]="issuer_name" name="issuer_name" multiple="false" okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}" (ngModelChange)="issuerChanged($event)">
                     <ion-option *ngFor="let avatar of avatars" value="{{avatar.symbol}}">{{avatar.symbol}}</ion-option>
                 </ion-select>
-                <ion-input *ngIf="no_avatar" disabled></ion-input>
+                <ion-input name="no_avatar" *ngIf="no_avatar" [(ngModel)]="no_avatar_placeholder" disabled></ion-input>
             </ion-item>
             <ion-item *ngIf="no_avatar" no-lines class="wrong-input">{{"ISSUE.NO_AVATAR" | translate}}</ion-item>
 
