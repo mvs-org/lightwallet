@@ -4,6 +4,8 @@ describe('Login', () => {
 
     let page: Page;
 
+    const DEFAULT_NETWORK = 'mainnet'
+
     beforeEach(() => {
         page = new Page();
         page.navigateTo('/');
@@ -26,9 +28,9 @@ describe('Login', () => {
         it('Login has a network switch', () => {
             page.hasId("network-switch").then(res => expect(res).toEqual(true));
         });
-        it('Default network is mainnet', () => {
+        it('Default network', () => {
             page.getElementById('label-network').getAttribute('value')
-                .then(network => expect(network).toEqual('mainnet'));
+                .then(network => expect(network).toEqual(DEFAULT_NETWORK));
         });
         it('Switch network', () => {
             page.clickId('network-switch-option-testnet')
