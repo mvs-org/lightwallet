@@ -1,40 +1,28 @@
 import { Page } from './app.po';
 
-describe('Wallet creation', () => {
+describe('Wallet Generation', () => {
 
     let page: Page;
 
     beforeEach(() => {
         page = new Page();
+        page.navigateTo('/');
     });
 
-    describe('Load login page', () => {
+    describe('Generate new wallet', () => {
         beforeEach(() => {
-            page.navigateTo('/');
+            page.clickId("create-wallet-button")
         });
 
-        it('Login should have an create wallet button', () => {
-            page.hasId("create-wallet-button").then(res => {
-                expect(res).toEqual(true);
-            });
-        });
-        it('Login should have correct title', () => {
-            page.getTitle().then(title => {
-                expect(title).toEqual('Metaverse Lightwallet');
-            });
-        });
-    })
-
-    describe('Gerneate new wallet', () => {
-        beforeEach(() => {
-            page.navigateTo('/');
-            page.getElementById("create-wallet-button").click()
-        });
-
-        it('Page should have backup words', () => {
-            page.hasId("backup-words").then(res => {
-                expect(res).toEqual(true);
-            });
+        it('Generation page should show 24 backup words', () => {
+            page.hasId("backup-words")
+                .then(res => {
+                    expect(res).toEqual(true);
+                })
+                .then(() => page.getElementById('backup-words').getText())
+                .then(words => {
+                    expect(words.split(' ').length).toEqual(24)
+                })
         });
     })
 

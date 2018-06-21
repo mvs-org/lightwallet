@@ -296,7 +296,7 @@
     "ISSUE.SYMBOL_AVAILABLE": "This Domain name is available. After issuing this MST, you will receive a Domain certificate",
     "ISSUE.SYMBOL_DOMAIN_OWNER": "Your Avatar own the Domain certificate to create this MST",
     "ISSUE.SYMBOL_NAMING_OWNER": "Your Avatar own the Naming certificate to create this MST",
-    "ISSUE.SYMBOL_ALREADY_EXIST": "This MST already exist",
+    "ISSUE.SYMBOL_ALREADY_EXIST": "This MST symbol has already been registered",
     "ISSUE.SYMBOL_NOT_CERT_OWNER": "Your Avatar does not own the Domain certificate to create this MST",
     "ISSUE.SYMBOL_ERROR_LOADING_MSTS": "Error while loading MSTs. Please make sure this MST Symbol is not already used",
     "ISSUE.SYMBOL_ERROR_LOADING_CERTS": "Error while loading the Domain certificates. Please make sure you have the right to create this Symbol",
@@ -312,5 +312,23 @@
     "CONTENT": "Content",
     "MIT.TX_HASH": "Created in",
     "MIT.HISTORY": "Transaction history",
-    "CHECK_IN_EXPLORER": "Check in Explorer"
+    "CHECK_IN_EXPLORER": "Check in Explorer",
+
+    "ISSUE.MAX_SUPPLY_TOO_HIGH": "Too high Maximum supply*Number of decimals. Please decrease one of the two",
+    "CREATE_AVATAR.NO_ADDRESS_1ETP": "You do not have any available address with at least 1 ETP available. Please send at least 1 ETP to an available address (not already linked to an Avatar) to create a new Avatar",
+    "MAINNET": "Mainnet",
+    "TESTNET": "Testnet",
+    "SELECT_NETWORK": "Select network",
+
+    "CREATE_AVATAR.CONFIRMATION_TITLE": "Creating an Avatar cost 1 ETP.",
+    "CREATE_AVATAR.CONFIRMATION_SUBTITLE": "Are you sure you want to create an Avatar?",
+    "ISSUE.NO_AVATAR": "You need an Avatar to register a MST. Please create an Avatar first",
+    "ISSUE.SELECT_AVATAR": "Please select an Issuer first",
+    "ISSUE.NO_AVATAR_PLACEHOLDER": "No Avatar",
+    "MIT_REGISTER.AVATAR_NAME": "Recipient Avatar name",
+    "MIT_REGISTER.NO_AVATAR": "You need an Avatar to register a MIT. Please create an Avatar first",
+    "MIT_REGISTER.RECIPIENT_ADDRESS": "Recipient Avatar address",
+    "MIT_REGISTER.SELECT_AVATAR": "Please select a Recipient Avatar first",
+    "CREATE_AVATAR.AVATAR_ALREADY_EXIST": "This Avatar name has already been registered",
+    "MIT_REGISTER.MIT_ALREADY_EXIST": "This MIT symbol has already been registered"
 }

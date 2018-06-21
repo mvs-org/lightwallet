@@ -21,7 +21,7 @@
             <p class="right">{{"FEE"|translate}}:<br *ngIf="platform.is('mobile')"> 10 ETP</p>
         </ion-col>
     </ion-row>
-    <h2 align="center" *ngIf="!addressbalances || !addressbalances[issue_address] || !addressbalances[issue_address][selectedAsset] || addressbalances[issue_address][selectedAsset].available<1000000000">{{"ISSUE.NOTICE_TRANSACTION_FEE_UNCOVERED"|translate}}</h2>
+    <h2 align="center" *ngIf="issuer_name && (!addressbalances || !addressbalances[issue_address] || !addressbalances[issue_address][selectedAsset] || addressbalances[issue_address][selectedAsset].available<1000000000)">{{"ISSUE.NOTICE_TRANSACTION_FEE_UNCOVERED"|translate}}</h2>
     <form #sendForm="ngForm" style="padding-bottom: 0;">
         <ion-list style="padding-bottom: 0;">
 
@@ -39,7 +39,7 @@
 
             <ion-item [ngClass]="{'error-border':!validMaxSupply(max_supply, asset_decimals)}">
                 <ion-label color="primary" floating>{{"ISSUE.MAX_SUPPLY" | translate}}</ion-label>
-                <ion-select [(ngModel)]="max_supply" name="max_supply" multiple="false" okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}" required>
+                <ion-select [(ngModel)]="max_supply" name="max_supply" multiple="false" (ngModelChange)="maxSupplyChanged($event)" okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}" required>
                     <ion-option value="1000000">{{1000000 | number : fractionSize}} ({{"ISSUE.ONE_MILLION" | translate}})</ion-option>
                     <ion-option value="10000000">{{10000000 | number : fractionSize}} ({{"ISSUE.TEN_MILLION" | translate}})</ion-option>
                     <ion-option value="100000000">{{100000000 | number : fractionSize}} ({{"ISSUE.ONE_HUNDRED_MILLION" | translate}})</ion-option>
@@ -50,15 +50,16 @@
             </ion-item>
             <ion-item *ngIf="max_supply == 'custom'" [ngClass]="{'error-border':!validMaxSupplyCustom(custom_max_supply, asset_decimals)}">
                 <ion-label color="primary" floating>{{"ISSUE.MAX_SUPPLY_CUSTOM" | translate}}</ion-label>
-                <ion-input name="custom_max_supply" type="tel" min="0" [(ngModel)]="custom_max_supply"></ion-input>
+                <ion-input name="custom_max_supply" type="tel" min="0" [(ngModel)]="custom_max_supply" (ngModelChange)="maxSupplyChanged($event)"></ion-input>
             </ion-item>
+            <ion-item *ngIf="error_too_high_max_supply" no-lines class="wrong-input">{{"ISSUE.MAX_SUPPLY_TOO_HIGH" | translate}}</ion-item>
             <br>
             <ion-item no-lines>
                 <ion-label color="primary">{{"ISSUE.DECIMALS" | translate}}</ion-label>
                 <ion-badge item-end color="primary">{{asset_decimals}}</ion-badge>
             </ion-item>
             <ion-item>
-                <ion-range min="0" max="8" step="1" pin="true" color="primary" [(ngModel)]="asset_decimals" name="asset_decimals">
+                <ion-range min="0" max="8" step="1" pin="true" color="primary" [(ngModel)]="asset_decimals" name="asset_decimals" (ngModelChange)="maxSupplyChanged($event)">
                     <ion-label range-left>0</ion-label>
                     <ion-label range-right>8</ion-label>
                 </ion-range>
@@ -80,11 +81,16 @@
                 </ion-range>
             </ion-item>
 
-            <ion-item [ngClass]="{'valid-border':true}">
+            <ion-item [ngClass]="{'error-border':!validName(issuer_name)}">
                 <ion-label color="primary" floating>{{"ISSUE.ISSUER_NAME" | translate}}</ion-label>
-                <ion-input name="issuer_name" [(ngModel)]="issuer_name" disabled></ion-input>
+                <ion-select *ngIf="!no_avatar" [(ngModel)]="issuer_name" name="issuer_name" multiple="false" okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}" (ngModelChange)="issuerChanged($event)">
+                    <ion-option *ngFor="let avatar of avatars" value="{{avatar.symbol}}">{{avatar.symbol}}</ion-option>
+                </ion-select>
+                <ion-input name="no_avatar" *ngIf="no_avatar" [(ngModel)]="no_avatar_placeholder" disabled></ion-input>
             </ion-item>
-            <ion-item [ngClass]="{'valid-border':true}">
+            <ion-item *ngIf="no_avatar" no-lines class="wrong-input">{{"ISSUE.NO_AVATAR" | translate}}</ion-item>
+
+            <ion-item [ngClass]="{'error-border':!validAddress(issue_address)}">
                 <ion-label color="primary" floating>{{"ISSUE.ISSUE_ADDRESS" | translate}}</ion-label>
                 <ion-input name="issue_address" [(ngModel)]="issue_address" disabled></ion-input>
             </ion-item>
@@ -126,7 +132,7 @@
 
         <ion-row>
             <ion-col>
-                <button ion-button full [disabled]="!sendForm.form.valid||!validSymbol(symbol)||symbol_check=='exist'||symbol_check=='not_cert_owner'||!validMaxSupply(max_supply, asset_decimals)||(max_supply=='custom' && !validMaxSupplyCustom(custom_max_supply, asset_decimals))||!validDecimals(asset_decimals)||!validDescription(description)||(issue_address=='custom' && !validIssueAddress(custom_issue_address))||!validPassword(passphrase)" (click)="confirm()" icon-left color="secondary">
+                <button ion-button full [disabled]="!sendForm.form.valid||!validSymbol(symbol)||symbol_check=='exist'||symbol_check=='not_cert_owner'||!validMaxSupply(max_supply, asset_decimals)||(max_supply=='custom' && !validMaxSupplyCustom(custom_max_supply, asset_decimals))||!validDecimals(asset_decimals)||!validName(issuer_name)||!validAddress(issue_address)||!validDescription(description)||(issue_address=='custom' && !validIssueAddress(custom_issue_address))||!validPassword(passphrase)" (click)="confirm()" icon-left color="secondary">
                     <ion-icon disabled="checked" name="send"></ion-icon>
                     {{"REGISTER_MST" | translate}}
                 </button>

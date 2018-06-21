@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, Platform } from 'ionic-angular';
 import { AppGlobals } from '../../app/app.global';
+import { Storage } from '@ionic/storage';
 
 @IonicPage()
 @Component({
@@ -10,11 +11,19 @@ import { AppGlobals } from '../../app/app.global';
 
 export class LoginPage {
 
+    public network = ''
+
     constructor (
         private nav: NavController,
         public platform: Platform,
+        private storage: Storage,
         public globals: AppGlobals
-    ){}
+    ){
+    }
+
+    ionViewDidEnter() {
+        this.loadNetwork()
+    }
 
     GenerateKeyPage = e => this.nav.push("GenerateKeyPage")
 
@@ -23,6 +32,15 @@ export class LoginPage {
     ImportMnemonicPage = e => this.nav.push("ImportMnemonicPage")
 
     switchLanguage = e => this.nav.push("LanguageSwitcherPage")
+
+    switchNetwork = network => this.storage.set("network", this.network).then(()=>this.loadNetwork())
+
+    loadNetwork = () => this.storage.get('network').then(network=>{
+        this.globals.network=(network)?network:'testnet'
+        if(network==undefined)
+            this.storage.set('network', this.globals.network)
+        this.network=this.globals.network;
+    })
 
     switchTheme = e => this.nav.push("ThemeSwitcherPage")
 
