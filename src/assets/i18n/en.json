@@ -316,9 +316,8 @@
 
     "ISSUE.MAX_SUPPLY_TOO_HIGH": "Too high Maximum supply*Number of decimals. Please decrease one of the two",
     "CREATE_AVATAR.NO_ADDRESS_1ETP": "You do not have any available address with at least 1 ETP available. Please send at least 1 ETP to an available address (not already linked to an Avatar) to create a new Avatar",
-    "MAINNET": "Mainnet",
-    "TESTNET": "Testnet",
-    "SELECT_NETWORK": "Select network",
+    "MAINNET": "mainnet",
+    "TESTNET": "testnet",
 
     "CREATE_AVATAR.CONFIRMATION_TITLE": "Creating an Avatar cost 1 ETP.",
     "CREATE_AVATAR.CONFIRMATION_SUBTITLE": "Are you sure you want to create an Avatar?",
