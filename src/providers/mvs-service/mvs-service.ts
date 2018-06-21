@@ -53,6 +53,23 @@ export class MvsServiceProvider {
             })
     }
 
+    createSendMoreTx(passphrase: string, target: any, recipients: Array<any>, from_address: string, change_address: string) {
+        return this.wallet.getWallet(passphrase)
+            .then(wallet => this.getUtxoFrom(from_address)
+                .then((utxo) => this.getHeight().then(height => Metaverse.output.findUtxo(utxo, target, height)))
+                .then((result) => {
+                    //Set change address to first utxo's address
+                    if (change_address == undefined)
+                        change_address = result.utxo[0].address;
+                    return Metaverse.transaction_builder.sendmore(result.utxo, recipients, change_address, result.change);
+                })
+                .then((tx) => wallet.sign(tx)))
+            .catch((error) => {
+                console.error(error)
+                throw Error(error.message);
+            })
+    }
+
     createDepositTx(passphrase: string, recipient_address: string, quantity: number, locktime: number, from_address: string, change_address: string) {
         let target = { ETP: quantity };
         return this.wallet.getWallet(passphrase)
