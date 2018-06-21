@@ -4,7 +4,7 @@ describe('Login', () => {
 
     let page: Page;
 
-    const DEFAULT_NETWORK = 'mainnet'
+    const DEFAULT_NETWORK = 'testnet'
 
     beforeEach(() => {
         page = new Page();
