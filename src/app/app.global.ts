@@ -16,9 +16,10 @@ export class AppGlobals {
     readonly DEFAULT_NETWORK = 'mainnet'
 
     constructor(
-        private storage: Storage
-    ){
-        this.storage.get('network')
-            .then(network=>this.network=(network)?network:this.DEFAULT_NETWORK)
+        private storage: Storage = undefined
+    ) {
+        if (storage !== undefined)
+            this.storage.get('network')
+                .then(network => this.network = (network) ? network : this.DEFAULT_NETWORK)
     }
 }
