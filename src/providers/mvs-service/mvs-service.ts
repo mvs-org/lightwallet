@@ -30,9 +30,15 @@ export class MvsServiceProvider {
         private event: Events,
         private storage: Storage
     ) {
-        this.storage.get('network')
-            .then(network => this.blockchain = Blockchain({ network: globals.network }))
+        this.setNetwork()
+        this.event.subscribe("network_update", (settings) => {
+            console.info('mvs service network update caused by network update event')
+            this.setNetwork()
+        })
     }
+
+    private setNetwork = () => this.globals.getNetwork()
+        .then(network => this.blockchain = Blockchain({ network: network }))
 
     createSendTx(passphrase: string, asset: string, recipient_address: string, recipient_avatar: string, quantity: number, from_address: string, change_address: string) {
         let target = {};
