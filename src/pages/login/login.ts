@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, Platform } from 'ionic-angular';
+import { IonicPage, NavController, Platform, Events } from 'ionic-angular';
 import { AppGlobals } from '../../app/app.global';
 import { Storage } from '@ionic/storage';
 
@@ -17,7 +17,8 @@ export class LoginPage {
         private nav: NavController,
         public platform: Platform,
         private storage: Storage,
-        public globals: AppGlobals
+        public globals: AppGlobals,
+        private event : Events
     ){
     }
 
@@ -33,7 +34,7 @@ export class LoginPage {
 
     switchLanguage = e => this.nav.push("LanguageSwitcherPage")
 
-    switchNetwork = network => this.storage.set("network", this.network).then(()=>this.loadNetwork())
+    switchNetwork = network => this.storage.set("network", this.network).then(()=>this.loadNetwork()).then(()=>this.event.publish('network_update', { network: network}))
 
     loadNetwork = () => this.storage.get('network').then(network=>{
         this.globals.network=(network)?network:'mainnet'
