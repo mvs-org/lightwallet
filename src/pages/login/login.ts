@@ -38,12 +38,13 @@ export class LoginPage {
         .then(() => this.loadNetwork())
         .then(() => this.event.publish('network_update', { network: network }))
 
-    loadNetwork = () => this.storage.get('network').then(network => {
-        this.globals.network = (network) ? network : 'mainnet'
-        this.network = this.globals.network;
-        console.log(this.network)
-        return network;
-    })
+    loadNetwork = () => this.storage.get('network')
+        .then(network => {
+            this.globals.network = (network) ? network : this.globals.DEFAULT_NETWORK
+            this.network = this.globals.network;
+            console.log(this.network)
+            return network;
+        })
 
     switchTheme = e => this.nav.push("ThemeSwitcherPage")
 
