@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Storage } from '@ionic/storage';
 
 @Injectable()
 export class AppGlobals {
@@ -11,4 +12,13 @@ export class AppGlobals {
     readonly ADDRESS_PREFIX_MAINNET = 'M'
     readonly ADDRESS_PREFIX_P2SH = '3'
     readonly ADDRESS_PREFIX_TESTNET = 't'
+
+    readonly DEFAULT_NETWORK = 'mainnet'
+
+    constructor(
+        private storage: Storage
+    ){
+        this.storage.get('network')
+            .then(network=>this.network=(network)?network:this.DEFAULT_NETWORK)
+    }
 }
