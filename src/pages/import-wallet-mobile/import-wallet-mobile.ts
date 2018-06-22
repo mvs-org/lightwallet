@@ -14,7 +14,7 @@ import { WalletServiceProvider } from '../../providers/wallet-service/wallet-ser
 export class ImportWalletMobilePage {
 
     loading: Loading;
-    qrCodeLoaded: boolean
+    qrCodeLoaded: boolean = false
     seed: string
 
     constructor(public nav: NavController, private globals: AppGlobals, public navParams: NavParams, private mvs: MvsServiceProvider, private wallet: WalletServiceProvider, private alertCtrl: AlertController, private translate: TranslateService, private barcodeScanner: BarcodeScanner, private loadingCtrl: LoadingController) {
@@ -36,6 +36,7 @@ export class ImportWalletMobilePage {
                 resultDisplayDuration: 0, // Android, display scanned text for X ms. 0 suppresses it entirely, default 1500
                 formats : "QR_CODE", // default: all but PDF_417 and RSS_EXPANDED
             }).then((result) => {
+            console.log(result)
                 if (!result.cancelled) {
                     let content = result.text.toString().split('&')
                     this.seed = content[0]
@@ -44,9 +45,9 @@ export class ImportWalletMobilePage {
                     } else if (content[1] != this.globals.network.charAt(0)) {
                         this.showError('MESSAGE.NETWORK_MISMATCH')
                     } else {
-                        wallet = { "index": Math.max(5,Math.min(parseInt(content[2]),50)) }
+                        wallet = { "index": 10 }
                         this.wallet.setWallet(wallet)
-                        this.wallet.setMobileWallet(content[0]).then(() => this.qrCodeLoaded = true)
+                        this.wallet.setMobileWallet(content[0]).then(() => { this.qrCodeLoaded = true; })
                     }
                 }
             })
