@@ -19,7 +19,10 @@ export class AppGlobals {
         private storage: Storage = undefined
     ) {
         if (storage !== undefined)
-            this.storage.get('network')
-                .then(network => this.network = (network) ? network : this.DEFAULT_NETWORK)
+            this.getNetwork()
+            .then(network=>{this.network=network;})
     }
+
+    getNetwork = () => this.storage.get('network')
+            .then(network => (network) ? network : this.DEFAULT_NETWORK)
 }
