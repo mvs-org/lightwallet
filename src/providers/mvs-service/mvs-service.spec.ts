@@ -2,30 +2,19 @@ import { async, TestBed } from '@angular/core/testing';
 import { AppGlobals } from '../../app/app.global';
 import { MvsServiceProvider } from './mvs-service';
 import { IonicStorageModule } from '@ionic/storage';
-import { Storage } from '@ionic/storage';
-
-class MockStorage extends Storage {
-    private db: any = {}
-    get(key) {
-        return Promise.resolve(this.db[key])
-    }
-    set(key, value) {
-        this.db[key] = value;
-        return Promise.resolve()
-    }
-}
+import { MockStorage, MockEvents } from '../../types/mocks';
 
 describe('MVS Service Provider', () => {
     let mvs: MvsServiceProvider = null;
-    let storage: Storage;
+    let storage: MockStorage;
 
     describe('Asset order', () => {
         beforeEach(() => {
             storage = new MockStorage({})
             mvs = new MvsServiceProvider(
-                new AppGlobals(),
+                new AppGlobals(storage),
                 undefined,
-                undefined,
+                new MockEvents(),
                 storage
             )
         });
@@ -59,14 +48,10 @@ describe('MVS Service Provider', () => {
 
     describe('Addresses', () => {
         let event: any;
-        let globals = new AppGlobals();
+        let globals : AppGlobals;
         beforeEach(() => {
-            event = {
-                publish: (a, b) => {
-                    event.published = true
-                },
-                published: false
-            }
+            globals = new AppGlobals(storage)
+            event = new MockEvents()
             storage = new MockStorage({})
             mvs = new MvsServiceProvider(
                 globals,
@@ -80,7 +65,7 @@ describe('MVS Service Provider', () => {
             return mvs.setAddresses(list)
                 .then(() => storage.get('mvs_addresses'))
                 .then(result => {
-                    expect(event.published).toBe(true)
+                    expect(event.published()).toBe(true)
                     expect(result).toEqual(list)
                     done()
                 })

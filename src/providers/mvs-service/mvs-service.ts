@@ -30,9 +30,15 @@ export class MvsServiceProvider {
         private event: Events,
         private storage: Storage
     ) {
-        this.storage.get('network')
-            .then(network => this.blockchain = Blockchain({ network: (globals.network)?globals.network:'testnet' }))
+        this.setNetwork()
+        this.event.subscribe("network_update", (settings) => {
+            console.info('mvs service network update caused by network update event')
+            this.setNetwork()
+        })
     }
+
+    private setNetwork = () => this.globals.getNetwork()
+        .then(network => this.blockchain = Blockchain({ network: network }))
 
     createSendTx(passphrase: string, asset: string, recipient_address: string, recipient_avatar: string, quantity: number, from_address: string, change_address: string) {
         let target = {};
@@ -45,6 +51,23 @@ export class MvsServiceProvider {
                     if (change_address == undefined)
                         change_address = result.utxo[0].address;
                     return Metaverse.transaction_builder.send(result.utxo, recipient_address, recipient_avatar, target, change_address, result.change);
+                })
+                .then((tx) => wallet.sign(tx)))
+            .catch((error) => {
+                console.error(error)
+                throw Error(error.message);
+            })
+    }
+
+    createSendMoreTx(passphrase: string, target: any, recipients: Array<any>, from_address: string, change_address: string) {
+        return this.wallet.getWallet(passphrase)
+            .then(wallet => this.getUtxoFrom(from_address)
+                .then((utxo) => this.getHeight().then(height => Metaverse.output.findUtxo(utxo, target, height)))
+                .then((result) => {
+                    //Set change address to first utxo's address
+                    if (change_address == undefined)
+                        change_address = result.utxo[0].address;
+                    return Metaverse.transaction_builder.sendmore(result.utxo, recipients, change_address, result.change);
                 })
                 .then((tx) => wallet.sign(tx)))
             .catch((error) => {
