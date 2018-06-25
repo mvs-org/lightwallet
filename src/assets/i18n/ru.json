@@ -107,7 +107,7 @@
     "CONFIRM_PASSWORD": "Подтвердить пароль",
     "LIGHT_WALLET_INFO_TEXT": "Пожалуйста имейте ввиду, что myetpwallet.com не имеет доступа к вашим ключам для кошелька. Если вы потеряете свой резервный ключ или ключевой файл мы не сможем обеспечить Вам доступ к вашему кошельку.",
     "TRANSACTION.INNER_WALLET": "Внутренняя транзакция кошелька",
-    "HEIGHT": "Высота",
+    "HEIGHT": "Блок №",
     "SELECT_CHANGE_ADDRESS": "Выбор адреса для остатка средств (опционально)",
     "SELECT_FROM_ADDRESS": "Выбор исходящего адреса (опционально)",
     "SHOW_ADVANCED": "Показать дополнительные настройки",
@@ -192,7 +192,7 @@
     "NOTICE_ASSET_ISSUE_FEE": "Пожалуйста обратите внимание, что создание нового Актива стоит 10 ETP.",
 
     "ISSUE.NOTICE_TRANSACTION_FEE_UNCOVERED": "Вам необходимо как минимум 10 ETP, чтобы создать Актив.",
-    "ISSUE.SYMBOL": "Символ",
+    "ISSUE.SYMBOL": "Название",
     "ISSUE.ISSUER_NAME": "Название эммитента",
     "ISSUE.MAX_SUPPLY": "Максимальное количество",
     "ISSUE.DECIMALS": "Количество знаков после запятой в единице актива",
@@ -214,9 +214,9 @@
     "REPORT_BUG": "Сообщить об ошибке",
 
     "MESSAGE.NETWORK_MISMATCH": "Не подходящая сеть",
-    "MESSAGE.PASSWORD_WRONG": "Невозможно расшифровать кошелек при помощи введенного резервного ключа",
-    "MESSAGE.CREATE_TRANSACTION": "Невозможно создать транзакцию.",
-    "MESSAGE.BROADCAST_ERROR": "Невозможно передать транзакцию.",
+    "MESSAGE.PASSWORD_WRONG": "Неверный пароль от кошелька",
+    "MESSAGE.CREATE_TRANSACTION": "Невозможно создать транзакцию, попробуйте позже",
+    "MESSAGE.BROADCAST_ERROR": "Невозможно передать транзакцию, попробуйте позже",
 
     "LOGIN": "Войти",
     "HOW_TO_IMPORT_WALLET_MOBILE": "Как импортировать",
@@ -259,15 +259,15 @@
 
     "CREATE_AVATAR": "Создать Аватар",
     "CREATE_AVATAR.CREATE_BTN": "Создать аватар",
-    "CREATE_AVATAR.SYMBOL": "Символ",
-    "CREATE_AVATAR.ADDRESS": "Адресс",
+    "CREATE_AVATAR.SYMBOL": "Название",
+    "CREATE_AVATAR.ADDRESS": "Адрес",
 
     "RECIPIENT_AVATAR": "Получатель аватара",
     "SEND_TO_AVATAR": "Отправить аватар",
     "HEADLINE_MST": "Metaverse Smart Token",
     "HEADLINE_MIT": "Metaverse Identifiable Token",
     "NO_MIT_TEXT": "У вас еще нет MIT. Чтобы создать MIT, вам сначала нужно создать аватар.",
-    "MIT_REGISTER.SYMBOL": "Символ",
+    "MIT_REGISTER.SYMBOL": "Название",
     "MIT_REGISTER.CONTENT": "Содержимое",
 
     "IMPORT.WORDS_REMAINING": " осталось слов",
@@ -296,9 +296,9 @@
     "ISSUE.SYMBOL_AVAILABLE": "Это доменное имя доступно. После выдачи этого MST вы получите сертификат домена",
     "ISSUE.SYMBOL_DOMAIN_OWNER": "Ваш Аватар обладает сертификатом домена для создания этого MST",
     "ISSUE.SYMBOL_NAMING_OWNER": "Ваш Аватар обладает сертификатом именования для создания этого MST ",
-    "ISSUE.SYMBOL_ALREADY_EXIST": "Этот символ MST уже зарегистрирован",
+    "ISSUE.SYMBOL_ALREADY_EXIST": "Это название MST уже зарегистрировано",
     "ISSUE.SYMBOL_NOT_CERT_OWNER": "Ваш Аватар не имеет сертификата домена для создания этого MST",
-    "ISSUE.SYMBOL_ERROR_LOADING_MSTS": "Ошибка при загрузке MST. Убедитесь, что этот символ MST еще не используется",
+    "ISSUE.SYMBOL_ERROR_LOADING_MSTS": "Ошибка при загрузке MST. Убедитесь, что это название MST еще не используется",
     "ISSUE.SYMBOL_ERROR_LOADING_CERTS": "Ошибка при загрузке сертификатов домена. Убедитесь, что вы имеете право создать этот символ",
 
     "REGISTER_MST": "Регистрация MST",
@@ -315,7 +315,7 @@
     "CHECK_IN_EXPLORER": "Проверить проводник",
 
     "ISSUE.MAX_SUPPLY_TOO_HIGH": "Слишком высокий Максимальный расход * Количество десятичных знаков. Пожалуйста, уменьшите один из двух",
-    "CREATE_AVATAR.NO_ADDRESS_1ETP": "У вас не досточно средств, по крайней мере, в 1 ETP. Пожалуйста, отправьте хотя бы 1 ETP на доступный адрес (который ещё не связан с аватаром) создать новый Аватар",
+    "CREATE_AVATAR.NO_ADDRESS_1ETP": "У вас не досточно средств (ETP). Пожалуйста, отправьте хотя бы 1 ETP на доступный адрес (который ещё не связан с аватаром) что бы создать новый Аватар",
     "MAINNET": "Mainnet",
     "TESTNET": "Testnet",
 
@@ -329,5 +329,11 @@
     "MIT_REGISTER.RECIPIENT_ADDRESS": "Адрес Аватара получателя",
     "MIT_REGISTER.SELECT_AVATAR": "Сначала выберите Аватар получателя",
     "CREATE_AVATAR.AVATAR_ALREADY_EXIST": "Это имя Аватара уже зарегистрировано",
-    "MIT_REGISTER.MIT_ALREADY_EXIST": "Этот символ MIT уже зарегистрирован"
+    "MIT_REGISTER.MIT_ALREADY_EXIST": "Это название MIT уже зарегистрировано",
+    "SEND_TO_ONE": "Отправить одному",
+    "SEND_MORE": "Отправить нескольким",
+    "RECIPIENT": "Получатель",
+    "ADD_RECIPIENT": "Добавить получателя",
+    "REMOVE_RECIPIENT": "Удалить получателя",
+    "TOTAL_TO_SEND": "Всего отправить"
 }

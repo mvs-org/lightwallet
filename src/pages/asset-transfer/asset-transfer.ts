@@ -6,6 +6,13 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { AlertProvider } from '../../providers/alert/alert';
 import { Keyboard } from '@ionic-native/keyboard';
 
+class RecipientSendMore {
+    constructor(
+        public address: string,
+        public target: any
+    ) { }
+}
+
 @IonicPage({
     name: 'transfer-page',
     segment: 'send/:asset'
@@ -36,6 +43,9 @@ export class AssetTransferPage {
     etpBalance: number
     @ViewChild('recipientAddressInput') recipientAddressInput;
     @ViewChild('quantityInput') quantityInput;
+    transfer_type: string = "one"
+    recipients: Array<RecipientSendMore> = []
+    total_to_send: any = {}
 
     constructor(
         public navCtrl: NavController,
@@ -49,6 +59,13 @@ export class AssetTransferPage {
     ) {
 
         this.selectedAsset = navParams.get('asset')
+        if(this.selectedAsset == 'ETP') {
+            this.recipients.push(new RecipientSendMore('', {"ETP": undefined}))
+        } else {
+            this.recipients.push(new RecipientSendMore('', {"MST": { [this.selectedAsset]: undefined}}))
+        }
+        this.total_to_send[this.selectedAsset] = 0
+
 
         //Load addresses
         mvs.getAddresses()
@@ -135,6 +152,61 @@ export class AssetTransferPage {
     create() {
         return this.alert.showLoading()
             .then(() => this.mvs.getAddresses())
+            .then((addresses) => {
+                switch(this.transfer_type){
+                    case "one":
+                        return this.mvs.createSendTx(
+                            this.passphrase,
+                            this.selectedAsset,
+                            this.recipient_address,
+                            (this.recipient_avatar && this.recipient_avatar_valid) ? this.recipient_avatar : undefined,
+                            Math.floor(parseFloat(this.quantity) * Math.pow(10, this.decimals)),
+                            (this.sendFrom != 'auto') ? this.sendFrom : null,
+                            (this.changeAddress != 'auto') ? this.changeAddress : undefined
+                        )
+                    case "more":
+                        let recipients = this.recipients
+                        let target = this.total_to_send
+                        console.log(recipients)
+                        console.log(target)
+                        if(this.selectedAsset == 'ETP') {
+                            target['ETP'] = Math.floor(parseFloat(target['ETP']) * Math.pow(10, this.decimals))
+                            recipients.forEach((recipient) => recipient.target['ETP'] = Math.floor(parseFloat(recipient.target['ETP']) * Math.pow(10, this.decimals)))
+                        } else {
+                            target[this.selectedAsset] = Math.floor(parseFloat(target[this.selectedAsset]) * Math.pow(10, this.decimals))
+                            recipients.forEach((recipient) => recipient.target['MST'][this.selectedAsset] = Math.floor(parseFloat(recipient.target['MST'][this.selectedAsset]) * Math.pow(10, this.decimals)))
+                        }
+                        console.log("Ready to create tx")
+                        return this.mvs.createSendMoreTx(
+                            this.passphrase,
+                            this.total_to_send,
+                            this.recipients,
+                            null,
+                            null
+                        )
+                    default:
+                        this.alert.showError('MESSAGE.UNKNOWN_TX_TYPE', '')
+                        return 0
+                }
+            })
+            .catch((error) => {
+                console.error(error.message)
+                switch(error.message){
+                    case "ERR_DECRYPT_WALLET":
+                        this.alert.showError('MESSAGE.PASSWORD_WRONG', '')
+                        break;
+                    case "ERR_INSUFFICIENT_BALANCE":
+                        this.alert.showError('MESSAGE.INSUFFICIENT_BALANCE', '')
+                        break;
+                    default:
+                        this.alert.showError('MESSAGE.CREATE_TRANSACTION', error.message)
+                }
+            })
+    }
+
+    createMore() {
+        return this.alert.showLoading()
+            .then(() => this.mvs.getAddresses())
             .then((addresses) => this.mvs.createSendTx(
                 this.passphrase,
                 this.selectedAsset,
@@ -218,6 +290,24 @@ export class AssetTransferPage {
         }
     }
 
+    quantityETPChanged = () => {
+        let total = 0
+        if(this.recipients) {
+            this.recipients.forEach((recipient) => total = recipient.target['ETP'] ? total + parseFloat(recipient.target['ETP']) : total)
+        }
+        this.total_to_send[this.selectedAsset] = total
+
+    }
+
+    quantityMSTChanged = () => {
+        let total = 0
+        if(this.recipients) {
+            this.recipients.forEach((recipient) => total = recipient.target['MST'][this.selectedAsset] ? total + parseFloat(recipient.target['MST'][this.selectedAsset]) : total)
+        }
+        this.total_to_send[this.selectedAsset] = total
+
+    }
+
     validPassword = (passphrase) => (passphrase.length > 0)
 
     scan() {
@@ -244,6 +334,24 @@ export class AssetTransferPage {
                     }
                 })
         })
+    }
+
+    addRecipient() {
+        if(this.selectedAsset == 'ETP') {
+            this.recipients.push(new RecipientSendMore('', {"ETP": undefined}))
+        } else {
+            this.recipients.push(new RecipientSendMore('', {"MST": { [this.selectedAsset]: undefined}}))
+        }
+    }
+
+    removeRecipient(index) {
+        this.recipients.splice(index, 1)
+        if(this.selectedAsset == 'ETP'){
+            this.quantityETPChanged()
+        } else {
+            this.quantityMSTChanged()
+        }
+
     }
 
 }
