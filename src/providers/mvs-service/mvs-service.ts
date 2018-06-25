@@ -60,6 +60,7 @@ export class MvsServiceProvider {
     }
 
     createSendMoreTx(passphrase: string, target: any, recipients: Array<any>, from_address: string, change_address: string) {
+        console.log(passphrase, target, recipients, from_address, change_address)
         return this.wallet.getWallet(passphrase)
             .then(wallet => this.getUtxoFrom(from_address)
                 .then((utxo) => this.getHeight().then(height => Metaverse.output.findUtxo(utxo, target, height)))
