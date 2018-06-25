@@ -46,6 +46,8 @@ export class AssetTransferPage {
     transfer_type: string = "one"
     recipients: Array<RecipientSendMore> = []
     total_to_send: any = {}
+    sendMoreValidQuantity: boolean = false
+    sendMoreValidAddress: boolean = false
 
     constructor(
         public navCtrl: NavController,
@@ -165,22 +167,22 @@ export class AssetTransferPage {
                             (this.changeAddress != 'auto') ? this.changeAddress : undefined
                         )
                     case "more":
-                        let recipients = this.recipients
-                        let target = this.total_to_send
+                        let target = {}
+                        console.log(this.recipients)
+                        let recipients = JSON.parse(JSON.stringify(this.recipients))
                         console.log(recipients)
-                        console.log(target)
                         if(this.selectedAsset == 'ETP') {
-                            target['ETP'] = Math.floor(parseFloat(target['ETP']) * Math.pow(10, this.decimals))
+                            target['ETP'] = Math.floor(parseFloat(this.total_to_send['ETP']) * Math.pow(10, this.decimals))
                             recipients.forEach((recipient) => recipient.target['ETP'] = Math.floor(parseFloat(recipient.target['ETP']) * Math.pow(10, this.decimals)))
                         } else {
-                            target[this.selectedAsset] = Math.floor(parseFloat(target[this.selectedAsset]) * Math.pow(10, this.decimals))
+                            target[this.selectedAsset] = Math.floor(parseFloat(this.total_to_send[this.selectedAsset]) * Math.pow(10, this.decimals))
                             recipients.forEach((recipient) => recipient.target['MST'][this.selectedAsset] = Math.floor(parseFloat(recipient.target['MST'][this.selectedAsset]) * Math.pow(10, this.decimals)))
                         }
-                        console.log("Ready to create tx")
+                        console.log(recipients)
                         return this.mvs.createSendMoreTx(
                             this.passphrase,
-                            this.total_to_send,
-                            this.recipients,
+                            target,
+                            recipients,
                             null,
                             null
                         )
@@ -271,6 +273,7 @@ export class AssetTransferPage {
             this.recipient_address = this.recipient_address.trim()
         }
     }
+
     recipientAvatarChanged = () => {
         if (this.recipient_avatar) {
             this.recipient_avatar = this.recipient_avatar.trim()
@@ -296,7 +299,7 @@ export class AssetTransferPage {
             this.recipients.forEach((recipient) => total = recipient.target['ETP'] ? total + parseFloat(recipient.target['ETP']) : total)
         }
         this.total_to_send[this.selectedAsset] = total
-
+        this.checkEtpSendMoreQuantity()
     }
 
     quantityMSTChanged = () => {
@@ -305,7 +308,34 @@ export class AssetTransferPage {
             this.recipients.forEach((recipient) => total = recipient.target['MST'][this.selectedAsset] ? total + parseFloat(recipient.target['MST'][this.selectedAsset]) : total)
         }
         this.total_to_send[this.selectedAsset] = total
+        this.checkMstSendMoreQuantity()
+    }
 
+    checkEtpSendMoreQuantity = () => {
+        let valid = true
+        this.recipients.forEach((recipient) => {
+            if(!recipient.target || !recipient.target['ETP'] || recipient.target['ETP'] <= 0 || this.countDecimals(recipient.target['ETP']) > this.decimals)
+                valid = false
+        })
+        this.sendMoreValidQuantity = valid
+    }
+
+    checkMstSendMoreQuantity = () => {
+        let valid = true
+        this.recipients.forEach((recipient) => {
+            if(!recipient.target || !recipient.target['MST'] || !recipient.target['MST'][this.selectedAsset] || recipient.target['MST'][this.selectedAsset] <= 0 || this.countDecimals(recipient.target['MST'][this.selectedAsset]) > this.decimals)
+                valid = false
+        })
+        this.sendMoreValidQuantity = valid
+    }
+
+    checkSendMoreAddress = () => {
+        let valid = true
+        this.recipients.forEach((recipient) => {
+            if(!recipient.address || !this.mvs.validAddress(recipient.address))
+                valid = false
+        })
+        this.sendMoreValidAddress = valid
     }
 
     validPassword = (passphrase) => (passphrase.length > 0)
@@ -337,6 +367,8 @@ export class AssetTransferPage {
     }
 
     addRecipient() {
+        this.sendMoreValidQuantity = false
+        this.sendMoreValidAddress = false
         if(this.selectedAsset == 'ETP') {
             this.recipients.push(new RecipientSendMore('', {"ETP": undefined}))
         } else {
@@ -351,7 +383,14 @@ export class AssetTransferPage {
         } else {
             this.quantityMSTChanged()
         }
+        this.checkSendMoreAddress()
+    }
 
+    sendMoreRecipientChanged(recipient_address) {
+        if (recipient_address) {
+            recipient_address = recipient_address.trim()
+        }
+        this.checkSendMoreAddress()
     }
 
 }

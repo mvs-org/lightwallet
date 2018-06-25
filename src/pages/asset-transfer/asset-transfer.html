@@ -144,7 +144,7 @@
                     <ion-col col-md-6 col-sm-12 col-12>
                         <ion-item [ngClass]="{'error-border':!validrecipient(recipient.address)}">
                             <ion-label color="primary" floating>{{"RECIPIENT_ADDRESS"|translate}} {{i+1}}</ion-label>
-                            <ion-input [(ngModel)]="recipient.address" (ngModelChange)="recipientChanged($event)" [ngModelOptions]="{standalone:true}" required></ion-input>
+                            <ion-input [(ngModel)]="recipient.address" (ngModelChange)="sendMoreRecipientChanged(recipient.address)" [ngModelOptions]="{standalone:true}" required></ion-input>
                         </ion-item>
                     </ion-col>
                     <ion-col col-md-6 col-sm-12 col-12>
@@ -219,7 +219,7 @@
         </ion-list>
         <ion-row class="padding-bottom">
             <ion-col>
-                <button type="submit" ion-button full icon-left [disabled]="!sendForm.form.valid||!validPassword(passphrase)" (click)="send()" color="secondary">
+                <button type="submit" ion-button full icon-left [disabled]="!sendForm.form.valid||!sendMoreValidQuantity||!sendMoreValidAddress||!validPassword(passphrase)" (click)="send()" color="secondary">
                     <ion-icon disabled="checked" name="send"></ion-icon>
                     {{"SEND" | translate}}
                 </button>

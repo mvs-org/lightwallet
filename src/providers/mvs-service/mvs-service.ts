@@ -67,7 +67,7 @@ export class MvsServiceProvider {
                     //Set change address to first utxo's address
                     if (change_address == undefined)
                         change_address = result.utxo[0].address;
-                    return Metaverse.transaction_builder.sendMore(result.utxo, recipients, change_address, result.change, undefined, undefined, undefined);
+                    return Metaverse.transaction_builder.sendMore(result.utxo, recipients, change_address, result.change);
                 })
                 .then((tx) => wallet.sign(tx)))
             .catch((error) => {
