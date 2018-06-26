@@ -6,6 +6,13 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { AlertProvider } from '../../providers/alert/alert';
 import { Keyboard } from '@ionic-native/keyboard';
 
+class RecipientSendMore {
+    constructor(
+        public address: string,
+        public target: any
+    ) { }
+}
+
 @IonicPage({
     name: 'transfer-page',
     segment: 'send/:asset'
@@ -36,6 +43,11 @@ export class AssetTransferPage {
     etpBalance: number
     @ViewChild('recipientAddressInput') recipientAddressInput;
     @ViewChild('quantityInput') quantityInput;
+    transfer_type: string = "one"
+    recipients: Array<RecipientSendMore> = []
+    total_to_send: any = {}
+    sendMoreValidQuantity: boolean = false
+    sendMoreValidAddress: boolean = false
 
     constructor(
         public navCtrl: NavController,
@@ -49,6 +61,13 @@ export class AssetTransferPage {
     ) {
 
         this.selectedAsset = navParams.get('asset')
+        if(this.selectedAsset == 'ETP') {
+            this.recipients.push(new RecipientSendMore('', {"ETP": undefined}))
+        } else {
+            this.recipients.push(new RecipientSendMore('', {"MST": { [this.selectedAsset]: undefined}}))
+        }
+        this.total_to_send[this.selectedAsset] = 0
+
 
         //Load addresses
         mvs.getAddresses()
@@ -135,15 +154,39 @@ export class AssetTransferPage {
     create() {
         return this.alert.showLoading()
             .then(() => this.mvs.getAddresses())
-            .then((addresses) => this.mvs.createSendTx(
-                this.passphrase,
-                this.selectedAsset,
-                this.recipient_address,
-                (this.recipient_avatar && this.recipient_avatar_valid) ? this.recipient_avatar : undefined,
-                Math.floor(parseFloat(this.quantity) * Math.pow(10, this.decimals)),
-                (this.sendFrom != 'auto') ? this.sendFrom : null,
-                (this.changeAddress != 'auto') ? this.changeAddress : undefined
-            ))
+            .then((addresses) => {
+                switch(this.transfer_type){
+                    case "one":
+                        return this.mvs.createSendTx(
+                            this.passphrase,
+                            this.selectedAsset,
+                            this.recipient_address,
+                            (this.recipient_avatar && this.recipient_avatar_valid) ? this.recipient_avatar : undefined,
+                            Math.floor(parseFloat(this.quantity) * Math.pow(10, this.decimals)),
+                            (this.sendFrom != 'auto') ? this.sendFrom : null,
+                            (this.changeAddress != 'auto') ? this.changeAddress : undefined
+                        )
+                    case "more":
+                        let target = {}
+                        let recipients = JSON.parse(JSON.stringify(this.recipients))
+                        target[this.selectedAsset] = Math.floor(parseFloat(this.total_to_send[this.selectedAsset]) * Math.pow(10, this.decimals))
+                        if(this.selectedAsset == 'ETP') {
+                            recipients.forEach((recipient) => recipient.target['ETP'] = Math.floor(parseFloat(recipient.target['ETP']) * Math.pow(10, this.decimals)))
+                        } else {
+                            recipients.forEach((recipient) => recipient.target['MST'][this.selectedAsset] = Math.floor(parseFloat(recipient.target['MST'][this.selectedAsset]) * Math.pow(10, this.decimals)))
+                        }
+                        return this.mvs.createSendMoreTx(
+                            this.passphrase,
+                            target,
+                            recipients,
+                            (this.sendFrom != 'auto') ? this.sendFrom : null,
+                            (this.changeAddress != 'auto') ? this.changeAddress : undefined
+                        )
+                    default:
+                        this.alert.showError('MESSAGE.UNKNOWN_TX_TYPE', '')
+                        return 0
+                }
+            })
             .catch((error) => {
                 console.error(error.message)
                 switch(error.message){
@@ -199,6 +242,7 @@ export class AssetTransferPage {
             this.recipient_address = this.recipient_address.trim()
         }
     }
+
     recipientAvatarChanged = () => {
         if (this.recipient_avatar) {
             this.recipient_avatar = this.recipient_avatar.trim()
@@ -216,6 +260,51 @@ export class AssetTransferPage {
                     this.recipientChanged()
                 })
         }
+    }
+
+    quantityETPChanged = () => {
+        let total = 0
+        if(this.recipients) {
+            this.recipients.forEach((recipient) => total = recipient.target['ETP'] ? total + parseFloat(recipient.target['ETP']) : total)
+        }
+        this.total_to_send[this.selectedAsset] = total
+        this.checkEtpSendMoreQuantity()
+    }
+
+    quantityMSTChanged = () => {
+        let total = 0
+        if(this.recipients) {
+            this.recipients.forEach((recipient) => total = recipient.target['MST'][this.selectedAsset] ? total + parseFloat(recipient.target['MST'][this.selectedAsset]) : total)
+        }
+        this.total_to_send[this.selectedAsset] = total
+        this.checkMstSendMoreQuantity()
+    }
+
+    checkEtpSendMoreQuantity = () => {
+        let valid = true
+        this.recipients.forEach((recipient) => {
+            if(!recipient.target || !recipient.target['ETP'] || recipient.target['ETP'] <= 0 || this.countDecimals(recipient.target['ETP']) > this.decimals)
+                valid = false
+        })
+        this.sendMoreValidQuantity = valid
+    }
+
+    checkMstSendMoreQuantity = () => {
+        let valid = true
+        this.recipients.forEach((recipient) => {
+            if(!recipient.target || !recipient.target['MST'] || !recipient.target['MST'][this.selectedAsset] || recipient.target['MST'][this.selectedAsset] <= 0 || this.countDecimals(recipient.target['MST'][this.selectedAsset]) > this.decimals)
+                valid = false
+        })
+        this.sendMoreValidQuantity = valid
+    }
+
+    checkSendMoreAddress = () => {
+        let valid = true
+        this.recipients.forEach((recipient) => {
+            if(!recipient.address || !this.mvs.validAddress(recipient.address))
+                valid = false
+        })
+        this.sendMoreValidAddress = valid
     }
 
     validPassword = (passphrase) => (passphrase.length > 0)
@@ -244,6 +333,66 @@ export class AssetTransferPage {
                     }
                 })
         })
+    }
+
+    addRecipient() {
+        this.sendMoreValidQuantity = false
+        this.sendMoreValidAddress = false
+        if(this.selectedAsset == 'ETP') {
+            this.recipients.push(new RecipientSendMore('', {"ETP": undefined}))
+        } else {
+            this.recipients.push(new RecipientSendMore('', {"MST": { [this.selectedAsset]: undefined}}))
+        }
+    }
+
+    removeRecipient(index) {
+        this.recipients.splice(index, 1)
+        if(this.selectedAsset == 'ETP'){
+            this.quantityETPChanged()
+        } else {
+            this.quantityMSTChanged()
+        }
+        this.checkSendMoreAddress()
+    }
+
+    sendMoreRecipientChanged(recipient_address) {
+        if (recipient_address) {
+            recipient_address = recipient_address.trim()
+        }
+        this.checkSendMoreAddress()
+    }
+
+    open(e) {
+        let file = e.target.files
+        let reader = new FileReader();
+        reader.onload = (e: any) => {
+            let content = e.target.result;
+            try {
+                let data = content.split('\n');
+                this.recipients = []
+                data.forEach((line) => {
+                    if(line) {
+                        let recipient = line.split(',');
+                        if(this.selectedAsset == 'ETP') {
+                            this.recipients.push(new RecipientSendMore(recipient[0].trim(), {"ETP": recipient[1].trim()}))
+                        } else {
+                            this.recipients.push(new RecipientSendMore(recipient[0].trim(), {"MST": { [this.selectedAsset]: recipient[1].trim()}}))
+                        }
+                    }
+                })
+                if(this.selectedAsset == 'ETP'){
+                    this.quantityETPChanged()
+                } else {
+                    this.quantityMSTChanged()
+                }
+                this.checkSendMoreAddress()
+            } catch (e) {
+                console.error(e);
+                this.alert.showError('WRONG_FILE', 'SEND_MORE.WRONG_FILE')
+            }
+        };
+        if(file[0])
+            reader.readAsText(file[0]);
     }
 
 }

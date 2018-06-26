@@ -32,4 +32,88 @@ page-asset-transfer {
         margin-top: 20px;
     }
 
+    .right-buttons {
+        float: right;
+        height: 34px;
+        margin-top: 20px;
+    }
+
+    .list-md .item-input:last-child {
+        border-bottom: 0;
+        -webkit-box-shadow: inset 0 0 0 0 !important;
+        box-shadow: inset 0 0 0 0 !important;
+    }
+
+    .inline {
+        display: inline;
+    }
+
+    .recipient-title {
+        margin-bottom: 0;
+        padding-left: 16px;
+        padding-top: 10px;
+    }
+
+    .recipient-title .label-md {
+        margin: 0;
+    }
+
+    .card-block {
+        padding: 10px;
+    }
+
+    .remove-button {
+        float: right;
+        margin: 0;
+
+    }
+
+    .card-block .col {
+       padding: 0;
+    }
+
+    .inputfile {
+        width: 0.1px;
+        height: 0.1px;
+        opacity: 0;
+        overflow: hidden;
+        position: absolute;
+        z-index: -1;
+
+    }
+
+    .inputfile + label {
+        font-size: 14px;
+        font-weight: 500;
+        color: white;
+        background-color: #32db64;
+        margin: auto;
+        margin-right: 0px;
+        padding: 5px;
+        padding-left: 15px;
+        padding-right: 15px;
+        padding-top: 6px;
+        padding-bottom: 6px;
+        border-radius: 2.5px;
+        display: block;
+        color: #fff;
+        font-size: 1em;
+        transition: all .4s;
+        cursor: pointer;
+    }
+
+    .inputfile:focus + label,
+    .inputfile + label:hover {
+        background-color: #4af47d;
+    }
+
+    .inputfile + label {
+        cursor: pointer; /* "hand" cursor */
+
+    }
+    .inputfile:focus + label {
+        //outline: 1px dotted #000;
+        //outline: -webkit-focus-ring-color auto 5px;
+    }
+
 }

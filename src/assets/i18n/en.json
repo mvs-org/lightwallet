@@ -329,5 +329,15 @@
     "MIT_REGISTER.RECIPIENT_ADDRESS": "Recipient Avatar address",
     "MIT_REGISTER.SELECT_AVATAR": "Please select a Recipient Avatar first",
     "CREATE_AVATAR.AVATAR_ALREADY_EXIST": "This Avatar name has already been registered",
-    "MIT_REGISTER.MIT_ALREADY_EXIST": "This MIT symbol has already been registered"
+    "MIT_REGISTER.MIT_ALREADY_EXIST": "This MIT symbol has already been registered",
+
+    "SEND_TO_ONE": "Send to one",
+    "SEND_MORE": "Send to many",
+    "RECIPIENT": "Recipient",
+    "ADD_RECIPIENT": "Add recipient",
+    "REMOVE_RECIPIENT": "Remove reicipient",
+    "TOTAL_TO_SEND": "Total to send",
+
+    "SEND_MORE.TOTAL_MORE_AVAILABLE": "The total is higher than your available balance",
+    "SEND_MORE.WRONG_FILE": "Impossible to read this file. Please check the format"
 }
