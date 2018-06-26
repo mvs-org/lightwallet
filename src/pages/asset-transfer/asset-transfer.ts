@@ -179,7 +179,7 @@ export class AssetTransferPage {
                             this.passphrase,
                             target,
                             recipients,
-                            null,
+                            (this.sendFrom != 'auto') ? this.sendFrom : null,
                             null
                         )
                     default:
@@ -187,33 +187,6 @@ export class AssetTransferPage {
                         return 0
                 }
             })
-            .catch((error) => {
-                console.error(error.message)
-                switch(error.message){
-                    case "ERR_DECRYPT_WALLET":
-                        this.alert.showError('MESSAGE.PASSWORD_WRONG', '')
-                        break;
-                    case "ERR_INSUFFICIENT_BALANCE":
-                        this.alert.showError('MESSAGE.INSUFFICIENT_BALANCE', '')
-                        break;
-                    default:
-                        this.alert.showError('MESSAGE.CREATE_TRANSACTION', error.message)
-                }
-            })
-    }
-
-    createMore() {
-        return this.alert.showLoading()
-            .then(() => this.mvs.getAddresses())
-            .then((addresses) => this.mvs.createSendTx(
-                this.passphrase,
-                this.selectedAsset,
-                this.recipient_address,
-                (this.recipient_avatar && this.recipient_avatar_valid) ? this.recipient_avatar : undefined,
-                Math.floor(parseFloat(this.quantity) * Math.pow(10, this.decimals)),
-                (this.sendFrom != 'auto') ? this.sendFrom : null,
-                (this.changeAddress != 'auto') ? this.changeAddress : undefined
-            ))
             .catch((error) => {
                 console.error(error.message)
                 switch(error.message){
