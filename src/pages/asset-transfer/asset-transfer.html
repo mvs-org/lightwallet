@@ -174,8 +174,7 @@
                     </p>
                 </ion-label>
             </ion-item>
-
-
+            <ion-item *ngIf="total_to_send[selectedAsset] > (showBalance | format : decimals)" no-lines class="wrong-input">{{"SEND_MORE.TOTAL_MORE_AVAILABLE" | translate}}</ion-item>
 
             <ion-item [ngClass]="{'error-border': !validPassword(passphrase)}">
                 <ion-label color="primary" floating>{{"PASSWORD" | translate}}</ion-label>
@@ -219,7 +218,7 @@
         </ion-list>
         <ion-row class="padding-bottom">
             <ion-col>
-                <button type="submit" ion-button full icon-left [disabled]="!sendForm.form.valid||!sendMoreValidQuantity||!sendMoreValidAddress||!validPassword(passphrase)" (click)="send()" color="secondary">
+                <button type="submit" ion-button full icon-left [disabled]="!sendForm.form.valid||!sendMoreValidQuantity||!sendMoreValidAddress||!validPassword(passphrase)||total_to_send[selectedAsset] > (showBalance | format : decimals)" (click)="send()" color="secondary">
                     <ion-icon disabled="checked" name="send"></ion-icon>
                     {{"SEND" | translate}}
                 </button>

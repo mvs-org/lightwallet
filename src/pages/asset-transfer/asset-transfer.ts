@@ -168,17 +168,13 @@ export class AssetTransferPage {
                         )
                     case "more":
                         let target = {}
-                        console.log(this.recipients)
                         let recipients = JSON.parse(JSON.stringify(this.recipients))
-                        console.log(recipients)
+                        target[this.selectedAsset] = Math.floor(parseFloat(this.total_to_send[this.selectedAsset]) * Math.pow(10, this.decimals))
                         if(this.selectedAsset == 'ETP') {
-                            target['ETP'] = Math.floor(parseFloat(this.total_to_send['ETP']) * Math.pow(10, this.decimals))
                             recipients.forEach((recipient) => recipient.target['ETP'] = Math.floor(parseFloat(recipient.target['ETP']) * Math.pow(10, this.decimals)))
                         } else {
-                            target[this.selectedAsset] = Math.floor(parseFloat(this.total_to_send[this.selectedAsset]) * Math.pow(10, this.decimals))
                             recipients.forEach((recipient) => recipient.target['MST'][this.selectedAsset] = Math.floor(parseFloat(recipient.target['MST'][this.selectedAsset]) * Math.pow(10, this.decimals)))
                         }
-                        console.log(recipients)
                         return this.mvs.createSendMoreTx(
                             this.passphrase,
                             target,
