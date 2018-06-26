@@ -42,7 +42,6 @@ export class LoginPage {
         .then(network => {
             this.globals.network = (network) ? network : this.globals.DEFAULT_NETWORK
             this.network = this.globals.network;
-            console.log(this.network)
             return network;
         })
 

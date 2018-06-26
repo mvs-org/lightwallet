@@ -338,5 +338,6 @@
     "REMOVE_RECIPIENT": "Remove reicipient",
     "TOTAL_TO_SEND": "Total to send",
 
-    "SEND_MORE.TOTAL_MORE_AVAILABLE": "The total is higher than your available balance"
+    "SEND_MORE.TOTAL_MORE_AVAILABLE": "The total is higher than your available balance",
+    "SEND_MORE.WRONG_FILE": "Impossible to read this file. Please check the format"
 }

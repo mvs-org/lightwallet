@@ -110,26 +110,10 @@
 
     <form *ngIf="transfer_type == 'more'" #sendForm="ngForm" style="padding-bottom: 0;">
         <ion-list style="padding-bottom: 0;">
-
-            <!--ion-row no-lines *ngFor="let recipient of recipients; let i = index" [attr.data-index]="i">
-                <ion-item [ngClass]="{'error-border':!validrecipient(recipient_address)}">
-                    <ion-label color="primary" floating>{{"RECIPIENT_ADDRESS"|translate}} {{i+1}}</ion-label>
-                    <ion-input name="recipient_address" [(ngModel)]="recipient.address" (ngModelChange)="recipientChanged($event)" required></ion-input>
-                </ion-item>
-                <ion-item [ngClass]="{'error-border':!validQuantity(quantity)}">
-                    <ion-label color="primary" floating>{{"AMOUNT" | translate}} {{i+1}}</ion-label>
-                    <ion-input name="quantity" type="number" min="0" [(ngModel)]="recipient.quantity" required></ion-input>
-                </ion-item>
+            <ion-row *ngIf="!fileLoaded">
+                <input type="file" name="file" id="file" class="inputfile" accept=".csv" (change)="open($event)" />
+                <label for="file"> <ion-icon name="document"></ion-icon> CSV</label>
             </ion-row>
-            <button type="button" class="right-buttons" ion-button icon-left color="primary" (click)="removeRecipient()">
-                <ion-icon name="remove"></ion-icon>
-                {{"REMOVE_RECIPIENT" | translate}}
-            </button>
-            <button type="button" class="right-buttons" ion-button icon-left color="primary" (click)="addRecipient()">
-                <ion-icon name="add"></ion-icon>
-                {{"ADD_RECIPIENT" | translate}}
-            </button-->
-
 
             <ion-card class="card-block" *ngFor="let recipient of recipients; let i = index" [attr.data-index]="i">
                 <ion-row>

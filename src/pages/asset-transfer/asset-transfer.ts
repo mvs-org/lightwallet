@@ -362,4 +362,37 @@ export class AssetTransferPage {
         this.checkSendMoreAddress()
     }
 
+    open(e) {
+        let file = e.target.files
+        let reader = new FileReader();
+        reader.onload = (e: any) => {
+            let content = e.target.result;
+            try {
+                let data = content.split('\n');
+                this.recipients = []
+                data.forEach((line) => {
+                    if(line) {
+                        let recipient = line.split(',');
+                        if(this.selectedAsset == 'ETP') {
+                            this.recipients.push(new RecipientSendMore(recipient[0], {"ETP": recipient[1]}))
+                        } else {
+                            this.recipients.push(new RecipientSendMore(recipient[0], {"MST": { [this.selectedAsset]: recipient[1]}}))
+                        }
+                    }
+                })
+                if(this.selectedAsset == 'ETP'){
+                    this.quantityETPChanged()
+                } else {
+                    this.quantityMSTChanged()
+                }
+                this.checkSendMoreAddress()
+            } catch (e) {
+                console.error(e);
+                this.alert.showError('WRONG_FILE', 'SEND_MORE.WRONG_FILE')
+            }
+        };
+        if(file[0])
+            reader.readAsText(file[0]);
+    }
+
 }
