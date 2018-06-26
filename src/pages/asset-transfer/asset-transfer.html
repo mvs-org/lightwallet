@@ -111,8 +111,6 @@
     <form *ngIf="transfer_type == 'more'" #sendForm="ngForm" style="padding-bottom: 0;">
         <ion-list style="padding-bottom: 0;">
             <ion-row *ngIf="!platform.is('mobile')">
-                <span class="fa fa-question-circle help-tooltip" bs-tooltip data-placement="top" title="{{ 'HELP.NEW_ACCOUNT_NAME' | translate }}"></span>
-
                 <input type="file" name="file" id="file" class="inputfile" accept=".csv" (change)="open($event)" />
                 <label for="file"> <ion-icon name="document"></ion-icon> CSV</label>
             </ion-row>
