@@ -374,9 +374,9 @@ export class AssetTransferPage {
                     if(line) {
                         let recipient = line.split(',');
                         if(this.selectedAsset == 'ETP') {
-                            this.recipients.push(new RecipientSendMore(recipient[0], {"ETP": recipient[1]}))
+                            this.recipients.push(new RecipientSendMore(recipient[0].trim(), {"ETP": recipient[1].trim()}))
                         } else {
-                            this.recipients.push(new RecipientSendMore(recipient[0], {"MST": { [this.selectedAsset]: recipient[1]}}))
+                            this.recipients.push(new RecipientSendMore(recipient[0].trim(), {"MST": { [this.selectedAsset]: recipient[1].trim()}}))
                         }
                     }
                 })
