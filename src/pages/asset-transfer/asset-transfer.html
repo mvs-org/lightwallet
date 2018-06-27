@@ -26,7 +26,8 @@
             <p>{{"AVAILABLE_BALANCE" | translate}}: <br *ngIf="platform.is('mobile')">{{showBalance | format : decimals}} {{selectedAsset}}</p>
         </ion-col>
         <ion-col>
-            <p class="right">{{"FEE"|translate}}:<br *ngIf="platform.is('mobile')"> {{10000 | format : 8}} ETP</p>
+            <p *ngIf="transfer_type == 'one'" class="right">{{"FEE"|translate}}:<br *ngIf="platform.is('mobile')"> {{10000 | format : 8}} ETP</p>
+            <p *ngIf="transfer_type == 'more'" class="right">{{"FEE"|translate}}:<br *ngIf="platform.is('mobile')"> {{10000*recipients.length | format : 8}} ETP</p>
         </ion-col>
     </ion-row>
 
@@ -128,7 +129,7 @@
                     <ion-col col-md-6 col-sm-12 col-12>
                         <ion-item [ngClass]="{'error-border':!validrecipient(recipient.address), 'valid-border': validrecipient(recipient.address)}">
                             <ion-label color="primary" floating>{{"RECIPIENT_ADDRESS"|translate}} {{i+1}}</ion-label>
-                            <ion-input [(ngModel)]="recipient.address" (ngModelChange)="sendMoreRecipientChanged(recipient.address)" [ngModelOptions]="{standalone:true}" required></ion-input>
+                            <ion-input [(ngModel)]="recipient.address" (ngModelChange)="sendMoreRecipientChanged($event)" [ngModelOptions]="{standalone:true}" required></ion-input>
                         </ion-item>
                     </ion-col>
                     <ion-col col-md-6 col-sm-12 col-12>
