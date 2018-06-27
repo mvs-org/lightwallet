@@ -105,7 +105,7 @@
     "CREATE_FROM_BACKUP_WORDS": "Create file from backup words",
     "WRONG_FILE": "Wrong File",
     "CONFIRM_PASSWORD": "Confirm Password",
-    "LIGHT_WALLET_INFO_TEXT": "Please be aware that myetpwallet.com does not have access to your wallet keys. If you lose your backup words or key file, and we will not be able to grant access to your funds.",
+    "LIGHT_WALLET_INFO_TEXT": "Please be aware that myetpwallet.com does not have access to your wallet keys. If you lose your backup words or key file, we will not be able to grant access to your funds.",
     "TRANSACTION.INNER_WALLET": "Intra-wallet transaction",
     "HEIGHT": "Block Height",
     "SELECT_CHANGE_ADDRESS": "Specify change address (optional)",
