@@ -127,7 +127,7 @@ export class AssetTransferPage {
     validQuantity = (quantity) => quantity != undefined
         && this.countDecimals(quantity) <= this.decimals
         && ((this.selectedAsset == 'ETP' && this.showBalance >= (Math.round(parseFloat(quantity) * Math.pow(10, this.decimals)) + 10000)) || (this.selectedAsset != 'ETP' && this.showBalance >= parseFloat(quantity) * Math.pow(10, this.decimals)))
-        && ((this.selectedAsset == 'ETP' && quantity >= 10000 / 100000000) || (this.selectedAsset != 'ETP' && quantity > 0))
+        && (quantity > 0)
 
     countDecimals(value) {
         if (Math.floor(value) !== value && value.toString().split(".").length > 1)
@@ -162,18 +162,18 @@ export class AssetTransferPage {
                             this.selectedAsset,
                             this.recipient_address,
                             (this.recipient_avatar && this.recipient_avatar_valid) ? this.recipient_avatar : undefined,
-                            Math.floor(parseFloat(this.quantity) * Math.pow(10, this.decimals)),
+                            Math.round(parseFloat(this.quantity) * Math.pow(10, this.decimals)),
                             (this.sendFrom != 'auto') ? this.sendFrom : null,
                             (this.changeAddress != 'auto') ? this.changeAddress : undefined
                         )
                     case "more":
                         let target = {}
                         let recipients = JSON.parse(JSON.stringify(this.recipients))
-                        target[this.selectedAsset] = Math.floor(parseFloat(this.total_to_send[this.selectedAsset]) * Math.pow(10, this.decimals))
+                        target[this.selectedAsset] = Math.round(parseFloat(this.total_to_send[this.selectedAsset]) * Math.pow(10, this.decimals))
                         if(this.selectedAsset == 'ETP') {
-                            recipients.forEach((recipient) => recipient.target['ETP'] = Math.floor(parseFloat(recipient.target['ETP']) * Math.pow(10, this.decimals)))
+                            recipients.forEach((recipient) => recipient.target['ETP'] = Math.round(parseFloat(recipient.target['ETP']) * Math.pow(10, this.decimals)))
                         } else {
-                            recipients.forEach((recipient) => recipient.target['MST'][this.selectedAsset] = Math.floor(parseFloat(recipient.target['MST'][this.selectedAsset]) * Math.pow(10, this.decimals)))
+                            recipients.forEach((recipient) => recipient.target['MST'][this.selectedAsset] = Math.round(parseFloat(recipient.target['MST'][this.selectedAsset]) * Math.pow(10, this.decimals)))
                         }
                         return this.mvs.createSendMoreTx(
                             this.passphrase,
@@ -267,7 +267,7 @@ export class AssetTransferPage {
         if(this.recipients) {
             this.recipients.forEach((recipient) => total = recipient.target['ETP'] ? total + parseFloat(recipient.target['ETP']) : total)
         }
-        this.total_to_send[this.selectedAsset] = total
+        this.total_to_send[this.selectedAsset] = +total.toFixed(this.decimals);
         this.checkEtpSendMoreQuantity()
     }
 
@@ -276,7 +276,7 @@ export class AssetTransferPage {
         if(this.recipients) {
             this.recipients.forEach((recipient) => total = recipient.target['MST'][this.selectedAsset] ? total + parseFloat(recipient.target['MST'][this.selectedAsset]) : total)
         }
-        this.total_to_send[this.selectedAsset] = total
+        this.total_to_send[this.selectedAsset] = +total.toFixed(this.decimals);
         this.checkMstSendMoreQuantity()
     }
 
@@ -355,10 +355,10 @@ export class AssetTransferPage {
         this.checkSendMoreAddress()
     }
 
-    sendMoreRecipientChanged(recipient_address) {
-        if (recipient_address) {
-            recipient_address = recipient_address.trim()
-        }
+    sendMoreRecipientChanged() {
+        //if (recipient_address) {
+        //    recipient_address = recipient_address.trim()
+        //}
         this.checkSendMoreAddress()
     }
 
