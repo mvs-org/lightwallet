@@ -121,22 +121,22 @@
                         <h2 class="recipient-title">{{"RECIPIENT"|translate}} {{i+1}}</h2>
                     </ion-col>
                     <ion-col col-6>
-                        <button type="button" class="remove-button" ion-button clear icon-left color="primary" (click)="removeRecipient(i)">
+                        <button type="button" tabIndex="-1" class="remove-button" ion-button clear icon-left color="primary" (click)="removeRecipient(i)">
                             X
                         </button>
                     </ion-col>
                     <ion-col col-md-6 col-sm-12 col-12>
-                        <ion-item [ngClass]="{'error-border':!validrecipient(recipient.address)}">
+                        <ion-item [ngClass]="{'error-border':!validrecipient(recipient.address), 'valid-border': validrecipient(recipient.address)}">
                             <ion-label color="primary" floating>{{"RECIPIENT_ADDRESS"|translate}} {{i+1}}</ion-label>
                             <ion-input [(ngModel)]="recipient.address" (ngModelChange)="sendMoreRecipientChanged(recipient.address)" [ngModelOptions]="{standalone:true}" required></ion-input>
                         </ion-item>
                     </ion-col>
                     <ion-col col-md-6 col-sm-12 col-12>
-                        <ion-item *ngIf="selectedAsset == 'ETP'" [ngClass]="{'error-border':!validQuantity(recipient.target['ETP'])}">
+                        <ion-item *ngIf="selectedAsset == 'ETP'" [ngClass]="{'error-border':!validQuantity(recipient.target['ETP']), 'valid-border': validQuantity(recipient.target['ETP'])}">
                             <ion-label color="primary" floating>{{"AMOUNT" | translate}} {{i+1}}</ion-label>
                             <ion-input type="number" min="0" [(ngModel)]="recipient.target['ETP']" [ngModelOptions]="{standalone:true}" (ngModelChange)="quantityETPChanged($event)" required></ion-input>
                         </ion-item>
-                        <ion-item *ngIf="selectedAsset != 'ETP' && recipient.target['MST']" [ngClass]="{'error-border':!validQuantity(recipient.target['MST'][selectedAsset])}">
+                        <ion-item *ngIf="selectedAsset != 'ETP' && recipient.target['MST']" [ngClass]="{'error-border':!validQuantity(recipient.target['MST'][selectedAsset]), 'valid-border': validQuantity(recipient.target['MST'][selectedAsset])}">
                             <ion-label color="primary" floating>{{"AMOUNT" | translate}} {{i+1}}</ion-label>
                             <ion-input type="number" min="0" [(ngModel)]="recipient.target['MST'][selectedAsset]" [ngModelOptions]="{standalone:true}" (ngModelChange)="quantityMSTChanged($event)" required></ion-input>
                         </ion-item>
@@ -150,7 +150,7 @@
                 {{"ADD_RECIPIENT" | translate}}
             </button>
 
-            <ion-item>
+            <ion-item [ngClass]="{'error-border':total_to_send[selectedAsset] > (showBalance | format : decimals)}">
                 <ion-label color="primary">
                     {{"TOTAL_TO_SEND" | translate}}:
                     <p class="inline">
