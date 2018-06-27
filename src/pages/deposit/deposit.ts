@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, Platform } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { AppGlobals } from '../../app/app.global';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { TranslateService } from '@ngx-translate/core';
@@ -34,9 +34,11 @@ export class DepositPage {
     etpBalance: number
     @ViewChild('customInput') customInput;
     @ViewChild('quantityInput') quantityInput;
+    selectedAsset: any
 
     constructor(
         public navCtrl: NavController,
+        public navParams: NavParams,
         private alert: AlertProvider,
         private globals: AppGlobals,
         private mvs: MvsServiceProvider,
@@ -51,6 +53,7 @@ export class DepositPage {
         this.locktime = 0
         this.custom_recipient = ''
         this.passphrase = ''
+        this.selectedAsset = navParams.get('asset')
 
         if (this.globals.network == 'mainnet')
             this.deposit_options = [
