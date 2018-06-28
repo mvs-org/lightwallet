@@ -27,7 +27,7 @@ export function HttpLoaderFactory(http: Http) {
     imports: [
         BrowserModule,
         HttpModule,
-        IonicModule.forRoot(MyETPWallet),
+        IonicModule.forRoot(MyETPWallet, { scrollAssist: false }),
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
