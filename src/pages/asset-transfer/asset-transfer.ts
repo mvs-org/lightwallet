@@ -355,10 +355,10 @@ export class AssetTransferPage {
         this.checkSendMoreAddress()
     }
 
-    sendMoreRecipientChanged() {
-        //if (recipient_address) {
-        //    recipient_address = recipient_address.trim()
-        //}
+    sendMoreRecipientChanged(index) {
+        if (this.recipients[index] && this.recipients[index].address) {
+            this.recipients[index].address = this.recipients[index].address.trim()
+        }
         this.checkSendMoreAddress()
     }
 

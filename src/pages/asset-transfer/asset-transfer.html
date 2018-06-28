@@ -129,7 +129,7 @@
                     <ion-col col-md-6 col-sm-12 col-12>
                         <ion-item [ngClass]="{'error-border':!validrecipient(recipient.address), 'valid-border': validrecipient(recipient.address)}">
                             <ion-label color="primary" floating>{{"RECIPIENT_ADDRESS"|translate}} {{i+1}}</ion-label>
-                            <ion-input [(ngModel)]="recipient.address" (ngModelChange)="sendMoreRecipientChanged($event)" [ngModelOptions]="{standalone:true}" required></ion-input>
+                            <ion-input [(ngModel)]="recipient.address" (ngModelChange)="sendMoreRecipientChanged(i)" [ngModelOptions]="{standalone:true}" required></ion-input>
                         </ion-item>
                     </ion-col>
                     <ion-col col-md-6 col-sm-12 col-12>
