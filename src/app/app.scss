@@ -31,6 +31,11 @@
     box-shadow: red !important;
 }
 
+.item-md.error-border:not(.item-input-has-focus) .item-inner, .item-md.valid-border:not(.item-input-has-focus) .item-inner, .item-md.item-select:not(.item-input-has-focus) .item-inner .ng-valid .item-cover{
+    border: 1px !important;
+    margin-bottom: 1px;
+}
+
 .wrong-input{
     color: red;
 }
