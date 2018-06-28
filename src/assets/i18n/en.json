@@ -339,8 +339,10 @@
     "TOTAL_TO_SEND": "Total to send",
 
     "SEND_MORE.TOTAL_MORE_AVAILABLE": "The total is higher than your available balance",
-    "SEND_MORE.WRONG_FILE": "Impossible to read this file. Please check the format",
+    "SEND_MORE.WRONG_FILE": "Impossible to read this file. Please check the format. In advanced options, you can export to CSV file and follow this template",
 
     "IMPORT_FROM_CSV": "Import from CSV",
-    "DOWNLOAD_CSV": "Download CSV"
+    "DOWNLOAD_CSV": "Download CSV",
+    "MESSAGE.SEND_MORE_IMPORT_CSV_TOO_MANY_RECIPIENT_TITLE": "Too many recipient",
+    "MESSAGE.SEND_MORE_IMPORT_CSV_TOO_MANY_RECIPIENT_BODY": "This file contains too many recipients. The maximum number of recipients is limited to "
 }
