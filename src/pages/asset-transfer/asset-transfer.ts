@@ -48,6 +48,7 @@ export class AssetTransferPage {
     total_to_send: any = {}
     sendMoreValidQuantity: boolean = false
     sendMoreValidAddress: boolean = false
+    sendMore_limit: number = 1000
 
     constructor(
         public navCtrl: NavController,
@@ -362,6 +363,15 @@ export class AssetTransferPage {
         this.checkSendMoreAddress()
     }
 
+    import(e) {
+        this.alert.showLoading()
+            .then(() => {
+                setTimeout(() => {
+                    this.open(e)
+                }, 500);
+            })
+    }
+
     open(e) {
         let file = e.target.files
         let reader = new FileReader();
@@ -370,25 +380,29 @@ export class AssetTransferPage {
             try {
                 let data = content.split('\n');
                 this.recipients = []
-                data.forEach((line) => {
-                    if(line) {
-                        let recipient = line.split(',');
+                for(let i=0;i<this.sendMore_limit;i++){
+                    if(data[i]) {
+                        let recipient = data[i].split(',');
                         if(this.selectedAsset == 'ETP') {
-                            this.recipients.push(new RecipientSendMore(recipient[0].trim(), {"ETP": recipient[1].trim()}))
+                            this.recipients.push(new RecipientSendMore(recipient[0] ? recipient[0].trim() : recipient[0], {"ETP": recipient[1] ? recipient[1].trim() : recipient[1]}))
                         } else {
-                            this.recipients.push(new RecipientSendMore(recipient[0].trim(), {"MST": { [this.selectedAsset]: recipient[1].trim()}}))
+                            this.recipients.push(new RecipientSendMore(recipient[0] ? recipient[0].trim() : recipient[0], {"MST": { [this.selectedAsset]: recipient[1] ? recipient[1].trim() : recipient[1]}}))
                         }
                     }
-                })
+                }
+                if(data.length > this.sendMore_limit)
+                    this.alert.showTooManyRecipients(this.sendMore_limit)
                 if(this.selectedAsset == 'ETP'){
                     this.quantityETPChanged()
                 } else {
                     this.quantityMSTChanged()
                 }
                 this.checkSendMoreAddress()
+                this.alert.stopLoading()
             } catch (e) {
+                this.alert.stopLoading()
                 console.error(e);
-                this.alert.showError('WRONG_FILE', 'SEND_MORE.WRONG_FILE')
+                this.alert.showMessage('WRONG_FILE', '', 'SEND_MORE.WRONG_FILE')
             }
         };
         if(file[0])

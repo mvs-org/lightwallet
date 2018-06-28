@@ -112,7 +112,7 @@
     <form *ngIf="transfer_type == 'more'" #sendForm="ngForm" style="padding-bottom: 0;">
         <ion-list style="padding-bottom: 0;">
             <ion-row *ngIf="!platform.is('mobile')">
-                <input type="file" name="file" id="file" class="inputfile" accept=".csv" (change)="open($event)" />
+                <input type="file" name="file" id="file" class="inputfile" accept=".csv" (change)="import($event)" />
                 <label for="file"> <ion-icon name="document"></ion-icon> {{"IMPORT_FROM_CSV"|translate}}</label>
             </ion-row>
 
@@ -146,7 +146,7 @@
             </ion-card>
 
 
-            <button type="button" class="right-buttons" ion-button icon-left color="primary" (click)="addRecipient()">
+            <button *ngIf="recipients.length < sendMore_limit" type="button" class="right-buttons" ion-button icon-left color="primary" (click)="addRecipient()">
                 <ion-icon name="add"></ion-icon>
                 {{"ADD_RECIPIENT" | translate}}
             </button>
