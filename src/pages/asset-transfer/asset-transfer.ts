@@ -395,4 +395,35 @@ export class AssetTransferPage {
             reader.readAsText(file[0]);
     }
 
+    download() {
+        var text = ''
+        var filename = 'recipients.csv'
+        this.recipients.forEach((recipient) => {
+            let line = recipient.address + ','
+            if(recipient.target['ETP']) {
+                line += recipient.target['ETP']
+            } else if (recipient.target['MST'] && recipient.target['MST'][this.selectedAsset]) {
+                line += recipient.target['MST'][this.selectedAsset]
+            }
+            line += '\n'
+            text += line
+        })
+        this.downloadFile(filename, text)
+    }
+
+    downloadFile(filename, text) {
+        var pom = document.createElement('a');
+        pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+        pom.setAttribute('download', filename);
+
+        if (document.createEvent) {
+            var event = document.createEvent('MouseEvents');
+            event.initEvent('click', true, true);
+            pom.dispatchEvent(event);
+        }
+        else {
+            pom.click();
+        }
+    }
+
 }

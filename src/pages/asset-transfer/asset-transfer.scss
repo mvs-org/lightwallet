@@ -66,27 +66,25 @@ page-asset-transfer {
         overflow: hidden;
         position: absolute;
         z-index: -1;
-
     }
 
     .inputfile + label {
-        font-size: 14px;
         font-weight: 500;
         color: white;
         background-color: #32db64;
         margin: auto;
         margin-right: 0px;
-        padding: 5px;
         padding-left: 15px;
         padding-right: 15px;
-        padding-top: 6px;
-        padding-bottom: 6px;
+        padding-top: 8px;
+        padding-bottom: 8px;
         border-radius: 2.5px;
         display: block;
         color: #fff;
         font-size: 1em;
         transition: all .4s;
         cursor: pointer;
+        text-transform: uppercase;
     }
 
     .inputfile:focus + label,

@@ -339,5 +339,8 @@
     "TOTAL_TO_SEND": "Total to send",
 
     "SEND_MORE.TOTAL_MORE_AVAILABLE": "The total is higher than your available balance",
-    "SEND_MORE.WRONG_FILE": "Impossible to read this file. Please check the format"
+    "SEND_MORE.WRONG_FILE": "Impossible to read this file. Please check the format",
+
+    "IMPORT_FROM_CSV": "Import from CSV",
+    "DOWNLOAD_CSV": "Download CSV"
 }

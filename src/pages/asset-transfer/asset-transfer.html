@@ -113,7 +113,7 @@
         <ion-list style="padding-bottom: 0;">
             <ion-row *ngIf="!platform.is('mobile')">
                 <input type="file" name="file" id="file" class="inputfile" accept=".csv" (change)="open($event)" />
-                <label for="file"> <ion-icon name="document"></ion-icon> CSV</label>
+                <label for="file"> <ion-icon name="document"></ion-icon> {{"IMPORT_FROM_CSV"|translate}}</label>
             </ion-row>
 
             <ion-card class="card-block" *ngFor="let recipient of recipients; let i = index" [attr.data-index]="i">
@@ -187,6 +187,7 @@
                         <ion-option *ngFor="let address of addresses" value="{{address}}">{{address}}</ion-option>
                     </ion-select>
                 </ion-item>
+                <button *ngIf="!platform.is('mobile')" type="button" class="right-buttons" ion-button icon-left color="secondary" (click)="download()"><ion-icon name="download"></ion-icon> {{"DOWNLOAD_CSV" | translate}}</button>
                 <button ion-button full [disabled]="!sendForm.form.valid||!sendMoreValidQuantity||!sendMoreValidAddress||!validPassword(passphrase)||total_to_send[selectedAsset] > (showBalance | format : decimals)" (click)="preview()" color="primary">
                     {{"PREVIEW" | translate}}
                 </button>
