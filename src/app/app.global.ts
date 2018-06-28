@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Events } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
 @Injectable()
@@ -16,10 +17,19 @@ export class AppGlobals {
     readonly DEFAULT_NETWORK = 'testnet'
 
     constructor(
+        private event: Events,
         private storage: Storage
     ) {
-            this.getNetwork()
-                .then(network => { this.network = network; })
+        this.event.subscribe("network_update", (settings) => {
+            console.info('app.globals network update caused by network update event')
+            this.updateNetwork()
+        })
+        this.updateNetwork()
+    }
+
+    updateNetwork(){
+        return this.getNetwork()
+            .then(network => { this.network = network; })
     }
 
     getNetwork = () => this.storage.get('network')

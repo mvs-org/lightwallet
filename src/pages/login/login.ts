@@ -36,13 +36,12 @@ export class LoginPage {
 
     switchNetwork = network => this.storage.set("network", this.network)
         .then(() => this.loadNetwork())
-        .then(() => this.event.publish('network_update', { network: network }))
 
     loadNetwork = () => this.storage.get('network')
         .then(network => {
             this.globals.network = (network) ? network : this.globals.DEFAULT_NETWORK
             this.network = this.globals.network;
-            console.log(this.network)
+            this.event.publish('network_update', { network: this.network })
             return network;
         })
 

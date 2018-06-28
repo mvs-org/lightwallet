@@ -8,36 +8,71 @@
 </ion-header>
 
 <ion-content>
-    <ion-list *ngIf="!loading">
-        <ion-item [hidden]="!txs.length" *ngFor="let tx of txs">
-            <!-- <ion-icon name="{{(tx.side=='in')?'arrow-down':'arrow-up'}}" item-start large color="{{(tx.side=='in')?'secondary':'danger'}}"></ion-icon> -->
-            <ion-item no-lines>
-                <ion-avatar item-start>
-                    <img class="coinlogo" [src]="'assets/icon/'+asset+'.png'" onerror="this.src='assets/icon/default_mst.png'">
-                </ion-avatar>
-                <h1>{{asset}}</h1>
-                <!-- <h3 *ngIf="!tx.quantity">{{'TRANSACTION.INNER_WALLET'|translate}}</h3> -->
-                <h3 *ngIf="tx.outputs['0']">{{'DATE'|translate}}: {{tx.outputs['0'].confirmed_at*1000|date : 'medium'}}</h3>
-                <p>{{'HASH'|translate}}: <a *ngIf="!tx.unconfirmed" href="{{explorerURL(tx.hash)}}" target="_blank">{{tx.hash}}</a>
-                    <span *ngIf="tx.unconfirmed">{{tx.hash}}</span>
-                </p>
-            </ion-item>
-        </ion-item>
-    </ion-list>
-    <div [hidden]="txs && txs.length" *ngIf="!loading">
-        <ion-row>
-            <ion-col></ion-col>
-            <ion-col width-67>
-                <img class="big-icon" [src]="'assets/icon/'+asset+'.png'" onerror="this.src='assets/icon/default_mst.png'">
-            </ion-col>
-            <ion-col></ion-col>
-        </ion-row>
+    <div *ngIf="!loading">
 
-        <ion-card-content>
-            <ion-card-title class="center" [translate]="'HISTORY.NO_TXS_YET'"></ion-card-title>
-            <p class="center" [translate]="'HISTORY.NO_TXS_YET_TEXT'">
-            </p>
-        </ion-card-content>
+        <ion-item *ngIf="asset=='ETP'" no-lines>
+            <ion-segment [(ngModel)]="display_segment" color="primary">
+                <ion-segment-button value="transactions">
+                    {{ "TRANSACTIONS" | translate}}
+                </ion-segment-button>
+                <ion-segment-button value="deposits">
+                    {{ "DEPOSITS" | translate}}
+                </ion-segment-button>
+            </ion-segment>
+        </ion-item>
+
+        <div *ngIf="display_segment=='transactions'">
+            <ion-list>
+                <ion-item [hidden]="!txs.length" *ngFor="let tx of txs">
+                    <ion-item no-lines>
+                        <ion-avatar item-start>
+                            <img class="coinlogo" [src]="'assets/icon/'+asset+'.png'" onerror="this.src='assets/icon/default_mst.png'">
+                        </ion-avatar>
+                        <h1>{{asset}}</h1>
+                        <h3 *ngIf="tx.outputs['0']">{{'DATE'|translate}}: {{tx.outputs['0'].confirmed_at*1000|date : 'medium'}}</h3>
+                        <p>{{'HASH'|translate}}: <a *ngIf="!tx.unconfirmed" href="{{explorerURL(tx.hash)}}" target="_blank">{{tx.hash}}</a>
+                            <span *ngIf="tx.unconfirmed">{{tx.hash}}</span>
+                        </p>
+                    </ion-item>
+                </ion-item>
+            </ion-list>
+            <div [hidden]="txs && txs.length">
+                <ion-row>
+                    <ion-col></ion-col>
+                    <ion-col width-67>
+                        <img class="big-icon" [src]="'assets/icon/'+asset+'.png'" onerror="this.src='assets/icon/default_mst.png'">
+                    </ion-col>
+                    <ion-col></ion-col>
+                </ion-row>
+
+                <ion-card-content>
+                    <ion-card-title class="center" [translate]="'HISTORY.NO_TXS_YET'"></ion-card-title>
+                    <p class="center" [translate]="'HISTORY.NO_TXS_YET_TEXT'">
+                    </p>
+                </ion-card-content>
+            </div>
+        </div>
+        <div *ngIf="display_segment=='deposits'">
+            <ion-list>
+                <ion-item [hidden]="!frozen_outputs.length" *ngFor="let output of frozen_outputs">
+                    <ion-item no-lines>
+                        <ion-avatar item-start>
+                            <img class="coinlogo" [src]="'assets/icon/'+asset+'.png'" onerror="this.src='assets/icon/default_mst.png'">
+                        </ion-avatar>
+                        <h1>{{asset}}</h1>
+                        <p>{{'TRANSACTION'|translate}}: <a href="{{explorerURL(output.hash)}}" target="_blank">{{output.hash}}</a>
+                        </p>
+                        <p>{{'QUANTITY'|translate}}: {{output.value | format : output.attachment.decimals}}</p>
+                        <p>{{'LOCKED_UNTIL'|translate}}: {{output.locked_until}}</p>
+                        <p>{{'LOCKED_FOR_BLOCKS'|translate}}: {{output.locked_until-output.height}}</p>
+                        <div *ngIf="output.height<= height">
+                            <progress-bar *ngIf="height<=output.locked_until && depositProgress(output.height, output.locked_until)>0" [progress]="depositProgress(output.height, output.locked_until)" ></progress-bar>
+                        <progress-bar *ngIf="height>output.locked_until" [progress]="100" [color]="'#32db64'"></progress-bar>
+                        </div>
+                    </ion-item>
+                </ion-item>
+            </ion-list>
+        </div>
     </div>
     <div class="mini-loader" *ngIf="loading"></div>
 </ion-content>
