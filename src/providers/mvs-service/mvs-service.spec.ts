@@ -7,14 +7,16 @@ import { MockStorage, MockEvents } from '../../types/mocks';
 describe('MVS Service Provider', () => {
     let mvs: MvsServiceProvider = null;
     let storage: MockStorage;
+    let events: MockEvents;
 
     describe('Asset order', () => {
         beforeEach(() => {
             storage = new MockStorage({})
+            events = new MockEvents();
             mvs = new MvsServiceProvider(
-                new AppGlobals(storage),
+                new AppGlobals(events, storage),
                 undefined,
-                new MockEvents(),
+                events,
                 storage
             )
         });
@@ -50,8 +52,8 @@ describe('MVS Service Provider', () => {
         let event: any;
         let globals : AppGlobals;
         beforeEach(() => {
-            globals = new AppGlobals(storage)
             event = new MockEvents()
+            globals = new AppGlobals(event, storage)
             storage = new MockStorage({})
             mvs = new MvsServiceProvider(
                 globals,
