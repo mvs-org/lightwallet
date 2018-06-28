@@ -345,6 +345,17 @@ export class MvsServiceProvider {
                 ))
     }
 
+    getFrozenOutputs() {
+            return this.getAddresses()
+                  .then(addresses => this.getTxs()
+                        .then(txs => Metaverse.output.calculateUtxo(txs, addresses))
+                        .then(outputs=>outputs.filter(o=>(o.locked_until>0 && o.height)))
+                        .then(outputs=>outputs.sort((a,b)=>{
+                            return (a.height>b.height)?-1:1;
+                        }))
+                       )
+    }
+
     setUpdateTime(lastupdate = undefined) {
         if (lastupdate == undefined)
             lastupdate = new Date()
