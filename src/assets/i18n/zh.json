@@ -312,5 +312,42 @@
   "CONTENT": "内容",
   "MIT.TX_HASH": "创建此MIT资产的交易哈希为",
   "MIT.HISTORY": "交易记录",
-  "CHECK_IN_EXPLORER": "在区块浏览器中查询"
+  "CHECK_IN_EXPLORER": "在区块浏览器中查询",
+
+  "ISSUE.MAX_SUPPLY_TOO_HIGH": "资产发行数量过大。小数位太多，请减少小数位数。",
+  "CREATE_AVATAR.NO_ADDRESS_1ETP": "您当前地址的可用余额不足1个ETP，请发送至少1个ETP到未绑定数字身份的地址上来创建新的数字身份。",
+  "MAINNET": "主网",
+  "TESTNET": "测试网",
+
+  "CREATE_AVATAR.CONFIRMATION_TITLE": "创建数字身份需花费1个ETP",
+  "CREATE_AVATAR.CONFIRMATION_SUBTITLE": "确认创建数字身份么？",
+  "ISSUE.NO_AVATAR": "您需要数字身份来创建MST资产，请先创建数字身份。",
+  "ISSUE.SELECT_AVATAR": "请选选择发行地址",
+  "ISSUE.NO_AVATAR_PLACEHOLDER": "未创建数字身份",
+  "MIT_REGISTER.AVATAR_NAME": "接收方的数字身份名字",
+  "MIT_REGISTER.NO_AVATAR": "您需要数字身份来创建MIT资产，请先创建数字身份。",
+  "MIT_REGISTER.RECIPIENT_ADDRESS": "接收方的数字身份地址",
+  "MIT_REGISTER.SELECT_AVATAR": "请先选择接收方的数字身份。",
+  "CREATE_AVATAR.AVATAR_ALREADY_EXIST": "此数字身份名字已被注册",
+  "MIT_REGISTER.MIT_ALREADY_EXIST": "此MIT资产符号已被占用",
+
+  "SEND_TO_ONE": "发送至一个数字身份",
+  "SEND_MORE": "发送至多个数字身份",
+  "RECIPIENT": "接收方",
+  "ADD_RECIPIENT": "增加接收人",
+  "REMOVE_RECIPIENT": "移除接收人",
+  "TOTAL_TO_SEND": "发送资产总额",
+
+  "SEND_MORE.TOTAL_MORE_AVAILABLE": "发送资产总额超出您的可用余额",
+  "SEND_MORE.WRONG_FILE": "无法读取此文件，请检查格式是否错误。",
+
+  "IMPORT_FROM_CSV": "从CSV文件导入",
+  "DOWNLOAD_CSV": "下载CSV文件",
+  "MESSAGE.SEND_MORE_IMPORT_CSV_TOO_MANY_RECIPIENT_TITLE": "接受者过多",
+  "MESSAGE.SEND_MORE_IMPORT_CSV_TOO_MANY_RECIPIENT_BODY": "此文件包含的接受者超出上限，上限为",
+
+  "TRANSACTION": "交易",
+  "LOCKED_UNTIL": "解锁区块",
+  "LOCKED_FOR_BLOCKS": "锁定区块数"
+
 }
