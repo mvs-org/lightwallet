@@ -160,10 +160,18 @@ page-account {
     .block-iPhone {
       line-height: 8;
       font-size: 14px;
-    }  
+    }
 
     .csdLogoDefault {
       //filter: invert(100%);
       filter: brightness(0.50);
+    }
+
+    .card-block {
+      padding-left: 0;
+    }
+
+    .coinlogo {
+      margin-left: 20px;
     }
 }

@@ -105,7 +105,7 @@
     "CREATE_FROM_BACKUP_WORDS": "Create file from backup words",
     "WRONG_FILE": "Wrong File",
     "CONFIRM_PASSWORD": "Confirm Password",
-    "LIGHT_WALLET_INFO_TEXT": "Please be aware that myetpwallet.com does not have access to your wallet keys. If you lose your backup words or key file, and we will not be able to grant access to your funds.",
+    "LIGHT_WALLET_INFO_TEXT": "Please be aware that myetpwallet.com does not have access to your wallet keys. If you lose your backup words or key file, we will not be able to grant access to your funds.",
     "TRANSACTION.INNER_WALLET": "Intra-wallet transaction",
     "HEIGHT": "Block Height",
     "SELECT_CHANGE_ADDRESS": "Specify change address (optional)",
@@ -316,8 +316,8 @@
 
     "ISSUE.MAX_SUPPLY_TOO_HIGH": "Too high Maximum supply*Number of decimals. Please decrease one of the two",
     "CREATE_AVATAR.NO_ADDRESS_1ETP": "You do not have any available address with at least 1 ETP available. Please send at least 1 ETP to an available address (not already linked to an Avatar) to create a new Avatar",
-    "MAINNET": "mainnet",
-    "TESTNET": "testnet",
+    "MAINNET": "Mainnet",
+    "TESTNET": "Testnet",
 
     "CREATE_AVATAR.CONFIRMATION_TITLE": "Creating an Avatar cost 1 ETP.",
     "CREATE_AVATAR.CONFIRMATION_SUBTITLE": "Are you sure you want to create an Avatar?",
@@ -329,5 +329,25 @@
     "MIT_REGISTER.RECIPIENT_ADDRESS": "Recipient Avatar address",
     "MIT_REGISTER.SELECT_AVATAR": "Please select a Recipient Avatar first",
     "CREATE_AVATAR.AVATAR_ALREADY_EXIST": "This Avatar name has already been registered",
-    "MIT_REGISTER.MIT_ALREADY_EXIST": "This MIT symbol has already been registered"
+    "MIT_REGISTER.MIT_ALREADY_EXIST": "This MIT symbol has already been registered",
+
+    "SEND_TO_ONE": "Send to one",
+    "SEND_MORE": "Send to many",
+    "RECIPIENT": "Recipient",
+    "ADD_RECIPIENT": "Add recipient",
+    "REMOVE_RECIPIENT": "Remove recipient",
+    "TOTAL_TO_SEND": "Total to send",
+
+    "SEND_MORE.TOTAL_MORE_AVAILABLE": "The total is higher than your available balance",
+    "SEND_MORE.WRONG_FILE": "Impossible to read this file. Please check the format. In advanced options, you can export to CSV file and follow this template",
+
+    "IMPORT_FROM_CSV": "Import from CSV",
+    "DOWNLOAD_CSV": "Download CSV",
+    "MESSAGE.SEND_MORE_IMPORT_CSV_TOO_MANY_RECIPIENT_TITLE": "Too many recipient",
+    "MESSAGE.SEND_MORE_IMPORT_CSV_TOO_MANY_RECIPIENT_BODY": "This file contains too many recipients. The maximum number of recipients is limited to ",
+
+    "TRANSACTION": "Transaction",
+    "LOCKED_UNTIL": "Locked until",
+    "LOCKED_FOR_BLOCKS": "Locked for",
+    "DEPOSITS": "Deposits"
 }

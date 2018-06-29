@@ -37,7 +37,8 @@ export class ImportWalletPage {
                 });
             }
         };
-        reader.readAsText(file[0]);
+        if(file[0])
+            reader.readAsText(file[0]);
     }
 
 

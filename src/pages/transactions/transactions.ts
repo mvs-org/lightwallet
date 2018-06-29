@@ -18,6 +18,11 @@ export class TransactionsPage {
     txs: any[]
     loading: boolean
 
+    display_segment: string = "transactions"
+    height: number;
+
+    frozen_outputs: any[] = [];
+
     constructor(
         public navCtrl: NavController,
         private globals: AppGlobals,
@@ -27,15 +32,29 @@ export class TransactionsPage {
         this.asset = navParams.get('asset');
         this.showTxs({ symbol: this.asset });
         this.loading = true;
+
     }
 
     ionViewDidEnter() {
         console.log('Transactions page loaded')
+        this.mvsServiceProvider.getFrozenOutputs()
+            .then(outputs=>{
+                console.log(outputs)
+                this.frozen_outputs=outputs;
+            })
+        this.mvsServiceProvider.getHeight()
+            .then(height=>{
+                this.height=height
+            })
         this.mvsServiceProvider.getAddresses()
             .then((addresses) => {
                 if (!Array.isArray(addresses) || !addresses.length)
                     this.navCtrl.setRoot("LoginPage")
             })
+    }
+
+    depositProgress(start_height, locked_until){
+        return Math.round((this.height-start_height)/(locked_until-start_height)*100)
     }
 
     private showTxs(filter) {

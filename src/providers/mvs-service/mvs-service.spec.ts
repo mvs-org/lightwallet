@@ -2,30 +2,21 @@ import { async, TestBed } from '@angular/core/testing';
 import { AppGlobals } from '../../app/app.global';
 import { MvsServiceProvider } from './mvs-service';
 import { IonicStorageModule } from '@ionic/storage';
-import { Storage } from '@ionic/storage';
-
-class MockStorage extends Storage {
-    private db: any = {}
-    get(key) {
-        return Promise.resolve(this.db[key])
-    }
-    set(key, value) {
-        this.db[key] = value;
-        return Promise.resolve()
-    }
-}
+import { MockStorage, MockEvents } from '../../types/mocks';
 
 describe('MVS Service Provider', () => {
     let mvs: MvsServiceProvider = null;
-    let storage: Storage;
+    let storage: MockStorage;
+    let events: MockEvents;
 
     describe('Asset order', () => {
         beforeEach(() => {
             storage = new MockStorage({})
+            events = new MockEvents();
             mvs = new MvsServiceProvider(
-                new AppGlobals(),
+                new AppGlobals(events, storage),
                 undefined,
-                undefined,
+                events,
                 storage
             )
         });
@@ -59,14 +50,10 @@ describe('MVS Service Provider', () => {
 
     describe('Addresses', () => {
         let event: any;
-        let globals = new AppGlobals();
+        let globals : AppGlobals;
         beforeEach(() => {
-            event = {
-                publish: (a, b) => {
-                    event.published = true
-                },
-                published: false
-            }
+            event = new MockEvents()
+            globals = new AppGlobals(event, storage)
             storage = new MockStorage({})
             mvs = new MvsServiceProvider(
                 globals,
@@ -80,7 +67,7 @@ describe('MVS Service Provider', () => {
             return mvs.setAddresses(list)
                 .then(() => storage.get('mvs_addresses'))
                 .then(result => {
-                    expect(event.published).toBe(true)
+                    expect(event.published()).toBe(true)
                     expect(result).toEqual(list)
                     done()
                 })

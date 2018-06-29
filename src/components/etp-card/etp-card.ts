@@ -13,7 +13,7 @@ export class EtpCardComponent {
         private nav: NavController
     ) { }
 
-    gotoDeposit = () => this.nav.push("DepositPage")
+    gotoDeposit = () => this.nav.push("DepositPage", { asset: 'ETP' })
 
     gotoTransactions = () => this.nav.push("transactions-page", { asset: 'ETP' })
 
