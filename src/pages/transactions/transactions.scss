@@ -52,7 +52,8 @@ page-transactions {
 
     progress-bar .progress-inner {
         height: 20px;
-        padding: 2px !important;
+        padding: 0 !important;
         min-width: 20px !important;
+        border-radius: 0 !important;
     }
 }

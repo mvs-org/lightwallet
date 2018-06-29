@@ -348,5 +348,6 @@
 
     "TRANSACTION": "Transaction",
     "LOCKED_UNTIL": "Locked until",
-    "LOCKED_FOR_BLOCKS": "Locked for"
+    "LOCKED_FOR_BLOCKS": "Locked for",
+    "DEPOSITS": "Deposits"
 }
