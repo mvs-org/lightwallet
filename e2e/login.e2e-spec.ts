@@ -37,6 +37,7 @@ describe('Login', () => {
                 .then(() => page.getElementById('label-network').getAttribute('value'))
                 .then(network => expect(network).toEqual('testnet'))
                 .then(() => page.clickId('network-switch-option-mainnet'))
+                .then(() => page.sleep(100))
                 .then(() => page.getElementById('label-network').getAttribute('value'))
                 .then(network => expect(network).toEqual('mainnet'));
         });

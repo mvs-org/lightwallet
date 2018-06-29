@@ -60,14 +60,13 @@
                             <img class="coinlogo" [src]="'assets/icon/'+asset+'.png'" onerror="this.src='assets/icon/default_mst.png'">
                         </ion-avatar>
                         <h1>{{asset}}</h1>
-                        <p>{{'TRANSACTION'|translate}}: <a href="{{explorerURL(output.hash)}}" target="_blank">{{output.hash}}</a>
-                        </p>
-                        <p>{{'QUANTITY'|translate}}: {{output.value | format : output.attachment.decimals}}</p>
+                        <p>{{'TRANSACTION'|translate}}: <a href="{{explorerURL(output.hash)}}" target="_blank">{{output.hash}}</a></p>
+                        <p>{{'AMOUNT'|translate}}: {{output.value | format : output.attachment.decimals}}</p>
                         <p>{{'LOCKED_UNTIL'|translate}}: {{output.locked_until}}</p>
-                        <p>{{'LOCKED_FOR_BLOCKS'|translate}}: {{output.locked_until-output.height}}</p>
+                        <p>{{'LOCKED_FOR_BLOCKS'|translate}}: {{output.locked_until-output.height}} {{'BLOCKS'|translate}}</p>
                         <div *ngIf="output.height<= height">
                             <progress-bar *ngIf="height<=output.locked_until && depositProgress(output.height, output.locked_until)>0" [progress]="depositProgress(output.height, output.locked_until)" ></progress-bar>
-                        <progress-bar *ngIf="height>output.locked_until" [progress]="100" [color]="'#32db64'"></progress-bar>
+                            <progress-bar *ngIf="height>output.locked_until" [progress]="100" [color]="'#32db64'"></progress-bar>
                         </div>
                     </ion-item>
                 </ion-item>

@@ -3,7 +3,7 @@ import { AppGlobals } from '../../app/app.global';
 import { WalletServiceProvider } from './wallet-service';
 import { CryptoServiceProvider } from '../crypto-service/crypto-service';
 import { IonicStorageModule } from '@ionic/storage';
-import { MockStorage } from '../../types/mocks';
+import { MockStorage, MockEvents } from '../../types/mocks';
 
 describe('Wallet Provider', () => {
     let walletservice = null
@@ -11,7 +11,7 @@ describe('Wallet Provider', () => {
 
     beforeEach(() => {
         walletservice = new WalletServiceProvider(undefined,
-            storage, new AppGlobals(storage), new CryptoServiceProvider())
+                                                  storage, new AppGlobals(new MockEvents(), storage), new CryptoServiceProvider())
     });
 
     it('Generate Wallet', (done) => {

@@ -44,4 +44,15 @@ page-transactions {
     .mini-loader:after {
         left: 3.5em;
     }
+
+    progress-bar .progress-outer {
+        border: 0 !important;
+        padding: 0 !important;
+    }
+
+    progress-bar .progress-inner {
+        height: 20px;
+        padding: 2px !important;
+        min-width: 20px !important;
+    }
 }
