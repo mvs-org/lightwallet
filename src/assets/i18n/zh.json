@@ -348,6 +348,7 @@
 
   "TRANSACTION": "交易",
   "LOCKED_UNTIL": "解锁区块",
-  "LOCKED_FOR_BLOCKS": "锁定区块数"
+  "LOCKED_FOR_BLOCKS": "锁定区块数",
+  "DEPOSITS": "存款"
 
 }
