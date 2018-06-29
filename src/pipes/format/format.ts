@@ -5,6 +5,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class FormatPipe implements PipeTransform {
     transform(quantity: number, decimals: number) {
-        return quantity / Math.pow(10, decimals)
+        return (quantity / Math.pow(10, decimals)).toLocaleString(undefined, {maximumFractionDigits: decimals})
     }
 }

@@ -41,12 +41,17 @@ export class ImportWalletMobilePage {
                     this.seed = content[0]
                     if (content.length != 3) {
                         this.showError('IMPORT_QRCODE')
-                    } else if (content[1] != this.globals.network.charAt(0)) {
-                        this.showError('MESSAGE.NETWORK_MISMATCH')
                     } else {
-                        wallet = { "index": Math.max(5,Math.min(parseInt(content[2]),50)) }
-                        this.wallet.setWallet(wallet)
-                        this.wallet.setMobileWallet(content[0]).then(() => this.qrCodeLoaded = true)
+                        this.globals.getNetwork()
+                            .then((network) => {
+                                if (content[1] != network.charAt(0)) {
+                                    this.showError('MESSAGE.NETWORK_MISMATCH')
+                                 } else {
+                                    wallet = { "index": Math.max(5,Math.min(parseInt(content[2]),50)) }
+                                    this.wallet.setWallet(wallet)
+                                    this.wallet.setMobileWallet(content[0]).then(() => this.qrCodeLoaded = true)
+                                }
+                            })
                     }
                 }
             })
