@@ -344,5 +344,9 @@
     "IMPORT_FROM_CSV": "Import from CSV",
     "DOWNLOAD_CSV": "Download CSV",
     "MESSAGE.SEND_MORE_IMPORT_CSV_TOO_MANY_RECIPIENT_TITLE": "Too many recipient",
-    "MESSAGE.SEND_MORE_IMPORT_CSV_TOO_MANY_RECIPIENT_BODY": "This file contains too many recipients. The maximum number of recipients is limited to "
+    "MESSAGE.SEND_MORE_IMPORT_CSV_TOO_MANY_RECIPIENT_BODY": "This file contains too many recipients. The maximum number of recipients is limited to ",
+
+    "TRANSACTION": "Transaction",
+    "LOCKED_UNTIL": "Locked until",
+    "LOCKED_FOR_BLOCKS": "Locked for"
 }
