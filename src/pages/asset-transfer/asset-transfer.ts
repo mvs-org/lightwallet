@@ -49,6 +49,7 @@ export class AssetTransferPage {
     sendMoreValidQuantity: boolean = false
     sendMoreValidAddress: boolean = false
     sendMore_limit: number = 1000
+    total: number
 
     constructor(
         public navCtrl: NavController,
@@ -68,6 +69,7 @@ export class AssetTransferPage {
             this.recipients.push(new RecipientSendMore('', {"MST": { [this.selectedAsset]: undefined}}))
         }
         this.total_to_send[this.selectedAsset] = 0
+        this.total = 0
 
 
         //Load addresses
@@ -269,6 +271,7 @@ export class AssetTransferPage {
             this.recipients.forEach((recipient) => total = recipient.target['ETP'] ? total + parseFloat(recipient.target['ETP']) : total)
         }
         this.total_to_send[this.selectedAsset] = +total.toFixed(this.decimals);
+        this.total = this.total_to_send[this.selectedAsset] * Math.pow(10, this.decimals);
         this.checkEtpSendMoreQuantity()
     }
 
@@ -278,6 +281,7 @@ export class AssetTransferPage {
             this.recipients.forEach((recipient) => total = recipient.target['MST'][this.selectedAsset] ? total + parseFloat(recipient.target['MST'][this.selectedAsset]) : total)
         }
         this.total_to_send[this.selectedAsset] = +total.toFixed(this.decimals);
+        this.total = this.total_to_send[this.selectedAsset] * Math.pow(10, this.decimals);
         this.checkMstSendMoreQuantity()
     }
 
