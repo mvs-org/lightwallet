@@ -347,5 +347,6 @@
 
     "TRANSACTION": "Транзакция",
     "LOCKED_UNTIL": "Заблокировано до",
-    "LOCKED_FOR_BLOCKS": "Заблокировано для"
+    "LOCKED_FOR_BLOCKS": "Заблокировано на",
+    "DEPOSITS": "Депозит"
 }
