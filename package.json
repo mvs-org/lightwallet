@@ -38,10 +38,9 @@
     "@ngx-translate/http-loader": "^0.1.0",
     "angular-progress-bar": "^1.0.0",
     "angular2-qrcode": "^2.0.1",
-    "cordova-android": "7.1.0",
+    "cordova-android": "7.0.0",
     "cordova-browser": "5.0.3",
     "cordova-plugin-device": "^2.0.2",
-    "cordova-plugin-ionic-keyboard": "^2.1.2",
     "cordova-plugin-ionic-webview": "^1.2.1",
     "cordova-plugin-splashscreen": "^4.1.0",
     "cordova-plugin-statusbar": "^2.4.2",
@@ -54,7 +53,7 @@
     "mvs-blockchain": "^0.1.32",
     "ng2-file-upload": "^1.3.0",
     "ngx-clipboard": "^7.0.6",
-    "phonegap-plugin-barcodescanner": "^7.1.2",
+    "phonegap-plugin-barcodescanner": "^8.0.0",
     "rxjs": "5.4.0",
     "sw-toolbox": "3.6.0",
     "zone.js": "0.8.12"
@@ -93,20 +92,15 @@
   "cordova": {
     "plugins": {
       "cordova-plugin-whitelist": {},
-      "phonegap-plugin-barcodescanner": {
-        "CAMERA_USAGE_DESCRIPTION": " ",
-        "ANDROID_SUPPORT_V4_VERSION": "27.+"
-      },
       "cordova-plugin-splashscreen": {},
       "cordova-plugin-statusbar": {},
       "cordova-plugin-device": {},
       "cordova-plugin-ionic-webview": {},
-      "cordova-plugin-ionic-keyboard": {},
       "ionic-plugin-keyboard": {}
     },
     "platforms": [
-      "android",
-      "browser"
+      "browser",
+      "android"
     ]
   }
 }
