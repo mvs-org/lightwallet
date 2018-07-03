@@ -335,5 +335,18 @@
     "RECIPIENT": "Получатель",
     "ADD_RECIPIENT": "Добавить получателя",
     "REMOVE_RECIPIENT": "Удалить получателя",
-    "TOTAL_TO_SEND": "Всего отправить"
+    "TOTAL_TO_SEND": "Всего отправить",
+
+    "SEND_MORE.TOTAL_MORE_AVAILABLE": "Общая сумма превышает ваш доступный баланс",
+    "SEND_MORE.WRONG_FILE": "Невозможно прочитать этот файл. Проверьте формат. В расширенных параметрах вы можете экспортировать в CSV-файл и следовать этому шаблону",
+
+    "IMPORT_FROM_CSV": "Импорт из CSV",
+    "DOWNLOAD_CSV": "Загрузить CSV",
+    "MESSAGE.SEND_MORE_IMPORT_CSV_TOO_MANY_RECIPIENT_TITLE": "Слишком много получателей",
+    "MESSAGE.SEND_MORE_IMPORT_CSV_TOO_MANY_RECIPIENT_BODY": "Этот файл содержит слишком много получателей. Максимальное количество получателей ограничено",
+
+    "TRANSACTION": "Транзакция",
+    "LOCKED_UNTIL": "Заблокировано до",
+    "LOCKED_FOR_BLOCKS": "Заблокировано на",
+    "DEPOSITS": "Депозит"
 }

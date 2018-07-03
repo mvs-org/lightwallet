@@ -65,7 +65,7 @@
                 {{"HOW_TO_IMPORT_WALLET_MOBILE"|translate}}
             </button>
         </ion-row>
-        <ion-row class="info-text">
+        <ion-row *ngIf="!platform.is('mobile')" class="info-text">
             <p>{{"LOGIN_MENU_INFO_TEXT"|translate}}</p>
         </ion-row>
 

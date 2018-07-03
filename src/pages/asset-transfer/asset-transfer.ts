@@ -48,6 +48,8 @@ export class AssetTransferPage {
     total_to_send: any = {}
     sendMoreValidQuantity: boolean = false
     sendMoreValidAddress: boolean = false
+    sendMore_limit: number = 1000
+    total: number
 
     constructor(
         public navCtrl: NavController,
@@ -67,6 +69,7 @@ export class AssetTransferPage {
             this.recipients.push(new RecipientSendMore('', {"MST": { [this.selectedAsset]: undefined}}))
         }
         this.total_to_send[this.selectedAsset] = 0
+        this.total = 0
 
 
         //Load addresses
@@ -127,7 +130,7 @@ export class AssetTransferPage {
     validQuantity = (quantity) => quantity != undefined
         && this.countDecimals(quantity) <= this.decimals
         && ((this.selectedAsset == 'ETP' && this.showBalance >= (Math.round(parseFloat(quantity) * Math.pow(10, this.decimals)) + 10000)) || (this.selectedAsset != 'ETP' && this.showBalance >= parseFloat(quantity) * Math.pow(10, this.decimals)))
-        && ((this.selectedAsset == 'ETP' && quantity >= 10000 / 100000000) || (this.selectedAsset != 'ETP' && quantity > 0))
+        && (quantity > 0)
 
     countDecimals(value) {
         if (Math.floor(value) !== value && value.toString().split(".").length > 1)
@@ -162,18 +165,18 @@ export class AssetTransferPage {
                             this.selectedAsset,
                             this.recipient_address,
                             (this.recipient_avatar && this.recipient_avatar_valid) ? this.recipient_avatar : undefined,
-                            Math.floor(parseFloat(this.quantity) * Math.pow(10, this.decimals)),
+                            Math.round(parseFloat(this.quantity) * Math.pow(10, this.decimals)),
                             (this.sendFrom != 'auto') ? this.sendFrom : null,
                             (this.changeAddress != 'auto') ? this.changeAddress : undefined
                         )
                     case "more":
                         let target = {}
                         let recipients = JSON.parse(JSON.stringify(this.recipients))
-                        target[this.selectedAsset] = Math.floor(parseFloat(this.total_to_send[this.selectedAsset]) * Math.pow(10, this.decimals))
+                        target[this.selectedAsset] = Math.round(parseFloat(this.total_to_send[this.selectedAsset]) * Math.pow(10, this.decimals))
                         if(this.selectedAsset == 'ETP') {
-                            recipients.forEach((recipient) => recipient.target['ETP'] = Math.floor(parseFloat(recipient.target['ETP']) * Math.pow(10, this.decimals)))
+                            recipients.forEach((recipient) => recipient.target['ETP'] = Math.round(parseFloat(recipient.target['ETP']) * Math.pow(10, this.decimals)))
                         } else {
-                            recipients.forEach((recipient) => recipient.target['MST'][this.selectedAsset] = Math.floor(parseFloat(recipient.target['MST'][this.selectedAsset]) * Math.pow(10, this.decimals)))
+                            recipients.forEach((recipient) => recipient.target['MST'][this.selectedAsset] = Math.round(parseFloat(recipient.target['MST'][this.selectedAsset]) * Math.pow(10, this.decimals)))
                         }
                         return this.mvs.createSendMoreTx(
                             this.passphrase,
@@ -267,7 +270,8 @@ export class AssetTransferPage {
         if(this.recipients) {
             this.recipients.forEach((recipient) => total = recipient.target['ETP'] ? total + parseFloat(recipient.target['ETP']) : total)
         }
-        this.total_to_send[this.selectedAsset] = total
+        this.total_to_send[this.selectedAsset] = +total.toFixed(this.decimals);
+        this.total = this.total_to_send[this.selectedAsset] * Math.pow(10, this.decimals);
         this.checkEtpSendMoreQuantity()
     }
 
@@ -276,7 +280,8 @@ export class AssetTransferPage {
         if(this.recipients) {
             this.recipients.forEach((recipient) => total = recipient.target['MST'][this.selectedAsset] ? total + parseFloat(recipient.target['MST'][this.selectedAsset]) : total)
         }
-        this.total_to_send[this.selectedAsset] = total
+        this.total_to_send[this.selectedAsset] = +total.toFixed(this.decimals);
+        this.total = this.total_to_send[this.selectedAsset] * Math.pow(10, this.decimals);
         this.checkMstSendMoreQuantity()
     }
 
@@ -355,11 +360,20 @@ export class AssetTransferPage {
         this.checkSendMoreAddress()
     }
 
-    sendMoreRecipientChanged(recipient_address) {
-        if (recipient_address) {
-            recipient_address = recipient_address.trim()
+    sendMoreRecipientChanged(index) {
+        if (this.recipients[index] && this.recipients[index].address) {
+            this.recipients[index].address = this.recipients[index].address.trim()
         }
         this.checkSendMoreAddress()
+    }
+
+    import(e) {
+        this.alert.showLoading()
+            .then(() => {
+                setTimeout(() => {
+                    this.open(e)
+                }, 500);
+            })
     }
 
     open(e) {
@@ -370,29 +384,64 @@ export class AssetTransferPage {
             try {
                 let data = content.split('\n');
                 this.recipients = []
-                data.forEach((line) => {
-                    if(line) {
-                        let recipient = line.split(',');
+                for(let i=0;i<this.sendMore_limit;i++){
+                    if(data[i]) {
+                        let recipient = data[i].split(',');
                         if(this.selectedAsset == 'ETP') {
-                            this.recipients.push(new RecipientSendMore(recipient[0].trim(), {"ETP": recipient[1].trim()}))
+                            this.recipients.push(new RecipientSendMore(recipient[0] ? recipient[0].trim() : recipient[0], {"ETP": recipient[1] ? recipient[1].trim() : recipient[1]}))
                         } else {
-                            this.recipients.push(new RecipientSendMore(recipient[0].trim(), {"MST": { [this.selectedAsset]: recipient[1].trim()}}))
+                            this.recipients.push(new RecipientSendMore(recipient[0] ? recipient[0].trim() : recipient[0], {"MST": { [this.selectedAsset]: recipient[1] ? recipient[1].trim() : recipient[1]}}))
                         }
                     }
-                })
+                }
+                if(data.length > this.sendMore_limit)
+                    this.alert.showTooManyRecipients(this.sendMore_limit)
                 if(this.selectedAsset == 'ETP'){
                     this.quantityETPChanged()
                 } else {
                     this.quantityMSTChanged()
                 }
                 this.checkSendMoreAddress()
+                this.alert.stopLoading()
             } catch (e) {
+                this.alert.stopLoading()
                 console.error(e);
-                this.alert.showError('WRONG_FILE', 'SEND_MORE.WRONG_FILE')
+                this.alert.showMessage('WRONG_FILE', '', 'SEND_MORE.WRONG_FILE')
             }
         };
         if(file[0])
             reader.readAsText(file[0]);
+    }
+
+    download() {
+        var text = ''
+        var filename = 'recipients.csv'
+        this.recipients.forEach((recipient) => {
+            let line = recipient.address + ','
+            if(recipient.target['ETP']) {
+                line += recipient.target['ETP']
+            } else if (recipient.target['MST'] && recipient.target['MST'][this.selectedAsset]) {
+                line += recipient.target['MST'][this.selectedAsset]
+            }
+            line += '\n'
+            text += line
+        })
+        this.downloadFile(filename, text)
+    }
+
+    downloadFile(filename, text) {
+        var pom = document.createElement('a');
+        pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+        pom.setAttribute('download', filename);
+
+        if (document.createEvent) {
+            var event = document.createEvent('MouseEvents');
+            event.initEvent('click', true, true);
+            pom.dispatchEvent(event);
+        }
+        else {
+            pom.click();
+        }
     }
 
 }

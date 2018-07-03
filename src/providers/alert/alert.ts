@@ -90,5 +90,32 @@ export class AlertProvider {
         })
     }
 
+    showMessage(title, subtitle, message) {
+        this.translate.get([title, subtitle, message, 'OK']).subscribe((translations: any) => {
+            let alert = this.alertCtrl.create({
+                title: translations[title],
+                subTitle: translations[subtitle],
+                message: translations[message],
+                buttons: [{
+                    text: translations['OK']
+                }]
+            });
+            alert.present(alert);
+        })
+    }
+
+    showTooManyRecipients(limit) {
+        this.translate.get(['MESSAGE.SEND_MORE_IMPORT_CSV_TOO_MANY_RECIPIENT_TITLE', 'MESSAGE.SEND_MORE_IMPORT_CSV_TOO_MANY_RECIPIENT_BODY', 'OK']).subscribe((translations: any) => {
+            let alert = this.alertCtrl.create({
+                title: translations['MESSAGE.SEND_MORE_IMPORT_CSV_TOO_MANY_RECIPIENT_TITLE'],
+                message: translations['MESSAGE.SEND_MORE_IMPORT_CSV_TOO_MANY_RECIPIENT_BODY'] + limit,
+                buttons: [{
+                    text: translations['OK']
+                }]
+            });
+            alert.present(alert);
+        })
+    }
+
 
 }
