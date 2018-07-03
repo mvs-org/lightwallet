@@ -32,6 +32,8 @@ export class SettingsPage {
 
     ExportWalletPage = e => this.nav.push("ExportWalletPage")
 
+    plugins = e => this.nav.push("PluginSettingsPage")
+
     /**
      * Logout dialog
      */
