@@ -15,6 +15,5 @@ import { AlertProvider } from '../../providers/alert/alert';
     providers: [
         AlertProvider
     ]
-
 })
 export class PluginSettingsPageModule { }

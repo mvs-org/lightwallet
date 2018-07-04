@@ -24,12 +24,6 @@ export class PluginPage {
     ) {
     }
 
-    sendData(data) {
-        let doc = this.iframe.nativeElement.contentDocument || this.iframe.nativeElement.contentWindow;
-
-        doc.postMessage({ topic: 'message', value: data }, '*');
-    }
-
     ionViewDidLoad() {
         this.plugin = this.navParams.data.plugin
         if(this.plugin)
@@ -40,6 +34,7 @@ export class PluginPage {
                 case 'permissions':
                     source.postMessage({
                         topic: 'permissions',
+                        id: event.data.id,
                         value: ['avatars']
                     }, event.origin)
                     break;
@@ -47,6 +42,7 @@ export class PluginPage {
                     this.mvs.listAvatars().then(avatars => {
                         source.postMessage({
                             topic: 'avatars',
+                            id: event.data.id,
                             value: avatars
                         }, event.origin)
                     })
