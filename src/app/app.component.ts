@@ -116,7 +116,7 @@ export class MyETPWallet {
                 let p = []
                 plugins.forEach(plugin => {
                     p.push({
-                        title: plugin.name, component: "PluginPage", params: { plugin }, icon: 'cube'
+                        title: (plugin.translation[this.translate.currentLang])?plugin.translation[this.translate.currentLang].name:plugin.translation.default.name, component: "PluginPage", params: { name: plugin.name }, icon: 'cube'
                     })
                 })
                 return p

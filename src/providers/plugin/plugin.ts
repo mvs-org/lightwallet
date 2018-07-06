@@ -11,6 +11,7 @@ export class Plugin {
     url: string
     config: PluginConfig
     author: string
+    translation: any
     repository: string
 }
 
@@ -28,12 +29,12 @@ export class PluginProvider {
             .then(plugins => (plugins) ? plugins : [])
     }
 
-    removePlugin(name){
+    removePlugin(name) {
         return this.getPlugins()
-            .then(plugins=>{
-                let p=[]
-                plugins.forEach(plugin=>{
-                    if(plugin.name!=name)
+            .then(plugins => {
+                let p = []
+                plugins.forEach(plugin => {
+                    if (plugin.name != name)
                         plugins.push(plugin)
                 })
                 return this.storage.set('plugins', p)
@@ -46,6 +47,13 @@ export class PluginProvider {
                 throw e.message
             });
         })
+            .then((plugin: Plugin) => {
+                if (!/^[a-z-]*$/.test(plugin.name))
+                    throw Error("ERR_INVALID_PLUGIN_NAME")
+                if (plugin.translation == undefined || plugin.translation.default == undefined || plugin.translation.default.name == undefined)
+                    throw Error("ERR_MISSING_DEFAULT_TRANSLATION")
+                return plugin
+            })
     }
 
     addPlugin(plugin: Plugin) {
