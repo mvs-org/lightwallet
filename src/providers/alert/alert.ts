@@ -15,7 +15,7 @@ export class AlertProvider {
     ) {
     }
 
-    stopLoading(){
+    stopLoading() {
         this.loading.dismiss()
     }
 
@@ -56,6 +56,31 @@ export class AlertProvider {
                 buttons: [
                     {
                         text: translations['OK'],
+                    }
+                ]
+            })
+            alert.present(prompt)
+        })
+    }
+
+    askPassphrase(message_key, onSubmit) {
+        this.translate.get(['PASSPHRASE', 'OK', 'CANCEL', message_key]).subscribe((translations: any) => {
+            let alert = this.alertCtrl.create({
+                title: translations['PASSPHRASE'],
+                subTitle: translations[message_key],
+                enableBackdropDismiss: false,
+                inputs: [
+                    { name: 'passphrase', placeholder: 'Passphrase' }
+                ],
+                buttons: [
+                    {
+                        text: translations['CANCEL'],
+                        role: 'cancel',
+                        handler: data => onSubmit()
+                    },
+                    {
+                        text: translations['OK'],
+                        handler: data => onSubmit(data.passphrase)
                     }
                 ]
             })

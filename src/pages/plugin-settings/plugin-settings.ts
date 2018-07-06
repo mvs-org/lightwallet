@@ -26,9 +26,7 @@ export class PluginSettingsPage {
             .then(()=>this.navCtrl.setRoot('AccountPage'))
             .then(()=>this.events.publish('settings_update'))
             .catch(error=>{
-                if(error.message=="ERR_PLUGIN_ALREADY_EXISTS")
                     this.alert.showError('Error',error.message)
-
             })
     }
 

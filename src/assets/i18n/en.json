@@ -349,5 +349,7 @@
     "TRANSACTION": "Transaction",
     "LOCKED_UNTIL": "Locked until",
     "LOCKED_FOR_BLOCKS": "Locked for",
-    "DEPOSITS": "Deposits"
+    "DEPOSITS": "Deposits",
+    "SETTINGS.PLUGINS": "Plugins",
+    "SETTINGS.PLUGINS_TEXT": "Add third party extensions to the wallet."
 }
