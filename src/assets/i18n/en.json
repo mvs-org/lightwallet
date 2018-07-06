@@ -351,5 +351,7 @@
     "LOCKED_FOR_BLOCKS": "Locked for",
     "DEPOSITS": "Deposits",
     "SETTINGS.PLUGINS": "Plugins",
-    "SETTINGS.PLUGINS_TEXT": "Add third party extensions to the wallet."
+    "SETTINGS.PLUGINS_TEXT": "Add third party extensions to the wallet.",
+
+    "PLUGIN_SETTINGS": "Plugin Settings"
 }
