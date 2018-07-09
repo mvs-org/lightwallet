@@ -2,6 +2,7 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service'
 import { AlertProvider } from '../../providers/alert/alert';
+import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
 import { Plugin, PluginProvider } from '../../providers/plugin/plugin'
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
@@ -19,10 +20,13 @@ export class PluginPage {
     plugin: Plugin = new Plugin()
     urlSafe: SafeResourceUrl;
 
+    wallet: any;
+
     constructor(
         public navCtrl: NavController,
         private mvs: MvsServiceProvider,
         private alert: AlertProvider,
+        private walletProvider: WalletServiceProvider,
         public sanitizer: DomSanitizer,
         private plugins: PluginProvider,
         public navParams: NavParams
@@ -33,18 +37,20 @@ export class PluginPage {
         window.removeEventListener('message', this.processMessage);
     }
 
-    getPermissions() {
-        return Promise.resolve(this.plugin.config.permissions)
-    }
-
     evaluateResponse(data) {
         switch (data.query) {
             case 'permissions':
-                return this.getPermissions()
+                return Promise.resolve(this.plugin.config.permissions)
             case 'create-mit':
                 return this.createMIT(data.params)
             case 'avatars':
                 return this.mvs.listAvatars()
+            case 'sign':
+                return this.sign(data.params.text, data.params.avatar)
+            case 'verify':
+                return Promise.resolve(this.walletProvider.verifyMessage(data.params.text, data.params.address, data.params.signature))
+            case 'unlock':
+                return this.unlock()
             case 'addresses':
                 return this.mvs.getAddresses()
             case 'broadcast':
@@ -102,6 +108,23 @@ export class PluginPage {
         console.log('ionViewDidLoad PluginPage');
     }
 
+    sign(text, avatar_symbol) {
+        console.info('attempt to sign ' + text + '  for ' + avatar_symbol)
+        return this.mvs.listAvatars()
+            .then(avatars => {
+                let address = null;
+                avatars.forEach(avatar => {
+                    if (avatar.symbol == avatar_symbol) {
+                        address = avatar.address;
+                    }
+                })
+                if (address == null)
+                    throw Error('Avatar not found');
+                else
+                    return this.wallet.signMessage(address, text)
+            })
+    }
+
     createMIT(params) {
         let address = null;
         if (params.avatar == undefined)
@@ -120,17 +143,22 @@ export class PluginPage {
                 return address;
             })
             .then(address => {
-                return this.askPassphrase(params)
+                return this.askPassphrase(`Plugin wants to create new MIT ${params.symbol}. It will be issued for by your Avatar ${params.avatar}`)
                     .then((passphrase: string) => {
-                        console.log(passphrase)
-                        return this.mvs.createRegisterMITTx(passphrase, address, params.avatar, params.symbol, params.content, undefined).then(tx=>(params.raw)?tx.encode().toString('hex'):tx)
+                        return this.mvs.createRegisterMITTx(passphrase, address, params.avatar, params.symbol, params.content, undefined).then(tx => (params.raw) ? tx.encode().toString('hex') : tx)
                     })
             })
     }
 
-    askPassphrase(params) {
+    unlock() {
+        return this.askPassphrase('Enter passphrase to unlock wallet')
+            .then(passphrase => this.walletProvider.getWallet(passphrase))
+            .then(wallet => this.wallet = wallet);
+    }
+
+    askPassphrase(text) {
         return new Promise((resolve, reject) => {
-            this.alert.askPassphrase(`Plugin wants to create new MIT ${params.symbol}. It will be issued for by your Avatar ${params.avatar}`, (passphrase) => {
+            this.alert.askPassphrase(text, (passphrase) => {
                 if (passphrase) resolve(passphrase)
                 else reject(Error('ERR_USER_CONFIRMATION_FAILED'))
             })

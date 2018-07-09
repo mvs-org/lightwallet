@@ -83,6 +83,10 @@ export class WalletServiceProvider {
         return Metaverse.wallet.fromMnemonic(mnemonic)
     }
 
+    verifyMessage(message, address, signature){
+        return Metaverse.message.verify(message,address,Buffer.from(signature,'hex'))
+    }
+
     getHDNodeFromSeed(seed) {
         return Metaverse.wallet.fromSeed(seed, Metaverse.networks[this.globals.network])
     }
