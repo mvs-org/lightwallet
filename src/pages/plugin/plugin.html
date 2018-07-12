@@ -5,6 +5,5 @@
 </ion-header>
 
 <ion-content padding>
-    {{random}}
     <iframe *ngIf="urlSafe" #iframe frameborder="0" style="width:100%;height:90%;" [src]="urlSafe" sandbox="allow-scripts allow-top-navigation allow-same-origin"></iframe>
 </ion-content>

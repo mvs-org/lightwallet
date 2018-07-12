@@ -71,11 +71,11 @@ export class PluginPage {
             }, event.origin)
         } else {
             this.evaluateResponse(event.data)
-                .then(tx => {
+                .then(response => {
                     source.postMessage({
                         topic: 'avatars',
                         nonce: event.data.nonce,
-                        value: tx
+                        value: response
                     }, event.origin)
                 })
                 .catch(error => {
@@ -153,7 +153,10 @@ export class PluginPage {
     unlock() {
         return this.askPassphrase('Enter passphrase to unlock wallet')
             .then(passphrase => this.walletProvider.getWallet(passphrase))
-            .then(wallet => this.wallet = wallet);
+            .then(wallet => {
+                this.wallet = wallet;
+                return true;
+            });
     }
 
     askPassphrase(text) {
