@@ -236,7 +236,7 @@
   "IMPORT_QRCODE": "โปรดใช้ QRCode ใน app.myetpwallet.com ในส่วนการตั้งค่า หลังจากนั้นให้เชื่อมกับโทรศัพท์",
 
   "MESSAGE.ONE_TX_PER_BLOCK": "โปรดรับทราบว่า ปัจจุบันบัญชีหนึ่งๆจะสามารถบอร์ดแคสได้เพียง 1 ธุรกรรมต่อบล็อก",
-  "MESSAGE.INSUFFICIENT_BALANCE": "ยอดคงเหลือไม่เพียงพอ โปรดตรวจสอบยอดคงเหลือของคุณอีกครั้ง"
+  "MESSAGE.INSUFFICIENT_BALANCE": "ยอดคงเหลือไม่เพียงพอ โปรดตรวจสอบยอดคงเหลือของคุณอีกครั้ง",
 
     "LOGIN.MOBILEWEB_ANDROID1": "ดาวน์โหลดแอป MyETPWallet บน Google Play Store (แนะนำ):",
   "LOGIN.MOBILEWEB_ANDROID2": "หรือดาวน์โหลดแอปจากที่นี่โดยตรง:",
@@ -249,5 +249,102 @@
   "ISSUE.TEN_MILLION": "สืบล้าน",
   "ISSUE.ONE_HUNDRED_MILLION": "หนึ่งร้อยล้าน",
   "ISSUE.ONE_BILLION": "หนึ่งพันล้าน",
-  "ISSUE.TEN_BILLION": "สิบพันล้าน"
+  "ISSUE.TEN_BILLION": "สิบพันล้าน",
+  
+  "AVATARS": "อวตาร",
+  "AVATARS.CREATE_AVATAR_BTN": "สร้าง",
+  "AVATARS.NO_AVATARS": "คุณยังไม่มีอวตาร กดปุ่มสร้างเพื่อสร้างอวตารแรกของคุณ!",
+
+  "CREATE_AVATAR": "สร้างอวตาร",
+  "CREATE_AVATAR.CREATE_BTN": "สร้างอวตาร",
+  "CREATE_AVATAR.SYMBOL": "สัญลักษณ์",
+  "CREATE_AVATAR.ADDRESS": "ที่อยู่",
+
+  "RECIPIENT_AVATAR": "อวตารของผู้รับ",
+  "SEND_TO_AVATAR": "ส่งให้อวตาร",
+  "HEADLINE_MST": "Metaverse Smart Token",
+  "HEADLINE_MIT": "Metaverse Identifiable Token",
+  "NO_MIT_TEXT": "คุณยังไม่มี MIT หากต้องการสร้าง MIT โปรดสร้างอวตารก่อน",
+  "MIT_REGISTER.SYMBOL": "สัญลักษณ์",
+  "MIT_REGISTER.CONTENT": "เนื้อหา",
+
+  "IMPORT.WORDS_REMAINING": " คำที่เหลืออยู่",
+  "IMPORT.WORDS_ALL_OK": "พร้อมจะนะเข้า",
+  "IMPORT.WORDS_TOO_MANY": "มีคำมากกว่า 24 คำถูกระบุมา",
+  "IMPORT.INCORRECT_WORD": "จำนวนคำไม่ถูกต้อง. ",
+  "IMPORT.INCORRECT_MNEMONIC": "นิวโมนิกนี้ไม่ถูกต้อง โปรดตรวจสอบลำดับของคำ",
+
+  "AVATARS.MY_CERTS": "ใบรับรองของฉัน",
+  "AVATARS.SECONDARY_ISSUE": "Secondary Issue",
+  "AVATARS.DOMAIN": "โดเมน",
+  "AVATARS.NAMING": "การตั้งชื่อ",
+  "OWNER": "เจ้าของ",
+  "HASH": "แฮช",
+  "RECEIVE.ADDRESS_NO_MST": "ที่อยู่นี้ไม่มี MST",
+
+  "ISSUE.SECONDARYISSUE_THRESHOLD": "Secondary Issue threshold",
+  "ISSUE.SECONDARYISSUE_TYPE": "สามารถ Secondary Issue ในอนาคตได้",
+  "ISSUE.SECONDARYISSUE_DISABLED": "ไม่สามารถ Secondary Issue ได้",
+  "ISSUE.SECONDARYISSUE_UNLIMITED": "Secondary Issue จะต้องมีใบรับรองเท่านั้น",
+  "ISSUE.SECONDARYISSUE_RATE": "Secondary Issue จะต้องมีใบรับรองและเงื่อนไขที่ถูกต้อง",
+
+  "TOTAL_AVAILABLE_BALANCE": "ที่มีเหลืออยู่ทั้งหมด",
+  "AVATAR_AVAILABLE_BALANCE": "ที่มีเหลืออยู่ในอวตาร",
+
+  "ISSUE.SYMBOL_AVAILABLE": "โดเมนนี้ยังมีอยู่ หลังจากออก MST นี้ คุณจะได้รับใบรับรองโดเมน",
+  "ISSUE.SYMBOL_DOMAIN_OWNER": "อวตารของคุณเป็นเจ้าของใบรับรองโดเมนที่จะสร้าง MST นี้",
+  "ISSUE.SYMBOL_NAMING_OWNER": "อวตารของคุณเป็นเจ้าใบรับรองการตั้งชื่อที่จะสร้าง MST นี้",
+  "ISSUE.SYMBOL_ALREADY_EXIST": "สัญลักษณ์ MST นี้ถูกลงทะเบียนไว้แล้ว",
+  "ISSUE.SYMBOL_NOT_CERT_OWNER": "อวตารของคุณไม่ได้เป็นเจ้าของใบรับรองโดเมนที่จะสร้าง MST นี้",
+  "ISSUE.SYMBOL_ERROR_LOADING_MSTS": "พบข้อผิดพลาดขณะโหลด MST โปรดตรวจสอบว่าสัญลักษณ์ MST นี้ยังไม่ได้ถูกใช้",
+  "ISSUE.SYMBOL_ERROR_LOADING_CERTS": "พบข้อผิดพลาดในใบรับรองโดเมน โปรดตรวจสอบว่าคุณมีสิทธิ์ที่จะสร้างสัญลักษณ์นี้",
+
+  "REGISTER_MST": "ลงทะเบียน MST",
+  "REGISTER_MIT": "ลงทะเบียน MIT",
+  "TRANSFER_MIT": "ส่งต่อ MIT",
+
+  "AVATAR_RECIPIENT_ADDRESS": "ที่อยู่ของอวตารนี้คือ {{addess}} มันถูกอัพเดทครั้งสุดท้ายเมื่อ {{last_update}}",
+  "MIT.STATUS": "สถานะ",
+  "CREATOR": "ผู้สร้าง",
+  "CONTENT": "เนื้อหา",
+  "MIT.TX_HASH": "สร้างใน",
+  "MIT.HISTORY": "ประวัติธุรกรรม",
+  "CHECK_IN_EXPLORER": "ตรวจสอบใน Explorer",
+
+  "ISSUE.MAX_SUPPLY_TOO_HIGH": "จำนวนมากสุดของอุปทาน*จำนวนหลักขอเลขมีมากเกินไป โปรดลดค่าใดค่าหนึ่ง",
+  "CREATE_AVATAR.NO_ADDRESS_1ETP": "คุณไม่มีที่อยู่ในที่มีอย่างน้อย 1 ETP โปรดส่งอย่างน้อย 1 ETP ไปที่ที่อยู่ที่ยังไม่ได้เชื่อมกับอวตารเพื่อที่จะสร้างอวตารของคุณ",
+  "MAINNET": "เมนเน็ต",
+  "TESTNET": "เทสเน็ต",
+
+  "CREATE_AVATAR.CONFIRMATION_TITLE": "สร้างอวตารต้องชำระ 1 TP.",
+  "CREATE_AVATAR.CONFIRMATION_SUBTITLE": "คุณมั่นใจที่จะสร้างอวตาร?",
+  "ISSUE.NO_AVATAR": "คุณต้องมีอวตารถึงจะสร้าง MST ได้ โปรดสร้างอวตารก่อน",
+  "ISSUE.SELECT_AVATAR": "โปรดเลือกอวตารที่จะเป็นผู้ออกก่อน",
+  "ISSUE.NO_AVATAR_PLACEHOLDER": "ไม่มีอวตาร",
+  "MIT_REGISTER.AVATAR_NAME": "ชื่ออวตารผู้รับ",
+  "MIT_REGISTER.NO_AVATAR": "คุณต้องมีอวตารเพื่อลงทะเบียน MIT โปรดสร้างอวตารก่อน",
+  "MIT_REGISTER.RECIPIENT_ADDRESS": "ที่อยู่อวตารผู้รับ",
+  "MIT_REGISTER.SELECT_AVATAR": "โปรดเลือกที่อยู่อวตารผู้รับก่อน",
+  "CREATE_AVATAR.AVATAR_ALREADY_EXIST": "อวตารนี้ถูกลงทะเบียนไปแล้ว",
+  "MIT_REGISTER.MIT_ALREADY_EXIST": "สัญลักษณ์ MIT นี้ถูกลงทะเบียนไปแล้ว",
+
+  "SEND_TO_ONE": "ส่งไปหนึ่งผู้รับ",
+  "SEND_MORE": "ส่งไปหลายผู้รับ",
+  "RECIPIENT": "ผู้รับ",
+  "ADD_RECIPIENT": "เพิ่มผู้รับ",
+  "REMOVE_RECIPIENT": "ลดผู้รับ",
+  "TOTAL_TO_SEND": "ทั้งหมดที่จะส่ง",
+
+  "SEND_MORE.TOTAL_MORE_AVAILABLE": "จำนวนทั้งหมดที่มีสูงกว่าที่คุณมี",
+  "SEND_MORE.WRONG_FILE": "ไม่สามารถที่จะอ่านไฟล์นี้ได้ โปรดตรวจสอบฟอร์แมต หรือคุณอาจดาวน์โหลดไฟล์ CSV และใช้เทมเพลตในนั้น",
+
+  "IMPORT_FROM_CSV": "นำเจ้าจาก CSV",
+  "DOWNLOAD_CSV": "ดาวน์โหลด CSV",
+  "MESSAGE.SEND_MORE_IMPORT_CSV_TOO_MANY_RECIPIENT_TITLE": "จำนวนผู้รับมากเกินไป",
+  "MESSAGE.SEND_MORE_IMPORT_CSV_TOO_MANY_RECIPIENT_BODY": "ไฟล์นี้มีจำนวนผู้รับมากเกินไป จำนวนผู้รับสูงสุดต่อไฟล์ถูกจำกัดอยู่ที่ ",
+
+  "TRANSACTION": "ธุรกรรม",
+  "LOCKED_UNTIL": "ล็อกจนกระทั่ง",
+  "LOCKED_FOR_BLOCKS": "ล็อกจน",
+  "DEPOSITS": "ฝาก"
 }
