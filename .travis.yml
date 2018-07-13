@@ -24,7 +24,6 @@ script:
 - npm run test
 after_script:
 - ./node_modules/ionic/bin/ionic cordova build browser --release --prod
-- ln -s platform/browser/www public
 notifications:
   pushover:
     api_key:
