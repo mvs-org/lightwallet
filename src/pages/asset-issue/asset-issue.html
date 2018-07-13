@@ -25,7 +25,7 @@
     <form #sendForm="ngForm" style="padding-bottom: 0;">
         <ion-list style="padding-bottom: 0;">
 
-            <ion-item [ngClass]="{'error-border':!validSymbol(symbol) || symbol_check == 'exist' || symbol_check == 'not_cert_owner'}">
+            <ion-item [ngClass]="{'error-border':!validSymbol(symbol) || symbol_check == 'exist' || symbol_check == 'not_domain_owner'}">
                 <ion-label color="primary" floating>{{"ISSUE.SYMBOL"|translate}}</ion-label>
                 <ion-input class="uppercase" name="symbol" [(ngModel)]="symbol" (ngModelChange)="symbolChanged($event)" maxlength="63" required></ion-input>
             </ion-item>
@@ -59,7 +59,7 @@
                 <ion-badge item-end color="primary">{{asset_decimals}}</ion-badge>
             </ion-item>
             <ion-item>
-                <ion-range min="0" max="8" step="1" pin="true" color="primary" [(ngModel)]="asset_decimals" name="asset_decimals" (ngModelChange)="maxSupplyChanged($event)">
+                <ion-range min="0" max="8" step="1" pin="true" snaps="true" color="primary" [(ngModel)]="asset_decimals" name="asset_decimals" (ngModelChange)="maxSupplyChanged($event)">
                     <ion-label range-left>0</ion-label>
                     <ion-label range-right>8</ion-label>
                 </ion-range>
@@ -116,6 +116,20 @@
                         <ion-option selected="true" value="auto">{{"AUTO"| translate}}</ion-option>
                         <ion-option *ngFor="let addressbalance of myaddressbalances" value="{{addressbalance.address}}">{{addressbalance.address}} - {{addressbalance.balance | format : decimals }} {{selectedAsset}}</ion-option>
                     </ion-select>
+                </ion-item>
+                <br/>
+                <ion-item no-lines>
+                    <ion-label color="primary">{{"TRANSFER_FEE_DISTRIBUTION" | translate}}</ion-label>
+                </ion-item>
+                <ion-item no-lines>
+                    <span class="rangeTextLeft">{{"MINERS" | translate}}</span>
+                    <span class="right">{{"DEVELOPERS" | translate}}</span>
+                </ion-item>
+                <ion-item>
+                    <ion-range class="bountyFeeRange" min="0" max="80" step="10" snaps="true" color="primary" [(ngModel)]="bounty_fee" name="bounty_fee">
+                        <ion-label range-left>{{(100-bounty_fee)*10/100}} ETP</ion-label>
+                        <ion-label range-right class="right">{{bounty_fee*10/100}} ETP</ion-label>
+                    </ion-range>
                 </ion-item>
                 <br>
                 <button ion-button full [disabled]="!sendForm.form.valid||!validSymbol(symbol)||symbol_check=='exist'||symbol_check=='not_cert_owner'||!validMaxSupply(max_supply, asset_decimals)||(max_supply=='custom' && !validMaxSupplyCustom(custom_max_supply, asset_decimals))||!validDecimals(asset_decimals)||!validDescription(description)||(issue_address=='custom' && !validIssueAddress(custom_issue_address))||!validPassword(passphrase)" (click)="preview()" color="primary">

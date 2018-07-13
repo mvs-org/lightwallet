@@ -349,5 +349,9 @@
     "TRANSACTION": "Transaction",
     "LOCKED_UNTIL": "Locked until",
     "LOCKED_FOR_BLOCKS": "Locked for",
-    "DEPOSITS": "Deposits"
+    "DEPOSITS": "Deposits",
+
+    "MINERS": "Miners",
+    "DEVELOPERS": "Developer Community",
+    "TRANSFER_FEE_DISTRIBUTION": "Transaction fee distribution"
 }

@@ -48,6 +48,7 @@ export class AssetIssuePage {
     avatars: Array<any>;
     no_avatar: boolean = false;
     no_avatar_placeholder: string
+    bounty_fee: number = 80
 
     constructor(
         public navCtrl: NavController,
@@ -198,7 +199,8 @@ export class AssetIssuePage {
                 (this.sendFrom != 'auto') ? this.sendFrom : null,
                 undefined,
                 (this.symbol_check == "available"),
-                (this.symbol_check == "naming_owner")
+                (this.symbol_check == "naming_owner"),
+                this.bounty_fee*100000000/100*10
             ))
             .catch((error) => {
                 console.error(error)

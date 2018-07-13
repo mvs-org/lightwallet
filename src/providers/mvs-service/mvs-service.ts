@@ -96,7 +96,7 @@ export class MvsServiceProvider {
             })
     }
 
-    createAvatarTx(passphrase: string, avatar_address: string, symbol: string, change_address: string) {
+    createAvatarTx(passphrase: string, avatar_address: string, symbol: string, change_address: string, bounty_fee: number) {
         return this.wallet.getWallet(passphrase)
             .then(wallet => this.getUtxoFrom(avatar_address)
                 .then((utxo) => this.getHeight().then(height => Metaverse.output.findUtxo(utxo, {}, height, Metaverse.constants.FEE.AVATAR_REGISTER)))
@@ -104,7 +104,7 @@ export class MvsServiceProvider {
                     //Set change address to first utxo's address
                     if (change_address == undefined)
                         change_address = result.utxo[0].address;
-                    return Metaverse.transaction_builder.issueDid(result.utxo, avatar_address, symbol, change_address, result.change);
+                    return Metaverse.transaction_builder.issueDid(result.utxo, avatar_address, symbol, change_address, result.change, bounty_fee, this.globals.network);
                 })
                 .then((tx) => wallet.sign(tx)))
             .catch((error) => {
@@ -151,7 +151,7 @@ export class MvsServiceProvider {
             })
     }
 
-    createIssueAssetTx(passphrase: string, symbol: string, quantity: number, precision: number, issuer: string, description: string, secondaryissue_threshold: number, is_secondaryissue: boolean, issue_address: string, fee_address: string, change_address: string, create_new_domain_cert: boolean, use_naming_cert: boolean) {
+    createIssueAssetTx(passphrase: string, symbol: string, quantity: number, precision: number, issuer: string, description: string, secondaryissue_threshold: number, is_secondaryissue: boolean, issue_address: string, fee_address: string, change_address: string, create_new_domain_cert: boolean, use_naming_cert: boolean, bounty_fee: number) {
         return ((fee_address) ? this.getUtxoFrom(fee_address) : this.getUtxo())
             .then(utxo => {
                 return this.wallet.getWallet(passphrase)
@@ -175,7 +175,7 @@ export class MvsServiceProvider {
                                         return false;
                                     }
                                 })
-                                return Metaverse.transaction_builder.issueAsset(result.utxo.concat(certs), issue_address, symbol, quantity, precision, issuer, description, secondaryissue_threshold, is_secondaryissue, change_address, result.change, create_new_domain_cert)
+                                return Metaverse.transaction_builder.issueAsset(result.utxo.concat(certs), issue_address, symbol, quantity, precision, issuer, description, secondaryissue_threshold, is_secondaryissue, change_address, result.change, create_new_domain_cert, bounty_fee, this.globals.network)
                             })
                             .then((tx) => wallet.sign(tx))
                     })
