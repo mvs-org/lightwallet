@@ -17,7 +17,7 @@ before_script:
 - "./node_modules/ionic/bin/ionic serve --no-open &"
 - sleep 30
 install:
-- npm install
+- npm install -g cordova ionic
 - npm run e2e-update
 script:
 - npm run e2e
