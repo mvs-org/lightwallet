@@ -20,4 +20,20 @@ page-create-avatar {
     .uppercase input {
         text-transform: uppercase;
     }
+
+    .bountyFeeRange .range-slider {
+        margin-right: 20%
+    }
+
+    .bountyFeeRange.range-md .range-bar:not(.range-bar-active) {
+        width: calc(125% + 25px);
+    }
+
+    .right {
+        float: right;
+    }
+
+    .rangeTextLeft {
+        padding: 8px;
+    }
 }

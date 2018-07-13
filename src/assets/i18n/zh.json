@@ -349,6 +349,10 @@
   "TRANSACTION": "交易",
   "LOCKED_UNTIL": "解锁区块",
   "LOCKED_FOR_BLOCKS": "锁定区块数",
-  "DEPOSITS": "存款"
+  "DEPOSITS": "存款",
+
+  "MINERS": "矿工",
+  "DEVELOPERS": "社区开发者",
+  "TRANSFER_FEE_DISTRIBUTION": "交易费用分配"
 
 }
