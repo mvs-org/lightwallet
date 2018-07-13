@@ -58,6 +58,13 @@
     color: #32db64;
 }
 
+.advice {
+    font-size: 1.2rem;
+    color: rgb(148, 148, 148);
+    padding-left: 16px;
+    margin-top: 10px;
+}
+
 .alert-sub-title{
     -webkit-user-select: text;
     -moz-user-select: text;
@@ -84,6 +91,9 @@
 // ░     ░ ░  ░ ░                ░      ░  ░   ░      ░    ░
 
 .theme-noctilux{
+  .wrong-input div{
+      color: red !important;
+  }
   background-color: #383838;
     .content{
         background-color: #202020;

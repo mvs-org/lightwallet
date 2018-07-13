@@ -353,5 +353,9 @@
 
     "MINERS": "Miners",
     "DEVELOPERS": "Developer Community",
-    "TRANSFER_FEE_DISTRIBUTION": "Transaction fee distribution"
+    "TRANSFER_FEE_DISTRIBUTION": "Transaction fee distribution",
+
+    "HELP.CREATE_AVATAR_NAME": "Your Avatar name is a unique symbol. It can contain numbers, uppercase letters, lowercase letters, dots, dashes, underscores and @. It can be used instead of your ETP address to receive ETP and other assets.",
+    "HELP.CREATE_AVATAR_LINKED_ADDRESS": "Your Avatar will be linked to this address."
+
 }

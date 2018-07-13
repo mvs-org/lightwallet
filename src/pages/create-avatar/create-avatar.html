@@ -18,6 +18,7 @@
                 <ion-label color="primary" floating>{{"CREATE_AVATAR.SYMBOL" | translate}}</ion-label>
                 <ion-input name="symbol" [(ngModel)]="symbol" maxlength="63" required></ion-input>
             </ion-item>
+            <div no-lines class="advice">{{"HELP.CREATE_AVATAR_NAME" | translate}}</div>
             <ion-item *ngIf="list_all_avatars.indexOf(symbol) !== -1" no-lines class="wrong-input">{{"CREATE_AVATAR.AVATAR_ALREADY_EXIST" | translate}}</ion-item>
 
             <ion-item [ngClass]="{'error-border': !validAddress(avatar_address)}">
@@ -27,6 +28,7 @@
                 </ion-select>
                 <ion-input *ngIf="addressbalances.length == 0" disabled></ion-input>
             </ion-item>
+            <div no-lines class="advice">{{"HELP.CREATE_AVATAR_LINKED_ADDRESS" | translate}}</div>
             <ion-item *ngIf="addressbalances.length == 0" no-lines class="wrong-input">{{"CREATE_AVATAR.NO_ADDRESS_1ETP" | translate}}</ion-item>
 
             <ion-item [ngClass]="{'error-border': !validPassword(passphrase)}">
