@@ -104,8 +104,8 @@
       "cordova-plugin-statusbar": {},
       "cordova-plugin-device": {},
       "cordova-plugin-ionic-webview": {},
-      "cordova-plugin-ionic-keyboard": {},
-      "ionic-plugin-keyboard": {}
+      "ionic-plugin-keyboard": {},
+      "cordova-plugin-ionic-keyboard": {}
     },
     "platforms": [
       "ios",
