@@ -22,7 +22,6 @@ install:
 script:
 - npm run e2e
 - npm run test
-after_script:
 - ./node_modules/ionic/bin/ionic cordova build browser --release --prod
 notifications:
   pushover:
