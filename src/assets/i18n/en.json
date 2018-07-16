@@ -260,7 +260,7 @@
     "CREATE_AVATAR": "Create Avatar",
     "CREATE_AVATAR.CREATE_BTN": "Create Avatar",
     "CREATE_AVATAR.SYMBOL": "Symbol",
-    "CREATE_AVATAR.ADDRESS": "Address",
+    "CREATE_AVATAR.ADDRESS": "Linked address",
 
     "RECIPIENT_AVATAR": "Recipient avatar",
     "SEND_TO_AVATAR": "Send to avatar",
@@ -356,6 +356,9 @@
     "TRANSFER_FEE_DISTRIBUTION": "Transaction fee distribution",
 
     "HELP.CREATE_AVATAR_NAME": "Your Avatar name is a unique symbol. It can contain numbers, uppercase letters, lowercase letters, dots, dashes, underscores and @. It can be used instead of your ETP address to receive ETP and other assets.",
-    "HELP.CREATE_AVATAR_LINKED_ADDRESS": "Your Avatar will be linked to this address."
+    "HELP.CREATE_AVATAR_LINKED_ADDRESS": "Your Avatar will be linked to this address.",
+
+    "CREATE_AVATAR.AVATAR_NAME_TOO_SHORT": "The Avatar name needs to be at least 3 characters",
+    "SUBTITLE.CREATE_AVATAR_ADDRESS": "You can link your Avatar only to an address with at least 1 ETP available"
 
 }

@@ -23,6 +23,7 @@ export class CreateAvatarPage {
     addressbalances: Array<AddressBalance> = []
     list_all_avatars: Array<string> = [];
     bounty_fee: number = 80
+    addressSelectOptions: any
 
     constructor(
         public navCtrl: NavController,
@@ -50,6 +51,11 @@ export class CreateAvatarPage {
     }
 
     ionViewDidLoad() {
+        this.translate.get('SUBTITLE.CREATE_AVATAR_ADDRESS').subscribe((message: string) => {
+            this.addressSelectOptions = {
+                subTitle: message
+            };
+        })
         this.loadListAvatars()
             .catch(console.error);
     }
