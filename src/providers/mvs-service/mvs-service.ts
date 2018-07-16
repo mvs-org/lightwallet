@@ -30,15 +30,13 @@ export class MvsServiceProvider {
         private event: Events,
         private storage: Storage
     ) {
-        this.setNetwork()
         this.event.subscribe("network_update", (settings) => {
             console.info('mvs service network update caused by network update event')
-            this.setNetwork()
+            this.blockchain = Blockchain({ network: this.globals.network })
         })
+        this.blockchain = Blockchain({ network: this.globals.network })
     }
 
-    private setNetwork = () => this.globals.getNetwork()
-        .then(network => this.blockchain = Blockchain({ network: network }))
 
     createSendTx(passphrase: string, asset: string, recipient_address: string, recipient_avatar: string, quantity: number, from_address: string, change_address: string) {
         let target = {};
@@ -262,6 +260,11 @@ export class MvsServiceProvider {
 
     getListMit = () => this.blockchain.MIT.list()
 
+    getBaseCurrency = () => this.storage.get('base')
+        .then(base=>(base)?base:'USD')
+
+    setBaseCurrency = (currency) => this.storage.set('base', currency).then(()=>this.event.publish('currency_changes',currency))
+
     getBalances() {
         return this.storage.get('balances')
             .then((balances: any) => {
@@ -477,6 +480,9 @@ export class MvsServiceProvider {
             })
     }
 
+    getTickers = () => {
+        return this.blockchain.pricing.tickers();
+    }
 
     assetOrder() {
         return this.storage.get('asset_order')

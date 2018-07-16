@@ -356,6 +356,9 @@
     "TRANSFER_FEE_DISTRIBUTION": "Transaction fee distribution",
 
     "HELP.CREATE_AVATAR_NAME": "Your Avatar name is a unique symbol. It can contain numbers, uppercase letters, lowercase letters, dots, dashes, underscores and @. It can be used instead of your ETP address to receive ETP and other assets.",
-    "HELP.CREATE_AVATAR_LINKED_ADDRESS": "Your Avatar will be linked to this address."
+    "HELP.CREATE_AVATAR_LINKED_ADDRESS": "Your Avatar will be linked to this address.",
+    "ACCOUNT.TOTAL_VALUE" : "Total value",
+    "SETTINGS.BASE_CURRENCY" : "Base Currency",
+    "SETTINGS.BASE_CURRENCY_TEXT" : "Choose your base currency that is used for value estimation."
 
 }

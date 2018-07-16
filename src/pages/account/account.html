@@ -35,7 +35,7 @@
             <ion-row>
                 <ng-container class="asset-container">
                     <ion-col class="asset-container">
-                        <etp-card *ngIf="balances!=undefined" [balance]="balances.ETP"></etp-card>
+                        <etp-card *ngIf="balances!=undefined" [balance]="balances.ETP" [tickers]="tickers.ETP" [base]="base"></etp-card>
                     </ion-col>
                 </ng-container>
             </ion-row>

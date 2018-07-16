@@ -30,6 +30,8 @@ export class SettingsPage {
             .then(() => this.nav.setRoot("AccountPage"))
     }
 
+    base = () => this.nav.push("BaseCurrencyPage")
+
     ExportWalletPage = e => this.nav.push("ExportWalletPage")
 
     /**

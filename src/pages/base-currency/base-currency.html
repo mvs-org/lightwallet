@@ -1,0 +1,16 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title> {{"SETTINGS.BASE_CURRENCY" | translate}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+    <ion-list>
+        <button ion-item (click)="select(currency)" *ngFor="let currency of currencies" [disabled]="currency==current_base">{{currency}}</button>
+    </ion-list>
+
+</ion-content>
