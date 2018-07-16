@@ -260,7 +260,7 @@
     "CREATE_AVATAR": "Create Avatar",
     "CREATE_AVATAR.CREATE_BTN": "Create Avatar",
     "CREATE_AVATAR.SYMBOL": "Symbol",
-    "CREATE_AVATAR.ADDRESS": "Address",
+    "CREATE_AVATAR.ADDRESS": "Linked address",
 
     "RECIPIENT_AVATAR": "Recipient avatar",
     "SEND_TO_AVATAR": "Send to avatar",
@@ -359,6 +359,9 @@
     "HELP.CREATE_AVATAR_LINKED_ADDRESS": "Your Avatar will be linked to this address.",
     "ACCOUNT.TOTAL_VALUE" : "Total value",
     "SETTINGS.BASE_CURRENCY" : "Base Currency",
-    "SETTINGS.BASE_CURRENCY_TEXT" : "Choose your base currency that is used for value estimation."
+    "SETTINGS.BASE_CURRENCY_TEXT" : "Choose your base currency that is used for value estimation.",
+
+    "CREATE_AVATAR.AVATAR_NAME_TOO_SHORT": "The Avatar name needs to be at least 3 characters",
+    "SUBTITLE.CREATE_AVATAR_ADDRESS": "You can link your Avatar only to an address with at least 1 ETP available"
 
 }
