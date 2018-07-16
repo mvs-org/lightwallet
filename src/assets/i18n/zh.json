@@ -353,6 +353,8 @@
 
   "MINERS": "矿工",
   "DEVELOPERS": "社区开发者",
-  "TRANSFER_FEE_DISTRIBUTION": "交易费用分配"
+  "TRANSFER_FEE_DISTRIBUTION": "交易费用分配",
+
+  "HELP.CREATE_AVATAR_NAME": "数字身份的名字是独特的字符，可包含数字、大写字母、小写字母、点、破折号、下划线和@，可代替ETP地址来接收ETP和其他资产。"
 
 }
