@@ -51,7 +51,10 @@
                     <ion-card-content>
                         <h1>{{address}}</h1>
                         <p *ngIf="displayType == 'asset'"><b>{{selectedAsset}}: </b>{{(addressBalancesObject[address] && addressBalancesObject[address]['MST'] && addressBalancesObject[address]['MST'][selectedAsset])?format(addressBalancesObject[address]['MST'][selectedAsset].available,addressBalancesObject[address]['MST'][selectedAsset].decimals):0}}</p>
-                        <p *ngIf="displayType == 'ETP'"><b>ETP: </b>{{(addressBalancesObject[address] && addressBalancesObject[address].ETP )?format(addressBalancesObject[address].ETP.available,addressBalancesObject[address].ETP.decimals):0}}</p>
+                        <p *ngIf="displayType == 'ETP'">
+                          <b>ETP: </b>{{(addressBalancesObject[address] && addressBalancesObject[address].ETP )?format(addressBalancesObject[address].ETP.available,addressBalancesObject[address].ETP.decimals):0}}
+                          <span class="right"><b>{{'ACCOUNT.FROZEN'|translate}}: </b>{{(addressBalancesObject[address] && addressBalancesObject[address].ETP )?format(addressBalancesObject[address].ETP.frozen,addressBalancesObject[address].ETP.decimals):0}}</span>
+                        </p>
                         <ng-container *ngIf="displayType == 'MST'">
                             <p *ngFor="let balance of addressbalances[address]">
                                 <b>{{balance.name}}: </b> {{format(balance.available, balance.decimals)}}
