@@ -11,6 +11,7 @@ import { AlertProvider } from '../../providers/alert/alert';
 export class PluginDetailsPage {
 
     plugin: Plugin
+    installed: boolean
 
     constructor(
         public navCtrl: NavController,
@@ -20,6 +21,7 @@ export class PluginDetailsPage {
         private pluginService: PluginProvider
     ) {
         this.plugin = navParams.get('plugin')
+        this.installed = navParams.get('installed')
     }
 
     addPlugin(){

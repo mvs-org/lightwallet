@@ -19,7 +19,7 @@
         - {{permission}}
     </ion-item>
 
-    <form>
+    <form *ngIf="!installed">
         <ion-row class="padding-bottom">
             <ion-col>
                 <button type="submit" ion-button full icon-left (click)="addPlugin()" color="secondary">

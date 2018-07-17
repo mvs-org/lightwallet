@@ -22,11 +22,11 @@ export class PluginSettingsPage {
 
     addPlugin(url){
         this.pluginService.fetchPlugin(url)
-            .then((plugin: Plugin)=> this.navCtrl.push("PluginDetailsPage", {plugin: plugin}))
+            .then((plugin: Plugin)=> this.navCtrl.push("PluginDetailsPage", {plugin: plugin, installed: false}))
     }
 
     checkPlugin = (plugin) => {
-        this.navCtrl.push("PluginDetailsPage", {plugin: plugin})
+        this.navCtrl.push("PluginDetailsPage", {plugin: plugin, installed: true})
     }
 
     removePlugin = (name) => {
