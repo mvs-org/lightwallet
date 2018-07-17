@@ -361,10 +361,9 @@
     "SETTINGS.BASE_CURRENCY" : "Base Currency",
     "SETTINGS.BASE_CURRENCY_TEXT" : "Choose your base currency that is used for value estimation.",
 
-    "CREATE_AVATAR.AVATAR_NAME_TOO_SHORT": "The Avatar name needs to be at least 3 characters",
+    "CREATE_AVATAR.AVATAR_NAME_TOO_SHORT": "The Avatar name must be at least 3 characters long",
     "SUBTITLE.CREATE_AVATAR_ADDRESS": "You can link your Avatar only to an address with at least 1 ETP available",
 
-    "HELP.BOUNTY_FEE": "You can choose how your fee will be distributed, between the Miners and the Developer Community. This does not impact the fee that you pay for the transaction. The maximum share for Developer Community is 80%."
-
-
+    "HELP.BOUNTY_FEE": "You can choose how your fee will be distributed, between the Miners and the Developer Community. This does not impact the total fee that you pay for the transaction. The maximum share for the Developer Community is 80%."
+    
 }

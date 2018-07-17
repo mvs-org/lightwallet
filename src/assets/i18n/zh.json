@@ -355,6 +355,15 @@
   "DEVELOPERS": "社区开发者",
   "TRANSFER_FEE_DISTRIBUTION": "交易费用分配",
 
-  "HELP.CREATE_AVATAR_NAME": "数字身份的名字是独特的字符，可包含数字、大写字母、小写字母、点、破折号、下划线和@，可代替ETP地址来接收ETP和其他资产。"
+  "HELP.CREATE_AVATAR_NAME": "数字身份的名字是独特的字符，可包含数字、大写字母、小写字母、点、破折号、下划线和@，可代替ETP地址来接收ETP和其他资产。",
+  "HELP.CREATE_AVATAR_LINKED_ADDRESS": "您的数字身份会链接到这个地址",
+  "ACCOUNT.TOTAL_VALUE" : "总价值",
+  "SETTINGS.BASE_CURRENCY" : "对标货币",
+  "SETTINGS.BASE_CURRENCY_TEXT" : "请选择你用于估值的对标货币",
+
+  "CREATE_AVATAR.AVATAR_NAME_TOO_SHORT": "数字身份至少包含3个字母",
+  "SUBTITLE.CREATE_AVATAR_ADDRESS": "数字身份链接的地址余额至少为1个ETP",
+
+  "HELP.BOUNTY_FEE": "您可以选择如何在矿工和社区开发者之间分配费用，这不会影响你支付的交易费用。给予开发者的最高费用占比为80%。"
 
 }
