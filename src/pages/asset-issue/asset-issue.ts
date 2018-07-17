@@ -48,6 +48,7 @@ export class AssetIssuePage {
     avatars: Array<any>;
     no_avatar: boolean = false;
     no_avatar_placeholder: string
+    bounty_fee: number = 80
 
     constructor(
         public navCtrl: NavController,
@@ -174,7 +175,6 @@ export class AssetIssuePage {
     preview() {
         this.create()
             .then((tx) => {
-            console.log('transaction details: '+tx)
                 this.rawtx = tx.encode().toString('hex')
                 this.loading.dismiss()
             })
@@ -198,7 +198,8 @@ export class AssetIssuePage {
                 (this.sendFrom != 'auto') ? this.sendFrom : null,
                 undefined,
                 (this.symbol_check == "available"),
-                (this.symbol_check == "naming_owner")
+                (this.symbol_check == "naming_owner"),
+                this.bounty_fee*100000000/100*10
             ))
             .catch((error) => {
                 console.error(error)
@@ -342,22 +343,30 @@ export class AssetIssuePage {
         return this.mvs.listCerts()
             .then((certs) => {
                 this.certs = certs;
-                certs.forEach(cert=>{
-                    if(cert.attachment.cert == 'domain') {
-                        if(cert.attachment.owner == this.issuer_name) {
-                            this.list_my_domain_certs.push(cert.attachment.symbol)
-                        } else {
-                            this.list_domain_certs.push(cert.attachment.symbol)
-                        }
-                    } else if((cert.attachment.cert == 'naming') && (cert.attachment.owner == this.issuer_name)) {
-                        this.list_my_naming_certs.push(cert.attachment.symbol)
-                    }
-                })
+                this.checkCerts(certs);
             })
             .catch((error) => {
                 console.error(error)
                 this.error_loading_certs = true;
             })
+    }
+
+    checkCerts(certs){
+      this.list_my_domain_certs = [];
+      this.list_domain_certs = [];
+      this.list_my_naming_certs = [];
+      certs.forEach(cert=>{
+          if(cert.attachment.cert == 'domain') {
+              if(cert.attachment.owner == this.issuer_name) {
+                  this.list_my_domain_certs.push(cert.attachment.symbol)
+              } else {
+                  this.list_domain_certs.push(cert.attachment.symbol)
+              }
+          } else if((cert.attachment.cert == 'naming') && (cert.attachment.owner == this.issuer_name)) {
+              this.list_my_naming_certs.push(cert.attachment.symbol)
+          }
+      })
+      this.symbolChanged()
     }
 
     loadMsts(){
@@ -415,6 +424,7 @@ export class AssetIssuePage {
     }
 
     issuerChanged = () => {
+        this.checkCerts(this.certs)
         this.avatars.forEach((avatar) => {
             if(avatar.symbol == this.issuer_name) {
                 this.issue_address = avatar.address
