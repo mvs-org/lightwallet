@@ -39,7 +39,6 @@ export class TransactionsPage {
         console.log('Transactions page loaded')
         this.mvsServiceProvider.getFrozenOutputs()
             .then(outputs=>{
-                console.log(outputs)
                 this.frozen_outputs=outputs;
             })
         this.mvsServiceProvider.getHeight()
@@ -54,7 +53,7 @@ export class TransactionsPage {
     }
 
     depositProgress(start_height, locked_until){
-        return Math.round((this.height-start_height)/(locked_until-start_height)*100)
+        return Math.max(1, Math.min(99, Math.round((this.height-start_height)/(locked_until-start_height)*100)))
     }
 
     private showTxs(filter) {
