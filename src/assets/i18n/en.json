@@ -369,5 +369,8 @@
     "SETTINGS.PLUGINS": "Plugins",
     "SETTINGS.PLUGINS_TEXT": "Add third party extensions to the wallet.",
 
-    "PLUGIN_SETTINGS": "Plugin Settings"
+    "PLUGIN_SETTINGS": "Plugin Settings",
+    "PLUGIN_DETAILS": "Plugin details",
+    "PLUGIN_DETAILS.PERMISSIONS": "This plugin wants to get access to the following permissions:",
+    "ADD": "Add"
 }

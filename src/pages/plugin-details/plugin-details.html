@@ -1,0 +1,38 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>{{"PLUGIN_DETAILS" | translate}}</ion-title>
+    </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+    <h2 class="pageHeadline">{{plugin.name}}</h2>
+
+    <h4>Description:</h4>
+    <ion-item no-lines>{{plugin.description}}</ion-item>
+
+    <h4>Author:</h4>
+    <ion-item no-lines>{{plugin.author}}</ion-item>
+
+    <h4>{{"PLUGIN_DETAILS.PERMISSIONS" | translate}}</h4>
+    <ion-item no-lines *ngFor="let permission of plugin.config.permissions">
+        - {{permission}}
+    </ion-item>
+
+    <form>
+        <ion-row class="padding-bottom">
+            <ion-col>
+                <button type="submit" ion-button full icon-left (click)="addPlugin()" color="secondary">
+                    <ion-icon name="add"></ion-icon>
+                    {{"ADD" | translate}}
+                </button>
+            </ion-col>
+            <ion-col>
+                <button ion-button color="danger" full item-right icon-left (click)="cancel($event)">
+                    <ion-icon name="close"></ion-icon>
+                    {{'CANCEL'|translate}}
+                </button>
+            </ion-col>
+        </ion-row>
+    </form>
+</ion-content>

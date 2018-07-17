@@ -22,12 +22,7 @@ export class PluginSettingsPage {
 
     addPlugin(url){
         this.pluginService.fetchPlugin(url)
-            .then((plugin: Plugin)=>this.pluginService.addPlugin(plugin))
-            .then(()=>this.navCtrl.setRoot('AccountPage'))
-            .then(()=>this.events.publish('settings_update'))
-            .catch(error=>{
-                    this.alert.showError('Error',error.message)
-            })
+            .then((plugin: Plugin)=> this.navCtrl.push("PluginDetailsPage", {plugin: plugin}))
     }
 
     removePlugin = (name) => {
