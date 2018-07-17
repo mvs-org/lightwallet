@@ -25,8 +25,11 @@ export class PluginSettingsPage {
             .then((plugin: Plugin)=> this.navCtrl.push("PluginDetailsPage", {plugin: plugin}))
     }
 
+    checkPlugin = (plugin) => {
+        this.navCtrl.push("PluginDetailsPage", {plugin: plugin})
+    }
+
     removePlugin = (name) => {
-        console.log(name)
         this.pluginService.removePlugin(name)
             .then(()=>this.events.publish('settings_update'))
             .then(()=>this.loadPlugins())

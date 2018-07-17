@@ -8,6 +8,7 @@ export class PluginItemComponent {
 
     @Input() plugin: any;
     @Input() removePlugin: any;
+    @Input() checkPlugin: any;
 
     constructor() {
     }
