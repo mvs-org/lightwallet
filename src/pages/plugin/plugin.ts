@@ -1,4 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
+import { AppGlobals } from '../../app/app.global';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service'
 import { AlertProvider } from '../../providers/alert/alert';
@@ -25,6 +26,7 @@ export class PluginPage {
     constructor(
         public navCtrl: NavController,
         private mvs: MvsServiceProvider,
+        private globals: AppGlobals,
         private alert: AlertProvider,
         private walletProvider: WalletServiceProvider,
         public sanitizer: DomSanitizer,
@@ -43,6 +45,8 @@ export class PluginPage {
                 return Promise.resolve(this.plugin.config.permissions)
             case 'create-mit':
                 return this.createMIT(data.params)
+            case 'network':
+                return Promise.resolve(this.globals.network)
             case 'avatars':
                 return this.mvs.listAvatars()
             case 'sign':
