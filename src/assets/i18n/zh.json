@@ -184,7 +184,7 @@
 
   "IMPORT_MNEMONIC_TEXT_MOBILE": "你的私钥将会被你设置的密码加密并保存到你的手机里",
 
-  "RESET_MESSAGE_MOBILE": "所有的数据会被清除.再次登入,你将需要输入你的助记词或从桌面端的轻钱包扫描二维码.",
+  "RESET_MESSAGE_MOBILE": "所有数据（包括私钥）会被清除.再次登入,你将需要输入你的助记词或从桌面端的轻钱包扫描二维码.",
   "IMPORT.SCAN_QRCODE_TEXT": "导入我的钱包账号到我的手机",
   "IMPORT.SCAN_QRCODE_BUTTON":"扫描二维码",
 
