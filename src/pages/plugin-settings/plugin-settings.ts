@@ -11,6 +11,7 @@ import { AlertProvider } from '../../providers/alert/alert';
 export class PluginSettingsPage {
 
     plugins: Array<Plugin>
+    loading: boolean = true
 
     constructor(
         public navCtrl: NavController,
@@ -39,6 +40,7 @@ export class PluginSettingsPage {
         return this.pluginService.getPlugins()
             .then(plugins=>{
                 this.plugins=plugins
+                this.loading=false
             })
     }
 

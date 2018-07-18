@@ -374,5 +374,6 @@
     "PLUGIN_DETAILS.PERMISSIONS": "This plugin wants to get access to the following permissions:",
     "ADD": "Add",
     "PLUGIN.REMOVE": "Remove",
-    "PLUGIN.CHECK": "Check"
+    "PLUGIN.CHECK": "Check",
+    "PLUGIN.URL": "Plugin URL"
 }
