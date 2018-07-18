@@ -10,7 +10,9 @@
                         <h1>ETP</h1>
                         <h3>{{"AVAILABLE"|translate}}: {{balance.available | format : balance.decimals}}</h3>
                         <p *ngIf="tickers!==undefined">
-                            {{"ACCOUNT.TOTAL_VALUE"|translate}}: {{(balance.frozen + balance.available)/100000000*tickers[base].price | currency : base}}</p>
+                            <span *ngIf="base == 'BTC'">{{"ACCOUNT.TOTAL_VALUE"|translate}}: {{base}} {{(balance.frozen + balance.available)/100000000*tickers[base].price | number : '1.0-8'}}</span>
+                            <span *ngIf="base != 'BTC'">{{"ACCOUNT.TOTAL_VALUE"|translate}}: {{base}} {{(balance.frozen + balance.available)/100000000*tickers[base].price | number : '1.0-2'}}</span>
+                        </p>
                         <p>
                             {{"ACCOUNT.FROZEN"|translate}}: {{balance.frozen | format : balance.decimals}}<button ion-button clear color="primary" icon-left (click)="gotoDeposit()" class="deposit-button"><ion-icon name="log-in"></ion-icon></button>
                         </p>
