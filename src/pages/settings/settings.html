@@ -23,6 +23,13 @@
             <p [translate]="'SETTINGS.SHOW_QRCODE_TEXT'" style="white-space: normal;"></p>
         </button>
       </ion-row>
+      <ion-row>
+          <button ion-item (click)="base()" style="white-space: normal;">
+              <ion-icon name="logo-usd" item-start></ion-icon>
+              <h1 [translate]="'SETTINGS.BASE_CURRENCY'"></h1>
+              <p [translate]="'SETTINGS.BASE_CURRENCY_TEXT'" style="white-space: normal;"></p>
+          </button>
+      </ion-row>
       <ion-row *ngIf="!platform.is('mobile')">
         <button ion-item (click)="logout()" style="white-space: normal;">
             <ion-icon name="log-out" item-start></ion-icon>

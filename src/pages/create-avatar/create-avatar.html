@@ -18,15 +18,18 @@
                 <ion-label color="primary" floating>{{"CREATE_AVATAR.SYMBOL" | translate}}</ion-label>
                 <ion-input name="symbol" [(ngModel)]="symbol" maxlength="63" required></ion-input>
             </ion-item>
+            <div no-lines class="advice">{{"HELP.CREATE_AVATAR_NAME" | translate}}</div>
             <ion-item *ngIf="list_all_avatars.indexOf(symbol) !== -1" no-lines class="wrong-input">{{"CREATE_AVATAR.AVATAR_ALREADY_EXIST" | translate}}</ion-item>
+            <ion-item *ngIf="symbol.length > 0 && symbol.length < 3" no-lines class="wrong-input">{{"CREATE_AVATAR.AVATAR_NAME_TOO_SHORT" | translate}}</ion-item>
 
             <ion-item [ngClass]="{'error-border': !validAddress(avatar_address)}">
                 <ion-label color="primary" floating>{{"CREATE_AVATAR.ADDRESS"|translate}}</ion-label>
-                <ion-select *ngIf="addressbalances.length != 0" [(ngModel)]="avatar_address" name="avatar_address" multiple="false" okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}">
-                    <ion-option *ngFor="let addressbalance of addressbalances" value="{{addressbalance.address}}">{{addressbalance.address}} - {{addressbalance.available | format : 8 | number : '1.0-8'}} ETP</ion-option>
+                <ion-select *ngIf="addressbalances.length != 0" [(ngModel)]="avatar_address" name="avatar_address" multiple="false" okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}" [selectOptions]="addressSelectOptions">
+                    <ion-option *ngFor="let addressbalance of addressbalances" value="{{addressbalance.address}}">{{addressbalance.address}} - {{addressbalance.available | format : 8}} ETP</ion-option>
                 </ion-select>
                 <ion-input *ngIf="addressbalances.length == 0" disabled></ion-input>
             </ion-item>
+            <div no-lines class="advice">{{"HELP.CREATE_AVATAR_LINKED_ADDRESS" | translate}}</div>
             <ion-item *ngIf="addressbalances.length == 0" no-lines class="wrong-input">{{"CREATE_AVATAR.NO_ADDRESS_1ETP" | translate}}</ion-item>
 
             <ion-item [ngClass]="{'error-border': !validPassword(passphrase)}">
@@ -34,6 +37,29 @@
                 <ion-input name="passphrase" type="password" [(ngModel)]="passphrase" required></ion-input>
             </ion-item>
             <br>
+
+            <ion-item>
+                <ion-label>{{"SHOW_ADVANCED"|translate}}</ion-label>
+                <ion-toggle [(ngModel)]="showAdvanced" name="showAdvanced" checked="false"></ion-toggle>
+            </ion-item>
+
+            <div *ngIf="showAdvanced">
+                <br/>
+                <ion-item no-lines>
+                    <ion-label color="primary">{{"TRANSFER_FEE_DISTRIBUTION" | translate}}</ion-label>
+                </ion-item>
+                <div no-lines class="advice">{{"HELP.BOUNTY_FEE" | translate}}</div>
+                <ion-item no-lines>
+                    <span class="rangeTextLeft">{{"MINERS" | translate}}</span>
+                    <span class="right">{{"DEVELOPERS" | translate}}</span>
+                </ion-item>
+                <ion-item>
+                    <ion-range class="bountyFeeRange" min="0" max="80" step="10" snaps="true" color="primary" [(ngModel)]="bounty_fee" name="bounty_fee">
+                        <ion-label range-left>{{(100-bounty_fee)/100}} ETP</ion-label>
+                        <ion-label range-right class="right">{{bounty_fee/100}} ETP</ion-label>
+                    </ion-range>
+                </ion-item>
+            </div>
         </ion-list>
         <ion-row class="padding-bottom">
             <ion-col>

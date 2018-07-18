@@ -22,6 +22,8 @@ export class CreateAvatarPage {
     passphrase: string = ""
     addressbalances: Array<AddressBalance> = []
     list_all_avatars: Array<string> = [];
+    bounty_fee: number = 80
+    addressSelectOptions: any
 
     constructor(
         public navCtrl: NavController,
@@ -49,6 +51,11 @@ export class CreateAvatarPage {
     }
 
     ionViewDidLoad() {
+        this.translate.get('SUBTITLE.CREATE_AVATAR_ADDRESS').subscribe((message: string) => {
+            this.addressSelectOptions = {
+                subTitle: message
+            };
+        })
         this.loadListAvatars()
             .catch(console.error);
     }
@@ -59,7 +66,7 @@ export class CreateAvatarPage {
 
     create() {
         return this.alert.showLoading()
-            .then(() => this.mvs.createAvatarTx(this.passphrase, this.avatar_address, this.symbol, undefined))
+            .then(() => this.mvs.createAvatarTx(this.passphrase, this.avatar_address, this.symbol, undefined, this.bounty_fee*100000000/100))
             .then(tx => this.mvs.send(tx))
             .then((result) => {
                 this.navCtrl.pop()

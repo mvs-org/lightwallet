@@ -5,6 +5,23 @@ import { AlertProvider } from '../../providers/alert/alert';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
 
+class Ticker {
+    market_cap: number
+    percent_change_1h: number
+    percent_change_7d: number
+    percent_change_24h: number
+    price: number
+    volume_24h: number
+}
+
+class BaseTickers {
+    BTC: Ticker
+    USD: Ticker
+    CNY: Ticker
+    EUR: Ticker
+    JPY: Ticker
+}
+
 @IonicPage()
 @Component({
     selector: 'page-account',
@@ -21,6 +38,8 @@ export class AccountPage {
     balancesKeys: any
     theme: string
     icons: any
+    tickers = {}
+    base : string
 
     private syncinterval: any;
 
@@ -43,6 +62,19 @@ export class AccountPage {
     isSyncing = () => this.syncingSmall
 
     ionViewDidEnter() {
+
+        this.mvs.getBaseCurrency()
+            .then(base=>{
+                this.base=base;
+                return this.mvs.getTickers()
+                    .then(tickers => {
+                        Object.keys(tickers).forEach((symbol) => {
+                            let ticker : BaseTickers = tickers[symbol];
+                            this.tickers[symbol]=ticker;
+                        })
+                    })
+            })
+
         this.mvs.getAddresses()
             .then((addresses) => {
                 if (Array.isArray(addresses) && addresses.length)
