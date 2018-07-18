@@ -35,7 +35,7 @@ export class PluginProvider {
                 let p = []
                 plugins.forEach(plugin => {
                     if (plugin.name != name)
-                        plugins.push(plugin)
+                        p.push(plugin)
                 })
                 return this.storage.set('plugins', p)
             })
