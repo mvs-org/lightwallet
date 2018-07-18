@@ -23,7 +23,7 @@ install:
 script:
 - npm run e2e
 - npm run test
-- cordova build browser --release --prod
+- ionic cordova build browser --release --prod
 notifications:
   pushover:
     api_key:
