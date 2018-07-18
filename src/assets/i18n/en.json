@@ -377,7 +377,7 @@
     "PLUGIN_DETAILS.PERMISSIONS": "Permissions",
     "ADD": "Add",
     "PLUGIN.REMOVE": "Remove",
-    "PLUGIN.CHECK": "Check",
+    "PLUGIN.INFO": "Details",
     "PLUGIN.URL": "Plugin URL",
     "PLUGIN.PERMISSION_CREATE_MIT": "Create MITs",
     "PLUGIN.PERMISSION_NETWORK": "Know the current network (mainnet or testnet)",
@@ -387,6 +387,7 @@
     "PLUGIN.PERMISSION_UNLOCK": "After asking the password, can re-use it in the same session",
     "PLUGIN.PERMISSION_ADDRESSES": "Access my list of addresses",
     "PLUGIN.PERMISSION_BROADCAST": "Broadcast transactions",
-    "PLUGIN.GIVE_PERMISSION": "I accept to provide those permissions to this Plugin"
+    "PLUGIN.GIVE_PERMISSION": "I accept to provide those permissions to this Plugin",
+    "PLUGIN.ALREADY_ADDED": "This Plugin is already added to your wallet"
 
 }

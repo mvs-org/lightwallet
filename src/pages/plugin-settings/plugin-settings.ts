@@ -11,6 +11,8 @@ import { AlertProvider } from '../../providers/alert/alert';
 export class PluginSettingsPage {
 
     plugins: Array<Plugin>
+    plugins_names: Array<string>
+    plugin_already_added: boolean = false
     loading: boolean = true
 
     constructor(
@@ -22,8 +24,15 @@ export class PluginSettingsPage {
     }
 
     addPlugin(url){
+        this.plugin_already_added = false
         this.pluginService.fetchPlugin(url)
-            .then((plugin: Plugin)=> this.navCtrl.push("PluginDetailsPage", {plugin: plugin, installed: false}))
+            .then((plugin: Plugin)=> {
+                if(this.plugins_names.indexOf(plugin.name) < 0) {
+                    this.navCtrl.push("PluginDetailsPage", {plugin: plugin, installed: false})
+                } else {
+                    this.plugin_already_added = true
+                }
+            })
     }
 
     checkPlugin = (plugin) => {
@@ -44,6 +53,10 @@ export class PluginSettingsPage {
             .then(plugins=>{
                 this.plugins=plugins
                 this.loading=false
+                this.plugins_names=[]
+                plugins.forEach(plugin => {
+                    this.plugins_names.push(plugin.name)
+                })
             })
     }
 
