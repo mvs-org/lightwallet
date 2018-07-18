@@ -7,9 +7,7 @@
 
 <ion-content padding>
     <ion-list>
-        <ion-item *ngFor="let plugin of plugins">
-            <plugin-item [plugin]="plugin" [removePlugin]="removePlugin" [checkPlugin]="checkPlugin"></plugin-item>
-        </ion-item>
+        <plugin-item *ngFor="let plugin of plugins" [plugin]="plugin" [removePlugin]="removePlugin" [checkPlugin]="checkPlugin"></plugin-item>
     </ion-list>
     <ion-list>
         <ion-item>
