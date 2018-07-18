@@ -34,6 +34,9 @@ export class PluginSettingsPage {
         this.pluginService.removePlugin(name)
             .then(()=>this.events.publish('settings_update'))
             .then(()=>this.loadPlugins())
+            .catch(error=>{
+                    this.alert.showError('Error',error.message)
+            })
     }
 
     loadPlugins(){

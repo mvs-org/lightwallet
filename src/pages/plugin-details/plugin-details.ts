@@ -33,6 +33,15 @@ export class PluginDetailsPage {
             })
     }
 
+    removePlugin = (name) => {
+        this.pluginService.removePlugin(name)
+            .then(()=>this.events.publish('settings_update'))
+            .then(()=>this.navCtrl.setRoot('AccountPage'))
+            .catch(error=>{
+                    this.alert.showError('Error',error.message)
+            })
+    }
+
     cancel(e) {
         e.preventDefault()
         this.navCtrl.pop()

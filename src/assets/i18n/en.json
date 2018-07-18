@@ -371,9 +371,22 @@
 
     "PLUGIN_SETTINGS": "Plugin Settings",
     "PLUGIN_DETAILS": "Plugin details",
-    "PLUGIN_DETAILS.PERMISSIONS": "This plugin wants to get access to the following permissions:",
+    "PLUGIN_DETAILS.NAME" : "Plugin name",
+    "PLUGIN_DETAILS.DESCRIPTION": "Description",
+    "PLUGIN_DETAILS.AUTHOR": "Author",
+    "PLUGIN_DETAILS.PERMISSIONS": "Permissions",
     "ADD": "Add",
     "PLUGIN.REMOVE": "Remove",
     "PLUGIN.CHECK": "Check",
-    "PLUGIN.URL": "Plugin URL"
+    "PLUGIN.URL": "Plugin URL",
+    "PLUGIN.PERMISSION_CREATE_MIT": "Create MITs",
+    "PLUGIN.PERMISSION_NETWORK": "Know the current network (mainnet or testnet)",
+    "PLUGIN.PERMISSION_AVATARS": "Access the list of all my avatars and their attached address",
+    "PLUGIN.PERMISSION_SIGN": "Sign a message (not a transaction)",
+    "PLUGIN.PERMISSION_VERIFY": "Verify the signature of other transactions",
+    "PLUGIN.PERMISSION_UNLOCK": "After asking the password, can re-use it in the same session",
+    "PLUGIN.PERMISSION_ADDRESSES": "Access my list of addresses",
+    "PLUGIN.PERMISSION_BROADCAST": "Broadcast transactions",
+    "PLUGIN.GIVE_PERMISSION": "I accept to provide those permissions to this Plugin"
+
 }
