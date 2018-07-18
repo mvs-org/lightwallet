@@ -33,6 +33,9 @@ export class PluginSettingsPage {
                     this.plugin_already_added = true
                 }
             })
+            .catch(error=>{
+                    this.alert.showError('Error',error.message)
+            })
     }
 
     checkPlugin = (plugin) => {
