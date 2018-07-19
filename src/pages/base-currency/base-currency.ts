@@ -9,7 +9,7 @@ import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 })
 export class BaseCurrencyPage {
 
-    currencies = ["BTC", "USD", "CNY", "EUR", "JPY"]
+    currencies = ["BTC", "USD", "CNY", "EUR", "JPY", "GBP"]
     current_base: string;
 
     constructor(
