@@ -195,12 +195,16 @@ export class AssetTransferPage {
                 switch(error.message){
                     case "ERR_DECRYPT_WALLET":
                         this.alert.showError('MESSAGE.PASSWORD_WRONG', '')
-                        break;
+                        throw Error('ERR_CREATE_TX')
                     case "ERR_INSUFFICIENT_BALANCE":
                         this.alert.showError('MESSAGE.INSUFFICIENT_BALANCE', '')
-                        break;
+                        throw Error('ERR_CREATE_TX')
+                    case "ERR_TOO_MANY_INPUTS":
+                        this.alert.showErrorTranslated('ERROR_TOO_MANY_INPUTS', 'ERROR_TOO_MANY_INPUTS_TEXT')
+                        throw Error('ERR_CREATE_TX')
                     default:
                         this.alert.showError('MESSAGE.CREATE_TRANSACTION', error.message)
+                        throw Error('ERR_CREATE_TX')
                 }
             })
     }
@@ -216,14 +220,16 @@ export class AssetTransferPage {
             .catch((error) => {
                 console.error(error)
                 this.alert.stopLoading()
-                if (error.message == 'ERR_CONNECTION') {
-                    this.alert.showError('ERROR_SEND_TEXT', '')
-                } else if (error.message == 'ERR_CREATE_TX') {
-                    //already handle in create function
-                } else {
-                    this.alert.showError('MESSAGE.BROADCAST_ERROR', error.message)
+                switch(error.message){
+                    case "ERR_CONNECTION":
+                        this.alert.showError('ERROR_SEND_TEXT', '')
+                        break;
+                    case "ERR_CREATE_TX":
+                        //already handle in create function
+                        break;
+                    default:
+                        this.alert.showError('MESSAGE.BROADCAST_ERROR', error.message)
                 }
-
             })
     }
 

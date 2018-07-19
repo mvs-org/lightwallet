@@ -394,6 +394,8 @@
     "MESSAGE.IMPORT_PLUGIN_INVALID_NAME": "Incorrect plugin name. The name of this plugin contains invalid characters.",
     "MESSAGE.IMPORT_PLUGIN_MISSING_DEFAULT_TRANSLATION": "The default translation of this plugin is missing.",
     "HISTORY.NO_DEPOSIT_YET": "No deposit yet",
-    "HISTORY.NO_DEPOSIT_YET_TEXT": "Freeze your ETP to earn interests!"
+    "HISTORY.NO_DEPOSIT_YET_TEXT": "Freeze your ETP to earn interests!",
+    "ERROR_TOO_MANY_INPUTS": "Too many inputs",
+    "ERROR_TOO_MANY_INPUTS_TEXT": "This transaction contains too many inputs. Please try a smaller amount"
 
 }
