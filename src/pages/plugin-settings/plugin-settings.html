@@ -11,7 +11,7 @@
         <plugin-item *ngFor="let plugin of plugins" [plugin]="plugin" [removePlugin]="removePlugin" [checkPlugin]="checkPlugin"></plugin-item>
     </ion-list>
     <ion-list>
-        <ion-item  [ngClass]="{'error-border': plugin_already_added}">
+        <ion-item  [ngClass]="{'error-border': plugin_already_added || error_plugin}">
             <ion-label color="primary" floating>{{"PLUGIN.URL" | translate}}</ion-label>
             <ion-input name="url" [(ngModel)]="url" required></ion-input>
         </ion-item>

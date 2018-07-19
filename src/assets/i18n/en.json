@@ -387,7 +387,11 @@
     "PLUGIN.PERMISSION_UNLOCK": "After asking the password, can re-use it in the same session",
     "PLUGIN.PERMISSION_ADDRESSES": "Access my list of addresses",
     "PLUGIN.PERMISSION_BROADCAST": "Broadcast transactions",
-    "PLUGIN.GIVE_PERMISSION": "I accept to provide those permissions to this Plugin",
-    "PLUGIN.ALREADY_ADDED": "This Plugin is already added to your wallet"
+    "PLUGIN.GIVE_PERMISSION": "I accept to provide those permissions to this plugin",
+    "PLUGIN.ALREADY_ADDED": "This plugin is already added to your wallet",
+    "MESSAGE.IMPORT_PLUGIN_ERROR": "Error while importing the plugin",
+    "MESSAGE.IMPORT_PLUGIN_INVALID_URL": "Incorrect URL. Please double check the plugin URL.",
+    "MESSAGE.IMPORT_PLUGIN_INVALID_NAME": "Incorrect plugin name. The name of this plugin contains invalid characters.",
+    "MESSAGE.IMPORT_PLUGIN_MISSING_DEFAULT_TRANSLATION": "The default translation of this plugin is missing."
 
 }
