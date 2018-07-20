@@ -45,6 +45,9 @@ export class MvsServiceProvider {
             .then(wallet => this.getUtxoFrom(from_address)
                 .then((utxo) => this.getHeight().then(height => Metaverse.output.findUtxo(utxo, target, height)))
                 .then((result) => {
+                    if (result.utxo.length > 676) {
+                        throw Error('ERR_TOO_MANY_INPUTS');
+                    }
                     //Set change address to first utxo's address
                     if (change_address == undefined)
                         change_address = result.utxo[0].address;
@@ -80,6 +83,9 @@ export class MvsServiceProvider {
             .then(wallet => this.getUtxoFrom(from_address)
                 .then((utxo) => this.getHeight().then(height => Metaverse.output.findUtxo(utxo, target, height)))
                 .then((result) => {
+                    if (result.utxo.length > 676) {
+                        throw Error('ERR_TOO_MANY_INPUTS');
+                    }
                     //Set change address to first utxo's address
                     if (change_address == undefined)
                         change_address = result.utxo[0].address;

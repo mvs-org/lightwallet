@@ -102,6 +102,20 @@ export class AlertProvider {
         })
     }
 
+    showErrorTranslated(subtitle, message) {
+        this.translate.get(['MESSAGE.ERROR_TITLE', subtitle, message]).subscribe((translations: any) => {
+            let alert = this.alertCtrl.create({
+                title: translations['MESSAGE.ERROR_TITLE'],
+                subTitle: translations[subtitle],
+                message: translations[message],
+                buttons: [{
+                    text: translations['OK']
+                }]
+            });
+            alert.present(alert);
+        })
+    }
+
     showWrongAddress() {
         this.translate.get(['MESSAGE.NOT_ETP_ADDRESS_TITLE', 'MESSAGE.NOT_ETP_ADDRESS_TEXT', 'OK']).subscribe((translations: any) => {
             let alert = this.alertCtrl.create({

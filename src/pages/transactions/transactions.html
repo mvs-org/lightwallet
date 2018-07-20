@@ -22,8 +22,8 @@
         </ion-item>
 
         <div *ngIf="display_segment=='transactions'">
-            <ion-list>
-                <ion-item [hidden]="!txs.length" *ngFor="let tx of txs">
+            <ion-list [hidden]="!txs.length" >
+                <ion-item *ngFor="let tx of txs">
                     <ion-item no-lines>
                         <ion-avatar item-start>
                             <img class="coinlogo" [src]="'assets/icon/'+asset+'.png'" onerror="this.src='assets/icon/default_mst.png'">
@@ -53,7 +53,7 @@
             </div>
         </div>
         <div *ngIf="display_segment=='deposits'">
-            <ion-list>
+            <ion-list [hidden]="!frozen_outputs.length">
                 <ion-item [hidden]="!frozen_outputs.length" *ngFor="let output of frozen_outputs">
                     <ion-item no-lines>
                         <ion-avatar item-start>
@@ -71,6 +71,21 @@
                     </ion-item>
                 </ion-item>
             </ion-list>
+            <div [hidden]="frozen_outputs && frozen_outputs.length">
+                <ion-row>
+                    <ion-col></ion-col>
+                    <ion-col width-67>
+                        <img class="big-icon" [src]="'assets/icon/'+asset+'.png'" onerror="this.src='assets/icon/default_mst.png'">
+                    </ion-col>
+                    <ion-col></ion-col>
+                </ion-row>
+
+                <ion-card-content>
+                    <ion-card-title class="center" [translate]="'HISTORY.NO_DEPOSIT_YET'"></ion-card-title>
+                    <p class="center" [translate]="'HISTORY.NO_DEPOSIT_YET_TEXT'">
+                    </p>
+                </ion-card-content>
+            </div>
         </div>
     </div>
     <div class="mini-loader" *ngIf="loading"></div>

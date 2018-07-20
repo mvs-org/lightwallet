@@ -177,13 +177,21 @@ export class DepositPage {
                 (this.changeAddress != 'auto') ? this.changeAddress : undefined)
             )
             .catch((error) => {
-                if (error.message == "ERR_DECRYPT_WALLET")
-                    this.alert.showError('MESSAGE.PASSWORD_WRONG', '')
-                else if (error.message == "ERR_INSUFFICIENT_BALANCE")
-                    this.alert.showError('MESSAGE.INSUFFICIENT_BALANCE', '')
-                else
-                    this.alert.showError('MESSAGE.CREATE_TRANSACTION', error)
-                throw Error('ERR_CREATE_TX')
+                console.error(error.message)
+                switch(error.message){
+                    case "ERR_DECRYPT_WALLET":
+                        this.alert.showError('MESSAGE.PASSWORD_WRONG', '')
+                        throw Error('ERR_CREATE_TX')
+                    case "ERR_INSUFFICIENT_BALANCE":
+                        this.alert.showError('MESSAGE.INSUFFICIENT_BALANCE', '')
+                        throw Error('ERR_CREATE_TX')
+                    case "ERR_TOO_MANY_INPUTS":
+                        this.alert.showErrorTranslated('ERROR_TOO_MANY_INPUTS', 'ERROR_TOO_MANY_INPUTS_TEXT')
+                        throw Error('ERR_CREATE_TX')
+                    default:
+                        this.alert.showError('MESSAGE.CREATE_TRANSACTION', error.message)
+                        throw Error('ERR_CREATE_TX')
+                }
             })
     }
 

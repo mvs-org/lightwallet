@@ -43,17 +43,23 @@ export class PluginProvider {
 
     fetchPlugin(url) {
         return new Promise(resolve => {
-            return this.http.get(url).subscribe(plugin => resolve(plugin.json()), e => {
-                throw e.message
+            return this.http.get(url).subscribe(plugin => {
+                try {
+                    resolve(plugin.json())
+                } catch(e) {
+                    resolve(null)
+                }
             });
         })
-            .then((plugin: Plugin) => {
-                if (!/^[a-z-]*$/.test(plugin.name))
-                    throw Error("ERR_INVALID_PLUGIN_NAME")
-                if (plugin.translation == undefined || plugin.translation.default == undefined || plugin.translation.default.name == undefined)
-                    throw Error("ERR_MISSING_DEFAULT_TRANSLATION")
-                return plugin
-            })
+        .then((plugin: Plugin) => {
+            if (plugin == null)
+                throw Error("ERR_INVALID_URL")
+            if (!/^[a-z-]*$/.test(plugin.name))
+                throw Error("ERR_INVALID_PLUGIN_NAME")
+            if (plugin.translation == undefined || plugin.translation.default == undefined || plugin.translation.default.name == undefined)
+                throw Error("ERR_MISSING_DEFAULT_TRANSLATION")
+            return plugin
+        })
     }
 
     addPlugin(plugin: Plugin) {
