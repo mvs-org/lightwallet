@@ -34,7 +34,10 @@ export class MvsServiceProvider {
             console.info('mvs service network update caused by network update event')
             this.blockchain = Blockchain({ network: this.globals.network })
         })
-        this.blockchain = Blockchain({ network: this.globals.network })
+        this.globals.getNetwork()
+            .then(network => {
+                this.blockchain = Blockchain({ network: network })
+            })
     }
 
 
