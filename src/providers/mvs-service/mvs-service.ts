@@ -361,7 +361,7 @@ export class MvsServiceProvider {
                     let outputs = []
                     txs.forEach(tx => {
                         tx.outputs.forEach((output) => {
-                            if (addresses.indexOf(output.address) !== -1) {
+                            if (output.locked_height_range > 0 && output.height && addresses.indexOf(output.address) !== -1) {
                                 output.locked_until = (output.locked_height_range) ? tx.height + output.locked_height_range : 0
                                 delete output['locked_height_range']
                                 output.hash = tx.hash
@@ -371,10 +371,6 @@ export class MvsServiceProvider {
                     })
                     return outputs
                 })
-                .then(outputs => outputs.filter(o => (o.locked_until > 0 && o.height)))
-                .then(outputs => outputs.sort((a, b) => {
-                    return (a.height > b.height) ? -1 : 1;
-                }))
             )
     }
 
