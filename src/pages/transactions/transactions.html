@@ -52,26 +52,70 @@
                 </ion-card-content>
             </div>
         </div>
+
         <div *ngIf="display_segment=='deposits'">
-            <ion-list [hidden]="!frozen_outputs.length">
-                <ion-item [hidden]="!frozen_outputs.length" *ngFor="let output of frozen_outputs">
+            <ion-row class="order-selectors" [hidden]="frozen_outputs_locked.length < 2 && frozen_outputs_unlocked.length < 2">
+                <ion-col col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6>
+                    <ion-item class="no-padding no-color-border">
+                        <ion-label>{{"HISTORY.ORDER_BY"|translate}}</ion-label>
+                        <ion-select [(ngModel)]="order_by">
+                            <ion-option value="locked_until">{{"HISTORY.ORDER_BY_UNLOCK_HEIGHT"|translate}}</ion-option>
+                            <ion-option value="height">{{"HISTORY.ORDER_BY_HEIGHT"|translate}}</ion-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-col>
+                <ion-col col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6>
+                    <ion-item class="no-padding no-color-border">
+                        <ion-label>{{"HISTORY.DIRECTION"|translate}}</ion-label>
+                        <ion-select [(ngModel)]="direction">
+                            <ion-option value="1">{{"HISTORY.DIRECTION_LATEST_TOP"|translate}}</ion-option>
+                            <ion-option value="0">{{"HISTORY.DIRECTION_EARLIEST_TOP"|translate}}</ion-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+
+            <ion-list [hidden]="!frozen_outputs_locked.length">
+                <h2 class="center" >{{"HISTORY.FROZEN_TX"|translate}}</h2>
+                <ion-item *ngFor="let output of frozen_outputs_locked | orderBy: [order_by, direction]">
                     <ion-item no-lines>
                         <ion-avatar item-start>
                             <img class="coinlogo" [src]="'assets/icon/'+asset+'.png'" onerror="this.src='assets/icon/default_mst.png'">
                         </ion-avatar>
                         <h1>{{asset}}</h1>
-                        <p>{{'TRANSACTION'|translate}}: <a href="{{explorerURL(output.hash)}}" target="_blank">{{output.hash}}</a></p>
+                        <p *ngFor="let transaction of output.transactions">{{'TRANSACTION'|translate}}: <a href="{{explorerURL(transaction)}}" target="_blank">{{transaction}}</a></p>
                         <p>{{'AMOUNT'|translate}}: {{output.value | format : output.attachment.decimals}}</p>
+                        <p>{{'LOCKED_SINCE'|translate}}: {{output.height}} ({{output.confirmed_at*1000|date : 'medium'}})</p>
                         <p>{{'LOCKED_UNTIL'|translate}}: {{output.locked_until}}</p>
                         <p>{{'LOCKED_FOR_BLOCKS'|translate}}: {{output.locked_until-output.height}} {{'BLOCKS'|translate}}</p>
                         <div *ngIf="output.height<= height">
                             <progress-bar *ngIf="height<=output.locked_until && depositProgress(output.height, output.locked_until)>0" [progress]="depositProgress(output.height, output.locked_until)" ></progress-bar>
+                        </div>
+                    </ion-item>
+                </ion-item>
+            </ion-list>
+
+            <ion-list [hidden]="!frozen_outputs_unlocked.length">
+                <h2 class="center" >{{"HISTORY.UNFROZEN_TX"|translate}}</h2>
+                <ion-item *ngFor="let output of frozen_outputs_unlocked | orderBy: [order_by, direction]">
+                    <ion-item no-lines>
+                        <ion-avatar item-start>
+                            <img class="coinlogo" [src]="'assets/icon/'+asset+'.png'" onerror="this.src='assets/icon/default_mst.png'">
+                        </ion-avatar>
+                        <h1>{{asset}}</h1>
+                        <p *ngFor="let transaction of output.transactions">{{'TRANSACTION'|translate}}: <a href="{{explorerURL(transaction)}}" target="_blank">{{transaction}}</a></p>
+                        <p>{{'AMOUNT'|translate}}: {{output.value | format : output.attachment.decimals}}</p>
+                        <p>{{'LOCKED_SINCE'|translate}}: {{output.height}} ({{output.confirmed_at*1000|date : 'medium'}})</p>
+                        <p>{{'LOCKED_UNTIL'|translate}}: {{output.locked_until}}</p>
+                        <p>{{'LOCKED_FOR_BLOCKS'|translate}}: {{output.locked_until-output.height}} {{'BLOCKS'|translate}}</p>
+                        <div *ngIf="output.height<= height">
                             <progress-bar *ngIf="height>output.locked_until" [progress]="100" [color]="'#32db64'"></progress-bar>
                         </div>
                     </ion-item>
                 </ion-item>
             </ion-list>
-            <div [hidden]="frozen_outputs && frozen_outputs.length">
+
+            <div [hidden]="frozen_outputs_unlocked.length || frozen_outputs_locked.length">
                 <ion-row>
                     <ion-col></ion-col>
                     <ion-col width-67>

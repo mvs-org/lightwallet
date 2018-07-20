@@ -17,4 +17,21 @@ page-transactions {
         min-width: 20px !important;
         border-radius: 0 !important;
     }
+
+    .no-padding {
+        padding: 0;
+    }
+
+    .no-padding .item-cover {
+        margin-left: 0 !important;
+    }
+
+    .center {
+        text-align: center;
+    }
+
+    .order-selectors {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
 }

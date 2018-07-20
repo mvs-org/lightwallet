@@ -21,7 +21,10 @@ export class TransactionsPage {
     display_segment: string = "transactions"
     height: number;
 
-    frozen_outputs: any[] = [];
+    frozen_outputs_locked: any[] = [];
+    frozen_outputs_unlocked: any[] = [];
+    order_by: string = 'locked_until'
+    direction: number = 1
 
     constructor(
         public navCtrl: NavController,
@@ -37,13 +40,34 @@ export class TransactionsPage {
 
     ionViewDidEnter() {
         console.log('Transactions page loaded')
-        this.mvsServiceProvider.getFrozenOutputs()
-            .then(outputs=>{
-                this.frozen_outputs=outputs;
-            })
         this.mvsServiceProvider.getHeight()
             .then(height=>{
                 this.height=height
+            })
+            .then(() => this.mvsServiceProvider.getFrozenOutputs())
+            .then(outputs=>{
+                this.frozen_outputs_locked = []
+                this.frozen_outputs_unlocked = []
+                let grouped_frozen_ouputs = {}
+                outputs.forEach((output) => {
+                    grouped_frozen_ouputs[output.height] = grouped_frozen_ouputs[output.height] ? grouped_frozen_ouputs[output.height] : {}
+                    if(grouped_frozen_ouputs[output.height][output.locked_until]) {
+                        grouped_frozen_ouputs[output.height][output.locked_until].value += output.value
+                        grouped_frozen_ouputs[output.height][output.locked_until].transactions.push(output.hash)
+                    } else {
+                        output.transactions = [output.hash]
+                        grouped_frozen_ouputs[output.height][output.locked_until] = output
+                    }
+                })
+                for (var height in grouped_frozen_ouputs) {
+                    var unlock = grouped_frozen_ouputs[height];
+                    for (var output in unlock) {
+                        if(this.height>parseInt(output))
+                            this.frozen_outputs_unlocked.push(unlock[output])
+                        else
+                            this.frozen_outputs_locked.push(unlock[output])
+                    }
+                }
             })
         this.mvsServiceProvider.getAddresses()
             .then((addresses) => {

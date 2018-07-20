@@ -396,6 +396,15 @@
     "HISTORY.NO_DEPOSIT_YET": "No deposit yet",
     "HISTORY.NO_DEPOSIT_YET_TEXT": "Freeze your ETP to earn interests!",
     "ERROR_TOO_MANY_INPUTS": "Too many inputs",
-    "ERROR_TOO_MANY_INPUTS_TEXT": "This transaction contains too many inputs. Please try a smaller amount"
+    "ERROR_TOO_MANY_INPUTS_TEXT": "This transaction contains too many inputs. Please try a smaller amount",
+    "HISTORY.ORDER_BY": "Order by",
+    "HISTORY.ORDER_BY_HEIGHT": "Locking time",
+    "HISTORY.ORDER_BY_UNLOCK_HEIGHT": "Unlocking time",
+    "HISTORY.DIRECTION": "Direction",
+    "HISTORY.DIRECTION_LATEST_TOP": "Latest on top",
+    "HISTORY.DIRECTION_EARLIEST_TOP": "Earliest on top",
+    "HISTORY.FROZEN_TX": "Currently locked transaction",
+    "HISTORY.UNFROZEN_TX": "Unlocked transactions",
+    "LOCKED_SINCE": "Locked since"
 
 }
