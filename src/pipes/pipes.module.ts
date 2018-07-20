@@ -2,14 +2,17 @@ import { NgModule } from '@angular/core';
 
 // Pipes
 import { FormatPipe } from './format/format'
+import { OrderByPipe } from './order-by/order-by'
 
 @NgModule({
     declarations: [
-        FormatPipe
+        FormatPipe,
+        OrderByPipe
     ],
     imports: [ ],
     exports: [
-        FormatPipe
+        FormatPipe,
+        OrderByPipe
     ]
 })
 export class PipesModule {}
