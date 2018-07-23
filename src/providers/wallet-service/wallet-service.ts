@@ -17,7 +17,7 @@ export class WalletServiceProvider {
             .then((seed) => this.crypto.encrypt(seed.toString('hex'), passphrase))
     }
 
-    encryptWalletFromMnemonic(mnemonic, passphrase){
+    encryptWalletFromMnemonic(mnemonic, passphrase) {
         return this.crypto.encrypt(mnemonic, passphrase)
             .then((res) => this.dataToKeystoreJson(res))
     }
@@ -118,7 +118,7 @@ export class WalletServiceProvider {
     exportWallet() {
         return Promise.all([this.storage.get('seed'), this.getAddressIndex()])
             .then((results) => {
-                return results[0] + "&" +  this.globals.network.charAt(0) + "&" + results[1]
+                return results[0] + "&" + this.globals.network.charAt(0) + "&" + results[1]
             })
             .catch((error) => {
                 console.error(error)
@@ -126,6 +126,14 @@ export class WalletServiceProvider {
             })
     }
 
+
+    setAddressIndex(index) {
+        return this.storage.get('wallet')
+            .then((wallet) => {
+                wallet.index = index
+                return this.storage.set('wallet', wallet)
+            })
+    }
 
     getAddressIndex() {
         return this.storage.get('wallet')

@@ -1,0 +1,26 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>{{"GENERATE_ADDRESSES.HEADLINE" | translate}}</ion-title>
+    </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+    <form #sendForm="ngForm" style="padding-bottom: 0;">
+        <p>Some text to clarify that the wallet has a deterministic key (address) generation. Thats why a wallet will always generate the same addresses.</p>
+        <ion-list style="padding-top: 20;">
+            <ion-item [ngClass]="{'error-border':!validIndex(index)}">
+                <ion-label color="primary" floating>{{"GENERATE_ADDRESSES.TOTAL_NUMBER_OF_ADDRESSES" | translate}}</ion-label>
+                <ion-input name="symbol" [(ngModel)]="index" maxlength="2" required></ion-input>
+            </ion-item>
+            <ion-item [ngClass]="{'error-border': !validPassword(passphrase)}">
+                <ion-label color="primary" floating>{{"PASSWORD" | translate}}</ion-label>
+                <ion-input name="passphrase" type="password" [(ngModel)]="passphrase" required></ion-input>
+            </ion-item>
+            <button ion-button full [disabled]="!sendForm.form.valid||!validIndex(index)||!validPassword(passphrase)" (click)="setIndex()" icon-left color="secondary">
+            <ion-icon disabled="checked" name="send"></ion-icon>
+            {{"GENERATE_ADDRESSES.CHANGE_ADDRESS_NUMBER" | translate}}
+        </button>
+        </ion-list>
+    </form>
+</ion-content>

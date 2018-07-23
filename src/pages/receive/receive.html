@@ -29,11 +29,6 @@
                 </ion-card>
             </ion-col>
             <ion-col>
-                <!--ion-item>
-                    <ion-label>{{"SHOW_ALL_ASSET_BALANCES"|translate}}</ion-label>
-                    <ion-toggle [(ngModel)]="showAll" name="showAll" checked="false"></ion-toggle>
-                </ion-item-->
-                <!-- Segment in content -->
                 <ion-item>
                     <ion-segment [(ngModel)]="displayType" color="primary">
                         <ion-segment-button value="ETP">
@@ -62,6 +57,9 @@
                             <p *ngIf="!addressbalances[address] || (addressbalances[address] && addressbalances[address].length == 0)">{{'RECEIVE.ADDRESS_NO_MST'|translate}}</p>
                         </ng-container>
                     </ion-card-content>
+                </ion-card>
+                <ion-card>
+                    <button ion-button (click)="addAddress()">{{"GENERATE_ADDRESSES.CHANGE_ADDRESS_NUMBER" | translate}}</button>
                 </ion-card>
             </ion-col>
         </ion-row>
