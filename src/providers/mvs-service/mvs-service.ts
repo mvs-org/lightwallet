@@ -41,7 +41,6 @@ export class MvsServiceProvider {
             })
     }
 
-
     createSendTx(passphrase: string, asset: string, recipient_address: string, recipient_avatar: string, quantity: number, from_address: string, change_address: string) {
         let target = {};
         target[asset] = quantity;
@@ -535,18 +534,43 @@ export class MvsServiceProvider {
     send = (tx) => {
         return this.broadcast(tx.encode().toString('hex'))
             .then((result: any) => this.getHeight()
-                .then(height => {
-                    tx.height = height
-                    tx.hash = result.hash
-                    tx.outputs.forEach((output, index) => {
-                        output.index = index
-                        output.locked_height_range = (output.locktime) ? output.locktime : 0
+                .then(height => this.getBalances()
+                    .then(balances => {
+                        tx.height = height
+                        tx.hash = result.hash
+                        tx.outputs.forEach((output, index) => {
+                            output.index = index
+                            output.locked_height_range = (output.locktime) ? output.locktime : 0
+                            output.locked_until = (output.locktime) ? height + output.locked_height_range : 0
+                            switch (output.attachment.type) {
+                                case Metaverse.constants.ATTACHMENT.TYPE.MST:
+                                    switch (output.attachment.status) {
+                                        case Metaverse.constants.MST.STATUS.REGISTER:
+                                            output.attachment.type = 'asset-issue';
+                                            break;
+                                        case Metaverse.constants.MST.STATUS.TRANSFER:
+                                            output.attachment.type = 'asset-transfer';
+                                            if (balances && balances.MST && balances.MST[output.attachment.symbol])
+                                                output.attachment.decimals = balances.MST[output.attachment.symbol].decimals
+                                            break;
+                                    }
+                                    break;
+                                case Metaverse.constants.ATTACHMENT.TYPE.MIT:
+                                    output.attachment.type = 'mit';
+                                    break;
+                                case Metaverse.constants.ATTACHMENT.TYPE.ETP_TRANSFER:
+                                    output.attachment.type = 'etp';
+                                    output.attachment.symbol = 'ETP';
+                                    output.attachment.decimals = 8;
+                                    break;
+                            }
+                        })
+                        tx.unconfirmed = true
+                        return this.addTxs([tx])
+                            .then(() => this.getData())
+                            .then(() => tx)
                     })
-                    tx.unconfirmed = true
-                    return this.addTxs([tx])
-                        .then(() => this.getData())
-                        .then(() => tx)
-                })
+                )
             )
     }
 
