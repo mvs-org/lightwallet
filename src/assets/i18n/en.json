@@ -414,6 +414,7 @@
     "GENERATE_ADDRESSES.TOTAL_NUMBER_OF_ADDRESSES": "Number of addresses in my wallet",
     "GENERATE_ADDRESSES.TOO_MANY_ADDRESSES": "The number of addresses is limited to 50 in the Lightwallet. If you need more addresses, please download the Desktop wallet.",
     "GENERATE_ADDRESSES.ERROR": "Error while regenerating your addresses",
-    "MIT_REGISTER.MIT_SYMBOL_TOO_SHORT": "The MIT symbol must be at least 3 characters long"
+    "MIT_REGISTER.MIT_SYMBOL_TOO_SHORT": "The MIT symbol must be at least 3 characters long",
+    "HELP.GENERATE_ADDRESSES_NUMBER": "In order to keep your wallet smooth, it is recommended to keep the number low. The default value is 10 addresses, maximum 50 addresses"
 
 }
