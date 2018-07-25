@@ -16,15 +16,10 @@
                 <ion-label color="primary" floating>{{"RECIPIENT_AVATAR"|translate}}</ion-label>
                 <ion-input #recipientAvatarInput name="recipient_avatar" [(ngModel)]="recipient_avatar" (ngModelChange)="recipientAvatarChanged($event)" required></ion-input>
             </ion-item>
-            <!--ion-item *ngIf="recipient_address" no-lines [translate]="TRANSFER_MIT.RECIPIENT_ADDRESS" [translateParams]="{address: recipient_address}"></ion-item-->
-            <ion-item *ngIf="recipient_address" no-lines>
+            <ion-item class="info-input" *ngIf="recipient_address" no-lines>
                 <span [translate]="'AVATAR_RECIPIENT_ADDRESS'" [translateParams]="{address: recipient_address, last_update: recipient_address_last_update*1000|date : 'medium'}"></span>
             </ion-item>
 
-            <!--ion-item [ngClass]="{'error-border':!validrecipient(recipient_address)}">
-                <ion-label color="primary" floating>{{"RECIPIENT_ADDRESS"|translate}}</ion-label>
-            <ion-input #recipientAddressInput name="recipient_address" [(ngModel)]="recipient_address" (ngModelChange)="recipientChanged($event)" required disabled></ion-input>
-          </ion-item-->
             <ion-item [ngClass]="{'error-border': !validPassword(passphrase)}">
                 <ion-label color="primary" floating>{{"PASSWORD" | translate}}</ion-label>
                 <ion-input name="passphrase" type="password" [(ngModel)]="passphrase" required></ion-input>
