@@ -13,6 +13,7 @@
                 <ion-input name="symbol" [(ngModel)]="symbol" maxlength="63" required></ion-input>
             </ion-item>
             <ion-item *ngIf="list_all_mits.indexOf(symbol) !== -1" no-lines class="wrong-input">{{"MIT_REGISTER.MIT_ALREADY_EXIST" | translate}}</ion-item>
+            <ion-item *ngIf="symbol.length > 0 && symbol.length < 3" no-lines class="wrong-input">{{"MIT_REGISTER.MIT_SYMBOL_TOO_SHORT" | translate}}</ion-item>
 
             <ion-item [ngClass]="{'error-border':!validContent(content)}">
                 <ion-label color="primary" floating>{{"MIT_REGISTER.CONTENT" | translate}}</ion-label>

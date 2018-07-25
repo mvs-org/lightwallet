@@ -393,10 +393,11 @@
     "MESSAGE.IMPORT_PLUGIN_INVALID_URL": "Incorrect URL. Please double check the plugin URL.",
     "MESSAGE.IMPORT_PLUGIN_INVALID_NAME": "Incorrect plugin name. The name of this plugin contains invalid characters.",
     "MESSAGE.IMPORT_PLUGIN_MISSING_DEFAULT_TRANSLATION": "The default translation of this plugin is missing.",
-    "HISTORY.NO_DEPOSIT_YET": "No deposit yet",
-    "HISTORY.NO_DEPOSIT_YET_TEXT": "Freeze your ETP to earn interests!",
     "ERROR_TOO_MANY_INPUTS": "Too many inputs",
     "ERROR_TOO_MANY_INPUTS_TEXT": "This transaction contains too many inputs. Please try a smaller amount",
+
+    "HISTORY.NO_DEPOSIT_YET": "No deposit yet",
+    "HISTORY.NO_DEPOSIT_YET_TEXT": "Freeze your ETP to earn interests!",
     "HISTORY.ORDER_BY": "Order by",
     "HISTORY.ORDER_BY_HEIGHT": "Locking time",
     "HISTORY.ORDER_BY_UNLOCK_HEIGHT": "Unlocking time",
@@ -405,6 +406,14 @@
     "HISTORY.DIRECTION_EARLIEST_TOP": "Earliest on top",
     "HISTORY.FROZEN_TX": "Currently locked transaction",
     "HISTORY.UNFROZEN_TX": "Unlocked transactions",
-    "LOCKED_SINCE": "Locked since"
+    "LOCKED_SINCE": "Locked since",
+
+    "GENERATE_ADDRESSES.CHANGE_ADDRESS_NUMBER": "Update number of addresses",
+    "GENERATE_ADDRESSES.HEADLINE": "Update number of addresses",
+    "GENERATE_ADDRESSES.EXPLANATION": "Your addresses are generated in a deterministic way: it means that if you reduce the number of your addresses, you can add them back later by increasing your number of addresses. It will regenerate the same addresses. (Metaverse use a Deterministic wallet, also called HD Wallet, to generate multiple addresses from your seed)",
+    "GENERATE_ADDRESSES.TOTAL_NUMBER_OF_ADDRESSES": "Number of addresses in my wallet",
+    "GENERATE_ADDRESSES.TOO_MANY_ADDRESSES": "The number of addresses is limited to 50 in the Lightwallet. If you need more addresses, please download the Desktop wallet.",
+    "GENERATE_ADDRESSES.ERROR": "Error while regenerating your addresses",
+    "MIT_REGISTER.MIT_SYMBOL_TOO_SHORT": "The MIT symbol must be at least 3 characters long"
 
 }
