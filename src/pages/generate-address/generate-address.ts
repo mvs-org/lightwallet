@@ -32,6 +32,10 @@ export class GenerateAddressPage {
             .then(index => this.index = index)
     }
 
+    cancel() {
+        this.navCtrl.pop();
+    }
+
     setIndex = () => {
         this.alert.showLoading()
             .then(() => this.wallet.getWallet(this.passphrase))
@@ -48,7 +52,7 @@ export class GenerateAddressPage {
             .catch(error=>{
                 console.error(error)
                 this.alert.stopLoading()
-                this.alert.showError('GENERATE_ADDRESSES.ERROR',error.message)
+                this.alert.showError('GENERATE_ADDRESSES.ERROR', error.message)
             })
 
     }

@@ -410,7 +410,7 @@
 
     "GENERATE_ADDRESSES.CHANGE_ADDRESS_NUMBER": "Update number of addresses",
     "GENERATE_ADDRESSES.HEADLINE": "Update number of addresses",
-    "GENERATE_ADDRESSES.EXPLANATION": "Your addresses are generated in a deterministic way: it means that if you reduce the number of your addresses, you can add them back later by increasing your number of addresses. It will regenerate the same addresses. (Metaverse use a Deterministic wallet, also called HD Wallet, to generate multiple addresses from your seed)",
+    "GENERATE_ADDRESSES.EXPLANATION": "MyETPWallet uses a HD Wallet (Hierarchical Deterministic) to generate multiple addresses from your seed. Because your addresses are generated in a deterministic way it means that if you reduce the number of your addresses, you can add them back later by increasing your number of addresses. It will always regenerate the same addresses.",
     "GENERATE_ADDRESSES.TOTAL_NUMBER_OF_ADDRESSES": "Number of addresses in my wallet",
     "GENERATE_ADDRESSES.TOO_MANY_ADDRESSES": "The number of addresses is limited to 50 in the Lightwallet. If you need more addresses, please download the Desktop wallet.",
     "GENERATE_ADDRESSES.ERROR": "Error while regenerating your addresses",
