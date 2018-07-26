@@ -419,6 +419,9 @@
 
     "MESSAGE": "Public message (optional)",
     "HELP.MESSAGE": "This message will be clearly and publicly displayed in your transaction. Do not enter any personnal data!",
-    "MESSAGE_TOO_LONG": "Too long message. Please use a shorter message"
+    "MESSAGE_TOO_LONG": "Too long message. Please use a shorter message",
 
+    "AVATARS.INFORMATION": "Avatars represent your Digital Identity on Metaverse Blockchain. You can use your Avatar name to send and receive ETP in place of your address. Avatars can create MST and MIT",
+    "MSTS.INFORMATION": "MST (Metaverse Smart Token) is the token standard use on Metaverse. Any Avatar can create a MST using the form below.",
+    "MITS.INFORMATION": "MIT (Metaverse Identifiable Token) is the nun-fungible token standard on Metaverse. A MIT is unique, its quantity is always 1 and can't be split. It can only be created by and transferred to an Avatar. MITs can be used to represent any unique digital or physical object, and easily trace its transfer from Avatars to Avatars"
 }
