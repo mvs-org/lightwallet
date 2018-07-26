@@ -23,6 +23,7 @@ export class MITRegisterPage {
     no_avatar: boolean = false;
     no_avatar_placeholder: string
     list_all_mits: Array<string> = [];
+    fee: number = 10000
 
     constructor(
         public navCtrl: NavController,
@@ -89,7 +90,15 @@ export class MITRegisterPage {
 
     create() {
         return this.showLoading()
-            .then(() => this.mvs.createRegisterMITTx(this.passphrase, this.recipient_address, this.recipient_avatar, this.symbol, this.content, undefined))
+            .then(() => this.mvs.createRegisterMITTx(
+                this.passphrase,
+                this.recipient_address,
+                this.recipient_avatar,
+                this.symbol,
+                this.content,
+                undefined,
+                this.fee)
+            )
             .then(tx => this.mvs.send(tx))
             .then((result) => {
                 this.navCtrl.pop()
