@@ -51,6 +51,7 @@ export class AssetTransferPage {
     sendMore_limit: number = 1000
     total: number
     message: string = ""
+    fee: number = 10000
 
     constructor(
         public navCtrl: NavController,
@@ -173,6 +174,7 @@ export class AssetTransferPage {
                             Math.round(parseFloat(this.quantity) * Math.pow(10, this.decimals)),
                             (this.sendFrom != 'auto') ? this.sendFrom : null,
                             (this.changeAddress != 'auto') ? this.changeAddress : undefined,
+                            this.fee,
                             (messages !== []) ? messages : undefined
                         )
                     case "more":
