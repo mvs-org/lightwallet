@@ -137,10 +137,10 @@ export class MvsServiceProvider {
             })
     }
 
-    createTransferMITTx(passphrase: string, sender_avatar: string, recipient_address: string, recipient_avatar, symbol: string, fee_address: string, change_address: string) {
+    createTransferMITTx(passphrase: string, sender_avatar: string, recipient_address: string, recipient_avatar, symbol: string, fee_address: string, change_address: string, fee: number) {
         return this.wallet.getWallet(passphrase)
             .then(wallet => this.getUtxoFrom(fee_address)
-                .then((utxo) => Promise.all([this.getHeight().then(height => Metaverse.output.findUtxo(utxo, {}, height, Metaverse.constants.FEE.DEFAULT)), this.getUtxo().then(utxo => Metaverse.output.filter(utxo, { type: 'mit', symbol: symbol }))]))
+                .then((utxo) => Promise.all([this.getHeight().then(height => Metaverse.output.findUtxo(utxo, {}, height, fee)), this.getUtxo().then(utxo => Metaverse.output.filter(utxo, { type: 'mit', symbol: symbol }))]))
                 .then((result) => {
                     var fee_utxo = result[0]
                     var mit_utxo = result[1]
@@ -149,7 +149,7 @@ export class MvsServiceProvider {
                     //Set change address to first utxo's address
                     if (change_address == undefined)
                         change_address = fee_utxo.utxo[0].address;
-                    return Metaverse.transaction_builder.transferMIT(fee_utxo.utxo.concat(mit_utxo), sender_avatar, recipient_address, recipient_avatar, symbol, change_address, fee_utxo.change)
+                    return Metaverse.transaction_builder.transferMIT(fee_utxo.utxo.concat(mit_utxo), sender_avatar, recipient_address, recipient_avatar, symbol, change_address, fee_utxo.change, fee)
                 })
                 .then((tx) => wallet.sign(tx)))
             .catch((error) => {

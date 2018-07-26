@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, Platform, LoadingController, Loading } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, Platform, Loading } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { AlertProvider } from '../../providers/alert/alert';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
@@ -31,7 +31,6 @@ export class MITRegisterPage {
         private alert: AlertProvider,
         public platform: Platform,
         public navParams: NavParams,
-        private loadingCtrl: LoadingController,
         private translate: TranslateService,
         private mvs: MvsServiceProvider) {
 
@@ -89,7 +88,7 @@ export class MITRegisterPage {
     validAddress = (recipient_address) => (recipient_address !== undefined && recipient_address.length > 0)
 
     create() {
-        return this.showLoading()
+        return this.alert.showLoading()
             .then(() => this.mvs.createRegisterMITTx(
                 this.passphrase,
                 this.recipient_address,
@@ -128,19 +127,6 @@ export class MITRegisterPage {
                         this.alert.showError('MESSAGE.CREATE_TRANSACTION', error.message)
                 }
             })
-    }
-
-    showLoading() {
-        return new Promise((resolve, reject) => {
-            this.translate.get('MESSAGE.LOADING').subscribe((loading: string) => {
-                this.loading = this.loadingCtrl.create({
-                    content: loading,
-                    dismissOnPageChange: true
-                })
-                this.loading.present()
-                resolve()
-            })
-        })
     }
 
     showSent(text, hash) {
