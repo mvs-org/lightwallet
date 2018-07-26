@@ -41,7 +41,7 @@ export class MvsServiceProvider {
             })
     }
 
-    createSendTx(passphrase: string, asset: string, recipient_address: string, recipient_avatar: string, quantity: number, from_address: string, change_address: string) {
+    createSendTx(passphrase: string, asset: string, recipient_address: string, recipient_avatar: string, quantity: number, from_address: string, change_address: string, messages: Array<string>) {
         let target = {};
         target[asset] = quantity;
         return this.wallet.getWallet(passphrase)
@@ -54,7 +54,7 @@ export class MvsServiceProvider {
                     //Set change address to first utxo's address
                     if (change_address == undefined)
                         change_address = result.utxo[0].address;
-                    return Metaverse.transaction_builder.send(result.utxo, recipient_address, recipient_avatar, target, change_address, result.change);
+                    return Metaverse.transaction_builder.send(result.utxo, recipient_address, recipient_avatar, target, change_address, result.change, undefined, undefined, messages);
                 })
                 .then((tx) => wallet.sign(tx)))
             .catch((error) => {

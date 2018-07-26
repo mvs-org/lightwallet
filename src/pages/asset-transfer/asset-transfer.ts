@@ -50,6 +50,7 @@ export class AssetTransferPage {
     sendMoreValidAddress: boolean = false
     sendMore_limit: number = 1000
     total: number
+    message: string = ""
 
     constructor(
         public navCtrl: NavController,
@@ -158,6 +159,10 @@ export class AssetTransferPage {
         return this.alert.showLoading()
             .then(() => this.mvs.getAddresses())
             .then((addresses) => {
+                let messages = [];
+                if(this.message) {
+                    messages.push(this.message)
+                }
                 switch(this.transfer_type){
                     case "one":
                         return this.mvs.createSendTx(
@@ -167,7 +172,8 @@ export class AssetTransferPage {
                             (this.recipient_avatar && this.recipient_avatar_valid) ? this.recipient_avatar : undefined,
                             Math.round(parseFloat(this.quantity) * Math.pow(10, this.decimals)),
                             (this.sendFrom != 'auto') ? this.sendFrom : null,
-                            (this.changeAddress != 'auto') ? this.changeAddress : undefined
+                            (this.changeAddress != 'auto') ? this.changeAddress : undefined,
+                            (messages !== []) ? messages : undefined
                         )
                     case "more":
                         let target = {}
@@ -319,6 +325,8 @@ export class AssetTransferPage {
     }
 
     validPassword = (passphrase) => (passphrase.length > 0)
+
+    validMessage = (message) => (message.length > 0)
 
     scan() {
         this.translate.get(['SCANNING.MESSAGE_ADDRESS']).subscribe((translations: any) => {

@@ -259,7 +259,7 @@
 
     "CREATE_AVATAR": "Create Avatar",
     "CREATE_AVATAR.CREATE_BTN": "Create Avatar",
-    "CREATE_AVATAR.SYMBOL": "Symbol",
+    "CREATE_AVATAR.SYMBOL": "Avatar name",
     "CREATE_AVATAR.ADDRESS": "Linked address",
 
     "RECIPIENT_AVATAR": "Recipient avatar",
@@ -267,7 +267,7 @@
     "HEADLINE_MST": "Metaverse Smart Token",
     "HEADLINE_MIT": "Metaverse Identifiable Token",
     "NO_MIT_TEXT": "You don't have any MIT yet. In order to create MIT you first have to create an avatar.",
-    "MIT_REGISTER.SYMBOL": "Symbol",
+    "MIT_REGISTER.SYMBOL": "MIT symbol",
     "MIT_REGISTER.CONTENT": "Content",
 
     "IMPORT.WORDS_REMAINING": " words remaining",
@@ -415,6 +415,9 @@
     "GENERATE_ADDRESSES.TOO_MANY_ADDRESSES": "The number of addresses is limited to 50 in the Lightwallet. If you need more addresses, please download the Desktop wallet.",
     "GENERATE_ADDRESSES.ERROR": "Error while regenerating your addresses",
     "MIT_REGISTER.MIT_SYMBOL_TOO_SHORT": "The MIT symbol must be at least 3 characters long",
-    "HELP.GENERATE_ADDRESSES_NUMBER": "In order to keep your wallet smooth, it is recommended to keep the number low. The default value is 10 addresses, maximum 50 addresses"
+    "HELP.GENERATE_ADDRESSES_NUMBER": "In order to keep your wallet smooth, it is recommended to keep the number low. The default value is 10 addresses, maximum 50 addresses",
+
+    "MESSAGE": "Public message (optional)",
+    "HELP.MESSAGE": "This message will be clearly and publicly displayed in your transaction. Do not enter any personnal data!"
 
 }
