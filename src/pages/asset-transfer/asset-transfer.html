@@ -184,6 +184,11 @@
                 <ion-toggle [(ngModel)]="showAdvanced" name="showAdvanced" checked="false"></ion-toggle>
             </ion-item>
             <div *ngIf="showAdvanced">
+                <ion-item [ngClass]="{'valid-border': validMessage(message)}">
+                    <ion-label floating>{{"MESSAGE" | translate}}</ion-label>
+                    <ion-input name="message" [(ngModel)]="message"></ion-input>
+                </ion-item>
+                <div no-lines class="advice">{{"HELP.MESSAGE" | translate}}</div>
                 <br>
                 <ion-item>
                     <ion-label>{{"SELECT_CHANGE_ADDRESS"|translate}}</ion-label>

@@ -189,7 +189,8 @@ export class AssetTransferPage {
                             target,
                             recipients,
                             (this.sendFrom != 'auto') ? this.sendFrom : null,
-                            (this.changeAddress != 'auto') ? this.changeAddress : undefined
+                            (this.changeAddress != 'auto') ? this.changeAddress : undefined,
+                            (messages !== []) ? messages : undefined
                         )
                     default:
                         this.alert.showError('MESSAGE.UNKNOWN_TX_TYPE', '')
