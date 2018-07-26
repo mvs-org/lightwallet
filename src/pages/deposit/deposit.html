@@ -61,11 +61,12 @@
         <ion-toggle [(ngModel)]="showAdvanced" name="showAdvanced" checked="false"></ion-toggle>
       </ion-item>
     <div *ngIf="showAdvanced">
-        <ion-item [ngClass]="{'valid-border': validMessage(message)}">
+        <ion-item [ngClass]="{'error-border':!validMessageLength(message), 'valid-border': message.length > 0 && validMessageLength(message)}">
           <ion-label floating>{{"MESSAGE" | translate}}</ion-label>
           <ion-input name="message" [(ngModel)]="message"></ion-input>
         </ion-item>
         <div no-lines class="advice">{{"HELP.MESSAGE" | translate}}</div>
+        <ion-item *ngIf="!validMessageLength(message)" no-lines class="wrong-input">{{"MESSAGE_TOO_LONG" | translate}}</ion-item>
         <br>
         <ion-item>
           <ion-label>{{"SELECT_RECIPIENT_ADDRESS" |translate}}</ion-label>
@@ -82,7 +83,7 @@
               <ion-icon name="qr-scanner"></ion-icon>
           </button>
         </ion-item>
-        <button ion-button full [disabled]="!sendForm.form.valid||!validLocktime(locktime)||!validQuantity(quantity)||!validPassword(passphrase)||(recipient_address == 'custom' && !validrecipient(custom_recipient))" (click)="preview()" color="primary">
+        <button ion-button full [disabled]="!sendForm.form.valid||!validLocktime(locktime)||!validQuantity(quantity)||!validPassword(passphrase)||(recipient_address == 'custom' && !validrecipient(custom_recipient))||!validMessageLength(message)" (click)="preview()" color="primary">
           {{"PREVIEW" | translate}}
         </button>
         <div *ngIf="rawtx">
@@ -95,7 +96,7 @@
     </ion-list>
     <ion-row class="padding-bottom">
       <ion-col>
-        <button ion-button full icon-left [disabled]="!sendForm.form.valid||!validLocktime(locktime)||!validQuantity(quantity)||!validPassword(passphrase)||(recipient_address == 'custom' && !validrecipient(custom_recipient))" (click)="send()" color="secondary">
+        <button ion-button full icon-left [disabled]="!sendForm.form.valid||!validLocktime(locktime)||!validQuantity(quantity)||!validPassword(passphrase)||(recipient_address == 'custom' && !validrecipient(custom_recipient))||!validMessageLength(message)" (click)="send()" color="secondary">
           <ion-icon disabled="checked" name="send"></ion-icon>
           {{"SEND" | translate}}
         </button>

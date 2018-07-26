@@ -149,7 +149,7 @@ export class DepositPage {
 
     validPassword = (passphrase) => (passphrase.length > 0)
 
-    validMessage = (message) => (message.length > 0)
+    validMessageLength = (message) => this.mvs.verifyMessageSize(message) < 253
 
     cancel(e) {
         e.preventDefault()

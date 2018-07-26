@@ -585,4 +585,8 @@ export class MvsServiceProvider {
     checkmnemonic(mnemonic, wordlist) {
         return Metaverse.wallet.validateMnemonic(mnemonic, wordlist)
     }
+
+    verifyMessageSize(message){
+        return Metaverse.message.size(message)
+    }
 }
