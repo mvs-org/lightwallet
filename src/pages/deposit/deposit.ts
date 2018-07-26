@@ -35,6 +35,7 @@ export class DepositPage {
     @ViewChild('customInput') customInput;
     @ViewChild('quantityInput') quantityInput;
     selectedAsset: any
+    message: string = ""
 
     constructor(
         public navCtrl: NavController,
@@ -148,6 +149,8 @@ export class DepositPage {
 
     validPassword = (passphrase) => (passphrase.length > 0)
 
+    validMessage = (message) => (message.length > 0)
+
     cancel(e) {
         e.preventDefault()
         this.navCtrl.pop()
@@ -166,6 +169,10 @@ export class DepositPage {
     }
 
     create() {
+        let messages = [];
+        if(this.message) {
+            messages.push(this.message)
+        }
         return this.alert.showLoading()
             .then(() => this.mvs.getAddresses())
             .then((addresses) => this.mvs.createDepositTx(
@@ -174,7 +181,8 @@ export class DepositPage {
                 Math.floor(parseFloat(this.quantity) * Math.pow(10, this.decimals)),
                 this.locktime,
                 (this.sendFrom != 'auto') ? this.sendFrom : null,
-                (this.changeAddress != 'auto') ? this.changeAddress : undefined)
+                (this.changeAddress != 'auto') ? this.changeAddress : undefined,
+                (messages !== []) ? messages : undefined)
             )
             .catch((error) => {
                 console.error(error.message)
