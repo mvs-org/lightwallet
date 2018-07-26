@@ -133,8 +133,8 @@ export class DepositPage {
 
     validQuantity = (quantity) => quantity != undefined
         && this.countDecimals(quantity) <= this.decimals
-        && this.showBalance >= (Math.round(parseFloat(quantity) * Math.pow(10, this.decimals)) + 10000)
-        && quantity >= 10000 / 100000000
+        && this.showBalance >= (Math.round(parseFloat(quantity) * Math.pow(10, this.decimals)) + this.fee)
+        && quantity >= this.fee / 100000000
 
     countDecimals(value) {
         if (Math.floor(value) !== value && value.toString().split(".").length > 1)
@@ -225,10 +225,10 @@ export class DepositPage {
             })
     }
 
-    sendAll() {
-        this.quantity = parseFloat(((this.showBalance / 100000000 - 10000 / 100000000).toFixed(this.decimals)) + "") + ""
+    sendAll = () => this.alert.showSendAll(() => {
+        this.quantity = parseFloat(((this.showBalance / 100000000 - this.fee / 100000000).toFixed(this.decimals)) + "") + ""
         this.quantityInput.setFocus()
-    }
+    })
 
     format = (quantity, decimals) => quantity / Math.pow(10, decimals)
 

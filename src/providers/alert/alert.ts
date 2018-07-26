@@ -48,6 +48,24 @@ export class AlertProvider {
         })
     }
 
+    showSendAll(action) {
+        this.translate.get(['SEND_ALL_TITLE', 'SEND_ALL_MESSAGE', 'OK', 'CANCEL']).subscribe(translations => {
+            this.alertCtrl.create({
+                title: translations.SEND_ALL_TITLE,
+                message: translations.SEND_ALL_MESSAGE,
+                buttons: [
+                    {
+                        text: translations.CANCEL
+                    },
+                    {
+                        text: translations.OK,
+                        handler: action
+                    }
+                ]
+            }).present()
+        })
+    }
+
     showSent(message_key, hash) {
         this.translate.get(['MESSAGE.SUCCESS', 'OK', message_key]).subscribe((translations: any) => {
             let alert = this.alertCtrl.create({

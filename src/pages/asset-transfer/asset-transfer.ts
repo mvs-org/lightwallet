@@ -131,7 +131,7 @@ export class AssetTransferPage {
 
     validQuantity = (quantity) => quantity != undefined
         && this.countDecimals(quantity) <= this.decimals
-        && ((this.selectedAsset == 'ETP' && this.showBalance >= (Math.round(parseFloat(quantity) * Math.pow(10, this.decimals)) + 10000)) || (this.selectedAsset != 'ETP' && this.showBalance >= parseFloat(quantity) * Math.pow(10, this.decimals)))
+        && ((this.selectedAsset == 'ETP' && this.showBalance >= (Math.round(parseFloat(quantity) * Math.pow(10, this.decimals)) + this.fee)) || (this.selectedAsset != 'ETP' && this.showBalance >= parseFloat(quantity) * Math.pow(10, this.decimals)))
         && (quantity > 0)
 
     countDecimals(value) {
@@ -242,14 +242,14 @@ export class AssetTransferPage {
             })
     }
 
-    sendAll() {
+    sendAll = () => this.alert.showSendAll(() => {
         if (this.selectedAsset == 'ETP') {
-            this.quantity = parseFloat(((this.showBalance / 100000000 - 10000 / 100000000).toFixed(this.decimals)) + "") + ""
+            this.quantity = parseFloat(((this.showBalance / 100000000 - this.fee / 100000000).toFixed(this.decimals)) + "") + ""
         } else {
             this.quantity = parseFloat((this.showBalance / Math.pow(10, this.decimals)).toFixed(this.decimals) + "") + ""
         }
         this.quantityInput.setFocus()
-    }
+    })
 
     validrecipient = this.mvs.validAddress
 
