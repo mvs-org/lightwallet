@@ -36,6 +36,7 @@ export class DepositPage {
     @ViewChild('quantityInput') quantityInput;
     selectedAsset: any
     message: string = ""
+    fee: number = 10000
 
     constructor(
         public navCtrl: NavController,
@@ -182,6 +183,7 @@ export class DepositPage {
                 this.locktime,
                 (this.sendFrom != 'auto') ? this.sendFrom : null,
                 (this.changeAddress != 'auto') ? this.changeAddress : undefined,
+                this.fee,
                 (messages !== []) ? messages : undefined)
             )
             .catch((error) => {
