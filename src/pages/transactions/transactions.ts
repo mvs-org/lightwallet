@@ -25,26 +25,29 @@ export class TransactionsPage {
     frozen_outputs_unlocked: any[] = [];
     order_by: string = 'locked_until'
     direction: number = 1
+    blocktime: number
+    current_time: number
 
     constructor(
         public navCtrl: NavController,
         private globals: AppGlobals,
         public navParams: NavParams,
-        private mvsServiceProvider: MvsServiceProvider
+        private mvs: MvsServiceProvider
     ) {
         this.asset = navParams.get('asset');
         this.showTxs({ symbol: this.asset });
         this.loading = true;
+        this.current_time = Date.now()
 
     }
 
     ionViewDidEnter() {
         console.log('Transactions page loaded')
-        this.mvsServiceProvider.getHeight()
+        this.mvs.getHeight()
             .then(height=>{
                 this.height=height
             })
-            .then(() => this.mvsServiceProvider.getFrozenOutputs())
+            .then(() => this.mvs.getFrozenOutputs())
             .then(outputs=>{
                 this.frozen_outputs_locked = []
                 this.frozen_outputs_unlocked = []
@@ -69,7 +72,10 @@ export class TransactionsPage {
                     }
                 }
             })
-        this.mvsServiceProvider.getAddresses()
+            .then(() => this.mvs.getBlocktime(this.height))
+            .then(blocktime => this.blocktime = blocktime)
+
+        this.mvs.getAddresses()
             .then((addresses) => {
                 if (!Array.isArray(addresses) || !addresses.length)
                     this.navCtrl.setRoot("LoginPage")
@@ -81,9 +87,9 @@ export class TransactionsPage {
     }
 
     private showTxs(filter) {
-        return this.mvsServiceProvider.getAddresses()
+        return this.mvs.getAddresses()
             .then((addresses: string[]) => {
-                return this.mvsServiceProvider.getTxs()
+                return this.mvs.getTxs()
                     .then((txs: any[]) => this.filterTxs(txs, filter.symbol, addresses))
             })
             .then((txs: any) => {

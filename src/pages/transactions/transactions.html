@@ -85,8 +85,8 @@
                         <h1>{{asset}}</h1>
                         <p *ngFor="let transaction of output.transactions">{{'TRANSACTION'|translate}}: <a href="{{explorerURL(transaction)}}" target="_blank">{{transaction}}</a></p>
                         <p>{{'AMOUNT'|translate}}: {{output.value | format : output.attachment.decimals}}</p>
-                        <p>{{'LOCKED_SINCE'|translate}}: {{output.height}} ({{output.confirmed_at*1000|date : 'medium'}})</p>
-                        <p>{{'LOCKED_UNTIL'|translate}}: {{output.locked_until}}</p>
+                        <p>{{'LOCKED_SINCE'|translate}}: {{output.height}} ({{output.confirmed_at*1000 | date : 'medium'}})</p>
+                        <p>{{'LOCKED_UNTIL'|translate}}: {{output.locked_until}} (~{{((output.locked_until - height) * blocktime * 1000) + current_time  |date : 'medium'}})*</p>
                         <p>{{'LOCKED_FOR_BLOCKS'|translate}}: {{output.locked_until-output.height}} {{'BLOCKS'|translate}}</p>
                         <div *ngIf="output.height<= height">
                             <progress-bar *ngIf="height<=output.locked_until && depositProgress(output.height, output.locked_until)>0" [progress]="depositProgress(output.height, output.locked_until)" ></progress-bar>
@@ -94,6 +94,12 @@
                     </ion-item>
                 </ion-item>
             </ion-list>
+
+            <ion-row [hidden]="!frozen_outputs_locked.length">
+                <ion-col>
+                    <p align="center">{{"HISTORY.UNLOCK_APPROXIMATION_INFORMATION" | translate}}</p>
+                </ion-col>
+            </ion-row>
 
             <ion-list [hidden]="!frozen_outputs_unlocked.length">
                 <h2 class="center" >{{"HISTORY.UNFROZEN_TX"|translate}}</h2>
