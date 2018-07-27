@@ -589,4 +589,31 @@ export class MvsServiceProvider {
     verifyMessageSize(message){
         return Metaverse.message.size(message)
     }
+
+    getBlocktime(current_height) {
+        return this.storage.get('blocktime')
+            .then((blocktime) => {
+                if (blocktime == undefined || blocktime.height == undefined || blocktime.height == undefined || current_height > blocktime.height + 1000) {
+                    return this.blockchain.block.blocktime(1000)
+                        .then((time) => {
+                            this.setBlocktime(time, current_height)
+                            return time
+                        })
+
+                } else {
+                    return blocktime.time
+                }
+            })
+            .catch((error) => {
+                console.error(error)
+                throw Error('ERR_GET_BLOCKTIME')
+            })
+    }
+
+    setBlocktime(time, height) {
+        var blocktime = {};
+        blocktime['time'] = time
+        blocktime['height'] = height
+        return this.storage.set('blocktime', blocktime)
+    }
 }

@@ -37,6 +37,9 @@ export class DepositPage {
     selectedAsset: any
     message: string = ""
     fee: number = 10000
+    blocktime: number
+    duration_days: number = 0
+    duration_hours: number = 0
 
     constructor(
         public navCtrl: NavController,
@@ -56,6 +59,7 @@ export class DepositPage {
         this.custom_recipient = ''
         this.passphrase = ''
         this.selectedAsset = navParams.get('asset')
+        //this.blocktime = mvs.getBlocktime()
 
         if (this.globals.network == 'mainnet')
             this.deposit_options = [
@@ -100,6 +104,14 @@ export class DepositPage {
                         this.addressbalances = addrblncs
                     })
             })
+
+        mvs.getHeight()
+            .then(height => mvs.getBlocktime(height))
+            .then(blocktime => this.blocktime = blocktime)
+            .catch((error) => {
+                console.error(error.message)
+            })
+
     }
 
     ionViewDidEnter() {
@@ -112,7 +124,8 @@ export class DepositPage {
     }
 
     onDepositOptionChange(event) {
-
+        this.duration_days = Math.floor(this.blocktime * this.locktime / (24 * 60 * 60))
+        this.duration_hours = Math.floor((this.blocktime * this.locktime / (60 * 60)) - (24 * this.duration_days))
     }
 
     onFromAddressChange(event) {

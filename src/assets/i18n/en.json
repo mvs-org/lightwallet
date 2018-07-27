@@ -426,5 +426,8 @@
     "MITS.INFORMATION": "MIT (Metaverse Identifiable Token) is the nun-fungible token standard on Metaverse. A MIT is unique, its quantity is always 1 and can't be split. It can only be created by and transferred to an Avatar. MITs can be used to represent any unique digital or physical object, and easily trace its transfer from Avatars to Avatars",
 
     "SEND_ALL_TITLE": "Send all?",
-    "SEND_ALL_MESSAGE": "Do you really want to send all your available balance?"
+    "SEND_ALL_MESSAGE": "Do you really want to send all your available balance?",
+
+    "DEPOSIT.DURATION_ESTIMATION": "Your ETP will be locked for approximately {{duration_days}} days and {{duration_hours}} hours. Be aware that this estimation is based on the blocktime of the last 1000 blocks ({{blocktime}} sec.), and might vary based on block generation speed."
+
 }
