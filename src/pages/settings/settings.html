@@ -16,7 +16,7 @@
             <p [translate]="'SETTINGS.RESYNC_TEXT'" style="white-space: normal;"></p>
         </button>
       </ion-row>
-      <ion-row>
+      <ion-row *ngIf="network == 'testnet'">
           <button ion-item (click)="plugins()" style="white-space: normal;">
               <ion-icon name="cube" item-start></ion-icon>
               <h1 [translate]="'SETTINGS.PLUGINS'"></h1>
