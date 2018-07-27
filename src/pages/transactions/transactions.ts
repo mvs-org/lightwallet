@@ -21,32 +21,61 @@ export class TransactionsPage {
     display_segment: string = "transactions"
     height: number;
 
-    frozen_outputs: any[] = [];
+    frozen_outputs_locked: any[] = [];
+    frozen_outputs_unlocked: any[] = [];
+    order_by: string = 'locked_until'
+    direction: number = 1
+    blocktime: number
+    current_time: number
 
     constructor(
         public navCtrl: NavController,
         private globals: AppGlobals,
         public navParams: NavParams,
-        private mvsServiceProvider: MvsServiceProvider
+        private mvs: MvsServiceProvider
     ) {
         this.asset = navParams.get('asset');
         this.showTxs({ symbol: this.asset });
         this.loading = true;
+        this.current_time = Date.now()
 
     }
 
     ionViewDidEnter() {
         console.log('Transactions page loaded')
-        this.mvsServiceProvider.getFrozenOutputs()
-            .then(outputs=>{
-                console.log(outputs)
-                this.frozen_outputs=outputs;
-            })
-        this.mvsServiceProvider.getHeight()
+        this.mvs.getHeight()
             .then(height=>{
                 this.height=height
             })
-        this.mvsServiceProvider.getAddresses()
+            .then(() => this.mvs.getFrozenOutputs())
+            .then(outputs=>{
+                this.frozen_outputs_locked = []
+                this.frozen_outputs_unlocked = []
+                let grouped_frozen_ouputs = {}
+                outputs.forEach((output) => {
+                    grouped_frozen_ouputs[output.height] = grouped_frozen_ouputs[output.height] ? grouped_frozen_ouputs[output.height] : {}
+                    if(grouped_frozen_ouputs[output.height][output.locked_until]) {
+                        grouped_frozen_ouputs[output.height][output.locked_until].value += output.value
+                        grouped_frozen_ouputs[output.height][output.locked_until].transactions.push(output.hash)
+                    } else {
+                        output.transactions = [output.hash]
+                        grouped_frozen_ouputs[output.height][output.locked_until] = output
+                    }
+                })
+                for (var height in grouped_frozen_ouputs) {
+                    var unlock = grouped_frozen_ouputs[height];
+                    for (var output in unlock) {
+                        if(this.height>parseInt(output))
+                            this.frozen_outputs_unlocked.push(unlock[output])
+                        else
+                            this.frozen_outputs_locked.push(unlock[output])
+                    }
+                }
+            })
+            .then(() => this.mvs.getBlocktime(this.height))
+            .then(blocktime => this.blocktime = blocktime)
+
+        this.mvs.getAddresses()
             .then((addresses) => {
                 if (!Array.isArray(addresses) || !addresses.length)
                     this.navCtrl.setRoot("LoginPage")
@@ -54,13 +83,13 @@ export class TransactionsPage {
     }
 
     depositProgress(start_height, locked_until){
-        return Math.round((this.height-start_height)/(locked_until-start_height)*100)
+        return Math.max(1, Math.min(99, Math.round((this.height-start_height)/(locked_until-start_height)*100)))
     }
 
     private showTxs(filter) {
-        return this.mvsServiceProvider.getAddresses()
+        return this.mvs.getAddresses()
             .then((addresses: string[]) => {
-                return this.mvsServiceProvider.getTxs()
+                return this.mvs.getTxs()
                     .then((txs: any[]) => this.filterTxs(txs, filter.symbol, addresses))
             })
             .then((txs: any) => {

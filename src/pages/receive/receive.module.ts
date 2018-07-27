@@ -7,7 +7,7 @@ import { ClipboardModule } from 'ngx-clipboard/dist';
 
 @NgModule({
     declarations: [
-        ReceivePage,
+        ReceivePage
     ],
     imports: [
         IonicPageModule.forChild(ReceivePage),

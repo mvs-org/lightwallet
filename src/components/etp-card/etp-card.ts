@@ -8,6 +8,8 @@ import { NavController } from 'ionic-angular';
 export class EtpCardComponent {
 
     @Input() balance: any;
+    @Input() tickers: any;
+    @Input() base: string;
 
     constructor(
         private nav: NavController

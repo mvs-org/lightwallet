@@ -4,7 +4,12 @@
     </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content padding style="padding-bottom: 0;">
+    <ion-row>
+        <ion-col>
+            <p align="center">{{"AVATARS.INFORMATION" | translate}}</p>
+        </ion-col>
+    </ion-row>
     <div class="no-avatar" *ngIf="no_avatar">{{"AVATARS.NO_AVATARS" | translate}}</div>
     <ion-card class="avatar-card" *ngFor="let avatar of avatars">
         <ion-grid>

@@ -1,11 +1,12 @@
-import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform, Events } from 'ionic-angular';
-import { SplashScreen } from '@ionic-native/splash-screen';
-import { TranslateService } from '@ngx-translate/core';
-import { StatusBar } from '@ionic-native/status-bar';
-import { Keyboard } from '@ionic-native/keyboard';
-import { AppGlobals } from './app.global';
-import { Storage } from '@ionic/storage';
+import { Component, ViewChild } from '@angular/core'
+import { Nav, Platform, Events } from 'ionic-angular'
+import { SplashScreen } from '@ionic-native/splash-screen'
+import { TranslateService } from '@ngx-translate/core'
+import { StatusBar } from '@ionic-native/status-bar'
+import { Keyboard } from '@ionic-native/keyboard'
+import { AppGlobals } from './app.global'
+import { Storage } from '@ionic/storage'
+import { PluginProvider } from '../providers/plugin/plugin'
 
 @Component({
     templateUrl: 'app.html'
@@ -20,6 +21,7 @@ export class MyETPWallet {
         private splashScreen: SplashScreen,
         public platform: Platform,
         private storage: Storage,
+        private plugins: PluginProvider,
         public translate: TranslateService,
         private event: Events,
         private globals: AppGlobals,
@@ -61,7 +63,7 @@ export class MyETPWallet {
         });
     }
 
-    isLoggedIn = () => {
+    isLoggedIn(): any {
         return this.storage.get('mvs_addresses')
             .then((addresses) => (addresses != undefined && addresses != null && Array.isArray(addresses) && addresses.length))
 
@@ -109,18 +111,30 @@ export class MyETPWallet {
     }
 
     setPrivateMenu() {
-        return Promise.all([
-            { title: 'ACCOUNT.TITLE', component: "AccountPage", icon: 'home', root: true },
-            { title: 'ETP_DEPOSIT', component: "DepositPage", icon: 'log-in' },
-            { title: 'AVATARS', component: "AvatarsPage", icon: 'person' },
-            { title: 'REGISTER_MST', component: "AssetIssuePage", icon: 'globe' },
-            { title: 'REGISTER_MIT', component: "MITRegisterPage", icon: 'create' },
-            { title: 'LANGUAGE_SETTINGS', component: "LanguageSwitcherPage", icon: 'flag' },
-            { title: 'THEME_SETTINGS', component: "ThemeSwitcherPage", icon: 'color-palette' },
-            { title: 'SETTINGS', component: "SettingsPage", icon: 'settings' },
-            { title: 'REPORT_BUG', newtab: 'https://github.com/mvs-org/lightwallet/issues', icon: 'bug' },
-            { title: 'INFORMATION', component: "InformationPage", icon: 'information-circle' }
-        ].map((entry) => this.addToMenu(entry)))
+        return this.plugins.getPlugins()
+            .then(plugins => {
+                let p = []
+                plugins.forEach(plugin => {
+                    p.push({
+                        title: (plugin.translation[this.translate.currentLang])?plugin.translation[this.translate.currentLang].name:plugin.translation.default.name, component: "PluginPage", params: { name: plugin.name }, icon: 'cube'
+                    })
+                })
+                return p
+            })
+            .then(plugins => {
+                return Promise.all([
+                    { title: 'ACCOUNT.TITLE', component: "AccountPage", icon: 'home', root: true },
+                    { title: 'ETP_DEPOSIT', component: "DepositPage", icon: 'log-in' },
+                    { title: 'AVATARS', component: "AvatarsPage", icon: 'person' },
+                    { title: 'REGISTER_MST', component: "AssetIssuePage", icon: 'globe' },
+                    { title: 'REGISTER_MIT', component: "MITRegisterPage", icon: 'create' },
+                    { title: 'LANGUAGE_SETTINGS', component: "LanguageSwitcherPage", icon: 'flag' },
+                    { title: 'THEME_SETTINGS', component: "ThemeSwitcherPage", icon: 'color-palette' },
+                    { title: 'SETTINGS', component: "SettingsPage", icon: 'settings' },
+                    { title: 'REPORT_BUG', newtab: 'https://github.com/mvs-org/lightwallet/issues', icon: 'bug' },
+                    { title: 'INFORMATION', component: "InformationPage", icon: 'information-circle' }
+                ].concat(plugins).map((entry) => this.addToMenu(entry)))
+            });
     }
 
     setHeaderColor(key) {
@@ -155,7 +169,7 @@ export class MyETPWallet {
             if (page.root)
                 this.nav.setRoot(page.component);
             else
-                this.nav.push(page.component);
+                this.nav.push(page.component, page.params);
         }
         else if (page.newtab)
             if (this.platform.is('mobile') && this.platform.is('ios'))

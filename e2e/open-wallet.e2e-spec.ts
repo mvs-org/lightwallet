@@ -25,7 +25,7 @@ describe('Load Wallet', () => {
 
         function openWalletFile() {
             page.moveTo(page.getElement("#disclaimer-agree button"))
-            page.sleep(200)
+            page.sleep(500)
             page.getElement("button.item-cover").click()
             var fileToUpload = process.cwd() + '/e2e/wallet.json'
             page.getElementById('file').sendKeys(fileToUpload)

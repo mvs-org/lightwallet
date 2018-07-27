@@ -15,7 +15,7 @@ export class AlertProvider {
     ) {
     }
 
-    stopLoading(){
+    stopLoading() {
         this.loading.dismiss()
     }
 
@@ -48,6 +48,24 @@ export class AlertProvider {
         })
     }
 
+    showSendAll(action) {
+        this.translate.get(['SEND_ALL_TITLE', 'SEND_ALL_MESSAGE', 'OK', 'CANCEL']).subscribe(translations => {
+            this.alertCtrl.create({
+                title: translations.SEND_ALL_TITLE,
+                message: translations.SEND_ALL_MESSAGE,
+                buttons: [
+                    {
+                        text: translations.CANCEL
+                    },
+                    {
+                        text: translations.OK,
+                        handler: action
+                    }
+                ]
+            }).present()
+        })
+    }
+
     showSent(message_key, hash) {
         this.translate.get(['MESSAGE.SUCCESS', 'OK', message_key]).subscribe((translations: any) => {
             let alert = this.alertCtrl.create({
@@ -63,12 +81,51 @@ export class AlertProvider {
         })
     }
 
+    askPassphrase(message_key, onSubmit) {
+        this.translate.get(['PASSPHRASE', 'OK', 'CANCEL', message_key]).subscribe((translations: any) => {
+            let alert = this.alertCtrl.create({
+                title: translations['PASSPHRASE'],
+                subTitle: translations[message_key],
+                enableBackdropDismiss: false,
+                inputs: [
+                    { name: 'passphrase', placeholder: 'Passphrase' }
+                ],
+                buttons: [
+                    {
+                        text: translations['CANCEL'],
+                        role: 'cancel',
+                        handler: data => onSubmit()
+                    },
+                    {
+                        text: translations['OK'],
+                        handler: data => onSubmit(data.passphrase)
+                    }
+                ]
+            })
+            alert.present(prompt)
+        })
+    }
+
     showError(message_key, error) {
         this.translate.get(['MESSAGE.ERROR_TITLE', message_key, 'OK']).subscribe((translations: any) => {
             let alert = this.alertCtrl.create({
                 title: translations['MESSAGE.ERROR_TITLE'],
                 subTitle: translations[message_key],
                 message: error,
+                buttons: [{
+                    text: translations['OK']
+                }]
+            });
+            alert.present(alert);
+        })
+    }
+
+    showErrorTranslated(subtitle, message) {
+        this.translate.get(['MESSAGE.ERROR_TITLE', subtitle, message]).subscribe((translations: any) => {
+            let alert = this.alertCtrl.create({
+                title: translations['MESSAGE.ERROR_TITLE'],
+                subTitle: translations[subtitle],
+                message: translations[message],
                 buttons: [{
                     text: translations['OK']
                 }]

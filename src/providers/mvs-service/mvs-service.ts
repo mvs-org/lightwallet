@@ -16,6 +16,7 @@ export class MvsServiceProvider {
         ETP: { frozen: 0, available: 0, decimals: 8 },
         MST: {
             "PARCELX.GPX": { frozen: 0, available: 0, decimals: 8 },
+            "RIGHTBTC.RT": { frozen: 0, available: 0, decimals: 4 },
             "MVS.ZGC": { frozen: 0, available: 0, decimals: 8 },
             "MVS.ZDC": { frozen: 0, available: 0, decimals: 6 },
             "CSD.CSD": { frozen: 0, available: 0, decimals: 8 },
@@ -30,27 +31,30 @@ export class MvsServiceProvider {
         private event: Events,
         private storage: Storage
     ) {
-        this.setNetwork()
         this.event.subscribe("network_update", (settings) => {
             console.info('mvs service network update caused by network update event')
-            this.setNetwork()
+            this.blockchain = Blockchain({ network: this.globals.network })
         })
+        this.globals.getNetwork()
+            .then(network => {
+                this.blockchain = Blockchain({ network: network })
+            })
     }
 
-    private setNetwork = () => this.globals.getNetwork()
-        .then(network => this.blockchain = Blockchain({ network: network }))
-
-    createSendTx(passphrase: string, asset: string, recipient_address: string, recipient_avatar: string, quantity: number, from_address: string, change_address: string) {
+    createSendTx(passphrase: string, asset: string, recipient_address: string, recipient_avatar: string, quantity: number, from_address: string, change_address: string, fee: number, messages: Array<string>) {
         let target = {};
         target[asset] = quantity;
         return this.wallet.getWallet(passphrase)
             .then(wallet => this.getUtxoFrom(from_address)
-                .then((utxo) => this.getHeight().then(height => Metaverse.output.findUtxo(utxo, target, height)))
+                .then((utxo) => this.getHeight().then(height => Metaverse.output.findUtxo(utxo, target, height, fee)))
                 .then((result) => {
+                    if (result.utxo.length > 676) {
+                        throw Error('ERR_TOO_MANY_INPUTS');
+                    }
                     //Set change address to first utxo's address
                     if (change_address == undefined)
                         change_address = result.utxo[0].address;
-                    return Metaverse.transaction_builder.send(result.utxo, recipient_address, recipient_avatar, target, change_address, result.change);
+                    return Metaverse.transaction_builder.send(result.utxo, recipient_address, recipient_avatar, target, change_address, result.change, undefined, fee, messages);
                 })
                 .then((tx) => wallet.sign(tx)))
             .catch((error) => {
@@ -59,15 +63,15 @@ export class MvsServiceProvider {
             })
     }
 
-    createSendMoreTx(passphrase: string, target: any, recipients: Array<any>, from_address: string, change_address: string) {
+    createSendMoreTx(passphrase: string, target: any, recipients: Array<any>, from_address: string, change_address: string, messages: Array<string>) {
         return this.wallet.getWallet(passphrase)
             .then(wallet => this.getUtxoFrom(from_address)
-                .then((utxo) => this.getHeight().then(height => Metaverse.output.findUtxo(utxo, target, height, Metaverse.constants.FEE.DEFAULT*recipients.length)))
+                .then((utxo) => this.getHeight().then(height => Metaverse.output.findUtxo(utxo, target, height, Metaverse.constants.FEE.DEFAULT * recipients.length)))
                 .then((result) => {
                     //Set change address to first utxo's address
                     if (change_address == undefined)
                         change_address = result.utxo[0].address;
-                    return Metaverse.transaction_builder.sendMore(result.utxo, recipients, change_address, result.change, undefined, Metaverse.constants.FEE.DEFAULT*recipients.length);
+                    return Metaverse.transaction_builder.sendMore(result.utxo, recipients, change_address, result.change, undefined, Metaverse.constants.FEE.DEFAULT * recipients.length, messages);
                 })
                 .then((tx) => wallet.sign(tx)))
             .catch((error) => {
@@ -76,18 +80,21 @@ export class MvsServiceProvider {
             })
     }
 
-    createDepositTx(passphrase: string, recipient_address: string, quantity: number, locktime: number, from_address: string, change_address: string) {
+    createDepositTx(passphrase: string, recipient_address: string, quantity: number, locktime: number, from_address: string, change_address: string, fee: number, messages: Array<string>) {
         let target = { ETP: quantity };
         return this.wallet.getWallet(passphrase)
             .then(wallet => this.getUtxoFrom(from_address)
-                .then((utxo) => this.getHeight().then(height => Metaverse.output.findUtxo(utxo, target, height)))
+                .then((utxo) => this.getHeight().then(height => Metaverse.output.findUtxo(utxo, target, height, fee)))
                 .then((result) => {
+                    if (result.utxo.length > 676) {
+                        throw Error('ERR_TOO_MANY_INPUTS');
+                    }
                     //Set change address to first utxo's address
                     if (change_address == undefined)
                         change_address = result.utxo[0].address;
                     if (recipient_address == undefined)
                         recipient_address = result.utxo[0].address;
-                    return Metaverse.transaction_builder.deposit(result.utxo, recipient_address, quantity, locktime, change_address, result.change, undefined, Metaverse.networks[this.globals.network]);
+                    return Metaverse.transaction_builder.deposit(result.utxo, recipient_address, quantity, locktime, change_address, result.change, fee, Metaverse.networks[this.globals.network], messages);
                 })
                 .then((tx) => wallet.sign(tx)))
             .catch((error) => {
@@ -96,7 +103,7 @@ export class MvsServiceProvider {
             })
     }
 
-    createAvatarTx(passphrase: string, avatar_address: string, symbol: string, change_address: string) {
+    createAvatarTx(passphrase: string, avatar_address: string, symbol: string, change_address: string, bounty_fee: number) {
         return this.wallet.getWallet(passphrase)
             .then(wallet => this.getUtxoFrom(avatar_address)
                 .then((utxo) => this.getHeight().then(height => Metaverse.output.findUtxo(utxo, {}, height, Metaverse.constants.FEE.AVATAR_REGISTER)))
@@ -104,7 +111,7 @@ export class MvsServiceProvider {
                     //Set change address to first utxo's address
                     if (change_address == undefined)
                         change_address = result.utxo[0].address;
-                    return Metaverse.transaction_builder.issueDid(result.utxo, avatar_address, symbol, change_address, result.change);
+                    return Metaverse.transaction_builder.issueDid(result.utxo, avatar_address, symbol, change_address, result.change, bounty_fee, this.globals.network);
                 })
                 .then((tx) => wallet.sign(tx)))
             .catch((error) => {
@@ -113,15 +120,15 @@ export class MvsServiceProvider {
             })
     }
 
-    createRegisterMITTx(passphrase: string, recipient_address: string, recipient_avatar, symbol: string, content: string, change_address: string) {
+    createRegisterMITTx(passphrase: string, recipient_address: string, recipient_avatar, symbol: string, content: string, change_address: string, fee: number) {
         return this.wallet.getWallet(passphrase)
             .then(wallet => this.getUtxoFrom(recipient_address)
-                .then((utxo) => this.getHeight().then(height => Metaverse.output.findUtxo(utxo, {}, height, Metaverse.constants.FEE.DEFAULT)))
+                .then((utxo) => this.getHeight().then(height => Metaverse.output.findUtxo(utxo, {}, height, fee)))
                 .then((result) => {
                     //Set change address to first utxo's address
                     if (change_address == undefined)
                         change_address = result.utxo[0].address;
-                    return Metaverse.transaction_builder.registerMIT(result.utxo, recipient_address, recipient_avatar, symbol, content, change_address, result.change)
+                    return Metaverse.transaction_builder.registerMIT(result.utxo, recipient_address, recipient_avatar, symbol, content, change_address, result.change, fee)
                 })
                 .then((tx) => wallet.sign(tx)))
             .catch((error) => {
@@ -130,10 +137,10 @@ export class MvsServiceProvider {
             })
     }
 
-    createTransferMITTx(passphrase: string, sender_avatar: string, recipient_address: string, recipient_avatar, symbol: string, fee_address: string, change_address: string) {
+    createTransferMITTx(passphrase: string, sender_avatar: string, recipient_address: string, recipient_avatar, symbol: string, fee_address: string, change_address: string, fee: number) {
         return this.wallet.getWallet(passphrase)
             .then(wallet => this.getUtxoFrom(fee_address)
-                .then((utxo) => Promise.all([this.getHeight().then(height => Metaverse.output.findUtxo(utxo, {}, height, Metaverse.constants.FEE.DEFAULT)), this.getUtxo().then(utxo => Metaverse.output.filter(utxo, { type: 'mit', symbol: symbol }))]))
+                .then((utxo) => Promise.all([this.getHeight().then(height => Metaverse.output.findUtxo(utxo, {}, height, fee)), this.getUtxo().then(utxo => Metaverse.output.filter(utxo, { type: 'mit', symbol: symbol }))]))
                 .then((result) => {
                     var fee_utxo = result[0]
                     var mit_utxo = result[1]
@@ -142,7 +149,7 @@ export class MvsServiceProvider {
                     //Set change address to first utxo's address
                     if (change_address == undefined)
                         change_address = fee_utxo.utxo[0].address;
-                    return Metaverse.transaction_builder.transferMIT(fee_utxo.utxo.concat(mit_utxo), sender_avatar, recipient_address, recipient_avatar, symbol, change_address, fee_utxo.change)
+                    return Metaverse.transaction_builder.transferMIT(fee_utxo.utxo.concat(mit_utxo), sender_avatar, recipient_address, recipient_avatar, symbol, change_address, fee_utxo.change, fee)
                 })
                 .then((tx) => wallet.sign(tx)))
             .catch((error) => {
@@ -151,7 +158,7 @@ export class MvsServiceProvider {
             })
     }
 
-    createIssueAssetTx(passphrase: string, symbol: string, quantity: number, precision: number, issuer: string, description: string, secondaryissue_threshold: number, is_secondaryissue: boolean, issue_address: string, fee_address: string, change_address: string, create_new_domain_cert: boolean, use_naming_cert: boolean) {
+    createIssueAssetTx(passphrase: string, symbol: string, quantity: number, precision: number, issuer: string, description: string, secondaryissue_threshold: number, is_secondaryissue: boolean, issue_address: string, fee_address: string, change_address: string, create_new_domain_cert: boolean, use_naming_cert: boolean, bounty_fee: number) {
         return ((fee_address) ? this.getUtxoFrom(fee_address) : this.getUtxo())
             .then(utxo => {
                 return this.wallet.getWallet(passphrase)
@@ -175,7 +182,7 @@ export class MvsServiceProvider {
                                         return false;
                                     }
                                 })
-                                return Metaverse.transaction_builder.issueAsset(result.utxo.concat(certs), issue_address, symbol, quantity, precision, issuer, description, secondaryissue_threshold, is_secondaryissue, change_address, result.change, create_new_domain_cert)
+                                return Metaverse.transaction_builder.issueAsset(result.utxo.concat(certs), issue_address, symbol, quantity, precision, issuer, description, secondaryissue_threshold, is_secondaryissue, change_address, result.change, create_new_domain_cert, bounty_fee, this.globals.network)
                             })
                             .then((tx) => wallet.sign(tx))
                     })
@@ -262,6 +269,11 @@ export class MvsServiceProvider {
 
     getListMit = () => this.blockchain.MIT.list()
 
+    getBaseCurrency = () => this.storage.get('base')
+        .then(base => (base) ? base : 'USD')
+
+    setBaseCurrency = (currency) => this.storage.set('base', currency).then(() => this.event.publish('currency_changes', currency))
+
     getBalances() {
         return this.storage.get('balances')
             .then((balances: any) => {
@@ -346,14 +358,23 @@ export class MvsServiceProvider {
     }
 
     getFrozenOutputs() {
-            return this.getAddresses()
-                  .then(addresses => this.getTxs()
-                        .then(txs => Metaverse.output.calculateUtxo(txs, addresses))
-                        .then(outputs=>outputs.filter(o=>(o.locked_until>0 && o.height)))
-                        .then(outputs=>outputs.sort((a,b)=>{
-                            return (a.height>b.height)?-1:1;
-                        }))
-                       )
+        return this.getAddresses()
+            .then(addresses => this.getTxs()
+                .then(txs => {
+                    let outputs = []
+                    txs.forEach(tx => {
+                        tx.outputs.forEach((output) => {
+                            if (output.locked_height_range > 0 && output.height && addresses.indexOf(output.address) !== -1) {
+                                output.locked_until = (output.locked_height_range) ? tx.height + output.locked_height_range : 0
+                                delete output['locked_height_range']
+                                output.hash = tx.hash
+                                outputs.push(output)
+                            }
+                        })
+                    })
+                    return outputs
+                })
+            )
     }
 
     setUpdateTime(lastupdate = undefined) {
@@ -477,6 +498,9 @@ export class MvsServiceProvider {
             })
     }
 
+    getTickers = () => {
+        return this.blockchain.pricing.tickers();
+    }
 
     assetOrder() {
         return this.storage.get('asset_order')
@@ -510,18 +534,43 @@ export class MvsServiceProvider {
     send = (tx) => {
         return this.broadcast(tx.encode().toString('hex'))
             .then((result: any) => this.getHeight()
-                .then(height => {
-                    tx.height = height
-                    tx.hash = result.hash
-                    tx.outputs.forEach((output, index) => {
-                        output.index = index
-                        output.locked_height_range = (output.locktime) ? output.locktime : 0
+                .then(height => this.getBalances()
+                    .then(balances => {
+                        tx.height = height
+                        tx.hash = result.hash
+                        tx.outputs.forEach((output, index) => {
+                            output.index = index
+                            output.locked_height_range = (output.locktime) ? output.locktime : 0
+                            output.locked_until = (output.locktime) ? height + output.locked_height_range : 0
+                            switch (output.attachment.type) {
+                                case Metaverse.constants.ATTACHMENT.TYPE.MST:
+                                    switch (output.attachment.status) {
+                                        case Metaverse.constants.MST.STATUS.REGISTER:
+                                            output.attachment.type = 'asset-issue';
+                                            break;
+                                        case Metaverse.constants.MST.STATUS.TRANSFER:
+                                            output.attachment.type = 'asset-transfer';
+                                            if (balances && balances.MST && balances.MST[output.attachment.symbol])
+                                                output.attachment.decimals = balances.MST[output.attachment.symbol].decimals
+                                            break;
+                                    }
+                                    break;
+                                case Metaverse.constants.ATTACHMENT.TYPE.MIT:
+                                    output.attachment.type = 'mit';
+                                    break;
+                                case Metaverse.constants.ATTACHMENT.TYPE.ETP_TRANSFER:
+                                    output.attachment.type = 'etp';
+                                    output.attachment.symbol = 'ETP';
+                                    output.attachment.decimals = 8;
+                                    break;
+                            }
+                        })
+                        tx.unconfirmed = true
+                        return this.addTxs([tx])
+                            .then(() => this.getData())
+                            .then(() => tx)
                     })
-                    tx.unconfirmed = true
-                    return this.addTxs([tx])
-                        .then(() => this.getData())
-                        .then(() => tx)
-                })
+                )
             )
     }
 
@@ -535,5 +584,36 @@ export class MvsServiceProvider {
 
     checkmnemonic(mnemonic, wordlist) {
         return Metaverse.wallet.validateMnemonic(mnemonic, wordlist)
+    }
+
+    verifyMessageSize(message){
+        return Metaverse.message.size(message)
+    }
+
+    getBlocktime(current_height) {
+        return this.storage.get('blocktime')
+            .then((blocktime) => {
+                if (blocktime == undefined || blocktime.height == undefined || blocktime.height == undefined || current_height > blocktime.height + 1000) {
+                    return this.blockchain.block.blocktime(1000)
+                        .then((time) => {
+                            this.setBlocktime(time, current_height)
+                            return time
+                        })
+
+                } else {
+                    return blocktime.time
+                }
+            })
+            .catch((error) => {
+                console.error(error)
+                throw Error('ERR_GET_BLOCKTIME')
+            })
+    }
+
+    setBlocktime(time, height) {
+        var blocktime = {};
+        blocktime['time'] = time
+        blocktime['height'] = height
+        return this.storage.set('blocktime', blocktime)
     }
 }

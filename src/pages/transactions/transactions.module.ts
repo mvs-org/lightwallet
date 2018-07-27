@@ -3,7 +3,7 @@ import { IonicPageModule } from 'ionic-angular';
 import { TransactionsPage } from './transactions';
 import { TranslateModule} from '@ngx-translate/core';
 import { PipesModule } from '../../pipes/pipes.module';
-import { ProgressBarModule } from "angular-progress-bar"
+import { ProgressBarModule } from 'angular-progress-bar';
 
 @NgModule({
     declarations: [
