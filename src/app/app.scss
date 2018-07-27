@@ -31,7 +31,7 @@
     box-shadow: red !important;
 }
 
-.item-md:not(.item-input-has-focus, .ng-untouched) .item-inner, .item-md.item-select:not(.item-input-has-focus) .item-inner .ng-valid .item-cover{
+.item-md:not(.item-input-has-focus).error-border .item-inner, .item-md:not(.item-input-has-focus).valid-border .item-inner, .item-md.item-select:not(.item-input-has-focus) .item-inner .ng-valid .item-cover{
     border: 1px !important;
     margin-bottom: 1px;
 }
