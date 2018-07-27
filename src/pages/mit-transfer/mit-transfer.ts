@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { IonicPage, NavController, NavParams, AlertController, Platform, LoadingController, Loading } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, Platform, Loading } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
+import { AlertProvider } from '../../providers/alert/alert';
 
 @IonicPage()
 @Component({
@@ -21,6 +22,7 @@ export class MITTransferPage {
     addressbalances: Array<any>
     sendFrom: string = 'auto'
     changeAddress: string = 'auto'
+    fee: number = 10000
 
     constructor(
         public navCtrl: NavController,
@@ -28,7 +30,7 @@ export class MITTransferPage {
         private translate: TranslateService,
         private mvs: MvsServiceProvider,
         public platform: Platform,
-        private loadingCtrl: LoadingController,
+        private alert: AlertProvider,
         public navParams: NavParams
     ) {
         this.symbol = this.navParams.get('symbol')
@@ -56,7 +58,7 @@ export class MITTransferPage {
     }
 
     send() {
-        return this.showLoading()
+        return this.alert.showLoading()
             .then(() => this.mvs.getAddresses())
             .then((addresses) => this.mvs.createTransferMITTx(
                 this.passphrase,
@@ -65,7 +67,8 @@ export class MITTransferPage {
                 this.recipient_avatar,
                 this.symbol,
                 (this.sendFrom != 'auto') ? this.sendFrom : undefined,
-                (this.changeAddress != 'auto') ? this.changeAddress : undefined
+                (this.changeAddress != 'auto') ? this.changeAddress : undefined,
+                this.fee
             ))
             .then(tx => this.mvs.send(tx))
             .then((result) => {
@@ -81,6 +84,7 @@ export class MITTransferPage {
             })
             .catch((error) => {
                 console.error(error.message)
+                this.alert.stopLoading()
                 if (error.message == "ERR_DECRYPT_WALLET")
                     this.showError('MESSAGE.PASSWORD_WRONG', '')
                 else if (error.message == "ERR_INSUFFICIENT_BALANCE")
@@ -127,19 +131,6 @@ export class MITTransferPage {
     }
 
     validPassword = (passphrase) => (passphrase.length > 0)
-
-    showLoading() {
-        return new Promise((resolve, reject) => {
-            this.translate.get('MESSAGE.LOADING').subscribe((loading: string) => {
-                this.loading = this.loadingCtrl.create({
-                    content: loading,
-                    dismissOnPageChange: true
-                })
-                this.loading.present()
-                resolve()
-            })
-        })
-    }
 
     showSent(text, hash) {
         this.translate.get(['MESSAGE.SUCCESS', 'OK']).subscribe((translations: any) => {

@@ -5,7 +5,12 @@
 </ion-header>
 
 <ion-content padding style="padding-bottom: 0;">
-    <p class="right">{{"FEE"|translate}}:<br *ngIf="platform.is('mobile')"> {{10000 | format : 8}} ETP</p>
+    <ion-row>
+        <ion-col>
+            <p align="center">{{"MITS.INFORMATION" | translate}}</p>
+        </ion-col>
+    </ion-row>
+    <p class="right">{{"FEE"|translate}}:<br *ngIf="platform.is('mobile')"> {{fee | format : 8}} ETP</p>
     <form #sendForm="ngForm" style="padding-bottom: 0;">
         <ion-list style="padding-bottom: 0;">
             <ion-item [ngClass]="{'error-border':!validSymbol(symbol)}">
@@ -13,6 +18,7 @@
                 <ion-input name="symbol" [(ngModel)]="symbol" maxlength="63" required></ion-input>
             </ion-item>
             <ion-item *ngIf="list_all_mits.indexOf(symbol) !== -1" no-lines class="wrong-input">{{"MIT_REGISTER.MIT_ALREADY_EXIST" | translate}}</ion-item>
+            <ion-item *ngIf="symbol.length > 0 && symbol.length < 3" no-lines class="wrong-input">{{"MIT_REGISTER.MIT_SYMBOL_TOO_SHORT" | translate}}</ion-item>
 
             <ion-item [ngClass]="{'error-border':!validContent(content)}">
                 <ion-label color="primary" floating>{{"MIT_REGISTER.CONTENT" | translate}}</ion-label>
@@ -36,6 +42,22 @@
                 <ion-input name="passphrase" type="password" [(ngModel)]="passphrase" required></ion-input>
             </ion-item>
             <br>
+            <ion-item>
+              <ion-label>{{"SHOW_ADVANCED"|translate}}</ion-label>
+              <ion-toggle [(ngModel)]="showAdvanced" name="showAdvanced" checked="false"></ion-toggle>
+            </ion-item>
+            <div *ngIf="showAdvanced">
+                <ion-item no-lines>
+                    <ion-label color="primary">{{"FEE" | translate}}</ion-label>
+                    <ion-badge item-end color="primary">{{fee | format : 8}} ETP</ion-badge>
+                </ion-item>
+                <ion-item>
+                    <ion-range min="10000" max="10000000" step="10000" color="primary" [(ngModel)]="fee" name="fee">
+                        <ion-label range-left>{{10000 | format : 8}}</ion-label>
+                        <ion-label range-right>{{10000000 | format : 8}}</ion-label>
+                    </ion-range>
+                </ion-item>
+            </div>
         </ion-list>
         <ion-row class="padding-bottom">
             <ion-col>

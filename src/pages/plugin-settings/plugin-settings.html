@@ -1,0 +1,23 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>{{"PLUGIN_SETTINGS" | translate}}</ion-title>
+    </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+    <div *ngIf="loading" class="mini-loader"></div>
+    <ion-list>
+        <plugin-item *ngFor="let plugin of plugins" [plugin]="plugin" [removePlugin]="removePlugin" [checkPlugin]="checkPlugin"></plugin-item>
+    </ion-list>
+    <ion-list>
+        <ion-item  [ngClass]="{'error-border': plugin_already_added || error_plugin}">
+            <ion-label color="primary" floating>{{"PLUGIN.URL" | translate}}</ion-label>
+            <ion-input name="url" [(ngModel)]="url" required></ion-input>
+        </ion-item>
+        <ion-item *ngIf="plugin_already_added" no-lines class="wrong-input">{{"PLUGIN.ALREADY_ADDED" | translate}}</ion-item>
+        <ion-item>
+            <button ion-button (click)="addPlugin(url)">{{"ADD" | translate}}</button>
+        </ion-item>
+    </ion-list>
+</ion-content>

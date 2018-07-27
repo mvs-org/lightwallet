@@ -13,6 +13,7 @@ import { CryptoServiceProvider } from '../providers/crypto-service/crypto-servic
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { Keyboard } from '@ionic-native/keyboard';
+import { PluginProvider } from '../providers/plugin/plugin';
 
 var pckg = require('../../package.json');
 
@@ -22,7 +23,7 @@ export function HttpLoaderFactory(http: Http) {
 
 @NgModule({
     declarations: [
-        MyETPWallet,
+        MyETPWallet
     ],
     imports: [
         BrowserModule,
@@ -53,6 +54,7 @@ export function HttpLoaderFactory(http: Http) {
         CryptoServiceProvider,
         StatusBar,
         Keyboard,
+        PluginProvider,
     ]
 })
 export class AppModule {

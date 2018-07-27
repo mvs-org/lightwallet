@@ -10,6 +10,11 @@
 <ion-content padding style="padding-bottom: 0;">
     <ion-row>
         <ion-col>
+            <p align="center">{{"MSTS.INFORMATION" | translate}}</p>
+        </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col>
             <p>
                 {{"TOTAL_AVAILABLE_BALANCE" | translate}}: <br *ngIf="platform.is('mobile')">{{showBalance| format : decimals}} {{selectedAsset}}
             </p>
