@@ -1,0 +1,65 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>{{"PLUGIN_DETAILS" | translate}}</ion-title>
+    </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+    <form>
+        <h4>{{"PLUGIN_DETAILS.NAME" | translate}}:</h4>
+        <ion-item>{{plugin.name}}</ion-item>
+
+        <h4>{{"PLUGIN_DETAILS.DESCRIPTION" | translate}}:</h4>
+        <ion-item>{{plugin.description}}</ion-item>
+
+        <h4>{{"PLUGIN_DETAILS.AUTHOR" | translate}}:</h4>
+        <ion-item>{{plugin.author}}</ion-item>
+
+        <h4>{{"PLUGIN_DETAILS.PERMISSIONS" | translate}}:</h4>
+        <ion-item *ngFor="let permission of plugin.config.permissions">
+            -
+            <span *ngIf="permission == 'create-mit'">{{"PLUGIN.PERMISSION_CREATE_MIT" | translate}}</span>
+            <span *ngIf="permission == 'network'">{{"PLUGIN.PERMISSION_NETWORK" | translate}}</span>
+            <span *ngIf="permission == 'avatars'">{{"PLUGIN.PERMISSION_AVATARS" | translate}}</span>
+            <span *ngIf="permission == 'sign'">{{"PLUGIN.PERMISSION_SIGN" | translate}}</span>
+            <span *ngIf="permission == 'verify'">{{"PLUGIN.PERMISSION_VERIFY" | translate}}</span>
+            <span *ngIf="permission == 'unlock'">{{"PLUGIN.PERMISSION_UNLOCK" | translate}}</span>
+            <span *ngIf="permission == 'addresses'">{{"PLUGIN.PERMISSION_ADDRESSES" | translate}}</span>
+            <span *ngIf="permission == 'broadcast'">{{"PLUGIN.PERMISSION_BROADCAST" | translate}}</span>
+        </ion-item>
+
+        <ion-list *ngIf="!installed">
+
+            <ion-item class="permissions-checkbox">
+                <ion-label id="permissions-agree-label" text-wrap>{{"PLUGIN.GIVE_PERMISSION"|translate}}</ion-label>
+                <ion-checkbox [(ngModel)]="permissions_agreed" name="permissions-agree" id="permissions-agree"></ion-checkbox>
+            </ion-item>
+
+            <ion-row class="buttons-row">
+                <ion-col>
+                    <button type="submit" ion-button full icon-left (click)="addPlugin()" [disabled]="!permissions_agreed" color="secondary">
+                        <ion-icon name="add"></ion-icon>
+                        {{"ADD" | translate}}
+                    </button>
+                </ion-col>
+                <ion-col>
+                    <button ion-button color="danger" full item-right icon-left (click)="cancel($event)">
+                        <ion-icon name="close"></ion-icon>
+                        {{'CANCEL'|translate}}
+                    </button>
+                </ion-col>
+            </ion-row>
+
+        </ion-list>
+
+        <ion-row *ngIf="installed" class="buttons-row">
+            <ion-col col-6>
+                <button ion-button color="danger" full item-right icon-left (click)="removePlugin(plugin.name)">
+                    <ion-icon name="close"></ion-icon>
+                    {{'PLUGIN.REMOVE'|translate}}
+                </button>
+            </ion-col>
+        </ion-row>
+    </form>
+</ion-content>

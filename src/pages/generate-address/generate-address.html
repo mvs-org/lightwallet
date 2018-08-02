@@ -1,0 +1,42 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>{{"GENERATE_ADDRESSES.HEADLINE" | translate}}</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding style="padding-bottom: 0;">
+    <ion-row>
+        <ion-col>
+            <p>{{"GENERATE_ADDRESSES.EXPLANATION" | translate}}</p>
+        </ion-col>
+    </ion-row>
+    <form #sendForm="ngForm" style="padding-bottom: 0;">
+        <ion-list style="padding-bottom: 0;">
+            <ion-item [ngClass]="{'error-border':!validIndex(index), 'valid-border':validIndex(index)}">
+                <ion-label color="primary" floating>{{"GENERATE_ADDRESSES.TOTAL_NUMBER_OF_ADDRESSES" | translate}}</ion-label>
+                <ion-input name="symbol" type="number" [(ngModel)]="index" required></ion-input>
+            </ion-item>
+            <div no-lines class="advice">{{"HELP.GENERATE_ADDRESSES_NUMBER" | translate}}</div>
+            <ion-item *ngIf="index > 50" no-lines class="wrong-input">{{"GENERATE_ADDRESSES.TOO_MANY_ADDRESSES" | translate}}</ion-item>
+            <ion-item [ngClass]="{'error-border': !validPassword(passphrase)}">
+                <ion-label color="primary" floating>{{"PASSWORD" | translate}}</ion-label>
+                <ion-input name="passphrase" type="password" [(ngModel)]="passphrase" required></ion-input>
+            </ion-item>
+            <br>
+        </ion-list>
+        <ion-row class="padding-bottom">
+            <ion-col>
+                <button ion-button full [disabled]="!sendForm.form.valid||!validIndex(index)||!validPassword(passphrase)" (click)="setIndex()" icon-left color="secondary">
+                    <ion-icon disabled="checked" name="send"></ion-icon>
+                    {{"GENERATE_ADDRESSES.CHANGE_ADDRESS_NUMBER" | translate}}
+                </button>
+            </ion-col>
+            <ion-col>
+                <button ion-button color="danger" full item-right icon-left (click)="cancel($event)">
+                    <ion-icon name="cancel"></ion-icon>
+                    {{'CANCEL'|translate}}
+                </button>
+            </ion-col>
+        </ion-row>
+    </form>
+</ion-content>

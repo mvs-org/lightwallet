@@ -259,7 +259,7 @@
 
     "CREATE_AVATAR": "Create Avatar",
     "CREATE_AVATAR.CREATE_BTN": "Create Avatar",
-    "CREATE_AVATAR.SYMBOL": "Symbol",
+    "CREATE_AVATAR.SYMBOL": "Avatar name",
     "CREATE_AVATAR.ADDRESS": "Linked address",
 
     "RECIPIENT_AVATAR": "Recipient avatar",
@@ -267,7 +267,7 @@
     "HEADLINE_MST": "Metaverse Smart Token",
     "HEADLINE_MIT": "Metaverse Identifiable Token",
     "NO_MIT_TEXT": "You don't have any MIT yet. In order to create MIT you first have to create an avatar.",
-    "MIT_REGISTER.SYMBOL": "Symbol",
+    "MIT_REGISTER.SYMBOL": "MIT symbol",
     "MIT_REGISTER.CONTENT": "Content",
 
     "IMPORT.WORDS_REMAINING": " words remaining",
@@ -314,13 +314,13 @@
     "MIT.HISTORY": "Transaction history",
     "CHECK_IN_EXPLORER": "Check in Explorer",
 
-    "ISSUE.MAX_SUPPLY_TOO_HIGH": "Too high Maximum supply*Number of decimals. Please decrease one of the two",
+    "ISSUE.MAX_SUPPLY_TOO_HIGH": "Invalid maximum supply. Please decrease the maximum supply or the number of decimals",
     "CREATE_AVATAR.NO_ADDRESS_1ETP": "You do not have any available address with at least 1 ETP available. Please send at least 1 ETP to an available address (not already linked to an Avatar) to create a new Avatar",
     "MAINNET": "Mainnet",
     "TESTNET": "Testnet",
 
     "CREATE_AVATAR.CONFIRMATION_TITLE": "Creating an Avatar cost 1 ETP.",
-    "CREATE_AVATAR.CONFIRMATION_SUBTITLE": "Are you sure you want to create an Avatar?",
+    "CREATE_AVATAR.CONFIRMATION_SUBTITLE": "Avatar registration confirmation?",
     "ISSUE.NO_AVATAR": "You need an Avatar to register a MST. Please create an Avatar first",
     "ISSUE.SELECT_AVATAR": "Please select an Issuer first",
     "ISSUE.NO_AVATAR_PLACEHOLDER": "No Avatar",
@@ -356,7 +356,7 @@
     "TRANSFER_FEE_DISTRIBUTION": "Transaction fee distribution",
 
     "HELP.CREATE_AVATAR_NAME": "Your Avatar name is a unique symbol. It can contain numbers, uppercase letters, lowercase letters, dots, dashes, underscores and @. It can be used instead of your ETP address to receive ETP and other assets.",
-    "HELP.CREATE_AVATAR_LINKED_ADDRESS": "Your Avatar will be linked to this address.",
+    "HELP.CREATE_AVATAR_LINKED_ADDRESS": "Your Avatar will be linked to this address. Each address can only be linked to 1 Avatar.",
     "ACCOUNT.TOTAL_VALUE" : "Total value",
     "SETTINGS.BASE_CURRENCY" : "Base Currency",
     "SETTINGS.BASE_CURRENCY_TEXT" : "Choose your base currency that is used for value estimation.",
@@ -364,6 +364,71 @@
     "CREATE_AVATAR.AVATAR_NAME_TOO_SHORT": "The Avatar name must be at least 3 characters long",
     "SUBTITLE.CREATE_AVATAR_ADDRESS": "You can link your Avatar only to an address with at least 1 ETP available",
 
-    "HELP.BOUNTY_FEE": "You can choose how your fee will be distributed, between the Miners and the Developer Community. This does not impact the total fee that you pay for the transaction. The maximum share for the Developer Community is 80%."
-    
+    "HELP.BOUNTY_FEE": "You can choose how your fee will be distributed, between the Miners and the Developer Community. This does not impact the total fee that you pay for the transaction. The maximum share for the Developer Community is 80%.",
+
+    "SETTINGS.PLUGINS": "Plugins",
+    "SETTINGS.PLUGINS_TEXT": "Add third party extensions to the wallet.",
+
+    "PLUGIN_SETTINGS": "Plugin Settings",
+    "PLUGIN_DETAILS": "Plugin details",
+    "PLUGIN_DETAILS.NAME" : "Plugin name",
+    "PLUGIN_DETAILS.DESCRIPTION": "Description",
+    "PLUGIN_DETAILS.AUTHOR": "Author",
+    "PLUGIN_DETAILS.PERMISSIONS": "Permissions",
+    "ADD": "Add",
+    "PLUGIN.REMOVE": "Remove",
+    "PLUGIN.INFO": "Details",
+    "PLUGIN.URL": "Plugin URL",
+    "PLUGIN.PERMISSION_CREATE_MIT": "Create MITs",
+    "PLUGIN.PERMISSION_NETWORK": "Know the current network (mainnet or testnet)",
+    "PLUGIN.PERMISSION_AVATARS": "Access the list of all my avatars and their attached address",
+    "PLUGIN.PERMISSION_SIGN": "Sign a message (not a transaction)",
+    "PLUGIN.PERMISSION_VERIFY": "Verify the signature of other transactions",
+    "PLUGIN.PERMISSION_UNLOCK": "After asking the password, can re-use it in the same session",
+    "PLUGIN.PERMISSION_ADDRESSES": "Access my list of addresses",
+    "PLUGIN.PERMISSION_BROADCAST": "Broadcast transactions",
+    "PLUGIN.GIVE_PERMISSION": "I accept to provide those permissions to this plugin",
+    "PLUGIN.ALREADY_ADDED": "This plugin is already added to your wallet",
+    "MESSAGE.IMPORT_PLUGIN_ERROR": "Error while importing the plugin",
+    "MESSAGE.IMPORT_PLUGIN_INVALID_URL": "Incorrect URL. Please double check the plugin URL.",
+    "MESSAGE.IMPORT_PLUGIN_INVALID_NAME": "Incorrect plugin name. The name of this plugin contains invalid characters.",
+    "MESSAGE.IMPORT_PLUGIN_MISSING_DEFAULT_TRANSLATION": "The default translation of this plugin is missing.",
+    "ERROR_TOO_MANY_INPUTS": "Too many inputs",
+    "ERROR_TOO_MANY_INPUTS_TEXT": "This transaction contains too many inputs. Please try a smaller amount",
+
+    "HISTORY.NO_DEPOSIT_YET": "No deposit yet",
+    "HISTORY.NO_DEPOSIT_YET_TEXT": "Freeze your ETP to earn interests!",
+    "HISTORY.ORDER_BY": "Order by",
+    "HISTORY.ORDER_BY_HEIGHT": "Locking time",
+    "HISTORY.ORDER_BY_UNLOCK_HEIGHT": "Unlocking time",
+    "HISTORY.DIRECTION": "Direction",
+    "HISTORY.DIRECTION_LATEST_TOP": "Latest on top",
+    "HISTORY.DIRECTION_EARLIEST_TOP": "Earliest on top",
+    "HISTORY.FROZEN_TX": "Currently locked transactions",
+    "HISTORY.UNFROZEN_TX": "Unlocked transactions",
+    "LOCKED_SINCE": "Locked since",
+
+    "GENERATE_ADDRESSES.CHANGE_ADDRESS_NUMBER": "Update number of addresses",
+    "GENERATE_ADDRESSES.HEADLINE": "Update number of addresses",
+    "GENERATE_ADDRESSES.EXPLANATION": "MyETPWallet uses a HD Wallet (Hierarchical Deterministic) to generate multiple addresses from your seed. Because your addresses are generated in a deterministic way it means that if you reduce the number of your addresses, you can add them back later by increasing your number of addresses. It will always regenerate the same addresses.",
+    "GENERATE_ADDRESSES.TOTAL_NUMBER_OF_ADDRESSES": "Number of addresses in my wallet",
+    "GENERATE_ADDRESSES.TOO_MANY_ADDRESSES": "The number of addresses is limited to 50 in the Lightwallet. If you need more addresses, please download the Desktop wallet.",
+    "GENERATE_ADDRESSES.ERROR": "Error while regenerating your addresses",
+    "MIT_REGISTER.MIT_SYMBOL_TOO_SHORT": "The MIT symbol must be at least 3 characters long",
+    "HELP.GENERATE_ADDRESSES_NUMBER": "In order to keep your wallet smooth, it is recommended to keep the number low. The default value is 10 addresses, maximum 50 addresses",
+
+    "MESSAGE": "Public message (optional)",
+    "HELP.MESSAGE": "This message will be clearly and publicly displayed in your transaction. Do not enter any personnal data!",
+    "MESSAGE_TOO_LONG": "Too long message. Please use a shorter message",
+
+    "AVATARS.INFORMATION": "Avatars represent your Digital Identity on Metaverse Blockchain. You can use your Avatar name to send and receive ETP in place of your address. Avatars can create MST and MIT",
+    "MSTS.INFORMATION": "MST (Metaverse Smart Token) is the token standard use on Metaverse. Any Avatar can create a MST using the form below.",
+    "MITS.INFORMATION": "MIT (Metaverse Identifiable Token) is the nun-fungible token standard on Metaverse. A MIT has a unique symbol and a content that cannot be changed. Its quantity is always 1 and cannot be split. It can only be created by and transferred to an Avatar. MITs can be used to represent any unique digital or physical object, and easily trace its transfer from Avatars to Avatars. The complete ownership history is recorded on the blockchain and publicly visible",
+
+    "SEND_ALL_TITLE": "Send all?",
+    "SEND_ALL_MESSAGE": "Do you really want to send all your available balance?",
+
+    "DEPOSIT.DURATION_ESTIMATION": "Your ETP will be locked for approximately {{duration_days}} days and {{duration_hours}} hours. Be aware that this estimation is based on the blocktime of the last 1000 blocks ({{blocktime}} sec.), and might vary based on block generation speed.",
+    "HISTORY.UNLOCK_APPROXIMATION_INFORMATION": "*Please be aware that the 'Locked until' date is an approximation based on the number of block remaining and the average blocktime of the last 1000 blocks. It might vary based on block generation speed."
+
 }

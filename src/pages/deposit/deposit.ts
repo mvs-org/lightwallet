@@ -35,6 +35,11 @@ export class DepositPage {
     @ViewChild('customInput') customInput;
     @ViewChild('quantityInput') quantityInput;
     selectedAsset: any
+    message: string = ""
+    fee: number = 10000
+    blocktime: number
+    duration_days: number = 0
+    duration_hours: number = 0
 
     constructor(
         public navCtrl: NavController,
@@ -54,6 +59,7 @@ export class DepositPage {
         this.custom_recipient = ''
         this.passphrase = ''
         this.selectedAsset = navParams.get('asset')
+        //this.blocktime = mvs.getBlocktime()
 
         if (this.globals.network == 'mainnet')
             this.deposit_options = [
@@ -98,6 +104,14 @@ export class DepositPage {
                         this.addressbalances = addrblncs
                     })
             })
+
+        mvs.getHeight()
+            .then(height => mvs.getBlocktime(height))
+            .then(blocktime => this.blocktime = blocktime)
+            .catch((error) => {
+                console.error(error.message)
+            })
+
     }
 
     ionViewDidEnter() {
@@ -110,7 +124,8 @@ export class DepositPage {
     }
 
     onDepositOptionChange(event) {
-
+        this.duration_days = Math.floor(this.blocktime * this.locktime / (24 * 60 * 60))
+        this.duration_hours = Math.floor((this.blocktime * this.locktime / (60 * 60)) - (24 * this.duration_days))
     }
 
     onFromAddressChange(event) {
@@ -131,8 +146,8 @@ export class DepositPage {
 
     validQuantity = (quantity) => quantity != undefined
         && this.countDecimals(quantity) <= this.decimals
-        && this.showBalance >= (Math.round(parseFloat(quantity) * Math.pow(10, this.decimals)) + 10000)
-        && quantity >= 10000 / 100000000
+        && this.showBalance >= (Math.round(parseFloat(quantity) * Math.pow(10, this.decimals)) + this.fee)
+        && quantity >= this.fee / 100000000
 
     countDecimals(value) {
         if (Math.floor(value) !== value && value.toString().split(".").length > 1)
@@ -147,6 +162,8 @@ export class DepositPage {
     customRecipientChanged = () => { if (this.custom_recipient) this.custom_recipient = this.custom_recipient.trim() }
 
     validPassword = (passphrase) => (passphrase.length > 0)
+
+    validMessageLength = (message) => this.mvs.verifyMessageSize(message) < 253
 
     cancel(e) {
         e.preventDefault()
@@ -166,6 +183,10 @@ export class DepositPage {
     }
 
     create() {
+        let messages = [];
+        if(this.message) {
+            messages.push(this.message)
+        }
         return this.alert.showLoading()
             .then(() => this.mvs.getAddresses())
             .then((addresses) => this.mvs.createDepositTx(
@@ -174,16 +195,26 @@ export class DepositPage {
                 Math.floor(parseFloat(this.quantity) * Math.pow(10, this.decimals)),
                 this.locktime,
                 (this.sendFrom != 'auto') ? this.sendFrom : null,
-                (this.changeAddress != 'auto') ? this.changeAddress : undefined)
+                (this.changeAddress != 'auto') ? this.changeAddress : undefined,
+                this.fee,
+                (messages !== []) ? messages : undefined)
             )
             .catch((error) => {
-                if (error.message == "ERR_DECRYPT_WALLET")
-                    this.alert.showError('MESSAGE.PASSWORD_WRONG', '')
-                else if (error.message == "ERR_INSUFFICIENT_BALANCE")
-                    this.alert.showError('MESSAGE.INSUFFICIENT_BALANCE', '')
-                else
-                    this.alert.showError('MESSAGE.CREATE_TRANSACTION', error)
-                throw Error('ERR_CREATE_TX')
+                console.error(error.message)
+                switch(error.message){
+                    case "ERR_DECRYPT_WALLET":
+                        this.alert.showError('MESSAGE.PASSWORD_WRONG', '')
+                        throw Error('ERR_CREATE_TX')
+                    case "ERR_INSUFFICIENT_BALANCE":
+                        this.alert.showError('MESSAGE.INSUFFICIENT_BALANCE', '')
+                        throw Error('ERR_CREATE_TX')
+                    case "ERR_TOO_MANY_INPUTS":
+                        this.alert.showErrorTranslated('ERROR_TOO_MANY_INPUTS', 'ERROR_TOO_MANY_INPUTS_TEXT')
+                        throw Error('ERR_CREATE_TX')
+                    default:
+                        this.alert.showError('MESSAGE.CREATE_TRANSACTION', error.message)
+                        throw Error('ERR_CREATE_TX')
+                }
             })
     }
 
@@ -207,10 +238,10 @@ export class DepositPage {
             })
     }
 
-    sendAll() {
-        this.quantity = parseFloat(((this.showBalance / 100000000 - 10000 / 100000000).toFixed(this.decimals)) + "") + ""
+    sendAll = () => this.alert.showSendAll(() => {
+        this.quantity = parseFloat(((this.showBalance / 100000000 - this.fee / 100000000).toFixed(this.decimals)) + "") + ""
         this.quantityInput.setFocus()
-    }
+    })
 
     format = (quantity, decimals) => quantity / Math.pow(10, decimals)
 

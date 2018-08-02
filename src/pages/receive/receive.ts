@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 
 @IonicPage({
@@ -19,11 +19,19 @@ export class ReceivePage {
     addresses: Array<string>;
     displayType: string;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, private mvs: MvsServiceProvider) {
+    constructor(
+        private navCtrl: NavController,
+        private navParams: NavParams,
+        private platform: Platform,
+        private mvs: MvsServiceProvider
+    ) {
         this.addressbalances = {};
-        this.selectedAsset = navParams.get('asset')
+        this.selectedAsset = this.navParams.get('asset')
         this.displayType = this.selectedAsset == 'ETP' ? 'ETP' : 'asset'
-        this.mvs.getAddresses()
+    }
+
+    showBalances() {
+        return this.mvs.getAddresses()
             .then((_: string[]) => {
                 this.address = _[0];
                 this.addresses = _;
@@ -45,12 +53,19 @@ export class ReceivePage {
     }
 
     ionViewDidEnter() {
+        console.log('ionViewDidEnter Receive');
         this.mvs.getAddresses()
             .then((addresses) => {
                 if (!Array.isArray(addresses) || !addresses.length)
                     this.navCtrl.setRoot("LoginPage")
+                else
+                    this.showBalances()
             })
     }
+
+    canAddAddress = () => this.platform.isPlatformMatch('mobile') && !this.platform.isPlatformMatch('mobileweb')
+
+    addAddress = () =>  this.navCtrl.push('generate-address-page')
 
     format = (quantity, decimals) => quantity / Math.pow(10, decimals)
 

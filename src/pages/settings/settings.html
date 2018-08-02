@@ -16,6 +16,13 @@
             <p [translate]="'SETTINGS.RESYNC_TEXT'" style="white-space: normal;"></p>
         </button>
       </ion-row>
+      <ion-row *ngIf="network == 'testnet'">
+          <button ion-item (click)="plugins()" style="white-space: normal;">
+              <ion-icon name="cube" item-start></ion-icon>
+              <h1 [translate]="'SETTINGS.PLUGINS'"></h1>
+              <p [translate]="'SETTINGS.PLUGINS_TEXT'" style="white-space: normal;"></p>
+          </button>
+      </ion-row>
       <ion-row *ngIf="!platform.is('mobile')" >
         <button ion-item (click)="ExportWalletPage();" style="white-space: normal;">
             <ion-icon name="phone-portrait" item-start></ion-icon>

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, AlertController, Platform } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { TranslateService } from '@ngx-translate/core';
+import { AppGlobals } from '../../app/app.global';
 
 @IonicPage()
 @Component({
@@ -11,9 +12,17 @@ import { TranslateService } from '@ngx-translate/core';
 export class SettingsPage {
 
     connectcode: any;
+    network: string;
 
-    constructor(public nav: NavController,  private mvs: MvsServiceProvider, public translate: TranslateService, private alertCtrl: AlertController, public platform: Platform) {
-
+    constructor(
+        public nav: NavController,
+        private mvs: MvsServiceProvider,
+        public translate: TranslateService,
+        private alertCtrl: AlertController,
+        private globals: AppGlobals,
+        public platform: Platform
+    ) {
+        this.network = this.globals.network
     }
 
     ionViewDidEnter() {
@@ -33,6 +42,8 @@ export class SettingsPage {
     base = () => this.nav.push("BaseCurrencyPage")
 
     ExportWalletPage = e => this.nav.push("ExportWalletPage")
+
+    plugins = e => this.nav.push("PluginSettingsPage")
 
     /**
      * Logout dialog
