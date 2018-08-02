@@ -24,7 +24,7 @@ export class TransactionsPage {
     frozen_outputs_locked: any[] = [];
     frozen_outputs_unlocked: any[] = [];
     order_by: string = 'locked_until'
-    direction: number = 1
+    direction: number = 0
     blocktime: number
     current_time: number
 
