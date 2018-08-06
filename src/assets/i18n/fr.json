@@ -30,7 +30,7 @@
 
     "SCAN": "Scanner",
 
-    "ETP_DEPOSIT": "Bloquer ETP",
+    "ETP_DEPOSIT": "Dépôt ETP",
 
     "SWITCH_LANGUAGE": "Langue",
     "LANGUAGE_SETTINGS": "Langues",
@@ -45,7 +45,7 @@
     "SETTINGS.RESET_BUTTON": "Réinitialiser",
     "SETTINGS.RESYNC_TEXT": "Forcer la resynchronisation de toutes les transactions et balances.",
     "SETTINGS.RESYNC_BUTTON": "Forcer resynchronisation",
-    "DEPOSIT": "Bloquer",
+    "DEPOSIT": "Dépôt",
     "SEND": "Envoyer",
     "RECEIVE": "Recevoir",
     "HISTORY": "Historique",
@@ -197,9 +197,9 @@
     "ISSUE.MAX_SUPPLY": "Quantité totale",
     "ISSUE.DECIMALS": "Nombre de décimales",
     "ISSUE.DESCRIPTION": "Description",
-    "ISSUE.ISSUE_ADDRESS": "Addresse de distribution (addresse qui recevra l'actif créé)",
-    "ISSUE.FEE_ADDRESS": "Addresse de payement (addresse payant 10 ETP)",
-    "ISSUE.CUSTOM_ISSUE_ADDRESS": "Entrer manuellement l'addresse de distribution",
+    "ISSUE.ISSUE_ADDRESS": "Adresse de distribution (adresse qui recevra l'actif créé)",
+    "ISSUE.FEE_ADDRESS": "Adresse de payement (adresse payant 10 ETP)",
+    "ISSUE.CUSTOM_ISSUE_ADDRESS": "Entrer manuellement l'adresse de distribution",
 
     "ISSUE.CONFIRMATION_TITLE": "Créer un actif coûte 10 ETP.",
     "ISSUE.CONFIRMATION_SUBTITLE": "Etes-vous sûr de vouloir créer cet actif ?",
@@ -282,7 +282,7 @@
     "AVATARS.NAMING": "Nom",
     "OWNER": "Propriétaire",
     "HASH": "Hash",
-    "RECEIVE.ADDRESS_NO_MST": "Cette address ne possède aucun MST",
+    "RECEIVE.ADDRESS_NO_MST": "Cette adresse ne possède aucun MST",
 
     "ISSUE.SECONDARYISSUE_THRESHOLD": "Seuil augmentation de capital",
     "ISSUE.SECONDARYISSUE_TYPE": "Autoriser une augmentation de capital dans le future",
@@ -305,7 +305,7 @@
     "REGISTER_MIT": "Enregistrer MIT",
     "TRANSFER_MIT": "Transférer MIT",
 
-    "AVATAR_RECIPIENT_ADDRESS": "L'address de cet Avatar est {{address}}, elle a été modifiée pour la dernière fois le {{last_update}}",
+    "AVATAR_RECIPIENT_ADDRESS": "L'adresse de cet Avatar est {{address}}, elle a été modifiée pour la dernière fois le {{last_update}}",
     "MIT.STATUS": "Statut",
     "CREATOR": "Créateur",
     "OWNER": "Propriétaire actuel",
@@ -336,6 +336,99 @@
     "RECIPIENT": "Destinataire",
     "ADD_RECIPIENT": "Ajouter destinataire",
     "REMOVE_RECIPIENT": "Supprimer destinataire",
-    "TOTAL_TO_SEND": "Total à envoyer"
+    "TOTAL_TO_SEND": "Total à envoyer",
+
+    "SEND_MORE.TOTAL_MORE_AVAILABLE": "Le total est supérieur à votre balance disponible",
+    "SEND_MORE.WRONG_FILE": "Impossible de lire le fichier. Veuillez vérifier le format. Dans les options avancées, vous pouvez exporter vers un fichier CSV et l'utiliser comme modèle",
+
+    "IMPORT_FROM_CSV": "Importer depuis fichier CSV",
+    "DOWNLOAD_CSV": "Télécharger fichier CSV",
+    "MESSAGE.SEND_MORE_IMPORT_CSV_TOO_MANY_RECIPIENT_TITLE": "Limite de destinataires dépassée",
+    "MESSAGE.SEND_MORE_IMPORT_CSV_TOO_MANY_RECIPIENT_BODY": "Ce fichier contient trop de destinataire. Le nombre maximum de destinataires est limité à ",
+
+    "TRANSACTION": "Transaction",
+    "LOCKED_UNTIL": "Déposés jusqu'à",
+    "LOCKED_FOR_BLOCKS": "Déposés pour",
+    "DEPOSITS": "Dépôts",
+
+    "MINERS": "Mineurs",
+    "DEVELOPERS": "Communauté des développeurs",
+    "TRANSFER_FEE_DISTRIBUTION": "Distribution des frais de transaction",
+
+    "HELP.CREATE_AVATAR_NAME": "Votre Nom d'Avatar est unique. Il peut contenir des nombres, lettres minuscules, majuscules, points, tirets, tiret bas et arobases. Votre Avatar peut être utilisé à la place de votre adresse pour recevoir et envoyer des ETP ou autres assets.",
+    "HELP.CREATE_AVATAR_LINKED_ADDRESS": "Votre Avatar sera lié à cette adresse.",
+    "ACCOUNT.TOTAL_VALUE" : "Valeur total",
+    "SETTINGS.BASE_CURRENCY" : "Devise utilisée",
+    "SETTINGS.BASE_CURRENCY_TEXT" : "Choisissez la devise qui sera utilisée dans votre portefeuille.",
+
+    "CREATE_AVATAR.AVATAR_NAME_TOO_SHORT": "Le nom de votre Avatar doit contenir au moins 3 characters",
+    "SUBTITLE.CREATE_AVATAR_ADDRESS": "Vous pouvez lier votre Avatar uniquement avec une adresse contenant au moins 1 ETP disponible",
+
+    "HELP.BOUNTY_FEE": "Vous pouvez choisir comment vos frais de transaction seront distribués entre les Mineurs et la Communauté des développeurs. Ce choix n'impacte pas le montant des frais que vous allez payer pour la transaction. La part maximale pour la Communauté des développeurs est 80%.",
+
+    "SETTINGS.PLUGINS": "Plugins",
+    "SETTINGS.PLUGINS_TEXT": "Ajouter une extension tierce.",
+
+    "PLUGIN_SETTINGS": "Paramètres des plugins",
+    "PLUGIN_DETAILS": "Détails du plugin",
+    "PLUGIN_DETAILS.NAME" : "Nom du plugin",
+    "PLUGIN_DETAILS.DESCRIPTION": "Description",
+    "PLUGIN_DETAILS.AUTHOR": "Autheur",
+    "PLUGIN_DETAILS.PERMISSIONS": "Permissions",
+    "ADD": "Ajouter",
+    "PLUGIN.REMOVE": "Supprimer",
+    "PLUGIN.INFO": "Details",
+    "PLUGIN.URL": "URL du plugin",
+    "PLUGIN.PERMISSION_CREATE_MIT": "Créer MITs",
+    "PLUGIN.PERMISSION_NETWORK": "Connaître le réseau utilisé (mainnet ou testnet)",
+    "PLUGIN.PERMISSION_AVATARS": "Accéder aux noms de tous mes Avatars and leur adresses associée",
+    "PLUGIN.PERMISSION_SIGN": "Signer un message (pas une transaction)",
+    "PLUGIN.PERMISSION_VERIFY": "Vérifier la signature d'autres transactions",
+    "PLUGIN.PERMISSION_UNLOCK": "Après avoir demandé le mot de passe, peut le réutliser dans la même session",
+    "PLUGIN.PERMISSION_ADDRESSES": "Accéder à la liste de mes adresses",
+    "PLUGIN.PERMISSION_BROADCAST": "Publier des transactions",
+    "PLUGIN.GIVE_PERMISSION": "J'accepter de donner accès à ces permissions pour ce plugin.",
+    "PLUGIN.ALREADY_ADDED": "Ce plugin a déjà été ajouté à votre portefeuille.",
+    "MESSAGE.IMPORT_PLUGIN_ERROR": "Erreur lors de l'ajout du plugin",
+    "MESSAGE.IMPORT_PLUGIN_INVALID_URL": "URL incorrect. Veuillez vérifier l'URL du plugin.",
+    "MESSAGE.IMPORT_PLUGIN_INVALID_NAME": "Nom du plugin incorrecte. Le nom de ce plugin contient des charactères invalides.",
+    "MESSAGE.IMPORT_PLUGIN_MISSING_DEFAULT_TRANSLATION": "La traduction par défaut est manquante.",
+    "ERROR_TOO_MANY_INPUTS": "Transaction trop large",
+    "ERROR_TOO_MANY_INPUTS_TEXT": "Cette transaction contient un nombre trop important d'entrées. Veuillez essayer un montant inférieur.",
+
+    "HISTORY.NO_DEPOSIT_YET": "Aucun dépôt pour l'instant",
+    "HISTORY.NO_DEPOSIT_YET_TEXT": "Dépôsez vos ETP pour recevoir des intérêts!",
+    "HISTORY.ORDER_BY": "Ordonner par",
+    "HISTORY.ORDER_BY_HEIGHT": "Date de dépôt",
+    "HISTORY.ORDER_BY_UNLOCK_HEIGHT": "Date de fin du dépôt",
+    "HISTORY.DIRECTION": "Direction",
+    "HISTORY.DIRECTION_LATEST_TOP": "Plus anciennes transactions",
+    "HISTORY.DIRECTION_EARLIEST_TOP": "Plus récentes transactions",
+    "HISTORY.FROZEN_TX": "Dépôts en cours",
+    "HISTORY.UNFROZEN_TX": "Dépôts terminés",
+    "LOCKED_SINCE": "Dépôsé depuis",
+
+    "GENERATE_ADDRESSES.CHANGE_ADDRESS_NUMBER": "Changer le nombre d'adresses",
+    "GENERATE_ADDRESSES.HEADLINE": "Changer le nombre d'adresses",
+    "GENERATE_ADDRESSES.EXPLANATION": "MyETPWallet utilise un HD Wallet (Hierarchical Deterministic) pour générer multiples adresses. Les adresses sont générées de manière déterministe, cela signifit que si vous supprimez certaines de vos adresses, vous pourrez les rajouter ultérieurement et les mêmes adresses seront regénérées.",
+    "GENERATE_ADDRESSES.TOTAL_NUMBER_OF_ADDRESSES": "Nombre d'adresses dans mon portefeuille",
+    "GENERATE_ADDRESSES.TOO_MANY_ADDRESSES": "Le nombre d'adresses est limité à 50 dans le Lightwallet. Si vous avez besoin d'un plus grand nombre d'adresses, veuillez télécharger le Official Desktop wallet.",
+    "GENERATE_ADDRESSES.ERROR": "Erreur lors de la génération de vos adresses",
+    "MIT_REGISTER.MIT_SYMBOL_TOO_SHORT": "Le symbole MIT doit contenir au moins 3 charactères",
+    "HELP.GENERATE_ADDRESSES_NUMBER": "Afin de garder votre portefeuille fluide, il est recommandé de garder un faible nombre d'adresses. La valeur par défaut est de 10 adresses, le maximum est de 50 adresses",
+
+    "MESSAGE": "Message publique (facultatif)",
+    "HELP.MESSAGE": "Ce message sera publiquement visible dans votre transaction. Veuillez ne pas entrer des données personnelles",
+    "MESSAGE_TOO_LONG": "Message trop long. Veuillez entrer un message plus court",
+
+    "AVATARS.INFORMATION": "Les Avatars representent votre identité numérique sur la blockchain Metaverse. Vous pouvez utiliser votre Avatar pour recevoir et envoyer des ETP ou MST à la place de votre adresse. Les Avatars peuvent créer des MST et MIT",
+    "MSTS.INFORMATION": "MST (Metaverse Smart Token) est le standard utilisé par les tokens sur Metaverse. Chaque Avatar peut créer un MST via le formulaire ci-dessous.",
+    "MITS.INFORMATION": "MIT (Metaverse Identifiable Token) est le standard utilisé par les uniques tokens sur Metaverse. Un MIT possède un symbole unique et son contenu ne peut être modifié. Sa quantité est toujours 1 et ne peut être divisé. Il peut uniquement être créé et transféré par et vers un Avatar. Les MITs peuvent être utilisés afin de représenter un object digital ou physique unique, et facilement retracer ses transferts entre Avatars. L'hitorique complet est enregistré sur la blockchain et publiquement visible",
+
+    "SEND_ALL_TITLE": "Tout envoyer?",
+    "SEND_ALL_MESSAGE": "Êtes vous sûr de vouloir envoyer la totalité de votre balance disponible?",
+
+    "DEPOSIT.DURATION_ESTIMATION": "Vos ETP seront bloqués pendant environ {{duration_days}} jours et {{duration_hours}} heures. Veuillez noter que cette estimation est basée sur la vitesse de génération des 1000 derniers blocs ({{blocktime}} sec.), et peut varier suivant l'évolution de la vitesse de générationon des blocs.",
+    "HISTORY.UNLOCK_APPROXIMATION_INFORMATION": "*Veuillez noter que la date 'Déposés jusqu'à' est une estimation basée sur le nombre de blocs restant the la vitesse moyenne de génération des 1000 derniers blocs. Cette date varie en fonction de la vitesse de génération des blocs."
 
 }

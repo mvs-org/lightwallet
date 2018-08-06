@@ -364,6 +364,72 @@
   "CREATE_AVATAR.AVATAR_NAME_TOO_SHORT": "数字身份至少包含3个字母",
   "SUBTITLE.CREATE_AVATAR_ADDRESS": "数字身份链接的地址余额至少为1个ETP",
 
-  "HELP.BOUNTY_FEE": "您可以选择如何在矿工和社区开发者之间分配费用，这不会影响你支付的交易费用。给予开发者的最高费用占比为80%。"
+  "HELP.BOUNTY_FEE": "您可以选择如何在矿工和社区开发者之间分配费用，这不会影响你支付的交易费用。给予开发者的最高费用占比为80%。",
+
+
+  "SETTINGS.PLUGINS": "插件",
+  "SETTINGS.PLUGINS_TEXT": "添加第三方扩展信息到钱包",
+
+  "PLUGIN_SETTINGS": "插件设置",
+  "PLUGIN_DETAILS": "插件详情",
+  "PLUGIN_DETAILS.NAME" : "插件名称",
+  "PLUGIN_DETAILS.DESCRIPTION": "说明",
+  "PLUGIN_DETAILS.AUTHOR": "拥有者",
+  "PLUGIN_DETAILS.PERMISSIONS": "准许",
+  "ADD": "增加",
+  "PLUGIN.REMOVE": "移除",
+  "PLUGIN.INFO": "详情",
+  "PLUGIN.URL": "插件网址",
+  "PLUGIN.PERMISSION_CREATE_MIT": "创建MIT资产",
+  "PLUGIN.PERMISSION_NETWORK": "了解当前网络",
+  "PLUGIN.PERMISSION_AVATARS": "获取数字身份列表以及数字身份链接的地址",
+  "PLUGIN.PERMISSION_SIGN": "对信息签名（不是对交易签名）",
+  "PLUGIN.PERMISSION_VERIFY": "验证其他交易的签名",
+  "PLUGIN.PERMISSION_UNLOCK": "获取密码后，可在同一场景下重复使用",
+  "PLUGIN.PERMISSION_ADDRESSES": "获取我的地址列表",
+  "PLUGIN.PERMISSION_BROADCAST": "广播交易信息",
+  "PLUGIN.GIVE_PERMISSION": "我同意为此插件提供这些权限",
+  "PLUGIN.ALREADY_ADDED": "此插件已经接入我的钱包",
+  "MESSAGE.IMPORT_PLUGIN_ERROR": "导入插件时出错",
+  "MESSAGE.IMPORT_PLUGIN_INVALID_URL": "网址错误，请检查插件路径",
+  "MESSAGE.IMPORT_PLUGIN_INVALID_NAME": "插件名称错误。此插件的名称含无效字符",
+  "MESSAGE.IMPORT_PLUGIN_MISSING_DEFAULT_TRANSLATION": "此插件的默认翻译丢失",
+  "ERROR_TOO_MANY_INPUTS": "超出交易额上限",
+  "ERROR_TOO_MANY_INPUTS_TEXT": "此交易额超出上限，请减少交易额",
+
+  "HISTORY.NO_DEPOSIT_YET": "无存款",
+  "HISTORY.NO_DEPOSIT_YET_TEXT": "冻结ETP获得锁仓利息",
+  "HISTORY.ORDER_BY": "由谁发起",
+  "HISTORY.ORDER_BY_HEIGHT": "锁仓时间",
+  "HISTORY.ORDER_BY_UNLOCK_HEIGHT": "解锁时间",
+  "HISTORY.DIRECTION": "说明",
+  "HISTORY.DIRECTION_LATEST_TOP": "最晚解锁区块",
+  "HISTORY.DIRECTION_EARLIEST_TOP": "最早解锁区块",
+  "HISTORY.FROZEN_TX": "当前未解锁交易",
+  "HISTORY.UNFROZEN_TX": "已解锁交易",
+  "LOCKED_SINCE": "锁仓起始时间",
+
+  "GENERATE_ADDRESSES.CHANGE_ADDRESS_NUMBER": "更新地址数量",
+  "GENERATE_ADDRESSES.HEADLINE": "更新地址数量",
+  "GENERATE_ADDRESSES.EXPLANATION": "轻钱包（MyETPWallet）使用分层确定性钱包（HD Wallet）从您的种子生成多个地址。由于您的地址是以确定的方式生成的，如果减少地址数量，稍后也可以通过增加地址数量将其添加回去。它会始终重新生成相同的地址。",
+  "GENERATE_ADDRESSES.TOTAL_NUMBER_OF_ADDRESSES": "钱包中的地址数量",
+  "GENERATE_ADDRESSES.TOO_MANY_ADDRESSES": "轻钱包的地址数量为50，如果您需要更多的地址数量，请下载桌面版（全节点）钱包。",
+  "GENERATE_ADDRESSES.ERROR": "生成地址时出错",
+  "MIT_REGISTER.MIT_SYMBOL_TOO_SHORT": "MIT资产符号至少包含三个字母",
+  "HELP.GENERATE_ADDRESSES_NUMBER": "为了确保钱包的安全性，不推荐使用过多的地址。默认的地址数量为10个，最多为50个。",
+
+  "MESSAGE": "公开信息（可选）",
+  "HELP.MESSAGE": "此信息会公开显示在交易中。请不要输入私密信息。",
+  "MESSAGE_TOO_LONG": "信息字符过多，请缩短长度。",
+
+  "AVATARS.INFORMATION": "Avatar 代表你在元界区块链上的数字身份。你可以使用数字身份进行ETP的交易，从而代替地址。Avatar 还可以用来创建MST资产和MIT资产。",
+  "MSTS.INFORMATION": "MST（元界智能资产）是元界资产的发行标准。任何Avatar 都可以填写以下表格创建MST资产。",
+  "MITS.INFORMATION": "MIT（元界可识别代币）是元界区块链的非同质代币标准。每个MIT资产都有唯一的符号和内容，且不能改变。每个MIT资产仅为1个且不能分割，只能被Avatar创建或在Avatar 之间流转。MIT资产可用来代表任何数字资产或实物资产，可以轻易地数字身份之间进行追踪。MIT资产的所有权记录在元界区块链上，且公开可见。",
+
+  "SEND_ALL_TITLE": "全部发送么？",
+  "SEND_ALL_MESSAGE": "您确认发送所有余额么？",
+
+  "DEPOSIT.DURATION_ESTIMATION": "您的ETP预估锁定时间为{{duration_days}}天 {{duration_hours}}小时。这个时间 ({{blocktime}}秒)是根据最近的1000个区块的解锁时间确定的，可能会随着出块速度而变化。",
+  "HISTORY.UNLOCK_APPROXIMATION_INFORMATION": "*请注意此“解锁时间”是由最近的1000个区块的平均出块时间预估所得，可能会随着出块速度而变化。"
 
 }

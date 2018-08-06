@@ -18,6 +18,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { IonicStorageModule } from '@ionic/storage';
 import { QRCodeModule } from 'angular2-qrcode';
 import { MyETPWallet } from './app.component';
+import { PluginProvider } from '../providers/plugin/plugin';
 
 export function HttpLoaderFactory(http: Http) {
     return new TranslateHttpLoader(http, '/assets/i18n/', '.json');
@@ -56,6 +57,7 @@ describe('MyETPWallet Component', () => {
                 Keyboard,
                 StatusBar,
                 SplashScreen,
+                PluginProvider,
                 WalletServiceProvider
             ]
         })

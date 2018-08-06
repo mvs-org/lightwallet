@@ -50,6 +50,8 @@ export class AssetTransferPage {
     sendMoreValidAddress: boolean = false
     sendMore_limit: number = 1000
     total: number
+    message: string = ""
+    fee: number = 10000
 
     constructor(
         public navCtrl: NavController,
@@ -129,7 +131,7 @@ export class AssetTransferPage {
 
     validQuantity = (quantity) => quantity != undefined
         && this.countDecimals(quantity) <= this.decimals
-        && ((this.selectedAsset == 'ETP' && this.showBalance >= (Math.round(parseFloat(quantity) * Math.pow(10, this.decimals)) + 10000)) || (this.selectedAsset != 'ETP' && this.showBalance >= parseFloat(quantity) * Math.pow(10, this.decimals)))
+        && ((this.selectedAsset == 'ETP' && this.showBalance >= (Math.round(parseFloat(quantity) * Math.pow(10, this.decimals)) + this.fee)) || (this.selectedAsset != 'ETP' && this.showBalance >= parseFloat(quantity) * Math.pow(10, this.decimals)))
         && (quantity > 0)
 
     countDecimals(value) {
@@ -158,6 +160,10 @@ export class AssetTransferPage {
         return this.alert.showLoading()
             .then(() => this.mvs.getAddresses())
             .then((addresses) => {
+                let messages = [];
+                if(this.message) {
+                    messages.push(this.message)
+                }
                 switch(this.transfer_type){
                     case "one":
                         return this.mvs.createSendTx(
@@ -167,7 +173,9 @@ export class AssetTransferPage {
                             (this.recipient_avatar && this.recipient_avatar_valid) ? this.recipient_avatar : undefined,
                             Math.round(parseFloat(this.quantity) * Math.pow(10, this.decimals)),
                             (this.sendFrom != 'auto') ? this.sendFrom : null,
-                            (this.changeAddress != 'auto') ? this.changeAddress : undefined
+                            (this.changeAddress != 'auto') ? this.changeAddress : undefined,
+                            this.fee,
+                            (messages !== []) ? messages : undefined
                         )
                     case "more":
                         let target = {}
@@ -183,7 +191,8 @@ export class AssetTransferPage {
                             target,
                             recipients,
                             (this.sendFrom != 'auto') ? this.sendFrom : null,
-                            (this.changeAddress != 'auto') ? this.changeAddress : undefined
+                            (this.changeAddress != 'auto') ? this.changeAddress : undefined,
+                            (messages !== []) ? messages : undefined
                         )
                     default:
                         this.alert.showError('MESSAGE.UNKNOWN_TX_TYPE', '')
@@ -195,12 +204,16 @@ export class AssetTransferPage {
                 switch(error.message){
                     case "ERR_DECRYPT_WALLET":
                         this.alert.showError('MESSAGE.PASSWORD_WRONG', '')
-                        break;
+                        throw Error('ERR_CREATE_TX')
                     case "ERR_INSUFFICIENT_BALANCE":
                         this.alert.showError('MESSAGE.INSUFFICIENT_BALANCE', '')
-                        break;
+                        throw Error('ERR_CREATE_TX')
+                    case "ERR_TOO_MANY_INPUTS":
+                        this.alert.showErrorTranslated('ERROR_TOO_MANY_INPUTS', 'ERROR_TOO_MANY_INPUTS_TEXT')
+                        throw Error('ERR_CREATE_TX')
                     default:
                         this.alert.showError('MESSAGE.CREATE_TRANSACTION', error.message)
+                        throw Error('ERR_CREATE_TX')
                 }
             })
     }
@@ -216,25 +229,27 @@ export class AssetTransferPage {
             .catch((error) => {
                 console.error(error)
                 this.alert.stopLoading()
-                if (error.message == 'ERR_CONNECTION') {
-                    this.alert.showError('ERROR_SEND_TEXT', '')
-                } else if (error.message == 'ERR_CREATE_TX') {
-                    //already handle in create function
-                } else {
-                    this.alert.showError('MESSAGE.BROADCAST_ERROR', error.message)
+                switch(error.message){
+                    case "ERR_CONNECTION":
+                        this.alert.showError('ERROR_SEND_TEXT', '')
+                        break;
+                    case "ERR_CREATE_TX":
+                        //already handle in create function
+                        break;
+                    default:
+                        this.alert.showError('MESSAGE.BROADCAST_ERROR', error.message)
                 }
-
             })
     }
 
-    sendAll() {
+    sendAll = () => this.alert.showSendAll(() => {
         if (this.selectedAsset == 'ETP') {
-            this.quantity = parseFloat(((this.showBalance / 100000000 - 10000 / 100000000).toFixed(this.decimals)) + "") + ""
+            this.quantity = parseFloat(((this.showBalance / 100000000 - this.fee / 100000000).toFixed(this.decimals)) + "") + ""
         } else {
             this.quantity = parseFloat((this.showBalance / Math.pow(10, this.decimals)).toFixed(this.decimals) + "") + ""
         }
         this.quantityInput.setFocus()
-    }
+    })
 
     validrecipient = this.mvs.validAddress
 
@@ -313,6 +328,8 @@ export class AssetTransferPage {
     }
 
     validPassword = (passphrase) => (passphrase.length > 0)
+
+    validMessageLength = (message) => this.mvs.verifyMessageSize(message) < 253
 
     scan() {
         this.translate.get(['SCANNING.MESSAGE_ADDRESS']).subscribe((translations: any) => {

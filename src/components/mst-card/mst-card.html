@@ -7,7 +7,7 @@
                         <img class="coinlogo" [src]="'assets/icon/'+icon+'.png'" (error)="errorImg($event)" [ngClass]="{'csdLogoDefault':symbol == 'CSD.CSD' && theme == 'theme-default', 'default-logo': icon == 'default_mst'}">
                     </ion-avatar>
                     <div>
-                        <h1>{{symbol}}</h1>
+                        <h1 class="overflow">{{symbol}}</h1>
                         <h3>{{"AVAILABLE"|translate}}: {{balance.available | format : balance.decimals}}</h3>
                         <p>
                             {{"ACCOUNT.FROZEN"|translate}}: {{balance.frozen | format : balance.decimals}}
