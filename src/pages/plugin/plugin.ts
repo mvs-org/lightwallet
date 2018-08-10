@@ -67,7 +67,7 @@ export class PluginPage {
     processMessage = (event) => {
         event.stopPropagation()
         let source: any = event.source;
-        if (this.plugin.config.permissions.indexOf(event.data.query) < 0) {
+        if (!this.hasPermission(event.data.query)) {
             source.postMessage({
                 topic: 'error',
                 nonce: event.data.nonce,
@@ -90,6 +90,18 @@ export class PluginPage {
                         value: error.message
                     }, event.origin)
                 })
+        }
+    }
+
+    hasPermission(request_type) {
+        switch (request_type) {
+            case 'permissions':
+            case 'verify':
+            case 'network':
+            case 'broadcast':
+                return true;
+            default:
+                return this.plugin.config.permissions.indexOf(request_type) !== -1
         }
     }
 
