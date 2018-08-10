@@ -418,7 +418,7 @@
     "HELP.GENERATE_ADDRESSES_NUMBER": "In order to keep your wallet smooth, it is recommended to keep the number low. The default value is 10 addresses, maximum 50 addresses",
 
     "MESSAGE": "Public message (optional)",
-    "HELP.MESSAGE": "This message will be clearly and publicly displayed in your transaction. Do not enter any personnal data!",
+    "HELP.MESSAGE": "This message will be clearly and publicly displayed in your transaction. Do not enter any personal data!",
     "MESSAGE_TOO_LONG": "Too long message. Please use a shorter message",
 
     "AVATARS.INFORMATION": "Avatars represent your Digital Identity on Metaverse Blockchain. You can use your Avatar name to send and receive ETP in place of your address. Avatars can create MST and MIT",
@@ -429,6 +429,12 @@
     "SEND_ALL_MESSAGE": "Do you really want to send all your available balance?",
 
     "DEPOSIT.DURATION_ESTIMATION": "Your ETP will be locked for approximately {{duration_days}} days and {{duration_hours}} hours. Be aware that this estimation is based on the blocktime of the last 1000 blocks ({{blocktime}} sec.), and might vary based on block generation speed.",
-    "HISTORY.UNLOCK_APPROXIMATION_INFORMATION": "*Please be aware that the 'Locked until' date is an approximation based on the number of block remaining and the average blocktime of the last 1000 blocks. It might vary based on block generation speed."
+    "HISTORY.UNLOCK_APPROXIMATION_INFORMATION": "*Please be aware that the 'Locked until' date is an approximation based on the number of block remaining and the average blocktime of the last 1000 blocks. It might vary based on block generation speed.",
+
+    "RECIPIENT_ADDRESS_OR_AVATAR": "Recipient avatar or address",
+    "HELP.RECIPIENT_ADDRESS_OR_AVATAR": "You can enter the recipient avatar name or address.",
+    "AVATAR": "Avatar",
+    "ADDRESS": "Address"
+
 
 }

@@ -578,6 +578,14 @@ export class MvsServiceProvider {
         return this.blockchain.transaction.broadcast(rawtx)
     }
 
+    suggestAvatar(prefix) {
+        return this.blockchain.suggest.avatar(prefix)
+    }
+
+    suggestAddress(prefix) {
+        return this.blockchain.suggest.address(prefix)
+    }
+
     getdictionary(lang) {
         return Metaverse.wallet.wordlists[lang]
     }

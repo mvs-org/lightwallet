@@ -99,4 +99,17 @@ page-asset-transfer {
 
     }
 
+    .suggestions {
+        margin-top: 1px;
+    }
+
+    .list-md > .item-block:last-child .item-inner {
+        border-bottom: 1px solid #dedede;
+    }
+
+    ion-label img {
+        height: 20px;
+    }
+
+
 }

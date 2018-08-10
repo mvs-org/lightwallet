@@ -5,6 +5,10 @@ import { TranslateService } from '@ngx-translate/core';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { AlertProvider } from '../../providers/alert/alert';
 import { Keyboard } from '@ionic-native/keyboard';
+import { AppGlobals } from '../../app/app.global';
+import { Subject } from 'rxjs/Subject';
+import { debounceTime } from 'rxjs/operators';
+import { distinctUntilChanged } from 'rxjs/operators';
 
 class RecipientSendMore {
     constructor(
@@ -30,7 +34,9 @@ export class AssetTransferPage {
     showBalance: number
     recipient_address: string = ""
     recipient_avatar: string
+    recipient: string = ""
     recipient_avatar_valid: boolean
+    recipient_address_valid: boolean
     quantity: string = ""
     builtFor: string
     rawtx: string
@@ -52,6 +58,12 @@ export class AssetTransferPage {
     total: number
     message: string = ""
     fee: number = 10000
+    selected: string;
+    suggestions_avatar: string[];
+    suggestions_address: string[];
+    suggestions_address_displayed: string[];
+    suggestions_avatar_displayed: string[];
+    recipientQueryChanged: Subject<string> = new Subject<string>();
 
     constructor(
         public navCtrl: NavController,
@@ -61,6 +73,7 @@ export class AssetTransferPage {
         private alert: AlertProvider,
         private barcodeScanner: BarcodeScanner,
         private keyboard: Keyboard,
+        private globals: AppGlobals,
         private translate: TranslateService
     ) {
 
@@ -107,6 +120,14 @@ export class AssetTransferPage {
                         this.addressbalances = addrblncs
                     })
             })
+
+            this.recipientQueryChanged
+                .pipe(debounceTime(500))
+                .pipe(distinctUntilChanged())
+                .subscribe(recipient => this.searchRecipientSuggestions(recipient));
+
+
+
     }
 
     ionViewDidEnter() {
@@ -253,31 +274,92 @@ export class AssetTransferPage {
 
     validrecipient = this.mvs.validAddress
 
-    validAvatar = (input: string) => /[A-Za-z0-9.-]/.test(input) && this.recipient_avatar_valid
+    //validAvatar = (input: string) => /[A-Za-z0-9.-]/.test(input) && this.recipient_avatar_valid
 
-    recipientChanged = () => {
-        if (this.recipient_address) {
-            this.recipient_address = this.recipient_address.trim()
+    recipientChanged = (query: string) => {
+        this.recipientQueryChanged.next(query);
+    }
+
+    searchRecipientSuggestions= (recipient) => {
+        if (recipient) {
+            this.recipient = recipient.trim()
+            this.checkAvatar();
+            this.checkAddress();
+            if(this.recipient.length > 1) {
+                if(this.recipient[0] == this.globals.ADDRESS_PREFIX_P2SH || (this.globals.network == 'mainnet' && this.recipient[0] == this.globals.ADDRESS_PREFIX_MAINNET) || (this.globals.network == 'testnet' && this.recipient[0] == this.globals.ADDRESS_PREFIX_TESTNET)) {
+                    Promise.all([this.mvs.suggestAvatar(this.recipient), this.mvs.suggestAddress(this.recipient)])
+                        .then(result => {
+                            this.suggestions_avatar = result[0];
+                            this.suggestions_address = result[1];
+                            this.displaySuggestions()
+                        })
+                } else {
+                    this.mvs.suggestAvatar(this.recipient)
+                        .then((result) => {
+                            this.suggestions_avatar = result;
+                            this.suggestions_address = [];
+                            this.displaySuggestions()
+                        })
+                }
+            } else {
+                this.suggestions_avatar = [];
+                this.suggestions_address = [];
+            }
         }
     }
 
-    recipientAvatarChanged = () => {
-        if (this.recipient_avatar) {
-            this.recipient_avatar = this.recipient_avatar.trim()
-            Promise.all([this.mvs.getGlobalAvatar(this.recipient_avatar), this.recipient_avatar])
+    selectSuggestionAvatar = (suggestion) => {
+        this.recipient = suggestion;
+        this.hideSuggestions()
+        this.checkAvatar()
+        this.suggestions_address = [];
+        this.suggestions_avatar = [];
+    }
+
+    selectSuggestionAddress = (suggestion) => {
+        this.recipient = suggestion;
+        this.hideSuggestions()
+        this.checkAddress()
+        this.suggestions_address = [];
+        this.suggestions_avatar = [];
+    }
+
+    checkAvatar = () => {
+        if (this.recipient) {
+            this.recipient = this.recipient.trim()
+            Promise.all([this.mvs.getGlobalAvatar(this.recipient), this.recipient])
                 .then(result => {
-                    if (this.recipient_avatar != result[1])
+                    if (this.recipient != result[1])
                         throw ''
+                    this.recipient_avatar = this.recipient
                     this.recipient_avatar_valid = true
                     this.recipient_address = result[0].address
-                    this.recipientChanged()
                 })
                 .catch((e) => {
                     this.recipient_avatar_valid = false
                     this.recipient_address = ""
-                    this.recipientChanged()
                 })
         }
+    }
+
+    checkAddress = () => {
+        if(this.mvs.validAddress(this.recipient)) {
+            this.recipient_address = this.recipient;
+            this.recipient_address_valid = true;
+        } else {
+            this.recipient_address = undefined;
+            this.recipient_address_valid = false;
+        }
+    }
+
+    displaySuggestions = () => {
+        this.suggestions_address_displayed = this.suggestions_address;
+        this.suggestions_avatar_displayed = this.suggestions_avatar;
+    }
+
+    hideSuggestions = () => {
+        this.suggestions_address_displayed = [];
+        this.suggestions_avatar_displayed = [];
     }
 
     quantityETPChanged = () => {
