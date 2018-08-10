@@ -77,7 +77,7 @@ export class PluginPage {
             this.evaluateResponse(event.data)
                 .then(response => {
                     source.postMessage({
-                        topic: 'avatars',
+                        topic: event.data.query,
                         nonce: event.data.nonce,
                         value: response
                     }, event.origin)
