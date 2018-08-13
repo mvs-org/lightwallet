@@ -40,6 +40,9 @@
                     <ion-icon name="qr-scanner"></ion-icon>
                 </button>
             </ion-item>
+            <ion-item class="info-input" *ngIf="recipient_address && recipient_avatar_valid" no-lines>
+                <span [translate]="'AVATAR_RECIPIENT_ADDRESS'" [translateParams]="{address: recipient_address, last_update: recipient_address_last_update*1000|date : 'medium'}"></span>
+            </ion-item>
 
             <ion-list class="suggestions" *ngIf="recipient.length > 1">
                 <button ion-item *ngFor="let suggestion of suggestions_address_displayed" (click)="selectSuggestionAddress(suggestion)">

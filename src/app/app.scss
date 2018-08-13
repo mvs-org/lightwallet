@@ -90,6 +90,15 @@
     overflow: hidden;
 }
 
+.info-input {
+    min-height: 0;
+}
+
+.info-input ion-label {
+    margin-top: 10px;
+    margin-bottom: 0;
+}
+
 
 // loading animation
 .mini-loader,

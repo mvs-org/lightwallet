@@ -64,6 +64,7 @@ export class AssetTransferPage {
     suggestions_address_displayed: string[];
     suggestions_avatar_displayed: string[];
     recipientQueryChanged: Subject<string> = new Subject<string>();
+    recipient_address_last_update: number = 0
 
     constructor(
         public navCtrl: NavController,
@@ -124,7 +125,7 @@ export class AssetTransferPage {
             this.recipientQueryChanged
                 .pipe(debounceTime(500))
                 .pipe(distinctUntilChanged())
-                .subscribe(recipient => this.searchRecipientSuggestions(recipient));
+                .subscribe(recipient => this.searchRecipientSuggestions());
 
 
 
@@ -272,17 +273,15 @@ export class AssetTransferPage {
         this.quantityInput.setFocus()
     })
 
-    validrecipient = this.mvs.validAddress
-
-    //validAvatar = (input: string) => /[A-Za-z0-9.-]/.test(input) && this.recipient_avatar_valid
+    validrecipient = (recipient_address) => recipient_address ? this.mvs.validAddress : false
 
     recipientChanged = (query: string) => {
         this.recipientQueryChanged.next(query);
     }
 
-    searchRecipientSuggestions= (recipient) => {
-        if (recipient) {
-            this.recipient = recipient.trim()
+    searchRecipientSuggestions= () => {
+        if (this.recipient) {
+            this.recipient = this.recipient.trim()
             this.checkAvatar();
             this.checkAddress();
             if(this.recipient.length > 1) {
@@ -334,10 +333,12 @@ export class AssetTransferPage {
                     this.recipient_avatar = this.recipient
                     this.recipient_avatar_valid = true
                     this.recipient_address = result[0].address
+                    this.recipient_address_last_update = result[0].confirmed_at
                 })
                 .catch((e) => {
                     this.recipient_avatar_valid = false
                     this.recipient_address = ""
+                    this.recipient_address_last_update = 0
                 })
         }
     }
