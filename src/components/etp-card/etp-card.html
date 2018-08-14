@@ -6,18 +6,30 @@
                     <ion-avatar item-start>
                         <img class="coinlogo" [src]="'assets/icon/ETP.png'">
                     </ion-avatar>
-                    <div>
-                        <h1>ETP</h1>
-                        <h3>{{"AVAILABLE"|translate}}: {{balance.available | format : balance.decimals}}</h3>
-                        <p *ngIf="tickers!==undefined">
-                            <span *ngIf="base == 'BTC'">{{"ACCOUNT.TOTAL_VALUE"|translate}}: {{base}} {{(balance.frozen + balance.available)/100000000*tickers[base].price | number : '1.0-8'}}</span>
-                            <span *ngIf="base != 'BTC'">{{"ACCOUNT.TOTAL_VALUE"|translate}}: {{base}} {{(balance.frozen + balance.available)/100000000*tickers[base].price | number : '1.0-2'}}</span>
-                        </p>
-                        <p>
-                            {{"ACCOUNT.FROZEN"|translate}}: {{balance.frozen | format : balance.decimals}}<button ion-button clear color="primary" icon-left (click)="gotoDeposit()" class="deposit-button"><ion-icon name="log-in"></ion-icon></button>
-                        </p>
-                    </div>
-
+                    <h1 class="symbol">ETP</h1>
+                    <h2 class="balances">
+                        <div class="balance-text">
+                            {{"ACCOUNT.TOTAL"|translate}}
+                        </div>
+                        <div class="balance-amount">
+                            <div>{{balance.available + balance.frozen | format : balance.decimals}}</div>
+                            <div *ngIf="tickers!==undefined" class="fiat">
+                                ≈{{base}} {{(balance.available + balance.frozen)/100000000*tickers[base].price | number : '1.0-2'}}
+                            </div>
+                        </div>
+                    </h2>
+                    <h2 class="balances frozen-balances">
+                        <div class="balance-text">
+                            {{"ACCOUNT.FROZEN"|translate}}
+                            <button ion-button clear color="primary" icon-left (click)="gotoDeposit()" class="deposit-button"><ion-icon name="log-in"></ion-icon></button>
+                        </div>
+                        <div class="balance-amount frozen-amount">
+                            <div>{{balance.frozen | format : balance.decimals}}</div>
+                            <div *ngIf="tickers!==undefined" class="fiat">
+                                ≈{{base}} {{(balance.frozen)/100000000*tickers[base].price | number : '1.0-2'}}
+                            </div>
+                        </div>
+                    </h2>
                 </ion-item>
             </ion-col>
         </ion-row>

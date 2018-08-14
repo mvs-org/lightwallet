@@ -94,7 +94,8 @@ etp-card {
     }
 
     .deposit-button {
-      top: -7px;
+      margin: 0;
+      padding: 0;
     }
 
     .row-buttons {
@@ -112,10 +113,6 @@ etp-card {
       padding-bottom: 50px;
     }
 
-    .asset-container {
-      height: 200px;
-    }
-
     .offlineIcon {
       color: red;
       padding-right: 10px;
@@ -131,4 +128,33 @@ etp-card {
       //filter: invert(100%);
       filter: brightness(0.50);
     }
+
+    .fiat {
+        color: grey;
+    }
+
+    .balances {
+        display: table;
+        width: 100%;
+    }
+
+    .balance-text {
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+    .balance-amount {
+        display: table-cell;
+        float: right;
+        text-align: right;
+    }
+
+    .frozen-balances {
+        margin-top: 10px;
+    }
+
+    .symbol {
+        padding-bottom: 5px;
+    }
+
 }

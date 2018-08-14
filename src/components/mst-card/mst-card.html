@@ -6,13 +6,23 @@
                     <ion-avatar item-start>
                         <img class="coinlogo" [src]="'assets/icon/'+icon+'.png'" (error)="errorImg($event)" [ngClass]="{'csdLogoDefault':symbol == 'CSD.CSD' && theme == 'theme-default', 'default-logo': icon == 'default_mst'}">
                     </ion-avatar>
-                    <div>
-                        <h1 class="overflow">{{symbol}}</h1>
-                        <h3>{{"AVAILABLE"|translate}}: {{balance.available | format : balance.decimals}}</h3>
-                        <p>
-                            {{"ACCOUNT.FROZEN"|translate}}: {{balance.frozen | format : balance.decimals}}
-                        </p>
-                    </div>
+                    <h1 class="symbol overflow">{{symbol}}</h1>
+                    <h2 class="balances">
+                        <div class="balance-text">
+                            {{"ACCOUNT.TOTAL"|translate}}
+                        </div>
+                        <div class="balance-amount">
+                            <div>{{balance.available + balance.frozen | format : balance.decimals}}</div>
+                        </div>
+                    </h2>
+                    <h2 class="balances frozen-balances">
+                        <div class="balance-text">
+                            {{"ACCOUNT.FROZEN"|translate}}
+                        </div>
+                        <div class="balance-amount frozen-amount">
+                            <div>{{balance.frozen | format : balance.decimals}}</div>
+                        </div>
+                    </h2>
                 </ion-item>
             </ion-col>
         </ion-row>
