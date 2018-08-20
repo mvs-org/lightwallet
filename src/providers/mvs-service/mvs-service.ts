@@ -209,7 +209,7 @@ export class MvsServiceProvider {
                 valid = this.globals.network == "testnet"
                 break
             case this.globals.ADDRESS_PREFIX_P2SH:
-                valid = true
+                valid = false
         }
         return valid
     }
