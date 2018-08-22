@@ -20,7 +20,7 @@ page-receive {
     }
 
     textarea{
-        min-width: 300px;
+        //min-width: 300px;
         width:100%;
         border: 0px !important;
         resize: none;
@@ -33,11 +33,22 @@ page-receive {
     .right {
         float: right;
     }
+
+    .card-ios {
+        margin-left: 0;
+        margin-right: 0;
+    }
 }
 
 
 @media (min-width: 1079px) {
     .col-margin {
         margin-right: 54px;
+    }
+}
+
+@media (max-width: 670px) {
+    .col {
+        -webkit-flex-basis: auto !important;
     }
 }
