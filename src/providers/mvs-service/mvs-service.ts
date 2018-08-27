@@ -158,8 +158,8 @@ export class MvsServiceProvider {
             })
     }
 
-    createIssueAssetTx(passphrase: string, symbol: string, quantity: number, precision: number, issuer: string, description: string, secondaryissue_threshold: number, is_secondaryissue: boolean, issue_address: string, fee_address: string, change_address: string, create_new_domain_cert: boolean, use_naming_cert: boolean, bounty_fee: number) {
-        return ((fee_address) ? this.getUtxoFrom(fee_address) : this.getUtxo())
+    createIssueAssetTx(passphrase: string, symbol: string, quantity: number, precision: number, issuer: string, description: string, secondaryissue_threshold: number, is_secondaryissue: boolean, issue_address: string, change_address: string, create_new_domain_cert: boolean, use_naming_cert: boolean, bounty_fee: number) {
+        return this.getUtxoFrom(issue_address)
             .then(utxo => {
                 return this.wallet.getWallet(passphrase)
                     .then((wallet) => {
