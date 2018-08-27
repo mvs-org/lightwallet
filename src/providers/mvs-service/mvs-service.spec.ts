@@ -75,8 +75,7 @@ describe('MVS Service Provider', () => {
         it('Validate address mainnet', () => {
             globals.network='mainnet'
             var target = [
-                'MKXYH2MhpvA3GU7kMk8y3SoywGnyHEj5SB',
-                '3KXYH2MhpvA3GU7kMk8y3SoywGnyHEj5SB'
+                'MKXYH2MhpvA3GU7kMk8y3SoywGnyHEj5SB'
             ]
             target.forEach(address=>{
                 expect(mvs.validAddress(address)).toBe(true)
@@ -85,8 +84,7 @@ describe('MVS Service Provider', () => {
         it('Validate address testnet', () => {
             globals.network='testnet'
             var target = [
-                'tKXYH2MhpvA3GU7kMk8y3SoywGnyHEj5SB',
-                '3KXYH2MhpvA3GU7kMk8y3SoywGnyHEj5SB'
+                'tKXYH2MhpvA3GU7kMk8y3SoywGnyHEj5SB'
             ]
             target.forEach(address=>{
                 expect(mvs.validAddress(address)).toBe(true)
