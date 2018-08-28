@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController } from 'ionic-angular';
+import { AppGlobals } from '../../app/app.global';
 
 @IonicPage()
 @Component({
@@ -9,6 +10,7 @@ import { IonicPage, NavController } from 'ionic-angular';
 export class InformationPage {
 
     constructor(
+        private globals: AppGlobals,
         private navCtrl: NavController
     ) {
     }
@@ -16,6 +18,10 @@ export class InformationPage {
     ionViewDidLoad() {
         console.log('ionViewDidLoad InformationPage');
     }
+
+    version = () => "v" + this.globals.version + " " + this.globals.name
+
+    network = () => this.globals.network;
 
     disclaimer = () => this.navCtrl.push("DisclaimerPage")
 
