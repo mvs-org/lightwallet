@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{"REPORT_BUG"|translate}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+
+    <ion-row class="report-button">
+        <p>{{"REPORT_BUG.TEXT"|translate}}</p>
+        <button ion-button class="large-btn" block full icon-left (click)="report();">
+            <ion-icon name="bug"></ion-icon>
+            {{"REPORT_BUG"|translate}}
+        </button>
+    </ion-row>
+    <ion-row class="follow-github">
+        <p>{{"GITHUB.TEXT"|translate}}</p>
+        <button ion-button class="large-btn" block full icon-left (click)="github();">
+            <ion-icon name="logo-github"></ion-icon>
+            {{"GITHUB.FOLLOW"|translate}}
+        </button>
+    </ion-row>
+</ion-content>
