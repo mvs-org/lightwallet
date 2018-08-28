@@ -434,7 +434,9 @@
     "RECIPIENT_ADDRESS_OR_AVATAR": "Recipient avatar or address",
     "HELP.RECIPIENT_ADDRESS_OR_AVATAR": "You can enter the recipient avatar name or address.",
     "AVATAR": "Avatar",
-    "ADDRESS": "Address"
+    "ADDRESS": "Address",
+
+    "INFORMATION.TITLE": "Information"
 
 
 }

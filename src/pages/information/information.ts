@@ -1,18 +1,22 @@
 import { Component } from '@angular/core';
-import { IonicPage } from 'ionic-angular';
+import { IonicPage, NavController } from 'ionic-angular';
 
 @IonicPage()
 @Component({
-  selector: 'page-information',
-  templateUrl: 'information.html',
+    selector: 'page-information',
+    templateUrl: 'information.html',
 })
 export class InformationPage {
 
-  constructor() {
-  }
+    constructor(
+        private navCtrl: NavController
+    ) {
+    }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad InformationPage');
-  }
+    ionViewDidLoad() {
+        console.log('ionViewDidLoad InformationPage');
+    }
+
+    disclaimer = () => this.navCtrl.push("DisclaimerPage")
 
 }

@@ -132,7 +132,7 @@ export class MyETPWallet {
                     { title: 'THEME_SETTINGS', component: "ThemeSwitcherPage", icon: 'color-palette' },
                     { title: 'SETTINGS', component: "SettingsPage", icon: 'settings' },
                     { title: 'REPORT_BUG', newtab: 'https://github.com/mvs-org/lightwallet/issues', icon: 'bug' },
-                    { title: 'INFORMATION', component: "InformationPage", icon: 'information-circle' }
+                    { title: 'INFORMATION.TITLE', component: "InformationPage", icon: 'information-circle' }
                 ].concat(plugins).map((entry) => this.addToMenu(entry)))
             });
     }
