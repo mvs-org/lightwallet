@@ -23,28 +23,9 @@ export class EthBridgePage {
     addresses: Array<string>
     balance: number
     showBalance: number
-    recipient_address: string = ""
-    recipient_avatar: string
-    recipient_avatar_valid: boolean
-    quantity: string = ""
-    builtFor: string
-    rawtx: string
-    passcodeSet: any
     addressbalances: Array<any>
-    sendFrom: string = "auto"
-    changeAddress: string
-    feeAddress: string = "auto"
-    passphrase: string = ""
     etpBalance: number
-    @ViewChild('recipientAddressInput') recipientAddressInput;
-    @ViewChild('quantityInput') quantityInput;
-    transfer_type: string = "one"
-    recipients: Array<RecipientSendMore> = []
-    sendMoreValidQuantity: boolean = false
-    sendMoreValidAddress: boolean = false
-    sendMore_limit: number = 1000
-    message: string = ""
-    fee: number = 10000
+    ETPMap: string
 
     constructor(
         public navCtrl: NavController,
@@ -53,6 +34,8 @@ export class EthBridgePage {
         private globals: AppGlobals,
         public platform: Platform
     ) {
+
+        this.ETPMap = this.globals.ETPMapContractAddress;
 
         //Load addresses
         mvs.getAddresses()
