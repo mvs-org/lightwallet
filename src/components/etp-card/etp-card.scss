@@ -136,15 +136,14 @@ etp-card {
     .balances {
         display: inline-block;
         width: auto;
+    }
+
+    .balance-text {
         margin-right: 10px;
     }
 
     .balance-field {
         height: 40px;
-        top: 0;
-    }
-
-    .balance-text .balance-field {
         top: 0;
     }
 

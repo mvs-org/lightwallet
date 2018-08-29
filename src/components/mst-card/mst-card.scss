@@ -139,23 +139,17 @@ mst-card {
     }
 
     .balances {
-        display: table;
-        width: 100%;
+        display: inline-block;
+        width: auto;
     }
 
     .balance-text {
-        display: table-cell;
-        vertical-align: middle;
+        margin-right: 47px;
     }
 
-    .balance-amount {
-        display: table-cell;
-        float: right;
-        text-align: right;
-    }
-
-    .frozen-balances {
-        margin-top: 10px;
+    .balance-field {
+        height: 40px;
+        top: 0;
     }
 
     .symbol {
