@@ -13,6 +13,7 @@ export class AppGlobals {
     readonly ADDRESS_PREFIX_MAINNET = 'M'
     readonly ADDRESS_PREFIX_P2SH = '3'
     readonly ADDRESS_PREFIX_TESTNET = 't'
+    readonly ETPMapContractAddress = '0xa52b0a032139e6303b86cfeb0bb9ae780a610354'
 
     readonly DEFAULT_NETWORK = 'mainnet'
 
