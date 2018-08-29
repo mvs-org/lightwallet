@@ -134,23 +134,18 @@ etp-card {
     }
 
     .balances {
-        display: table;
-        width: 100%;
+        display: inline-block;
+        width: auto;
+        margin-right: 10px;
     }
 
-    .balance-text {
-        display: table-cell;
-        vertical-align: middle;
+    .balance-field {
+        height: 40px;
+        top: 0;
     }
 
-    .balance-amount {
-        display: table-cell;
-        float: right;
-        text-align: right;
-    }
-
-    .frozen-balances {
-        margin-top: 10px;
+    .balance-text .balance-field {
+        top: 0;
     }
 
     .symbol {
