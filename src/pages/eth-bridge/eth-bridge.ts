@@ -106,4 +106,6 @@ export class EthBridgePage {
         this.data = FUNCTION_ID + LOCATION + this.zerofill(hexLength, 64, 'left') + this.zerofill(dynamic, 64, 'right');
     }
 
+    validIdentifier = (identifier) => identifier != undefined && identifier != ''
+
 }
