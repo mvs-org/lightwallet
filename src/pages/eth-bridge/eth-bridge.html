@@ -33,7 +33,7 @@
             </ion-item>
             <ion-card-content *ngIf="data">
                 <h4>{{"ETH_TO_MVS.DATA"|translate}}:</h4>
-                <textarea autosize ion-input full type="text" #copy id="copy" value="{{data}}" style="" readonly>{{data}}</textarea>
+                <textarea fz-elastic ion-input full type="text" #copy id="copy" value="{{data}}" style="" readonly>{{data}}</textarea>
                 <button ion-button full item-right icon-left [ngxClipboard]="copy">
                     <ion-icon name="copy"></ion-icon>
                     {{'COPY'|translate}}

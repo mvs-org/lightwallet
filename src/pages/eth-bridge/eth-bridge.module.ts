@@ -5,7 +5,7 @@ import { TranslateModule} from '@ngx-translate/core';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { PipesModule } from '../../pipes/pipes.module';
 import { ClipboardModule } from 'ngx-clipboard/dist';
-import { AutosizeModule } from 'ngx-autosize';
+import { ElasticModule } from 'angular2-elastic';
 
 @NgModule({
     declarations: [
@@ -16,7 +16,7 @@ import { AutosizeModule } from 'ngx-autosize';
         PipesModule,
         TranslateModule,
         ClipboardModule,
-        AutosizeModule
+        ElasticModule
     ],
     providers:[
         BarcodeScanner
