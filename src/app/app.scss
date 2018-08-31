@@ -74,6 +74,13 @@
     user-select: text;
 }
 
+.manual-copy {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+}
+
 .valid-input ion-label, .wrong-input ion-label, .info-input ion-label{
     text-overflow: initial;
     white-space: initial;
