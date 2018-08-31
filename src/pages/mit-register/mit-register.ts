@@ -172,7 +172,6 @@ export class MITRegisterPage {
     loadMits(){
         return this.mvs.getListMit()
             .then((mits) => {
-                console.log(mits.result)
                 mits.result.forEach((mit) => {
                     this.list_all_mits.push(mit.attachment.symbol)
                 })

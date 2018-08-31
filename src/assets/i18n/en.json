@@ -466,6 +466,11 @@
     "MVS_TO_ETH.STEP2_TITLE": "Step 2: Swap your MST",
     "MVS_TO_ETH.STEP2_EXPLAIN": "By clicking on the 'Swap' button, you can do a transfer very similar to a classic Metaverse transfer. The only differences are that the recipient will automatically be the 'crosschain' avatar, and you will be asked to fill the Ethereum address that will receive the ERC20 token on Ethereum",
     "MVS_TO_ETH.STEP3_TITLE": "Step 3: Receive your ERC20 token on Ethereum!",
-    "MVS_TO_ETH.STEP3_EXPLAIN": "After sending your MST, they will be automatically converted to the ERC20 token that you will receive on the Ethereum address specified in the previous step. Please be patient, this process might take some time since it involves 2 transactions (first the Metaverse blockchainz, then on Ethereum)."
+    "MVS_TO_ETH.STEP3_EXPLAIN": "After sending your MST, they will be automatically converted to the ERC20 token that you will receive on the Ethereum address specified in the previous step. Please be patient, this process might take some time since it involves 2 transactions (first on the Metaverse blockchain, then on Ethereum).",
+    "HELP.ETH_SWAP_RECIPIENT": "The Recipient for a Metaverse->Ethereum swap is always the Avatar '{{crosschain_avatar}}'",
+    "ETHEREUM_ADDRESS": "Ethereum address",
+    "HELP.ETH_ADDRESS": "This is the Ethereum address that will receive the equivalent ERC20 token on Ethereum",
+    "SWAP.NOTICE_SWAP_FEE": "Please be aware that doing a swap from Metaverse to Ethereum cost an additional 1 ETP in order to pay for the Ethereum transaction fee",
+    "SWAP": "Swap"
 
 }

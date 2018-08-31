@@ -1,14 +1,7 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { AppGlobals } from '../../app/app.global';
-
-class RecipientSendMore {
-    constructor(
-        public address: string,
-        public target: any
-    ) { }
-}
 
 @IonicPage()
 @Component({

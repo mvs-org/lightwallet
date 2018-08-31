@@ -43,7 +43,7 @@
             <ion-row *ngIf="balances!=undefined">
                 <ng-container *ngFor="let asset of balancesKeys" class="asset-container">
                     <ion-col *ngIf="balances.MST[asset]!==undefined" class="asset-container">
-                        <mst-card [balance]="balances.MST[asset]" [symbol]="asset" [theme]="theme" [icon]="icons[asset]"></mst-card>
+                        <mst-card [balance]="balances.MST[asset]" [symbol]="asset" [theme]="theme" [icon]="icons[asset]" [domain]="domains[asset]"></mst-card>
                     </ion-col>
                 </ng-container>
             </ion-row>

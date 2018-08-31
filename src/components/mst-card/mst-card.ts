@@ -11,6 +11,7 @@ export class MSTCardComponent {
     @Input() symbol: string;
     @Input() theme: string;
     @Input() icon: string;
+    @Input() domain: string;
 
     constructor(
         private nav: NavController
@@ -23,4 +24,6 @@ export class MSTCardComponent {
     gotoTransfer = () => this.nav.push("transfer-page", { asset: this.symbol })
 
     gotoReceive = () => this.nav.push("receive-page", { asset: this.symbol })
+
+    gotoSwap = () => this.nav.push("eth-swap-page", { asset: this.symbol })
 }
