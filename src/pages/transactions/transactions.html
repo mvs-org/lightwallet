@@ -23,18 +23,34 @@
 
         <div *ngIf="display_segment=='transactions'">
             <ion-list [hidden]="!txs.length" >
-                <ion-item *ngFor="let tx of txs">
-                    <ion-item no-lines>
-                        <ion-avatar item-start>
-                            <img class="coinlogo" [src]="'assets/icon/'+asset+'.png'" onerror="this.src='assets/icon/default_mst.png'">
-                        </ion-avatar>
-                        <h1>{{asset}}</h1>
-                        <h3 *ngIf="tx.outputs['0']">{{'DATE'|translate}}: {{tx.outputs['0'].confirmed_at*1000|date : 'medium'}}</h3>
-                        <p>{{'HASH'|translate}}: <a *ngIf="!tx.unconfirmed" href="{{explorerURL(tx.hash)}}" target="_blank">{{tx.hash}}</a>
-                            <span *ngIf="tx.unconfirmed">{{tx.hash}}</span>
-                        </p>
+                <div *ngFor="let tx of txs | orderBy: ['confirmed_at', '1']">
+                    <ion-item *ngIf="!tx.confirmed_at">
+                        <ion-item no-lines>
+                            <ion-avatar item-start>
+                                <img class="coinlogo" [src]="'assets/icon/'+asset+'.png'" onerror="this.src='assets/icon/default_mst.png'">
+                            </ion-avatar>
+                            <h1>{{asset}}</h1>
+                            <h3>{{'DATE'|translate}}: <span class="warning">{{'PENDING_CONFIRMATION'|translate}}</span></h3>
+                            <p>
+                                {{'HASH'|translate}}: <a href="{{explorerURL(tx.hash)}}" target="_blank">{{tx.hash}}</a>
+                            </p>
+                        </ion-item>
                     </ion-item>
-                </ion-item>
+                </div>
+                <div *ngFor="let tx of txs">
+                    <ion-item *ngIf="tx.confirmed_at">
+                        <ion-item no-lines>
+                            <ion-avatar item-start>
+                                <img class="coinlogo" [src]="'assets/icon/'+asset+'.png'" onerror="this.src='assets/icon/default_mst.png'">
+                            </ion-avatar>
+                            <h1>{{asset}}</h1>
+                            <h3>{{'DATE'|translate}}: {{tx.confirmed_at*1000|date : 'medium'}}</h3>
+                            <p>
+                                {{'HASH'|translate}}: <a href="{{explorerURL(tx.hash)}}" target="_blank">{{tx.hash}}</a>
+                            </p>
+                        </ion-item>
+                    </ion-item>
+                </div>
             </ion-list>
             <div [hidden]="txs && txs.length">
                 <ion-row>

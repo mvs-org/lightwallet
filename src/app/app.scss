@@ -35,6 +35,10 @@
     color: red;
 }
 
+.warning{
+    color: orange;
+}
+
 .item.item-select:not(.error-border):not(.no-color-border) .item-inner .ng-valid .item-cover{
     border-bottom-color: #32db64 !important;
     -webkit-box-shadow: inset 0 -1px 0 0 #32db64 !important;

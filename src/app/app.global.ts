@@ -13,8 +13,8 @@ export class AppGlobals {
     readonly ADDRESS_PREFIX_MAINNET = 'M'
     readonly ADDRESS_PREFIX_P2SH = '3'
     readonly ADDRESS_PREFIX_TESTNET = 't'
-    readonly ETPMapContractAddress = '0xa52b0a032139e6303b86cfeb0bb9ae780a610354'
-    readonly crosschain_avatar = 'crosschain'
+    readonly ETPMapContractAddress = '0xc1e5fd24fa2b4a3581335fc3f2850f717dd09c86'
+    readonly crosschain_avatar = 'droplet'
 
     readonly DEFAULT_NETWORK = 'mainnet'
 

@@ -454,10 +454,10 @@
     "ETH_TO_MVS.STEP2_TITLE": "Step 2: Go to your Ethereum wallet",
     "ETH_TO_MVS.STEP2_EXPLAIN": "The next step is to go to you Ethereum wallet. It can be any wallet that has the option to add 'Data' to a transaction (myetherwallet, imToken etc...).",
     "ETH_TO_MVS.STEP3_TITLE": "Step 3: Send an ETH transaction containing this Data",
-    "ETH_TO_MVS.STEP3_EXPLAIN": "Finally, send a transaction to the ETPMap contract address on Ethereum specified below. It is important that you add the data generated here in the transaction, in the field 'Data' (usually in the Advanced options). The value to send is 0 Ether, but you will have to pay the transaction fee in order to have your transaction processed.",
-    "ETH_TO_MVS.ETPMAP_CONTRACT_ADDRESS": "ETPMap contract address on Ethereum:",
+    "ETH_TO_MVS.STEP3_EXPLAIN": "Finally, send a transaction to the Metaverse smart contract address on Ethereum specified below. It is important that you add the data generated here in the transaction, in the field 'Data' (usually in the Advanced options). The value to send is 0 Ether, but you will have to pay the transaction fee in order to have your transaction processed.",
+    "ETH_TO_MVS.ETPMAP_CONTRACT_ADDRESS": "Smart contract address on Ethereum:",
     "ETH_TO_MVS.STEP4_TITLE": "Step 4: Your Ethereum and Metaverse addresses are now linked!",
-    "ETH_TO_MVS.STEP4_EXPLAIN": "The Ethereum address used to send the transaction is now linked to your Metaverse avatar or address! You can now send any supported ERC20 token to the ETPMap contract address on Ethereum, and the equivalent MST will be sent to your Avatar or address specified here on Metaverse.",
+    "ETH_TO_MVS.STEP4_EXPLAIN": "The Ethereum address used to send the transaction is now linked to your Metaverse avatar or address! You can now send any supported ERC20 token to the Metaverse smart contract address on Ethereum, and the equivalent MST will be sent to your Avatar or address specified here on Metaverse.",
     "ETH_TO_MVS.UPDATE_ADDRESS": "The linked Avatar or address can be updated at any time by following the same process, the latest transaction is always the one taken into account.",
     "MVS_TO_ETH.LINK_ADDRESSES_TITLE": "Convert tokens from Metaverse to Ethereum!",
     "MVS_TO_ETH.LINK_ADDRESSES_EXPLAIN": "You can also swap compatibles MST on Metaverse to their ERC20 equivalent on Ethereum.",
@@ -474,6 +474,8 @@
     "SWAP": "Swap",
 
     "EXPORT_CSV": "Export to CSV",
-    "DOWNLOAD_CSV_EXAMPLE": "Download CSV Example"
+    "DOWNLOAD_CSV_EXAMPLE": "Download CSV Example",
+
+    "PENDING_CONFIRMATION": "Pending confirmation"
 
 }
