@@ -446,6 +446,12 @@ export class AssetTransferPage {
         this.downloadFile(filename, text)
     }
 
+    csvExample() {
+        var text = 'MAwLwVGwJyFsTBfNj2j5nCUrQXGVRvHzPh,2\nMEWdqvhETJex22kBbYDSD999Vs4xFwQ4fo,2';
+        var filename = 'mvs_example.csv'
+        this.downloadFile(filename, text)
+    }
+
     downloadFile(filename, text) {
         var pom = document.createElement('a');
         pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));

@@ -162,6 +162,8 @@
             </ion-card>
 
 
+            <button *ngIf="!platform.is('mobile')" type="button" class="right-buttons" ion-button icon-left color="secondary" (click)="download()"><ion-icon name="download"></ion-icon> {{"EXPORT_CSV" | translate}}</button>
+            <button *ngIf="!platform.is('mobile')" type="button" class="right-buttons" ion-button icon-left color="light" (click)="csvExample()"><ion-icon name="download"></ion-icon> {{"DOWNLOAD_CSV_EXAMPLE" | translate}}</button>
             <button *ngIf="recipients.length < sendMore_limit" type="button" class="right-buttons" ion-button icon-left color="primary" (click)="addRecipient()">
                 <ion-icon name="add"></ion-icon>
                 {{"ADD_RECIPIENT" | translate}}
@@ -209,7 +211,6 @@
                         <ion-option *ngFor="let address of addresses" value="{{address}}">{{address}}</ion-option>
                     </ion-select>
                 </ion-item>
-                <button *ngIf="!platform.is('mobile')" type="button" class="right-buttons" ion-button icon-left color="secondary" (click)="download()"><ion-icon name="download"></ion-icon> {{"DOWNLOAD_CSV" | translate}}</button>
                 <button ion-button full [disabled]="!sendForm.form.valid||!sendMoreValidQuantity||!sendMoreValidAddress||!validPassword(passphrase)||total > showBalance||!validMessageLength(message)" (click)="preview()" color="primary">
                     {{"PREVIEW" | translate}}
                 </button>

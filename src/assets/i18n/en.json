@@ -440,6 +440,8 @@
 
     "REPORT_BUG.TEXT": "The easiest way to report issues is to fillout our bug report form.",
     "GITHUB.FOLLOW": "Follow issues on GitHub",
-    "GITHUB.TEXT": "All our source code and development process it open and publicly availavle on GitHub. You can always see the process of open issues and of course also help with the implementation."
+    "GITHUB.TEXT": "All our source code and development process it open and publicly availavle on GitHub. You can always see the process of open issues and of course also help with the implementation.",
+    "EXPORT_CSV": "Export to CSV",
+    "DOWNLOAD_CSV_EXAMPLE": "Download CSV Example"
 
 }
