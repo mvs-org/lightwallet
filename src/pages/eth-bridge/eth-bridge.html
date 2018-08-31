@@ -1,0 +1,69 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+        <ion-title>{{ "ETH_BRIDGE" | translate}}</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding style="padding-bottom: 0;">
+    <ion-item no-lines>
+        <ion-segment [(ngModel)]="direction" color="primary">
+            <ion-segment-button value="ethtomvs">
+                {{ "ETH_TO_MVS" | translate}}
+            </ion-segment-button>
+            <ion-segment-button value="mvstoeth">
+                {{ "MVS_TO_ETH" | translate}}
+            </ion-segment-button>
+        </ion-segment>
+    </ion-item>
+
+    <form *ngIf="direction == 'ethtomvs'" #sendForm="ngForm">
+        <h2>{{"ETH_TO_MVS.LINK_ADDRESSES_TITLE"|translate}}</h2>
+        <p>{{"ETH_TO_MVS.LINK_ADDRESSES_EXPLAIN" | translate}}</p>
+        <h2>{{"ETH_TO_MVS.STEP1_TITLE" | translate}}</h2>
+        <p>{{"ETH_TO_MVS.STEP1_EXPLAIN" | translate}}</p>
+        <ion-list>
+            <ion-item [ngClass]="{'error-border': !validIdentifier(identifier)}">
+                <ion-label>{{"ETH_TO_MVS.SELECT_AVATAR_OR_ADDRESS"|translate}}</ion-label>
+                <ion-select [(ngModel)]="identifier" name="identifier" multiple="false" okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}" (ngModelChange)="registerEthBridge(identifier)">
+                    <ion-option *ngFor="let addressbalance of addressbalances" value="{{addressbalance.identifier}}">{{addressbalance.identifier}} - {{addressbalance.balance | format : 8}} ETP</ion-option>
+                </ion-select>
+            </ion-item>
+            <ion-card-content *ngIf="data">
+                <h4>{{"ETH_TO_MVS.DATA"|translate}}:</h4>
+                <textarea fz-elastic ion-input full type="text" #copy id="copy" value="{{data}}" style="" readonly>{{data}}</textarea>
+                <button ion-button full item-right icon-left [ngxClipboard]="copy">
+                    <ion-icon name="copy"></ion-icon>
+                    {{'COPY'|translate}}
+                </button>
+            </ion-card-content>
+            <br>
+        </ion-list>
+        <h2>{{"ETH_TO_MVS.STEP2_TITLE" | translate}}</h2>
+        <p>{{"ETH_TO_MVS.STEP2_EXPLAIN" | translate}}</p>
+        <h2>{{"ETH_TO_MVS.STEP3_TITLE" | translate}}</h2>
+        <p>{{"ETH_TO_MVS.STEP3_EXPLAIN" | translate}}</p>
+        <ion-card-content>
+            <h4>{{"ETH_TO_MVS.ETPMAP_CONTRACT_ADDRESS" | translate}}</h4>
+            <h4 class="manual-copy">{{ETPMap}}</h4>
+        </ion-card-content>
+        <h2>{{"ETH_TO_MVS.STEP4_TITLE" | translate}}</h2>
+        <p>{{"ETH_TO_MVS.STEP4_EXPLAIN" | translate}}</p>
+        <p>{{"ETH_TO_MVS.UPDATE_ADDRESS" | translate}}</p>
+        <br>
+    </form>
+
+    <form *ngIf="direction == 'mvstoeth'" #sendForm="ngForm" style="padding-bottom: 0;">
+        <h2>{{"MVS_TO_ETH.LINK_ADDRESSES_TITLE"|translate}}</h2>
+        <p>{{"MVS_TO_ETH.LINK_ADDRESSES_EXPLAIN" | translate}}</p>
+        <h2>{{"MVS_TO_ETH.STEP1_TITLE" | translate}}</h2>
+        <p>{{"MVS_TO_ETH.STEP1_EXPLAIN" | translate}}</p>
+        <h2>{{"MVS_TO_ETH.STEP2_TITLE" | translate}}</h2>
+        <p>{{"MVS_TO_ETH.STEP2_EXPLAIN" | translate}}</p>
+        <h2>{{"MVS_TO_ETH.STEP3_TITLE" | translate}}</h2>
+        <p>{{"MVS_TO_ETH.STEP3_EXPLAIN" | translate}}</p>
+    </form>
+
+</ion-content>

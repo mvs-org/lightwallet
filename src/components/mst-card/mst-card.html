@@ -6,22 +6,29 @@
                     <ion-avatar item-start>
                         <img class="coinlogo" [src]="'assets/icon/'+icon+'.png'" (error)="errorImg($event)" [ngClass]="{'csdLogoDefault':symbol == 'CSD.CSD' && theme == 'theme-default', 'default-logo': icon == 'default_mst'}">
                     </ion-avatar>
-                    <h1 class="symbol overflow">{{symbol}}</h1>
-                    <h2 class="balances">
-                        <div class="balance-text">
+                    <h1 class="symbol overflow">
+                        {{symbol}}
+                        <button ion-button clear color="danger" icon-left (click)="gotoSwap()" class="swap-buton">
+                            <ion-icon name="swap"></ion-icon>SWAP
+                        </button>
+                    </h1>
+                    <h2 class="balances balance-text">
+                        <div class="balance-field">
                             {{"ACCOUNT.TOTAL"|translate}}
                         </div>
-                        <div class="balance-amount">
-                            <div>{{balance.available + balance.frozen | format : balance.decimals}}</div>
-                        </div>
-                    </h2>
-                    <h2 class="balances frozen-balances">
-                        <div class="balance-text">
+                        <div class="balance-field">
                             {{"ACCOUNT.FROZEN"|translate}}
                         </div>
-                        <div class="balance-amount frozen-amount">
+                        <br>
+                    </h2>
+                    <h2 class="balances frozen-balances">
+                        <div class="balance-field">
+                            <div>{{balance.available + balance.frozen | format : balance.decimals}}</div>
+                        </div>
+                        <div class="balance-field">
                             <div>{{balance.frozen | format : balance.decimals}}</div>
                         </div>
+                        <br>
                     </h2>
                 </ion-item>
             </ion-col>
