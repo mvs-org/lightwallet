@@ -8,7 +8,7 @@
                     </ion-avatar>
                     <h1 class="symbol overflow">
                         {{symbol}}
-                        <button ion-button clear color="danger" icon-left (click)="gotoSwap()" class="swap-buton">
+                        <button *ngIf="swap" ion-button clear color="danger" icon-left (click)="gotoSwap()" class="swap-buton">
                             <ion-icon name="swap"></ion-icon>{{"SWAP"|translate}}
                         </button>
                     </h1>

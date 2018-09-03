@@ -22,6 +22,9 @@
     <form *ngIf="direction == 'ethtomvs'" #sendForm="ngForm">
         <h2>{{"ETH_TO_MVS.LINK_ADDRESSES_TITLE"|translate}}</h2>
         <p>{{"ETH_TO_MVS.LINK_ADDRESSES_EXPLAIN" | translate}}</p>
+        <ion-card-content>
+            <h4>{{"ETH_TO_MVS.DO_ONLY_ONCE" | translate}}</h4>
+        </ion-card-content>
         <h2>{{"ETH_TO_MVS.STEP1_TITLE" | translate}}</h2>
         <p>{{"ETH_TO_MVS.STEP1_EXPLAIN" | translate}}</p>
         <ion-list>
@@ -51,11 +54,16 @@
         </ion-card-content>
         <h2>{{"ETH_TO_MVS.STEP4_TITLE" | translate}}</h2>
         <p>{{"ETH_TO_MVS.STEP4_EXPLAIN" | translate}}</p>
+        <ion-card-content>
+            <h4>{{"ETH_TO_MVS.SWAP_CENTER_ADDRESS" | translate}}</h4>
+            <h4 class="manual-copy">{{SwapAddress}}</h4>
+        </ion-card-content>
+        <br>
         <p>{{"ETH_TO_MVS.UPDATE_ADDRESS" | translate}}</p>
         <br>
     </form>
 
-    <form *ngIf="direction == 'mvstoeth'" #sendForm="ngForm" style="padding-bottom: 0;">
+    <form *ngIf="direction == 'mvstoeth'" #sendForm="ngForm">
         <h2>{{"MVS_TO_ETH.LINK_ADDRESSES_TITLE"|translate}}</h2>
         <p>{{"MVS_TO_ETH.LINK_ADDRESSES_EXPLAIN" | translate}}</p>
         <h2>{{"MVS_TO_ETH.STEP1_TITLE" | translate}}</h2>
@@ -64,6 +72,11 @@
         <p>{{"MVS_TO_ETH.STEP2_EXPLAIN" | translate}}</p>
         <h2>{{"MVS_TO_ETH.STEP3_TITLE" | translate}}</h2>
         <p>{{"MVS_TO_ETH.STEP3_EXPLAIN" | translate}}</p>
+        <h2>{{"SWAP_MST.LIST_TITLE"|translate}}</h2>
+        <p>{{"SWAP_MST.LIST_EXPLAIN" | translate}}</p>
+        <p *ngFor="let mst of whitelist" class="mstSwap">
+            - {{mst}}
+        </p>
     </form>
 
 </ion-content>

@@ -457,7 +457,7 @@
     "ETH_TO_MVS.STEP3_EXPLAIN": "Finally, send a transaction to the Metaverse smart contract address on Ethereum specified below. It is important that you add the data generated here in the transaction, in the field 'Data' (usually in the Advanced options). The value to send is 0 Ether, but you will have to pay the transaction fee in order to have your transaction processed.",
     "ETH_TO_MVS.ETPMAP_CONTRACT_ADDRESS": "Smart contract address on Ethereum:",
     "ETH_TO_MVS.STEP4_TITLE": "Step 4: Your Ethereum and Metaverse addresses are now linked!",
-    "ETH_TO_MVS.STEP4_EXPLAIN": "The Ethereum address used to send the transaction is now linked to your Metaverse avatar or address! You can now send any supported ERC20 token to the Metaverse smart contract address on Ethereum, and the equivalent MST will be sent to your Avatar or address specified here on Metaverse.",
+    "ETH_TO_MVS.STEP4_EXPLAIN": "The Ethereum address used to send the transaction is now linked to your Metaverse avatar or address! You can now send any supported ERC20 token to the Metaverse swap center address on Ethereum, and the equivalent MST will be sent on Metaverse to your Avatar or address specified here.",
     "ETH_TO_MVS.UPDATE_ADDRESS": "The linked Avatar or address can be updated at any time by following the same process, the latest transaction is always the one taken into account.",
     "MVS_TO_ETH.LINK_ADDRESSES_TITLE": "Convert tokens from Metaverse to Ethereum!",
     "MVS_TO_ETH.LINK_ADDRESSES_EXPLAIN": "You can also swap compatibles MST on Metaverse to their ERC20 equivalent on Ethereum.",
@@ -476,6 +476,11 @@
     "EXPORT_CSV": "Export to CSV",
     "DOWNLOAD_CSV_EXAMPLE": "Download CSV Example",
 
-    "PENDING_CONFIRMATION": "Pending confirmation"
+    "PENDING_CONFIRMATION": "Pending confirmation",
+    "COMPATIBLE_MST_LIST": "Compatible MST",
+    "SWAP_MST.LIST_TITLE": "List of MST compatible with Ethereum swap",
+    "SWAP_MST.LIST_EXPLAIN": "Please find below the full list of MST that can be swapped to their equivalent Ethereum token:",
+    "ETH_TO_MVS.DO_ONLY_ONCE": "Please note this process only has to be done once.",
+    "ETH_TO_MVS.SWAP_CENTER_ADDRESS": "Metaverse swap center on Ethereum:"
 
 }

@@ -19,6 +19,8 @@ export class EthBridgePage {
     addressbalances: Array<any>
     etpBalance: number
     ETPMap: string
+    SwapAddress: string
+    whitelist: any = []
 
     constructor(
         public navCtrl: NavController,
@@ -28,7 +30,8 @@ export class EthBridgePage {
         public platform: Platform
     ) {
 
-        this.ETPMap = this.globals.ETPMapContractAddress;
+        this.ETPMap = this.globals.ETPMap;
+        this.SwapAddress = this.globals.SwapAddress;
 
         //Load addresses
         mvs.getAddresses()
@@ -55,6 +58,11 @@ export class EthBridgePage {
                         }
                         this.addressbalances = addrblncs
                     })
+            })
+
+        this.mvs.getWhitelist()
+            .then((whitelist) => {
+                this.whitelist = whitelist;
             })
     }
 

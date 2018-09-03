@@ -41,6 +41,7 @@ export class AccountPage {
     tickers = {}
     base : string
     domains: any = []
+    whitelist: any = []
 
     private syncinterval: any;
 
@@ -81,6 +82,11 @@ export class AccountPage {
                     this.initialize()
                 else
                     this.nav.setRoot("LoginPage")
+            })
+
+        this.mvs.getWhitelist()
+            .then((whitelist) => {
+                this.whitelist = whitelist;
             })
     }
 

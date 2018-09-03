@@ -366,7 +366,6 @@
 
   "HELP.BOUNTY_FEE": "您可以选择如何在矿工和社区开发者之间分配费用，这不会影响你支付的交易费用。给予开发者的最高费用占比为80%。",
 
-
   "SETTINGS.PLUGINS": "插件",
   "SETTINGS.PLUGINS_TEXT": "添加第三方扩展信息到钱包",
 
@@ -472,6 +471,16 @@
   "ETHEREUM_ADDRESS": "以太坊钱包地址",
   "HELP.ETH_ADDRESS": "以太坊钱包地址，用于接收置换后的以太坊 ERC20 代币。",
   "SWAP.NOTICE_SWAP_FEE": "将元界 MST 资产置换回以太坊 ERC20 代币将花费额外 1 ETP 作为置换费用，该费用被用作将以太坊 ERC20 代币发送到您提供的以太坊钱包地址交易的 gas 手续费。",
-  "SWAP": "置换"
+  "SWAP": "置换",
+
+  "EXPORT_CSV": "导出为 CSV",
+  "DOWNLOAD_CSV_EXAMPLE": "下载 CSV 样例",
+
+  "PENDING_CONFIRMATION": "待确认",
+  "COMPATIBLE_MST_LIST": "可置换的 MST",
+  "SWAP_MST.LIST_TITLE": "可置换为以太坊资产的 MST 列表",
+  "SWAP_MST.LIST_EXPLAIN": "请在列表中查询可置换为以太坊资产的 MST：",
+  "ETH_TO_MVS.DO_ONLY_ONCE": "请注意该操作只需进行一次。",
+  "ETH_TO_MVS.SWAP_CENTER_ADDRESS": "元界资产置换的以太坊地址:"
 
 }

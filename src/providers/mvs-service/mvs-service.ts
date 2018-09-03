@@ -620,10 +620,37 @@ export class MvsServiceProvider {
         return Metaverse.message.size(message)
     }
 
+    getWhitelist() {
+        return this.storage.get('eth_swap')
+            .then((eth_swap) => {
+                let current_time = new Date();
+                if (eth_swap == undefined || eth_swap.whitelist == undefined || eth_swap.last_update == undefined || current_time.getTime() - eth_swap.last_update.getTime() > 3600000) {
+                    return this.blockchain.bridge.whitelist()
+                        .then((whitelist) => {
+                            this.setWhitelist(whitelist, current_time)
+                            return whitelist
+                        })
+                } else {
+                    return eth_swap.whitelist
+                }
+            })
+            .catch((error) => {
+                console.error(error)
+                throw Error('ERR_GET_WHITELIST')
+            })
+    }
+
+    setWhitelist(whitelist, current_time) {
+        var eth_swap = {};
+        eth_swap['whitelist'] = whitelist
+        eth_swap['last_update'] = current_time
+        return this.storage.set('eth_swap', eth_swap)
+    }
+
     getBlocktime(current_height) {
         return this.storage.get('blocktime')
             .then((blocktime) => {
-                if (blocktime == undefined || blocktime.height == undefined || blocktime.height == undefined || current_height > blocktime.height + 1000) {
+                if (blocktime == undefined || blocktime.height == undefined || current_height > blocktime.height + 1000) {
                     return this.blockchain.block.blocktime(1000)
                         .then((time) => {
                             this.setBlocktime(time, current_height)
