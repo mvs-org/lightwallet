@@ -21,11 +21,13 @@
     <h4 align="center">{{"SWAP.NOTICE_SWAP_FEE"|translate}}</h4>
     <form #sendForm="ngForm" style="padding-bottom: 0;">
         <ion-list style="padding-bottom: 0;">
+
             <ion-item class="valid-border">
                 <ion-label color="primary" floating>{{"RECIPIENT_AVATAR"|translate}}</ion-label>
                 <ion-input #recipientAvatarInput name="recipient_avatar" [(ngModel)]="recipient_avatar" required disabled></ion-input>
             </ion-item>
             <div no-lines class="advice" [translate]="'HELP.ETH_SWAP_RECIPIENT'" [translateParams]="{crosschain_avatar: globals.crosschain_avatar}"></div>
+
             <ion-item [ngClass]="{'error-border':!validQuantity(quantity)}">
                 <ion-label color="primary" floating>{{"AMOUNT" | translate}}</ion-label>
                 <ion-input #quantityInput name="quantity" type="number" min="0" [(ngModel)]="quantity" required></ion-input>
@@ -33,11 +35,14 @@
                     {{"SEND_ALL_BUTTON"|translate}}
                 </button>
             </ion-item>
+
             <ion-item [ngClass]="{'error-border': !validEthereumAddress(eth_address)}">
                 <ion-label color="primary" floating>{{"ETHEREUM_ADDRESS" | translate}}</ion-label>
                 <ion-input name="eth_address" type="eth_address" [(ngModel)]="eth_address" required></ion-input>
             </ion-item>
             <div no-lines class="advice" [translate]="'HELP.ETH_ADDRESS'"></div>
+            <ion-item *ngIf="eth_address && eth_address.length != 0 && !validEthereumAddress(eth_address)" no-lines class="wrong-input">{{"SWAP_MST.INCORRECT_ETH_ADDRESS" | translate}}</ion-item>
+
             <ion-item [ngClass]="{'error-border': !validPassword(passphrase)}">
                 <ion-label color="primary" floating>{{"PASSWORD" | translate}}</ion-label>
                 <ion-input name="passphrase" type="password" [(ngModel)]="passphrase" required></ion-input>

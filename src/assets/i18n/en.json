@@ -481,6 +481,8 @@
     "SWAP_MST.LIST_TITLE": "List of MST compatible with Ethereum swap",
     "SWAP_MST.LIST_EXPLAIN": "Please find below the full list of MST that can be swapped to their equivalent Ethereum token:",
     "ETH_TO_MVS.DO_ONLY_ONCE": "Please note this process only has to be done once.",
-    "ETH_TO_MVS.SWAP_CENTER_ADDRESS": "Metaverse swap center on Ethereum:"
+    "ETH_TO_MVS.SWAP_CENTER_ADDRESS": "Metaverse swap center on Ethereum:",
+
+    "SWAP_MST.INCORRECT_ETH_ADDRESS": "Incorrect Ethereum address. Please double check the address"
 
 }

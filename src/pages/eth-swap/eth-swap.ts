@@ -141,6 +141,7 @@ export class EthSwapPage {
                 if(this.message) {
                     messages.push(this.message)
                 }
+                this.eth_address = this.eth_address.trim();
                 let eth_message = '{\"type\":\"ETH\",\"address\":\"' + this.eth_address + '\"}';
                 messages.push(eth_message)
                 return this.mvs.createSendSwapTx(
@@ -212,6 +213,6 @@ export class EthSwapPage {
 
     validMessageLength = (message) => this.mvs.verifyMessageSize(message) < 253
 
-    validEthereumAddress = (address) => (address != undefined && address != '')
+    validEthereumAddress = (address) => (address != undefined && address != '' && address.charAt(0) == '0' && address.charAt(1) == 'x' && address.trim().length == 42)
 
 }
