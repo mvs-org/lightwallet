@@ -8,7 +8,7 @@ page-eth-bridge {
     }
     h4 {
         padding-top: 10px;
-        font-size: 1.6rem;
+        font-size: 1.8rem;
     }
 
     ion-card-content {
@@ -19,13 +19,7 @@ page-eth-bridge {
         width:100%;
         border: 0px !important;
         resize: none;
-    }
-
-    #copy {
-        width: calc(100% - 10px);
-        border: 0;
-        border-radius: 0;
-        background: transparent;
+        font-size: 1.8rem;
     }
 
     .mstSwap {

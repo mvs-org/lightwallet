@@ -36,8 +36,8 @@
             </ion-item>
             <ion-card-content *ngIf="data">
                 <h4>{{"ETH_TO_MVS.DATA"|translate}}:</h4>
-                <textarea fz-elastic ion-input full type="text" #copy id="copy" value="{{data}}" style="" readonly>{{data}}</textarea>
-                <button ion-button full item-right icon-left [ngxClipboard]="copy">
+                <textarea fz-elastic ion-input full type="text" #copyData value="{{data}}" style="" readonly>{{data}}</textarea>
+                <button col-sm-12 col-md-6 col-lg-3 ion-button full item-right icon-left [ngxClipboard]="copyData">
                     <ion-icon name="copy"></ion-icon>
                     {{'COPY'|translate}}
                 </button>
@@ -50,13 +50,21 @@
         <p>{{"ETH_TO_MVS.STEP3_EXPLAIN" | translate}}</p>
         <ion-card-content>
             <h4>{{"ETH_TO_MVS.ETPMAP_CONTRACT_ADDRESS" | translate}}</h4>
-            <h4 class="manual-copy">{{ETPMap}}</h4>
+            <textarea fz-elastic ion-input full type="text" #copyETPMap value="{{ETPMap}}" readonly>{{ETPMap}}</textarea>
+            <button col-sm-12 col-md-6 col-lg-3 ion-button full item-right icon-left [ngxClipboard]="copyETPMap">
+                <ion-icon name="copy"></ion-icon>
+                {{'COPY'|translate}}
+            </button>
         </ion-card-content>
         <h2>{{"ETH_TO_MVS.STEP4_TITLE" | translate}}</h2>
         <p>{{"ETH_TO_MVS.STEP4_EXPLAIN" | translate}}</p>
         <ion-card-content>
             <h4>{{"ETH_TO_MVS.SWAP_CENTER_ADDRESS" | translate}}</h4>
-            <h4 class="manual-copy">{{SwapAddress}}</h4>
+            <textarea fz-elastic ion-input full type="text" #copySwapAddress value="{{SwapAddress}}" readonly>{{SwapAddress}}</textarea>
+            <button col-sm-12 col-md-6 col-lg-3 ion-button full item-right icon-left [ngxClipboard]="copySwapAddress">
+                <ion-icon name="copy"></ion-icon>
+                {{'COPY'|translate}}
+            </button>
         </ion-card-content>
         <br>
         <p>{{"ETH_TO_MVS.UPDATE_ADDRESS" | translate}}</p>
