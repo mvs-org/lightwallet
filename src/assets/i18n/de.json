@@ -460,7 +460,7 @@
     "ETH_TO_MVS.UPDATE_ADDRESS": "Die Metaverse Verknüpfung kann jederzeit geändert werden indem du die Schritte von Schritt 1 an wiederholst. Die letzte bekannte Adresse wird verwendet.",
     "MVS_TO_ETH.LINK_ADDRESSES_TITLE": "Austausch von Metaverse zu Ethereum",
     "MVS_TO_ETH.LINK_ADDRESSES_EXPLAIN": "Du kannst auch kompatible MST vom Metaverse an eine Ethereum Adresse senden.",
-    "MVS_TO_ETH.STEP1_TITLE": "Schritt 1: Besitze ein Kompatibles MST",
+    "MVS_TO_ETH.STEP1_TITLE": "Schritt 1: Besitze ein kompatibles MST",
     "MVS_TO_ETH.STEP1_EXPLAIN": "Du kannst die MST, die einen Ethereum Austausch unterstützen an dem \"Swap\" Knopf auf der Portfolio Seite des Wallets. Nur die unterstützten MST haben diese Option.",
     "MVS_TO_ETH.STEP2_TITLE": "Schritt 2: Swap deine MST",
     "MVS_TO_ETH.STEP2_EXPLAIN": "Nach einen Klick auf Swap kannst du deine MST an das Ethereum Netzwerk übertragen. Als Empfänger der Metaverse Transaktion wird ein crosschain Avatar verwendet.",
