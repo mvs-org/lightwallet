@@ -453,10 +453,10 @@
     "ETH_TO_MVS.STEP2_TITLE": "Schritt 2: Ethereum wallet",
     "ETH_TO_MVS.STEP2_EXPLAIN": "Im nächsten Schritt benötigst du dein Ethereum Wallet. Dieses Wallet muss beim Senden einer Transaktion die Möglichkeit haben, Daten hinzuzufügen (z.B. myetherwallet oder imToken).",
     "ETH_TO_MVS.STEP3_TITLE": "Schritt 3: Ethereum Transaktion",
-    "ETH_TO_MVS.STEP3_EXPLAIN": "Sende nun eine Transaktion an die Metaverse ETPMap Smart Contract Adresse auf Ethereum. Es ist sehr wichtig, den Daten Code der Transaktion hinzuzufügen! Es muss kein Ether gesendet werden aber genug Gas für die Ausführung deiner Transaktion im Ethereum Netzwerk.",
-    "ETH_TO_MVS.ETPMAP_CONTRACT_ADDRESS": "ETPMap Contract Addresse auf Ethereum:",
+    "ETH_TO_MVS.STEP3_EXPLAIN": "Sende nun eine Transaktion an die Metaverse Smart Contract Adresse auf Ethereum. Es ist sehr wichtig, den Daten Code der Transaktion hinzuzufügen! Es muss kein Ether gesendet werden aber genug Gas für die Ausführung deiner Transaktion im Ethereum Netzwerk.",
+    "ETH_TO_MVS.ETPMAP_CONTRACT_ADDRESS": "Smart Contract Addresse auf Ethereum:",
     "ETH_TO_MVS.STEP4_TITLE": "Schritt 4: Ethereum und Metaverse Adressen sind nun verbunden!",
-    "ETH_TO_MVS.STEP4_EXPLAIN": "Deine Ethereum Adresse ist nun mit deinem Metaverse Avatar oder Adresse verbunden! Nun kannst du unterstützte ERC20 Token mit Metaverse austauschen indem du sie an die ETPMap Contract Adresse sendest. Die entsprechende Anzahl des MST wird dann deiner Metaverse Adresse gutgeschrieben.",
+    "ETH_TO_MVS.STEP4_EXPLAIN": "Deine Ethereum Adresse ist nun mit deinem Metaverse Avatar oder Adresse verbunden! Nun kannst du unterstützte ERC20 Token mit Metaverse austauschen indem du sie an die Metaverse Spaw center Adresse sendest. Die entsprechende Anzahl des MST wird dann deiner Metaverse Adresse gutgeschrieben.",
     "ETH_TO_MVS.UPDATE_ADDRESS": "Die Metaverse Verknüpfung kann jederzeit geändert werden indem du die Schritte von Schritt 1 an wiederholst. Die letzte bekannte Adresse wird verwendet.",
     "MVS_TO_ETH.LINK_ADDRESSES_TITLE": "Austausch von Metaverse zu Ethereum",
     "MVS_TO_ETH.LINK_ADDRESSES_EXPLAIN": "Du kannst auch kompatible MST vom Metaverse an eine Ethereum Adresse senden.",
@@ -473,6 +473,15 @@
     "SWAP": "Swap",
 
     "EXPORT_CSV": "Export zu CSV",
-    "DOWNLOAD_CSV_EXAMPLE": "Download CSV Beispiel"
+    "DOWNLOAD_CSV_EXAMPLE": "Download CSV Beispiel",
+
+    "PENDING_CONFIRMATION": "Unbestätigt",
+    "COMPATIBLE_MST_LIST": "Kompatible MST",
+    "SWAP_MST.LIST_TITLE": "Liste der kompatiblen MST für den Ethereum Swap",
+    "SWAP_MST.LIST_EXPLAIN": "Dies ist die aktuelle Liste der mit dem Ethereum Swap kompatiblen MST:",
+    "ETH_TO_MVS.DO_ONLY_ONCE": "Dieser Vorgang muss nur einmal vorgenommen werden.",
+    "ETH_TO_MVS.SWAP_CENTER_ADDRESS": "Metaverse Swap center Addresse auf Ethereum:",
+
+    "SWAP_MST.INCORRECT_ETH_ADDRESS": "Ungültige Ethereum Adresse."
 
 }
