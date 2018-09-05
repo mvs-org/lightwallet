@@ -77,7 +77,7 @@
         <h2>{{"MVS_TO_ETH.STEP1_TITLE" | translate}}</h2>
         <p>{{"MVS_TO_ETH.STEP1_EXPLAIN" | translate}}</p>
         <h2>{{"MVS_TO_ETH.STEP2_TITLE" | translate}}</h2>
-        <p>{{"MVS_TO_ETH.STEP2_EXPLAIN" | translate}}</p>
+        <p [translate]="'MVS_TO_ETH.STEP2_EXPLAIN'" [translateParams]="{crosschain_avatar: globals.crosschain_avatar}"></p>
         <h2>{{"MVS_TO_ETH.STEP3_TITLE" | translate}}</h2>
         <p>{{"MVS_TO_ETH.STEP3_EXPLAIN" | translate}}</p>
         <h2>{{"SWAP_MST.LIST_TITLE"|translate}}</h2>

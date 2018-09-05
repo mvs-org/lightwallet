@@ -429,6 +429,59 @@
     "SEND_ALL_MESSAGE": "Êtes vous sûr de vouloir envoyer la totalité de votre balance disponible?",
 
     "DEPOSIT.DURATION_ESTIMATION": "Vos ETP seront bloqués pendant environ {{duration_days}} jours et {{duration_hours}} heures. Veuillez noter que cette estimation est basée sur la vitesse de génération des 1000 derniers blocs ({{blocktime}} sec.), et peut varier suivant l'évolution de la vitesse de générationon des blocs.",
-    "HISTORY.UNLOCK_APPROXIMATION_INFORMATION": "*Veuillez noter que la date 'Déposés jusqu'à' est une estimation basée sur le nombre de blocs restant the la vitesse moyenne de génération des 1000 derniers blocs. Cette date varie en fonction de la vitesse de génération des blocs."
+    "HISTORY.UNLOCK_APPROXIMATION_INFORMATION": "*Veuillez noter que la date 'Déposés jusqu'à' est une estimation basée sur le nombre de blocs restant the la vitesse moyenne de génération des 1000 derniers blocs. Cette date varie en fonction de la vitesse de génération des blocs.",
 
+    "RECIPIENT_ADDRESS_OR_AVATAR": "Destinataire Avatar ou adresse",
+    "HELP.RECIPIENT_ADDRESS_OR_AVATAR": "Vous pouvez entrer l'Avatar ou l'adresse du destinataire.",
+    "AVATAR": "Avatar",
+    "ADDRESS": "Adresse",
+
+    "INFORMATION.TITLE": "Information",
+
+    "REPORT_BUG.TEXT": "La manière la plus simple de soumettre un problème est de remplir notre formulaire.",
+    "GITHUB.FOLLOW": "Suivre les problème connus sur GitHub",
+    "GITHUB.TEXT": "Notre code et développements sont totalement open source et publiquement visible sur GitHub. Vous pouvez consulter l'avancée des problèmes connus et bien sur aussi aider à les implémenter.",
+
+    "ETH_BRIDGE": "Pont Ethereum",
+    "ETH_TO_MVS": "Ethereum -> Metaverse",
+    "MVS_TO_ETH": "Metaverse -> Ethereum",
+    "ETH_TO_MVS.SELECT_AVATAR_OR_ADDRESS": "Sélectionner votre Avatar ou adresse",
+    "ETH_TO_MVS.LINK_ADDRESSES_TITLE": "Lier vos Ethereum et Metaverse adresses pour échanger vos assets!",
+    "ETH_TO_MVS.LINK_ADDRESSES_EXPLAIN": "Vous pouvez maintenant échanger les ERC20 tokens sur Ethereum vers leur équivalent MST sur Metaverse. Ce formulaire détails étape par étape le processus pour envoyer un asset depuis Ethereum vers Metaverse. Pour échanger un asset depuis Metaverse vers Ethereum, veuillez consulter l'onglet 'Metaverse -> Ethereum' en haut de cette page.",
+    "ETH_TO_MVS.STEP1_TITLE": "Étape 1: Générez le champs Data à partir de votre Avatar ou adresse Metaverse",
+    "ETH_TO_MVS.STEP1_EXPLAIN": "La première étape consiste à générer le champs Data à partir de l'Avatar ou adresse Metaverse que vous souhaiter utiliser. La donnée générée devra ensuite utilisée afin de lier votre adresse Ethereum à l'Avatar ou adresse Metaverse sélectionnée",
+    "ETH_TO_MVS.DATA": "Data",
+    "ETH_TO_MVS.STEP2_TITLE": "Étape 2: Connectez-vous sur votre Ethereum wallet",
+    "ETH_TO_MVS.STEP2_EXPLAIN": "L'étape suivante consiste à vous connecter à votre Ethereum wallet. Vous pouvez utiliser n'importe quel wallet qui propose d'attacher le champs 'Data' à une transaction (myetherwallet, imToken etc...).",
+    "ETH_TO_MVS.STEP3_TITLE": "Étape 3: Envoyez une transaction sur Ethereum contenant le champs Data",
+    "ETH_TO_MVS.STEP3_EXPLAIN": "Enfin, envoyer une transaction à l'adresse du smart contract Metaverse sur Ethereum (adresse ci-dessous). Il est important que vous remplissiez le champs 'Data' (généralement dans le paramètres avancées) avec l'information générée à l'étape 1. Le montant de la transaction doit être 0 ETH, mais vous devez payer les frais de transaction afin de faire valider votre transaction.",
+    "ETH_TO_MVS.ETPMAP_CONTRACT_ADDRESS": "Adresse du smart contract Metaverse sur Ethereum:",
+    "ETH_TO_MVS.STEP4_TITLE": "Étape 4: Vos adresses Ethereum et Metaverse sont maintenant liées!",
+    "ETH_TO_MVS.STEP4_EXPLAIN": "L'adresse Ethereum utilisée pour envoyer la transaction est désormais liée à votre Avatar ou adresse sur Metaverse ! Vous pouvez désormais envoyer n'importe quel ERC20 compatible vers le Centre d'échange de Metaverse sur Ethereum (adresse ci-dessous), et l'équivalent MST sera envoyé sur Metaverse à votre Avatar ou adresse spécifiée à l'étape 1.",
+    "ETH_TO_MVS.UPDATE_ADDRESS": "Ce lien peut être mis à jour à n'importe quel moment en effectuant de nouveau les étapes mentionnées ici, la dernière transaction est toujours celle prise en compte.",
+    "MVS_TO_ETH.LINK_ADDRESSES_TITLE": "Convertir assets depuis Metaverse vers Ethereum!",
+    "MVS_TO_ETH.LINK_ADDRESSES_EXPLAIN": "Vous pouvez aussi convertir les MST compatibles vers leur équivalent ERC20 sur Ethereum.",
+    "MVS_TO_ETH.STEP1_TITLE": "Étape 1: Obtenez un MST compatible",
+    "MVS_TO_ETH.STEP1_EXPLAIN": "Vous pouvez identifier les MST qui peuvent être convertis vers leur équivalent ERC20 sur Ethereum grâce au boutton 'Swap' sur la page principale de votre portefeuille. Seul les MST compatible possèdent cette option 'Sapw'. Vous pouvez aussi consulter la liste complète des MST compatibles à la fin de cette page.",
+    "MVS_TO_ETH.STEP2_TITLE": "Étape 2: Échangez votre MST",
+    "MVS_TO_ETH.STEP2_EXPLAIN": "En cliquant sur le boutton 'Swap', vous pouvez facilement convertir votre MST vers son équivalent ERC20. Les seules différences par rapport à un transfer classique sur Metaverse est que le destinataire sera automatiquement l'Avatar '{{crosschain_avatar}}', et il vous sera demandé de renseigner l'adresse Ethereum qui recevra l'ERC20 sur Ethereum.",
+    "MVS_TO_ETH.STEP3_TITLE": "Étape 3: Recevez votre ERC20 sur Ethereum!",
+    "MVS_TO_ETH.STEP3_EXPLAIN": "Après avoir envoyé votre MST, il sera automatiquement convertit vers son équivalent ERC20 qui sera envoyé à l'adresse Ethereum spécifiée dans l'étape précédente. Veuillez être patient, ce processus inclu 2 transactions (une transaction sur Metaverse puis une seconde sur Ethereum) et prend donc plus de temps qu'une transaction sur une seule blockchain.",
+    "HELP.ETH_SWAP_RECIPIENT": "Le destinataire d'un swap Metaverse->Ethereum est toujours l'Avatar '{{crosschain_avatar}}'",
+    "ETHEREUM_ADDRESS": "Adresse Ethereum",
+    "HELP.ETH_ADDRESS": "Cette adresse Ethereum est celle qui recevra l'équivalent ERC20 sur Ethereum",
+    "SWAP.NOTICE_SWAP_FEE": "Veuillez noter qu'un swap depuis Metaverse vers Ethereum coûte 1 ETP supplémentaire afin de payer les frais de transaction sur Ethereum",
+    "SWAP": "Swap",
+
+    "EXPORT_CSV": "Exporter vers CSV",
+    "DOWNLOAD_CSV_EXAMPLE": "Télécharger le CSV exemple",
+
+    "PENDING_CONFIRMATION": "En attente de confirmation",
+    "COMPATIBLE_MST_LIST": "MST compatibles",
+    "SWAP_MST.LIST_TITLE": "Liste des MST qui peuvent être échangés vers leur équivelent ERC20",
+    "SWAP_MST.LIST_EXPLAIN": "Veuillez trouver ci-dessous la liste complète des MST qui peut être échangés vers leur équivelent ERC20 sur Ethereum:",
+    "ETH_TO_MVS.DO_ONLY_ONCE": "Veuillez noter que ce processus nécessite d'être réalisé qu'une seule fois.",
+    "ETH_TO_MVS.SWAP_CENTER_ADDRESS": "Centre d'échange de Metaverse sur Ethereum:",
+
+    "SWAP_MST.INCORRECT_ETH_ADDRESS": "Incorrect adresse Ethereum. Veuillez vérifier l'adresse."
 }

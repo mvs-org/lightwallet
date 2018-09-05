@@ -464,7 +464,7 @@
   "MVS_TO_ETH.STEP1_TITLE": "步骤一：拥有可置换的元界 MST",
   "MVS_TO_ETH.STEP1_EXPLAIN": "只有在可置换的元界 MST 的界面中，才会显示置换按钮。",
   "MVS_TO_ETH.STEP2_TITLE": "步骤二：置换元界 MST",
-  "MVS_TO_ETH.STEP2_EXPLAIN": "点击置换按钮，您可以像普通资产转账一样发起资产置换交易。 唯一的区别是元界 MST 接收者被指定为数字身份 'crosschain'，并需要填写接收以太坊 ERC20 代币的以太坊钱包地址。",
+  "MVS_TO_ETH.STEP2_EXPLAIN": "点击置换按钮，您可以像普通资产转账一样发起资产置换交易。 唯一的区别是元界 MST 接收者被指定为数字身份 '{{crosschain_avatar}}'，并需要填写接收以太坊 ERC20 代币的以太坊钱包地址。",
   "MVS_TO_ETH.STEP3_TITLE": "步骤三：在以太坊上确认接收 ERC20 代币",
   "MVS_TO_ETH.STEP3_EXPLAIN": "在发起资产置换交易之后，您的元界 MST 将会自动置换为以太坊 ERC20 代币，并发送到您填写的以太坊钱包地址。请耐心等待置换完成，因为置换过程涉及两笔交易：第一笔为元界区块链交易，第二笔为以太坊交易。",
   "HELP.ETH_SWAP_RECIPIENT": "在此次资产置换交易中，元界 MST 资产的接收者被指定为数字身份： '{{crosschain_avatar}}'",
