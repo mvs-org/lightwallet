@@ -37,15 +37,16 @@ export class AccountPage {
     loading: boolean
     balancesKeys: any
     theme: string
-    icons: any
+    icons: any = []
     tickers = {}
     base : string
+    domains: any = []
+    whitelist: any = []
 
     private syncinterval: any;
 
     constructor(public nav: NavController, public translate: TranslateService, private wallet: WalletServiceProvider, private mvs: MvsServiceProvider, private alert: AlertProvider, public platform: Platform, private event: Events) {
         this.loading = true;
-        this.icons = []
 
         //Reset last update time
         var lastupdate = new Date()
@@ -81,6 +82,11 @@ export class AccountPage {
                     this.initialize()
                 else
                     this.nav.setRoot("LoginPage")
+            })
+
+        this.mvs.getWhitelist()
+            .then((whitelist) => {
+                this.whitelist = whitelist;
             })
     }
 
@@ -173,7 +179,10 @@ export class AccountPage {
             })
             .then((balances) => {
                 let iconsList = this.wallet.getMstIcons()
-                balances.map((symbol) => this.icons[symbol] = iconsList.indexOf(symbol) !== -1 ? symbol : 'default_mst')
+                balances.map((symbol) => {
+                    this.icons[symbol] = iconsList.indexOf(symbol) !== -1 ? symbol : 'default_mst'
+                    this.domains[symbol] = symbol.split('.')[0]
+                })
             })
             .catch((e) => {
                 console.error(e)

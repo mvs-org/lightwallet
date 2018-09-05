@@ -1,0 +1,28 @@
+page-eth-bridge {
+    h2 {
+        margin-left: 16px;
+        padding-top: 20px;
+    }
+    p {
+        margin-left: 16px;
+    }
+    h4 {
+        padding-top: 10px;
+        font-size: 1.8rem;
+    }
+
+    ion-card-content {
+        padding-bottom: 0 !important;
+    }
+
+    textarea{
+        width:100%;
+        border: 0px !important;
+        resize: none;
+        font-size: 1.8rem;
+    }
+
+    .mstSwap {
+        padding-left: 20px;
+    }
+}

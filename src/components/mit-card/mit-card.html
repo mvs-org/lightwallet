@@ -6,10 +6,13 @@
                     <ion-avatar item-start>
                         <img class="coinlogo default-logo" [src]="'assets/icon/default_mit.png'" (error)="errorImg($event)">
                     </ion-avatar>
-                    <div>
-                        <h1 class="overflow">{{symbol}}</h1>
-                        <p>{{"OWNER"|translate}}: {{avatar}}</p>
-                    </div>
+                    <h1 class="overflow">{{symbol}}</h1>
+                    <h2 class="overflow owner">
+                        {{"OWNER"|translate}}
+                        <span class="avatar">
+                            {{avatar}}
+                        </span>
+                    </h2>
                 </ion-item>
             </ion-col>
         </ion-row>
