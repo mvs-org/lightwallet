@@ -144,6 +144,6 @@ export class CreateAvatarPage {
 
     validAddress = (avatar_address) => (avatar_address != '')
 
-    validSymbol = (symbol) => (symbol.length > 2) && (symbol.length < 64) && (!/[^A-Za-z0-9.-]/g.test(symbol)) && (this.list_all_avatars.indexOf(symbol) == -1)
+    validSymbol = (symbol) => (symbol.length > 2) && (symbol.length < 64) && (!/[^A-Za-z0-9@_.-]/g.test(symbol)) && (this.list_all_avatars.indexOf(symbol) == -1)
 
 }

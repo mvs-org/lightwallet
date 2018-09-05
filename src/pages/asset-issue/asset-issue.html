@@ -116,14 +116,6 @@
 
             <div *ngIf="showAdvanced">
                 <br>
-                <ion-item>
-                    <ion-label>{{"ISSUE.FEE_ADDRESS"|translate}}</ion-label>
-                    <ion-select [(ngModel)]="sendFrom" name="sendfrom" multiple="false" okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}">
-                        <ion-option selected="true" value="auto">{{"AUTO"| translate}}</ion-option>
-                        <ion-option *ngFor="let addressbalance of myaddressbalances" value="{{addressbalance.address}}">{{addressbalance.address}} - {{addressbalance.balance | format : decimals }} {{selectedAsset}}</ion-option>
-                    </ion-select>
-                </ion-item>
-                <br/>
                 <ion-item no-lines>
                     <ion-label color="primary">{{"TRANSFER_FEE_DISTRIBUTION" | translate}}</ion-label>
                 </ion-item>

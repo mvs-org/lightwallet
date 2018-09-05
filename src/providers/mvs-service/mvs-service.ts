@@ -80,6 +80,28 @@ export class MvsServiceProvider {
             })
     }
 
+    createSendSwapTx(passphrase: string, asset: string, recipient_address: string, recipient_avatar: string, quantity: number, from_address: string, change_address: string, fee: number, messages: Array<string>, swap_fee: number) {
+        let target = {};
+        target[asset] = quantity;
+        return this.wallet.getWallet(passphrase)
+            .then(wallet => this.getUtxoFrom(from_address)
+                .then((utxo) => this.getHeight().then(height => Metaverse.output.findUtxo(utxo, target, height, fee + swap_fee)))
+                .then((result) => {
+                    if (result.utxo.length > 676) {
+                        throw Error('ERR_TOO_MANY_INPUTS');
+                    }
+                    //Set change address to first utxo's address
+                    if (change_address == undefined)
+                        change_address = result.utxo[0].address;
+                    return Metaverse.transaction_builder.sendSwap(result.utxo, recipient_address, recipient_avatar, target, change_address, result.change, undefined, fee, this.globals.network, messages, swap_fee);
+                })
+                .then((tx) => wallet.sign(tx)))
+            .catch((error) => {
+                console.error(error)
+                throw Error(error.message);
+            })
+    }
+
     createDepositTx(passphrase: string, recipient_address: string, quantity: number, locktime: number, from_address: string, change_address: string, fee: number, messages: Array<string>) {
         let target = { ETP: quantity };
         return this.wallet.getWallet(passphrase)
@@ -158,8 +180,8 @@ export class MvsServiceProvider {
             })
     }
 
-    createIssueAssetTx(passphrase: string, symbol: string, quantity: number, precision: number, issuer: string, description: string, secondaryissue_threshold: number, is_secondaryissue: boolean, issue_address: string, fee_address: string, change_address: string, create_new_domain_cert: boolean, use_naming_cert: boolean, bounty_fee: number) {
-        return ((fee_address) ? this.getUtxoFrom(fee_address) : this.getUtxo())
+    createIssueAssetTx(passphrase: string, symbol: string, quantity: number, precision: number, issuer: string, description: string, secondaryissue_threshold: number, is_secondaryissue: boolean, issue_address: string, change_address: string, create_new_domain_cert: boolean, use_naming_cert: boolean, bounty_fee: number) {
+        return this.getUtxoFrom(issue_address)
             .then(utxo => {
                 return this.wallet.getWallet(passphrase)
                     .then((wallet) => {
@@ -578,6 +600,14 @@ export class MvsServiceProvider {
         return this.blockchain.transaction.broadcast(rawtx)
     }
 
+    suggestAvatar(prefix) {
+        return this.blockchain.suggest.avatar(prefix)
+    }
+
+    suggestAddress(prefix) {
+        return this.blockchain.suggest.address(prefix)
+    }
+
     getdictionary(lang) {
         return Metaverse.wallet.wordlists[lang]
     }
@@ -590,10 +620,37 @@ export class MvsServiceProvider {
         return Metaverse.message.size(message)
     }
 
+    getWhitelist() {
+        return this.storage.get('eth_swap')
+            .then((eth_swap) => {
+                let current_time = new Date();
+                if (eth_swap == undefined || eth_swap.whitelist == undefined || eth_swap.last_update == undefined || current_time.getTime() - eth_swap.last_update.getTime() > 3600000) {
+                    return this.blockchain.bridge.whitelist()
+                        .then((whitelist) => {
+                            this.setWhitelist(whitelist, current_time)
+                            return whitelist
+                        })
+                } else {
+                    return eth_swap.whitelist
+                }
+            })
+            .catch((error) => {
+                console.error(error)
+                throw Error('ERR_GET_WHITELIST')
+            })
+    }
+
+    setWhitelist(whitelist, current_time) {
+        var eth_swap = {};
+        eth_swap['whitelist'] = whitelist
+        eth_swap['last_update'] = current_time
+        return this.storage.set('eth_swap', eth_swap)
+    }
+
     getBlocktime(current_height) {
         return this.storage.get('blocktime')
             .then((blocktime) => {
-                if (blocktime == undefined || blocktime.height == undefined || blocktime.height == undefined || current_height > blocktime.height + 1000) {
+                if (blocktime == undefined || blocktime.height == undefined || current_height > blocktime.height + 1000) {
                     return this.blockchain.block.blocktime(1000)
                         .then((time) => {
                             this.setBlocktime(time, current_height)

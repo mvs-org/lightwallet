@@ -95,11 +95,11 @@ export class AssetTransferPage {
                             Object.keys(addressbalances).forEach((address) => {
                                 if (this.selectedAsset == 'ETP') {
                                     if (addressbalances[address].ETP.available > 0) {
-                                        addrblncs.push({ "address": address, "balance": addressbalances[address].ETP.available })
+                                        addrblncs.push({ "address": address, "avatar": addressbalances[address].AVATAR ? addressbalances[address].AVATAR : "", "identifier": addressbalances[address].AVATAR ? addressbalances[address].AVATAR : address, "balance": addressbalances[address].ETP.available })
                                     }
                                 } else {
                                     if (addressbalances[address].MST[this.selectedAsset] && addressbalances[address].MST[this.selectedAsset].available) {
-                                        addrblncs.push({ "address": address, "balance": addressbalances[address].MST[this.selectedAsset].available })
+                                        addrblncs.push({ "address": address, "avatar": addressbalances[address].AVATAR ? addressbalances[address].AVATAR : "", "identifier": addressbalances[address].AVATAR ? addressbalances[address].AVATAR : address, "balance": addressbalances[address].MST[this.selectedAsset].available })
                                     }
                                 }
                             })
@@ -443,6 +443,12 @@ export class AssetTransferPage {
             line += '\n'
             text += line
         })
+        this.downloadFile(filename, text)
+    }
+
+    csvExample() {
+        var text = 'MAwLwVGwJyFsTBfNj2j5nCUrQXGVRvHzPh,2\nMEWdqvhETJex22kBbYDSD999Vs4xFwQ4fo,2';
+        var filename = 'mvs_example.csv'
         this.downloadFile(filename, text)
     }
 

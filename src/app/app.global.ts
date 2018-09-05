@@ -4,7 +4,11 @@ import { Storage } from '@ionic/storage';
 
 @Injectable()
 export class AppGlobals {
+<<<<<<< HEAD
     readonly version: string = '0.4.4';
+=======
+    readonly version: string = '0.5.1';
+>>>>>>> dev
     readonly db_version = 4;
     readonly name: string = 'Supernova';
     readonly algo: string = 'aes';
@@ -13,6 +17,9 @@ export class AppGlobals {
     readonly ADDRESS_PREFIX_MAINNET = 'M'
     readonly ADDRESS_PREFIX_P2SH = '3'
     readonly ADDRESS_PREFIX_TESTNET = 't'
+    readonly ETPMap = '0xa52b0a032139e6303b86cfeb0bb9ae780a610354';
+    readonly SwapAddress = '0xc1e5fd24fa2b4a3581335fc3f2850f717dd09c86';
+    readonly crosschain_avatar = 'droplet'
 
     readonly DEFAULT_NETWORK = 'mainnet'
 

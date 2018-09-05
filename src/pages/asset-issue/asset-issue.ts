@@ -22,7 +22,6 @@ export class AssetIssuePage {
     passcodeSet: any
     addressbalances: Array<any>
     myaddressbalances: Array<any>
-    sendFrom: string
     secondaryissue: boolean
     secondaryissue_threshold: number;
     feeAddress: string
@@ -61,7 +60,6 @@ export class AssetIssuePage {
         private translate: TranslateService) {
 
         this.selectedAsset = "ETP"
-        this.sendFrom = 'auto'
         this.feeAddress = 'auto'
         this.max_supply = ''
         this.custom_max_supply = ''
@@ -131,18 +129,6 @@ export class AssetIssuePage {
             .catch(console.error);
     }
 
-    onFromAddressChange(event) {
-        if (this.sendFrom == 'auto') {
-            this.showBalance = this.balance
-        } else {
-            if (this.addressbalances.length)
-                this.addressbalances.forEach((addressbalance) => {
-                    if (addressbalance.address == this.sendFrom)
-                        this.showBalance = addressbalance.balance
-                })
-        }
-    }
-
     onSendToAddressChange(event) {
 
     }
@@ -195,7 +181,6 @@ export class AssetIssuePage {
                 (this.secondaryissue) ? (this.secondaryissue_threshold == 0) ? -1 : this.secondaryissue_threshold : 0,
                 false,
                 this.issue_address,
-                (this.sendFrom != 'auto') ? this.sendFrom : null,
                 undefined,
                 (this.symbol_check == "available"),
                 (this.symbol_check == "naming_owner"),
