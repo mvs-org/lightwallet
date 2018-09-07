@@ -137,14 +137,14 @@ mst-card {
     .fiat {
         color: grey;
     }
-
+    
     .balances {
-        display: inline-block;
+        display: inline-table;
         width: auto;
     }
 
     .balance-text {
-        margin-right: 47px;
+        margin-right: 10px;
     }
 
     .balance-field {
@@ -154,6 +154,10 @@ mst-card {
 
     .symbol {
         padding-bottom: 5px;
+    }
+
+    .frozen-balance {
+        height: 19px;
     }
 
     .swap-buton {

@@ -13,9 +13,7 @@
                         </div>
                         <div class="balance-field">
                             {{"ACCOUNT.FROZEN"|translate}}
-                            <button ion-button clear color="primary" icon-left (click)="gotoDeposit()" class="deposit-button"><ion-icon name="log-in"></ion-icon></button>
                         </div>
-                        <br>
                     </h2>
                     <h2 class="balances">
                         <div class="balance-field">
@@ -25,12 +23,14 @@
                             </div>
                         </div>
                         <div class="balance-field">
-                            <div>{{balance.frozen | format : balance.decimals}}</div>
+                            <div class="frozen-balance">
+                                {{balance.frozen | format : balance.decimals}}
+                                <button ion-button clear color="primary" icon-left (click)="gotoDeposit()" class="deposit-button"><ion-icon name="log-in"></ion-icon></button>
+                            </div>
                             <div *ngIf="tickers!==undefined" class="fiat">
                                 ≈{{base}} {{(balance.frozen)/100000000*tickers[base].price | number : '1.0-2'}}
                             </div>
                         </div>
-                        <br>
                     </h2>
                 </ion-item>
             </ion-col>

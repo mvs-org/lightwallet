@@ -134,7 +134,7 @@ etp-card {
     }
 
     .balances {
-        display: inline-block;
+        display: inline-table;
         width: auto;
     }
 
@@ -149,6 +149,10 @@ etp-card {
 
     .symbol {
         padding-bottom: 5px;
+    }
+
+    .frozen-balance {
+        height: 19px;
     }
 
 }
