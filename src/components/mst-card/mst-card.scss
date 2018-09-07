@@ -109,7 +109,6 @@ mst-card {
       padding-top: 10px;
       padding-left: 0px;
       padding-right: 0px;
-      padding-bottom: 80px;
     }
 
     .offlineIcon {
@@ -137,7 +136,7 @@ mst-card {
     .fiat {
         color: grey;
     }
-    
+
     .balances {
         display: inline-table;
         width: auto;
@@ -148,8 +147,7 @@ mst-card {
     }
 
     .balance-field {
-        height: 40px;
-        top: 0;
+        height: 45px;
     }
 
     .symbol {
