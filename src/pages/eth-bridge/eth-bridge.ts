@@ -33,31 +33,21 @@ export class EthBridgePage {
         this.ETPMap = this.globals.ETPMap;
         this.SwapAddress = this.globals.SwapAddress;
 
-        //Load addresses
-        mvs.getAddresses()
-            .then((_: Array<string>) => {
-                this.addresses = _
-            })
-
-        //Load balances
-        mvs.getBalances()
+        //Load addresses and balances
+        Promise.all([this.mvs.getAddresses(), this.mvs.getAddressBalances()])
             .then((balances) => {
-                let balance = balances.ETP
-                this.balance = (balance && balance.available) ? balance.available : 0
-                this.etpBalance = balances.ETP.available
-                this.showBalance = this.balance
-                return this.mvs.getAddressBalances()
-                    .then((addressbalances) => {
-                        let addrblncs = []
-                        if (Object.keys(addressbalances).length) {
-                            Object.keys(addressbalances).forEach((address) => {
-                                if (addressbalances[address].ETP.available > 0) {
-                                    addrblncs.push({ "address": address, "avatar": addressbalances[address].AVATAR ? addressbalances[address].AVATAR : "", "identifier": addressbalances[address].AVATAR ? addressbalances[address].AVATAR : address, "balance": addressbalances[address].ETP.available })
-                                }
-                            })
-                        }
-                        this.addressbalances = addrblncs
-                    })
+                let addresses = balances[0]
+                let addressbalances = balances[1]
+                let addrblncs = []
+                Object.keys(addresses).forEach((index) => {
+                    let address = addresses[index]
+                    if (addressbalances[address]) {
+                        addrblncs.push({ "address": address, "avatar": addressbalances[address].AVATAR ? addressbalances[address].AVATAR : "", "identifier": addressbalances[address].AVATAR ? addressbalances[address].AVATAR : address, "balance": addressbalances[address].ETP.available })
+                    } else {
+                        addrblncs.push({ "address": address, "avatar": "", "identifier": address, "balance": 0 })
+                    }
+                })
+                this.addressbalances = addrblncs
             })
 
         this.mvs.getWhitelist()
