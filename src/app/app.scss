@@ -35,6 +35,10 @@
     color: red;
 }
 
+.warning{
+    color: orange;
+}
+
 .item.item-select:not(.error-border):not(.no-color-border) .item-inner .ng-valid .item-cover{
     border-bottom-color: #32db64 !important;
     -webkit-box-shadow: inset 0 -1px 0 0 #32db64 !important;
@@ -74,6 +78,13 @@
     user-select: text;
 }
 
+.manual-copy {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+}
+
 .valid-input ion-label, .wrong-input ion-label, .info-input ion-label{
     text-overflow: initial;
     white-space: initial;
@@ -88,6 +99,15 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+}
+
+.info-input {
+    min-height: 0;
+}
+
+.info-input ion-label {
+    margin-top: 10px;
+    margin-bottom: 0;
 }
 
 
@@ -192,7 +212,7 @@
     }
 
     .progress-inner {
-        color: white;
+        color: #202020;
     }
 
     .alert-md{
@@ -348,7 +368,7 @@
     }
 
     .progress-inner {
-        color: white;
+        color: #073642;
     }
 
     .alert-md{

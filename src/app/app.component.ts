@@ -128,11 +128,12 @@ export class MyETPWallet {
                     { title: 'AVATARS', component: "AvatarsPage", icon: 'person' },
                     { title: 'REGISTER_MST', component: "AssetIssuePage", icon: 'globe' },
                     { title: 'REGISTER_MIT', component: "MITRegisterPage", icon: 'create' },
+                    { title: 'ETH_BRIDGE', component: "EthBridgePage", icon: 'swap' },
                     { title: 'LANGUAGE_SETTINGS', component: "LanguageSwitcherPage", icon: 'flag' },
                     { title: 'THEME_SETTINGS', component: "ThemeSwitcherPage", icon: 'color-palette' },
                     { title: 'SETTINGS', component: "SettingsPage", icon: 'settings' },
-                    { title: 'REPORT_BUG', newtab: 'https://github.com/mvs-org/lightwallet/issues', icon: 'bug' },
-                    { title: 'INFORMATION', component: "InformationPage", icon: 'information-circle' }
+                    { title: 'REPORT_BUG', component: "ReportPage", icon: 'bug' },
+                    { title: 'INFORMATION.TITLE', component: "InformationPage", icon: 'information-circle' }
                 ].concat(plugins).map((entry) => this.addToMenu(entry)))
             });
     }

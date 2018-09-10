@@ -112,10 +112,6 @@ mit-card {
       padding-bottom: 80px;
     }
 
-    .asset-container {
-      height: 200px;
-    }
-
     .offlineIcon {
       color: red;
       padding-right: 10px;
@@ -136,5 +132,17 @@ mit-card {
       box-shadow: 0px 0px 4px 1px;
       color: rgba(255, 255, 255, 0.6);
       background-color: rgba(255, 255, 255, 0.6);
+    }
+
+    .avatar {
+        float: right;
+    }
+
+    .owner {
+        padding-top: 5px;
+    }
+
+    .grid-info {
+        padding-top: 20px;
     }
 }
