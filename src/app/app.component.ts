@@ -129,6 +129,7 @@ export class MyETPWallet {
                     { title: 'REGISTER_MST', component: "AssetIssuePage", icon: 'globe' },
                     { title: 'REGISTER_MIT', component: "MITRegisterPage", icon: 'create' },
                     { title: 'ETH_BRIDGE', component: "EthBridgePage", icon: 'swap' },
+                    { title: 'MULTISIGNATURE', component: "MultisignaturePage", icon: 'people' },
                     { title: 'LANGUAGE_SETTINGS', component: "LanguageSwitcherPage", icon: 'flag' },
                     { title: 'THEME_SETTINGS', component: "ThemeSwitcherPage", icon: 'color-palette' },
                     { title: 'SETTINGS', component: "SettingsPage", icon: 'settings' },

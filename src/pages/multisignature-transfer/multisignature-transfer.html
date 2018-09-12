@@ -1,0 +1,24 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+        <ion-title>{{ "MULTISIGNATURE_TRANSFER" | translate}}</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding style="padding-bottom: 0;">
+    <ion-item no-lines>
+        <ion-segment [(ngModel)]="transfer_type" color="primary">
+            <ion-segment-button value="one">
+                {{ "SEND_TO_ONE" | translate}}
+            </ion-segment-button>
+            <ion-segment-button value="more">
+                {{ "SEND_MORE" | translate}}
+            </ion-segment-button>
+        </ion-segment>
+    </ion-item>
+
+
+
+</ion-content>

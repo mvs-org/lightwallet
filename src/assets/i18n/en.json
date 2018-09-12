@@ -483,6 +483,15 @@
     "ETH_TO_MVS.DO_ONLY_ONCE": "Please note this process only has to be done once.",
     "ETH_TO_MVS.SWAP_CENTER_ADDRESS": "Metaverse swap center on Ethereum:",
 
-    "SWAP_MST.INCORRECT_ETH_ADDRESS": "Incorrect Ethereum address. Please double check the address"
+    "SWAP_MST.INCORRECT_ETH_ADDRESS": "Incorrect Ethereum address. Please double check the address",
+
+    "MULTISIGNATURE": "Multisignature",
+    "MULTISIGNATURE.INFORMATION": "You can use multisignature addresses in order to share a multisignature address with other account. This address will require the signature of a defined number of members in order to do a transaction.",
+    "MULTISIGNATURE.NO_ADDRESS": "You do not have any multisignature address yet. Create one by clicking on 'Create multisignature address'!",
+    "MULTISIGNATURE.ADD_ADDRESS": "Add multisignature address",
+    "MULTISIGNATURE_ADD.NEW": "New address",
+    "MULTISIGNATURE_ADD.EXISTING": "Existing address",
+    "MULTISIGNATURE_ADD": "Add multisignature address",
+    "MULTISIGNATURE_ADD.GET_PUBLICKEY": "Get public key"
 
 }

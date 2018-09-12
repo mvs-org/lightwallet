@@ -1,0 +1,58 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+        <ion-title>{{ "MULTISIGNATURE_ADD" | translate}}</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding style="padding-bottom: 0;">
+    <ion-item no-lines>
+        <ion-segment [(ngModel)]="creation_type" color="primary">
+            <ion-segment-button value="new">
+                {{ "MULTISIGNATURE_ADD.NEW" | translate}}
+            </ion-segment-button>
+            <ion-segment-button value="existing">
+                {{ "MULTISIGNATURE_ADD.EXISTING" | translate}}
+            </ion-segment-button>
+        </ion-segment>
+    </ion-item>
+
+    <form *ngIf="creation_type == 'new'" #newAddressForm="ngForm">
+        <ion-list>
+            <ion-item [ngClass]="{'error-border': !validAddress(address)}">
+                <ion-label>{{"ETH_TO_MVS.SELECT_AVATAR_OR_ADDRESS"|translate}}</ion-label>
+                <ion-select [(ngModel)]="address" name="address" multiple="false" okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}">
+                    <ion-option *ngFor="let addressbalance of addressbalances" value="{{addressbalance.address}}">{{addressbalance.identifier}} - {{addressbalance.balance | format : 8}} ETP</ion-option>
+                </ion-select>
+            </ion-item>
+            <ion-item [ngClass]="{'error-border': !validPassword(passphrase)}">
+                <ion-label color="primary" floating>{{"PASSWORD" | translate}}</ion-label>
+                <ion-input name="passphrase" type="password" [(ngModel)]="passphrase" required></ion-input>
+            </ion-item>
+            <br>
+        </ion-list>
+        <ion-row class="padding-bottom">
+            <ion-col>
+                <button type="submit" ion-button full icon-left (click)="getPublicKey(address)" [disabled]="!validPassword(passphrase)||!validAddress(address)" color="secondary">
+                    <ion-icon disabled="checked" name="send"></ion-icon>
+                    {{"MULTISIGNATURE_ADD.GET_PUBLICKEY" | translate}}
+                </button>
+            </ion-col>
+            <ion-col>
+                <button ion-button color="danger" full item-right icon-left (click)="cancel($event)">
+                    <ion-icon name="cancel"></ion-icon>
+                    {{'CANCEL'|translate}}
+                </button>
+            </ion-col>
+        </ion-row>
+    </form>
+
+    <form *ngIf="creation_type == 'existing'" #existingAddressForm="ngForm">
+        existing
+    </form>
+
+
+
+</ion-content>

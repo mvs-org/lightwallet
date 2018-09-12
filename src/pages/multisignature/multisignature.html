@@ -1,0 +1,63 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+        <ion-title>{{ "MULTISIGNATURE" | translate}}</ion-title>
+    </ion-navbar>
+</ion-header>
+
+
+<ion-content padding style="padding-bottom: 0;">
+    <ion-row>
+        <ion-col>
+            <p align="center">{{"MULTISIGNATURE.INFORMATION" | translate}}</p>
+        </ion-col>
+    </ion-row>
+    <div class="no-address" *ngIf="no_address">{{"MULTISIGNATURE.NO_ADDRESS" | translate}}</div>
+    <ion-card class="avatar-card" *ngFor="let address of addresses">
+        <ion-grid>
+            <ion-row>
+                <ion-col col-sm-12 col-md-6>
+                    <ion-item>
+                        <ion-avatar item-start>
+                            <img class="avatar-logo" [src]="'assets/icon/default_avatar.png'">
+                        </ion-avatar>
+                        <h1>{{avatar.symbol}}</h1>
+                        <!--h1><ion-icon name="person"></ion-icon> {{avatar.symbol}}</h1-->
+                        {{avatar.address}}
+                        <!--textarea ion-input type="text" #copy value="{{avatar.address}}" readonly>{{avatar.address}}</textarea>
+                        <button ion-button item-right icon-left [ngxClipboard]="copy">
+                            <ion-icon name="copy"></ion-icon>
+                        </button-->
+                    </ion-item>
+                    <ion-item *ngIf="avatar.certs && avatar.certs.length > 0">
+                        <h2 class="certificates-title"><ion-icon name="paper"></ion-icon> {{"AVATARS.MY_CERTS" | translate}}:</h2>
+                        <ion-row *ngFor="let cert of avatar.certs">
+                            <ion-col *ngIf="cert.cert_type == 'issue'" class="cert-type">{{"AVATARS.SECONDARY_ISSUE" | translate}}</ion-col>
+                            <ion-col *ngIf="cert.cert_type == 'domain'" class="cert-type">{{"AVATARS.DOMAIN" | translate}}</ion-col>
+                            <ion-col *ngIf="cert.cert_type == 'naming'" class="cert-type">{{"AVATARS.NAMING" | translate}}</ion-col>
+                            <ion-col>{{cert.symbol}}</ion-col>
+                        </ion-row>
+                    </ion-item>
+                </ion-col>
+                <ion-col col-sm-12 col-md-6>
+                    <button class="right-buttons" ion-button clear icon-left color="primary" icon-left (click)="registerMIT(avatar.symbol, avatar.address)">
+                        <ion-icon name="add"></ion-icon>
+                        {{"REGISTER_MIT" | translate}}
+                    </button>
+                    <button class="right-buttons" ion-button clear icon-left color="danger" icon-left (click)="createAsset(avatar.symbol, avatar.address)">
+                        <ion-icon name="add"></ion-icon>
+                        {{"REGISTER_MST" | translate}}
+                    </button>
+                </ion-col>
+            </ion-row>
+
+
+        </ion-grid>
+    </ion-card>
+    <button ion-button icon-left color="primary" icon-left (click)="addAddress()" class="create-avatar-btn">
+        <ion-icon name="add"></ion-icon>
+        {{"MULTISIGNATURE.ADD_ADDRESS" | translate}}
+    </button>
+</ion-content>

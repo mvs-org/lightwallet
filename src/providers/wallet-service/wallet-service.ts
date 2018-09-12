@@ -156,4 +156,8 @@ export class WalletServiceProvider {
         return addresses;
     }
 
+    getPublicKeyByAddress(wallet: any, address: string) {
+        return wallet.findPublicKeyByAddess(address, 200);
+    }
+
 }
