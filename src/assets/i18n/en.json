@@ -492,6 +492,8 @@
     "MULTISIGNATURE_ADD.NEW": "New address",
     "MULTISIGNATURE_ADD.EXISTING": "Existing address",
     "MULTISIGNATURE_ADD": "Add multisignature address",
-    "MULTISIGNATURE_ADD.GET_PUBLICKEY": "Get public key"
+    "MULTISIGNATURE_ADD.GET_PUBLICKEY": "Get public key",
+    "GET_PUBLIC_KEY.ERROR": "Error while getting your public key",
+    "MULTISIGNATURE_ADD.PUBLICKEY": "Your public key"
 
 }

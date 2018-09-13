@@ -1,10 +1,7 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
-import { TranslateService } from '@ngx-translate/core';
-import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { AlertProvider } from '../../providers/alert/alert';
-import { Keyboard } from '@ionic-native/keyboard';
 import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
 
 @IonicPage()
@@ -19,6 +16,7 @@ export class MultisignatureAddPage {
     addresses: Array<string>
     passphrase: string = ""
     address: string = ""
+    publicKey: string = ""
 
     constructor(
         public navCtrl: NavController,
@@ -26,9 +24,6 @@ export class MultisignatureAddPage {
         private mvs: MvsServiceProvider,
         public platform: Platform,
         private alert: AlertProvider,
-        private barcodeScanner: BarcodeScanner,
-        private keyboard: Keyboard,
-        private translate: TranslateService,
         private wallet: WalletServiceProvider
     ) {
 
@@ -56,16 +51,17 @@ export class MultisignatureAddPage {
         this.navCtrl.pop()
     }
 
+    onAddressChange(event) {
+        this.publicKey = ""
+    }
+
     getPublicKey(address) {
-        /*this.alert.showLoading()
-            .then(() => {
-                console.log("Password: " + this.passphrase);
-                this.wallet.getWallet(this.passphrase)
-            })
-            .then(wallet => {
-                console.log("Got the wallet")
-                console.log(wallet)
-                console.log(this.wallet.getPublicKeyByAddress(wallet, address))
+        this.alert.showLoading()
+            .then(() => this.wallet.getWallet(this.passphrase))
+            .then(wallet => this.wallet.getPublicKeyByAddress(wallet, address))
+            .then(publicKey => {
+                this.alert.stopLoading()
+                this.publicKey = publicKey
             })
             .catch(error=>{
                 console.error(error)
@@ -75,10 +71,10 @@ export class MultisignatureAddPage {
                         this.alert.showError('MESSAGE.PASSWORD_WRONG', '')
                         break;
                     default:
-                        this.alert.showError('GENERATE_ADDRESSES.ERROR', error.message)
+                        this.alert.showError('GET_PUBLIC_KEY.ERROR', error.message)
                         break;
                 }
-            })*/
+            })
     }
 
     validPassword = (password) => (password) ? password.length > 0 : false;

@@ -23,7 +23,7 @@
         <ion-list>
             <ion-item [ngClass]="{'error-border': !validAddress(address)}">
                 <ion-label>{{"ETH_TO_MVS.SELECT_AVATAR_OR_ADDRESS"|translate}}</ion-label>
-                <ion-select [(ngModel)]="address" name="address" multiple="false" okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}">
+                <ion-select [(ngModel)]="address" name="address" multiple="false" (ngModelChange)="onAddressChange($event)" okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}">
                     <ion-option *ngFor="let addressbalance of addressbalances" value="{{addressbalance.address}}">{{addressbalance.identifier}} - {{addressbalance.balance | format : 8}} ETP</ion-option>
                 </ion-select>
             </ion-item>
@@ -47,6 +47,14 @@
                 </button>
             </ion-col>
         </ion-row>
+        <ion-card-content *ngIf="publicKey">
+            <h4>{{"MULTISIGNATURE_ADD.PUBLICKEY"|translate}}:</h4>
+            <textarea fz-elastic ion-input full type="text" #copyPublicKey value="{{publicKey}}" style="" readonly>{{publicKey}}</textarea>
+            <button col-sm-12 col-md-6 col-lg-3 ion-button full item-right icon-left [ngxClipboard]="copyPublicKey">
+                <ion-icon name="copy"></ion-icon>
+                {{'COPY'|translate}}
+            </button>
+        </ion-card-content>
     </form>
 
     <form *ngIf="creation_type == 'existing'" #existingAddressForm="ngForm">
