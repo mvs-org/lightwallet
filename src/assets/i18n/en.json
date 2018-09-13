@@ -499,14 +499,18 @@
     "MULTISIGNATURE_ADD.STEP1_TITLE": "Step 1: Select your address and get your public key",
     "MULTISIGNATURE_ADD.STEP1_EXPLAIN": "The first step consist in choosing the Avatar or address that you want to use, and get its public key. Then you will have to share your public key with the other co-signers.",
     "MULTISIGNATURE_ADD.STEP2_TITLE": "Step 2: Enter your co-signers public keys",
-    "MULTISIGNATURE_ADD.STEP2_EXPLAIN": "The second step consist in entering the public key of all the co-signers involved in this multisignature address. You also have to select how many signatures are required in order to do a transaction from the multisignature address.",
+    "MULTISIGNATURE_ADD.STEP2_EXPLAIN": "The second step consist in entering the public key of all the co-signers involved in this multisignature address.",
     "ADD_COSIGNER": "Add co-signer",
     "COSIGNER": "Co-signer",
     "COSIGNER_PUBLIC_KEY": "Co-signer public key",
-    "MULTISIGNATURE_ADD.STEP3_TITLE": "Step 3: Generate your multisignature address",
-    "MULTISIGNATURE_ADD.STEP3_EXPLAIN": "If all the information above have been correctly filled, you can generate you multisignature address. You can identity a multisignature address by the first character, a '3' instead of a 'M' for a normal address.",
+    "MULTISIGNATURE_ADD.STEP3_TITLE": "Step 3: Choose the number of signatures required",
+    "MULTISIGNATURE_ADD.STEP3_EXPLAIN": "Now you have to select how many signatures are required in order to do a transaction from the multisignature address. The minimum value is 2, and the maximum value is the total number of persons involved in this address.",
+    "MULTISIGNATURE_ADD.STEP4_TITLE": "Step 4: Generate your multisignature address",
+    "MULTISIGNATURE_ADD.STEP4_EXPLAIN": "If all the information above have been correctly filled, you can generate you multisignature address. You can identity a multisignature address by the first character, a '3' instead of a 'M' for a normal address.",
     "MULTISIGNATURE_ADD.GET_ADDRESS": "Get address",
-    "MULTISIGNATURE_ADD.STEP4_TITLE": "Step 4: Use your multisignature address!",
-    "MULTISIGNATURE_ADD.STEP4_EXPLAIN": "Your multisignature address has now been created, your co-signers can add it to their wallet by going on this page, in the tab 'Existing address'"
+    "MULTISIGNATURE_ADD.STEP5_TITLE": "Step 5: Use your multisignature address!",
+    "MULTISIGNATURE_ADD.STEP5_EXPLAIN": "Your multisignature address has now been created, your co-signers can add it to their wallet by going on this page, in the tab 'Existing address'",
+    "MULTISIGNATURE_ADD.NBR_SIGN_REQ": "Number of signatures required",
+    "CREATE_MULTISIG.ERROR": "Error while generating your multisignature address"
 
 }

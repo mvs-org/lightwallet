@@ -160,4 +160,8 @@ export class WalletServiceProvider {
         return wallet.findPublicKeyByAddess(address, 200);
     }
 
+    getMultisigAddress(nbrSigReq, publicKeys) {
+        return Metaverse.multisig.generate(nbrSigReq, publicKeys);
+    }
+
 }

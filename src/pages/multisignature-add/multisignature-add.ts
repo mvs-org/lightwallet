@@ -16,10 +16,12 @@ export class MultisignatureAddPage {
     addresses: Array<string>
     passphrase: string = ""
     address: string = ""
-    publicKey: string = ""
+    myPublicKey: string = ""
     cosignersLimit: number = 20
 
     cosigners: Array<string> = []
+    nbrSigReq: number;
+    nbrSigReqOptions: Array<number> = [2]
 
     customTrackBy(index: number, obj: any): any {
         return index;
@@ -61,7 +63,7 @@ export class MultisignatureAddPage {
     }
 
     onAddressChange(event) {
-        this.publicKey = ""
+        this.myPublicKey = ""
     }
 
     getPublicKey(address) {
@@ -70,7 +72,7 @@ export class MultisignatureAddPage {
             .then(wallet => this.wallet.getPublicKeyByAddress(wallet, address))
             .then(publicKey => {
                 this.alert.stopLoading()
-                this.publicKey = publicKey
+                this.myPublicKey = publicKey
             })
             .catch(error=>{
                 console.error(error)
@@ -86,24 +88,30 @@ export class MultisignatureAddPage {
             })
     }
 
-    getAddress() {
+    getAddress(cosigners, nbrSigReq) {
         console.log("Get multisig address")
+        console.log("Public keys: " + cosigners.concat(this.myPublicKey))
+        console.log("Required sign." + nbrSigReq)
+        try {
+            let multisig = this.wallet.getMultisigAddress(nbrSigReq, cosigners.concat(this.myPublicKey))
+            console.log(multisig)
+        } catch (e) {
+            console.error(e);
+            this.alert.showError('CREATE_MULTISIG.ERROR', e.message)
+        }
+
+
+            //.then((result) => console.log(result))
     }
 
     addCosigner() {
-        //this.cosigners.push('')
-        this.cosigners = [...this.cosigners, ''];
-        console.log(this.cosigners)
+        this.cosigners.push('')
+        this.nbrSigReqOptions.push(this.nbrSigReqOptions.length+2)
     }
 
     removeCosigner(index) {
         this.cosigners.splice(index, 1)
-    }
-
-    cosignerChanged(index) {
-        console.log("Changed index: " + index)
-        console.log("Index value: " + this.cosigners[index])
-        console.log("Full info: " + this.cosigners)
+        this.nbrSigReqOptions.pop()
     }
 
     validPassword = (password) => (password) ? password.length > 0 : false;
@@ -111,4 +119,6 @@ export class MultisignatureAddPage {
     validAddress = this.mvs.validAddress
 
     validPublicKey = (publicKey) => (publicKey) ? publicKey.length == 66 : false;
+
+    validnbrSigReq = (nbrSigReq) => nbrSigReq && nbrSigReq > 0
 }
