@@ -7,7 +7,7 @@
     </ion-navbar>
 </ion-header>
 
-<ion-content padding style="padding-bottom: 0;">
+<ion-content padding>
     <ion-item no-lines>
         <ion-segment [(ngModel)]="creation_type" color="primary">
             <ion-segment-button value="new">
@@ -19,7 +19,15 @@
         </ion-segment>
     </ion-item>
 
-    <form *ngIf="creation_type == 'new'" #newAddressForm="ngForm">
+
+    <form *ngIf="creation_type == 'new'" #newAddressForm="ngForm" class="padding-bottom">
+        <ion-row>
+            <ion-col>
+                <p align="center">{{"MULTISIGNATURE_ADD.INFORMATION_NEW" | translate}}</p>
+            </ion-col>
+        </ion-row>
+        <h2>{{"MULTISIGNATURE_ADD.STEP1_TITLE" | translate}}</h2>
+        <p>{{"MULTISIGNATURE_ADD.STEP1_EXPLAIN" | translate}}</p>
         <ion-list>
             <ion-item [ngClass]="{'error-border': !validAddress(address)}">
                 <ion-label>{{"ETH_TO_MVS.SELECT_AVATAR_OR_ADDRESS"|translate}}</ion-label>
@@ -33,7 +41,7 @@
             </ion-item>
             <br>
         </ion-list>
-        <ion-row class="padding-bottom">
+        <ion-row>
             <ion-col>
                 <button type="submit" ion-button full icon-left (click)="getPublicKey(address)" [disabled]="!validPassword(passphrase)||!validAddress(address)" color="secondary">
                     <ion-icon disabled="checked" name="send"></ion-icon>
@@ -55,10 +63,52 @@
                 {{'COPY'|translate}}
             </button>
         </ion-card-content>
+        <h2>{{"MULTISIGNATURE_ADD.STEP2_TITLE" | translate}}</h2>
+        <p>{{"MULTISIGNATURE_ADD.STEP2_EXPLAIN" | translate}}</p>
+        <ion-card class="card-block" *ngFor="let cosigner of cosigners; let i = index; trackBy:customTrackBy" [attr.data-index]="i">
+            <ion-row>
+                <ion-col col-6>
+                    <h2 class="cosigner-title">{{"COSIGNER"|translate}} {{i+1}}</h2>
+                </ion-col>
+                <ion-col col-6>
+                    <button type="button" tabIndex="-1" class="remove-button" ion-button clear icon-left color="primary" (click)="removeCosigner(i)">
+                        X
+                    </button>
+                </ion-col>
+                <ion-col class="cosigner-publickey">
+                    <ion-item [ngClass]="{'error-border':!validPublicKey(cosigners[i]), 'valid-border':validPublicKey(cosigners[i])}">
+                        <ion-label color="primary" floating>{{"COSIGNER_PUBLIC_KEY"|translate}} {{i+1}}</ion-label>
+                        <ion-input [(ngModel)]="cosigners[i]" [name]="cosigner + '_' + i" (ngModelChange)="cosignerChanged(i)" required></ion-input>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+        </ion-card>
+        <button *ngIf="cosigners.length < cosignersLimit" type="button" class="right-buttons" ion-button icon-left color="primary" (click)="addCosigner()">
+            <ion-icon name="add"></ion-icon>
+            {{"ADD_COSIGNER" | translate}}
+        </button>
+        <h2>{{"MULTISIGNATURE_ADD.STEP3_TITLE" | translate}}</h2>
+        <p>{{"MULTISIGNATURE_ADD.STEP3_EXPLAIN" | translate}}</p>
+        <ion-row>
+            <ion-col>
+                <button type="submit" ion-button full icon-left (click)="getAddress()" [disabled]="false" color="secondary">
+                    <ion-icon disabled="checked" name="send"></ion-icon>
+                    {{"MULTISIGNATURE_ADD.GET_ADDRESS" | translate}}
+                </button>
+            </ion-col>
+            <ion-col>
+                <button ion-button color="danger" full item-right icon-left (click)="cancel($event)">
+                    <ion-icon name="cancel"></ion-icon>
+                    {{'CANCEL'|translate}}
+                </button>
+            </ion-col>
+        </ion-row>
+        <h2>{{"MULTISIGNATURE_ADD.STEP4_TITLE" | translate}}</h2>
+        <p>{{"MULTISIGNATURE_ADD.STEP4_EXPLAIN" | translate}}</p>
     </form>
 
-    <form *ngIf="creation_type == 'existing'" #existingAddressForm="ngForm">
-        existing
+    <form *ngIf="creation_type == 'existing'" #existingAddressForm="ngForm" class="padding-bottom">
+
     </form>
 
 

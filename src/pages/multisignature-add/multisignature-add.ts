@@ -17,6 +17,13 @@ export class MultisignatureAddPage {
     passphrase: string = ""
     address: string = ""
     publicKey: string = ""
+    cosignersLimit: number = 20
+
+    cosigners: Array<string> = []
+
+    customTrackBy(index: number, obj: any): any {
+        return index;
+    }
 
     constructor(
         public navCtrl: NavController,
@@ -26,6 +33,8 @@ export class MultisignatureAddPage {
         private alert: AlertProvider,
         private wallet: WalletServiceProvider
     ) {
+
+        this.cosigners.push('')
 
         //Load addresses and balances
         Promise.all([this.mvs.getAddresses(), this.mvs.getAddressBalances()])
@@ -77,7 +86,29 @@ export class MultisignatureAddPage {
             })
     }
 
+    getAddress() {
+        console.log("Get multisig address")
+    }
+
+    addCosigner() {
+        //this.cosigners.push('')
+        this.cosigners = [...this.cosigners, ''];
+        console.log(this.cosigners)
+    }
+
+    removeCosigner(index) {
+        this.cosigners.splice(index, 1)
+    }
+
+    cosignerChanged(index) {
+        console.log("Changed index: " + index)
+        console.log("Index value: " + this.cosigners[index])
+        console.log("Full info: " + this.cosigners)
+    }
+
     validPassword = (password) => (password) ? password.length > 0 : false;
 
     validAddress = this.mvs.validAddress
+
+    validPublicKey = (publicKey) => (publicKey) ? publicKey.length == 66 : false;
 }
