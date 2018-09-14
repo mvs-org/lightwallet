@@ -102,7 +102,7 @@
         <p>{{"MULTISIGNATURE_ADD.STEP4_EXPLAIN" | translate}}</p>
         <ion-row>
             <ion-col>
-                <button type="submit" ion-button full icon-left (click)="getAddress(cosigners, nbrSigReq)" [disabled]="false" color="secondary">
+                <button type="submit" ion-button full icon-left (click)="getAddress(cosigners, nbrSigReq, myPublicKey)" [disabled]="false" color="secondary">
                     <ion-icon disabled="checked" name="send"></ion-icon>
                     {{"MULTISIGNATURE_ADD.GET_ADDRESS" | translate}}
                 </button>

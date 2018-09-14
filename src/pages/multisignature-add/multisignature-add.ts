@@ -88,13 +88,34 @@ export class MultisignatureAddPage {
             })
     }
 
-    getAddress(cosigners, nbrSigReq) {
+    getAddress(cosigners, nbrSigReq, myPublicKey) {
         console.log("Get multisig address")
-        console.log("Public keys: " + cosigners.concat(this.myPublicKey))
+        console.log("Public keys: " + cosigners.concat(myPublicKey))
         console.log("Required sign." + nbrSigReq)
         try {
-            let multisig = this.wallet.getMultisigAddress(nbrSigReq, cosigners.concat(this.myPublicKey))
+            let publicKeys = cosigners.concat(myPublicKey)
+            let multisig = this.wallet.getNewMultisigAddress(nbrSigReq, publicKeys)
             console.log(multisig)
+            let newMultisig = {
+                "d": "",
+                "k": publicKeys,
+                "m": parseInt(nbrSigReq),
+                "n": publicKeys.length,
+                "s": myPublicKey,
+                "a": multisig.address
+            };
+            this.wallet.getMultisigAddresses()
+                .then((multisig_addresses) => {
+                    if(multisig_addresses.indexOf(newMultisig.a) !== -1) {
+                        this.alert.showError('MULTISIG_ADDRESS_ALREADY_ADD.ERROR', newMultisig.a)
+                    } else {
+                        this.wallet.addMultisig(newMultisig)
+                        this.navCtrl.pop()
+                        this.navCtrl.pop()
+                        this.navCtrl.push('MultisignaturePage')
+                        this.alert.showSent('SUCCESS_CREATE_MULTISIG', multisig.address)
+                    }
+                })
         } catch (e) {
             console.error(e);
             this.alert.showError('CREATE_MULTISIG.ERROR', e.message)

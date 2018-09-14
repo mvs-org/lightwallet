@@ -511,6 +511,9 @@
     "MULTISIGNATURE_ADD.STEP5_TITLE": "Step 5: Use your multisignature address!",
     "MULTISIGNATURE_ADD.STEP5_EXPLAIN": "Your multisignature address has now been created, your co-signers can add it to their wallet by going on this page, in the tab 'Existing address'",
     "MULTISIGNATURE_ADD.NBR_SIGN_REQ": "Number of signatures required",
-    "CREATE_MULTISIG.ERROR": "Error while generating your multisignature address"
+    "CREATE_MULTISIG.ERROR": "Error while generating your multisignature address",
+    "SUCCESS_CREATE_MULTISIG": "Your multisignature address has been created! You can now share it with the co-signers. Your address is: ",
+    "SEND_MULTISIG": "Send",
+    "MULTISIG_ADDRESS_ALREADY_ADD.ERROR": "This multisignature address has already been added to your wallet: "
 
 }

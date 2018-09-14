@@ -160,8 +160,54 @@ export class WalletServiceProvider {
         return wallet.findPublicKeyByAddess(address, 200);
     }
 
-    getMultisigAddress(nbrSigReq, publicKeys) {
+    getNewMultisigAddress(nbrSigReq, publicKeys) {
         return Metaverse.multisig.generate(nbrSigReq, publicKeys);
+    }
+
+    addMultisig(newMultisig) {
+        return this.getMultisigAddresses()
+            .then((multisig_addresses) => {
+                if(multisig_addresses.indexOf(newMultisig.a) == -1) {
+                    return Promise.all([this.addMultisigAddresses([newMultisig.a]), this.addMultisigInfo([newMultisig])])
+                }
+            })
+        /*return this.storage.get('multisigs')
+            .then((multisigs) => {
+                if(multisigs) {
+                    getMultisigAddresses()
+                    console.log(newMultisig.a)
+                    for (let multisig of multisigs) {
+                        console.log(multisig.a)
+                        if (multisigs.a == newMultisig.a) {
+                            return;
+                        }
+                    }
+                    return this.storage.set('multisigs', multisigs.concat(newMultisig))
+
+                } else {
+                    return this.storage.set('multisigs', newMultisig)
+                }
+            })*/
+    }
+
+    getMultisigsInfo() {
+        return this.storage.get('multisigs')
+            .then((multisigs) => (multisigs) ? multisigs : [])
+    }
+
+    addMultisigInfo(newMultisig: Array<any>) {
+        return this.getMultisigsInfo()
+            .then((multisigs: Array<any>) => this.storage.set('multisigs', multisigs.concat(newMultisig)))
+    }
+
+    getMultisigAddresses() {
+        return this.storage.get('multisig_addresses')
+            .then((addresses) => (addresses) ? addresses : [])
+    }
+
+    addMultisigAddresses(addresses: Array<string>) {
+        return this.getMultisigAddresses()
+            .then((addr: Array<string>) => this.storage.set('multisig_addresses', addr.concat(addresses)))
     }
 
 }
