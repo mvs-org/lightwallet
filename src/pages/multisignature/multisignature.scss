@@ -1,6 +1,42 @@
 page-multisignature {
-  .no-address {
-      margin-top: 20px;
-      margin-bottom: 20px;
-  }
+
+    .no-address {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .right-buttons {
+        float: right;
+        height: 40px;
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+
+    .multisig-logo {
+        margin-top: 6px;
+    }
+
+    textarea{
+        width:100%;
+        border: 0px !important;
+        resize: none;
+        font-size: 1.8rem;
+    }
+
+    .address {
+        font-size: 2.4rem !important;
+    }
+
+    @media (max-width: 1310px) {
+        .address {
+            font-size: 2rem !important;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .address {
+            font-size: 1.6rem !important;
+        }
+    }
+
 }

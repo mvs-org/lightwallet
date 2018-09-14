@@ -1,10 +1,7 @@
-import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
+import { Component } from '@angular/core';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
-import { TranslateService } from '@ngx-translate/core';
-import { BarcodeScanner } from '@ionic-native/barcode-scanner';
-import { AlertProvider } from '../../providers/alert/alert';
-import { Keyboard } from '@ionic-native/keyboard';
+import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
 
 
 @IonicPage()
@@ -15,18 +12,20 @@ import { Keyboard } from '@ionic-native/keyboard';
 export class MultisignaturePage {
 
     no_address: boolean = true;
+    multisigs: Array<any>;
 
     constructor(
         public navCtrl: NavController,
         public navParams: NavParams,
         private mvs: MvsServiceProvider,
-        public platform: Platform,
-        private alert: AlertProvider,
-        private barcodeScanner: BarcodeScanner,
-        private keyboard: Keyboard,
-        private translate: TranslateService
+        private wallet: WalletServiceProvider
     ) {
-
+            this.wallet.getMultisigsInfo()
+                .then((multisigs) => {
+                    this.multisigs = multisigs;
+                    if(multisigs && multisigs.length > 0)
+                        this.no_address = false;
+                })
 
     }
 

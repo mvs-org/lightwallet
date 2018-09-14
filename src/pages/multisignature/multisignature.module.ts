@@ -2,14 +2,13 @@ import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { MultisignaturePage } from './multisignature';
 import { TranslateModule} from '@ngx-translate/core';
-import { BarcodeScanner } from '@ionic-native/barcode-scanner';
-import { Keyboard } from '@ionic-native/keyboard';
-import { AlertProvider } from '../../providers/alert/alert';
 import { PipesModule } from '../../pipes/pipes.module';
+import { MultisigCardComponent } from '../../components/multisig-card/multisig-card';
 
 @NgModule({
     declarations: [
-        MultisignaturePage
+        MultisignaturePage,
+        MultisigCardComponent
     ],
     imports: [
         IonicPageModule.forChild(MultisignaturePage),
@@ -17,9 +16,7 @@ import { PipesModule } from '../../pipes/pipes.module';
         TranslateModule
     ],
     providers:[
-        BarcodeScanner,
-        Keyboard,
-        AlertProvider
+
     ],
     exports: [
         MultisignaturePage
