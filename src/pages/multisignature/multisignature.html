@@ -25,7 +25,10 @@
                             <img class="multisig-logo" [src]="'assets/icon/default.png'">
                         </ion-avatar>
                         <h1 class="address manual-copy">{{multisig.a}}</h1>
-                        {{"ACCOUNT.AVAILABLE" | translate}}: 0
+                        <div>{{"ACCOUNT.AVAILABLE" | translate}}: {{(addressBalancesObject[multisig.a] && addressBalancesObject[multisig.a].ETP )?format(addressBalancesObject[multisig.a].ETP.available,addressBalancesObject[multisig.a].ETP.decimals):0}} ETP</div>
+                        <div *ngIf="addressbalances[multisig.a]">
+                            <div *ngFor="let mst of addressbalances[multisig.a]">{{format(mst.available,mst.decimals)}} {{mst.name}}</div>
+                        </div>
                     </ion-item>
                 </ion-col>
                 <ion-col col-sm-12 col-md-2>

@@ -345,9 +345,9 @@ export class MvsServiceProvider {
         return this.getBalances()
             .then(_ => {
                 balances = _;
-                return Promise.all([this.getAddresses(), this.getLastTxHeight(), this.getHeight(), this.getTxs()])
+                return Promise.all([this.getAddresses(), this.getLastTxHeight(), this.getHeight(), this.getTxs(), this.wallet.getMultisigAddresses()])
             })
-            .then(results => { return this.getNewTxs(results[0], results[1], results[3]) })
+            .then(results => { return this.getNewTxs(results[0].concat(results[4]), results[1], results[3]) })
             .then(() => this.calculateBalances())
             .then(() => { return balances })
     }
@@ -366,17 +366,18 @@ export class MvsServiceProvider {
     calculateBalances() {
         return this.getHeight()
             .then(height => this.getAddresses()
-                .then(addresses => this.getTxs()
-                    .then(txs => Metaverse.output.calculateUtxo(txs, addresses))
-                    .then(utxos => Promise.all([
-                        this.blockchain.balance.all(utxos, addresses, height),
-                        this.blockchain.balance.addresses(utxos, addresses, height)
-                    ]))
-                    .then((balances) => Promise.all([
-                        this.setBalances(balances[0]),
-                        this.setAddressBalances(balances[1])
-                    ]))
-                ))
+                .then(addresses => this.wallet.getMultisigAddresses()
+                    .then(multisigAddresses => this.getTxs()
+                        .then(txs => Metaverse.output.calculateUtxo(txs, addresses.concat(multisigAddresses)))
+                        .then(utxos => Promise.all([
+                            this.blockchain.balance.all(utxos, addresses, height),
+                            this.blockchain.balance.addresses(utxos, addresses.concat(multisigAddresses), height)
+                        ]))
+                        .then((balances) => Promise.all([
+                            this.setBalances(balances[0]),
+                            this.setAddressBalances(balances[1])
+                        ]))
+                    )))
     }
 
     getFrozenOutputs() {

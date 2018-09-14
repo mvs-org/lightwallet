@@ -102,7 +102,8 @@ export class MultisignatureAddPage {
                 "m": parseInt(nbrSigReq),
                 "n": publicKeys.length,
                 "s": myPublicKey,
-                "a": multisig.address
+                "a": multisig.address,
+                "r": multisig.script
             };
             this.wallet.getMultisigAddresses()
                 .then((multisig_addresses) => {
