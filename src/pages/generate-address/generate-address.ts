@@ -47,7 +47,7 @@ export class GenerateAddressPage {
             .then(() => Promise.all([this.mvs.updateHeight(), this.updateBalances()]))
             .then(() => this.updateBalances())
             .then(() => this.wallet.setAddressIndex(this.index))
-            .then(()=>this.alert.stopLoading())
+            .then(() => this.alert.stopLoading())
             .then(() => this.navCtrl.pop())
             .catch(error=>{
                 console.error(error)

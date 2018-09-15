@@ -523,6 +523,7 @@
     "MULTISIGNATURE.NBR_PERSON": "Persons involved",
     "MULTISIGNATURE.SIGN_REQ": "Signatures required",
     "MULTISIGNATURE.PUBLIC_KEYS": "Public keys",
-    "MULTISIG_ADDRESS_NOT_THIS_WALLET.ERROR": "This multisignature address doesn't belong to your wallet. Are you sure the multisignature address is correct?"
+    "MULTISIG_ADDRESS_NOT_THIS_WALLET.ERROR": "This multisignature address doesn't belong to your wallet. Are you sure the multisignature address is correct?",
+    "ADD_MULTISIG.ERROR": "Error while adding the multisignature address"
 
 }

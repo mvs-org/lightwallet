@@ -62,6 +62,8 @@ export class MultisignaturePage {
             .then((addresses) => {
                 if (!Array.isArray(addresses) || !addresses.length)
                     this.navCtrl.setRoot("LoginPage")
+                else
+                    this.showBalances()
             })
     }
 

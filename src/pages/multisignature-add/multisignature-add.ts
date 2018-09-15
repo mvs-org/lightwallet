@@ -152,7 +152,6 @@ export class MultisignatureAddPage {
                                         }))
                                         .then(() => {
                                             if(myPublicKey) {
-                                                this.alert.stopLoading()
                                                 newMultisig.s = myPublicKey
                                                 this.addMultisigAddress(newMultisig)
                                             } else {
@@ -177,7 +176,7 @@ export class MultisignatureAddPage {
                 if(multisig_addresses.indexOf(newMultisig.a) !== -1) {
                     this.alert.showError('MULTISIG_ADDRESS_ALREADY_ADD.ERROR', newMultisig.a)
                 } else {
-                    this.wallet.addMultisig(newMultisig)
+
                     try {
                         this.mvs.addMultisigWallet(newMultisig)
                     } catch (error) {
@@ -192,12 +191,32 @@ export class MultisignatureAddPage {
                                 break;
                         }
                     }
-                    this.navCtrl.pop()
-                    this.navCtrl.pop()
-                    this.navCtrl.push('MultisignaturePage')
-                    this.alert.showSent('SUCCESS_CREATE_MULTISIG', newMultisig.a)
+                    this.wallet.addMultisig(newMultisig)
+                        .then(() => this.mvs.dataReset())
+                        .then(() => Promise.all([this.mvs.updateHeight(), this.updateBalances()]))
+                        .then(() => this.updateBalances())
+                        .then(() => this.alert.stopLoading())
+                        .then(() => this.alert.showSent('SUCCESS_CREATE_MULTISIG', newMultisig.a))
+                        .then(() => this.navCtrl.pop())
+                        .then(() => this.navCtrl.pop())
+                        .then(() => this.navCtrl.push('MultisignaturePage'))
+                        .catch(error=>{
+                            console.error(error)
+                            this.alert.stopLoading()
+                            this.alert.showError('ADD_MULTISIG.ERROR', error.message)
+                        })
                 }
             })
+    }
+
+    private updateBalances = () => {
+        return this.mvs.getData()
+            .then(() => this.mvs.setUpdateTime())
+            .then(() => this.mvs.getBalances())
+            .then((_) => {
+                return Promise.all(Object.keys(_.MST).map((symbol) => this.mvs.addAssetToAssetOrder(symbol)))
+            })
+            .catch((error) => console.error("Can't update balances: " + error))
     }
 
     scan() {
