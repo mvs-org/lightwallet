@@ -171,23 +171,6 @@ export class WalletServiceProvider {
                     return Promise.all([this.addMultisigAddresses([newMultisig.a]), this.addMultisigInfo([newMultisig])])
                 }
             })
-        /*return this.storage.get('multisigs')
-            .then((multisigs) => {
-                if(multisigs) {
-                    getMultisigAddresses()
-                    console.log(newMultisig.a)
-                    for (let multisig of multisigs) {
-                        console.log(multisig.a)
-                        if (multisigs.a == newMultisig.a) {
-                            return;
-                        }
-                    }
-                    return this.storage.set('multisigs', multisigs.concat(newMultisig))
-
-                } else {
-                    return this.storage.set('multisigs', newMultisig)
-                }
-            })*/
     }
 
     getMultisigsInfo() {
@@ -208,6 +191,10 @@ export class WalletServiceProvider {
     addMultisigAddresses(addresses: Array<string>) {
         return this.getMultisigAddresses()
             .then((addr: Array<string>) => this.storage.set('multisig_addresses', addr.concat(addresses)))
+    }
+
+    findDeriveNodeByPublic(wallet: any, publicKey: string, maxDepth: number) {
+        return wallet.findDeriveNodeByPublicKey(publicKey, maxDepth ? maxDepth : 200)
     }
 
 }

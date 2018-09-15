@@ -14,7 +14,7 @@ export class MultisignaturePage {
     no_address: boolean = true;
     multisigs: Array<any>;
     address: string;
-    addressbalances: any;
+    addressbalances: any = {};
     addressBalancesObject: any = {};
     addresses: Array<string>;
 
@@ -25,7 +25,6 @@ export class MultisignaturePage {
         private wallet: WalletServiceProvider
     ) {
             this.addressbalances = {};
-
             this.wallet.getMultisigsInfo()
                 .then((multisigs) => {
                     this.multisigs = multisigs;
@@ -43,7 +42,7 @@ export class MultisignaturePage {
                 return this.mvs.getAddressBalances()
                     .then((addressbalances) => {
                         this.addressBalancesObject = addressbalances;
-                        console.log(this.addressBalancesObject)
+                        this.addressbalances = {};
                         Object.keys(addressbalances).map((address) => {
                             if (this.addressbalances[address] == undefined)
                                 this.addressbalances[address] = []
@@ -52,21 +51,17 @@ export class MultisignaturePage {
                                 balance.name = asset;
                                 this.addressbalances[address].push(balance)
                             })
-                            console.log(this.addressbalances)
                         })
                     })
-
             })
     }
 
     ionViewDidEnter() {
         console.log('ionViewDidEnter Multisignature');
-        this.wallet.getMultisigAddresses()
+        this.mvs.getAddresses()
             .then((addresses) => {
                 if (!Array.isArray(addresses) || !addresses.length)
                     this.navCtrl.setRoot("LoginPage")
-                else
-                    this.showBalances()
             })
     }
 

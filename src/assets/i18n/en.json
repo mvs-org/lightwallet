@@ -514,6 +514,15 @@
     "CREATE_MULTISIG.ERROR": "Error while generating your multisignature address",
     "SUCCESS_CREATE_MULTISIG": "Your multisignature address has been created! You can now share it with the co-signers. Your address is: ",
     "SEND_MULTISIG": "Send",
-    "MULTISIG_ADDRESS_ALREADY_ADD.ERROR": "This multisignature address has already been added to your wallet: "
+    "MULTISIG_ADDRESS_ALREADY_ADD.ERROR": "This multisignature address has already been added to your wallet: ",
+    "IMPORT_MULTISIG_ADDRESS": "Multisignature address to import",
+    "MULTISIGNATURE_ADD.IMPORT_ADDRESS": "Import address",
+    "IMPORT_ADDRESS_UNKNOW.ERROR": "This multisignature address is unknow. Please make sure the address is correct and has been registered at least once via MyETPWallet. To register an address, go to the tab 'New address' on top of this page.",
+    "IMPORT_ADDRESS": "Error while importing your address",
+    "MULTISIGNATURE.DETAILS": "Multisignature address details",
+    "MULTISIGNATURE.NBR_PERSON": "Persons involved",
+    "MULTISIGNATURE.SIGN_REQ": "Signatures required",
+    "MULTISIGNATURE.PUBLIC_KEYS": "Public keys",
+    "MULTISIG_ADDRESS_NOT_THIS_WALLET.ERROR": "This multisignature address doesn't belong to your wallet. Are you sure the multisignature address is correct?"
 
 }

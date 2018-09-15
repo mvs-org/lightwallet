@@ -231,7 +231,7 @@ export class MvsServiceProvider {
                 valid = this.globals.network == "testnet"
                 break
             case this.globals.ADDRESS_PREFIX_P2SH:
-                valid = false
+                valid = true
         }
         return valid
     }
@@ -674,4 +674,14 @@ export class MvsServiceProvider {
         blocktime['height'] = height
         return this.storage.set('blocktime', blocktime)
     }
+
+
+    addMultisigWallet(wallet) {
+        return this.blockchain.multisig.add(wallet)
+    }
+
+    getMultisigWallet(address) {
+        return this.blockchain.multisig.get(address)
+    }
+
 }

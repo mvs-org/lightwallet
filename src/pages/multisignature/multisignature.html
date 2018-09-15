@@ -38,6 +38,25 @@
                     </button>
                 </ion-col>
             </ion-row>
+            <ion-row>
+                <ion-item>
+                    <h2 class="certificates-title"><ion-icon name="paper"></ion-icon> {{"MULTISIGNATURE.DETAILS" | translate}}:</h2>
+                    <ion-row>
+                        <ion-col>{{"MULTISIGNATURE.NBR_PERSON" | translate}}</ion-col>
+                        <ion-col>{{multisig.n}}</ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col>{{"MULTISIGNATURE.SIGN_REQ" | translate}}</ion-col>
+                        <ion-col>{{multisig.m}}</ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col>{{"MULTISIGNATURE.PUBLIC_KEYS" | translate}}</ion-col>
+                        <ion-col>
+                            <div *ngFor="let publicKey of multisig.k" [ngClass]="{'self-publickey': publicKey == multisig.s}">{{publicKey}}</div>
+                        </ion-col>
+                    </ion-row>
+                </ion-item>
+            </ion-row>
         </ion-grid>
     </ion-card>
     <button ion-button icon-left color="primary" icon-left (click)="addAddress()" class="create-avatar-btn">
