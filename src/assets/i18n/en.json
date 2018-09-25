@@ -320,7 +320,7 @@
     "TESTNET": "Testnet",
 
     "CREATE_AVATAR.CONFIRMATION_TITLE": "Creating an Avatar cost 1 ETP.",
-    "CREATE_AVATAR.CONFIRMATION_SUBTITLE": "Avatar registration confirmation?",
+    "CREATE_AVATAR.CONFIRMATION_SUBTITLE": "Are you sure you want to create an Avatar?",
     "ISSUE.NO_AVATAR": "You need an Avatar to register a MST. Please create an Avatar first",
     "ISSUE.SELECT_AVATAR": "Please select an Issuer first",
     "ISSUE.NO_AVATAR_PLACEHOLDER": "No Avatar",
@@ -513,7 +513,7 @@
     "MULTISIGNATURE_ADD.NBR_SIGN_REQ": "Number of signatures required",
     "CREATE_MULTISIG.ERROR": "Error while generating your multisignature address",
     "SUCCESS_CREATE_MULTISIG": "Your multisignature address has been created! You can now share it with the co-signers. Your address is: ",
-    "SEND_MULTISIG": "Send",
+    "SEND_MULTISIG": "Send ETP",
     "MULTISIG_ADDRESS_ALREADY_ADD.ERROR": "This multisignature address has already been added to your wallet: ",
     "IMPORT_MULTISIG_ADDRESS": "Multisignature address to import",
     "MULTISIGNATURE_ADD.IMPORT_ADDRESS": "Import address",
@@ -524,6 +524,8 @@
     "MULTISIGNATURE.SIGN_REQ": "Signatures required",
     "MULTISIGNATURE.PUBLIC_KEYS": "Public keys",
     "MULTISIG_ADDRESS_NOT_THIS_WALLET.ERROR": "This multisignature address doesn't belong to your wallet. Are you sure the multisignature address is correct?",
-    "ADD_MULTISIG.ERROR": "Error while adding the multisignature address"
+    "ADD_MULTISIG.ERROR": "Error while adding the multisignature address",
+    "MULTISIGNATURE_TRANSFER": "Multisignature transfer",
+    "MULTISIG_TRANSFER.FROM_ADDRESS": "Source address"
 
 }

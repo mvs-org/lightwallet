@@ -76,6 +76,8 @@ export class MultisignaturePage {
         this.navCtrl.push("MultisignatureAddPage")
     }
 
+    gotoMultisigTransfer = (asset, address) => this.navCtrl.push("MultisignatureTransferPage", { asset: asset, address: address })
+
     format = (quantity, decimals) => quantity / Math.pow(10, decimals)
 
 }
