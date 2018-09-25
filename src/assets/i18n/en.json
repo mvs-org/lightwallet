@@ -526,6 +526,8 @@
     "MULTISIG_ADDRESS_NOT_THIS_WALLET.ERROR": "This multisignature address doesn't belong to your wallet. Are you sure the multisignature address is correct?",
     "ADD_MULTISIG.ERROR": "Error while adding the multisignature address",
     "MULTISIGNATURE_TRANSFER": "Multisignature transfer",
-    "MULTISIG_TRANSFER.FROM_ADDRESS": "Source address"
+    "MULTISIG_TRANSFER.FROM_ADDRESS": "Source address",
+    "MULTISIG_MISSING_MY_PUBLIC_KEY.ERROR": "Please generate your public key in Step 1 first.",
+    "MULTISIG_WRONG_PUBLIC_KEYS.ERROR": "Please make sure all the public keys in Step 2 are correct"
 
 }

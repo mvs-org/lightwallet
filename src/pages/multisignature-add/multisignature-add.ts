@@ -28,6 +28,7 @@ export class MultisignatureAddPage {
     import_address: string = ""
     @ViewChild('importAddressInput') importAddressInput;
     passphrase_import: string = ""
+    validPublicKeys: boolean = false
 
     customTrackBy(index: number, obj: any): any {
         return index;
@@ -98,23 +99,29 @@ export class MultisignatureAddPage {
     }
 
     getAddress(cosigners, nbrSigReq, myPublicKey) {
-        try {
-            let nbrSigns = parseInt(nbrSigReq);
-            let publicKeys = cosigners.concat(myPublicKey);
-            let multisig = this.wallet.getNewMultisigAddress(nbrSigns, publicKeys)
-            let newMultisig = {
-                "d": "",
-                "k": publicKeys,
-                "m": nbrSigns,
-                "n": publicKeys.length,
-                "s": myPublicKey,
-                "a": multisig.address,
-                "r": multisig.script
-            };
-            this.addMultisigAddress(newMultisig)
-        } catch (e) {
-            console.error(e);
-            this.alert.showError('CREATE_MULTISIG.ERROR', e.message)
+        if(!this.myPublicKey) {
+            this.alert.showError('MULTISIG_MISSING_MY_PUBLIC_KEY.ERROR', '')
+        } else if (!this.validPublicKeys) {
+            this.alert.showError('MULTISIG_WRONG_PUBLIC_KEYS.ERROR', '')
+        } else {
+            try {
+                let nbrSigns = parseInt(nbrSigReq);
+                let publicKeys = cosigners.concat(myPublicKey);
+                let multisig = this.wallet.getNewMultisigAddress(nbrSigns, publicKeys)
+                let newMultisig = {
+                    "d": "",
+                    "k": publicKeys,
+                    "m": nbrSigns,
+                    "n": publicKeys.length,
+                    "s": myPublicKey,
+                    "a": multisig.address,
+                    "r": multisig.script
+                };
+                this.addMultisigAddress(newMultisig)
+            } catch (e) {
+                console.error(e);
+                this.alert.showError('CREATE_MULTISIG.ERROR', e.message)
+            }
         }
     }
 
@@ -160,6 +167,18 @@ export class MultisignatureAddPage {
                                             }
                                         })
                                     })
+                                    .catch(error=>{
+                                        console.error(error)
+                                        this.alert.stopLoading()
+                                        switch(error.message){
+                                            case "ERR_DECRYPT_WALLET":
+                                                this.alert.showError('MESSAGE.PASSWORD_WRONG', '')
+                                                break;
+                                            default:
+                                                this.alert.showError('GET_PUBLIC_KEY.ERROR', error.message)
+                                                break;
+                                        }
+                                    })
                             }
                         })
                 } catch (e) {
@@ -174,6 +193,7 @@ export class MultisignatureAddPage {
         this.wallet.getMultisigAddresses()
             .then((multisig_addresses) => {
                 if(multisig_addresses.indexOf(newMultisig.a) !== -1) {
+                    this.alert.stopLoading()
                     this.alert.showError('MULTISIG_ADDRESS_ALREADY_ADD.ERROR', newMultisig.a)
                 } else {
 
@@ -248,11 +268,13 @@ export class MultisignatureAddPage {
     addCosigner() {
         this.cosigners.push('')
         this.nbrSigReqOptions.push(this.nbrSigReqOptions.length+2)
+        this.checkPublicKeys();
     }
 
     removeCosigner(index) {
         this.cosigners.splice(index, 1)
         this.nbrSigReqOptions.pop()
+        this.checkPublicKeys();
     }
 
     validPassword = (password) => (password) ? password.length > 0 : false;
@@ -262,4 +284,13 @@ export class MultisignatureAddPage {
     validPublicKey = (publicKey) => (publicKey) ? publicKey.length == 66 : false;
 
     validnbrSigReq = (nbrSigReq) => nbrSigReq && nbrSigReq > 0
+
+    checkPublicKeys = () => {
+        let valid = true
+        this.cosigners.forEach((key) => {
+            if(!key || !this.validPublicKey(key))
+                valid = false
+        })
+        this.validPublicKeys = valid
+    }
 }

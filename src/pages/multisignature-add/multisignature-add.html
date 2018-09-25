@@ -78,7 +78,7 @@
                 <ion-col class="cosigner-publickey">
                     <ion-item [ngClass]="{'error-border':!validPublicKey(cosigners[i]), 'valid-border':validPublicKey(cosigners[i])}">
                         <ion-label color="primary" floating>{{"COSIGNER_PUBLIC_KEY"|translate}} {{i+1}}</ion-label>
-                        <ion-input [(ngModel)]="cosigners[i]" [name]="cosigner + '_' + i" required></ion-input>
+                        <ion-input [(ngModel)]="cosigners[i]" [name]="cosigner + '_' + i" (ngModelChange)="checkPublicKeys()" required></ion-input>
                     </ion-item>
                 </ion-col>
             </ion-row>
@@ -102,7 +102,7 @@
         <p>{{"MULTISIGNATURE_ADD.STEP4_EXPLAIN" | translate}}</p>
         <ion-row>
             <ion-col>
-                <button type="submit" ion-button full icon-left (click)="getAddress(cosigners, nbrSigReq, myPublicKey)" [disabled]="false" color="secondary">
+                <button type="submit" ion-button full icon-left (click)="getAddress(cosigners, nbrSigReq, myPublicKey)" [disabled]="!nbrSigReq" color="secondary">
                     <ion-icon disabled="checked" name="send"></ion-icon>
                     {{"MULTISIGNATURE_ADD.GET_ADDRESS" | translate}}
                 </button>
