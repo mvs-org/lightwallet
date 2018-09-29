@@ -13,7 +13,7 @@
 
     "MNEMONIC_SHOW.TITLE": "Your wallet backup",
     "YOUR_MNEMONIC_WORDS": "Your backup words",
-    "IMPORT_WALLET": "Import wallet",
+    "IMPORT_WALLET": "Enter wallet",
     "CREATE_NEW_WALLET": "Create new wallet",
     "CREATE_WALLET": "Got it. Let's rock",
     "BUTTON.OK": "Ok",
@@ -528,6 +528,10 @@
     "MULTISIGNATURE_TRANSFER": "Multisignature transfer",
     "MULTISIG_TRANSFER.FROM_ADDRESS": "Source address",
     "MULTISIG_MISSING_MY_PUBLIC_KEY.ERROR": "Please generate your public key in Step 1 first.",
-    "MULTISIG_WRONG_PUBLIC_KEYS.ERROR": "Please make sure all the public keys in Step 2 are correct"
+    "MULTISIG_WRONG_PUBLIC_KEYS.ERROR": "Please make sure all the public keys in Step 2 are correct",
+
+    "SIGN": "Sign",
+    "MULTISIGNATURE_TRANSFER.TX_TO_SIGN": "Transaction to sign",
+    "MULTISIGNATURE_TRANSFER.SIGNED_TX": "Signed transaction"
 
 }

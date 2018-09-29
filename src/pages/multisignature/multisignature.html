@@ -26,7 +26,7 @@
                         </ion-avatar>
                         <ion-row>
                             <ion-col>
-                                <h1 class="address manual-copy">{{multisig.a}}</h1>
+                                <h1 class="address manual-copy display-overflow">{{multisig.a}}</h1>
                             </ion-col>
                         </ion-row>
                         <ion-row class="asset-balance">
@@ -70,7 +70,7 @@
                     <ion-row>
                         <ion-col>{{"MULTISIGNATURE.PUBLIC_KEYS" | translate}}</ion-col>
                         <ion-col>
-                            <div *ngFor="let publicKey of multisig.k" [ngClass]="{'self-publickey': publicKey == multisig.s}">{{publicKey}}</div>
+                            <div *ngFor="let publicKey of multisig.k" class="public-key manual-copy display-overflow" [ngClass]="{'self-publickey': publicKey == multisig.s}">{{publicKey}}</div>
                         </ion-col>
                     </ion-row>
                 </ion-item>

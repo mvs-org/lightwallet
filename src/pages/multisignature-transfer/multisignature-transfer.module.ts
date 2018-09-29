@@ -6,6 +6,8 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { Keyboard } from '@ionic-native/keyboard';
 import { AlertProvider } from '../../providers/alert/alert';
 import { PipesModule } from '../../pipes/pipes.module';
+import { ClipboardModule } from 'ngx-clipboard/dist';
+import { ElasticModule } from 'angular2-elastic';
 
 @NgModule({
     declarations: [
@@ -14,7 +16,9 @@ import { PipesModule } from '../../pipes/pipes.module';
     imports: [
         IonicPageModule.forChild(MultisignatureTransferPage),
         PipesModule,
-        TranslateModule
+        TranslateModule,
+        ClipboardModule,
+        ElasticModule
     ],
     providers:[
         BarcodeScanner,

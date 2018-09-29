@@ -9,8 +9,19 @@
 
 <ion-content padding style="padding-bottom: 0;">
 
-    <p align="center" *ngIf="etpBalance<fee/100000000">{{"NOTICE_TRANSACTION_FEE_UNCOVERED"|translate}}</p>
-    <ion-row>
+    <ion-item no-lines>
+        <ion-segment [(ngModel)]="type" color="primary">
+            <ion-segment-button value="create">
+                {{ "ETH_TO_MVS" | translate}}
+            </ion-segment-button>
+            <ion-segment-button value="sign">
+                {{ "MVS_TO_ETH" | translate}}
+            </ion-segment-button>
+        </ion-segment>
+    </ion-item>
+
+    <p align="center" *ngIf="etpBalance<fee/100000000 && type == 'create'">{{"NOTICE_TRANSACTION_FEE_UNCOVERED"|translate}}</p>
+    <ion-row *ngIf="type == 'create'">
         <ion-col>
             <p>{{"AVAILABLE_BALANCE" | translate}}: <br *ngIf="platform.is('mobile')">{{showBalance | format : decimals}} {{selectedAsset}}</p>
         </ion-col>
@@ -19,7 +30,7 @@
         </ion-col>
     </ion-row>
 
-    <form *ngIf="transfer_type == 'one'" #sendForm="ngForm" style="padding-bottom: 0;">
+    <form *ngIf="type == 'create'" #sendForm="ngForm" style="padding-bottom: 0;">
         <ion-list style="padding-bottom: 0;">
 
             <ion-item>
@@ -110,5 +121,42 @@
                 </button>
             </ion-col>
         </ion-row>
+    </form>
+
+
+    <form *ngIf="type == 'sign'" #sendForm="ngForm" style="padding-bottom: 0;">
+
+        <ion-list style="padding-bottom: 0;">
+
+        <ion-card-content>
+            <h4>{{"MULTISIGNATURE_TRANSFER.TX_TO_SIGN"|translate}}:</h4>
+            <textarea fz-elastic ion-input full type="text" value="{{input}}" style="">{{input}}</textarea>
+        </ion-card-content>
+
+        </ion-list>
+        <ion-row class="padding-bottom">
+            <ion-col>
+                <button type="submit" ion-button full icon-left (click)="sign()" color="secondary">
+                    <ion-icon disabled="checked" name="send"></ion-icon>
+                    {{"SIGN" | translate}}
+                </button>
+            </ion-col>
+            <ion-col>
+                <button ion-button color="danger" full item-right icon-left (click)="cancel($event)">
+                    <ion-icon name="cancel"></ion-icon>
+                    {{'CANCEL'|translate}}
+                </button>
+            </ion-col>
+        </ion-row>
+
+        <ion-card-content *ngIf="signedTx">
+            <h4>{{"MULTISIGNATURE_TRANSFER.SIGNED_TX"|translate}}:</h4>
+            <textarea fz-elastic ion-input full type="text" #copySignedTx value="{{signedTx}}" style="">{{signedTx}}</textarea>
+            <button col-sm-12 col-md-6 col-lg-3 ion-button full item-right icon-left [ngxClipboard]="copySignedTx">
+                <ion-icon name="copy"></ion-icon>
+                {{'COPY'|translate}}
+            </button>
+        </ion-card-content>
+
     </form>
 </ion-content>

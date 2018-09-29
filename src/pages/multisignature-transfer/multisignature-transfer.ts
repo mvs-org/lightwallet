@@ -33,7 +33,6 @@ export class MultisignatureTransferPage {
     etpBalance: number
     @ViewChild('recipientAddressInput') recipientAddressInput;
     @ViewChild('quantityInput') quantityInput;
-    transfer_type: string = "one"
     total_to_send: any = {}
     sendMoreValidQuantity: boolean = false
     sendMoreValidAddress: boolean = false
@@ -41,6 +40,9 @@ export class MultisignatureTransferPage {
     total: number
     message: string = ""
     fee: number = 10000
+    type: string = "create"
+    input: string
+    signedTx: string
 
     constructor(
         public navCtrl: NavController,
@@ -57,9 +59,6 @@ export class MultisignatureTransferPage {
         this.sendFrom = navParams.get('address')
         this.total_to_send[this.selectedAsset] = 0
         this.total = 0
-
-        console.log(this.sendFrom)
-
 
         //Load addresses
         mvs.getAddresses()
@@ -258,6 +257,11 @@ export class MultisignatureTransferPage {
                     }
                 })
         })
+    }
+
+    sign() {
+        //TODO
+        this.signedTx = "aaa"
     }
 
 }
