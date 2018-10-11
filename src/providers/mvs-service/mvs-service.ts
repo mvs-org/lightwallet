@@ -270,9 +270,6 @@ export class MvsServiceProvider {
 
     listAvatars() {
         return this.getUtxo()
-            .then((utxo) => {
-                return utxo
-            })
             .then((outputs) => this.blockchain.avatar.extract(outputs))
     }
 
@@ -446,7 +443,7 @@ export class MvsServiceProvider {
 
     dataReset() {
         console.info('reset data')
-        return Promise.all(['mvs_last_tx_height', 'mvs_height', 'utxo', 'last_update', 'addressbalances', 'balances', 'mvs_txs'].map((key) => this.storage.remove(key)))
+        return Promise.all(['mvs_last_tx_height', 'mvs_height', 'utxo', 'last_update', 'addressbalances', 'balances', 'mvs_txs', 'asset_order'].map((key) => this.storage.remove(key)))
     }
 
     getNewTxs(addresses: Array<string>, lastKnownHeight: number, txs: any): Promise<any> {
@@ -528,7 +525,7 @@ export class MvsServiceProvider {
         return this.storage.get('asset_order')
             .then((_: string[]) => {
                 if (_)
-                    return Promise.resolve(_)
+                    return _
                 else {
                     return this.getBalances().then((balances: any) => {
                         let order: string[] = Object.keys(balances.MST)
