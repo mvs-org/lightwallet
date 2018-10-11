@@ -376,24 +376,21 @@ export class MvsServiceProvider {
                 ))
     }
 
-    getFrozenOutputs() {
-        return this.getAddresses()
-            .then(addresses => this.getTxs()
-                .then(txs => {
-                    let outputs = []
-                    txs.forEach(tx => {
-                        tx.outputs.forEach((output) => {
-                            if (output.locked_height_range > 0 && output.height && addresses.indexOf(output.address) !== -1) {
-                                output.locked_until = (output.locked_height_range) ? tx.height + output.locked_height_range : 0
-                                delete output['locked_height_range']
-                                output.hash = tx.hash
-                                outputs.push(output)
-                            }
-                        })
-                    })
-                    return outputs
-                })
-            )
+    async getFrozenOutputs() {
+        let addresses = await this.getAddresses()
+        let transactions = await this.getTxs()
+        let outputs = []
+        transactions.forEach(tx => {
+            tx.outputs.forEach((output) => {
+                if (output.locked_height_range > 0 && output.height && addresses.indexOf(output.address) !== -1) {
+                    output.locked_until = (output.locked_height_range) ? tx.height + output.locked_height_range : 0
+                    delete output['locked_height_range']
+                    output.hash = tx.hash
+                    outputs.push(output)
+                }
+            })
+        })
+        return outputs
     }
 
     setUpdateTime(lastupdate = undefined) {
@@ -550,47 +547,42 @@ export class MvsServiceProvider {
             .then(() => this.assetOrder())
     }
 
-    send = (tx) => {
-        return this.broadcast(tx.encode().toString('hex'))
-            .then((result: any) => this.getHeight()
-                .then(height => this.getBalances()
-                    .then(balances => {
-                        tx.height = height
-                        tx.hash = result.hash
-                        tx.outputs.forEach((output, index) => {
-                            output.index = index
-                            output.locked_height_range = (output.locktime) ? output.locktime : 0
-                            output.locked_until = (output.locktime) ? height + output.locked_height_range : 0
-                            switch (output.attachment.type) {
-                                case Metaverse.constants.ATTACHMENT.TYPE.MST:
-                                    switch (output.attachment.status) {
-                                        case Metaverse.constants.MST.STATUS.REGISTER:
-                                            output.attachment.type = 'asset-issue';
-                                            break;
-                                        case Metaverse.constants.MST.STATUS.TRANSFER:
-                                            output.attachment.type = 'asset-transfer';
-                                            if (balances && balances.MST && balances.MST[output.attachment.symbol])
-                                                output.attachment.decimals = balances.MST[output.attachment.symbol].decimals
-                                            break;
-                                    }
-                                    break;
-                                case Metaverse.constants.ATTACHMENT.TYPE.MIT:
-                                    output.attachment.type = 'mit';
-                                    break;
-                                case Metaverse.constants.ATTACHMENT.TYPE.ETP_TRANSFER:
-                                    output.attachment.type = 'etp';
-                                    output.attachment.symbol = 'ETP';
-                                    output.attachment.decimals = 8;
-                                    break;
-                            }
-                        })
-                        tx.unconfirmed = true
-                        return this.addTxs([tx])
-                            .then(() => this.getData())
-                            .then(() => tx)
-                    })
-                )
-            )
+    send = async (tx) => {
+        tx.hash = (await this.broadcast(tx.encode().toString('hex'))).hash
+        tx.height = await this.getHeight()
+        tx.unconfirmed = true
+        let balances = await this.getBalances()
+        tx.outputs.forEach((output, index) => {
+            output.index = index
+            output.locked_height_range = (output.locktime) ? output.locktime : 0
+            output.locked_until = (output.locktime) ? tx.height + output.locked_height_range : 0
+            switch (output.attachment.type) {
+                case Metaverse.constants.ATTACHMENT.TYPE.MST:
+                    switch (output.attachment.status) {
+                        case Metaverse.constants.MST.STATUS.REGISTER:
+                            output.attachment.type = 'asset-issue';
+                            break;
+                        case Metaverse.constants.MST.STATUS.TRANSFER:
+                            output.attachment.type = 'asset-transfer';
+                            if (balances && balances.MST && balances.MST[output.attachment.symbol])
+                                output.attachment.decimals = balances.MST[output.attachment.symbol].decimals
+                            break;
+                    }
+                    break;
+                case Metaverse.constants.ATTACHMENT.TYPE.MIT:
+                    output.attachment.type = 'mit';
+                    break;
+                case Metaverse.constants.ATTACHMENT.TYPE.ETP_TRANSFER:
+                    output.attachment.type = 'etp';
+                    output.attachment.symbol = 'ETP';
+                    output.attachment.decimals = 8;
+                    break;
+            }
+        })
+        return this.addTxs([tx])
+            .then(() => this.getData())
+            .then(() => tx)
+
     }
 
     broadcast(rawtx: string, max_fee: number = undefined) {
@@ -613,7 +605,7 @@ export class MvsServiceProvider {
         return Metaverse.wallet.validateMnemonic(mnemonic, wordlist)
     }
 
-    verifyMessageSize(message){
+    verifyMessageSize(message) {
         return Metaverse.message.size(message)
     }
 
