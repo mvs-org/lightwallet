@@ -9,20 +9,20 @@ import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 })
 @Component({
     selector: 'page-transactions',
-    templateUrl: 'transactions.html',
+    templateUrl: 'transactions.html'
 })
 
 export class TransactionsPage {
 
-    asset: any
+    asset: string
     txs: any[]
     loading: boolean
 
     display_segment: string = "transactions"
-    height: number;
+    height: number
 
-    frozen_outputs_locked: any[] = [];
-    frozen_outputs_unlocked: any[] = [];
+    frozen_outputs_locked: any[] = []
+    frozen_outputs_unlocked: any[] = []
     order_by: string = 'locked_until'
     direction: number = 0
     blocktime: number
@@ -38,67 +38,25 @@ export class TransactionsPage {
         this.showTxs({ symbol: this.asset });
         this.loading = true;
         this.current_time = Date.now()
-
     }
 
-    ionViewDidEnter() {
-        console.log('Transactions page loaded')
-        this.mvs.getHeight()
-            .then(height=>{
-                this.height=height
-            })
-            .then(() => this.mvs.getFrozenOutputs())
-            .then(outputs=>{
-                this.frozen_outputs_locked = []
-                this.frozen_outputs_unlocked = []
-                let grouped_frozen_ouputs = {}
-                outputs.forEach((output) => {
-                    grouped_frozen_ouputs[output.height] = grouped_frozen_ouputs[output.height] ? grouped_frozen_ouputs[output.height] : {}
-                    if(grouped_frozen_ouputs[output.height][output.locked_until]) {
-                        grouped_frozen_ouputs[output.height][output.locked_until].value += output.value
-                        grouped_frozen_ouputs[output.height][output.locked_until].transactions.push(output.hash)
-                    } else {
-                        output.transactions = [output.hash]
-                        grouped_frozen_ouputs[output.height][output.locked_until] = output
-                    }
-                })
-                for (var height in grouped_frozen_ouputs) {
-                    var unlock = grouped_frozen_ouputs[height];
-                    for (var output in unlock) {
-                        if(this.height>parseInt(output))
-                            this.frozen_outputs_unlocked.push(unlock[output])
-                        else
-                            this.frozen_outputs_locked.push(unlock[output])
-                    }
-                }
-            })
-            .then(() => this.mvs.getBlocktime(this.height))
-            .then(blocktime => this.blocktime = blocktime)
-
-        this.mvs.getAddresses()
-            .then((addresses) => {
-                if (!Array.isArray(addresses) || !addresses.length)
-                    this.navCtrl.setRoot("LoginPage")
-            })
+    async ionViewDidEnter() {
+        this.height = await this.mvs.getHeight()
+        this.calculateFrozenOutputs()
+        this.blocktime = await this.mvs.getBlocktime(this.height)
     }
 
-    depositProgress(start_height, locked_until){
-        return Math.max(1, Math.min(99, Math.round((this.height-start_height)/(locked_until-start_height)*100)))
+    depositProgress(start, end) {
+        return Math.max(1, Math.min(99, Math.round((this.height - start) / (end - start) * 100)))
     }
 
-    private showTxs(filter) {
-        return this.mvs.getAddresses()
-            .then((addresses: string[]) => {
-                return this.mvs.getTxs()
-                    .then((txs: any[]) => this.filterTxs(txs, filter.symbol, addresses))
-            })
-            .then((txs: any) => {
-                this.txs = txs
-                this.loading = false;
-            })
+    private async showTxs(filter) {
+        let addresses = await this.mvs.getAddresses()
+        this.txs = await this.mvs.getTxs().then(txs=>this.filterTxs(txs, filter.symbol, addresses))
+        this.loading = false
     }
 
-    explorerURL = (tx) => (this.globals.network == 'mainnet') ? 'https://explorer.mvs.org/#!/tx/' + tx : 'https://explorer-testnet.mvs.org/#!/tx/' + tx;
+    explorerURL = (tx) => (this.globals.network == 'mainnet') ? 'https://explorer.mvs.org/#!/tx/' + tx : 'https://explorer-testnet.mvs.org/#!/tx/' + tx
 
     private filterTxs(txs: any[], symbol, addresses) {
         return Promise.all(txs.filter((tx) => this.filterTx(tx, symbol, addresses)))
@@ -111,9 +69,9 @@ export class TransactionsPage {
             if (this.isMineTXIO(input, addresses)) {
                 if (!tx.unconfirmed) {
                     if (['asset-transfer', 'asset-issue'].indexOf(input.attachment.type) !== -1 && input.attachment.symbol == asset)
-                        result = true;
+                        result = true
                     else if (asset == 'ETP' && input.value)
-                        result = true;
+                        result = true
                 }
             }
         });
@@ -126,17 +84,35 @@ export class TransactionsPage {
                     result = true;
             }
         });
-        if (result) return tx;
-    }
-
-    public formatQuantity(quantity, decimals) {
-        return quantity / Math.pow(10, decimals)
+        if (result) return tx
     }
 
     private isMineTXIO = (txio, addresses) => (addresses.indexOf(txio.address) !== -1)
 
-    format(quantity, decimals) {
-        return quantity / Math.pow(10, decimals);
+    async calculateFrozenOutputs() {
+        let outputs = await this.mvs.getFrozenOutputs()
+        this.frozen_outputs_locked = []
+        this.frozen_outputs_unlocked = []
+        let grouped_frozen_ouputs = {}
+        outputs.forEach((output) => {
+            grouped_frozen_ouputs[output.height] = grouped_frozen_ouputs[output.height] ? grouped_frozen_ouputs[output.height] : {}
+            if (grouped_frozen_ouputs[output.height][output.locked_until]) {
+                grouped_frozen_ouputs[output.height][output.locked_until].value += output.value
+                grouped_frozen_ouputs[output.height][output.locked_until].transactions.push(output.hash)
+            } else {
+                output.transactions = [output.hash]
+                grouped_frozen_ouputs[output.height][output.locked_until] = output
+            }
+        })
+        for (var height in grouped_frozen_ouputs) {
+            var unlock = grouped_frozen_ouputs[height];
+            for (var output in unlock) {
+                if (parseInt(height) > parseInt(output))
+                    this.frozen_outputs_unlocked.push(unlock[output])
+                else
+                    this.frozen_outputs_locked.push(unlock[output])
+            }
+        }
     }
 
 }
