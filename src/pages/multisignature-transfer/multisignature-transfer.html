@@ -12,10 +12,10 @@
     <ion-item no-lines>
         <ion-segment [(ngModel)]="type" color="primary">
             <ion-segment-button value="create">
-                {{ "ETH_TO_MVS" | translate}}
+                {{ "MULTISIGNATURE_TRANSFER.CREATE" | translate}}
             </ion-segment-button>
             <ion-segment-button value="sign">
-                {{ "MVS_TO_ETH" | translate}}
+                {{ "MULTISIGNATURE_TRANSFER.SIGN" | translate}}
             </ion-segment-button>
         </ion-segment>
     </ion-item>
@@ -128,15 +128,21 @@
 
         <ion-list style="padding-bottom: 0;">
 
-        <ion-card-content>
-            <h4>{{"MULTISIGNATURE_TRANSFER.TX_TO_SIGN"|translate}}:</h4>
-            <textarea fz-elastic ion-input full type="text" value="{{input}}" style="">{{input}}</textarea>
-        </ion-card-content>
+            <ion-card-content>
+                <h4>{{"MULTISIGNATURE_TRANSFER.TX_TO_SIGN"|translate}}:</h4>
+                <!--textarea fz-elastic ion-input full type="text" value="{{input}}" style="">{{input}}</textarea-->
+                <ion-textarea [(ngModel)]="input" name="input"></ion-textarea>
+            </ion-card-content>
 
+            <ion-item [ngClass]="{'error-border': !validPassword(passphrase_sign)}">
+                <ion-label color="primary" floating>{{"PASSWORD" | translate}}</ion-label>
+                <ion-input name="passphrase_sign" type="password" [(ngModel)]="passphrase_sign" required></ion-input>
+            </ion-item>
+            <br/>
         </ion-list>
         <ion-row class="padding-bottom">
             <ion-col>
-                <button type="submit" ion-button full icon-left (click)="sign()" color="secondary">
+                <button type="submit" ion-button full icon-left (click)="sign(sendFrom, input, passphrase_sign)" color="secondary">
                     <ion-icon disabled="checked" name="send"></ion-icon>
                     {{"SIGN" | translate}}
                 </button>

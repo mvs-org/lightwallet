@@ -532,6 +532,8 @@
 
     "SIGN": "Sign",
     "MULTISIGNATURE_TRANSFER.TX_TO_SIGN": "Transaction to sign",
-    "MULTISIGNATURE_TRANSFER.SIGNED_TX": "Signed transaction"
+    "MULTISIGNATURE_TRANSFER.SIGNED_TX": "Signed transaction",
+    "MULTISIGNATURE_TRANSFER.CREATE": "Create transaction",
+    "MULTISIGNATURE_TRANSFER.SIGN": "Sign transaction"
 
 }

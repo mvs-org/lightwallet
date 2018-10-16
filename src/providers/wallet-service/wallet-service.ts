@@ -178,6 +178,20 @@ export class WalletServiceProvider {
             .then((multisigs) => (multisigs) ? multisigs : [])
     }
 
+    getMultisigInfoFromAddress(address) {
+        return this.getMultisigsInfo()
+            .then((multisigs) => {
+                return this.findMultisigWallet(address, multisigs)
+            })
+    }
+
+    findMultisigWallet(address, wallets) {
+        if (wallets.length == 0)
+            throw 'wallet not found';
+        return (wallets[0].a == address) ? wallets[0] : this.findMultisigWallet(address, wallets.slice(1));
+    }
+
+
     addMultisigInfo(newMultisig: Array<any>) {
         return this.getMultisigsInfo()
             .then((multisigs: Array<any>) => this.storage.set('multisigs', multisigs.concat(newMultisig)))
@@ -195,6 +209,15 @@ export class WalletServiceProvider {
 
     findDeriveNodeByPublic(wallet: any, publicKey: string, maxDepth: number) {
         return wallet.findDeriveNodeByPublicKey(publicKey, maxDepth ? maxDepth : 200)
+    }
+
+    signMultisigTx(address, tx, passphrase) {
+        return Promise.all([this.getWallet(passphrase), this.getMultisigInfoFromAddress(address)])
+            .then((results) => results[0].signMultisig(Metaverse.transaction.decode(tx), results[1]))
+            .catch((error) => {
+                console.error(error)
+                throw Error(error.message);
+            })
     }
 
 }

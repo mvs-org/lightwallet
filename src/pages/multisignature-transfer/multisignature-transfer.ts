@@ -5,6 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { AlertProvider } from '../../providers/alert/alert';
 import { Keyboard } from '@ionic-native/keyboard';
+import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
 
 @IonicPage()
 @Component({
@@ -43,6 +44,7 @@ export class MultisignatureTransferPage {
     type: string = "create"
     input: string
     signedTx: string
+    passphrase_sign: string = ""
 
     constructor(
         public navCtrl: NavController,
@@ -52,6 +54,7 @@ export class MultisignatureTransferPage {
         private alert: AlertProvider,
         private barcodeScanner: BarcodeScanner,
         private keyboard: Keyboard,
+        private wallet: WalletServiceProvider,
         private translate: TranslateService
     ) {
 
@@ -259,9 +262,12 @@ export class MultisignatureTransferPage {
         })
     }
 
-    sign() {
-        //TODO
-        this.signedTx = "aaa"
+    sign(sendFrom, tx, passphrase) {
+        //signMultisigTx
+        //console.log(sendFrom, tx, passphrase)
+        this.wallet.signMultisigTx(sendFrom, tx, passphrase)
+            .then((result) => console.log(result))
+        //this.signedTx = "aaa"
     }
 
 }

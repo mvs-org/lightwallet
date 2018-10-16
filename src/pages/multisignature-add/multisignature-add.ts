@@ -143,7 +143,7 @@ export class MultisignatureAddPage {
                                         Promise.all(newMultisig.k.map((publicKey) => {
                                             this.wallet.findDeriveNodeByPublic(wallet, publicKey, addresses ? addresses.length : undefined)
                                                 .then(myMultisigWallet => {
-                                                    console.log("Found it!")
+                                                    //console.log("Found it!")
                                                     myPublicKey = publicKey;
                                                 })
                                                 .catch(error=>{
