@@ -3,7 +3,7 @@ import { Http } from '@angular/http';
 import { AppGlobals } from '../../app/app.global';
 import 'rxjs/add/operator/map';
 import { Storage } from '@ionic/storage';
-import * as Metaverse from 'metaversejs/dist/metaverse.js';
+import * as Metaverse from 'metaversejs/index.js';
 import { CryptoServiceProvider } from '../crypto-service/crypto-service';
 
 @Injectable()
@@ -83,8 +83,8 @@ export class WalletServiceProvider {
         return Metaverse.wallet.fromMnemonic(mnemonic)
     }
 
-    verifyMessage(message, address, signature){
-        return Metaverse.message.verify(message,address,Buffer.from(signature,'hex'))
+    verifyMessage(message, address, signature) {
+        return Metaverse.message.verify(message, address, Buffer.from(signature, 'hex'))
     }
 
     getHDNodeFromSeed(seed) {
@@ -167,7 +167,7 @@ export class WalletServiceProvider {
     addMultisig(newMultisig) {
         return this.getMultisigAddresses()
             .then((multisig_addresses) => {
-                if(multisig_addresses.indexOf(newMultisig.a) == -1) {
+                if (multisig_addresses.indexOf(newMultisig.a) == -1) {
                     return Promise.all([this.addMultisigAddresses([newMultisig.a]), this.addMultisigInfo([newMultisig])])
                 }
             })
@@ -195,7 +195,7 @@ export class WalletServiceProvider {
     addMultisigInfo(newMultisig: Array<any>) {
         return this.getMultisigsInfo()
             .then((multisigs: Array<any>) => {
-                newMultisig.map(multisig=> {
+                newMultisig.map(multisig => {
                     multisig.r = Metaverse.multisig.generate(multisig.m, multisig.k).script
                     return multisig
                 })
@@ -217,13 +217,11 @@ export class WalletServiceProvider {
         return wallet.findDeriveNodeByPublicKey(publicKey, maxDepth ? maxDepth : 200)
     }
 
-    signMultisigTx(address, tx, passphrase) {
-        return Promise.all([this.getWallet(passphrase), this.getMultisigInfoFromAddress(address)])
-            .then((results) => results[0].signMultisig(tx, results[1]))
-            .catch((error) => {
-                console.error(error)
-                throw Error(error.message);
-            })
+    async signMultisigTx(address, tx, passphrase) {
+        console.log(tx)
+        let wallet = await this.getWallet(passphrase)
+        let parameters = await this.getMultisigInfoFromAddress(address)
+        return wallet.signMultisig(tx, parameters)
     }
 
 }
