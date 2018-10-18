@@ -689,10 +689,14 @@ export class MvsServiceProvider {
        let transactions = await this.getTxs()
        let tx = Metaverse.transaction.decode(rawtx);
         tx.inputs.forEach(input=>{
+            let found=false
             transactions.forEach(t=>{
-                if(input.previous_output.hash==t.hash)
+                if(input.previous_output.hash==t.hash){
+                    found=true
                     input.previous_output.script=t.outputs[input.previous_output.index].script
+                }
             })
+            if(!found) throw `Error finding previous output script for ${input.previous_output.hash}-${input.previous_output.index}`
         })
        return tx
     }
