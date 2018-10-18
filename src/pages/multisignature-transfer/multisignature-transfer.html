@@ -124,16 +124,40 @@
     </form>
 
 
-    <form *ngIf="type == 'sign'" #sendForm="ngForm" style="padding-bottom: 0;">
+    <form *ngIf="type == 'sign' && !decoded_tx" #sendForm="ngForm" style="padding-bottom: 0;">
 
-        <ion-list style="padding-bottom: 0;">
-
+        <ion-list>
             <ion-card-content>
                 <h4>{{"MULTISIGNATURE_TRANSFER.TX_TO_SIGN"|translate}}:</h4>
-                <!--textarea fz-elastic ion-input full type="text" value="{{input}}" style="">{{input}}</textarea-->
-                <ion-textarea [(ngModel)]="input" name="input"></ion-textarea>
+                <!--textarea fz-elastic ion-input full type="text" value="{{input}}" name="input" style="">{{input}}</textarea-->
+                <ion-textarea fz-elastic [(ngModel)]="input" name="input"></ion-textarea>
             </ion-card-content>
+        </ion-list>
+        <ion-row>
+            <ion-col>
+                <button type="submit" ion-button full icon-left (click)="decode(input)" [disabled]="!input" color="secondary">
+                    <ion-icon disabled="checked" name="send"></ion-icon>
+                    {{"MULTISIGNATURE_TRANSFER.DECODE" | translate}}
+                </button>
+            </ion-col>
+            <ion-col>
+                <button ion-button color="danger" full item-right icon-left (click)="cancel($event)">
+                    <ion-icon name="cancel"></ion-icon>
+                    {{'CANCEL'|translate}}
+                </button>
+            </ion-col>
+        </ion-row>
 
+    </form>
+    <form *ngIf="type == 'sign' && decoded_tx" #sendForm="ngForm" style="padding-bottom: 0;">
+        <ion-list>
+            TODO: Decode TX
+            <div *ngFor="let input of decoded_tx.inputs">
+                <div>Script: {{input.script}}</div>
+            </div>
+            <div *ngFor="let output of decoded_tx.outputs">
+                <div>Script: {{output.script}}</div>
+            </div>
             <ion-item [ngClass]="{'error-border': !validPassword(passphrase_sign)}">
                 <ion-label color="primary" floating>{{"PASSWORD" | translate}}</ion-label>
                 <ion-input name="passphrase_sign" type="password" [(ngModel)]="passphrase_sign" required></ion-input>
@@ -148,7 +172,7 @@
                 </button>
             </ion-col>
             <ion-col>
-                <button ion-button color="danger" full item-right icon-left (click)="cancel($event)">
+                <button ion-button color="danger" full item-right icon-left (click)="resetInput()">
                     <ion-icon name="cancel"></ion-icon>
                     {{'CANCEL'|translate}}
                 </button>

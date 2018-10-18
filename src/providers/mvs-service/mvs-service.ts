@@ -684,10 +684,9 @@ export class MvsServiceProvider {
         return this.blockchain.multisig.get(address)
     }
 
-   async deodeTx(rawtx){
-       console.log(rawtx)
-       let transactions = await this.getTxs()
-       let tx = Metaverse.transaction.decode(rawtx);
+    async decodeTx(rawtx){
+        let transactions = await this.getTxs()
+        let tx = Metaverse.transaction.decode(rawtx);
         tx.inputs.forEach(input=>{
             let found=false
             transactions.forEach(t=>{
@@ -698,7 +697,7 @@ export class MvsServiceProvider {
             })
             if(!found) throw `Error finding previous output script for ${input.previous_output.hash}-${input.previous_output.index}`
         })
-       return tx
+        return tx
     }
 
 }

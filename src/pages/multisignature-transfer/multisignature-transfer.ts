@@ -45,6 +45,7 @@ export class MultisignatureTransferPage {
     input: string
     signedTx: string
     passphrase_sign: string = ""
+    decoded_tx: any
 
     constructor(
         public navCtrl: NavController,
@@ -263,12 +264,22 @@ export class MultisignatureTransferPage {
     }
 
     async sign(sendFrom, rawtx, passphrase) {
-        //signMultisigTx
-        //console.log(sendFrom, tx, passphrase)
-        let tx = await this.mvs.deodeTx(rawtx)
+        let tx = await this.mvs.decodeTx(rawtx)
         let signedTx = await this.wallet.signMultisigTx(sendFrom, tx, passphrase)
         console.log(signedTx)
-        //this.signedTx = "aaa"
+    }
+
+    decode(tx) {
+        this.mvs.decodeTx(tx)
+            .then((result) => this.decoded_tx = result)
+            .catch((error) => {
+                console.error(error);
+                this.alert.showErrorTranslated('MESSAGE.ERROR_DECODE_MULTISIG_SUBTITLE', 'MESSAGE.ERROR_DECODE_MULTISIG_BODY')
+            })
+    }
+
+    resetInput() {
+        this.decoded_tx = undefined
     }
 
 }

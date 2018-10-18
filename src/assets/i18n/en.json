@@ -534,6 +534,11 @@
     "MULTISIGNATURE_TRANSFER.TX_TO_SIGN": "Transaction to sign",
     "MULTISIGNATURE_TRANSFER.SIGNED_TX": "Signed transaction",
     "MULTISIGNATURE_TRANSFER.CREATE": "Create transaction",
-    "MULTISIGNATURE_TRANSFER.SIGN": "Sign transaction"
+    "MULTISIGNATURE_TRANSFER.SIGN": "Sign transaction",
+
+    "MULTISIGNATURE_TRANSFER.DECODE": "Verify transaction",
+
+    "MESSAGE.ERROR_DECODE_MULTISIG_SUBTITLE": "Cannot decode this raw transaction",
+    "MESSAGE.ERROR_DECODE_MULTISIG_BODY": "This raw transaction cannot be decoded. Please make sure this raw transaction is correct."
 
 }
