@@ -539,6 +539,9 @@
     "MULTISIGNATURE_TRANSFER.DECODE": "Verify transaction",
 
     "MESSAGE.ERROR_DECODE_MULTISIG_SUBTITLE": "Cannot decode this raw transaction",
-    "MESSAGE.ERROR_DECODE_MULTISIG_BODY": "This raw transaction cannot be decoded. Please make sure this raw transaction is correct."
+    "MESSAGE.ERROR_DECODE_MULTISIG_BODY": "This raw transaction cannot be decoded. Please make sure this raw transaction is correct and has been created from the selected multisignature address",
+    "MULTISIGNATURE.CURRENT_NBR_SIGN": "Current number of signatures",
+    "MULTISIGNATURE.NEW_NBR_SIGN": "New number of signatures",
+    "MULTISIGNATURE.BROADCAST": "Broadcast transaction"
 
 }

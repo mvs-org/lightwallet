@@ -218,7 +218,6 @@ export class WalletServiceProvider {
     }
 
     async signMultisigTx(address, tx, passphrase) {
-        console.log(tx)
         let wallet = await this.getWallet(passphrase)
         let parameters = await this.getMultisigInfoFromAddress(address)
         return wallet.signMultisig(tx, parameters)

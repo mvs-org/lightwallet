@@ -46,6 +46,11 @@ export class MultisignatureTransferPage {
     signedTx: string
     passphrase_sign: string = ""
     decoded_tx: any
+    address_info: any
+    signed_tx: any
+    raw_signed_tx: any
+    nbr_sign_before_sign: number
+    nbr_sign_after_sign: number
 
     constructor(
         public navCtrl: NavController,
@@ -95,6 +100,9 @@ export class MultisignatureTransferPage {
                 this.addressbalances = addrblncs
 
             })
+
+        this.wallet.getMultisigInfoFromAddress(this.sendFrom)
+            .then((info) => this.address_info = info)
     }
 
     ionViewDidEnter() {
@@ -146,7 +154,7 @@ export class MultisignatureTransferPage {
                     this.recipient_address,
                     (this.recipient_avatar && this.recipient_avatar_valid) ? this.recipient_avatar : undefined,
                     Math.round(parseFloat(this.quantity) * Math.pow(10, this.decimals)),
-                    (this.sendFrom != 'auto') ? this.sendFrom : null,
+                    this.sendFrom,
                     (this.changeAddress != 'auto') ? this.changeAddress : undefined,
                     this.fee,
                     (messages !== []) ? messages : undefined
@@ -265,13 +273,17 @@ export class MultisignatureTransferPage {
 
     async sign(sendFrom, rawtx, passphrase) {
         let tx = await this.mvs.decodeTx(rawtx)
-        let signedTx = await this.wallet.signMultisigTx(sendFrom, tx, passphrase)
-        console.log(signedTx)
+        this.signed_tx = await this.wallet.signMultisigTx(sendFrom, tx, passphrase)
+        this.raw_signed_tx = this.signed_tx.encode().toString('hex')
+        this.nbr_sign_after_sign = this.signed_tx.inputs[0].script.length - 2
     }
 
     decode(tx) {
         this.mvs.decodeTx(tx)
-            .then((result) => this.decoded_tx = result)
+            .then((result) => {
+                this.decoded_tx = result
+                this.nbr_sign_before_sign = this.decoded_tx.inputs[0].script.split("[").length - 2
+            })
             .catch((error) => {
                 console.error(error);
                 this.alert.showErrorTranslated('MESSAGE.ERROR_DECODE_MULTISIG_SUBTITLE', 'MESSAGE.ERROR_DECODE_MULTISIG_BODY')
@@ -280,6 +292,34 @@ export class MultisignatureTransferPage {
 
     resetInput() {
         this.decoded_tx = undefined
+        this.passphrase_sign = ""
+        this.decoded_tx = undefined
+        this.signed_tx = undefined
+        this.raw_signed_tx = undefined
+        this.nbr_sign_before_sign = undefined
+        this.nbr_sign_after_sign = undefined
+    }
+
+    broadcast() {
+        this.alert.showLoading()
+            .then(() => this.mvs.send(this.signed_tx))
+            .then((result) => {
+                this.navCtrl.pop()
+                this.navCtrl.pop()
+                this.alert.stopLoading()
+                this.alert.showSent('SUCCESS_SEND_TEXT', result.hash)
+            })
+            .catch((error) => {
+                console.error(error)
+                this.alert.stopLoading()
+                switch(error.message){
+                    case "ERR_CONNECTION":
+                        this.alert.showError('ERROR_SEND_TEXT', '')
+                        break;
+                    default:
+                        this.alert.showError('MESSAGE.BROADCAST_ERROR', error.message)
+                }
+            })
     }
 
 }

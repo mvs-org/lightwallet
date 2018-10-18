@@ -158,13 +158,27 @@
             <div *ngFor="let output of decoded_tx.outputs">
                 <div>Script: {{output.script}}</div>
             </div>
+            <ion-item *ngIf="nbr_sign_before_sign">
+                <ion-row>
+                    <ion-col>{{"MULTISIGNATURE.NBR_PERSON" | translate}}</ion-col>
+                    <ion-col>{{address_info.n}}</ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col>{{"MULTISIGNATURE.SIGN_REQ" | translate}}</ion-col>
+                    <ion-col>{{address_info.m}}</ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col>{{"MULTISIGNATURE.CURRENT_NBR_SIGN" | translate}}</ion-col>
+                    <ion-col>{{nbr_sign_before_sign}}</ion-col>
+                </ion-row>
+            </ion-item>
             <ion-item [ngClass]="{'error-border': !validPassword(passphrase_sign)}">
                 <ion-label color="primary" floating>{{"PASSWORD" | translate}}</ion-label>
                 <ion-input name="passphrase_sign" type="password" [(ngModel)]="passphrase_sign" required></ion-input>
             </ion-item>
             <br/>
         </ion-list>
-        <ion-row class="padding-bottom">
+        <ion-row class="padding-bottom" *ngIf="!raw_signed_tx">
             <ion-col>
                 <button type="submit" ion-button full icon-left (click)="sign(sendFrom, input, passphrase_sign)" color="secondary">
                     <ion-icon disabled="checked" name="send"></ion-icon>
@@ -178,10 +192,37 @@
                 </button>
             </ion-col>
         </ion-row>
+        <ion-list>
+            <ion-item *ngIf="nbr_sign_after_sign">
+                <ion-row>
+                    <ion-col>{{"MULTISIGNATURE.SIGN_REQ" | translate}}</ion-col>
+                    <ion-col>{{address_info.m}}</ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col>{{"MULTISIGNATURE.NEW_NBR_SIGN" | translate}}</ion-col>
+                    <ion-col>{{nbr_sign_after_sign}}</ion-col>
+                </ion-row>
+            </ion-item>
+        </ion-list>
 
-        <ion-card-content *ngIf="signedTx">
+        <ion-row *ngIf="signed_tx && nbr_sign_after_sign>=address_info.m">
+            <ion-col>
+                <button type="submit" ion-button full icon-left (click)="broadcast()" color="secondary">
+                    <ion-icon disabled="checked" name="send"></ion-icon>
+                    {{"MULTISIGNATURE.BROADCAST" | translate}}
+                </button>
+            </ion-col>
+            <ion-col>
+                <button ion-button color="danger" full item-right icon-left (click)="resetInput()">
+                    <ion-icon name="cancel"></ion-icon>
+                    {{'CANCEL'|translate}}
+                </button>
+            </ion-col>
+        </ion-row>
+
+        <ion-card-content *ngIf="raw_signed_tx && nbr_sign_after_sign<address_info.m">
             <h4>{{"MULTISIGNATURE_TRANSFER.SIGNED_TX"|translate}}:</h4>
-            <textarea fz-elastic ion-input full type="text" #copySignedTx value="{{signedTx}}" style="">{{signedTx}}</textarea>
+            <textarea fz-elastic ion-input full type="text" #copySignedTx value="{{raw_signed_tx}}" style="" readonly>{{raw_signed_tx}}</textarea>
             <button col-sm-12 col-md-6 col-lg-3 ion-button full item-right icon-left [ngxClipboard]="copySignedTx">
                 <ion-icon name="copy"></ion-icon>
                 {{'COPY'|translate}}

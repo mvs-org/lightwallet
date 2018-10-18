@@ -197,7 +197,7 @@ export class MultisignatureAddPage {
                     this.alert.showError('MULTISIG_ADDRESS_ALREADY_ADD.ERROR', newMultisig.a)
                 } else {
 
-                    /*try {
+                    try {
                         this.mvs.addMultisigWallet(newMultisig)
                     } catch (error) {
                         switch(error.message){
@@ -210,7 +210,7 @@ export class MultisignatureAddPage {
                                 console.error(error);
                                 break;
                         }
-                    }*/
+                    }
                     this.wallet.addMultisig(newMultisig)
                         .then(() => this.mvs.dataReset())
                         .then(() => Promise.all([this.mvs.updateHeight(), this.updateBalances()]))
