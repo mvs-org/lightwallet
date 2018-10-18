@@ -262,11 +262,12 @@ export class MultisignatureTransferPage {
         })
     }
 
-    sign(sendFrom, tx, passphrase) {
+    async sign(sendFrom, rawtx, passphrase) {
         //signMultisigTx
         //console.log(sendFrom, tx, passphrase)
-        this.wallet.signMultisigTx(sendFrom, tx, passphrase)
-            .then((result) => console.log(result))
+        let tx = await this.mvs.deodeTx(rawtx)
+        let signedTx = await this.wallet.signMultisigTx(sendFrom, tx, passphrase)
+        console.log(signedTx)
         //this.signedTx = "aaa"
     }
 

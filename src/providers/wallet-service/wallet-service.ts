@@ -194,7 +194,13 @@ export class WalletServiceProvider {
 
     addMultisigInfo(newMultisig: Array<any>) {
         return this.getMultisigsInfo()
-            .then((multisigs: Array<any>) => this.storage.set('multisigs', multisigs.concat(newMultisig)))
+            .then((multisigs: Array<any>) => {
+                newMultisig.map(multisig=> {
+                    multisig.r = Metaverse.multisig.generate(multisig.m, multisig.k).script
+                    return multisig
+                })
+                this.storage.set('multisigs', multisigs.concat(newMultisig))
+            })
     }
 
     getMultisigAddresses() {
@@ -213,7 +219,7 @@ export class WalletServiceProvider {
 
     signMultisigTx(address, tx, passphrase) {
         return Promise.all([this.getWallet(passphrase), this.getMultisigInfoFromAddress(address)])
-            .then((results) => results[0].signMultisig(Metaverse.transaction.decode(tx), results[1]))
+            .then((results) => results[0].signMultisig(tx, results[1]))
             .catch((error) => {
                 console.error(error)
                 throw Error(error.message);

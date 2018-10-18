@@ -4,7 +4,7 @@ import { AppGlobals } from '../../app/app.global';
 import 'rxjs/add/operator/map';
 import { Storage } from '@ionic/storage';
 import { WalletServiceProvider } from '../wallet-service/wallet-service';
-import * as Metaverse from 'metaversejs/dist/metaverse.js';
+import * as Metaverse from 'metaversejs/index.js';
 import * as Blockchain from 'mvs-blockchain';
 
 @Injectable()
@@ -682,6 +682,19 @@ export class MvsServiceProvider {
 
     getMultisigWallet(address) {
         return this.blockchain.multisig.get(address)
+    }
+
+   async deodeTx(rawtx){
+       console.log(rawtx)
+       let transactions = await this.getTxs()
+       let tx = Metaverse.transaction.decode(rawtx);
+        tx.inputs.forEach(input=>{
+            transactions.forEach(t=>{
+                if(input.previous_output.hash==t.hash)
+                    input.previous_output.script=t.outputs[input.previous_output.index].script
+            })
+        })
+       return tx
     }
 
 }
