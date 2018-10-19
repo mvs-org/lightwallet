@@ -548,6 +548,7 @@
     "MULTISIGNATURE.GENERATE": "Generate transaction",
     "MESSAGE.SIGN_TRANSACTION": "Unable to sign this transaction",
     "MULTISIGNATURE.TX_SUMMARY": "Transaction summary",
-    "MULTISIGNATURE.TX_SUMMARY_OUPUTS": "Recipients"
+    "MULTISIGNATURE.TX_SUMMARY_OUPUTS": "Recipient(s)",
+    "MULTISIGNATURE.TX_SUMMARY_SIGN_INFO": "Signatures information"
 
 }

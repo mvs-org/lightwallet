@@ -160,17 +160,23 @@
                 </ion-row>
                 <ion-row>
                     <ion-item>
-                        {{'MULTISIGNATURE.TX_SUMMARY_OUPUTS'|translate}}:
+                        <h2>{{'MULTISIGNATURE.TX_SUMMARY_OUPUTS'|translate}}:</h2>
                     </ion-item>
                 </ion-row>
                 <div *ngFor="let output of decoded_tx.outputs">
                     <ion-item *ngIf="output.address != sendFrom">
                         <ion-row>
-                            <ion-col>{{output.address}}</ion-col>
+                            <ion-col *ngIf="output.attachment.to_did">{{output.attachment.to_did}}</ion-col>
+                            <ion-col *ngIf="!output.attachment.to_did">{{output.address}}</ion-col>
                             <ion-col>{{output.value | format : 8}} ETP</ion-col>
                         </ion-row>
                     </ion-item>
                 </div>
+                <ion-row *ngIf="nbr_sign_before_sign">
+                    <ion-item>
+                        <h2>{{'MULTISIGNATURE.TX_SUMMARY_SIGN_INFO'|translate}}</h2>
+                    </ion-item>
+                </ion-row>
                 <ion-item *ngIf="nbr_sign_before_sign">
                     <ion-row>
                         <ion-col>{{"MULTISIGNATURE.NBR_PERSON" | translate}}</ion-col>
