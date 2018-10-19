@@ -300,7 +300,6 @@ export class MultisignatureTransferPage {
             .then((result) => {
                 this.decoded_tx = result
                 this.nbr_sign_before_sign = this.decoded_tx.inputs[0].script.split("[").length - 2
-                console.log(this.decoded_tx.stringify)
             })
             .catch((error) => {
                 console.error(error);

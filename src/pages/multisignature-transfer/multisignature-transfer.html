@@ -151,28 +151,43 @@
 
     </form>
     <form *ngIf="type == 'sign' && decoded_tx" #sendForm="ngForm" style="padding-bottom: 0;">
+        <ion-card>
+            <ion-grid>
+                <ion-row>
+                    <ion-item>
+                        <h1>{{'MULTISIGNATURE.TX_SUMMARY'|translate}}</h1>
+                    </ion-item>
+                </ion-row>
+                <ion-row>
+                    <ion-item>
+                        {{'MULTISIGNATURE.TX_SUMMARY_OUPUTS'|translate}}:
+                    </ion-item>
+                </ion-row>
+                <div *ngFor="let output of decoded_tx.outputs">
+                    <ion-item *ngIf="output.address != sendFrom">
+                        <ion-row>
+                            <ion-col>{{output.address}}</ion-col>
+                            <ion-col>{{output.value | format : 8}} ETP</ion-col>
+                        </ion-row>
+                    </ion-item>
+                </div>
+                <ion-item *ngIf="nbr_sign_before_sign">
+                    <ion-row>
+                        <ion-col>{{"MULTISIGNATURE.NBR_PERSON" | translate}}</ion-col>
+                        <ion-col>{{address_info.n}}</ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col>{{"MULTISIGNATURE.SIGN_REQ" | translate}}</ion-col>
+                        <ion-col>{{address_info.m}}</ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col>{{"MULTISIGNATURE.CURRENT_NBR_SIGN" | translate}}</ion-col>
+                        <ion-col>{{nbr_sign_before_sign}}</ion-col>
+                    </ion-row>
+                </ion-item>
+            </ion-grid>
+        </ion-card>
         <ion-list>
-            TODO: Decode TX
-            <div *ngFor="let input of decoded_tx.inputs">
-                <div>Script: {{input.script}}</div>
-            </div>
-            <div *ngFor="let output of decoded_tx.outputs">
-                <div>Script: {{output.script}}</div>
-            </div>
-            <ion-item *ngIf="nbr_sign_before_sign">
-                <ion-row>
-                    <ion-col>{{"MULTISIGNATURE.NBR_PERSON" | translate}}</ion-col>
-                    <ion-col>{{address_info.n}}</ion-col>
-                </ion-row>
-                <ion-row>
-                    <ion-col>{{"MULTISIGNATURE.SIGN_REQ" | translate}}</ion-col>
-                    <ion-col>{{address_info.m}}</ion-col>
-                </ion-row>
-                <ion-row>
-                    <ion-col>{{"MULTISIGNATURE.CURRENT_NBR_SIGN" | translate}}</ion-col>
-                    <ion-col>{{nbr_sign_before_sign}}</ion-col>
-                </ion-row>
-            </ion-item>
             <ion-item [ngClass]="{'error-border': !validPassword(passphrase_sign)}">
                 <ion-label color="primary" floating>{{"PASSWORD" | translate}}</ion-label>
                 <ion-input name="passphrase_sign" type="password" [(ngModel)]="passphrase_sign" required></ion-input>
@@ -206,6 +221,15 @@
             </ion-item>
         </ion-list>
 
+        <ion-card-content *ngIf="raw_signed_tx">
+            <h4>{{"MULTISIGNATURE_TRANSFER.SIGNED_TX"|translate}}:</h4>
+            <textarea fz-elastic ion-input full type="text" #copySignedTx value="{{raw_signed_tx}}" style="" readonly>{{raw_signed_tx}}</textarea>
+            <button col-sm-12 col-md-6 col-lg-3 ion-button full item-right icon-left [ngxClipboard]="copySignedTx">
+                <ion-icon name="copy"></ion-icon>
+                {{'COPY'|translate}}
+            </button>
+        </ion-card-content>
+
         <ion-row *ngIf="signed_tx && nbr_sign_after_sign>=address_info.m">
             <ion-col>
                 <button type="submit" ion-button full icon-left (click)="broadcast()" color="secondary">
@@ -220,15 +244,6 @@
                 </button>
             </ion-col>
         </ion-row>
-
-        <ion-card-content *ngIf="raw_signed_tx && nbr_sign_after_sign<address_info.m">
-            <h4>{{"MULTISIGNATURE_TRANSFER.SIGNED_TX"|translate}}:</h4>
-            <textarea fz-elastic ion-input full type="text" #copySignedTx value="{{raw_signed_tx}}" style="" readonly>{{raw_signed_tx}}</textarea>
-            <button col-sm-12 col-md-6 col-lg-3 ion-button full item-right icon-left [ngxClipboard]="copySignedTx">
-                <ion-icon name="copy"></ion-icon>
-                {{'COPY'|translate}}
-            </button>
-        </ion-card-content>
 
     </form>
 </ion-content>

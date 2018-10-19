@@ -70,7 +70,6 @@ export class MvsServiceProvider {
             .then(wallet => this.getUtxoFromMultisig(from_address)
                 .then((utxo) => this.getHeight().then(height => Metaverse.output.findUtxo(utxo, target, height, fee)))
                 .then((result) => {
-                    console.log(result)
                     if (result.utxo.length > 676) {
                         throw Error('ERR_TOO_MANY_INPUTS');
                     }
