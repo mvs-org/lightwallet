@@ -13,7 +13,7 @@
 
   "MNEMONIC_SHOW.TITLE": "您的钱包助记词",
   "YOUR_MNEMONIC_WORDS": "您的助记词",
-  "IMPORT_WALLET": "导入钱包",
+  "IMPORT_WALLET": "导入并进入钱包",
   "CREATE_NEW_WALLET": "创建新的钱包",
   "CREATE_WALLET": "恭喜您，钱包已创建成功",
   "BUTTON.OK": "确认",

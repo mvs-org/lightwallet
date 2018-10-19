@@ -1,0 +1,84 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+        <ion-title>{{ "MULTISIGNATURE" | translate}}</ion-title>
+    </ion-navbar>
+</ion-header>
+
+
+<ion-content padding style="padding-bottom: 0;">
+    <ion-row>
+        <ion-col>
+            <p align="center">{{"MULTISIGNATURE.INFORMATION" | translate}}</p>
+        </ion-col>
+    </ion-row>
+    <div class="no-address" *ngIf="no_address">{{"MULTISIGNATURE.NO_ADDRESS" | translate}}</div>
+
+    <ion-card class="avatar-card" *ngFor="let multisig of multisigs">
+        <ion-grid>
+            <ion-row>
+                <ion-col>
+                    <ion-item>
+                        <ion-avatar item-start>
+                            <img class="multisig-logo" [src]="'assets/icon/default.png'">
+                        </ion-avatar>
+                        <ion-row>
+                            <ion-col>
+                                <h1 class="address manual-copy display-overflow">{{multisig.a}}</h1>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row class="asset-balance">
+                            <ion-col>
+                                <div class="asset-balance-text">{{"ACCOUNT.AVAILABLE" | translate}}: {{(addressBalancesObject[multisig.a] && addressBalancesObject[multisig.a].ETP )?format(addressBalancesObject[multisig.a].ETP.available,addressBalancesObject[multisig.a].ETP.decimals):0}} ETP</div>
+                            </ion-col>
+                            <ion-col>
+                                <button class="right-buttons" ion-button clear icon-left color="danger" icon-left (click)="gotoMultisigTransfer('ETP', multisig.a)">
+                                    <ion-icon name="send"></ion-icon>
+                                    {{"SEND_MULTISIG" | translate}}
+                                </button>
+                            </ion-col>
+                        </ion-row>
+                        <div *ngIf="addressbalances[multisig.a]">
+                            <ion-row class="asset-balance" *ngFor="let mst of addressbalances[multisig.a]">
+                                <ion-col>
+                                    <div class="asset-balance-text">{{format(mst.available,mst.decimals)}} {{mst.name}}</div>
+                                </ion-col>
+                                <ion-col>
+                                    <button class="right-buttons" ion-button clear icon-left color="danger" icon-left (click)="gotoMultisigTransfer(mst.name, multisig.a)">
+                                        <ion-icon name="send"></ion-icon>
+                                        {{"SEND" | translate}} {{mst.name}}
+                                    </button>
+                                </ion-col>
+                            </ion-row>
+                        </div>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-item>
+                    <h2 class="certificates-title"><ion-icon name="paper"></ion-icon> {{"MULTISIGNATURE.DETAILS" | translate}}:</h2>
+                    <ion-row>
+                        <ion-col>{{"MULTISIGNATURE.NBR_PERSON" | translate}}</ion-col>
+                        <ion-col>{{multisig.n}}</ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col>{{"MULTISIGNATURE.SIGN_REQ" | translate}}</ion-col>
+                        <ion-col>{{multisig.m}}</ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col>{{"MULTISIGNATURE.PUBLIC_KEYS" | translate}}</ion-col>
+                        <ion-col>
+                            <div *ngFor="let publicKey of multisig.k" class="public-key manual-copy display-overflow" [ngClass]="{'self-publickey': publicKey == multisig.s}">{{publicKey}}</div>
+                        </ion-col>
+                    </ion-row>
+                </ion-item>
+            </ion-row>
+        </ion-grid>
+    </ion-card>
+    <button ion-button icon-left color="primary" icon-left (click)="addAddress()" class="create-avatar-btn">
+        <ion-icon name="add"></ion-icon>
+        {{"MULTISIGNATURE.ADD_ADDRESS" | translate}}
+    </button>
+</ion-content>

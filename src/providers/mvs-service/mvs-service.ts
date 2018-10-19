@@ -4,7 +4,7 @@ import { AppGlobals } from '../../app/app.global';
 import 'rxjs/add/operator/map';
 import { Storage } from '@ionic/storage';
 import { WalletServiceProvider } from '../wallet-service/wallet-service';
-import * as Metaverse from 'metaversejs/dist/metaverse.js';
+import * as Metaverse from 'metaversejs/index.js';
 import * as Blockchain from 'mvs-blockchain';
 
 @Injectable()
@@ -57,6 +57,28 @@ export class MvsServiceProvider {
                     return Metaverse.transaction_builder.send(result.utxo, recipient_address, recipient_avatar, target, change_address, result.change, undefined, fee, messages);
                 })
                 .then((tx) => wallet.sign(tx)))
+            .catch((error) => {
+                console.error(error)
+                throw Error(error.message);
+            })
+    }
+
+    createSendMultisigTx(passphrase: string, asset: string, recipient_address: string, recipient_avatar: string, quantity: number, from_address: string, change_address: string, fee: number, messages: Array<string>, multisig: any) {
+        let target = {};
+        target[asset] = quantity;
+        return this.wallet.getWallet(passphrase)
+            .then(wallet => this.getUtxoFromMultisig(from_address)
+                .then((utxo) => this.getHeight().then(height => Metaverse.output.findUtxo(utxo, target, height, fee)))
+                .then((result) => {
+                    if (result.utxo.length > 676) {
+                        throw Error('ERR_TOO_MANY_INPUTS');
+                    }
+                    //Set change address to first utxo's address
+                    if (change_address == undefined)
+                        change_address = result.utxo[0].address;
+                    return Metaverse.transaction_builder.send(result.utxo, recipient_address, recipient_avatar, target, change_address, result.change, undefined, fee, messages);
+                })
+                .then((tx) => wallet.signMultisig(tx, multisig)))
             .catch((error) => {
                 console.error(error)
                 throw Error(error.message);
@@ -231,7 +253,7 @@ export class MvsServiceProvider {
                 valid = this.globals.network == "testnet"
                 break
             case this.globals.ADDRESS_PREFIX_P2SH:
-                valid = false
+                valid = true
         }
         return valid
     }
@@ -266,6 +288,14 @@ export class MvsServiceProvider {
                     return utxo;
                 }
             })
+    }
+
+    getUtxoFromMultisig(address: any) {
+        return this.getTxs()
+            .then((txs: Array<any>) => txs.sort(function(a, b) {
+                return b.height - a.height;
+            }))
+            .then((txs: Array<any>) => Metaverse.output.calculateUtxo(txs, [address]));
     }
 
     listAvatars() {
@@ -342,9 +372,9 @@ export class MvsServiceProvider {
         return this.getBalances()
             .then(_ => {
                 balances = _;
-                return Promise.all([this.getAddresses(), this.getLastTxHeight(), this.getHeight(), this.getTxs()])
+                return Promise.all([this.getAddresses(), this.getLastTxHeight(), this.getHeight(), this.getTxs(), this.wallet.getMultisigAddresses()])
             })
-            .then(results => { return this.getNewTxs(results[0], results[1], results[3]) })
+            .then(results => { return this.getNewTxs(results[0].concat(results[4]), results[1], results[3]) })
             .then(() => this.calculateBalances())
             .then(() => { return balances })
     }
@@ -363,17 +393,18 @@ export class MvsServiceProvider {
     calculateBalances() {
         return this.getHeight()
             .then(height => this.getAddresses()
-                .then(addresses => this.getTxs()
-                    .then(txs => Metaverse.output.calculateUtxo(txs, addresses))
-                    .then(utxos => Promise.all([
-                        this.blockchain.balance.all(utxos, addresses, height),
-                        this.blockchain.balance.addresses(utxos, addresses, height)
-                    ]))
-                    .then((balances) => Promise.all([
-                        this.setBalances(balances[0]),
-                        this.setAddressBalances(balances[1])
-                    ]))
-                ))
+                .then(addresses => this.wallet.getMultisigAddresses()
+                    .then(multisigAddresses => this.getTxs()
+                        .then(txs => Metaverse.output.calculateUtxo(txs, addresses.concat(multisigAddresses)))
+                        .then(utxos => Promise.all([
+                            this.blockchain.balance.all(utxos, addresses, height),
+                            this.blockchain.balance.addresses(utxos, addresses.concat(multisigAddresses), height)
+                        ]))
+                        .then((balances) => Promise.all([
+                            this.setBalances(balances[0]),
+                            this.setAddressBalances(balances[1])
+                        ]))
+                    )))
     }
 
     async getFrozenOutputs() {
@@ -662,4 +693,33 @@ export class MvsServiceProvider {
         blocktime['height'] = height
         return this.storage.set('blocktime', blocktime)
     }
+
+
+    addMultisigWallet(wallet) {
+        return this.blockchain.multisig.add(wallet)
+    }
+
+    getMultisigWallet(address) {
+        return this.blockchain.multisig.get(address)
+    }
+
+    async decodeTx(rawtx){
+        let transactions = await this.getTxs()
+        let tx = Metaverse.transaction.decode(rawtx);
+        tx.inputs.forEach(input=>{
+            let found=false
+            transactions.forEach(t=>{
+                if(input.previous_output.hash==t.hash){
+                    found=true
+                    input.previous_output.script=t.outputs[input.previous_output.index].script
+                    input.previous_output.address = t.outputs[input.previous_output.index].address
+                    input.previous_output.value = t.outputs[input.previous_output.index].value
+                    input.previous_output.attachment = t.outputs[input.previous_output.index].attachment
+                }
+            })
+            if(!found) throw `Error finding previous output script for ${input.previous_output.hash}-${input.previous_output.index}`
+        })
+        return tx
+    }
+
 }

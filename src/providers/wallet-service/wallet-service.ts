@@ -3,7 +3,7 @@ import { Http } from '@angular/http';
 import { AppGlobals } from '../../app/app.global';
 import 'rxjs/add/operator/map';
 import { Storage } from '@ionic/storage';
-import * as Metaverse from 'metaversejs/dist/metaverse.js';
+import * as Metaverse from 'metaversejs/index.js';
 import { CryptoServiceProvider } from '../crypto-service/crypto-service';
 
 @Injectable()
@@ -83,8 +83,8 @@ export class WalletServiceProvider {
         return Metaverse.wallet.fromMnemonic(mnemonic)
     }
 
-    verifyMessage(message, address, signature){
-        return Metaverse.message.verify(message,address,Buffer.from(signature,'hex'))
+    verifyMessage(message, address, signature) {
+        return Metaverse.message.verify(message, address, Buffer.from(signature, 'hex'))
     }
 
     getHDNodeFromSeed(seed) {
@@ -154,6 +154,73 @@ export class WalletServiceProvider {
             addresses.push(this.generateNewAddress(wallet, i));
         }
         return addresses;
+    }
+
+    getPublicKeyByAddress(wallet: any, address: string) {
+        return wallet.findPublicKeyByAddess(address, 200);
+    }
+
+    getNewMultisigAddress(nbrSigReq, publicKeys) {
+        return Metaverse.multisig.generate(nbrSigReq, publicKeys);
+    }
+
+    addMultisig(newMultisig) {
+        return this.getMultisigAddresses()
+            .then((multisig_addresses) => {
+                if (multisig_addresses.indexOf(newMultisig.a) == -1) {
+                    return Promise.all([this.addMultisigAddresses([newMultisig.a]), this.addMultisigInfo([newMultisig])])
+                }
+            })
+    }
+
+    getMultisigsInfo() {
+        return this.storage.get('multisigs')
+            .then((multisigs) => (multisigs) ? multisigs : [])
+    }
+
+    getMultisigInfoFromAddress(address) {
+        return this.getMultisigsInfo()
+            .then((multisigs) => {
+                return this.findMultisigWallet(address, multisigs)
+            })
+    }
+
+    findMultisigWallet(address, wallets) {
+        if (wallets.length == 0)
+            throw 'wallet not found';
+        return (wallets[0].a == address) ? wallets[0] : this.findMultisigWallet(address, wallets.slice(1));
+    }
+
+
+    addMultisigInfo(newMultisig: Array<any>) {
+        return this.getMultisigsInfo()
+            .then((multisigs: Array<any>) => {
+                newMultisig.map(multisig => {
+                    multisig.r = Metaverse.multisig.generate(multisig.m, multisig.k).script
+                    return multisig
+                })
+                this.storage.set('multisigs', multisigs.concat(newMultisig))
+            })
+    }
+
+    getMultisigAddresses() {
+        return this.storage.get('multisig_addresses')
+            .then((addresses) => (addresses) ? addresses : [])
+    }
+
+    addMultisigAddresses(addresses: Array<string>) {
+        return this.getMultisigAddresses()
+            .then((addr: Array<string>) => this.storage.set('multisig_addresses', addr.concat(addresses)))
+    }
+
+    findDeriveNodeByPublic(wallet: any, publicKey: string, maxDepth: number) {
+        return wallet.findDeriveNodeByPublicKey(publicKey, maxDepth ? maxDepth : 200)
+    }
+
+    async signMultisigTx(address, tx, passphrase) {
+        let wallet = await this.getWallet(passphrase)
+        let parameters = await this.getMultisigInfoFromAddress(address)
+        return wallet.signMultisig(tx, parameters)
     }
 
 }
