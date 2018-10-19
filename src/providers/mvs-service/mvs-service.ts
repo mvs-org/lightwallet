@@ -723,6 +723,9 @@ export class MvsServiceProvider {
                 if(input.previous_output.hash==t.hash){
                     found=true
                     input.previous_output.script=t.outputs[input.previous_output.index].script
+                    input.previous_output.address = t.outputs[input.previous_output.index].address
+                    input.previous_output.value = t.outputs[input.previous_output.index].value
+                    input.previous_output.attachment = t.outputs[input.previous_output.index].attachment
                 }
             })
             if(!found) throw `Error finding previous output script for ${input.previous_output.hash}-${input.previous_output.index}`

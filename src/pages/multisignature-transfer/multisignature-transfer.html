@@ -164,11 +164,18 @@
                     </ion-item>
                 </ion-row>
                 <div *ngFor="let output of decoded_tx.outputs">
-                    <ion-item *ngIf="output.address != sendFrom">
+                    <ion-item *ngIf="output.address != sendFrom && output.value != 0">
                         <ion-row>
                             <ion-col *ngIf="output.attachment.to_did">{{output.attachment.to_did}}</ion-col>
                             <ion-col *ngIf="!output.attachment.to_did">{{output.address}}</ion-col>
                             <ion-col>{{output.value | format : 8}} ETP</ion-col>
+                        </ion-row>
+                    </ion-item>
+                    <ion-item *ngIf="output.address != sendFrom && output.attachment && output.attachment.asset">
+                        <ion-row>
+                            <ion-col *ngIf="output.attachment.to_did">{{output.attachment.to_did}}</ion-col>
+                            <ion-col *ngIf="!output.attachment.to_did">{{output.address}}</ion-col>
+                            <ion-col>{{output.attachment.quantity | format : decimals_mst[output.attachment.asset]}} {{output.attachment.asset}}</ion-col>
                         </ion-row>
                     </ion-item>
                 </div>

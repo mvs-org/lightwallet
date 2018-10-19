@@ -51,6 +51,7 @@ export class MultisignatureTransferPage {
     raw_signed_tx: any
     nbr_sign_before_sign: number
     nbr_sign_after_sign: number
+    decimals_mst: any = {}
 
     constructor(
         public navCtrl: NavController,
@@ -300,6 +301,10 @@ export class MultisignatureTransferPage {
             .then((result) => {
                 this.decoded_tx = result
                 this.nbr_sign_before_sign = this.decoded_tx.inputs[0].script.split("[").length - 2
+                this.decoded_tx.inputs.forEach((input) => {
+                    if(input.previous_output.attachment && input.previous_output.attachment.symbol)
+                        this.decimals_mst[input.previous_output.attachment.symbol] = input.previous_output.attachment.decimals
+                })
             })
             .catch((error) => {
                 console.error(error);
