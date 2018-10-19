@@ -3,6 +3,7 @@ import { IonicPage, NavController, AlertController, Platform } from 'ionic-angul
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { TranslateService } from '@ngx-translate/core';
 import { AppGlobals } from '../../app/app.global';
+import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
 
 @IonicPage()
 @Component({
@@ -20,7 +21,8 @@ export class SettingsPage {
         public translate: TranslateService,
         private alertCtrl: AlertController,
         private globals: AppGlobals,
-        public platform: Platform
+        public platform: Platform,
+        private wallet: WalletServiceProvider
     ) {
         this.network = this.globals.network
     }
@@ -51,29 +53,42 @@ export class SettingsPage {
     logout() {
         this.translate.get('RESET_TITLE').subscribe(title => {
             this.translate.get('RESET_MESSAGE').subscribe(message => {
-                this.translate.get('CONFIRM').subscribe(yes => {
-                    this.translate.get('BACK').subscribe(no => {
-                        let confirm = this.alertCtrl.create({
-                            title: title,
-                            message: message,
-                            buttons: [
-                                {
-                                    text: no,
-                                    handler: () => {
-                                        console.log('Disagree clicked')
+                this.translate.get('SAVE').subscribe(save => {
+                    this.translate.get('DELETE').subscribe(no => {
+                        this.translate.get('BACK').subscribe(back => {
+                            let confirm = this.alertCtrl.create({
+                                title: title,
+                                message: message,
+                                buttons: [
+                                    {
+                                        text: save,
+                                        handler: () => {
+                                            this.wallet.saveAccount().then(() => {
+                                                this.mvs.hardReset().then(() => {
+                                                    this.nav.setRoot("LoginPage")
+                                                })
+                                            })
+                                        }
+                                    },
+                                    {
+                                        text: no,
+                                        handler: () => {
+                                            this.wallet.getAccountName()
+                                                .then((account_name) => this.wallet.deleteAccount(account_name))
+                                                .then(() => this.mvs.hardReset())
+                                                .then(() => this.nav.setRoot("LoginPage"))
+                                        }
+                                    },
+                                    {
+                                        text: back,
+                                        handler: () => {
+                                            console.log('Disagree clicked')
+                                        }
                                     }
-                                },
-                                {
-                                    text: yes,
-                                    handler: () => {
-                                        this.mvs.hardReset().then(() => {
-                                            this.nav.setRoot("LoginPage")
-                                        })
-                                    }
-                                }
-                            ]
-                        });
-                        confirm.present()
+                                ]
+                            });
+                            confirm.present()
+                        })
                     })
                 })
             })
@@ -82,30 +97,43 @@ export class SettingsPage {
 
     logoutMobile() {
         this.translate.get('RESET_TITLE').subscribe(title => {
-            this.translate.get('RESET_MESSAGE_MOBILE').subscribe(message => {
-                this.translate.get('CONFIRM').subscribe(yes => {
-                    this.translate.get('BACK').subscribe(no => {
-                        let confirm = this.alertCtrl.create({
-                            title: title,
-                            message: message,
-                            buttons: [
-                                {
-                                    text: no,
-                                    handler: () => {
-                                        console.log('Disagree clicked')
+            this.translate.get('RESET_MESSAGE_MOBILE_SAVE_ACCOUNT').subscribe(message => {
+                this.translate.get('SAVE').subscribe(save => {
+                    this.translate.get('DELETE').subscribe(no => {
+                        this.translate.get('BACK').subscribe(back => {
+                            let confirm = this.alertCtrl.create({
+                                title: title,
+                                message: message,
+                                buttons: [
+                                    {
+                                        text: save,
+                                        handler: () => {
+                                            this.wallet.saveAccount().then(() => {
+                                                this.mvs.hardReset().then(() => {
+                                                    this.nav.setRoot("LoginPage")
+                                                })
+                                            })
+                                        }
+                                    },
+                                    {
+                                        text: no,
+                                        handler: () => {
+                                            this.wallet.getAccountName()
+                                                .then((account_name) => this.wallet.deleteAccount(account_name))
+                                                .then(() => this.mvs.hardReset())
+                                                .then(() => this.nav.setRoot("LoginPage"))
+                                        }
+                                    },
+                                    {
+                                        text: back,
+                                        handler: () => {
+                                            console.log('Disagree clicked')
+                                        }
                                     }
-                                },
-                                {
-                                    text: yes,
-                                    handler: () => {
-                                        this.mvs.hardReset().then(() => {
-                                            this.nav.setRoot("LoginPage")
-                                        })
-                                    }
-                                }
-                            ]
-                        });
-                        confirm.present()
+                                ]
+                            });
+                            confirm.present()
+                        })
                     })
                 })
             })

@@ -8,20 +8,26 @@
     <ion-row class="top-padding">
         <h2 class="center-info">{{"PASSWORD_WARNING"|translate}}</h2>
     </ion-row>
-    <ion-row class="top-padding">
-        <ion-item class="center-psw">
+    <ion-row class="top-padding" *ngIf="platform.is('mobile')">
+        <ion-item class="center-psw" [ngClass]="{'error-border':!validAccountName(account_name)}">
+            <ion-label color="primary" floating>{{'ACCOUNT_NAME'|translate}}</ion-label>
+            <ion-input type="text" placeholder="" [(ngModel)]="account_name"></ion-input>
+        </ion-item>
+    </ion-row>
+    <ion-row>
+        <ion-item class="center-psw" [ngClass]="{'error-border':!passwordValid(password)}">
             <ion-label color="primary" floating>{{'PASSWORD'| translate}}</ion-label>
             <ion-input type="password" placeholder="" [(ngModel)]="password"></ion-input>
         </ion-item>
     </ion-row>
     <ion-row class="more-bottom-padding">
-        <ion-item class="center-psw">
+        <ion-item class="center-psw" [ngClass]="{'error-border':!passwordRepeatValid(password, password_repeat)}">
             <ion-label color="primary" floating>{{'CONFIRM_PASSWORD'|translate}}</ion-label>
             <ion-input type="password" placeholder="" [(ngModel)]="password_repeat"></ion-input>
         </ion-item>
     </ion-row>
     <ion-row class="button more-bottom-padding">
-        <button *ngIf="!platform.is('mobile')" ion-button full [disabled]="!complete(password, password_repeat)" (click)="encrypt(password)">{{'BUTTON.NEXT'|translate}}</button>
-        <button *ngIf="platform.is('mobile')" ion-button full [disabled]="!complete(password, password_repeat)" (click)="encryptMobile(password)">{{'BUTTON.NEXT'|translate}}</button>
+        <button *ngIf="!platform.is('mobile')" ion-button full [disabled]="!complete(account_name, password, password_repeat)" (click)="encrypt(account_name, password)">{{'BUTTON.NEXT'|translate}}</button>
+        <button *ngIf="platform.is('mobile')" ion-button full [disabled]="!passwordValid(password) || !passwordRepeatValid(password, password_repeat) || !validAccountName(account_name)" (click)="encryptMobile(account_name, password)">{{'BUTTON.NEXT'|translate}}</button>
     </ion-row>
 </ion-content>

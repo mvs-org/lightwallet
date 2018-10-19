@@ -549,6 +549,15 @@
     "MESSAGE.SIGN_TRANSACTION": "Unable to sign this transaction",
     "MULTISIGNATURE.TX_SUMMARY": "Transaction summary",
     "MULTISIGNATURE.TX_SUMMARY_OUPUTS": "Recipient(s)",
-    "MULTISIGNATURE.TX_SUMMARY_SIGN_INFO": "Signatures information"
+    "MULTISIGNATURE.TX_SUMMARY_SIGN_INFO": "Signatures information",
+
+    "ACCOUNT_NAME": "Account name",
+    "RESET_MESSAGE_MOBILE_SAVE_ACCOUNT": "You can choose to Save locally the information about your account in order to easily login with your password, or Delete all the information. If you choose to Delete, you will need your 24 backup words to login.",
+    "SAVE": "Save",
+    "DELETE": "Delete",
+    "BUTTON.DELETE_ACCOUNT": "Delete Account",
+    "DELETE_ACCOUNT_TITLE": "Delete account?",
+    "DELETE_ACCOUNT_BODY": "If you delete your account, all it's information saved on your device will be deleted. To login, you will need your 24 backup words.",
+    "ACCOUNT_NAME_ALREADY_USED": "This account name is already used"
 
 }

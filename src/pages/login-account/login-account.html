@@ -1,0 +1,24 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>Passphrase</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-row class="top-padding">
+        <h2 class="center-info">{{account_name}}</h2>
+    </ion-row>
+    <ion-row>
+        <ion-item class="center-psw more-bottom-padding">
+            <ion-label color="primary" floating>{{'PASSWORD'| translate}}</ion-label>
+            <ion-input type="password" placeholder="" [(ngModel)]="password"></ion-input>
+        </ion-item>
+    </ion-row>
+    <ion-row>
+        <button ion-button full [disabled]="!complete(password)" (click)="importAccount(account_name, password)">{{'BUTTON.NEXT'|translate}}</button>
+    </ion-row>
+    <br>
+    <ion-row class="more-bottom-padding">
+        <button ion-button full color="danger" (click)="deleteAccount(account_name)">{{'BUTTON.DELETE_ACCOUNT'|translate}}</button>
+    </ion-row>
+</ion-content>

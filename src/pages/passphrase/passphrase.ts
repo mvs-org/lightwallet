@@ -16,6 +16,7 @@ export class PassphrasePage {
 
     mnemonic: string;
     loading: Loading;
+    account_list: Array<string> = []
 
     constructor(public nav: NavController,
         public navParams: NavParams,
@@ -26,14 +27,18 @@ export class PassphrasePage {
         public mvs: MvsServiceProvider,
         public loadingCtrl: LoadingController,
         public wallet: WalletServiceProvider) {
-        this.mnemonic = this.navParams.get('mnemonic');
+
+            this.mnemonic = this.navParams.get('mnemonic');
+
+            this.wallet.getSavedAccounts()
+                .then((accounts) => this.account_list = accounts ? Object.keys(accounts) : [])
     }
 
     /* moves nagigation
      * encypts mnemonic with authentication provider encypt function
      * then writes the data to the json file and downloads the file
      */
-    encrypt(password) {
+    encrypt(account_name, password) {
         this.nav.setRoot("LoginPage");
         this.crypto.encrypt(this.mnemonic, password)
             .then((res) => this.dataToKeystoreJson(res))
@@ -43,7 +48,7 @@ export class PassphrasePage {
             });
     }
 
-    encryptMobile(password) {
+    encryptMobile(account_name, password) {
         this.showLoading();
         let wallet = {};
         wallet = { "index": 10 }
@@ -51,6 +56,7 @@ export class PassphrasePage {
         this.wallet.setWallet(wallet)
             .then((wallet) => this.wallet.setSeedMobile(password, this.mnemonic))
             .then((seed) => this.wallet.setMobileWallet(seed))
+            .then(() => this.wallet.setAccountName(account_name))
             .then(() => Promise.all([this.wallet.getWallet(password), this.wallet.getAddressIndex()]))
             .then((results) => this.wallet.generateAddresses(results[0], 0, results[1]))
             .then((addresses) => this.mvs.addAddresses(addresses))
@@ -61,6 +67,8 @@ export class PassphrasePage {
     }
 
     passwordValid = (password) => (password) ? password.length > 5 : false;
+
+    passwordRepeatValid = (password, password_repeat) => (password_repeat) ? password_repeat.length > 5 && password_repeat == password : false;
 
     complete = (password, password_repeat) => (password && password_repeat) ? this.passwordValid(password) && password == password_repeat : false;
 
@@ -93,4 +101,8 @@ export class PassphrasePage {
             this.loading.present();
         })
     }
+
+    validAccountName = (account_name) => account_name != undefined
+        && account_name != ''
+        && this.account_list.indexOf(account_name) == -1
 }

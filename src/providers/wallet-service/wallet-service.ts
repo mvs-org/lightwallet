@@ -223,4 +223,47 @@ export class WalletServiceProvider {
         return wallet.signMultisig(tx, parameters)
     }
 
+    getAccountName() {
+        return this.storage.get('account_name')
+            .then((account_name) => {
+                return account_name ? account_name : 'Default'
+            })
+    }
+     setAccountName(account_name) {
+        return this.storage.set('account_name', account_name)
+    }
+     deleteAccount(account_name) {
+        return this.storage.get('saved_accounts')
+            .then((accounts) => {
+                delete accounts[account_name]
+                return this.storage.set('saved_accounts', accounts)
+            })
+            .catch((error) => {
+                console.error(error)
+                throw Error('ERR_DELETE_ACCOUNT')
+            })
+    }
+     saveAccount() {
+        return Promise.all([this.getAccountName(), this.storage.get('seed'), this.storage.get('wallet'), this.storage.get('saved_accounts')])
+            .then((results) => {
+                let accounts = results[3] ? results[3] : {};
+                let account_name = results[0]
+                accounts[account_name] = {}
+                accounts[account_name].seed = results[1]
+                accounts[account_name].index = results[2].index
+                return this.storage.set('saved_accounts', accounts)
+            })
+            .catch((error) => {
+                console.error(error)
+                throw Error('ERR_SAVE_ACCOUNT')
+            })
+    }
+     getSavedAccounts() {
+        return this.storage.get('saved_accounts')
+    }
+     getSavedAccount(account_name) {
+        return this.storage.get('saved_accounts')
+            .then((accounts) => accounts[account_name])
+    }
+
 }
