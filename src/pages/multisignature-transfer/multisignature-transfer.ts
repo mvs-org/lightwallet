@@ -148,7 +148,7 @@ export class MultisignatureTransferPage {
                 if(this.message) {
                     messages.push(this.message)
                 }
-                return this.mvs.createSendTx(
+                return this.mvs.createSendMultisigTx(
                     this.passphrase,
                     this.selectedAsset,
                     this.recipient_address,
@@ -157,7 +157,8 @@ export class MultisignatureTransferPage {
                     this.sendFrom,
                     (this.changeAddress != 'auto') ? this.changeAddress : undefined,
                     this.fee,
-                    (messages !== []) ? messages : undefined
+                    (messages !== []) ? messages : undefined,
+                    this.address_info
                 )
             })
             .catch((error) => {
@@ -271,11 +272,27 @@ export class MultisignatureTransferPage {
         })
     }
 
-    async sign(sendFrom, rawtx, passphrase) {
-        let tx = await this.mvs.decodeTx(rawtx)
-        this.signed_tx = await this.wallet.signMultisigTx(sendFrom, tx, passphrase)
-        this.raw_signed_tx = this.signed_tx.encode().toString('hex')
-        this.nbr_sign_after_sign = this.signed_tx.inputs[0].script.length - 2
+    sign(sendFrom, rawtx, passphrase) {
+        this.alert.showLoading()
+            .then(() => this.mvs.decodeTx(rawtx))
+            .then((tx) => this.wallet.signMultisigTx(sendFrom, tx, passphrase))
+            .then((signed_tx) => {
+                this.signed_tx = signed_tx
+                this.raw_signed_tx = this.signed_tx.encode().toString('hex')
+                this.nbr_sign_after_sign = this.signed_tx.inputs[0].script.length - 2
+                this.alert.stopLoading()
+            })
+            .catch((error) => {
+                this.alert.stopLoading()
+                console.error(error.message)
+                switch(error.message){
+                    case "ERR_DECRYPT_WALLET":
+                        this.alert.showError('MESSAGE.PASSWORD_WRONG', '')
+                        break;
+                    default:
+                        this.alert.showError('MESSAGE.SIGN_TRANSACTION', error.message)
+                }
+            })
     }
 
     decode(tx) {
@@ -283,6 +300,7 @@ export class MultisignatureTransferPage {
             .then((result) => {
                 this.decoded_tx = result
                 this.nbr_sign_before_sign = this.decoded_tx.inputs[0].script.split("[").length - 2
+                console.log(this.decoded_tx.stringify)
             })
             .catch((error) => {
                 console.error(error);

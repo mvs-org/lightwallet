@@ -542,6 +542,10 @@
     "MESSAGE.ERROR_DECODE_MULTISIG_BODY": "This raw transaction cannot be decoded. Please make sure this raw transaction is correct and has been created from the selected multisignature address",
     "MULTISIGNATURE.CURRENT_NBR_SIGN": "Current number of signatures",
     "MULTISIGNATURE.NEW_NBR_SIGN": "New number of signatures",
-    "MULTISIGNATURE.BROADCAST": "Broadcast transaction"
+    "MULTISIGNATURE.BROADCAST": "Broadcast transaction",
+    "MULTISIGNATURE_TRANSFER.CREATED_TX": "Raw transaction",
+    "MULTISIGNATURE_TRANSFER.CREATED_TX_DESCRIPTION": "This is your raw transaction. It has already been signed with your private key, you can now share it with the other co-signers.",
+    "MULTISIGNATURE.GENERATE": "Generate transaction",
+    "MESSAGE.SIGN_TRANSACTION": "Unable to sign this transaction"
 
 }

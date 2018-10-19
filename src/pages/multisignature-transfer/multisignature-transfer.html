@@ -96,22 +96,13 @@
                         <ion-option *ngFor="let address of addresses" value="{{address}}">{{address}}</ion-option>
                     </ion-select>
                 </ion-item>
-                <button ion-button full [disabled]="!sendForm.form.valid||!validrecipient(recipient_address)||!validQuantity(quantity)||!validPassword(passphrase)||!validMessageLength(message)" (click)="preview()" color="primary">
-                    {{"PREVIEW" | translate}}
-                </button>
-                <div *ngIf="rawtx">
-                    <br><br>
-                    <h2>{{"TRANSACTION_PREVIEW_TEXT"|translate}}</h2>
-                    <p class="rawtx">{{rawtx}}</p>
-                    <br><br>
-                </div>
             </div>
         </ion-list>
         <ion-row class="padding-bottom">
             <ion-col>
-                <button type="submit" ion-button full icon-left [disabled]="!sendForm.form.valid||!validrecipient(recipient_address)||!validQuantity(quantity)||!validPassword(passphrase)||!validMessageLength(message)" (click)="send()" color="secondary">
-                    <ion-icon disabled="checked" name="send"></ion-icon>
-                    {{"SEND" | translate}}
+                <button type="submit" ion-button full icon-left [disabled]="!sendForm.form.valid||!validrecipient(recipient_address)||!validQuantity(quantity)||!validPassword(passphrase)||!validMessageLength(message)" (click)="preview()" color="secondary">
+                    <ion-icon disabled="checked" name="settings"></ion-icon>
+                    {{"MULTISIGNATURE.GENERATE" | translate}}
                 </button>
             </ion-col>
             <ion-col>
@@ -121,6 +112,16 @@
                 </button>
             </ion-col>
         </ion-row>
+
+        <ion-card-content *ngIf="rawtx">
+            <h4>{{"MULTISIGNATURE_TRANSFER.CREATED_TX"|translate}}:</h4>
+            <div no-lines class="advice">{{"MULTISIGNATURE_TRANSFER.CREATED_TX_DESCRIPTION"|translate}}</div>
+            <textarea fz-elastic ion-input full type="text" #copyCreatedTx value="{{rawtx}}" style="" readonly>{{rawtx}}</textarea>
+            <button col-sm-12 col-md-6 col-lg-3 ion-button full item-right icon-left [ngxClipboard]="copyCreatedTx">
+                <ion-icon name="copy"></ion-icon>
+                {{'COPY'|translate}}
+            </button>
+        </ion-card-content>
     </form>
 
 
@@ -181,7 +182,7 @@
         <ion-row class="padding-bottom" *ngIf="!raw_signed_tx">
             <ion-col>
                 <button type="submit" ion-button full icon-left (click)="sign(sendFrom, input, passphrase_sign)" color="secondary">
-                    <ion-icon disabled="checked" name="send"></ion-icon>
+                    <ion-icon disabled="checked" name="create"></ion-icon>
                     {{"SIGN" | translate}}
                 </button>
             </ion-col>
