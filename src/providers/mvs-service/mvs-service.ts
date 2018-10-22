@@ -462,7 +462,7 @@ export class MvsServiceProvider {
                     .then((language: any) => {
                         return this.storage.get('saved_accounts')
                             .then((saved_accounts: any) => {
-                                this.storage.clear()
+                                return this.storage.clear()
                                     .then(() => {
                                         this.event.publish('settings_update', {});
                                         return Promise.all([this.storage.set('language', language), this.storage.set('theme', theme), this.storage.set('saved_accounts', saved_accounts)]);

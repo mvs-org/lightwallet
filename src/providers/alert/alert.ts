@@ -106,6 +106,30 @@ export class AlertProvider {
         })
     }
 
+    askInfo(title, message, placeholder, onSubmit) {
+        this.translate.get(['OK', 'CANCEL', title, message, placeholder]).subscribe((translations: any) => {
+            let alert = this.alertCtrl.create({
+                title: translations[title],
+                message: translations[message],
+                enableBackdropDismiss: false,
+                inputs: [
+                    { name: 'info', placeholder: translations[placeholder] }
+                ],
+                buttons: [
+                    {
+                        text: translations['CANCEL'],
+                        role: 'cancel'
+                    },
+                    {
+                        text: translations['OK'],
+                        handler: data => onSubmit(data.info)
+                    }
+                ]
+            })
+            alert.present(prompt)
+        })
+    }
+
     showError(message_key, error) {
         this.translate.get(['MESSAGE.ERROR_TITLE', message_key, 'OK']).subscribe((translations: any) => {
             let alert = this.alertCtrl.create({

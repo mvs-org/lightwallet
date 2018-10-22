@@ -23,6 +23,8 @@ export class LoginPage {
         private event: Events,
         private wallet: WalletServiceProvider
     ) {
+        this.wallet.getSavedAccounts()
+            .then((accounts) => this.saved_accounts = accounts ? Object.keys(accounts) : [])
     }
 
     ionViewDidEnter() {

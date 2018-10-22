@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, Platform, Events } from 'ionic-angular';
+import { IonicPage, NavController, Platform, Events, AlertController } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { AlertProvider } from '../../providers/alert/alert';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
@@ -42,10 +42,11 @@ export class AccountPage {
     base: string
     domains: any = []
     whitelist: any = []
+    saved_accounts: any;
 
     private syncinterval: any;
 
-    constructor(public nav: NavController, public translate: TranslateService, private wallet: WalletServiceProvider, private mvs: MvsServiceProvider, private alert: AlertProvider, public platform: Platform, private event: Events) {
+    constructor(public nav: NavController, private alertCtrl: AlertController, public translate: TranslateService, private wallet: WalletServiceProvider, private mvs: MvsServiceProvider, private alert: AlertProvider, public platform: Platform, private event: Events) {
 
         this.loading = true;
         //Reset last update time
@@ -57,6 +58,9 @@ export class AccountPage {
         this.event.subscribe("theme_changed", (theme) => {
             this.theme = ('theme-' + theme)
         });
+
+        this.wallet.getSavedAccounts()
+            .then((accounts) => this.saved_accounts = accounts ? Object.keys(accounts) : [])
     }
 
     isOffline = () => !this.syncingSmall && this.offline
@@ -122,9 +126,84 @@ export class AccountPage {
 
     ionViewWillLeave = () => clearInterval(this.syncinterval)
 
-    logout = () => this.alert.showLogout(() => this.mvs.hardReset()
-        .then(() => this.nav.setRoot("LoginPage"))
-    )
+    /**
+     * Logout dialog
+     */
+     logout() {
+         this.translate.get('RESET_TITLE').subscribe(title => {
+             this.translate.get('RESET_MESSAGE_CHOICE').subscribe(message => {
+                 this.translate.get('SAVE').subscribe(save => {
+                     this.translate.get('DELETE').subscribe(no => {
+                         this.translate.get('BACK').subscribe(back => {
+                             let confirm = this.alertCtrl.create({
+                                 title: title,
+                                 message: message,
+                                 buttons: [
+                                     {
+                                         text: save,
+                                         handler: () => this.wallet.getAccountName()
+                                             .then((current_username) => {
+                                                 if(current_username) {
+                                                     this.saveAccount(current_username);
+                                                 } else {
+                                                     this.newUsername('SAVE_ACCOUNT_TITLE', 'SAVE_ACCOUNT_MESSAGE', 'SAVE_ACCOUNT_PLACEHOLDER')
+                                                 }
+                                             })
+                                     },
+                                     {
+                                         text: no,
+                                         handler: () => {
+                                             this.wallet.getAccountName()
+                                                 .then((account_name) => this.wallet.deleteAccount(account_name))
+                                                 .then(() => this.mvs.hardReset())
+                                                 .then(() => this.nav.setRoot("LoginPage"))
+                                         }
+                                     },
+                                     {
+                                         text: back,
+                                         handler: () => {
+                                             console.log('Disagree clicked')
+                                         }
+                                     }
+                                 ]
+                             });
+                             confirm.present()
+                         })
+                     })
+                 })
+             })
+         })
+     }
+
+    newUsername(title, message, placeholder) {
+        this.askUsername(title, message, placeholder)
+            .then((username) => {
+                if(!username) {
+                    this.newUsername('SAVE_ACCOUNT_TITLE_NO_INPUT', 'SAVE_ACCOUNT_MESSAGE', placeholder)
+                } else if (this.saved_accounts.indexOf(username) != -1) {
+                    console.log("account name already exist")
+                    this.newUsername('SAVE_ACCOUNT_TITLE_ALREADY_EXIST', 'SAVE_ACCOUNT_MESSAGE_ALREADY_EXIST', placeholder)
+                } else {
+                    this.saveAccount(username);
+                }
+            })
+    }
+
+    askUsername(title, message, placeholder) {
+        return new Promise((resolve, reject) => {
+            this.translate.get([title, message, placeholder]).subscribe((translations: any) => {
+                this.alert.askInfo(translations[title], translations[message], translations[placeholder], (info) => {
+                    resolve(info)
+                })
+            })
+        })
+    }
+
+    saveAccount(username) {
+        this.wallet.saveAccount(username)
+            .then(() => this.mvs.hardReset())
+            .then(() => this.nav.setRoot("LoginPage"))
+    }
 
     sync(refresher = undefined) {
         //Only allow a single sync process

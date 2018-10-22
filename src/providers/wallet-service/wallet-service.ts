@@ -226,7 +226,7 @@ export class WalletServiceProvider {
     getAccountName() {
         return this.storage.get('account_name')
             .then((account_name) => {
-                return account_name ? account_name : 'Default'
+                return account_name
             })
     }
      setAccountName(account_name) {
@@ -243,14 +243,14 @@ export class WalletServiceProvider {
                 throw Error('ERR_DELETE_ACCOUNT')
             })
     }
-     saveAccount() {
-        return Promise.all([this.getAccountName(), this.storage.get('seed'), this.storage.get('wallet'), this.storage.get('saved_accounts')])
+     saveAccount(username) {
+        return Promise.all([this.storage.get('seed'), this.storage.get('wallet'), this.storage.get('saved_accounts')])
             .then((results) => {
-                let accounts = results[3] ? results[3] : {};
-                let account_name = results[0]
+                let accounts = results[2] ? results[2] : {};
+                let account_name = username ? username : 'Default'
                 accounts[account_name] = {}
-                accounts[account_name].seed = results[1]
-                accounts[account_name].index = results[2].index
+                accounts[account_name].seed = results[0]
+                accounts[account_name].index = results[1].index
                 return this.storage.set('saved_accounts', accounts)
             })
             .catch((error) => {

@@ -105,21 +105,25 @@ export class MultisignatureAddPage {
             this.alert.showError('MULTISIG_WRONG_PUBLIC_KEYS.ERROR', '')
         } else {
             try {
-                let nbrSigns = parseInt(nbrSigReq);
-                let publicKeys = cosigners.concat(myPublicKey);
-                let multisig = this.wallet.getNewMultisigAddress(nbrSigns, publicKeys)
-                let newMultisig = {
-                    "d": "",
-                    "k": publicKeys,
-                    "m": nbrSigns,
-                    "n": publicKeys.length,
-                    "s": myPublicKey,
-                    "a": multisig.address,
-                    "r": multisig.script
-                };
-                this.addMultisigAddress(newMultisig)
+                this.alert.showLoading()
+                    .then(() => {
+                        let nbrSigns = parseInt(nbrSigReq);
+                        let publicKeys = cosigners.concat(myPublicKey);
+                        let multisig = this.wallet.getNewMultisigAddress(nbrSigns, publicKeys)
+                        let newMultisig = {
+                            "d": "",
+                            "k": publicKeys,
+                            "m": nbrSigns,
+                            "n": publicKeys.length,
+                            "s": myPublicKey,
+                            "a": multisig.address,
+                            "r": multisig.script
+                        };
+                        this.addMultisigAddress(newMultisig, true)
+                    })
             } catch (e) {
                 console.error(e);
+                this.alert.stopLoading()
                 this.alert.showError('CREATE_MULTISIG.ERROR', e.message)
             }
         }
@@ -160,7 +164,9 @@ export class MultisignatureAddPage {
                                         .then(() => {
                                             if(myPublicKey) {
                                                 newMultisig.s = myPublicKey
-                                                this.addMultisigAddress(newMultisig)
+                                                let multisig = this.wallet.getNewMultisigAddress(newMultisig.m, newMultisig.k)
+                                                newMultisig.r = multisig.r
+                                                this.addMultisigAddress(newMultisig, false)
                                             } else {
                                                 this.alert.stopLoading()
                                                 this.alert.showError('MULTISIG_ADDRESS_NOT_THIS_WALLET.ERROR', '')
@@ -189,34 +195,25 @@ export class MultisignatureAddPage {
             })
     }
 
-    addMultisigAddress(newMultisig) {
+    addMultisigAddress(newMultisig, newAddress: boolean) {
         this.wallet.getMultisigAddresses()
             .then((multisig_addresses) => {
                 if(multisig_addresses.indexOf(newMultisig.a) !== -1) {
                     this.alert.stopLoading()
                     this.alert.showError('MULTISIG_ADDRESS_ALREADY_ADD.ERROR', newMultisig.a)
                 } else {
-
                     try {
-                        this.mvs.addMultisigWallet(newMultisig)
+                        if(newAddress)
+                            this.mvs.addMultisigWallet(newMultisig)
                     } catch (error) {
-                        switch(error.message){
-                            //TODO
-                            case "Error storing wallet":
-                                //server already know this address
-                                console.error("Server already know this address");
-                                break;
-                            default:
-                                console.error(error);
-                                break;
-                        }
+                        console.error(error);
                     }
                     this.wallet.addMultisig(newMultisig)
                         .then(() => this.mvs.dataReset())
                         .then(() => Promise.all([this.mvs.updateHeight(), this.updateBalances()]))
                         .then(() => this.updateBalances())
                         .then(() => this.alert.stopLoading())
-                        .then(() => this.alert.showSent('SUCCESS_CREATE_MULTISIG', newMultisig.a))
+                        .then(() => this.alert.showSent(newAddress ? 'SUCCESS_CREATE_MULTISIG' : 'SUCCESS_CREATE_MULTISIG', newMultisig.a))
                         .then(() => this.navCtrl.pop())
                         .then(() => this.navCtrl.pop())
                         .then(() => this.navCtrl.push('MultisignaturePage'))
