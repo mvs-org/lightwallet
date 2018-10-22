@@ -95,7 +95,7 @@ export class LoginAccountPage {
         })
     }
 
-    passwordValid = (password) => (password) ? password.length > 5 : false;
+    passwordValid = (password) => (password) ? password.length > 3 : false;
 
     complete = (password) => (password) ? this.passwordValid(password) : false;
 
