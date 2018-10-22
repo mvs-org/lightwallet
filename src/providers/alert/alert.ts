@@ -77,7 +77,7 @@ export class AlertProvider {
                     }
                 ]
             })
-            alert.present(prompt)
+            alert.present()
         })
     }
 
@@ -102,7 +102,7 @@ export class AlertProvider {
                     }
                 ]
             })
-            alert.present(prompt)
+            alert.present()
         })
     }
 

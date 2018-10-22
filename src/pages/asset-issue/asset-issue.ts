@@ -220,7 +220,7 @@ export class AssetIssuePage {
                             }
                         ]
                     });
-                    alert.present(prompt)
+                    alert.present()
                   });
               });
           });
@@ -284,7 +284,7 @@ export class AssetIssuePage {
                     subTitle: text + hash,
                     buttons: [ok]
                 })
-                alert.present(prompt)
+                alert.present()
             })
         })
     }
@@ -297,7 +297,7 @@ export class AssetIssuePage {
                     subTitle: text,
                     buttons: [ok]
                 })
-                alert.present(prompt)
+                alert.present()
             })
         })
     }
