@@ -110,7 +110,7 @@ export class AlertProvider {
         this.translate.get(['OK', 'CANCEL', title, message, placeholder]).subscribe((translations: any) => {
             let alert = this.alertCtrl.create({
                 title: translations[title],
-                subTitle: translations[message],
+                message: translations[message],
                 enableBackdropDismiss: false,
                 inputs: [
                     { name: 'info', placeholder: translations[placeholder] }

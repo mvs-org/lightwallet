@@ -129,53 +129,51 @@ export class AccountPage {
     /**
      * Logout dialog
      */
-    logout() {
-        this.translate.get('RESET_TITLE').subscribe(title => {
-            this.translate.get('RESET_MESSAGE').subscribe(message => {
-                this.translate.get('RESET_MESSAGE_MOBILE_SAVE_ACCOUNT').subscribe(messageMobile => {
-                    this.translate.get('SAVE').subscribe(save => {
-                        this.translate.get('DELETE').subscribe(no => {
-                            this.translate.get('BACK').subscribe(back => {
-                                let confirm = this.alertCtrl.create({
-                                    title: title,
-                                    message: message,
-                                    buttons: [
-                                        {
-                                            text: save,
-                                            handler: () => this.wallet.getAccountName()
-                                                .then((current_username) => {
-                                                    if(current_username) {
-                                                        this.saveAccount(current_username);
-                                                    } else {
-                                                        this.newUsername('SAVE_ACCOUNT_TITLE', 'SAVE_ACCOUNT_MESSAGE', 'SAVE_ACCOUNT_PLACEHOLDER')
-                                                    }
-                                                })
-                                        },
-                                        {
-                                            text: no,
-                                            handler: () => {
-                                                this.wallet.getAccountName()
-                                                    .then((account_name) => this.wallet.deleteAccount(account_name))
-                                                    .then(() => this.mvs.hardReset())
-                                                    .then(() => this.nav.setRoot("LoginPage"))
-                                            }
-                                        },
-                                        {
-                                            text: back,
-                                            handler: () => {
-                                                console.log('Disagree clicked')
-                                            }
-                                        }
-                                    ]
-                                });
-                                confirm.present()
-                            })
-                        })
-                    })
-                })
-            })
-        })
-    }
+     logout() {
+         this.translate.get('RESET_TITLE').subscribe(title => {
+             this.translate.get('RESET_MESSAGE_CHOICE').subscribe(message => {
+                 this.translate.get('SAVE').subscribe(save => {
+                     this.translate.get('DELETE').subscribe(no => {
+                         this.translate.get('BACK').subscribe(back => {
+                             let confirm = this.alertCtrl.create({
+                                 title: title,
+                                 message: message,
+                                 buttons: [
+                                     {
+                                         text: save,
+                                         handler: () => this.wallet.getAccountName()
+                                             .then((current_username) => {
+                                                 if(current_username) {
+                                                     this.saveAccount(current_username);
+                                                 } else {
+                                                     this.newUsername('SAVE_ACCOUNT_TITLE', 'SAVE_ACCOUNT_MESSAGE', 'SAVE_ACCOUNT_PLACEHOLDER')
+                                                 }
+                                             })
+                                     },
+                                     {
+                                         text: no,
+                                         handler: () => {
+                                             this.wallet.getAccountName()
+                                                 .then((account_name) => this.wallet.deleteAccount(account_name))
+                                                 .then(() => this.mvs.hardReset())
+                                                 .then(() => this.nav.setRoot("LoginPage"))
+                                         }
+                                     },
+                                     {
+                                         text: back,
+                                         handler: () => {
+                                             console.log('Disagree clicked')
+                                         }
+                                     }
+                                 ]
+                             });
+                             confirm.present()
+                         })
+                     })
+                 })
+             })
+         })
+     }
 
     newUsername(title, message, placeholder) {
         this.askUsername(title, message, placeholder)
