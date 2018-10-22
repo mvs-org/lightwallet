@@ -558,6 +558,7 @@
     "BUTTON.DELETE_ACCOUNT": "Delete Account",
     "DELETE_ACCOUNT_TITLE": "Delete account?",
     "DELETE_ACCOUNT_BODY": "If you delete your account, all it's information saved on your device will be deleted. To login, you will need your 24 backup words.",
-    "ACCOUNT_NAME_ALREADY_USED": "This account name is already used"
+    "ACCOUNT_NAME_ALREADY_USED": "This account name is already used",
+    "SUCCESS_ADD_MULTISIG": "The multisiginature address has been successfully added to your wallet!"
 
 }

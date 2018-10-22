@@ -117,7 +117,7 @@ export class MultisignatureAddPage {
                     "a": multisig.address,
                     "r": multisig.script
                 };
-                this.addMultisigAddress(newMultisig)
+                this.addMultisigAddress(newMultisig, true)
             } catch (e) {
                 console.error(e);
                 this.alert.showError('CREATE_MULTISIG.ERROR', e.message)
@@ -160,7 +160,9 @@ export class MultisignatureAddPage {
                                         .then(() => {
                                             if(myPublicKey) {
                                                 newMultisig.s = myPublicKey
-                                                this.addMultisigAddress(newMultisig)
+                                                let multisig = this.wallet.getNewMultisigAddress(newMultisig.m, newMultisig.k)
+                                                newMultisig.r = multisig.r
+                                                this.addMultisigAddress(newMultisig, false)
                                             } else {
                                                 this.alert.stopLoading()
                                                 this.alert.showError('MULTISIG_ADDRESS_NOT_THIS_WALLET.ERROR', '')
@@ -189,7 +191,7 @@ export class MultisignatureAddPage {
             })
     }
 
-    addMultisigAddress(newMultisig) {
+    addMultisigAddress(newMultisig, newAddress: boolean) {
         this.wallet.getMultisigAddresses()
             .then((multisig_addresses) => {
                 if(multisig_addresses.indexOf(newMultisig.a) !== -1) {
@@ -198,7 +200,8 @@ export class MultisignatureAddPage {
                 } else {
 
                     try {
-                        this.mvs.addMultisigWallet(newMultisig)
+                        if(newAddress)
+                            this.mvs.addMultisigWallet(newMultisig)
                     } catch (error) {
                         switch(error.message){
                             //TODO
@@ -216,7 +219,7 @@ export class MultisignatureAddPage {
                         .then(() => Promise.all([this.mvs.updateHeight(), this.updateBalances()]))
                         .then(() => this.updateBalances())
                         .then(() => this.alert.stopLoading())
-                        .then(() => this.alert.showSent('SUCCESS_CREATE_MULTISIG', newMultisig.a))
+                        .then(() => this.alert.showSent(newAddress ? 'SUCCESS_CREATE_MULTISIG' : 'SUCCESS_CREATE_MULTISIG', newMultisig.a))
                         .then(() => this.navCtrl.pop())
                         .then(() => this.navCtrl.pop())
                         .then(() => this.navCtrl.push('MultisignaturePage'))
