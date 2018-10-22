@@ -23,13 +23,16 @@ export class LoginPage {
         private event: Events,
         private wallet: WalletServiceProvider
     ) {
+        this.wallet.getSavedAccounts()
+            .then((accounts) => this.saved_accounts = accounts ? Object.keys(accounts) : [])
     }
 
     ionViewDidEnter() {
         this.loadNetwork()
 
         this.wallet.getSavedAccounts()
-            .then((accounts) => this.saved_accounts = accounts ? Object.keys(accounts) : [])
+            .then((accounts) => {console.log("Getting account");
+            this.saved_accounts = accounts ? Object.keys(accounts) : []})
     }
 
     GenerateKeyPage = e => this.nav.push("GenerateKeyPage")

@@ -27,7 +27,7 @@
         </ion-item>
     </ion-row>
     <ion-row class="button more-bottom-padding">
-        <button *ngIf="!platform.is('mobile')" ion-button full [disabled]="!complete(account_name, password, password_repeat)" (click)="encrypt(account_name, password)">{{'BUTTON.NEXT'|translate}}</button>
-        <button *ngIf="platform.is('mobile')" ion-button full [disabled]="!passwordValid(password) || !passwordRepeatValid(password, password_repeat) || !validAccountName(account_name)" (click)="encryptMobile(account_name, password)">{{'BUTTON.NEXT'|translate}}</button>
+        <button *ngIf="!platform.is('mobile')" ion-button full [disabled]="!complete(password, password_repeat)" (click)="encrypt(password)">{{'BUTTON.NEXT'|translate}}</button>
+        <button *ngIf="platform.is('mobile')" ion-button full [disabled]="!passwordValid(password) || !passwordRepeatValid(password, password_repeat)" (click)="encryptMobile(password)">{{'BUTTON.NEXT'|translate}}</button>
     </ion-row>
 </ion-content>

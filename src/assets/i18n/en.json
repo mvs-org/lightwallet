@@ -559,6 +559,13 @@
     "DELETE_ACCOUNT_TITLE": "Delete account?",
     "DELETE_ACCOUNT_BODY": "If you delete your account, all it's information saved on your device will be deleted. To login, you will need your 24 backup words.",
     "ACCOUNT_NAME_ALREADY_USED": "This account name is already used",
-    "SUCCESS_ADD_MULTISIG": "The multisiginature address has been successfully added to your wallet!"
+    "SUCCESS_ADD_MULTISIG": "The multisiginature address has been successfully added to your wallet!",
+
+    "SAVE_ACCOUNT_TITLE": "Choose a user name",
+    "SAVE_ACCOUNT_MESSAGE": "Please give an Username to the account. This username will only be used locally for you to identify your accounts.",
+    "SAVE_ACCOUNT_PLACEHOLDER": "Username",
+    "SAVE_ACCOUNT_TITLE_NO_INPUT": "Please enter an Username",
+    "SAVE_ACCOUNT_TITLE_ALREADY_EXIST": "Username already used",
+    "SAVE_ACCOUNT_MESSAGE_ALREADY_EXIST": "This Username has already been saved. Please use a different Username"
 
 }

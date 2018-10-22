@@ -16,7 +16,6 @@ export class PassphrasePage {
 
     mnemonic: string;
     loading: Loading;
-    account_list: Array<string> = []
 
     constructor(public nav: NavController,
         public navParams: NavParams,
@@ -30,15 +29,13 @@ export class PassphrasePage {
 
             this.mnemonic = this.navParams.get('mnemonic');
 
-            this.wallet.getSavedAccounts()
-                .then((accounts) => this.account_list = accounts ? Object.keys(accounts) : [])
     }
 
     /* moves nagigation
      * encypts mnemonic with authentication provider encypt function
      * then writes the data to the json file and downloads the file
      */
-    encrypt(account_name, password) {
+    encrypt(password) {
         this.nav.setRoot("LoginPage");
         this.crypto.encrypt(this.mnemonic, password)
             .then((res) => this.dataToKeystoreJson(res))
@@ -48,7 +45,7 @@ export class PassphrasePage {
             });
     }
 
-    encryptMobile(account_name, password) {
+    encryptMobile(password) {
         this.showLoading();
         let wallet = {};
         wallet = { "index": 10 }
@@ -56,7 +53,6 @@ export class PassphrasePage {
         this.wallet.setWallet(wallet)
             .then((wallet) => this.wallet.setSeedMobile(password, this.mnemonic))
             .then((seed) => this.wallet.setMobileWallet(seed))
-            .then(() => this.wallet.setAccountName(account_name))
             .then(() => Promise.all([this.wallet.getWallet(password), this.wallet.getAddressIndex()]))
             .then((results) => this.wallet.generateAddresses(results[0], 0, results[1]))
             .then((addresses) => this.mvs.addAddresses(addresses))
@@ -102,7 +98,4 @@ export class PassphrasePage {
         })
     }
 
-    validAccountName = (account_name) => account_name != undefined
-        && account_name != ''
-        && this.account_list.indexOf(account_name) == -1
 }
