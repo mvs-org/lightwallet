@@ -42,6 +42,12 @@ export class LoginAccountPage {
             })
             .then((wallet) => this.wallet.setWallet(wallet))
             .then((wallet2) => this.wallet.setMobileWallet(this.account.seed))
+            .then(() => {
+                if(this.account.multisig_addresses) {
+                    this.wallet.setMultisigAddresses(this.account.multisig_addresses)
+                    this.wallet.setMultisigInfo(this.account.multisigs)
+                }
+            })
             .then(() => this.wallet.setAccountName(account_name))
             .then(() => Promise.all([this.wallet.getWallet(password), this.wallet.getAddressIndex()]))
             .then((results) => this.wallet.generateAddresses(results[0], 0, results[1]))

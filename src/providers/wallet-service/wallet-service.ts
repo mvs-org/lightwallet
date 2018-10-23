@@ -208,6 +208,14 @@ export class WalletServiceProvider {
             .then((addresses) => (addresses) ? addresses : [])
     }
 
+    setMultisigAddresses(multisig: Array<any>) {
+        this.storage.set('multisig_addresses', multisig)
+    }
+
+    setMultisigInfo(multisigs: Array<any>) {
+        this.storage.set('multisigs', multisigs)
+    }
+
     addMultisigAddresses(addresses: Array<string>) {
         return this.getMultisigAddresses()
             .then((addr: Array<string>) => this.storage.set('multisig_addresses', addr.concat(addresses)))
@@ -254,13 +262,15 @@ export class WalletServiceProvider {
             })
     }
      saveAccount(username) {
-        return Promise.all([this.storage.get('seed'), this.storage.get('wallet'), this.storage.get('saved_accounts')])
-            .then((results) => {
-                let accounts = results[2] ? results[2] : {};
+        return Promise.all([this.storage.get('seed'), this.storage.get('wallet'), this.storage.get('saved_accounts'), this.storage.get('multisig_addresses'), this.storage.get('multisigs')])
+            .then(([seed, wallet, saved_accounts, multisig_addresses, multisigs]) => {
+                let accounts = saved_accounts ? saved_accounts : {};
                 let account_name = username ? username : 'Default'
                 accounts[account_name] = {}
-                accounts[account_name].seed = results[0]
-                accounts[account_name].index = results[1].index
+                accounts[account_name].seed = seed
+                accounts[account_name].index = wallet.index
+                accounts[account_name].multisig_addresses = multisig_addresses ? multisig_addresses : []
+                accounts[account_name].multisigs = multisigs ? multisigs : []
                 return this.storage.set('saved_accounts', accounts)
             })
             .catch((error) => {
