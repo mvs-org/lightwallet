@@ -4,8 +4,8 @@ import { AppGlobals } from '../../app/app.global';
 import 'rxjs/add/operator/map';
 import { Storage } from '@ionic/storage';
 import { WalletServiceProvider } from '../wallet-service/wallet-service';
-import * as Metaverse from 'metaversejs/index.js';
-import * as Blockchain from 'mvs-blockchain';
+import Metaverse from 'metaversejs/index.js';
+import Blockchain from 'mvs-blockchain';
 
 @Injectable()
 export class MvsServiceProvider {

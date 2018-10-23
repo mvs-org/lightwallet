@@ -3,7 +3,7 @@ import { Http } from '@angular/http';
 import { AppGlobals } from '../../app/app.global';
 import 'rxjs/add/operator/map';
 import { Storage } from '@ionic/storage';
-import * as Metaverse from 'metaversejs/index.js';
+import Metaverse from 'metaversejs/index.js';
 import { CryptoServiceProvider } from '../crypto-service/crypto-service';
 
 @Injectable()
