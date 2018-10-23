@@ -145,7 +145,7 @@ export class AlertProvider {
     }
 
     showErrorTranslated(subtitle, message) {
-        this.translate.get(['MESSAGE.ERROR_TITLE', subtitle, message]).subscribe((translations: any) => {
+        this.translate.get(['MESSAGE.ERROR_TITLE', subtitle, message, 'OK']).subscribe((translations: any) => {
             let alert = this.alertCtrl.create({
                 title: translations['MESSAGE.ERROR_TITLE'],
                 subTitle: translations[subtitle],

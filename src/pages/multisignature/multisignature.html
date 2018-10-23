@@ -31,7 +31,10 @@
                         </ion-row>
                         <ion-row class="asset-balance">
                             <ion-col>
-                                <div class="asset-balance-text">{{"ACCOUNT.AVAILABLE" | translate}}: {{(addressBalancesObject[multisig.a] && addressBalancesObject[multisig.a].ETP )?format(addressBalancesObject[multisig.a].ETP.available,addressBalancesObject[multisig.a].ETP.decimals):0}} ETP</div>
+                                <div class="asset-balance-text">{{"ACCOUNT.AVAILABLE" | translate}}:
+                                    <span *ngIf="addressBalancesObject[multisig.a] && addressBalancesObject[multisig.a].ETP">{{addressBalancesObject[multisig.a].ETP.available | format : addressBalancesObject[multisig.a].ETP.decimals}} ETP</span>
+                                    <span *ngIf="!addressBalancesObject[multisig.a] || !addressBalancesObject[multisig.a].ETP">0 ETP</span>
+                                </div>
                             </ion-col>
                             <ion-col>
                                 <button class="right-buttons" ion-button clear icon-left color="danger" icon-left (click)="gotoMultisigTransfer('ETP', multisig.a)">
@@ -43,7 +46,7 @@
                         <div *ngIf="addressbalances[multisig.a]">
                             <ion-row class="asset-balance" *ngFor="let mst of addressbalances[multisig.a]">
                                 <ion-col>
-                                    <div class="asset-balance-text">{{format(mst.available,mst.decimals)}} {{mst.name}}</div>
+                                    <div class="asset-balance-text">{{mst.available | format : mst.decimals}} {{mst.name}}</div>
                                 </ion-col>
                                 <ion-col>
                                     <button class="right-buttons" ion-button clear icon-left color="danger" icon-left (click)="gotoMultisigTransfer(mst.name, multisig.a)">

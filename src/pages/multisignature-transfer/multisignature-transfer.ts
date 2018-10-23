@@ -78,22 +78,30 @@ export class MultisignatureTransferPage {
 
         this.mvs.getAddressBalances()
             .then((addressbalances) => {
+                console.log(addressbalances)
+                if(!addressbalances[this.sendFrom]) {
+                    addressbalances[this.sendFrom] = {}
+                    addressbalances[this.sendFrom].AVATAR = ""
+                    addressbalances[this.sendFrom].ETP = {}
+                    addressbalances[this.sendFrom].ETP.available = 0
+                    addressbalances[this.sendFrom].ETP.frozen = 0
+                    addressbalances[this.sendFrom].ETP.decimals = 8
+                    addressbalances[this.sendFrom].MIT = []
+                    addressbalances[this.sendFrom].MST = {}
+                }
                 this.decimals = (this.selectedAsset == 'ETP') ? addressbalances[this.sendFrom]['ETP'].decimals : addressbalances[this.sendFrom]['MST'][this.selectedAsset].decimals
                 this.etpBalance = addressbalances[this.sendFrom]['ETP'].available
                 let addrblncs = []
+                this.showBalance = this.selectedAsset == 'ETP' ? addressbalances[this.sendFrom].ETP.available : addressbalances[this.sendFrom].MST[this.selectedAsset].available
                 if (Object.keys(addressbalances).length) {
                     Object.keys(addressbalances).forEach((address) => {
                         if (this.selectedAsset == 'ETP') {
                             if (addressbalances[address].ETP.available > 0) {
                                 addrblncs.push({ "address": address, "avatar": addressbalances[address].AVATAR ? addressbalances[address].AVATAR : "", "identifier": addressbalances[address].AVATAR ? addressbalances[address].AVATAR : address, "balance": addressbalances[address].ETP.available })
-                                if(address == this.sendFrom)
-                                    this.showBalance = addressbalances[address].ETP.available
                             }
                         } else {
                             if (addressbalances[address].MST[this.selectedAsset] && addressbalances[address].MST[this.selectedAsset].available) {
                                 addrblncs.push({ "address": address, "avatar": addressbalances[address].AVATAR ? addressbalances[address].AVATAR : "", "identifier": addressbalances[address].AVATAR ? addressbalances[address].AVATAR : address, "balance": addressbalances[address].MST[this.selectedAsset].available })
-                                if(address == this.sendFrom)
-                                    this.showBalance = addressbalances[address].MST[this.selectedAsset].available
                             }
                         }
                     })
