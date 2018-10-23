@@ -221,6 +221,16 @@ export class WalletServiceProvider {
         let wallet = await this.getWallet(passphrase)
         let parameters = await this.getMultisigInfoFromAddress(address)
         return wallet.signMultisig(tx, parameters)
+            .catch((error) => {
+                console.error(error)
+                switch(error){
+                    case "Signature already included":
+                        throw Error('SIGN_ALREADY_INCL')
+                    default:
+                        throw Error('ERR_SIGN_TX')
+                }
+
+            })
     }
 
     getAccountName() {

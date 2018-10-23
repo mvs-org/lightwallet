@@ -298,8 +298,11 @@ export class MultisignatureTransferPage {
                     case "ERR_DECRYPT_WALLET":
                         this.alert.showError('MESSAGE.PASSWORD_WRONG', '')
                         break;
+                    case "SIGN_ALREADY_INCL":
+                        this.alert.showError('MESSAGE.ALREADY_SIGN_TRANSACTION', '')
+                        break;
                     default:
-                        this.alert.showError('MESSAGE.SIGN_TRANSACTION', error.message)
+                        this.alert.showError('MESSAGE.SIGN_TRANSACTION', '')
                 }
             })
     }
