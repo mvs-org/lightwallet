@@ -322,9 +322,11 @@ export class MultisignatureTransferPage {
         this.nbr_sign_after_sign = undefined
     }
 
-    broadcast() {
+    broadcast(tx, raw: boolean) {
         this.alert.showLoading()
-            .then(() => this.mvs.send(this.signed_tx))
+            .then(() => {
+                return raw ? this.mvs.broadcast(tx) : this.mvs.send(tx)
+            })
             .then((result) => {
                 this.navCtrl.pop()
                 this.navCtrl.pop()

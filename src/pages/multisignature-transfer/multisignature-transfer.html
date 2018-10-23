@@ -200,7 +200,7 @@
                 </ion-item>
             </ion-grid>
         </ion-card>
-        <ion-list>
+        <ion-list *ngIf="nbr_sign_before_sign<address_info.m">
             <ion-item [ngClass]="{'error-border': !validPassword(passphrase_sign)}">
                 <ion-label color="primary" floating>{{"PASSWORD" | translate}}</ion-label>
                 <ion-input name="passphrase_sign" type="password" [(ngModel)]="passphrase_sign" required></ion-input>
@@ -208,10 +208,16 @@
             <br/>
         </ion-list>
         <ion-row class="padding-bottom" *ngIf="!raw_signed_tx">
-            <ion-col>
+            <ion-col *ngIf="nbr_sign_before_sign<address_info.m">
                 <button type="submit" ion-button full icon-left (click)="sign(sendFrom, input, passphrase_sign)" color="secondary">
                     <ion-icon disabled="checked" name="create"></ion-icon>
                     {{"SIGN" | translate}}
+                </button>
+            </ion-col>
+            <ion-col *ngIf="nbr_sign_before_sign>=address_info.m">
+                <button type="submit" ion-button full icon-left (click)="broadcast(input, true)" color="secondary">
+                    <ion-icon disabled="checked" name="send"></ion-icon>
+                    {{"MULTISIGNATURE.BROADCAST" | translate}}
                 </button>
             </ion-col>
             <ion-col>
@@ -245,7 +251,7 @@
 
         <ion-row *ngIf="signed_tx && nbr_sign_after_sign>=address_info.m">
             <ion-col>
-                <button type="submit" ion-button full icon-left (click)="broadcast()" color="secondary">
+                <button type="submit" ion-button full icon-left (click)="broadcast(signed_tx, false)" color="secondary">
                     <ion-icon disabled="checked" name="send"></ion-icon>
                     {{"MULTISIGNATURE.BROADCAST" | translate}}
                 </button>

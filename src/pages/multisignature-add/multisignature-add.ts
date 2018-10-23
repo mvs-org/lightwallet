@@ -213,7 +213,7 @@ export class MultisignatureAddPage {
                         .then(() => Promise.all([this.mvs.updateHeight(), this.updateBalances()]))
                         .then(() => this.updateBalances())
                         .then(() => this.alert.stopLoading())
-                        .then(() => this.alert.showSent(newAddress ? 'SUCCESS_CREATE_MULTISIG' : 'SUCCESS_CREATE_MULTISIG', newMultisig.a))
+                        .then(() => this.alert.showSent(newAddress ? 'SUCCESS_CREATE_MULTISIG' : 'SUCCESS_IMPORT_MULTISIG', newMultisig.a))
                         .then(() => this.navCtrl.pop())
                         .then(() => this.navCtrl.pop())
                         .then(() => this.navCtrl.push('MultisignaturePage'))
