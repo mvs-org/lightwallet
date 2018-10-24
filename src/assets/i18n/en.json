@@ -570,6 +570,9 @@
     "RESET_MESSAGE_CHOICE": "You can choose to locally save the information of your account, including your encrypted private key, in order to easily login with your password.",
     "SUCCESS_IMPORT_MULTISIG": "Your multisignature address has been successfully imported! The address is: ",
 
-    "MESSAGE.ALREADY_SIGN_TRANSACTION": "You have already signed this transaction, no need to sign it again!"
-
+    "MESSAGE.ALREADY_SIGN_TRANSACTION": "You have already signed this transaction, no need to sign it again!",
+    "MESSAGE.WARNING_PLUGIN_TITLE": "Be careful with plugins!",
+    "MESSAGE.WARNING_PLUGIN_MESSAGE": "Since v0.6.0, you can now add plugins to myetpwallet! This feature allow you to easily connect third party plugins with your Metaverse wallet. However, be aware that anything displayed in a plugin is managed by a third party. We recommend user to use the plugins carefully, an to not use it with their main account but with an account with a small number of ETP instead.",
+    "MESSAGE.WARNING_MULTISIG_TITLE": "Be careful with multisignature addresses!",
+    "MESSAGE.WARNING_MULTISIG_MESSAGE": "Since v0.6.0, you can now use multisignatures addresses in MyETPWallet. However, please use this new feature carefully and avoid sending important quantity of ETP or MST to your multisignature addresses. If you notice any bug, do not hesitate to report it via Report Bug in the main menu!"
 }

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
-
+import { AlertProvider } from '../../providers/alert/alert';
 
 @IonicPage()
 @Component({
@@ -21,16 +21,19 @@ export class MultisignaturePage {
     constructor(
         public navCtrl: NavController,
         public navParams: NavParams,
+        private alert: AlertProvider,
         private mvs: MvsServiceProvider,
         private wallet: WalletServiceProvider
     ) {
-            this.addressbalances = {};
-            this.wallet.getMultisigsInfo()
-                .then((multisigs) => {
-                    this.multisigs = multisigs;
-                    if(multisigs && multisigs.length > 0)
-                        this.no_address = false;
-                })
+
+        this.alert.showMessage('MESSAGE.WARNING_MULTISIG_TITLE', '', 'MESSAGE.WARNING_MULTISIG_MESSAGE')
+        this.addressbalances = {};
+        this.wallet.getMultisigsInfo()
+            .then((multisigs) => {
+                this.multisigs = multisigs;
+                if(multisigs && multisigs.length > 0)
+                    this.no_address = false;
+            })
 
     }
 
