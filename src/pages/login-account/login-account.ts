@@ -37,12 +37,11 @@ export class LoginAccountPage {
         this.alert.showLoading()
             .then(() => this.wallet.getSavedAccount(account_name))
             .then((account) => {
-                this.account = account;
+                this.account = account ? account : {}
                 return { "index": account.index ? account.index : 10 }
             })
             .then((wallet) => this.wallet.setWallet(wallet))
-            .then((wallet2) => this.wallet.setMobileWallet(this.account.seed))
-            .then(() => this.wallet.setAccountName(account_name))
+            .then(() => Promise.all([this.wallet.setMobileWallet(this.account.seed), this.wallet.setAccountName(account_name), this.wallet.setMultisigAddresses(this.account.multisig_addresses), this.wallet.setMultisigInfo(this.account.multisigs), this.wallet.setPlugins(this.account.plugins)]))
             .then(() => Promise.all([this.wallet.getWallet(password), this.wallet.getAddressIndex()]))
             .then((results) => this.wallet.generateAddresses(results[0], 0, results[1]))
             .then((addresses) => this.mvs.addAddresses(addresses))
