@@ -73,39 +73,26 @@ export class AssetTransferPage {
         this.total_to_send[this.selectedAsset] = 0
         this.total = 0
 
-
-        //Load addresses
-        mvs.getAddresses()
-            .then((_: Array<string>) => {
-                this.addresses = _
-            })
-
-        //Load balances
-        mvs.getBalances()
-            .then((balances) => {
+        //Load addresses and balances
+        Promise.all([this.mvs.getBalances(), this.mvs.getAddresses(), this.mvs.getAddressBalances()])
+            .then(([balances, addresses, addressbalances]) => {
                 let balance = (this.selectedAsset == 'ETP') ? balances.ETP : balances.MST[this.selectedAsset]
                 this.balance = (balance && balance.available) ? balance.available : 0
                 this.decimals = balance.decimals
                 this.etpBalance = balances.ETP.available
                 this.showBalance = this.balance
-                return this.mvs.getAddressBalances()
-                    .then((addressbalances) => {
-                        let addrblncs = []
-                        if (Object.keys(addressbalances).length) {
-                            Object.keys(addressbalances).forEach((address) => {
-                                if (this.selectedAsset == 'ETP') {
-                                    if (addressbalances[address].ETP.available > 0) {
-                                        addrblncs.push({ "address": address, "avatar": addressbalances[address].AVATAR ? addressbalances[address].AVATAR : "", "identifier": addressbalances[address].AVATAR ? addressbalances[address].AVATAR : address, "balance": addressbalances[address].ETP.available })
-                                    }
-                                } else {
-                                    if (addressbalances[address].MST[this.selectedAsset] && addressbalances[address].MST[this.selectedAsset].available) {
-                                        addrblncs.push({ "address": address, "avatar": addressbalances[address].AVATAR ? addressbalances[address].AVATAR : "", "identifier": addressbalances[address].AVATAR ? addressbalances[address].AVATAR : address, "balance": addressbalances[address].MST[this.selectedAsset].available })
-                                    }
-                                }
-                            })
-                        }
-                        this.addressbalances = addrblncs
-                    })
+                this.addresses = addresses
+
+                let addrblncs = []
+                Object.keys(addresses).forEach((index) => {
+                    let address = addresses[index]
+                    if (addressbalances[address]) {
+                        addrblncs.push({ "address": address, "avatar": addressbalances[address].AVATAR ? addressbalances[address].AVATAR : "", "identifier": addressbalances[address].AVATAR ? addressbalances[address].AVATAR : address, "balance": addressbalances[address].ETP.available })
+                    } else {
+                        addrblncs.push({ "address": address, "avatar": "", "identifier": address, "balance": 0 })
+                    }
+                })
+                this.addressbalances = addrblncs
             })
     }
 

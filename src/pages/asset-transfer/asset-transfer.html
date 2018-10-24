@@ -65,7 +65,9 @@
                 <ion-label>{{"SELECT_FROM_ADDRESS"|translate}}</ion-label>
                 <ion-select [(ngModel)]="sendFrom" name="sendfrom" multiple="false" (ngModelChange)="onFromAddressChange($event)" okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}">
                     <ion-option selected="true" value="auto">{{"AUTO"| translate}}</ion-option>
-                    <ion-option *ngFor="let addressbalance of addressbalances" value="{{addressbalance.address}}">{{addressbalance.identifier}} - {{addressbalance.balance | format : decimals}} {{selectedAsset}}</ion-option>
+                    <ng-container *ngFor="let addressbalance of addressbalances">
+                        <ion-option *ngIf="addressbalance.balance>0" value="{{addressbalance.address}}">{{addressbalance.identifier}} - {{addressbalance.balance | format : decimals}} {{selectedAsset}}</ion-option>
+                    </ng-container>
                 </ion-select>
             </ion-item>
             <br>
@@ -95,7 +97,7 @@
                     <ion-label>{{"SELECT_CHANGE_ADDRESS"|translate}}</ion-label>
                     <ion-select [(ngModel)]="changeAddress" name="changeaddress" okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}">
                         <ion-option selected="true" value="auto">{{"AUTO"| translate}}</ion-option>
-                        <ion-option *ngFor="let address of addresses" value="{{address}}">{{address}}</ion-option>
+                        <ion-option *ngFor="let addressbalance of addressbalances" value="{{addressbalance.address}}">{{addressbalance.identifier}} - {{addressbalance.balance | format : decimals}} {{selectedAsset}}</ion-option>
                     </ion-select>
                 </ion-item>
                 <button ion-button full [disabled]="!sendForm.form.valid||!validrecipient(recipient_address)||!validQuantity(quantity)||!validPassword(passphrase)||!validMessageLength(message)" (click)="preview()" color="primary">
