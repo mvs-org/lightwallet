@@ -107,7 +107,7 @@ export class TransactionsPage {
         for (var height in grouped_frozen_ouputs) {
             var unlock = grouped_frozen_ouputs[height];
             for (var output in unlock) {
-                if (parseInt(height) > parseInt(output))
+                if (this.height > parseInt(output))
                     this.frozen_outputs_unlocked.push(unlock[output])
                 else
                     this.frozen_outputs_locked.push(unlock[output])
