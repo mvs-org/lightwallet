@@ -586,5 +586,6 @@
     "PLUGIN_START.PLUGIN_NAME": "Plugin name",
     "MESSAGE.UNLOCK_WALLET": "Error while unlocking your wallet, the plugin cannot access your wallet",
     "MESSAGE.WRONG_PASSWORD_TRY_AGAIN": "Wrong password, try again?",
-    "MESSAGE.UNLOCK_WALLET_PASSWORD_NOT_ENTERED": "Password not entered, your experience in the plugin might be limited"
+    "MESSAGE.UNLOCK_WALLET_PASSWORD_NOT_ENTERED": "Password not entered, your experience in the plugin might be limited",
+    "MESSAGE.UNLOCK_WALLET_PASSWORD_MESSAGE": "Enter your password to unlock your wallet"
 }

@@ -54,7 +54,7 @@ export class PluginPage {
             case 'verify':
                 return Promise.resolve(this.walletProvider.verifyMessage(data.params.text, data.params.address, data.params.signature))
             case 'unlock':
-                return this.unlock('Enter passphrase to unlock wallet')
+                return this.unlock('MESSAGE.UNLOCK_WALLET_PASSWORD_MESSAGE')
             case 'addresses':
                 return this.mvs.getAddresses()
             case 'broadcast':
