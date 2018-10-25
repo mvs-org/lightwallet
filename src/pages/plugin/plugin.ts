@@ -33,7 +33,6 @@ export class PluginPage {
         private plugins: PluginProvider,
         public navParams: NavParams
     ) {
-        this.alert.showMessage('MESSAGE.WARNING_PLUGIN_TITLE', '', 'MESSAGE.WARNING_PLUGIN_MESSAGE')
     }
 
     ionViewWillLeave() {

@@ -486,7 +486,7 @@
     "SWAP_MST.INCORRECT_ETH_ADDRESS": "Incorrect Ethereum address. Please double check the address",
 
     "MULTISIGNATURE": "Multisignature",
-    "MULTISIGNATURE.INFORMATION": "You can use multisignature addresses in order to share a multisignature address with other account. This address will require the signature of a defined number of members in order to do a transaction.",
+    "MULTISIGNATURE.INFORMATION": "You can use multisignature addresses in order to share a multisignature address with other users. This address will require the signature of a defined number of members in order to do a transaction.",
     "MULTISIGNATURE.NO_ADDRESS": "You do not have any multisignature address yet. Create one by clicking on 'Create multisignature address'!",
     "MULTISIGNATURE.ADD_ADDRESS": "Add multisignature address",
     "MULTISIGNATURE_ADD.NEW": "New address",
@@ -578,5 +578,10 @@
 
     "SWAP_FEE": "Swap fee",
     "HELP.SWAP_TX_FEE": "This is the transaction fee for the transaction on the Metaverse blockchain",
-    "HELP.SWAP_TX_SWAP_FEE": "This is the transaction fee for the transaction on the Ethereum blockchain. This ETP fee will be converted to ETH to pay for the Ethereum transaction fee"
+    "HELP.SWAP_TX_SWAP_FEE": "This is the transaction fee for the transaction on the Ethereum blockchain. This ETP fee will be converted to ETH to pay for the Ethereum transaction fee",
+    "PLUGIN_START": "Access plugin",
+    "PLUGIN_START.WARNING_TITLE": "Get ready to enter in a plugin!",
+    "PLUGIN_START.WARNING_TEXT": "You are about to enter in a third-party plugin. For your own security, please be carefull with the information that you share with this third-party. In order to avoid any funds lost, we recommend to use plugins only with accounts that own a limited amount of assets.",
+    "PLUGIN_START.GO_BUTTON": "Go to plugin",
+    "PLUGIN_START.PLUGIN_NAME": "Plugin name"
 }
