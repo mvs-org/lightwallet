@@ -27,6 +27,9 @@ export class PluginStartPage {
         this.navCtrl.pop()
     }
 
-    gotoPlugin = () => this.navCtrl.push("PluginPage", { name: this.name })
+    gotoPlugin = () => {
+        this.navCtrl.pop()
+            .then(() => this.navCtrl.push("PluginPage", { name: this.name }))
+    }
 
 }
