@@ -87,7 +87,7 @@ export class AssetTransferPage {
                 Object.keys(addresses).forEach((index) => {
                     let address = addresses[index]
                     if (addressbalances[address]) {
-                        addrblncs.push({ "address": address, "avatar": addressbalances[address].AVATAR ? addressbalances[address].AVATAR : "", "identifier": addressbalances[address].AVATAR ? addressbalances[address].AVATAR : address, "balance": addressbalances[address].ETP.available })
+                        addrblncs.push({ "address": address, "avatar": addressbalances[address].AVATAR ? addressbalances[address].AVATAR : "", "identifier": addressbalances[address].AVATAR ? addressbalances[address].AVATAR : address, "balance": this.selectedAsset == 'ETP' ? addressbalances[address].ETP.available : addressbalances[address].MST[this.selectedAsset] ? addressbalances[address].MST[this.selectedAsset].available : 0})
                     } else {
                         addrblncs.push({ "address": address, "avatar": "", "identifier": address, "balance": 0 })
                     }
