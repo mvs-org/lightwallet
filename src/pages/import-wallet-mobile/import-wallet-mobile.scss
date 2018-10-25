@@ -15,56 +15,13 @@ page-import-wallet-mobile {
         background-color: black;
         display: inline-block;
     }
-    .inputfile {
-        width: 0.1px;
-        height: 0.1px;
-        opacity: 0;
-        overflow: hidden;
-        position: absolute;
-        z-index: -1;
-
-    }
-    .inputfile + label {
-        font-size: 1.25em !important;
-        font-weight: 700;
-        color: white;
-        background-color: #32db64;
-        margin: auto;
-        margin-top: 50px;
-        padding: 5px;
-        padding-left: 15px;
-        padding-right: 15px;
-        border-radius: 2.5px;
-        display: block;
-        /* padding: 14px 45px; */
-        // background: #39D2B4;
-        color: #fff;
-        font-size: 1em;
-        transition: all .4s;
-        cursor: pointer;
-    }
-
-    .inputfile:focus + label,
-    .inputfile + label:hover {
-        background-color: #4af47d;
-    }
-
-    .inputfile + label {
-        cursor: pointer; /* "hand" cursor */
-
-    }
-    .inputfile:focus + label {
-        outline: 1px dotted #000;
-        outline: -webkit-focus-ring-color auto 5px;
-
-    }
 
     .buttons-container {
         height: 170px;
     }
 
     .verifiedQRCode {
-        color: #32db64;
+        color: color($colors, secondary);
         font-size: 50px;
         margin-left: calc(50% - 25px);
     }
