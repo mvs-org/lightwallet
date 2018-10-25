@@ -26,7 +26,6 @@ export class MultisignaturePage {
         private wallet: WalletServiceProvider
     ) {
 
-        this.alert.showMessage('MESSAGE.WARNING_MULTISIG_TITLE', '', 'MESSAGE.WARNING_MULTISIG_MESSAGE')
         this.addressbalances = {};
         this.wallet.getMultisigsInfo()
             .then((multisigs) => {
