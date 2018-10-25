@@ -18,6 +18,7 @@ export class LoginAccountPage {
     loading: Loading;
     account_name: string
     account: any
+    wallet_info: any
 
     constructor(public nav: NavController,
         public navParams: NavParams,
@@ -40,6 +41,8 @@ export class LoginAccountPage {
 
     importAccount(account_name, password) {
         this.alert.showLoading()
+            .then(() => this.wallet.getWallet(password))
+            .then((wallet_info) => this.wallet_info = wallet_info)
             .then(() => this.wallet.getSavedAccount(account_name))
             .then((account) => {
                 this.account = account ? account : {}
@@ -47,8 +50,8 @@ export class LoginAccountPage {
             })
             .then((wallet) => this.wallet.setWallet(wallet))
             .then(() => Promise.all([this.wallet.setMobileWallet(this.account.seed), this.wallet.setAccountName(account_name), this.wallet.setMultisigAddresses(this.account.multisig_addresses), this.wallet.setMultisigInfo(this.account.multisigs), this.wallet.setPlugins(this.account.plugins)]))
-            .then(() => Promise.all([this.wallet.getWallet(password), this.wallet.getAddressIndex()]))
-            .then((results) => this.wallet.generateAddresses(results[0], 0, results[1]))
+            .then(() => this.wallet.getAddressIndex())
+            .then((index) => this.wallet.generateAddresses(this.wallet_info, 0, index))
             .then((addresses) => this.mvs.addAddresses(addresses))
             .then(() => this.alert.stopLoading())
             .then(() => this.nav.setRoot("AccountPage"))
