@@ -3,7 +3,6 @@ import { IonicPageModule } from 'ionic-angular';
 import { MultisignaturePage } from './multisignature';
 import { TranslateModule} from '@ngx-translate/core';
 import { PipesModule } from '../../pipes/pipes.module';
-import { AlertProvider } from '../../providers/alert/alert';
 
 @NgModule({
     declarations: [
@@ -15,7 +14,7 @@ import { AlertProvider } from '../../providers/alert/alert';
         TranslateModule
     ],
     providers: [
-        AlertProvider
+
     ],
     exports: [
         MultisignaturePage

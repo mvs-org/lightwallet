@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
-import { AlertProvider } from '../../providers/alert/alert';
 
 @IonicPage()
 @Component({
@@ -21,7 +20,6 @@ export class MultisignaturePage {
     constructor(
         public navCtrl: NavController,
         public navParams: NavParams,
-        private alert: AlertProvider,
         private mvs: MvsServiceProvider,
         private wallet: WalletServiceProvider
     ) {

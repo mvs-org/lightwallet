@@ -15,10 +15,22 @@
         </ion-item>
     </ion-row>
     <ion-row>
-        <button ion-button full [disabled]="!complete(password)" (click)="importAccount(account_name, password)">{{'BUTTON.NEXT'|translate}}</button>
+        <button ion-button icon-left full [disabled]="!complete(password)" (click)="importAccount(account_name, password)">
+            <ion-icon name="arrow-forward"></ion-icon>
+            {{'BUTTON.NEXT'|translate}}
+        </button>
+    </ion-row>
+    <br>
+    <ion-row>
+        <button ion-button icon-left full color="secondary" (click)="deleteAccount(account_name)">
+            <ion-icon name="trash"></ion-icon>
+            {{'BUTTON.DELETE_ACCOUNT'|translate}}
+        </button>
     </ion-row>
     <br>
     <ion-row class="more-bottom-padding">
-        <button ion-button full color="danger" (click)="deleteAccount(account_name)">{{'BUTTON.DELETE_ACCOUNT'|translate}}</button>
+        <button ion-button icon-left full color="danger" (click)="cancel($event)">
+            {{'CANCEL'|translate}}
+        </button>
     </ion-row>
 </ion-content>

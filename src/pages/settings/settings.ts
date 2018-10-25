@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, AlertController, Platform } from 'ionic-angular';
+import { IonicPage, NavController, Platform } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { TranslateService } from '@ngx-translate/core';
 import { AppGlobals } from '../../app/app.global';
@@ -21,7 +21,6 @@ export class SettingsPage {
         public nav: NavController,
         private mvs: MvsServiceProvider,
         public translate: TranslateService,
-        private alertCtrl: AlertController,
         private globals: AppGlobals,
         public platform: Platform,
         private alert: AlertProvider,
@@ -56,51 +55,9 @@ export class SettingsPage {
     /**
      * Logout dialog
      */
-    logout() {
-        this.translate.get('RESET_TITLE').subscribe(title => {
-            this.translate.get('RESET_MESSAGE_CHOICE').subscribe(message => {
-                this.translate.get('SAVE').subscribe(save => {
-                    this.translate.get('DELETE').subscribe(no => {
-                        this.translate.get('BACK').subscribe(back => {
-                            let confirm = this.alertCtrl.create({
-                                title: title,
-                                message: message,
-                                buttons: [
-                                    {
-                                        text: save,
-                                        handler: () => this.wallet.getAccountName()
-                                            .then((current_username) => {
-                                                if(current_username) {
-                                                    this.saveAccount(current_username);
-                                                } else {
-                                                    this.newUsername('SAVE_ACCOUNT_TITLE', 'SAVE_ACCOUNT_MESSAGE', 'SAVE_ACCOUNT_PLACEHOLDER')
-                                                }
-                                            })
-                                    },
-                                    {
-                                        text: no,
-                                        handler: () => {
-                                            this.wallet.getAccountName()
-                                                .then((account_name) => this.wallet.deleteAccount(account_name))
-                                                .then(() => this.mvs.hardReset())
-                                                .then(() => this.nav.setRoot("LoginPage"))
-                                        }
-                                    },
-                                    {
-                                        text: back,
-                                        handler: () => {
-                                            console.log('Disagree clicked')
-                                        }
-                                    }
-                                ]
-                            });
-                            confirm.present()
-                        })
-                    })
-                })
-            })
-        })
-    }
+     logout() {
+         this.alert.showLogout(this.saveAccountHandler, this.forgetAccountHandler)
+     }
 
     newUsername(title, message, placeholder) {
         this.askUsername(title, message, placeholder)
@@ -111,6 +68,24 @@ export class SettingsPage {
                     this.newUsername('SAVE_ACCOUNT_TITLE_ALREADY_EXIST', 'SAVE_ACCOUNT_MESSAGE_ALREADY_EXIST', placeholder)
                 } else {
                     this.saveAccount(username);
+                }
+            })
+    }
+
+    private forgetAccountHandler = () => {
+        return this.wallet.getAccountName()
+            .then((account_name) => this.wallet.deleteAccount(account_name))
+            .then(() => this.mvs.hardReset())
+            .then(() => this.nav.setRoot("LoginPage"))
+    }
+
+    private saveAccountHandler = () => {
+        return this.wallet.getAccountName()
+            .then((current_username) => {
+                if (current_username) {
+                    this.saveAccount(current_username);
+                } else {
+                    this.newUsername('SAVE_ACCOUNT_TITLE', 'SAVE_ACCOUNT_MESSAGE', 'SAVE_ACCOUNT_PLACEHOLDER')
                 }
             })
     }

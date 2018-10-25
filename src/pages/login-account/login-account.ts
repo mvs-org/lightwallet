@@ -33,6 +33,11 @@ export class LoginAccountPage {
             this.account_name = navParams.get('account')
     }
 
+    cancel(e) {
+        e.preventDefault()
+        this.nav.pop()
+    }
+
     importAccount(account_name, password) {
         this.alert.showLoading()
             .then(() => this.wallet.getSavedAccount(account_name))

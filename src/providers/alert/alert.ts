@@ -35,7 +35,7 @@ export class AlertProvider {
     showLogout(saveAccountHandler, forgetAccountHandler) {
         this.translate.get(['RESET_TITLE', 'RESET_MESSAGE_CHOICE', 'SAVE', 'DELETE', 'BACK']).subscribe(translations => {
             this.alertCtrl.create({
-                title: translations.TITLE,
+                title: translations.RESET_TITLE,
                 message: translations.RESET_MESSAGE_CHOICE,
                 buttons: [
                     {
