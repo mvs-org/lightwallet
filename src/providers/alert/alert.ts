@@ -88,13 +88,13 @@ export class AlertProvider {
     }
 
     askPassphrase(message_key, onSubmit) {
-        this.translate.get(['PASSPHRASE', 'OK', 'CANCEL', message_key]).subscribe((translations: any) => {
+        this.translate.get(['PASSWORD', 'OK', 'CANCEL', message_key]).subscribe((translations: any) => {
             let alert = this.alertCtrl.create({
-                title: translations['PASSPHRASE'],
+                title: translations['PASSWORD'],
                 subTitle: translations[message_key],
                 enableBackdropDismiss: false,
                 inputs: [
-                    { name: 'passphrase', placeholder: 'Passphrase' }
+                    { name: 'passphrase', placeholder: translations['PASSWORD'], type:'password' }
                 ],
                 buttons: [
                     {

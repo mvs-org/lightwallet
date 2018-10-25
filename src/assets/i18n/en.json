@@ -582,6 +582,9 @@
     "PLUGIN_START": "Access plugin",
     "PLUGIN_START.WARNING_TITLE": "Get ready to enter in a plugin!",
     "PLUGIN_START.WARNING_TEXT": "You are about to enter in a third-party plugin. For your own security, please be carefull with the information that you share with this third-party. In order to avoid any funds lost, we recommend to use plugins only with accounts that own a limited amount of assets.",
-    "PLUGIN_START.GO_BUTTON": "Go to plugin",
-    "PLUGIN_START.PLUGIN_NAME": "Plugin name"
+    "PLUGIN_START.GO_BUTTON": "Enter plugin",
+    "PLUGIN_START.PLUGIN_NAME": "Plugin name",
+    "MESSAGE.UNLOCK_WALLET": "Error while unlocking your wallet, the plugin cannot access your wallet",
+    "MESSAGE.WRONG_PASSWORD_TRY_AGAIN": "Wrong password, try again?",
+    "MESSAGE.UNLOCK_WALLET_PASSWORD_NOT_ENTERED": "Password not entered, your experience in the plugin might be limited"
 }
