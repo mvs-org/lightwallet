@@ -32,19 +32,25 @@ export class AlertProvider {
         })
     }
 
-    showLogout(onLogout) {
-        this.translate.get(['RESET_TITLE', 'RESET_MESSAGE', 'CONFIRM', 'BACK']).subscribe(translations => {
+    showLogout(saveAccountHandler, forgetAccountHandler) {
+        this.translate.get(['RESET_TITLE', 'RESET_MESSAGE_CHOICE', 'SAVE', 'DELETE', 'BACK']).subscribe(translations => {
             this.alertCtrl.create({
-                title: translations.RESET_TITLE,
-                message: translations.RESET_MESSAGE,
+                title: translations.TITLE,
+                message: translations.RESET_MESSAGE_CHOICE,
                 buttons: [
-                    { text: translations.BACK },
                     {
-                        text: translations.CONFIRM,
-                        handler: onLogout
+                        text: translations.SAVE,
+                        handler: saveAccountHandler
+                    },
+                    {
+                        text: translations.DELETE,
+                        handler: forgetAccountHandler
+                    },
+                    {
+                        text: translations.BACK
                     }
                 ]
-            }).present()
+            }).present();
         })
     }
 

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, Platform, Events, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, Platform, Events } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { AlertProvider } from '../../providers/alert/alert';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
@@ -46,7 +46,7 @@ export class AccountPage {
 
     private syncinterval: any;
 
-    constructor(public nav: NavController, private alertCtrl: AlertController, public translate: TranslateService, private wallet: WalletServiceProvider, private mvs: MvsServiceProvider, private alert: AlertProvider, public platform: Platform, private event: Events) {
+    constructor(public nav: NavController, public translate: TranslateService, private wallet: WalletServiceProvider, private mvs: MvsServiceProvider, private alert: AlertProvider, public platform: Platform, private event: Events) {
 
         this.loading = true;
         //Reset last update time
@@ -68,7 +68,7 @@ export class AccountPage {
 
     async ionViewDidEnter() {
 
-        if(await this.checkAccess()){
+        if (await this.checkAccess()) {
             this.loadTickers()
             this.initialize()
             this.whitelist = await this.mvs.getWhitelist()
@@ -77,12 +77,12 @@ export class AccountPage {
             this.nav.setRoot("LoginPage")
     }
 
-    private async checkAccess(){
+    private async checkAccess() {
         let addresses = await this.mvs.getAddresses()
         return Array.isArray(addresses) && addresses.length
     }
 
-    private async loadTickers(){
+    private async loadTickers() {
         this.base = await this.mvs.getBaseCurrency()
         this.mvs.getTickers()
             .then(tickers => {
@@ -119,72 +119,45 @@ export class AccountPage {
     }
 
     private update = async () => {
-        return (await this.mvs.getUpdateNeeded()) ?  this.sync()
-                .then(() => this.mvs.setUpdateTime())
+        return (await this.mvs.getUpdateNeeded()) ? this.sync()
+            .then(() => this.mvs.setUpdateTime())
             .catch(() => console.log("Can't update")) : null
     }
 
     ionViewWillLeave = () => clearInterval(this.syncinterval)
 
-    /**
-     * Logout dialog
-     */
-     logout() {
-         this.translate.get('RESET_TITLE').subscribe(title => {
-             this.translate.get('RESET_MESSAGE_CHOICE').subscribe(message => {
-                 this.translate.get('SAVE').subscribe(save => {
-                     this.translate.get('DELETE').subscribe(no => {
-                         this.translate.get('BACK').subscribe(back => {
-                             let confirm = this.alertCtrl.create({
-                                 title: title,
-                                 message: message,
-                                 buttons: [
-                                     {
-                                         text: save,
-                                         handler: () => this.wallet.getAccountName()
-                                             .then((current_username) => {
-                                                 if(current_username) {
-                                                     this.saveAccount(current_username);
-                                                 } else {
-                                                     this.newUsername('SAVE_ACCOUNT_TITLE', 'SAVE_ACCOUNT_MESSAGE', 'SAVE_ACCOUNT_PLACEHOLDER')
-                                                 }
-                                             })
-                                     },
-                                     {
-                                         text: no,
-                                         handler: () => {
-                                             this.wallet.getAccountName()
-                                                 .then((account_name) => this.wallet.deleteAccount(account_name))
-                                                 .then(() => this.mvs.hardReset())
-                                                 .then(() => this.nav.setRoot("LoginPage"))
-                                         }
-                                     },
-                                     {
-                                         text: back,
-                                         handler: () => {
-                                             console.log('Disagree clicked')
-                                         }
-                                     }
-                                 ]
-                             });
-                             confirm.present()
-                         })
-                     })
-                 })
-             })
-         })
-     }
+    logout() {
+        this.alert.showLogout(this.saveAccountHandler, this.forgetAccountHandler)
+    }
 
     newUsername(title, message, placeholder) {
         this.askUsername(title, message, placeholder)
             .then((username) => {
-                if(!username) {
+                if (!username) {
                     this.newUsername('SAVE_ACCOUNT_TITLE_NO_INPUT', 'SAVE_ACCOUNT_MESSAGE', placeholder)
                 } else if (this.saved_accounts.indexOf(username) != -1) {
                     console.log("account name already exist")
                     this.newUsername('SAVE_ACCOUNT_TITLE_ALREADY_EXIST', 'SAVE_ACCOUNT_MESSAGE_ALREADY_EXIST', placeholder)
                 } else {
                     this.saveAccount(username);
+                }
+            })
+    }
+
+    private forgetAccountHandler = () => {
+        return this.wallet.getAccountName()
+            .then((account_name) => this.wallet.deleteAccount(account_name))
+            .then(() => this.mvs.hardReset())
+            .then(() => this.nav.setRoot("LoginPage"))
+    }
+
+    private saveAccountHandler = () => {
+        return this.wallet.getAccountName()
+            .then((current_username) => {
+                if (current_username) {
+                    this.saveAccount(current_username);
+                } else {
+                    this.newUsername('SAVE_ACCOUNT_TITLE', 'SAVE_ACCOUNT_MESSAGE', 'SAVE_ACCOUNT_PLACEHOLDER')
                 }
             })
     }
