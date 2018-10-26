@@ -30,7 +30,7 @@
         </ion-col>
     </ion-row>
 
-    <form *ngIf="type == 'create'" #sendForm="ngForm" style="padding-bottom: 0;">
+    <form *ngIf="type == 'create'" #sendForm="ngForm" class="padding-bottom">
         <ion-list style="padding-bottom: 0;">
 
             <ion-item>
@@ -125,7 +125,7 @@
     </form>
 
 
-    <form *ngIf="type == 'sign' && !decoded_tx" #sendForm="ngForm" style="padding-bottom: 0;">
+    <form *ngIf="type == 'sign' && !decoded_tx" #sendForm="ngForm" class="padding-bottom">
 
         <ion-list>
             <ion-card-content>
