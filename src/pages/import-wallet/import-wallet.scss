@@ -31,7 +31,7 @@ page-import-wallet {
         font-size: 1.25em !important;
         font-weight: 700;
         color: white;
-        background-color: #32db64;
+        background-color: color($colors, secondary);
         margin: auto;
         margin-top: 50px;
         padding: 5px;
@@ -67,7 +67,7 @@ page-import-wallet {
     }
 
     .verifiedFile {
-        color: #32db64;
+        color: color($colors, secondary);
         font-size: 50px;
         margin-left: calc(50% - 25px);
     }

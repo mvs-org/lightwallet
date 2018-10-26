@@ -143,7 +143,7 @@ export class MITTransferPage {
                     }
                 ]
             })
-            alert.present(prompt)
+            alert.present()
         })
     }
 
@@ -159,7 +159,7 @@ export class MITTransferPage {
                     }
                 ]
             })
-            alert.present(prompt)
+            alert.present()
         })
     }
 

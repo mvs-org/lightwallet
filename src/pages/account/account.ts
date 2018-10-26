@@ -39,15 +39,16 @@ export class AccountPage {
     theme: string
     icons: any = []
     tickers = {}
-    base : string
+    base: string
     domains: any = []
     whitelist: any = []
+    saved_accounts: any;
 
     private syncinterval: any;
 
     constructor(public nav: NavController, public translate: TranslateService, private wallet: WalletServiceProvider, private mvs: MvsServiceProvider, private alert: AlertProvider, public platform: Platform, private event: Events) {
-        this.loading = true;
 
+        this.loading = true;
         //Reset last update time
         var lastupdate = new Date()
         lastupdate.setDate(0)
@@ -57,37 +58,40 @@ export class AccountPage {
         this.event.subscribe("theme_changed", (theme) => {
             this.theme = ('theme-' + theme)
         });
+
+        this.wallet.getSavedAccounts()
+            .then((accounts) => this.saved_accounts = accounts ? Object.keys(accounts) : [])
     }
 
     isOffline = () => !this.syncingSmall && this.offline
     isSyncing = () => this.syncingSmall
 
-    ionViewDidEnter() {
+    async ionViewDidEnter() {
 
-        this.mvs.getBaseCurrency()
-            .then(base=>{
-                this.base=base;
-                return this.mvs.getTickers()
-                    .then(tickers => {
-                        Object.keys(tickers).forEach((symbol) => {
-                            let ticker : BaseTickers = tickers[symbol];
-                            this.tickers[symbol]=ticker;
-                        })
-                    })
+        if (await this.checkAccess()) {
+            this.loadTickers()
+            this.initialize()
+            this.whitelist = await this.mvs.getWhitelist()
+        }
+        else
+            this.nav.setRoot("LoginPage")
+    }
+
+    private async checkAccess() {
+        let addresses = await this.mvs.getAddresses()
+        return Array.isArray(addresses) && addresses.length
+    }
+
+    private async loadTickers() {
+        this.base = await this.mvs.getBaseCurrency()
+        this.mvs.getTickers()
+            .then(tickers => {
+                Object.keys(tickers).forEach((symbol) => {
+                    let ticker: BaseTickers = tickers[symbol];
+                    this.tickers[symbol] = ticker;
+                })
             })
 
-        this.mvs.getAddresses()
-            .then((addresses) => {
-                if (Array.isArray(addresses) && addresses.length)
-                    this.initialize()
-                else
-                    this.nav.setRoot("LoginPage")
-            })
-
-        this.mvs.getWhitelist()
-            .then((whitelist) => {
-                this.whitelist = whitelist;
-            })
     }
 
     private loadFromCache() {
@@ -114,20 +118,65 @@ export class AccountPage {
 
     }
 
-    private update = () => {
-        return this.mvs.getUpdateNeeded()
-            .then((update_needed) => {
-                if (update_needed)
-                    return this.sync().then(() => this.mvs.setUpdateTime())
-            })
-            .catch(() => console.log("Can't update"))
+    private update = async () => {
+        return (await this.mvs.getUpdateNeeded()) ? this.sync()
+            .then(() => this.mvs.setUpdateTime())
+            .catch(() => console.log("Can't update")) : null
     }
 
     ionViewWillLeave = () => clearInterval(this.syncinterval)
 
-    logout = () => this.alert.showLogout(() => this.mvs.hardReset()
-        .then(() => this.nav.setRoot("LoginPage"))
-    )
+    logout() {
+        this.alert.showLogout(this.saveAccountHandler, this.forgetAccountHandler)
+    }
+
+    newUsername(title, message, placeholder) {
+        this.askUsername(title, message, placeholder)
+            .then((username) => {
+                if (!username) {
+                    this.newUsername('SAVE_ACCOUNT_TITLE_NO_INPUT', 'SAVE_ACCOUNT_MESSAGE', placeholder)
+                } else if (this.saved_accounts.indexOf(username) != -1) {
+                    console.log("account name already exist")
+                    this.newUsername('SAVE_ACCOUNT_TITLE_ALREADY_EXIST', 'SAVE_ACCOUNT_MESSAGE_ALREADY_EXIST', placeholder)
+                } else {
+                    this.saveAccount(username);
+                }
+            })
+    }
+
+    private forgetAccountHandler = () => {
+        return this.wallet.getAccountName()
+            .then((account_name) => this.wallet.deleteAccount(account_name))
+            .then(() => this.mvs.hardReset())
+            .then(() => this.nav.setRoot("LoginPage"))
+    }
+
+    private saveAccountHandler = () => {
+        return this.wallet.getAccountName()
+            .then((current_username) => {
+                if (current_username) {
+                    this.saveAccount(current_username);
+                } else {
+                    this.newUsername('SAVE_ACCOUNT_TITLE', 'SAVE_ACCOUNT_MESSAGE', 'SAVE_ACCOUNT_PLACEHOLDER')
+                }
+            })
+    }
+
+    askUsername(title, message, placeholder) {
+        return new Promise((resolve, reject) => {
+            this.translate.get([title, message, placeholder]).subscribe((translations: any) => {
+                this.alert.askInfo(translations[title], translations[message], translations[placeholder], (info) => {
+                    resolve(info)
+                })
+            })
+        })
+    }
+
+    saveAccount(username) {
+        this.wallet.saveAccount(username)
+            .then(() => this.mvs.hardReset())
+            .then(() => this.nav.setRoot("LoginPage"))
+    }
 
     sync(refresher = undefined) {
         //Only allow a single sync process
@@ -158,10 +207,12 @@ export class AccountPage {
         }
     }
 
-    private updateBalances = () => {
+    private updateBalances = async () => {
         return this.mvs.getData()
-            .then(() => this.showBalances())
-            .then(() => this.mvs.setUpdateTime())
+            .then(() => {
+                this.showBalances()
+                return this.mvs.setUpdateTime()
+            })
             .catch((error) => console.error("Can't update balances: " + error))
     }
 

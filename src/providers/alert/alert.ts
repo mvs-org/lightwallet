@@ -32,19 +32,25 @@ export class AlertProvider {
         })
     }
 
-    showLogout(onLogout) {
-        this.translate.get(['RESET_TITLE', 'RESET_MESSAGE', 'CONFIRM', 'BACK']).subscribe(translations => {
+    showLogout(saveAccountHandler, forgetAccountHandler) {
+        this.translate.get(['RESET_TITLE', 'RESET_MESSAGE_CHOICE', 'SAVE', 'DELETE', 'BACK']).subscribe(translations => {
             this.alertCtrl.create({
                 title: translations.RESET_TITLE,
-                message: translations.RESET_MESSAGE,
+                message: translations.RESET_MESSAGE_CHOICE,
                 buttons: [
-                    { text: translations.BACK },
                     {
-                        text: translations.CONFIRM,
-                        handler: onLogout
+                        text: translations.SAVE,
+                        handler: saveAccountHandler
+                    },
+                    {
+                        text: translations.DELETE,
+                        handler: forgetAccountHandler
+                    },
+                    {
+                        text: translations.BACK
                     }
                 ]
-            }).present()
+            }).present();
         })
     }
 
@@ -77,18 +83,18 @@ export class AlertProvider {
                     }
                 ]
             })
-            alert.present(prompt)
+            alert.present()
         })
     }
 
     askPassphrase(message_key, onSubmit) {
-        this.translate.get(['PASSPHRASE', 'OK', 'CANCEL', message_key]).subscribe((translations: any) => {
+        this.translate.get(['PASSWORD', 'OK', 'CANCEL', message_key]).subscribe((translations: any) => {
             let alert = this.alertCtrl.create({
-                title: translations['PASSPHRASE'],
+                title: translations['PASSWORD'],
                 subTitle: translations[message_key],
                 enableBackdropDismiss: false,
                 inputs: [
-                    { name: 'passphrase', placeholder: 'Passphrase' }
+                    { name: 'passphrase', placeholder: translations['PASSWORD'], type:'password' }
                 ],
                 buttons: [
                     {
@@ -99,6 +105,30 @@ export class AlertProvider {
                     {
                         text: translations['OK'],
                         handler: data => onSubmit(data.passphrase)
+                    }
+                ]
+            })
+            alert.present()
+        })
+    }
+
+    askInfo(title, message, placeholder, onSubmit) {
+        this.translate.get(['OK', 'CANCEL', title, message, placeholder]).subscribe((translations: any) => {
+            let alert = this.alertCtrl.create({
+                title: translations[title],
+                message: translations[message],
+                enableBackdropDismiss: false,
+                inputs: [
+                    { name: 'info', placeholder: translations[placeholder] }
+                ],
+                buttons: [
+                    {
+                        text: translations['CANCEL'],
+                        role: 'cancel'
+                    },
+                    {
+                        text: translations['OK'],
+                        handler: data => onSubmit(data.info)
                     }
                 ]
             })
@@ -121,7 +151,7 @@ export class AlertProvider {
     }
 
     showErrorTranslated(subtitle, message) {
-        this.translate.get(['MESSAGE.ERROR_TITLE', subtitle, message]).subscribe((translations: any) => {
+        this.translate.get(['MESSAGE.ERROR_TITLE', subtitle, message, 'OK']).subscribe((translations: any) => {
             let alert = this.alertCtrl.create({
                 title: translations['MESSAGE.ERROR_TITLE'],
                 subTitle: translations[subtitle],

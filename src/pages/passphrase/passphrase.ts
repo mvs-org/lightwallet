@@ -26,7 +26,9 @@ export class PassphrasePage {
         public mvs: MvsServiceProvider,
         public loadingCtrl: LoadingController,
         public wallet: WalletServiceProvider) {
-        this.mnemonic = this.navParams.get('mnemonic');
+
+            this.mnemonic = this.navParams.get('mnemonic');
+
     }
 
     /* moves nagigation
@@ -62,6 +64,8 @@ export class PassphrasePage {
 
     passwordValid = (password) => (password) ? password.length > 5 : false;
 
+    passwordRepeatValid = (password, password_repeat) => (password_repeat) ? password_repeat.length > 5 && password_repeat == password : false;
+
     complete = (password, password_repeat) => (password && password_repeat) ? this.passwordValid(password) && password == password_repeat : false;
 
     downloadFile(filename, text) {
@@ -93,4 +97,5 @@ export class PassphrasePage {
             this.loading.present();
         })
     }
+
 }

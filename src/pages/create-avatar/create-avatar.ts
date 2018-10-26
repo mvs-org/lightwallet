@@ -121,7 +121,7 @@ export class CreateAvatarPage {
                             }
                         ]
                     });
-                    alert.present(prompt)
+                    alert.present()
                   });
               });
           });

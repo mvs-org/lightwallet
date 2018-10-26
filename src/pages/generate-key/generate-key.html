@@ -30,14 +30,20 @@
         </ion-col>
     </ion-row>
     <ion-row class="button" *ngIf="builtFor=='browser'">
-        <button ion-button full (click)="download()">{{'BUTTON.NEXT'|translate}}</button>
+        <button ion-button icon-left full (click)="download()">
+            <ion-icon name="arrow-forward"></ion-icon>
+            {{'BUTTON.NEXT'|translate}}
+        </button>
     </ion-row>
 </ion-content>
 
 <ion-footer *ngIf="builtFor=='app'">
     <ion-row>
         <ion-col>
-            <button ion-button full (click)="download()">{{'BUTTON.NEXT'|translate}}</button>
+            <button ion-button icon-left full (click)="download()">
+                <ion-icon name="arrow-forward"></ion-icon>
+                {{'BUTTON.NEXT'|translate}}
+            </button>
         </ion-col>
     </ion-row>
 </ion-footer>

@@ -16,7 +16,11 @@
 // automatically applied to the <body> element in the app.
 
 .alert-md .alert-wrapper, .alert-ios .alert-wrapper {
-    max-width: none;
+    max-width: 600px;
+}
+
+.alert-message {
+    overflow-y: inherit;
 }
 
 .scroll-content {
@@ -64,7 +68,7 @@
     margin-top: 10px;
 }
 
-.alert-sub-title{
+.alert-sub-title, .alert-message{
     -webkit-user-select: text;
     -moz-user-select: text;
     -ms-user-select: text;
@@ -93,6 +97,11 @@
 .small-label{
     min-height: 22px;
     height: 22px;
+}
+
+.display-overflow {
+    text-overflow: initial;
+    white-space: initial;
 }
 
 .overflow {

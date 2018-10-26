@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, AlertController, Platform } from 'ionic-angular';
+import { IonicPage, NavController, Platform } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { TranslateService } from '@ngx-translate/core';
 import { AppGlobals } from '../../app/app.global';
+import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
+import { AlertProvider } from '../../providers/alert/alert';
 
 @IonicPage()
 @Component({
@@ -13,16 +15,21 @@ export class SettingsPage {
 
     connectcode: any;
     network: string;
+    saved_accounts: any;
 
     constructor(
         public nav: NavController,
         private mvs: MvsServiceProvider,
         public translate: TranslateService,
-        private alertCtrl: AlertController,
         private globals: AppGlobals,
-        public platform: Platform
+        public platform: Platform,
+        private alert: AlertProvider,
+        private wallet: WalletServiceProvider
     ) {
         this.network = this.globals.network
+
+        this.wallet.getSavedAccounts()
+            .then((accounts) => this.saved_accounts = accounts ? Object.keys(accounts) : [])
     }
 
     ionViewDidEnter() {
@@ -48,68 +55,55 @@ export class SettingsPage {
     /**
      * Logout dialog
      */
-    logout() {
-        this.translate.get('RESET_TITLE').subscribe(title => {
-            this.translate.get('RESET_MESSAGE').subscribe(message => {
-                this.translate.get('CONFIRM').subscribe(yes => {
-                    this.translate.get('BACK').subscribe(no => {
-                        let confirm = this.alertCtrl.create({
-                            title: title,
-                            message: message,
-                            buttons: [
-                                {
-                                    text: no,
-                                    handler: () => {
-                                        console.log('Disagree clicked')
-                                    }
-                                },
-                                {
-                                    text: yes,
-                                    handler: () => {
-                                        this.mvs.hardReset().then(() => {
-                                            this.nav.setRoot("LoginPage")
-                                        })
-                                    }
-                                }
-                            ]
-                        });
-                        confirm.present()
-                    })
+     logout() {
+         this.alert.showLogout(this.saveAccountHandler, this.forgetAccountHandler)
+     }
+
+    newUsername(title, message, placeholder) {
+        this.askUsername(title, message, placeholder)
+            .then((username) => {
+                if(!username) {
+                    this.newUsername('SAVE_ACCOUNT_TITLE_NO_INPUT', 'SAVE_ACCOUNT_MESSAGE', placeholder)
+                } else if (this.saved_accounts.indexOf(username) != -1) {
+                    this.newUsername('SAVE_ACCOUNT_TITLE_ALREADY_EXIST', 'SAVE_ACCOUNT_MESSAGE_ALREADY_EXIST', placeholder)
+                } else {
+                    this.saveAccount(username);
+                }
+            })
+    }
+
+    private forgetAccountHandler = () => {
+        return this.wallet.getAccountName()
+            .then((account_name) => this.wallet.deleteAccount(account_name))
+            .then(() => this.mvs.hardReset())
+            .then(() => this.nav.setRoot("LoginPage"))
+    }
+
+    private saveAccountHandler = () => {
+        return this.wallet.getAccountName()
+            .then((current_username) => {
+                if (current_username) {
+                    this.saveAccount(current_username);
+                } else {
+                    this.newUsername('SAVE_ACCOUNT_TITLE', 'SAVE_ACCOUNT_MESSAGE', 'SAVE_ACCOUNT_PLACEHOLDER')
+                }
+            })
+    }
+
+    askUsername(title, message, placeholder) {
+        return new Promise((resolve, reject) => {
+            this.translate.get([title, message, placeholder]).subscribe((translations: any) => {
+                this.alert.askInfo(translations[title], translations[message], translations[placeholder], (info) => {
+                    resolve(info)
                 })
             })
         })
     }
 
-    logoutMobile() {
-        this.translate.get('RESET_TITLE').subscribe(title => {
-            this.translate.get('RESET_MESSAGE_MOBILE').subscribe(message => {
-                this.translate.get('CONFIRM').subscribe(yes => {
-                    this.translate.get('BACK').subscribe(no => {
-                        let confirm = this.alertCtrl.create({
-                            title: title,
-                            message: message,
-                            buttons: [
-                                {
-                                    text: no,
-                                    handler: () => {
-                                        console.log('Disagree clicked')
-                                    }
-                                },
-                                {
-                                    text: yes,
-                                    handler: () => {
-                                        this.mvs.hardReset().then(() => {
-                                            this.nav.setRoot("LoginPage")
-                                        })
-                                    }
-                                }
-                            ]
-                        });
-                        confirm.present()
-                    })
-                })
-            })
-        })
+    saveAccount(username) {
+        this.wallet.saveAccount(username)
+            .then(() => this.mvs.hardReset())
+            .then(() => this.nav.setRoot("LoginPage"))
     }
 
 }

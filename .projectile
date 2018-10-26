@@ -1,0 +1,11 @@
+-/www
+-/node_modules
+-/resources
+-/platforms
+-/plugins
+-/.sourcemaps
+-/*.json
+-/*.png
+-/*.jpg
+-/*.gif
+-/*.pdf

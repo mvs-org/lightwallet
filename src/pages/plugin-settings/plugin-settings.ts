@@ -24,6 +24,7 @@ export class PluginSettingsPage {
         private translate: TranslateService,
         private pluginService: PluginProvider
     ) {
+        this.alert.showMessage('MESSAGE.WARNING_PLUGIN_TITLE', '', 'MESSAGE.WARNING_PLUGIN_MESSAGE')
     }
 
     addPlugin(url){
