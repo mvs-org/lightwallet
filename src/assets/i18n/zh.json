@@ -558,6 +558,32 @@
   "BUTTON.DELETE_ACCOUNT": "删除账户",
   "DELETE_ACCOUNT_TITLE": "删除账户？",
   "DELETE_ACCOUNT_BODY": "如果您选择删除，账户上全部储存的信息将会被删除。登入账户需要您的24个助记词。",
-  "ACCOUNT_NAME_ALREADY_USED": "该账户名以使用中"
+  "ACCOUNT_NAME_ALREADY_USED": "该账户名以使用中",
+  "SUCCESS_ADD_MULTISIG": "多重签名地址成功添加!",
+
+  "SAVE_ACCOUNT_TITLE": "选择账户名",
+  "SAVE_ACCOUNT_MESSAGE": "请给您的账户命名。该账户名只会在本地中，用来鉴定您的账户。",
+  "SAVE_ACCOUNT_PLACEHOLDER": "账户名",
+  "SAVE_ACCOUNT_TITLE_NO_INPUT": "请输入账户名",
+  "SAVE_ACCOUNT_TITLE_ALREADY_EXIST": "账户名使用中",
+  "SAVE_ACCOUNT_MESSAGE_ALREADY_EXIST": "该账户名已储存。请使用另一个账户名",
+  "RESET_MESSAGE_CHOICE": "您可以选择存取账户信息包括加密私钥于本地，以方便下次账户登入。",
+  "SUCCESS_IMPORT_MULTISIG": "您的多重签名地址成功导入！地址是: ",
+
+  "MESSAGE.ALREADY_SIGN_TRANSACTION": "您已经签署该交易，无需再度签名！",
+  "MESSAGE.WARNING_PLUGIN_MESSAGE": "从v0.6.0版本开始，您可以在 MyETPWallet 中添加插件！这项功能能助您轻松链接第三方插件于元界钱包中，但请注意所有插件总的内容为第三方插件管理。我们建议用户使用插件时不要直接使用主账户，而是建议用其他拥有少量 ETP 资产的账户。",
+  "MESSAGE.WARNING_PLUGIN_TITLE": "注意插件！",
+  "MESSAGE.WARNING_MULTISIG_TITLE": "请注意多重签名地址！",
+  "MESSAGE.WARNING_MULTISIG_MESSAGE": "从v0.6.0版本开始，您可开始在 MyETPWallet 中使用多重签名地址。但请谨慎使用该功能，避免发送错误的 ETP 或 MST 数量给您的多重签名地址。如果您留意到任何 Bug，请第一时间通过主菜单中的 “Report Bug” 呈报！",
+
+  "SWAP_FEE": "置换费用",
+  "HELP.SWAP_TX_FEE": "这是在元界区块链上的交易手续费",
+  "HELP.SWAP_TX_SWAP_FEE": "这是在以太坊链上的交易手续费。这项 ETP 费用将会被转换去 ETH 来支付以太坊上的手续费。",
+  "PLUGIN_START": "接驳插件",
+  "PLUGIN_START.WARNING_TITLE": "请准备进入插件！",
+  "PLUGIN_START.WARNING_TEXT": "您即将进入第三方插件。为了您的安全，请谨慎地分享信息给第三方。避免损失金额，我们建议只在拥有少量资产的账户上使用第三方插件。",
+  "PLUGIN_START.GO_BUTTON": "进入插件",
+  "PLUGIN_START.PLUGIN_NAME": "插件名称",
+  "MESSAGE.UNLOCK_WALLET": "解锁钱包错误，插件无法访问您的钱包"
 
 }
