@@ -116,7 +116,7 @@ export class MyETPWallet {
                 let p = []
                 plugins.forEach(plugin => {
                     p.push({
-                        title: (plugin.translation[this.translate.currentLang])?plugin.translation[this.translate.currentLang].name:plugin.translation.default.name, component: "PluginStartPage", params: { name: plugin.name }, icon: 'cube'
+                        title: (plugin.translation[this.translate.currentLang])?plugin.translation[this.translate.currentLang].name:plugin.translation.default.name, component: "PluginStartPage", params: { name: plugin.name }, icon: 'cube', beta: true
                     })
                 })
                 return p
@@ -129,7 +129,8 @@ export class MyETPWallet {
                     { title: 'REGISTER_MST', component: "AssetIssuePage", icon: 'globe' },
                     { title: 'REGISTER_MIT', component: "MITRegisterPage", icon: 'create' },
                     { title: 'ETH_BRIDGE', component: "EthBridgePage", icon: 'swap' },
-                    { title: 'MULTISIGNATURE', component: "MultisignaturePage", icon: 'people' },
+                    { title: 'MULTISIGNATURE', component: "MultisignaturePage", icon: 'people', beta: true },
+                    { title: 'SETTINGS.PLUGINS', component: "PluginSettingsPage", icon: 'cube', beta: true },
                     { title: 'LANGUAGE_SETTINGS', component: "LanguageSwitcherPage", icon: 'flag' },
                     { title: 'THEME_SETTINGS', component: "ThemeSwitcherPage", icon: 'color-palette' },
                     { title: 'SETTINGS', component: "SettingsPage", icon: 'settings' },

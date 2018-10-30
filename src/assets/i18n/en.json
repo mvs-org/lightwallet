@@ -495,7 +495,7 @@
     "MULTISIGNATURE_ADD.GET_PUBLICKEY": "Get public key",
     "GET_PUBLIC_KEY.ERROR": "Error while getting your public key",
     "MULTISIGNATURE_ADD.PUBLICKEY": "Your public key",
-    "MULTISIGNATURE_ADD.INFORMATION_NEW": "Here you can create a new multisignature for you and your co-signers. If the address has already been created by you or a cosigner, you will find it in the tab 'Existing address'",
+    "MULTISIGNATURE_ADD.INFORMATION_NEW": "Here you can create a new multisignature for you and your co-signers. If the address has already been created by you or a cosigner, you can import it in the tab 'Existing address'",
     "MULTISIGNATURE_ADD.STEP1_TITLE": "Step 1: Select your address and get your public key",
     "MULTISIGNATURE_ADD.STEP1_EXPLAIN": "The first step consist in choosing the Avatar or address that you want to use, and get its public key. Then you will have to share your public key with the other co-signers.",
     "MULTISIGNATURE_ADD.STEP2_TITLE": "Step 2: Enter your co-signers public keys",
