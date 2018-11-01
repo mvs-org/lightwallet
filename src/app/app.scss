@@ -97,7 +97,7 @@
     user-select: text;
 }
 
-.valid-input ion-label, .wrong-input ion-label, .info-input ion-label{
+.valid-input, .wrong-input, .info-input, .valid-input ion-label, .wrong-input ion-label, .info-input ion-label{
     text-overflow: initial;
     white-space: initial;
 }
