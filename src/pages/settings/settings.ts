@@ -15,7 +15,7 @@ export class SettingsPage {
 
     connectcode: any;
     network: string;
-    saved_accounts: any;
+    saved_accounts_name: any;
 
     constructor(
         public nav: NavController,
@@ -29,7 +29,7 @@ export class SettingsPage {
         this.network = this.globals.network
 
         this.wallet.getSavedAccounts()
-            .then((accounts) => this.saved_accounts = accounts ? Object.keys(accounts) : [])
+            .then((accounts) => this.saved_accounts_name = accounts.map(account => account.name))
     }
 
     ionViewDidEnter() {
@@ -60,14 +60,16 @@ export class SettingsPage {
      newUsername(title, message, placeholder1, placeholder2) {
          this.askUsername(title, message, placeholder1, placeholder2)
              .then((info) => {
-                 console.log(info)
+                 let username = info.info1;
+                 let password = info.info2;
                  if (!info || !info.info1) {
                      this.newUsername('SAVE_ACCOUNT_TITLE_NO_NAME', 'SAVE_ACCOUNT_MESSAGE', placeholder1, placeholder2)
-                 /*} else if (this.saved_accounts.indexOf(username) != -1) {
-                     console.log("account name already exist")
+                 } else if (this.saved_accounts_name.indexOf(username) != -1) {
                      this.newUsername('SAVE_ACCOUNT_TITLE_ALREADY_EXIST', 'SAVE_ACCOUNT_MESSAGE_ALREADY_EXIST', placeholder1, placeholder2)
-                 */} else {
-                     this.saveAccount(info.info1, info.info2);
+                 } else if (!password) {
+                     this.existingUsername(username, 'SAVE_ACCOUNT_TITLE_NO_PASSWORD', 'SAVE_ACCOUNT_MESSAGE_PASSWORD', 'PASSWORD')
+                 } else {
+                     this.saveAccount(username, password);
                  }
              })
      }
@@ -76,7 +78,7 @@ export class SettingsPage {
          this.askPassword(title, message, placeholder)
              .then((password) => {
                  if (!password) {
-                     this.existingUsername(username, 'SAVE_ACCOUNT_TITLE_NO_PASSWORD', 'SAVE_ACCOUNT_MESSAGE', placeholder)
+                     this.existingUsername(username, 'SAVE_ACCOUNT_TITLE_NO_PASSWORD', 'SAVE_ACCOUNT_MESSAGE_PASSWORD', placeholder)
                  } else {
                      this.saveAccount(username, password);
                  }
@@ -129,7 +131,7 @@ export class SettingsPage {
              .catch((error) => {
                  switch (error.message) {
                      case "ERR_DECRYPT_WALLET":
-                         this.alert.showError('MESSAGE.PASSWORD_WRONG', '')
+                         this.existingUsername(username, 'MESSAGE.PASSWORD_WRONG', 'SAVE_ACCOUNT_MESSAGE_PASSWORD', 'PASSWORD')
                          break;
                      default:
                          this.alert.showError('MESSAGE.ERR_SAVE_ACCOUNT', error.message)
