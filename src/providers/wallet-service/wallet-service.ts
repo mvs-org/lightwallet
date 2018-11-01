@@ -308,9 +308,8 @@ export class WalletServiceProvider {
         return this.storage.get('saved_accounts')
     }
 
-    decyptAccount(content, password) {
+    decryptAccount(content, password) {
         return this.crypto.decrypt(content, password)
-            .then((decrypt) => JSON.parse(decrypt))
             .catch((error) => {
                 console.error(error)
                 throw Error('ERR_DECRYPT_WALLET')
