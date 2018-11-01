@@ -311,6 +311,10 @@ export class WalletServiceProvider {
     decyptAccount(content, password) {
         return this.crypto.decrypt(content, password)
             .then((decrypt) => JSON.parse(decrypt))
+            .catch((error) => {
+                console.error(error)
+                throw Error('ERR_DECRYPT_WALLET')
+            })
     }
 
     setPlugins(plugins: Array<any>) {

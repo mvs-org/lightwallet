@@ -38,7 +38,7 @@ export class LoginAccountPage {
 
     importAccount(account, password) {
         this.alert.showLoading()
-            .then(() => this.decrypt(account.content, password))
+            .then(() => this.wallet.decyptAccount(account.content, password))
             .then((decryptedAccount) => Promise.all([this.wallet.setWallet(decryptedAccount.wallet), this.wallet.setMobileWallet(decryptedAccount.seed), this.wallet.setAccountName(account.name), this.wallet.setMultisigAddresses(decryptedAccount.multisig_addresses), this.wallet.setMultisigInfo(decryptedAccount.multisigs), this.wallet.setPlugins(decryptedAccount.plugins)]))
             .then(() => Promise.all([this.wallet.getWallet(password), this.wallet.getAddressIndex()]))
             .then(([wallet, index]) => this.wallet.generateAddresses(wallet, 0, index))
@@ -59,13 +59,6 @@ export class LoginAccountPage {
                         this.alert.showError('MESSAGE.ERR_IMPORT_ACCOUNT', error.message)
                         break;
                 }
-            })
-    }
-
-    decrypt(content, password) {
-        return this.wallet.decyptAccount(content, password)
-            .catch((error) => {
-                throw Error('ERR_DECRYPT_WALLET')
             })
     }
 
