@@ -10,16 +10,15 @@
 
 <ion-content padding>
     <ion-row>
-        <ion-col>
+        <h3>{{"MESSAGE.WARNING_MULTISIG_TITLE" | translate}}</h3>
+        <p>{{"MESSAGE.WARNING_MULTISIG_MESSAGE" | translate}}</p>
 
-            <h3 align="center">{{"MESSAGE.WARNING_MULTISIG_TITLE" | translate}}</h3>
-            <p align="center">{{"MESSAGE.WARNING_MULTISIG_MESSAGE" | translate}}</p>
-
-            <p align="center">{{"MULTISIGNATURE.INFORMATION" | translate}}</p>
-            <p align="center">{{"MULTISIGNATURE.INFORMATION2" | translate}}</p>
-        </ion-col>
+        <p>{{"MULTISIGNATURE.INFORMATION" | translate}}</p>
+        <p>{{"MULTISIGNATURE.INFORMATION2" | translate}}</p>
     </ion-row>
-    <div class="no-address" *ngIf="no_address">{{"MULTISIGNATURE.NO_ADDRESS" | translate}}</div>
+    <ion-row class="no-address" *ngIf="no_address">
+        {{"MULTISIGNATURE.NO_ADDRESS" | translate}}
+    </ion-row>
 
     <ion-card class="avatar-card" *ngFor="let multisig of multisigs">
         <ion-grid>
