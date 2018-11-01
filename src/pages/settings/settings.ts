@@ -57,51 +57,74 @@ export class SettingsPage {
          this.alert.showLogout(this.saveAccountHandler, this.forgetAccountHandler)
      }
 
-    newUsername(title, message, placeholder) {
-        this.askUsername(title, message, placeholder)
-            .then((username) => {
-                if(!username) {
-                    this.newUsername('SAVE_ACCOUNT_TITLE_NO_INPUT', 'SAVE_ACCOUNT_MESSAGE', placeholder)
-                } else if (this.saved_accounts.indexOf(username) != -1) {
-                    this.newUsername('SAVE_ACCOUNT_TITLE_ALREADY_EXIST', 'SAVE_ACCOUNT_MESSAGE_ALREADY_EXIST', placeholder)
-                } else {
-                    this.saveAccount(username);
-                }
-            })
-    }
+     newUsername(title, message, placeholder1, placeholder2) {
+         this.askUsername(title, message, placeholder1, placeholder2)
+             .then((info) => {
+                 console.log(info)
+                 if (!info || !info.info1) {
+                     this.newUsername('SAVE_ACCOUNT_TITLE_NO_NAME', 'SAVE_ACCOUNT_MESSAGE', placeholder1, placeholder2)
+                 /*} else if (this.saved_accounts.indexOf(username) != -1) {
+                     console.log("account name already exist")
+                     this.newUsername('SAVE_ACCOUNT_TITLE_ALREADY_EXIST', 'SAVE_ACCOUNT_MESSAGE_ALREADY_EXIST', placeholder1, placeholder2)
+                 */} else {
+                     this.saveAccount(info.info1, info.info2);
+                 }
+             })
+     }
 
-    private forgetAccountHandler = () => {
-        return this.wallet.getAccountName()
-            .then((account_name) => this.wallet.deleteAccount(account_name))
-            .then(() => this.mvs.hardReset())
-            .then(() => this.nav.setRoot("LoginPage"))
-    }
+     existingUsername(username, title, message, placeholder) {
+         this.askPassword(title, message, placeholder)
+             .then((password) => {
+                 if (!password) {
+                     this.existingUsername(username, 'SAVE_ACCOUNT_TITLE_NO_PASSWORD', 'SAVE_ACCOUNT_MESSAGE', placeholder)
+                 } else {
+                     this.saveAccount(username, password);
+                 }
+             })
+     }
 
-    private saveAccountHandler = () => {
-        return this.wallet.getAccountName()
-            .then((current_username) => {
-                if (current_username) {
-                    this.saveAccount(current_username);
-                } else {
-                    this.newUsername('SAVE_ACCOUNT_TITLE', 'SAVE_ACCOUNT_MESSAGE', 'SAVE_ACCOUNT_PLACEHOLDER')
-                }
-            })
-    }
+     private forgetAccountHandler = () => {
+         return this.wallet.getAccountName()
+             .then((account_name) => this.wallet.deleteAccount(account_name))
+             .then(() => this.mvs.hardReset())
+             .then(() => this.nav.setRoot("LoginPage"))
+     }
 
-    askUsername(title, message, placeholder) {
-        return new Promise((resolve, reject) => {
-            this.translate.get([title, message, placeholder]).subscribe((translations: any) => {
-                this.alert.askInfo(translations[title], translations[message], translations[placeholder], (info) => {
-                    resolve(info)
-                })
-            })
-        })
-    }
+     private saveAccountHandler = () => {
+         return this.wallet.getAccountName()
+             .then((current_username) => {
+                 if (current_username) {
+                     this.existingUsername(current_username, 'SAVE_ACCOUNT_TITLE_PASSWORD', 'SAVE_ACCOUNT_MESSAGE_PASSWORD', 'PASSWORD');
+                 } else {
+                     this.newUsername('SAVE_ACCOUNT_TITLE', 'SAVE_ACCOUNT_MESSAGE', 'SAVE_ACCOUNT_PLACEHOLDER', 'PASSWORD')
+                 }
+             })
+     }
 
-    saveAccount(username) {
-        this.wallet.saveAccount(username)
-            .then(() => this.mvs.hardReset())
-            .then(() => this.nav.setRoot("LoginPage"))
-    }
+     askUsername(title, message, placeholder1, placeholder2) {
+         return new Promise((resolve, reject) => {
+             this.translate.get([title, message, placeholder1, placeholder2]).subscribe((translations: any) => {
+                 this.alert.ask2Info(translations[title], translations[message], translations[placeholder1], translations[placeholder2], 'text', 'password', (info) => {
+                     resolve(info)
+                 })
+             })
+         })
+     }
+
+     askPassword(title, message, placeholder) {
+         return new Promise((resolve, reject) => {
+             this.translate.get([title, message, placeholder]).subscribe((translations: any) => {
+                 this.alert.askInfo(translations[title], translations[message], translations[placeholder], 'password', (info) => {
+                     resolve(info)
+                 })
+             })
+         })
+     }
+
+     saveAccount(username, password) {
+         this.wallet.saveAccount(username, password)
+             .then(() => this.mvs.hardReset())
+             .then(() => this.nav.setRoot("LoginPage"))
+     }
 
 }

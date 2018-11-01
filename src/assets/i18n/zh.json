@@ -564,7 +564,7 @@
   "SAVE_ACCOUNT_TITLE": "选择账户名",
   "SAVE_ACCOUNT_MESSAGE": "请给您的账户命名。该账户名只会在本地中，用来鉴定您的账户。",
   "SAVE_ACCOUNT_PLACEHOLDER": "账户名",
-  "SAVE_ACCOUNT_TITLE_NO_INPUT": "请输入账户名",
+  "SAVE_ACCOUNT_TITLE_NO_NAME": "请输入账户名",
   "SAVE_ACCOUNT_TITLE_ALREADY_EXIST": "账户名使用中",
   "SAVE_ACCOUNT_MESSAGE_ALREADY_EXIST": "该账户名已储存。请使用另一个账户名",
   "RESET_MESSAGE_CHOICE": "您可以选择存取账户信息包括加密私钥于本地，以方便下次账户登入。",

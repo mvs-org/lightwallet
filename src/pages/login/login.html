@@ -31,7 +31,7 @@
         <ion-row class="browser-button" *ngFor="let account of saved_accounts">
              <button ion-button class="large-btn account-btn" block full icon-left (click)="LoginAccountPage(account);">
                  <ion-icon name="contact"></ion-icon>
-                 {{account}}
+                 {{account.name}}
              </button>
          </ion-row>
         <ion-row class="browser-button">

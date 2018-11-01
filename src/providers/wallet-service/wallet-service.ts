@@ -247,13 +247,20 @@ export class WalletServiceProvider {
                 return account_name
             })
     }
-     setAccountName(account_name) {
+
+    setAccountName(account_name) {
         return this.storage.set('account_name', account_name)
     }
-     deleteAccount(account_name) {
+
+    deleteAccount(account_name) {
         return this.storage.get('saved_accounts')
             .then((accounts) => {
-                delete accounts[account_name]
+                accounts.find((o, i) => {
+                    if (o.name === account_name) {
+                        accounts.splice(i, 1)
+                        return true; // stop searching
+                    }
+                });
                 return this.storage.set('saved_accounts', accounts)
             })
             .catch((error) => {
@@ -261,30 +268,49 @@ export class WalletServiceProvider {
                 throw Error('ERR_DELETE_ACCOUNT')
             })
     }
-     saveAccount(username) {
+
+    saveAccount(username, password) {
         return Promise.all([this.storage.get('seed'), this.storage.get('wallet'), this.storage.get('saved_accounts'), this.storage.get('multisig_addresses'), this.storage.get('multisigs'), this.storage.get('plugins')])
             .then(([seed, wallet, saved_accounts, multisig_addresses, multisigs, plugins]) => {
-                let accounts = saved_accounts ? saved_accounts : {};
+                let accounts = saved_accounts ? saved_accounts : [];
                 let account_name = username ? username : 'Default'
-                accounts[account_name] = {}
-                accounts[account_name].seed = seed
-                accounts[account_name].index = wallet.index
-                accounts[account_name].multisig_addresses = multisig_addresses ? multisig_addresses : []
-                accounts[account_name].multisigs = multisigs ? multisigs : []
-                accounts[account_name].plugins = plugins ? plugins : []
-                return this.storage.set('saved_accounts', accounts)
+                let new_account_content = {}
+                new_account_content.seed = seed
+                new_account_content.wallet = wallet
+                new_account_content.multisig_addresses = multisig_addresses ? multisig_addresses : []
+                new_account_content.multisigs = multisigs ? multisigs : []
+                new_account_content.plugins = plugins ? plugins : []
+                let old_account_index = -1;
+                saved_accounts.find((o, i) => {
+                    if (o.name === username) {
+                        old_account_index = i;
+                        return true; // stop searching
+                    }
+                });
+                this.crypto.encrypt(JSON.stringify(new_account_content), password)
+                    .then((content) => {
+                        let new_account = {
+                            "name": account_name,
+                            "content": content,
+                            "type": "AES"
+                        }
+                        old_account_index > -1 ? accounts[old_account_index] = new_account : accounts.push(new_account);
+                        return this.storage.set('saved_accounts', accounts)
+                    })
             })
             .catch((error) => {
                 console.error(error)
                 throw Error('ERR_SAVE_ACCOUNT')
             })
     }
-     getSavedAccounts() {
+
+    getSavedAccounts() {
         return this.storage.get('saved_accounts')
     }
-     getSavedAccount(account_name) {
-        return this.storage.get('saved_accounts')
-            .then((accounts) => accounts[account_name])
+
+    decyptAccount(content, password) {
+        return this.crypto.decrypt(content, password)
+            .then((decrypt) => JSON.parse(decrypt))
     }
 
     setPlugins(plugins: Array<any>) {
