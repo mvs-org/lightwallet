@@ -129,6 +129,11 @@
 
     <form *ngIf="transfer_type == 'more'" #sendForm="ngForm" style="padding-bottom: 0;">
         <ion-list style="padding-bottom: 0;">
+            <ion-item>
+                <ion-label>{{"SEND_TO_AVATAR"|translate}}</ion-label>
+                <ion-toggle [(ngModel)]="sendToAvatar" name="sendToAvatar" checked="false"></ion-toggle>
+            </ion-item>
+            <br>
             <ion-row *ngIf="!platform.is('mobile')">
                 <input type="file" name="file" id="file" class="inputfile" accept=".csv" (change)="import($event)" />
                 <label for="file"> <ion-icon name="document"></ion-icon> {{"IMPORT_FROM_CSV"|translate}}</label>
@@ -144,7 +149,13 @@
                             X
                         </button>
                     </ion-col>
-                    <ion-col col-md-6 col-sm-12 col-12>
+                    <ion-col col-md-6 col-sm-12 col-12 *ngIf="sendToAvatar">
+                        <ion-item [ngClass]="{'error-border':!validSendMoreAvatar(recipient.avatar, i), 'valid-border': validSendMoreAvatar(recipient.avatar, i)}">
+                            <ion-label color="primary" floating>{{"RECIPIENT_AVATAR"|translate}} {{i+1}}</ion-label>
+                            <ion-input [(ngModel)]="recipient.avatar" (ngModelChange)="sendMoreRecipientAvatarChanged(i)" [ngModelOptions]="{standalone:true}" required></ion-input>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col col-md-6 col-sm-12 col-12 *ngIf="!sendToAvatar">
                         <ion-item [ngClass]="{'error-border':!validrecipient(recipient.address), 'valid-border': validrecipient(recipient.address)}">
                             <ion-label color="primary" floating>{{"RECIPIENT_ADDRESS"|translate}} {{i+1}}</ion-label>
                             <ion-input [(ngModel)]="recipient.address" (ngModelChange)="sendMoreRecipientChanged(i)" [ngModelOptions]="{standalone:true}" required></ion-input>
