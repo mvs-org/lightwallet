@@ -122,9 +122,19 @@ export class SettingsPage {
      }
 
      saveAccount(username, password) {
-         this.wallet.saveAccount(username, password)
+         this.wallet.getWallet(password)   //test password
+             .then(() => this.wallet.saveAccount(username, password))
              .then(() => this.mvs.hardReset())
              .then(() => this.nav.setRoot("LoginPage"))
+             .catch((error) => {
+                 switch (error.message) {
+                     case "ERR_DECRYPT_WALLET":
+                         this.alert.showError('MESSAGE.PASSWORD_WRONG', '')
+                         break;
+                     default:
+                         this.alert.showError('MESSAGE.ERR_SAVE_ACCOUNT', error.message)
+                 }
+             })
      }
 
 }

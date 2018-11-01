@@ -167,7 +167,7 @@ export class AccountPage {
         return this.wallet.getAccountName()
             .then((current_username) => {
                 if (current_username) {
-                    this.existingUsername(current_username, 'SAVE_ACCOUNT_TITLE', 'SAVE_ACCOUNT_MESSAGE', 'PASSWORD');
+                    this.existingUsername(current_username, 'SAVE_ACCOUNT_TITLE_PASSWORD', 'SAVE_ACCOUNT_MESSAGE_PASSWORD', 'PASSWORD');
                 } else {
                     this.newUsername('SAVE_ACCOUNT_TITLE', 'SAVE_ACCOUNT_MESSAGE', 'SAVE_ACCOUNT_PLACEHOLDER', 'PASSWORD')
                 }
@@ -195,9 +195,19 @@ export class AccountPage {
     }
 
     saveAccount(username, password) {
-        this.wallet.saveAccount(username, password)
+        this.wallet.getWallet(password)   //test password
+            .then(() => this.wallet.saveAccount(username, password))
             .then(() => this.mvs.hardReset())
             .then(() => this.nav.setRoot("LoginPage"))
+            .catch((error) => {
+                switch (error.message) {
+                    case "ERR_DECRYPT_WALLET":
+                        this.alert.showError('MESSAGE.PASSWORD_WRONG', '')
+                        break;
+                    default:
+                        this.alert.showError('MESSAGE.ERR_SAVE_ACCOUNT', error.message)
+                }
+            })
     }
 
     sync(refresher = undefined) {
