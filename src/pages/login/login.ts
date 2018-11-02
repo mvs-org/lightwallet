@@ -13,7 +13,7 @@ import { WalletServiceProvider } from '../../providers/wallet-service/wallet-ser
 export class LoginPage {
 
     public network = ''
-    saved_accounts: any
+    saved_accounts: Array<any> = []
 
     constructor(
         private nav: NavController,
