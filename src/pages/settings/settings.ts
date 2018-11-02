@@ -60,9 +60,9 @@ export class SettingsPage {
      newUsername(title, message, placeholder1, placeholder2) {
          this.askUsername(title, message, placeholder1, placeholder2)
              .then((info) => {
-                 let username = info.info1;
-                 let password = info.info2;
-                 if (!info || !info.info1) {
+                 let username = info['info1'];
+                 let password = info['info2'];
+                 if (!info || !username) {
                      this.newUsername('SAVE_ACCOUNT_TITLE_NO_NAME', 'SAVE_ACCOUNT_MESSAGE', placeholder1, placeholder2)
                  } else if (this.saved_accounts_name.indexOf(username) != -1) {
                      this.newUsername('SAVE_ACCOUNT_TITLE_ALREADY_EXIST', 'SAVE_ACCOUNT_MESSAGE_ALREADY_EXIST', placeholder1, placeholder2)

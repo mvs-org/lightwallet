@@ -16,6 +16,7 @@ export class LoginAccountPage {
 
     mnemonic: string;
     loading: Loading;
+    account: any
 
     constructor(public nav: NavController,
         public navParams: NavParams,
@@ -39,10 +40,7 @@ export class LoginAccountPage {
     importAccount(account, password) {
         this.alert.showLoading()
             .then(() => this.wallet.decryptAccount(account.content, password))
-            .then((decryptedAccountString) => {
-                let decryptedAccount = JSON.parse(decryptedAccountString)
-                return Promise.all([this.wallet.setWallet(decryptedAccount.wallet), this.wallet.setMobileWallet(decryptedAccount.seed), this.wallet.setAccountName(account.name), this.wallet.setMultisigAddresses(decryptedAccount.multisig_addresses), this.wallet.setMultisigInfo(decryptedAccount.multisigs), this.wallet.setPlugins(decryptedAccount.plugins)])
-            })
+            .then((decryptedAccount) => Promise.all([this.wallet.setWallet(decryptedAccount.wallet), this.wallet.setMobileWallet(decryptedAccount.seed), this.wallet.setAccountName(account.name), this.wallet.setMultisigAddresses(decryptedAccount.multisig_addresses), this.wallet.setMultisigInfo(decryptedAccount.multisigs), this.wallet.setPlugins(decryptedAccount.plugins)]))
             .then(() => Promise.all([this.wallet.getWallet(password), this.wallet.getAddressIndex()]))
             .then(([wallet, index]) => this.wallet.generateAddresses(wallet, 0, index))
             .then((addresses) => this.mvs.addAddresses(addresses))

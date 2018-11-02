@@ -274,12 +274,18 @@ export class WalletServiceProvider {
             .then(([seed, wallet, saved_accounts, multisig_addresses, multisigs, plugins]) => {
                 let accounts = saved_accounts ? saved_accounts : [];
                 let account_name = username ? username : 'Default'
-                let new_account_content = {}
-                new_account_content.seed = seed
-                new_account_content.wallet = wallet
-                new_account_content.multisig_addresses = multisig_addresses ? multisig_addresses : []
-                new_account_content.multisigs = multisigs ? multisigs : []
-                new_account_content.plugins = plugins ? plugins : []
+                let new_account_content = {
+                    seed: seed,
+                    wallet: wallet,
+                    multisig_addresses: multisig_addresses ? multisig_addresses : [],
+                    multisigs: multisigs ? multisigs : [],
+                    plugins: plugins ? plugins : []
+                }
+                /*new_account_content['seed'] = seed
+                new_account_content['wallet'] = wallet
+                new_account_content['multisig_addresses'] = multisig_addresses ? multisig_addresses : []
+                new_account_content['multisigs'] = multisigs ? multisigs : []
+                new_account_content['plugins'] = plugins ? plugins : []*/
                 let old_account_index = -1;
                 saved_accounts.find((o, i) => {
                     if (o.name === username) {
@@ -310,6 +316,7 @@ export class WalletServiceProvider {
 
     decryptAccount(content, password) {
         return this.crypto.decrypt(content, password)
+            .then((decrypted) => JSON.parse(decrypted.toString()))
             .catch((error) => {
                 console.error(error)
                 throw Error('ERR_DECRYPT_WALLET')
