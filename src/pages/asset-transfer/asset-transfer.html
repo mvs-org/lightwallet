@@ -42,7 +42,7 @@
                 <ion-label color="primary" floating>{{"RECIPIENT_AVATAR"|translate}}</ion-label>
                 <ion-input #recipientAvatarInput name="recipient_avatar" [(ngModel)]="recipient_avatar" (ngModelChange)="recipientAvatarChanged($event)" required></ion-input>
             </ion-item>
-            <ion-item [ngClass]="{'error-border':!validrecipient(recipient_address), 'valid-border':validrecipient(recipient_address)}">
+            <ion-item [ngClass]="{'error-border':!validaddress(recipient_address), 'valid-border':validaddress(recipient_address)}">
                 <ion-label color="primary" floating>{{"RECIPIENT_ADDRESS"|translate}}</ion-label>
                 <ion-input #recipientAddressInput name="recipient_address" [(ngModel)]="recipient_address" (ngModelChange)="recipientChanged($event)" [disabled]="sendToAvatar" required></ion-input>
                 <button id="scanButton" *ngIf="platform.is('mobile')" ion-button item-right (click)="scan()">
@@ -100,7 +100,7 @@
                         <ion-option *ngFor="let addressbalance of addressbalances" value="{{addressbalance.address}}">{{addressbalance.identifier}} - {{addressbalance.balance | format : decimals}} {{selectedAsset}}</ion-option>
                     </ion-select>
                 </ion-item>
-                <button ion-button full [disabled]="!sendForm.form.valid||!validrecipient(recipient_address)||!validQuantity(quantity)||!validPassword(passphrase)||!validMessageLength(message)" (click)="preview()" color="primary">
+                <button ion-button full [disabled]="!sendForm.form.valid||!validaddress(recipient_address)||!validQuantity(quantity)||!validPassword(passphrase)||!validMessageLength(message)" (click)="preview()" color="primary">
                     {{"PREVIEW" | translate}}
                 </button>
                 <div *ngIf="rawtx">
@@ -113,7 +113,7 @@
         </ion-list>
         <ion-row class="padding-bottom">
             <ion-col>
-                <button type="submit" ion-button full icon-left [disabled]="!sendForm.form.valid||!validrecipient(recipient_address)||!validQuantity(quantity)||!validPassword(passphrase)||!validMessageLength(message)" (click)="send()" color="secondary">
+                <button type="submit" ion-button full icon-left [disabled]="!sendForm.form.valid||!validaddress(recipient_address)||!validQuantity(quantity)||!validPassword(passphrase)||!validMessageLength(message)" (click)="send()" color="secondary">
                     <ion-icon disabled="checked" name="send"></ion-icon>
                     {{"SEND" | translate}}
                 </button>
@@ -156,9 +156,9 @@
                         </ion-item>
                     </ion-col>
                     <ion-col col-md-6 col-sm-12 col-12 *ngIf="!sendToAvatar">
-                        <ion-item [ngClass]="{'error-border':!validrecipient(recipient.address), 'valid-border': validrecipient(recipient.address)}">
+                        <ion-item [ngClass]="{'error-border':!validaddress(recipient.address), 'valid-border': validaddress(recipient.address)}">
                             <ion-label color="primary" floating>{{"RECIPIENT_ADDRESS"|translate}} {{i+1}}</ion-label>
-                            <ion-input [(ngModel)]="recipient.address" (ngModelChange)="sendMoreRecipientChanged(i)" [ngModelOptions]="{standalone:true}" required></ion-input>
+                            <ion-input [(ngModel)]="recipient.address" (ngModelChange)="sendMoreAddressChanged(i)" [ngModelOptions]="{standalone:true}" required></ion-input>
                         </ion-item>
                     </ion-col>
                     <ion-col col-md-6 col-sm-12 col-12>

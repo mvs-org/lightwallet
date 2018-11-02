@@ -241,7 +241,7 @@ export class AssetTransferPage {
         this.quantityInput.setFocus()
     })
 
-    validrecipient = this.mvs.validAddress
+    validaddress = this.mvs.validAddress
 
     validAvatar = (input: string) => /[A-Za-z0-9.-]/.test(input) && this.recipient_avatar_valid
 
@@ -274,7 +274,6 @@ export class AssetTransferPage {
         if (this.recipients[index] && this.recipients[index].avatar) {
             this.recipients[index].avatar = this.recipients[index].avatar.trim()
         }
-        console.log("Searching for Avatar " + this.recipients[index].avatar)
         Promise.all([this.mvs.getGlobalAvatar(this.recipients[index].avatar), this.recipients[index].avatar])
             .then(result => {
                 if (this.recipients[index].avatar != result[1])
@@ -379,6 +378,7 @@ export class AssetTransferPage {
 
     removeRecipient(index) {
         this.recipients.splice(index, 1)
+        this.sendMoreValidEachAvatar.splice(index, 1)
         if(this.selectedAsset == 'ETP'){
             this.quantityETPChanged()
         } else {
@@ -387,9 +387,10 @@ export class AssetTransferPage {
         this.checkSendMoreAddress()
     }
 
-    sendMoreRecipientChanged(index) {
+    sendMoreAddressChanged(index) {
         if (this.recipients[index] && this.recipients[index].address) {
             this.recipients[index].address = this.recipients[index].address.trim()
+            this.recipients[index].avatar = ''
         }
         this.checkSendMoreAddress()
     }
@@ -414,10 +415,21 @@ export class AssetTransferPage {
                 for(let i=0;i<this.sendMore_limit;i++){
                     if(data[i]) {
                         let recipient = data[i].split(',');
+                        recipient[0] = recipient[0] ? recipient[0].trim() : recipient[0]
                         if(this.selectedAsset == 'ETP') {
-                            this.recipients.push(new RecipientSendMore(recipient[0] ? recipient[0].trim() : recipient[0], '', {"ETP": recipient[1] ? recipient[1].trim() : recipient[1]}))
+                            if(this.validaddress(recipient[0])) {
+                                this.recipients.push(new RecipientSendMore(recipient[0], '', {"ETP": recipient[1] ? recipient[1].trim() : recipient[1]}))
+                            } else {
+                                this.recipients.push(new RecipientSendMore('', recipient[0], {"ETP": recipient[1] ? recipient[1].trim() : recipient[1]}))
+                                this.sendMoreRecipientAvatarChanged(i)
+                            }
                         } else {
-                            this.recipients.push(new RecipientSendMore(recipient[0] ? recipient[0].trim() : recipient[0], '', {"MST": { [this.selectedAsset]: recipient[1] ? recipient[1].trim() : recipient[1]}}))
+                            if(this.validaddress(recipient[0])) {
+                                this.recipients.push(new RecipientSendMore(recipient[0], '', {"MST": { [this.selectedAsset]: recipient[1] ? recipient[1].trim() : recipient[1]}}))
+                            } else {
+                                this.recipients.push(new RecipientSendMore('', recipient[0], {"MST": { [this.selectedAsset]: recipient[1] ? recipient[1].trim() : recipient[1]}}))
+                                this.sendMoreRecipientAvatarChanged(i)
+                            }
                         }
                     }
                 }
@@ -457,7 +469,7 @@ export class AssetTransferPage {
     }
 
     csvExample() {
-        var text = 'MAwLwVGwJyFsTBfNj2j5nCUrQXGVRvHzPh,2\nMEWdqvhETJex22kBbYDSD999Vs4xFwQ4fo,2';
+        var text = 'MAwLwVGwJyFsTBfNj2j5nCUrQXGVRvHzPh,2\nMEWdqvhETJex22kBbYDSD999Vs4xFwQ4fo,2\navatar-name,4';
         var filename = 'mvs_example.csv'
         this.downloadFile(filename, text)
     }
