@@ -38,4 +38,10 @@ page-qr-code {
         border: 0px !important;
         resize: none;
     }
+
+    .copy-btn {
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+    }
 }

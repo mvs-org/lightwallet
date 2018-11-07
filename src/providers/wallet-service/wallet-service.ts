@@ -243,9 +243,6 @@ export class WalletServiceProvider {
 
     getAccountName() {
         return this.storage.get('account_name')
-            .then((account_name) => {
-                return account_name
-            })
     }
 
     setAccountName(account_name) {
@@ -311,6 +308,9 @@ export class WalletServiceProvider {
 
     getSavedAccounts() {
         return this.storage.get('saved_accounts')
+            .then((accounts) => {
+                return accounts ? accounts : []
+            })
     }
 
     decryptAccount(content, password) {

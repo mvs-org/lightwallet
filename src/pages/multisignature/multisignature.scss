@@ -29,6 +29,8 @@ page-multisignature {
 
     .address {
         font-size: 2.4rem !important;
+        word-break: break-all;
+        display: inline-block;
     }
 
     @media (max-width: 1310px) {
@@ -61,6 +63,26 @@ page-multisignature {
 
     .add-multisig-btn {
         margin-bottom: 20px;
+    }
+
+    .address-text {
+        margin-right: 10px;
+    }
+
+    .qrcode-btn {
+        padding: 0px;
+        height: auto;
+        display: inline-block;
+        top: -8px;
+    }
+
+    .qrcode-btn img {
+        height: 28px;
+        width: 28px;
+    }
+
+    .qrcode-btn .button-inner {
+        height: auto;
     }
 
 }

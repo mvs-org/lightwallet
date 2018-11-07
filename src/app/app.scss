@@ -174,10 +174,10 @@ ion-modal ion-backdrop {
 
 .md .modal-wrapper {
     left: calc(50% - (250px/2));
-    top: calc(50% - (270px/2));
+    top: calc(50% - (280px/2));
     position: absolute;
     width: 250px;
-    height: 270px;
+    height: 280px;
     box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
     overflow: hidden;
 }
@@ -185,18 +185,18 @@ ion-modal ion-backdrop {
 @media (min-width: 400px) {
     .md .modal-wrapper {
         left: calc(50% - (300px/2));
-        top: calc(50% - (300px/2));
+        top: calc(50% - (310px/2));
         width: 300px;
-        height: 300px;
+        height: 310px;
     }
 }
 
 @media (min-width: 600px) {
     .md .modal-wrapper {
         left: calc(50% - (400px/2));
-        top: calc(50% - (360px/2));
+        top: calc(50% - (370px/2));
         width: 400px;
-        height: 360px;
+        height: 370px;
     }
 }
 
@@ -282,7 +282,7 @@ ion-modal ion-backdrop {
     }
 
     textarea {
-        background-color: #383838
+        background-color: transparent;
     }
 
     ion-card {
@@ -357,7 +357,7 @@ ion-modal ion-backdrop {
     }
 
     textarea {
-        background-color: #383838
+        background-color: transparent;
     }
 
     ion-card {
@@ -449,7 +449,7 @@ ion-modal ion-backdrop {
     }
 
     textarea {
-        background-color: #002b36;
+        background-color: transparent;
         color: #fff;
     }
 

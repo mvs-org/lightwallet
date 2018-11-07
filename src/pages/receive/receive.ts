@@ -15,7 +15,6 @@ import { DepositPage } from '../deposit/deposit';
 export class ReceivePage {
 
     selectedAsset: any;
-    address: string;
     addressbalances: any;
     addressBalancesObject: any = {};
     addresses: Array<string>;
@@ -37,7 +36,6 @@ export class ReceivePage {
     showBalances() {
         return this.mvs.getAddresses()
             .then((_: string[]) => {
-                this.address = _[0];
                 this.addresses = _;
                 return this.mvs.getAddressBalances()
                     .then((addressbalances) => {
@@ -74,7 +72,6 @@ export class ReceivePage {
     format = (quantity, decimals) => quantity / Math.pow(10, decimals)
 
     show(address) {
-        this.address = address;
         let profileModal = this.modalCtrl.create('QRCodePage', { value: address });
         profileModal.present();
     }

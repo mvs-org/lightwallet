@@ -30,8 +30,14 @@
                         </ion-avatar>
                         <ion-row>
                             <ion-col>
-                                <h1 class="address manual-copy display-overflow">{{multisig.a}}</h1>
+                                <h1 class="address display-overflow">
+                                    <span class="address-text">{{multisig.a}}</span>
+                                    <button type="button" class="qrcode-btn" id="qrcode" ion-button item-right (click)="show(address)">
+                                        <img class="menu-icon" [src]="'assets/images/qrcode.png'">
+                                    </button>
+                                </h1>
                             </ion-col>
+
                         </ion-row>
                         <ion-row class="asset-balance">
                             <ion-col>
