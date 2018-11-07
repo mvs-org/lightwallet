@@ -268,11 +268,9 @@ export class WalletServiceProvider {
             })
     }
 
-    saveAccount(username, password) {
-        return Promise.all([this.storage.get('seed'), this.storage.get('wallet'), this.storage.get('saved_accounts'), this.storage.get('multisig_addresses'), this.storage.get('multisigs'), this.storage.get('plugins')])
-            .then(([seed, wallet, saved_accounts, multisig_addresses, multisigs, plugins]) => {
-                let accounts = saved_accounts ? saved_accounts : [];
-                let account_name = username ? username : 'Default'
+    saveSessionAccount(password) {
+        return Promise.all([this.storage.get('seed'), this.storage.get('wallet'), this.storage.get('multisig_addresses'), this.storage.get('multisigs'), this.storage.get('plugins')])
+            .then(([seed, wallet, multisig_addresses, multisigs, plugins]) => {
                 let new_account_content = {
                     seed: seed,
                     wallet: wallet,
@@ -280,30 +278,44 @@ export class WalletServiceProvider {
                     multisigs: multisigs ? multisigs : [],
                     plugins: plugins ? plugins : []
                 }
+                return this.crypto.encrypt(JSON.stringify(new_account_content), password)
+                    .then((content) => this.storage.set('account_info', content))
+            })
+            .catch((error) => {
+                console.error(error)
+                throw Error('ERR_SAVE_SESSION_ACCOUNT')
+            })
+    }
+
+    saveAccount(account_name) {
+        return Promise.all([this.getSavedAccounts(), this.getSessionAccountInfo()])
+            .then(([saved_accounts, content]) => {
                 let old_account_index = -1;
                 if(saved_accounts) {
                     saved_accounts.find((o, i) => {
-                        if (o.name === username) {
+                        if (o.name === account_name) {
                             old_account_index = i;
                             return true; // stop searching
                         }
                     });
                 }
-                this.crypto.encrypt(JSON.stringify(new_account_content), password)
-                    .then((content) => {
-                        let new_account = {
-                            "name": account_name,
-                            "content": content,
-                            "type": "AES"
-                        }
-                        old_account_index > -1 ? accounts[old_account_index] = new_account : accounts.push(new_account);
-                        return this.storage.set('saved_accounts', accounts)
-                    })
+
+                let new_account = {
+                    "name": account_name,
+                    "content": content,
+                    "type": "AES"
+                }
+                old_account_index > -1 ? saved_accounts[old_account_index] = new_account : saved_accounts.push(new_account);
+                return this.storage.set('saved_accounts', saved_accounts)
             })
             .catch((error) => {
                 console.error(error)
                 throw Error('ERR_SAVE_ACCOUNT')
             })
+    }
+
+    getSessionAccountInfo() {
+        return this.storage.get('account_info')
     }
 
     getSavedAccounts() {

@@ -593,9 +593,6 @@
 
     "TOKEN_DROPLET.POWERED_BY": "Powered by RightBTC",
 
-    "SAVE_ACCOUNT_TITLE_NO_PASSWORD": "Please enter a password",
-    "SAVE_ACCOUNT_TITLE_PASSWORD": "Enter your password",
-    "SAVE_ACCOUNT_MESSAGE_PASSWORD": "Please enter your password in order to encrypt your account's information",
     "MESSAGE.ERR_SAVE_ACCOUNT": "Error while saving your account",
     "MESSAGE.ERR_IMPORT_ACCOUNT": "Error while importing your account"
 

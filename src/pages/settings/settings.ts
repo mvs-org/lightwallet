@@ -56,33 +56,22 @@ export class SettingsPage {
      logout() {
          this.alert.showLogout(this.saveAccountHandler, this.forgetAccountHandler)
      }
-
-     newUsername(title, message, placeholder1, placeholder2) {
-         this.askUsername(title, message, placeholder1, placeholder2)
-             .then((info) => {
-                 let username = info['info1'];
-                 let password = info['info2'];
-                 if (!info || !username) {
-                     this.newUsername('SAVE_ACCOUNT_TITLE_NO_NAME', 'SAVE_ACCOUNT_MESSAGE', placeholder1, placeholder2)
+ 
+     newUsername(title, message, placeholder) {
+         this.askUsername(title, message, placeholder)
+             .then((username) => {
+                 if (!username) {
+                     this.newUsername('SAVE_ACCOUNT_TITLE_NO_NAME', 'SAVE_ACCOUNT_MESSAGE', placeholder)
                  } else if (this.saved_accounts_name.indexOf(username) != -1) {
-                     this.newUsername('SAVE_ACCOUNT_TITLE_ALREADY_EXIST', 'SAVE_ACCOUNT_MESSAGE_ALREADY_EXIST', placeholder1, placeholder2)
-                 } else if (!password) {
-                     this.existingUsername(username, 'SAVE_ACCOUNT_TITLE_NO_PASSWORD', 'SAVE_ACCOUNT_MESSAGE_PASSWORD', 'PASSWORD')
+                     this.newUsername('SAVE_ACCOUNT_TITLE_ALREADY_EXIST', 'SAVE_ACCOUNT_MESSAGE_ALREADY_EXIST', placeholder)
                  } else {
-                     this.saveAccount(username, password);
+                     this.saveAccount(username);
                  }
              })
      }
 
      existingUsername(username, title, message, placeholder) {
-         this.askPassword(title, message, placeholder)
-             .then((password) => {
-                 if (!password) {
-                     this.existingUsername(username, 'SAVE_ACCOUNT_TITLE_NO_PASSWORD', 'SAVE_ACCOUNT_MESSAGE_PASSWORD', placeholder)
-                 } else {
-                     this.saveAccount(username, password);
-                 }
-             })
+         this.saveAccount(username);
      }
 
      private forgetAccountHandler = () => {
@@ -96,46 +85,29 @@ export class SettingsPage {
          return this.wallet.getAccountName()
              .then((current_username) => {
                  if (current_username) {
-                     this.existingUsername(current_username, 'SAVE_ACCOUNT_TITLE_PASSWORD', 'SAVE_ACCOUNT_MESSAGE_PASSWORD', 'PASSWORD');
+                     this.saveAccount(current_username);
                  } else {
-                     this.newUsername('SAVE_ACCOUNT_TITLE', 'SAVE_ACCOUNT_MESSAGE', 'SAVE_ACCOUNT_PLACEHOLDER', 'PASSWORD')
+                     this.newUsername('SAVE_ACCOUNT_TITLE', 'SAVE_ACCOUNT_MESSAGE', 'SAVE_ACCOUNT_PLACEHOLDER')
                  }
              })
      }
 
-     askUsername(title, message, placeholder1, placeholder2) {
-         return new Promise((resolve, reject) => {
-             this.translate.get([title, message, placeholder1, placeholder2]).subscribe((translations: any) => {
-                 this.alert.ask2Info(translations[title], translations[message], translations[placeholder1], translations[placeholder2], 'text', 'password', (info) => {
-                     resolve(info)
-                 })
-             })
-         })
-     }
-
-     askPassword(title, message, placeholder) {
+     askUsername(title, message, placeholder) {
          return new Promise((resolve, reject) => {
              this.translate.get([title, message, placeholder]).subscribe((translations: any) => {
-                 this.alert.askInfo(translations[title], translations[message], translations[placeholder], 'password', (info) => {
+                 this.alert.askInfo(translations[title], translations[message], translations[placeholder], 'text', (info) => {
                      resolve(info)
                  })
              })
          })
      }
 
-     saveAccount(username, password) {
-         this.wallet.getWallet(password)   //test password
-             .then(() => this.wallet.saveAccount(username, password))
+     saveAccount(username) {
+         this.wallet.saveAccount(username)
              .then(() => this.mvs.hardReset())
              .then(() => this.nav.setRoot("LoginPage"))
              .catch((error) => {
-                 switch (error.message) {
-                     case "ERR_DECRYPT_WALLET":
-                         this.existingUsername(username, 'MESSAGE.PASSWORD_WRONG', 'SAVE_ACCOUNT_MESSAGE_PASSWORD', 'PASSWORD')
-                         break;
-                     default:
-                         this.alert.showError('MESSAGE.ERR_SAVE_ACCOUNT', error.message)
-                 }
+                 this.alert.showError('MESSAGE.ERR_SAVE_ACCOUNT', error.message)
              })
      }
 
