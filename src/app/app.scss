@@ -167,6 +167,39 @@
     left: 3.5em;
 }
 
+ion-modal ion-backdrop {
+    visibility: visible;
+}
+
+
+.md .modal-wrapper {
+    left: calc(50% - (250px/2));
+    top: calc(50% - (270px/2));
+    position: absolute;
+    width: 250px;
+    height: 270px;
+    box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+}
+
+@media (min-width: 400px) {
+    .md .modal-wrapper {
+        left: calc(50% - (300px/2));
+        top: calc(50% - (300px/2));
+        width: 300px;
+        height: 300px;
+    }
+}
+
+@media (min-width: 600px) {
+    .md .modal-wrapper {
+        left: calc(50% - (400px/2));
+        top: calc(50% - (360px/2));
+        width: 400px;
+        height: 360px;
+    }
+}
+
 
 // ███▄    █  ▒█████   ▄████▄  ▄▄▄█████▓ ██▓ ██▓     █    ██ ▒██   ██▒
 // ██ ▀█   █ ▒██▒  ██▒▒██▀ ▀█  ▓  ██▒ ▓▒▓██▒▓██▒     ██  ▓██▒▒▒ █ █ ▒░

@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, ModalController } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
+import { QRCodePage } from '../qr-code/qr-code';
+import { DepositPage } from '../deposit/deposit';
 
 @IonicPage({
     name: 'receive-page',
@@ -23,11 +25,13 @@ export class ReceivePage {
         private navCtrl: NavController,
         private navParams: NavParams,
         private platform: Platform,
-        private mvs: MvsServiceProvider
+        private mvs: MvsServiceProvider,
+        public modalCtrl: ModalController
     ) {
         this.addressbalances = {};
         this.selectedAsset = this.navParams.get('asset')
         this.displayType = this.selectedAsset == 'ETP' ? 'ETP' : 'asset'
+
     }
 
     showBalances() {
@@ -71,6 +75,8 @@ export class ReceivePage {
 
     show(address) {
         this.address = address;
+        let profileModal = this.modalCtrl.create('QRCodePage', { value: address });
+        profileModal.present();
     }
 
 }
