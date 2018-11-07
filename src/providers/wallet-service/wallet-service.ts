@@ -255,13 +255,15 @@ export class WalletServiceProvider {
     deleteAccount(account_name) {
         return this.storage.get('saved_accounts')
             .then((accounts) => {
-                accounts.find((o, i) => {
-                    if (o.name === account_name) {
-                        accounts.splice(i, 1)
-                        return true; // stop searching
-                    }
-                });
-                return this.storage.set('saved_accounts', accounts)
+                if(accounts) {
+                    accounts.find((o, i) => {
+                        if (o.name === account_name) {
+                            accounts.splice(i, 1)
+                            return true; // stop searching
+                        }
+                    });
+                    return this.storage.set('saved_accounts', accounts)
+                }
             })
             .catch((error) => {
                 console.error(error)
@@ -281,18 +283,15 @@ export class WalletServiceProvider {
                     multisigs: multisigs ? multisigs : [],
                     plugins: plugins ? plugins : []
                 }
-                /*new_account_content['seed'] = seed
-                new_account_content['wallet'] = wallet
-                new_account_content['multisig_addresses'] = multisig_addresses ? multisig_addresses : []
-                new_account_content['multisigs'] = multisigs ? multisigs : []
-                new_account_content['plugins'] = plugins ? plugins : []*/
                 let old_account_index = -1;
-                saved_accounts.find((o, i) => {
-                    if (o.name === username) {
-                        old_account_index = i;
-                        return true; // stop searching
-                    }
-                });
+                if(saved_accounts) {
+                    saved_accounts.find((o, i) => {
+                        if (o.name === username) {
+                            old_account_index = i;
+                            return true; // stop searching
+                        }
+                    });
+                }
                 this.crypto.encrypt(JSON.stringify(new_account_content), password)
                     .then((content) => {
                         let new_account = {
