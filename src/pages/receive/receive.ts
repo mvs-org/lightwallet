@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, ModalController } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
-import { QRCodePage } from '../qr-code/qr-code';
-import { DepositPage } from '../deposit/deposit';
 
 @IonicPage({
     name: 'receive-page',
