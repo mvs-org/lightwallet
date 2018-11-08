@@ -46,9 +46,15 @@ export class SettingsPage {
             .then(() => this.nav.setRoot("AccountPage"))
     }
 
-    base = () => this.nav.push("BaseCurrencyPage")
+    BaseCurrencyPage = () => this.nav.push("BaseCurrencyPage")
 
     ExportWalletPage = e => this.nav.push("ExportWalletPage")
+
+    LanguageSwitcherPage = e => this.nav.push("LanguageSwitcherPage")
+
+    ThemeSwitcherPage = e => this.nav.push("ThemeSwitcherPage")
+
+    InformationPage = e => this.nav.push("InformationPage")
 
     /**
      * Logout dialog
@@ -56,7 +62,7 @@ export class SettingsPage {
      logout() {
          this.alert.showLogout(this.saveAccountHandler, this.forgetAccountHandler)
      }
- 
+
      newUsername(title, message, placeholder) {
          this.askUsername(title, message, placeholder)
              .then((username) => {

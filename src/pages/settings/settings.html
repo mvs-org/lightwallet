@@ -24,10 +24,31 @@
         </button>
       </ion-row>
       <ion-row>
-          <button ion-item (click)="base()" style="white-space: normal;">
+          <button ion-item (click)="LanguageSwitcherPage()" style="white-space: normal;">
+              <ion-icon name="flag" item-start></ion-icon>
+              <h1 [translate]="'LANGUAGE_SETTINGS'"></h1>
+              <p [translate]="'LANGUAGE_SETTINGS_TEXT'" style="white-space: normal;"></p>
+          </button>
+      </ion-row>
+      <ion-row>
+          <button ion-item (click)="ThemeSwitcherPage()" style="white-space: normal;">
+              <ion-icon name="color-palette" item-start></ion-icon>
+              <h1 [translate]="'THEME_SETTINGS'"></h1>
+              <p [translate]="'THEME_SETTINGS_TEXT'" style="white-space: normal;"></p>
+          </button>
+      </ion-row>
+      <ion-row>
+          <button ion-item (click)="BaseCurrencyPage()" style="white-space: normal;">
               <ion-icon name="logo-usd" item-start></ion-icon>
               <h1 [translate]="'SETTINGS.BASE_CURRENCY'"></h1>
               <p [translate]="'SETTINGS.BASE_CURRENCY_TEXT'" style="white-space: normal;"></p>
+          </button>
+      </ion-row>
+      <ion-row>
+          <button ion-item (click)="InformationPage()" style="white-space: normal;">
+              <ion-icon name="information-circle" item-start></ion-icon>
+              <h1 [translate]="'INFORMATION.TITLE'"></h1>
+              <p [translate]="'INFORMATION.TEXT'" style="white-space: normal;"></p>
           </button>
       </ion-row>
       <ion-row *ngIf="!platform.is('mobile')">

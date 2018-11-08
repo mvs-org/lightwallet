@@ -33,7 +33,7 @@
     "ETP_DEPOSIT": "ETP Deposit",
 
     "SWITCH_LANGUAGE": "Language",
-    "LANGUAGE_SETTINGS": "Language Settings",
+    "LANGUAGE_SETTINGS": "Language",
     "SETTINGS": "Settings",
     "INFORMATION": "Legal Disclaimer",
     "MESSAGE.ERROR_TITLE": "Oops",
@@ -177,7 +177,7 @@
     "SETTINGS.SHOW_QRCODE_BUTTON": "Connect phone",
     "SETTINGS.SHOW_QRCODE_TEXT": "Export your private key to the mobile application MyETPWallet.",
 
-    "LOGOUT_TEXT": "Log out of the wallet",
+    "LOGOUT_TEXT": "Log out of the wallet.",
     "EXPORT_ACCOUNT": "Connect phone",
 
     "IMPORT.SHOW_QRCODE_BUTTON": "Show QR Code",
@@ -602,6 +602,10 @@
     "MESSAGE.PLUGIN_ADDED_MESSAGE": "The plugin has been added, you will find it at the bottom of the main menu.",
     "REMOVE_PLUGIN.ERROR": "Error while removing the plugin",
     "MESSAGE.PLUGIN_REMOVED_TITLE": "Plugin removed successfully",
-    "MESSAGE.PLUGIN_REMOVED_MESSAGE": "The plugin has been removed."
+    "MESSAGE.PLUGIN_REMOVED_MESSAGE": "The plugin has been removed.",
+
+    "LANGUAGE_SETTINGS_TEXT": "Change the language.",
+    "THEME_SETTINGS_TEXT": "Change the theme to change the colors of the wallet.",
+    "INFORMATION.TEXT": "Get more information about MyETPWallet."
 
 }

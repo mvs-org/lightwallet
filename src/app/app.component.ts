@@ -103,10 +103,8 @@ export class MyETPWallet {
     setPublicMenu() {
         return Promise.all([
             { title: 'LOGIN', component: "LoginPage", icon: 'log-in', root: true },
-            { title: 'LANGUAGE_SETTINGS', component: "LanguageSwitcherPage", icon: 'flag' },
-            { title: 'THEME_SETTINGS', component: "ThemeSwitcherPage", icon: 'color-palette' },
             { title: 'REPORT_BUG', newtab: 'https://github.com/mvs-org/lightwallet/issues', icon: 'bug' },
-            { title: 'INFORMATION', component: "InformationPage", icon: 'information-circle' }
+            { title: 'INFORMATION.TITLE', component: "InformationPage", icon: 'information-circle' }
         ].map((entry) => this.addToMenu(entry)))
     }
 
@@ -131,11 +129,8 @@ export class MyETPWallet {
                     { title: 'ETH_BRIDGE', component: "EthBridgePage", icon: 'swap' },
                     { title: 'MULTISIGNATURE', component: "MultisignaturePage", icon: 'people', beta: true },
                     { title: 'SETTINGS.PLUGINS', component: "PluginSettingsPage", icon: 'cube', beta: true },
-                    { title: 'LANGUAGE_SETTINGS', component: "LanguageSwitcherPage", icon: 'flag' },
-                    { title: 'THEME_SETTINGS', component: "ThemeSwitcherPage", icon: 'color-palette' },
                     { title: 'SETTINGS', component: "SettingsPage", icon: 'settings' },
-                    { title: 'REPORT_BUG', component: "ReportPage", icon: 'bug' },
-                    { title: 'INFORMATION.TITLE', component: "InformationPage", icon: 'information-circle' }
+                    { title: 'REPORT_BUG', component: "ReportPage", icon: 'bug' }
                 ].concat(plugins).map((entry) => this.addToMenu(entry)))
             });
     }
