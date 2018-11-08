@@ -596,6 +596,12 @@
     "MESSAGE.ERR_SAVE_ACCOUNT": "Error while saving your account",
     "MESSAGE.ERR_IMPORT_ACCOUNT": "Error while importing your account",
 
-    "MULTISIGNATURE_ADD.UPDATE_MY_ADDRESS": "Change my address"
+    "MULTISIGNATURE_ADD.UPDATE_MY_ADDRESS": "Change my address",
+    "IMPORT_PLUGIN.ERROR": "Error while importing the plugin",
+    "MESSAGE.PLUGIN_ADDED_TITLE": "Plugin added successfully!",
+    "MESSAGE.PLUGIN_ADDED_MESSAGE": "The plugin has been added, you will find it at the bottom of the main menu.",
+    "REMOVE_PLUGIN.ERROR": "Error while removing the plugin",
+    "MESSAGE.PLUGIN_REMOVED_TITLE": "Plugin removed successfully",
+    "MESSAGE.PLUGIN_REMOVED_MESSAGE": "The plugin has been removed."
 
 }
