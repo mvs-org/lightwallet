@@ -594,6 +594,8 @@
     "TOKEN_DROPLET.POWERED_BY": "Powered by RightBTC",
 
     "MESSAGE.ERR_SAVE_ACCOUNT": "Error while saving your account",
-    "MESSAGE.ERR_IMPORT_ACCOUNT": "Error while importing your account"
+    "MESSAGE.ERR_IMPORT_ACCOUNT": "Error while importing your account",
+
+    "MULTISIGNATURE_ADD.UPDATE_MY_ADDRESS": "Change my address"
 
 }
