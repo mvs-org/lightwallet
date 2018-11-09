@@ -24,7 +24,7 @@ export class MultisignatureAddPage {
 
     cosigners: Array<string> = []
     nbrSigReq: number;
-    nbrSigReqOptions: Array<number> = [2]
+    nbrSigReqOptions: Array<number> = [1, 2]
     import_address: string = ""
     @ViewChild('importAddressInput') importAddressInput;
     passphrase_import: string = ""
@@ -265,7 +265,7 @@ export class MultisignatureAddPage {
 
     addCosigner() {
         this.cosigners.push('')
-        this.nbrSigReqOptions.push(this.nbrSigReqOptions.length+2)
+        this.nbrSigReqOptions.push(this.nbrSigReqOptions.length+1)
         this.checkPublicKeys();
     }
 
