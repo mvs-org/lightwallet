@@ -16,9 +16,6 @@
         <p>{{"MULTISIGNATURE.INFORMATION" | translate}}</p>
         <p>{{"MULTISIGNATURE.INFORMATION2" | translate}}</p>
     </ion-row>
-    <ion-row class="no-address" *ngIf="no_address">
-        {{"MULTISIGNATURE.NO_ADDRESS" | translate}}
-    </ion-row>
 
     <ion-card class="avatar-card" *ngFor="let multisig of multisigs">
         <ion-grid>
