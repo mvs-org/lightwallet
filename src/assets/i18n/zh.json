@@ -447,7 +447,7 @@
   "MVS_TO_ETH": "元界 -> 以太坊",
   "ETH_TO_MVS.SELECT_AVATAR_OR_ADDRESS": "选择数字身份或地址",
   "ETH_TO_MVS.LINK_ADDRESSES_TITLE": "绑定以太坊钱包地址和元界钱包地址以置换数字资产",
-  "ETH_TO_MVS.LINK_ADDRESSES_EXPLAIN": "你现在可以将 ETH 置换为 ETP，或将以太坊 ERC20 代币置换为对等的元界 MST。 本页面列出了从以太坊置换到元界的步骤。若要从元界置换到以太坊，请点击上方的标签'元界 -> 以太坊'。",
+  "ETH_TO_MVS.LINK_ADDRESSES_EXPLAIN": "您现在可以将 Ether 置换为 ETP，或将以太坊 ERC20 等代币置换为对应的元界 MST。 本页面列出了从以太坊置换到元界的步骤。若要从元界置换到以太坊，请点击上方的标签'元界 -> 以太坊'。",
   "ETH_TO_MVS.STEP1_TITLE": "步骤一：用元界数字身份或钱包地址生成交易数据。",
   "ETH_TO_MVS.STEP1_EXPLAIN": "该元界数字身份或钱包地址将与随后用生成的交易数据发起交易的以太坊钱包地址建立绑定关系。。",
   "ETH_TO_MVS.DATA": "数据",
@@ -572,18 +572,40 @@
 
   "MESSAGE.ALREADY_SIGN_TRANSACTION": "您已经签署该交易，无需再度签名！",
   "MESSAGE.WARNING_PLUGIN_MESSAGE": "从v0.6.0版本开始，您可以在 MyETPWallet 中添加插件！这项功能能助您轻松链接第三方插件于元界钱包中，但请注意所有插件总的内容为第三方插件管理。我们建议用户使用插件时不要直接使用主账户，而是建议用其他拥有少量 ETP 资产的账户。",
-  "MESSAGE.WARNING_PLUGIN_TITLE": "注意插件！",
-  "MESSAGE.WARNING_MULTISIG_TITLE": "请注意多重签名地址！",
-  "MESSAGE.WARNING_MULTISIG_MESSAGE": "从v0.6.0版本开始，您可开始在 MyETPWallet 中使用多重签名地址。但请谨慎使用该功能，避免发送错误的 ETP 或 MST 数量给您的多重签名地址。如果您留意到任何 Bug，请第一时间通过主菜单中的 “Report Bug” 呈报！",
+  "MESSAGE.WARNING_PLUGIN_TITLE": "请注意插件使用！",
+  "MESSAGE.WARNING_MULTISIG_TITLE": "MyETPWallet 中的多重签名地址及相对交易现属 Beta 阶段！",
+  "MESSAGE.WARNING_MULTISIG_MESSAGE": "从v0.6.0版本开始，您可开始在 MyETPWallet 中使用多重签名地址。但请谨慎使用该功能，再三确认避免发送错误的 ETP 或 MST 数量给您的多重签名地址。如果您留意到任何 Bug，请第一时间通过主菜单中的 “Report Bug” 呈报！我们会尽快确认及采取对应行动！",
 
   "SWAP_FEE": "置换费用",
   "HELP.SWAP_TX_FEE": "这是在元界区块链上的交易手续费",
-  "HELP.SWAP_TX_SWAP_FEE": "这是在以太坊链上的交易手续费。这项 ETP 费用将会被转换去 ETH 来支付以太坊上的手续费。",
-  "PLUGIN_START": "接驳插件",
-  "PLUGIN_START.WARNING_TITLE": "请准备进入插件！",
-  "PLUGIN_START.WARNING_TEXT": "您即将进入第三方插件。为了您的安全，请谨慎地分享信息给第三方。避免损失金额，我们建议只在拥有少量资产的账户上使用第三方插件。",
+  "HELP.SWAP_TX_SWAP_FEE": "这是在以太坊链上的交易手续费。这单 ETP 费用将会被转换去 ETH 来支付以太坊上的手续费。",
+  "PLUGIN_START": "访问插件",
+  "PLUGIN_START.WARNING_TITLE": "准备进入插件！",
+  "PLUGIN_START.WARNING_TEXT": "您即将进入第三方插件。为了您的安全，请谨慎地分享信息给第三方。避免损失任何资产，我们建议只在拥有少量金额的账户上使用第三方插件。",
   "PLUGIN_START.GO_BUTTON": "进入插件",
   "PLUGIN_START.PLUGIN_NAME": "插件名称",
-  "MESSAGE.UNLOCK_WALLET": "解锁钱包错误，插件无法访问您的钱包"
+  "MESSAGE.UNLOCK_WALLET": "解锁钱包错误，插件无法访问您的钱包",
+  "MESSAGE.WRONG_PASSWORD_TRY_AGAIN": "密码错误，请重新尝试！",
+  "MESSAGE.UNLOCK_WALLET_PASSWORD_NOT_ENTERED": "如不输入密码，您的插件使用体验将会受限。",
+  "MESSAGE.UNLOCK_WALLET_PASSWORD_MESSAGE": "输入密码解锁钱包",
+
+  "MULTISIGNATURE.INFORMATION2": "一条多重签名地址可以收取或发送 ETP 和 MST。此页面将会自动显示每条地址全部的 MST 数量。",
+
+  "TOKEN_DROPLET.POWERED_BY": "由 RightBTC 技术支持",
+
+  "MESSAGE.ERR_SAVE_ACCOUNT": "存取账号中有误",
+  "MESSAGE.ERR_IMPORT_ACCOUNT": "导入账号中有误",
+
+  "MULTISIGNATURE_ADD.UPDATE_MY_ADDRESS": "更改我的地址",
+  "IMPORT_PLUGIN.ERROR": "导入插件中有误",
+  "MESSAGE.PLUGIN_ADDED_TITLE": "成功添加插件！",
+  "MESSAGE.PLUGIN_ADDED_MESSAGE": "已添加插件，您可在主页的末端找到该插件。",
+  "REMOVE_PLUGIN.ERROR": "去除插件中有误",
+  "MESSAGE.PLUGIN_REMOVED_TITLE": "插件成功去除！",
+  "MESSAGE.PLUGIN_REMOVED_MESSAGE": "插件已去除。",
+
+  "LANGUAGE_SETTINGS_TEXT": "更换语言",
+  "THEME_SETTINGS_TEXT": "更换主题来换钱包颜色。",
+  "INFORMATION.TEXT": "获取更多有关 MyETPWallet 的相关信息。"
 
 }
