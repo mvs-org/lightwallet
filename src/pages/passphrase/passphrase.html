@@ -9,12 +9,6 @@
         <ion-row class="top-padding">
             <h2 class="center-info">{{"PASSWORD_WARNING"|translate}}</h2>
         </ion-row>
-        <ion-row class="top-padding" *ngIf="platform.is('mobile')">
-            <ion-item class="center-psw" [ngClass]="{'error-border':!validAccountName(account_name)}">
-                <ion-label color="primary" floating>{{'ACCOUNT_NAME'|translate}}</ion-label>
-                <ion-input name="account_name" type="text" placeholder="" [(ngModel)]="account_name"></ion-input>
-            </ion-item>
-        </ion-row>
         <ion-row>
             <ion-item class="center-psw" [ngClass]="{'error-border':!passwordValid(password)}">
                 <ion-label color="primary" floating>{{'PASSWORD'| translate}}</ion-label>

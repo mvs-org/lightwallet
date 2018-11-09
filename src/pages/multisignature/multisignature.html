@@ -22,14 +22,11 @@
             <ion-row>
                 <ion-col>
                     <ion-item>
-                        <ion-avatar item-start>
-                            <img class="multisig-logo" [src]="'assets/icon/default.png'">
-                        </ion-avatar>
                         <ion-row>
                             <ion-col>
                                 <h1 class="address display-overflow">
                                     <span class="address-text">{{multisig.a}}</span>
-                                    <button type="button" class="qrcode-btn" id="qrcode" ion-button item-right (click)="show(address)">
+                                    <button type="button" class="qrcode-btn" id="qrcode" ion-button item-right (click)="show(multisig.a)">
                                         <img class="menu-icon" [src]="'assets/images/qrcode.png'">
                                     </button>
                                 </h1>

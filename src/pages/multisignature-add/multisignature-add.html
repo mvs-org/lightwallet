@@ -42,13 +42,13 @@
             <br>
         </ion-list>
         <ion-row *ngIf="!myPublicKey">
-            <ion-col>
+            <ion-col col-12 col-sm-6>
                 <button type="submit" ion-button full icon-left (click)="getPublicKey(address)" [disabled]="!validPassword(passphrase)||!validAddress(address)" color="secondary">
                     <ion-icon disabled="checked" name="send"></ion-icon>
                     {{"MULTISIGNATURE_ADD.GET_PUBLICKEY" | translate}}
                 </button>
             </ion-col>
-            <ion-col>
+            <ion-col col-12 col-sm-6>
                 <button ion-button color="danger" full item-right icon-left (click)="cancel($event)">
                     <ion-icon name="cancel"></ion-icon>
                     {{'CANCEL'|translate}}
@@ -61,13 +61,13 @@
                 <textarea fz-elastic ion-input full type="text" #copyMyPublicKey value="{{myPublicKey}}" style="" readonly>{{myPublicKey}}</textarea>
             </ion-card-content>
             <ion-row>
-                <ion-col>
+                <ion-col col-12 col-sm-6>
                     <button type="submit" ion-button full icon-left [ngxClipboard]="copyMyPublicKey">
                         <ion-icon name="copy"></ion-icon>
                         {{"COPY" | translate}}
                     </button>
                 </ion-col>
-                <ion-col>
+                <ion-col col-12 col-sm-6>
                     <button ion-button color="danger" full item-right icon-left (click)="myPublicKey = ''">
                         <ion-icon name="refresh"></ion-icon>
                         {{"MULTISIGNATURE_ADD.UPDATE_MY_ADDRESS"|translate}}

@@ -99,13 +99,13 @@
             </div>
         </ion-list>
         <ion-row class="padding-bottom">
-            <ion-col>
+            <ion-col col-12 col-sm-6>
                 <button type="submit" ion-button full icon-left [disabled]="!sendForm.form.valid||!validrecipient(recipient_address)||!validQuantity(quantity)||!validPassword(passphrase)||!validMessageLength(message)" (click)="preview()" color="secondary">
                     <ion-icon disabled="checked" name="settings"></ion-icon>
                     {{"MULTISIGNATURE.GENERATE" | translate}}
                 </button>
             </ion-col>
-            <ion-col>
+            <ion-col col-12 col-sm-6>
                 <button ion-button color="danger" full item-right icon-left (click)="cancel($event)">
                     <ion-icon name="cancel"></ion-icon>
                     {{'CANCEL'|translate}}
