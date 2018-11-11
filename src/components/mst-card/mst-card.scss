@@ -109,7 +109,7 @@ mst-card {
       padding-top: 10px;
       padding-left: 0px;
       padding-right: 0px;
-      padding-bottom: 80px;
+      padding-bottom: 50px;
     }
 
     .offlineIcon {
@@ -139,25 +139,33 @@ mst-card {
     }
 
     .balances {
-        display: inline-block;
+        display: inline-table;
         width: auto;
     }
 
     .balance-text {
-        margin-right: 47px;
+        margin-right: 10px;
     }
 
     .balance-field {
-        height: 40px;
-        top: 0;
+        height: 45px;
     }
 
     .symbol {
         padding-bottom: 5px;
     }
 
+    .frozen-balance {
+        height: 19px;
+    }
+
     .swap-buton {
         float: right;
         font-size: 1.4rem !important;
+    }
+
+    .card-ios {
+      margin: 0;
+      width: 100%;
     }
 }

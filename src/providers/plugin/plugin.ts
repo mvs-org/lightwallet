@@ -43,13 +43,12 @@ export class PluginProvider {
 
     fetchPlugin(url) {
         return new Promise(resolve => {
-            return this.http.get(url).subscribe(plugin => {
-                try {
-                    resolve(plugin.json())
-                } catch(e) {
-                    resolve(null)
-                }
-            });
+            return this.http.get(url)
+                .map(res => res.json())
+                .subscribe(
+                    data => resolve(data),
+                    err => resolve(null)
+                );
         })
         .then((plugin: Plugin) => {
             if (plugin == null)

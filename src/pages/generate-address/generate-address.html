@@ -25,13 +25,13 @@
             <br>
         </ion-list>
         <ion-row class="padding-bottom">
-            <ion-col>
+            <ion-col col-12 col-sm-6>
                 <button ion-button full [disabled]="!sendForm.form.valid||!validIndex(index)||!validPassword(passphrase)" (click)="setIndex()" icon-left color="secondary">
                     <ion-icon disabled="checked" name="send"></ion-icon>
                     {{"GENERATE_ADDRESSES.CHANGE_ADDRESS_NUMBER" | translate}}
                 </button>
             </ion-col>
-            <ion-col>
+            <ion-col col-12 col-sm-6>
                 <button ion-button color="danger" full item-right icon-left (click)="cancel($event)">
                     <ion-icon name="cancel"></ion-icon>
                     {{'CANCEL'|translate}}

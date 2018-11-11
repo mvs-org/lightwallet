@@ -1,0 +1,14 @@
+<ion-content>
+    <ion-card>
+        <qr-code [value]="value" [size]="550" class="center"></qr-code>
+        <ion-card-content>
+            <h3 class="center"><textarea ion-input full type="text" #copy value="{{value}}" class="center" style="" readonly>{{value}}</textarea></h3>
+        </ion-card-content>
+        <ion-row>
+            <button class="copy-btn" ion-button full item-right icon-left [ngxClipboard]="copy">
+                <ion-icon name="copy"></ion-icon>
+                {{'COPY'|translate}}
+            </button>
+        </ion-row>
+    </ion-card>
+</ion-content>

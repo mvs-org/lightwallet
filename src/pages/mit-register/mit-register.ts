@@ -137,7 +137,7 @@ export class MITRegisterPage {
                     subTitle: text + hash,
                     buttons: [ok]
                 })
-                alert.present(prompt)
+                alert.present()
             })
         })
     }
@@ -150,7 +150,7 @@ export class MITRegisterPage {
                     subTitle: text,
                     buttons: [ok]
                 })
-                alert.present(prompt)
+                alert.present()
             })
         })
     }

@@ -26,7 +26,9 @@ export class PassphrasePage {
         public mvs: MvsServiceProvider,
         public loadingCtrl: LoadingController,
         public wallet: WalletServiceProvider) {
-        this.mnemonic = this.navParams.get('mnemonic');
+
+            this.mnemonic = this.navParams.get('mnemonic');
+
     }
 
     /* moves nagigation
@@ -54,6 +56,7 @@ export class PassphrasePage {
             .then(() => Promise.all([this.wallet.getWallet(password), this.wallet.getAddressIndex()]))
             .then((results) => this.wallet.generateAddresses(results[0], 0, results[1]))
             .then((addresses) => this.mvs.addAddresses(addresses))
+            .then(() => this.wallet.saveSessionAccount(password))
             .then(() => this.nav.setRoot("AccountPage"))
             .catch((e) => {
                 console.error(e);
@@ -61,6 +64,8 @@ export class PassphrasePage {
     }
 
     passwordValid = (password) => (password) ? password.length > 5 : false;
+
+    passwordRepeatValid = (password, password_repeat) => (password_repeat) ? password_repeat.length > 5 && password_repeat == password : false;
 
     complete = (password, password_repeat) => (password && password_repeat) ? this.passwordValid(password) && password == password_repeat : false;
 
@@ -93,4 +98,5 @@ export class PassphrasePage {
             this.loading.present();
         })
     }
+
 }

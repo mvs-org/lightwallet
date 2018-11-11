@@ -42,7 +42,7 @@
                 <ion-label color="primary" floating>{{"RECIPIENT_AVATAR"|translate}}</ion-label>
                 <ion-input #recipientAvatarInput name="recipient_avatar" [(ngModel)]="recipient_avatar" (ngModelChange)="recipientAvatarChanged($event)" required></ion-input>
             </ion-item>
-            <ion-item [ngClass]="{'error-border':!validrecipient(recipient_address), 'valid-border':validrecipient(recipient_address)}">
+            <ion-item [ngClass]="{'error-border':!validaddress(recipient_address), 'valid-border':validaddress(recipient_address)}">
                 <ion-label color="primary" floating>{{"RECIPIENT_ADDRESS"|translate}}</ion-label>
                 <ion-input #recipientAddressInput name="recipient_address" [(ngModel)]="recipient_address" (ngModelChange)="recipientChanged($event)" [disabled]="sendToAvatar" required></ion-input>
                 <button id="scanButton" *ngIf="platform.is('mobile')" ion-button item-right (click)="scan()">
@@ -65,7 +65,9 @@
                 <ion-label>{{"SELECT_FROM_ADDRESS"|translate}}</ion-label>
                 <ion-select [(ngModel)]="sendFrom" name="sendfrom" multiple="false" (ngModelChange)="onFromAddressChange($event)" okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}">
                     <ion-option selected="true" value="auto">{{"AUTO"| translate}}</ion-option>
-                    <ion-option *ngFor="let addressbalance of addressbalances" value="{{addressbalance.address}}">{{addressbalance.identifier}} - {{addressbalance.balance | format : decimals}} {{selectedAsset}}</ion-option>
+                    <ng-container *ngFor="let addressbalance of addressbalances">
+                        <ion-option *ngIf="addressbalance.balance>0" value="{{addressbalance.address}}">{{addressbalance.identifier}} - {{addressbalance.balance | format : decimals}} {{selectedAsset}}</ion-option>
+                    </ng-container>
                 </ion-select>
             </ion-item>
             <br>
@@ -95,10 +97,10 @@
                     <ion-label>{{"SELECT_CHANGE_ADDRESS"|translate}}</ion-label>
                     <ion-select [(ngModel)]="changeAddress" name="changeaddress" okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}">
                         <ion-option selected="true" value="auto">{{"AUTO"| translate}}</ion-option>
-                        <ion-option *ngFor="let address of addresses" value="{{address}}">{{address}}</ion-option>
+                        <ion-option *ngFor="let addressbalance of addressbalances" value="{{addressbalance.address}}">{{addressbalance.identifier}} - {{addressbalance.balance | format : decimals}} {{selectedAsset}}</ion-option>
                     </ion-select>
                 </ion-item>
-                <button ion-button full [disabled]="!sendForm.form.valid||!validrecipient(recipient_address)||!validQuantity(quantity)||!validPassword(passphrase)||!validMessageLength(message)" (click)="preview()" color="primary">
+                <button ion-button full [disabled]="!sendForm.form.valid||!validaddress(recipient_address)||!validQuantity(quantity)||!validPassword(passphrase)||!validMessageLength(message)" (click)="preview()" color="primary">
                     {{"PREVIEW" | translate}}
                 </button>
                 <div *ngIf="rawtx">
@@ -111,7 +113,7 @@
         </ion-list>
         <ion-row class="padding-bottom">
             <ion-col>
-                <button type="submit" ion-button full icon-left [disabled]="!sendForm.form.valid||!validrecipient(recipient_address)||!validQuantity(quantity)||!validPassword(passphrase)||!validMessageLength(message)" (click)="send()" color="secondary">
+                <button type="submit" ion-button full icon-left [disabled]="!sendForm.form.valid||!validaddress(recipient_address)||!validQuantity(quantity)||!validPassword(passphrase)||!validMessageLength(message)" (click)="send()" color="secondary">
                     <ion-icon disabled="checked" name="send"></ion-icon>
                     {{"SEND" | translate}}
                 </button>
@@ -127,6 +129,11 @@
 
     <form *ngIf="transfer_type == 'more'" #sendForm="ngForm" style="padding-bottom: 0;">
         <ion-list style="padding-bottom: 0;">
+            <ion-item>
+                <ion-label>{{"SEND_TO_AVATAR"|translate}}</ion-label>
+                <ion-toggle [(ngModel)]="sendToAvatar" name="sendToAvatar" checked="false"></ion-toggle>
+            </ion-item>
+            <br>
             <ion-row *ngIf="!platform.is('mobile')">
                 <input type="file" name="file" id="file" class="inputfile" accept=".csv" (change)="import($event)" />
                 <label for="file"> <ion-icon name="document"></ion-icon> {{"IMPORT_FROM_CSV"|translate}}</label>
@@ -142,10 +149,16 @@
                             X
                         </button>
                     </ion-col>
-                    <ion-col col-md-6 col-sm-12 col-12>
-                        <ion-item [ngClass]="{'error-border':!validrecipient(recipient.address), 'valid-border': validrecipient(recipient.address)}">
+                    <ion-col col-md-6 col-sm-12 col-12 *ngIf="sendToAvatar">
+                        <ion-item [ngClass]="{'error-border':!validSendMoreAvatar(recipient.avatar, i), 'valid-border': validSendMoreAvatar(recipient.avatar, i)}">
+                            <ion-label color="primary" floating>{{"RECIPIENT_AVATAR"|translate}} {{i+1}}</ion-label>
+                            <ion-input [(ngModel)]="recipient.avatar" (ngModelChange)="sendMoreRecipientAvatarChanged(i)" [ngModelOptions]="{standalone:true}" required></ion-input>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col col-md-6 col-sm-12 col-12 *ngIf="!sendToAvatar">
+                        <ion-item [ngClass]="{'error-border':!validaddress(recipient.address), 'valid-border': validaddress(recipient.address)}">
                             <ion-label color="primary" floating>{{"RECIPIENT_ADDRESS"|translate}} {{i+1}}</ion-label>
-                            <ion-input [(ngModel)]="recipient.address" (ngModelChange)="sendMoreRecipientChanged(i)" [ngModelOptions]="{standalone:true}" required></ion-input>
+                            <ion-input [(ngModel)]="recipient.address" (ngModelChange)="sendMoreAddressChanged(i)" [ngModelOptions]="{standalone:true}" required></ion-input>
                         </ion-item>
                     </ion-col>
                     <ion-col col-md-6 col-sm-12 col-12>

@@ -52,7 +52,6 @@ page-asset-transfer {
     .remove-button {
         float: right;
         margin: 0;
-
     }
 
     .card-block .col {
@@ -71,7 +70,7 @@ page-asset-transfer {
     .inputfile + label {
         font-weight: 500;
         color: white;
-        background-color: #32db64;
+        background-color: color($colors, secondary);
         margin: auto;
         margin-right: 0px;
         padding-left: 15px;

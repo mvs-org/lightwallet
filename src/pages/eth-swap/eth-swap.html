@@ -9,13 +9,13 @@
 
 <ion-content padding style="padding-bottom: 0;">
 
-    <p align="center" *ngIf="etpBalance<fee/100000000">{{"NOTICE_TRANSACTION_FEE_UNCOVERED"|translate}}</p>
+    <p align="center" *ngIf="etpBalance<(fee+swap_fee)/100000000">{{"NOTICE_TRANSACTION_FEE_UNCOVERED"|translate}}</p>
     <ion-row>
         <ion-col>
             <p>{{"AVAILABLE_BALANCE" | translate}}: <br *ngIf="platform.is('mobile')">{{showBalance | format : decimals}} {{selectedAsset}}</p>
         </ion-col>
         <ion-col>
-            <p class="right">{{"FEE"|translate}}:<br *ngIf="platform.is('mobile')"> {{fee+100000000 | format : 8}} ETP</p>
+            <p class="right">{{"FEE"|translate}}:<br *ngIf="platform.is('mobile')"> {{fee+swap_fee | format : 8}} ETP</p>
         </ion-col>
     </ion-row>
     <h4 align="center">{{"SWAP.NOTICE_SWAP_FEE"|translate}}</h4>
@@ -65,12 +65,26 @@
                     <ion-label color="primary">{{"FEE" | translate}}</ion-label>
                     <ion-badge item-end color="primary">{{fee | format : 8}} ETP</ion-badge>
                 </ion-item>
+                <div no-lines class="advice">{{"HELP.SWAP_TX_FEE" | translate}}</div>
                 <ion-item>
                     <ion-range min="10000" max="10000000" step="10000" color="primary" [(ngModel)]="fee" name="fee">
                         <ion-label range-left>{{10000 | format : 8}}</ion-label>
                         <ion-label range-right>{{10000000 | format : 8}}</ion-label>
                     </ion-range>
                 </ion-item>
+
+                <ion-item no-lines>
+                    <ion-label color="primary">{{"SWAP_FEE" | translate}}</ion-label>
+                    <ion-badge item-end color="primary">{{swap_fee | format : 8}} ETP</ion-badge>
+                </ion-item>
+                <div no-lines class="advice">{{"HELP.SWAP_TX_SWAP_FEE" | translate}}</div>
+                <ion-item>
+                    <ion-range min="100000000" max="1000000000" step="10000" color="primary" [(ngModel)]="swap_fee" name="swap_fee">
+                        <ion-label range-left>{{100000000 | format : 8}}</ion-label>
+                        <ion-label range-right>{{1000000000 | format : 8}}</ion-label>
+                    </ion-range>
+                </ion-item>
+
                 <ion-item [ngClass]="{'error-border':!validMessageLength(message), 'valid-border': message.length > 0 && validMessageLength(message)}">
                     <ion-label floating>{{"MESSAGE" | translate}}</ion-label>
                     <ion-input name="message" [(ngModel)]="message"></ion-input>

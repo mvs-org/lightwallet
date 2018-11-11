@@ -54,7 +54,7 @@ export class PluginPage {
             case 'verify':
                 return Promise.resolve(this.walletProvider.verifyMessage(data.params.text, data.params.address, data.params.signature))
             case 'unlock':
-                return this.unlock()
+                return this.unlock('MESSAGE.UNLOCK_WALLET_PASSWORD_MESSAGE')
             case 'addresses':
                 return this.mvs.getAddresses()
             case 'broadcast':
@@ -166,13 +166,26 @@ export class PluginPage {
             })
     }
 
-    unlock() {
-        return this.askPassphrase('Enter passphrase to unlock wallet')
+    unlock(text) {
+        return this.askPassphrase(text)
             .then(passphrase => this.walletProvider.getWallet(passphrase))
             .then(wallet => {
                 this.wallet = wallet;
                 return true;
-            });
+            })
+            .catch((error) => {
+                console.error(error.message)
+                switch(error.message){
+                    case "ERR_DECRYPT_WALLET":
+                        return this.unlock('MESSAGE.WRONG_PASSWORD_TRY_AGAIN')
+                    case "ERR_USER_CONFIRMATION_FAILED":
+                        this.alert.showError('MESSAGE.UNLOCK_WALLET_PASSWORD_NOT_ENTERED', '')
+                        throw Error('ERR_USER_CONFIRMATION_FAILED')
+                    default:
+                        this.alert.showError('MESSAGE.UNLOCK_WALLET', error.message)
+                        throw Error('ERR_UNLOCK_WALLET')
+                }
+            })
     }
 
     askPassphrase(text) {

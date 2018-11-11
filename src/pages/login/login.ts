@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, Platform, Events } from 'ionic-angular';
 import { AppGlobals } from '../../app/app.global';
 import { Storage } from '@ionic/storage';
+import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
 
 @IonicPage()
 @Component({
@@ -12,18 +13,23 @@ import { Storage } from '@ionic/storage';
 export class LoginPage {
 
     public network = ''
+    saved_accounts: Array<any> = []
 
     constructor(
         private nav: NavController,
         public platform: Platform,
         private storage: Storage,
         public globals: AppGlobals,
-        private event: Events
+        private event: Events,
+        private wallet: WalletServiceProvider
     ) {
+        this.wallet.getSavedAccounts()
+            .then((accounts) => this.saved_accounts = accounts ? accounts : [])
     }
 
     ionViewDidEnter() {
         this.loadNetwork()
+
     }
 
     GenerateKeyPage = e => this.nav.push("GenerateKeyPage")
@@ -52,5 +58,7 @@ export class LoginPage {
     loginFromMobile = () => this.nav.push("ImportWalletMobilePage")
 
     howToMobile = () => this.nav.push("HowToMobilePage")
+
+    LoginAccountPage = (account) => this.nav.push("LoginAccountPage", { account: account })
 
 }

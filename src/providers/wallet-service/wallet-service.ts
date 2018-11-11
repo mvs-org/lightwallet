@@ -3,7 +3,7 @@ import { Http } from '@angular/http';
 import { AppGlobals } from '../../app/app.global';
 import 'rxjs/add/operator/map';
 import { Storage } from '@ionic/storage';
-import * as Metaverse from 'metaversejs/dist/metaverse.js';
+import Metaverse from 'metaversejs/index.js';
 import { CryptoServiceProvider } from '../crypto-service/crypto-service';
 
 @Injectable()
@@ -28,7 +28,7 @@ export class WalletServiceProvider {
     }
 
     getMstIcons() {
-        return ['ETP', 'MVS.ZGC', 'MVS.ZDC', 'CSD.CSD', 'PARCELX.GPX', 'PARCELX.TEST', 'SDG', 'META', 'MVS.HUG', 'RIGHTBTC.RT'];
+        return ['ETP', 'MVS.ZGC', 'MVS.ZDC', 'CSD.CSD', 'PARCELX.GPX', 'PARCELX.TEST', 'SDG', 'META', 'MVS.HUG', 'RIGHTBTC.RT', 'TIPLR.TPC', 'PANDO', 'VALOTY'];
     }
 
     exportMemonic() {
@@ -83,8 +83,8 @@ export class WalletServiceProvider {
         return Metaverse.wallet.fromMnemonic(mnemonic)
     }
 
-    verifyMessage(message, address, signature){
-        return Metaverse.message.verify(message,address,Buffer.from(signature,'hex'))
+    verifyMessage(message, address, signature) {
+        return Metaverse.message.verify(message, address, Buffer.from(signature, 'hex'))
     }
 
     getHDNodeFromSeed(seed) {
@@ -154,6 +154,188 @@ export class WalletServiceProvider {
             addresses.push(this.generateNewAddress(wallet, i));
         }
         return addresses;
+    }
+
+    getPublicKeyByAddress(wallet: any, address: string) {
+        return wallet.findPublicKeyByAddess(address, 200);
+    }
+
+    getNewMultisigAddress(nbrSigReq, publicKeys) {
+        return Metaverse.multisig.generate(nbrSigReq, publicKeys);
+    }
+
+    addMultisig(newMultisig) {
+        return this.getMultisigAddresses()
+            .then((multisig_addresses) => {
+                if (multisig_addresses.indexOf(newMultisig.a) == -1) {
+                    return Promise.all([this.addMultisigAddresses([newMultisig.a]), this.addMultisigInfo([newMultisig])])
+                }
+            })
+    }
+
+    getMultisigsInfo() {
+        return this.storage.get('multisigs')
+            .then((multisigs) => (multisigs) ? multisigs : [])
+    }
+
+    getMultisigInfoFromAddress(address) {
+        return this.getMultisigsInfo()
+            .then((multisigs) => {
+                return this.findMultisigWallet(address, multisigs)
+            })
+    }
+
+    findMultisigWallet(address, wallets) {
+        if (wallets.length == 0)
+            throw 'wallet not found';
+        return (wallets[0].a == address) ? wallets[0] : this.findMultisigWallet(address, wallets.slice(1));
+    }
+
+
+    addMultisigInfo(newMultisig: Array<any>) {
+        return this.getMultisigsInfo()
+            .then((multisigs: Array<any>) => {
+                newMultisig.map(multisig => {
+                    multisig.r = Metaverse.multisig.generate(multisig.m, multisig.k).script
+                    return multisig
+                })
+                this.storage.set('multisigs', multisigs.concat(newMultisig))
+            })
+    }
+
+    getMultisigAddresses() {
+        return this.storage.get('multisig_addresses')
+            .then((addresses) => (addresses) ? addresses : [])
+    }
+
+    setMultisigAddresses(multisig: Array<any>) {
+        this.storage.set('multisig_addresses', multisig ? multisig : [])
+    }
+
+    setMultisigInfo(multisigs: Array<any>) {
+        this.storage.set('multisigs', multisigs ? multisigs : [])
+    }
+
+    addMultisigAddresses(addresses: Array<string>) {
+        return this.getMultisigAddresses()
+            .then((addr: Array<string>) => this.storage.set('multisig_addresses', addr.concat(addresses)))
+    }
+
+    findDeriveNodeByPublic(wallet: any, publicKey: string, maxDepth: number) {
+        return wallet.findDeriveNodeByPublicKey(publicKey, maxDepth ? maxDepth : 200)
+    }
+
+    async signMultisigTx(address, tx, passphrase) {
+        let wallet = await this.getWallet(passphrase)
+        let parameters = await this.getMultisigInfoFromAddress(address)
+        return wallet.signMultisig(tx, parameters)
+            .catch((error) => {
+                console.error(error)
+                switch(error){
+                    case "Signature already included":
+                        throw Error('SIGN_ALREADY_INCL')
+                    default:
+                        throw Error('ERR_SIGN_TX')
+                }
+
+            })
+    }
+
+    getAccountName() {
+        return this.storage.get('account_name')
+    }
+
+    setAccountName(account_name) {
+        return this.storage.set('account_name', account_name)
+    }
+
+    deleteAccount(account_name) {
+        return this.storage.get('saved_accounts')
+            .then((accounts) => {
+                if(accounts) {
+                    accounts.find((o, i) => {
+                        if (o.name === account_name) {
+                            accounts.splice(i, 1)
+                            return true; // stop searching
+                        }
+                    });
+                    return this.storage.set('saved_accounts', accounts)
+                }
+            })
+            .catch((error) => {
+                console.error(error)
+                throw Error('ERR_DELETE_ACCOUNT')
+            })
+    }
+
+    saveSessionAccount(password) {
+        return Promise.all([this.storage.get('seed'), this.storage.get('wallet'), this.storage.get('multisig_addresses'), this.storage.get('multisigs'), this.storage.get('plugins')])
+            .then(([seed, wallet, multisig_addresses, multisigs, plugins]) => {
+                let new_account_content = {
+                    seed: seed,
+                    wallet: wallet,
+                    multisig_addresses: multisig_addresses ? multisig_addresses : [],
+                    multisigs: multisigs ? multisigs : [],
+                    plugins: plugins ? plugins : []
+                }
+                return this.crypto.encrypt(JSON.stringify(new_account_content), password)
+                    .then((content) => this.storage.set('account_info', content))
+            })
+            .catch((error) => {
+                console.error(error)
+                throw Error('ERR_SAVE_SESSION_ACCOUNT')
+            })
+    }
+
+    saveAccount(account_name) {
+        return Promise.all([this.getSavedAccounts(), this.getSessionAccountInfo()])
+            .then(([saved_accounts, content]) => {
+                let old_account_index = -1;
+                if(saved_accounts) {
+                    saved_accounts.find((o, i) => {
+                        if (o.name === account_name) {
+                            old_account_index = i;
+                            return true; // stop searching
+                        }
+                    });
+                }
+
+                let new_account = {
+                    "name": account_name,
+                    "content": content,
+                    "type": "AES"
+                }
+                old_account_index > -1 ? saved_accounts[old_account_index] = new_account : saved_accounts.push(new_account);
+                return this.storage.set('saved_accounts', saved_accounts)
+            })
+            .catch((error) => {
+                console.error(error)
+                throw Error('ERR_SAVE_ACCOUNT')
+            })
+    }
+
+    getSessionAccountInfo() {
+        return this.storage.get('account_info')
+    }
+
+    getSavedAccounts() {
+        return this.storage.get('saved_accounts')
+            .then((accounts) => {
+                return accounts ? accounts : []
+            })
+    }
+
+    decryptAccount(content, password) {
+        return this.crypto.decrypt(content, password)
+            .then((decrypted) => JSON.parse(decrypted.toString()))
+            .catch((error) => {
+                console.error(error)
+                throw Error('ERR_DECRYPT_WALLET')
+            })
+    }
+
+    setPlugins(plugins: Array<any>) {
+        this.storage.set('plugins', plugins ? plugins : [])
     }
 
 }
