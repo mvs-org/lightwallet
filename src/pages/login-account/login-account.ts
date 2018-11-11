@@ -66,7 +66,7 @@ export class LoginAccountPage {
 
     deleteAccount(account_name) {
         this.translate.get('DELETE_ACCOUNT_TITLE').subscribe(title => {
-            this.translate.get('DELETE_ACCOUNT_BODY').subscribe(message => {
+            this.translate.get(this.platform.is('mobile') ? 'RESET_MESSAGE_MOBILE_SAVE_ACCOUNT' : 'DELETE_ACCOUNT_BODY').subscribe(message => {
                 this.translate.get('DELETE').subscribe(no => {
                     this.translate.get('BACK').subscribe(back => {
                         let confirm = this.alertCtrl.create({
