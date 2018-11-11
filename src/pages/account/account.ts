@@ -227,7 +227,7 @@ export class AccountPage {
         return this.mvs.getBalances()
             .then((_) => {
                 this.balances = _
-                return Promise.all(Object.keys(_.MST).map((symbol) => this.mvs.addAssetToAssetOrder(symbol)))
+                return this.mvs.addAssetsToAssetOrder(Object.keys(_.MST))
             })
             .then(() => this.mvs.assetOrder())
             .then((order) => {
