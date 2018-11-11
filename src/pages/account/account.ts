@@ -42,7 +42,7 @@ export class AccountPage {
     base: string
     domains: any = []
     whitelist: any = []
-    saved_accounts_name: any;
+    saved_accounts_name: any = [];
 
     private syncinterval: any;
 
