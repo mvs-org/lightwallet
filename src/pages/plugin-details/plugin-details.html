@@ -8,29 +8,41 @@
 <ion-content padding>
     <form>
         <h4>{{"PLUGIN_DETAILS.NAME" | translate}}:</h4>
-        <ion-item>{{plugin.name}}</ion-item>
+        <ion-item>
+            <ion-label class="display-overflow">
+                {{plugin.name}}
+            </ion-label>
+        </ion-item>
 
         <h4>{{"PLUGIN_DETAILS.DESCRIPTION" | translate}}:</h4>
-        <ion-item>{{plugin.description}}</ion-item>
+        <ion-item>
+            <ion-label class="display-overflow">
+                {{plugin.description}}
+            </ion-label>
+        </ion-item>
 
         <h4>{{"PLUGIN_DETAILS.AUTHOR" | translate}}:</h4>
-        <ion-item>{{plugin.author}}</ion-item>
+        <ion-item>
+            <ion-label class="display-overflow">
+                {{plugin.author}}
+            </ion-label>
+        </ion-item>
 
         <h4>{{"PLUGIN_DETAILS.PERMISSIONS" | translate}}:</h4>
         <ion-item *ngFor="let permission of plugin.config.permissions">
             -
-            <span *ngIf="permission == 'create-mit'">{{"PLUGIN.PERMISSION_CREATE_MIT" | translate}}</span>
-            <span *ngIf="permission == 'network'">{{"PLUGIN.PERMISSION_NETWORK" | translate}}</span>
-            <span *ngIf="permission == 'avatars'">{{"PLUGIN.PERMISSION_AVATARS" | translate}}</span>
-            <span *ngIf="permission == 'sign'">{{"PLUGIN.PERMISSION_SIGN" | translate}}</span>
-            <span *ngIf="permission == 'verify'">{{"PLUGIN.PERMISSION_VERIFY" | translate}}</span>
-            <span *ngIf="permission == 'unlock'">{{"PLUGIN.PERMISSION_UNLOCK" | translate}}</span>
-            <span *ngIf="permission == 'addresses'">{{"PLUGIN.PERMISSION_ADDRESSES" | translate}}</span>
-            <span *ngIf="permission == 'broadcast'">{{"PLUGIN.PERMISSION_BROADCAST" | translate}}</span>
+            <ion-label class="display-overflow" *ngIf="permission == 'create-mit'">{{"PLUGIN.PERMISSION_CREATE_MIT" | translate}}</ion-label>
+            <ion-label class="display-overflow" *ngIf="permission == 'network'">{{"PLUGIN.PERMISSION_NETWORK" | translate}}</ion-label>
+            <ion-label class="display-overflow" *ngIf="permission == 'avatars'">{{"PLUGIN.PERMISSION_AVATARS" | translate}}</ion-label>
+            <ion-label class="display-overflow" *ngIf="permission == 'sign'">{{"PLUGIN.PERMISSION_SIGN" | translate}}</ion-label>
+            <ion-label class="display-overflow" *ngIf="permission == 'verify'">{{"PLUGIN.PERMISSION_VERIFY" | translate}}</ion-label>
+            <ion-label class="display-overflow" *ngIf="permission == 'unlock'">{{"PLUGIN.PERMISSION_UNLOCK" | translate}}</ion-label>
+            <ion-label class="display-overflow" *ngIf="permission == 'addresses'">{{"PLUGIN.PERMISSION_ADDRESSES" | translate}}</ion-label>
+            <ion-label class="display-overflow" *ngIf="permission == 'broadcast'">{{"PLUGIN.PERMISSION_BROADCAST" | translate}}</ion-label>
         </ion-item>
 
         <ion-list>
-          
+
             <ion-item [ngClass]="{'error-border': !validPassword(passphrase)}">
                 <ion-label color="primary" floating>{{"PASSWORD" | translate}}</ion-label>
                 <ion-input name="passphrase" type="password" [(ngModel)]="passphrase" required></ion-input>
