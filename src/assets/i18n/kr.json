@@ -368,7 +368,7 @@
 
     "SETTINGS.PLUGINS": "플러그인",
     "SETTINGS.PLUGINS_TEXT": "지갑에 제3자 확장명을 추가해 주세요.",
-    
+
     "PLUGIN_SETTINGS": "플러그인 설정",
     "PLUGIN_DETAILS": "플러그인 세부사항",
     "PLUGIN_DETAILS.NAME" : "플러그인 이름",
@@ -401,7 +401,7 @@
     "HISTORY.ORDER_BY": "주문 하기",
     "HISTORY.ORDER_BY_HEIGHT": "동결 시간",
     "HISTORY.ORDER_BY_UNLOCK_HEIGHT": "미동결 시간",
-    "HISTORY.DIRECTION": "Direction",
+    "HISTORY.DIRECTION": "보기",
     "HISTORY.DIRECTION_LATEST_TOP": "최근 항목",
     "HISTORY.DIRECTION_EARLIEST_TOP": "초기 항목",
     "HISTORY.FROZEN_TX": "현재 동결 중인 트렌젝션",
