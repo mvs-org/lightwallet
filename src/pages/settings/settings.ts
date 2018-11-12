@@ -29,7 +29,7 @@ export class SettingsPage {
         this.network = this.globals.network
 
         this.wallet.getSavedAccounts()
-            .then((accounts) => this.saved_accounts_name = accounts.map(account => account.name))
+            .then((accounts) => this.saved_accounts_name = (accounts && accounts.length >= 1) ? accounts.map(account => account.name) : [])
     }
 
     ionViewDidEnter() {
