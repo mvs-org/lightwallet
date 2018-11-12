@@ -60,7 +60,7 @@ export class AccountPage {
         });
 
         this.wallet.getSavedAccounts()
-            .then((accounts) => this.saved_accounts_name = accounts ? accounts.map(account => account.name) : [])
+            .then((accounts) => this.saved_accounts_name = (accounts && accounts.length >= 1) ? accounts.map(account => account.name) : [])
 
     }
 
