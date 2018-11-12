@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, ModalController } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 
 @IonicPage({
@@ -13,7 +13,6 @@ import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 export class ReceivePage {
 
     selectedAsset: any;
-    address: string;
     addressbalances: any;
     addressBalancesObject: any = {};
     addresses: Array<string>;
@@ -23,17 +22,18 @@ export class ReceivePage {
         private navCtrl: NavController,
         private navParams: NavParams,
         private platform: Platform,
-        private mvs: MvsServiceProvider
+        private mvs: MvsServiceProvider,
+        public modalCtrl: ModalController
     ) {
         this.addressbalances = {};
         this.selectedAsset = this.navParams.get('asset')
         this.displayType = this.selectedAsset == 'ETP' ? 'ETP' : 'asset'
+
     }
 
     showBalances() {
         return this.mvs.getAddresses()
             .then((_: string[]) => {
-                this.address = _[0];
                 this.addresses = _;
                 return this.mvs.getAddressBalances()
                     .then((addressbalances) => {
@@ -70,7 +70,8 @@ export class ReceivePage {
     format = (quantity, decimals) => quantity / Math.pow(10, decimals)
 
     show(address) {
-        this.address = address;
+        let profileModal = this.modalCtrl.create('QRCodePage', { value: address });
+        profileModal.present();
     }
 
 }

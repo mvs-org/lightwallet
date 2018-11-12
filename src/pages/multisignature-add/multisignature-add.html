@@ -31,24 +31,24 @@
         <ion-list>
             <ion-item [ngClass]="{'error-border': !validAddress(address)}">
                 <ion-label>{{"ETH_TO_MVS.SELECT_AVATAR_OR_ADDRESS"|translate}}</ion-label>
-                <ion-select [(ngModel)]="address" name="address" multiple="false" (ngModelChange)="onAddressChange($event)" okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}">
+                <ion-select [(ngModel)]="address" [disabled]="myPublicKey != ''" name="address" multiple="false" (ngModelChange)="onAddressChange($event)" okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}">
                     <ion-option *ngFor="let addressbalance of addressbalances" value="{{addressbalance.address}}">{{addressbalance.identifier}} - {{addressbalance.balance | format : 8}} ETP</ion-option>
                 </ion-select>
             </ion-item>
-            <ion-item [ngClass]="{'error-border': !validPassword(passphrase)}">
+            <ion-item *ngIf="!myPublicKey" [ngClass]="{'error-border': !validPassword(passphrase)}">
                 <ion-label color="primary" floating>{{"PASSWORD" | translate}}</ion-label>
                 <ion-input name="passphrase" type="password" [(ngModel)]="passphrase" required></ion-input>
             </ion-item>
             <br>
         </ion-list>
-        <ion-row>
-            <ion-col>
+        <ion-row *ngIf="!myPublicKey">
+            <ion-col col-12 col-sm-6>
                 <button type="submit" ion-button full icon-left (click)="getPublicKey(address)" [disabled]="!validPassword(passphrase)||!validAddress(address)" color="secondary">
                     <ion-icon disabled="checked" name="send"></ion-icon>
                     {{"MULTISIGNATURE_ADD.GET_PUBLICKEY" | translate}}
                 </button>
             </ion-col>
-            <ion-col>
+            <ion-col col-12 col-sm-6>
                 <button ion-button color="danger" full item-right icon-left (click)="cancel($event)">
                     <ion-icon name="cancel"></ion-icon>
                     {{'CANCEL'|translate}}
@@ -59,11 +59,21 @@
             <ion-card-content>
                 <h4>{{"MULTISIGNATURE_ADD.PUBLICKEY"|translate}}:</h4>
                 <textarea fz-elastic ion-input full type="text" #copyMyPublicKey value="{{myPublicKey}}" style="" readonly>{{myPublicKey}}</textarea>
-                <button col-sm-12 col-md-6 col-lg-3 ion-button full item-right icon-left [ngxClipboard]="copyMyPublicKey">
-                    <ion-icon name="copy"></ion-icon>
-                    {{'COPY'|translate}}
-                </button>
             </ion-card-content>
+            <ion-row>
+                <ion-col col-12 col-sm-6>
+                    <button type="submit" ion-button full icon-left [ngxClipboard]="copyMyPublicKey">
+                        <ion-icon name="copy"></ion-icon>
+                        {{"COPY" | translate}}
+                    </button>
+                </ion-col>
+                <ion-col col-12 col-sm-6>
+                    <button ion-button color="danger" full item-right icon-left (click)="myPublicKey = ''">
+                        <ion-icon name="refresh"></ion-icon>
+                        {{"MULTISIGNATURE_ADD.UPDATE_MY_ADDRESS"|translate}}
+                    </button>
+                </ion-col>
+            </ion-row>
             <h2>{{"MULTISIGNATURE_ADD.STEP2_TITLE" | translate}}</h2>
             <p>{{"MULTISIGNATURE_ADD.STEP2_EXPLAIN" | translate}}</p>
             <ion-card class="card-block" *ngFor="let cosigner of cosigners; let i = index; trackBy:customTrackBy" [attr.data-index]="i">
@@ -89,7 +99,7 @@
                 {{"ADD_COSIGNER" | translate}}
             </button>
             <h2>{{"MULTISIGNATURE_ADD.STEP3_TITLE" | translate}}</h2>
-            <p>{{"MULTISIGNATURE_ADD.STEP3_EXPLAIN" | translate}}</p>
+            <!--p>{{"MULTISIGNATURE_ADD.STEP3_EXPLAIN" | translate}}</p-->
             <ion-list>
                 <ion-item [ngClass]="{'error-border': !validnbrSigReq(nbrSigReq)}">
                     <ion-label>{{"MULTISIGNATURE_ADD.NBR_SIGN_REQ"|translate}}</ion-label>
@@ -103,7 +113,7 @@
             <p>{{"MULTISIGNATURE_ADD.STEP4_EXPLAIN" | translate}}</p>
             <ion-row>
                 <ion-col>
-                    <button type="submit" ion-button full icon-left (click)="getAddress(cosigners, nbrSigReq, myPublicKey)" [disabled]="!nbrSigReq" color="secondary">
+                    <button type="submit" ion-button full icon-left (click)="getAddress(cosigners, nbrSigReq, myPublicKey, passphrase)" [disabled]="!nbrSigReq" color="secondary">
                         <ion-icon disabled="checked" name="send"></ion-icon>
                         {{"MULTISIGNATURE_ADD.GET_ADDRESS" | translate}}
                     </button>

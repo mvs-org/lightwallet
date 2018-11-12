@@ -42,7 +42,7 @@ export class AccountPage {
     base: string
     domains: any = []
     whitelist: any = []
-    saved_accounts: any;
+    saved_accounts_name: any;
 
     private syncinterval: any;
 
@@ -60,7 +60,8 @@ export class AccountPage {
         });
 
         this.wallet.getSavedAccounts()
-            .then((accounts) => this.saved_accounts = accounts ? Object.keys(accounts) : [])
+            .then((accounts) => this.saved_accounts_name = accounts ? accounts.map(account => account.name) : [])
+
     }
 
     isOffline = () => !this.syncingSmall && this.offline
@@ -134,14 +135,17 @@ export class AccountPage {
         this.askUsername(title, message, placeholder)
             .then((username) => {
                 if (!username) {
-                    this.newUsername('SAVE_ACCOUNT_TITLE_NO_INPUT', 'SAVE_ACCOUNT_MESSAGE', placeholder)
-                } else if (this.saved_accounts.indexOf(username) != -1) {
-                    console.log("account name already exist")
+                    this.newUsername('SAVE_ACCOUNT_TITLE_NO_NAME', 'SAVE_ACCOUNT_MESSAGE', placeholder)
+                } else if (this.saved_accounts_name.indexOf(username) != -1) {
                     this.newUsername('SAVE_ACCOUNT_TITLE_ALREADY_EXIST', 'SAVE_ACCOUNT_MESSAGE_ALREADY_EXIST', placeholder)
                 } else {
                     this.saveAccount(username);
                 }
             })
+    }
+
+    existingUsername(username, title, message, placeholder) {
+        this.saveAccount(username);
     }
 
     private forgetAccountHandler = () => {
@@ -165,7 +169,7 @@ export class AccountPage {
     askUsername(title, message, placeholder) {
         return new Promise((resolve, reject) => {
             this.translate.get([title, message, placeholder]).subscribe((translations: any) => {
-                this.alert.askInfo(translations[title], translations[message], translations[placeholder], (info) => {
+                this.alert.askInfo(translations[title], translations[message], translations[placeholder], 'text', (info) => {
                     resolve(info)
                 })
             })
@@ -176,6 +180,9 @@ export class AccountPage {
         this.wallet.saveAccount(username)
             .then(() => this.mvs.hardReset())
             .then(() => this.nav.setRoot("LoginPage"))
+            .catch((error) => {
+                this.alert.showError('MESSAGE.ERR_SAVE_ACCOUNT', error.message)
+            })
     }
 
     sync(refresher = undefined) {

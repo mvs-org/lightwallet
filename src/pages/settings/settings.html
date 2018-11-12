@@ -9,47 +9,54 @@
 
 <ion-content padding>
     <ion-list>
-      <ion-row>
-        <button ion-item (click)="reset()" style="white-space: normal;">
-            <ion-icon name="refresh" item-start></ion-icon>
-            <h1 [translate]="'SETTINGS.RESYNC_BUTTON'"></h1>
-            <p [translate]="'SETTINGS.RESYNC_TEXT'" style="white-space: normal;"></p>
-        </button>
-      </ion-row>
-      <ion-row *ngIf="network == 'testnet'">
-          <button ion-item (click)="plugins()" style="white-space: normal;">
-              <ion-icon name="cube" item-start></ion-icon>
-              <h1 [translate]="'SETTINGS.PLUGINS'"></h1>
-              <p [translate]="'SETTINGS.PLUGINS_TEXT'" style="white-space: normal;"></p>
-          </button>
-      </ion-row>
-      <ion-row *ngIf="!platform.is('mobile')" >
-        <button ion-item (click)="ExportWalletPage();" style="white-space: normal;">
-            <ion-icon name="phone-portrait" item-start></ion-icon>
-            <h1 [translate]="'SETTINGS.SHOW_QRCODE_BUTTON'"></h1>
-            <p [translate]="'SETTINGS.SHOW_QRCODE_TEXT'" style="white-space: normal;"></p>
-        </button>
-      </ion-row>
-      <ion-row>
-          <button ion-item (click)="base()" style="white-space: normal;">
-              <ion-icon name="logo-usd" item-start></ion-icon>
-              <h1 [translate]="'SETTINGS.BASE_CURRENCY'"></h1>
-              <p [translate]="'SETTINGS.BASE_CURRENCY_TEXT'" style="white-space: normal;"></p>
-          </button>
-      </ion-row>
-      <ion-row *ngIf="!platform.is('mobile')">
-        <button ion-item (click)="logout()" style="white-space: normal;">
-            <ion-icon name="log-out" item-start></ion-icon>
-            <h1 [translate]="'LOGOUT'"></h1>
-            <p [translate]="'LOGOUT_TEXT'" style="white-space: normal;"></p>
-        </button>
-      </ion-row>
-      <ion-row *ngIf="platform.is('mobile')">
-        <button *ngIf="platform.is('mobile')" ion-item (click)="logoutMobile()" style="white-space: normal;">
-            <ion-icon name="log-out" item-start></ion-icon>
-            <h1 [translate]="'LOGOUT'"></h1>
-            <p [translate]="'LOGOUT_TEXT'" style="white-space: normal;"></p>
-        </button>
-      </ion-row>
+        <ion-row>
+            <button ion-item (click)="reset()" style="white-space: normal;">
+                <ion-icon name="refresh" item-start></ion-icon>
+                <h1 [translate]="'SETTINGS.RESYNC_BUTTON'"></h1>
+                <p [translate]="'SETTINGS.RESYNC_TEXT'" style="white-space: normal;"></p>
+            </button>
+        </ion-row>
+        <ion-row *ngIf="!platform.is('mobile')" >
+            <button ion-item (click)="ExportWalletPage();" style="white-space: normal;">
+                <ion-icon name="phone-portrait" item-start></ion-icon>
+                <h1 [translate]="'SETTINGS.SHOW_QRCODE_BUTTON'"></h1>
+                <p [translate]="'SETTINGS.SHOW_QRCODE_TEXT'" style="white-space: normal;"></p>
+            </button>
+        </ion-row>
+        <ion-row>
+            <button ion-item (click)="LanguageSwitcherPage()" style="white-space: normal;">
+                <ion-icon name="flag" item-start></ion-icon>
+                <h1 [translate]="'LANGUAGE_SETTINGS'"></h1>
+                <p [translate]="'LANGUAGE_SETTINGS_TEXT'" style="white-space: normal;"></p>
+            </button>
+        </ion-row>
+        <ion-row>
+            <button ion-item (click)="ThemeSwitcherPage()" style="white-space: normal;">
+                <ion-icon name="color-palette" item-start></ion-icon>
+                <h1 [translate]="'THEME_SETTINGS'"></h1>
+                <p [translate]="'THEME_SETTINGS_TEXT'" style="white-space: normal;"></p>
+            </button>
+        </ion-row>
+        <ion-row>
+            <button ion-item (click)="BaseCurrencyPage()" style="white-space: normal;">
+                <ion-icon name="logo-usd" item-start></ion-icon>
+                <h1 [translate]="'SETTINGS.BASE_CURRENCY'"></h1>
+                <p [translate]="'SETTINGS.BASE_CURRENCY_TEXT'" style="white-space: normal;"></p>
+            </button>
+        </ion-row>
+        <ion-row>
+            <button ion-item (click)="InformationPage()" style="white-space: normal;">
+                <ion-icon name="information-circle" item-start></ion-icon>
+                <h1 [translate]="'INFORMATION.TITLE'"></h1>
+                <p [translate]="'INFORMATION.TEXT'" style="white-space: normal;"></p>
+            </button>
+        </ion-row>
+        <ion-row>
+            <button ion-item (click)="logout()" style="white-space: normal;">
+                <ion-icon name="log-out" item-start></ion-icon>
+                <h1 [translate]="'LOGOUT'"></h1>
+                <p [translate]="'LOGOUT_TEXT'" style="white-space: normal;"></p>
+            </button>
+        </ion-row>
     </ion-list>
 </ion-content>

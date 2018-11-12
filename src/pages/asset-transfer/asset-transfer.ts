@@ -9,6 +9,7 @@ import { Keyboard } from '@ionic-native/keyboard';
 class RecipientSendMore {
     constructor(
         public address: string,
+        public avatar: string,
         public target: any
     ) { }
 }
@@ -52,6 +53,8 @@ export class AssetTransferPage {
     total: number
     message: string = ""
     fee: number = 10000
+    sendMoreValidAvatar: boolean = false
+    sendMoreValidEachAvatar: Array<boolean> = []
 
     constructor(
         public navCtrl: NavController,
@@ -66,9 +69,9 @@ export class AssetTransferPage {
 
         this.selectedAsset = navParams.get('asset')
         if(this.selectedAsset == 'ETP') {
-            this.recipients.push(new RecipientSendMore('', {"ETP": undefined}))
+            this.recipients.push(new RecipientSendMore('', '', {"ETP": undefined}))
         } else {
-            this.recipients.push(new RecipientSendMore('', {"MST": { [this.selectedAsset]: undefined}}))
+            this.recipients.push(new RecipientSendMore('', '', {"MST": { [this.selectedAsset]: undefined}}))
         }
         this.total_to_send[this.selectedAsset] = 0
         this.total = 0
@@ -238,9 +241,11 @@ export class AssetTransferPage {
         this.quantityInput.setFocus()
     })
 
-    validrecipient = this.mvs.validAddress
+    validaddress = this.mvs.validAddress
 
     validAvatar = (input: string) => /[A-Za-z0-9.-]/.test(input) && this.recipient_avatar_valid
+
+    validSendMoreAvatar = (input: string, index: number) => /[A-Za-z0-9.-]/.test(input) && this.sendMoreValidEachAvatar[index]
 
     recipientChanged = () => {
         if (this.recipient_address) {
@@ -257,14 +262,31 @@ export class AssetTransferPage {
                         throw ''
                     this.recipient_avatar_valid = true
                     this.recipient_address = result[0].address
-                    this.recipientChanged()
                 })
                 .catch((e) => {
                     this.recipient_avatar_valid = false
                     this.recipient_address = ""
-                    this.recipientChanged()
                 })
         }
+    }
+
+    sendMoreRecipientAvatarChanged = (index) => {
+        if (this.recipients[index] && this.recipients[index].avatar) {
+            this.recipients[index].avatar = this.recipients[index].avatar.trim()
+        }
+        Promise.all([this.mvs.getGlobalAvatar(this.recipients[index].avatar), this.recipients[index].avatar])
+            .then(result => {
+                if (this.recipients[index].avatar != result[1])
+                    throw ''
+                this.sendMoreValidEachAvatar[index] = true
+                this.recipients[index].address = result[0].address
+                this.checkSendMoreAddress()
+            })
+            .catch((e) => {
+                this.sendMoreValidEachAvatar[index] = false
+                this.recipients[index].address = ""
+                this.sendMoreValidAddress = false
+            })
     }
 
     quantityETPChanged = () => {
@@ -348,14 +370,15 @@ export class AssetTransferPage {
         this.sendMoreValidQuantity = false
         this.sendMoreValidAddress = false
         if(this.selectedAsset == 'ETP') {
-            this.recipients.push(new RecipientSendMore('', {"ETP": undefined}))
+            this.recipients.push(new RecipientSendMore('', '', {"ETP": undefined}))
         } else {
-            this.recipients.push(new RecipientSendMore('', {"MST": { [this.selectedAsset]: undefined}}))
+            this.recipients.push(new RecipientSendMore('', '', {"MST": { [this.selectedAsset]: undefined}}))
         }
     }
 
     removeRecipient(index) {
         this.recipients.splice(index, 1)
+        this.sendMoreValidEachAvatar.splice(index, 1)
         if(this.selectedAsset == 'ETP'){
             this.quantityETPChanged()
         } else {
@@ -364,9 +387,10 @@ export class AssetTransferPage {
         this.checkSendMoreAddress()
     }
 
-    sendMoreRecipientChanged(index) {
+    sendMoreAddressChanged(index) {
         if (this.recipients[index] && this.recipients[index].address) {
             this.recipients[index].address = this.recipients[index].address.trim()
+            this.recipients[index].avatar = ''
         }
         this.checkSendMoreAddress()
     }
@@ -391,10 +415,21 @@ export class AssetTransferPage {
                 for(let i=0;i<this.sendMore_limit;i++){
                     if(data[i]) {
                         let recipient = data[i].split(',');
+                        recipient[0] = recipient[0] ? recipient[0].trim() : recipient[0]
                         if(this.selectedAsset == 'ETP') {
-                            this.recipients.push(new RecipientSendMore(recipient[0] ? recipient[0].trim() : recipient[0], {"ETP": recipient[1] ? recipient[1].trim() : recipient[1]}))
+                            if(this.validaddress(recipient[0])) {
+                                this.recipients.push(new RecipientSendMore(recipient[0], '', {"ETP": recipient[1] ? recipient[1].trim() : recipient[1]}))
+                            } else {
+                                this.recipients.push(new RecipientSendMore('', recipient[0], {"ETP": recipient[1] ? recipient[1].trim() : recipient[1]}))
+                                this.sendMoreRecipientAvatarChanged(i)
+                            }
                         } else {
-                            this.recipients.push(new RecipientSendMore(recipient[0] ? recipient[0].trim() : recipient[0], {"MST": { [this.selectedAsset]: recipient[1] ? recipient[1].trim() : recipient[1]}}))
+                            if(this.validaddress(recipient[0])) {
+                                this.recipients.push(new RecipientSendMore(recipient[0], '', {"MST": { [this.selectedAsset]: recipient[1] ? recipient[1].trim() : recipient[1]}}))
+                            } else {
+                                this.recipients.push(new RecipientSendMore('', recipient[0], {"MST": { [this.selectedAsset]: recipient[1] ? recipient[1].trim() : recipient[1]}}))
+                                this.sendMoreRecipientAvatarChanged(i)
+                            }
                         }
                     }
                 }
@@ -434,7 +469,7 @@ export class AssetTransferPage {
     }
 
     csvExample() {
-        var text = 'MAwLwVGwJyFsTBfNj2j5nCUrQXGVRvHzPh,2\nMEWdqvhETJex22kBbYDSD999Vs4xFwQ4fo,2';
+        var text = 'MAwLwVGwJyFsTBfNj2j5nCUrQXGVRvHzPh,2\nMEWdqvhETJex22kBbYDSD999Vs4xFwQ4fo,2\navatar-name,4';
         var filename = 'mvs_example.csv'
         this.downloadFile(filename, text)
     }

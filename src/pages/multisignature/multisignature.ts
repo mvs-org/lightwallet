@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
 
@@ -21,7 +21,8 @@ export class MultisignaturePage {
         public navCtrl: NavController,
         public navParams: NavParams,
         private mvs: MvsServiceProvider,
-        private wallet: WalletServiceProvider
+        private wallet: WalletServiceProvider,
+        public modalCtrl: ModalController
     ) {
 
         this.addressbalances = {};
@@ -79,5 +80,10 @@ export class MultisignaturePage {
     gotoMultisigTransfer = (asset, address) => this.navCtrl.push("MultisignatureTransferPage", { asset: asset, address: address })
 
     format = (quantity, decimals) => quantity / Math.pow(10, decimals)
+
+    show(address) {
+        let profileModal = this.modalCtrl.create('QRCodePage', { value: address });
+        profileModal.present();
+    }
 
 }

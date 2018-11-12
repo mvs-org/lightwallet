@@ -28,7 +28,7 @@ export class WalletServiceProvider {
     }
 
     getMstIcons() {
-        return ['ETP', 'MVS.ZGC', 'MVS.ZDC', 'CSD.CSD', 'PARCELX.GPX', 'PARCELX.TEST', 'SDG', 'META', 'MVS.HUG', 'RIGHTBTC.RT', 'TIPLR.TPC'];
+        return ['ETP', 'MVS.ZGC', 'MVS.ZDC', 'CSD.CSD', 'PARCELX.GPX', 'PARCELX.TEST', 'SDG', 'META', 'MVS.HUG', 'RIGHTBTC.RT', 'TIPLR.TPC', 'PANDO', 'VALOTY'];
     }
 
     exportMemonic() {
@@ -243,48 +243,95 @@ export class WalletServiceProvider {
 
     getAccountName() {
         return this.storage.get('account_name')
-            .then((account_name) => {
-                return account_name
-            })
     }
-     setAccountName(account_name) {
+
+    setAccountName(account_name) {
         return this.storage.set('account_name', account_name)
     }
-     deleteAccount(account_name) {
+
+    deleteAccount(account_name) {
         return this.storage.get('saved_accounts')
             .then((accounts) => {
-                delete accounts[account_name]
-                return this.storage.set('saved_accounts', accounts)
+                if(accounts) {
+                    accounts.find((o, i) => {
+                        if (o.name === account_name) {
+                            accounts.splice(i, 1)
+                            return true; // stop searching
+                        }
+                    });
+                    return this.storage.set('saved_accounts', accounts)
+                }
             })
             .catch((error) => {
                 console.error(error)
                 throw Error('ERR_DELETE_ACCOUNT')
             })
     }
-     saveAccount(username) {
-        return Promise.all([this.storage.get('seed'), this.storage.get('wallet'), this.storage.get('saved_accounts'), this.storage.get('multisig_addresses'), this.storage.get('multisigs'), this.storage.get('plugins')])
-            .then(([seed, wallet, saved_accounts, multisig_addresses, multisigs, plugins]) => {
-                let accounts = saved_accounts ? saved_accounts : {};
-                let account_name = username ? username : 'Default'
-                accounts[account_name] = {}
-                accounts[account_name].seed = seed
-                accounts[account_name].index = wallet.index
-                accounts[account_name].multisig_addresses = multisig_addresses ? multisig_addresses : []
-                accounts[account_name].multisigs = multisigs ? multisigs : []
-                accounts[account_name].plugins = plugins ? plugins : []
-                return this.storage.set('saved_accounts', accounts)
+
+    saveSessionAccount(password) {
+        return Promise.all([this.storage.get('seed'), this.storage.get('wallet'), this.storage.get('multisig_addresses'), this.storage.get('multisigs'), this.storage.get('plugins')])
+            .then(([seed, wallet, multisig_addresses, multisigs, plugins]) => {
+                let new_account_content = {
+                    seed: seed,
+                    wallet: wallet,
+                    multisig_addresses: multisig_addresses ? multisig_addresses : [],
+                    multisigs: multisigs ? multisigs : [],
+                    plugins: plugins ? plugins : []
+                }
+                return this.crypto.encrypt(JSON.stringify(new_account_content), password)
+                    .then((content) => this.storage.set('account_info', content))
+            })
+            .catch((error) => {
+                console.error(error)
+                throw Error('ERR_SAVE_SESSION_ACCOUNT')
+            })
+    }
+
+    saveAccount(account_name) {
+        return Promise.all([this.getSavedAccounts(), this.getSessionAccountInfo()])
+            .then(([saved_accounts, content]) => {
+                let old_account_index = -1;
+                if(saved_accounts) {
+                    saved_accounts.find((o, i) => {
+                        if (o.name === account_name) {
+                            old_account_index = i;
+                            return true; // stop searching
+                        }
+                    });
+                }
+
+                let new_account = {
+                    "name": account_name,
+                    "content": content,
+                    "type": "AES"
+                }
+                old_account_index > -1 ? saved_accounts[old_account_index] = new_account : saved_accounts.push(new_account);
+                return this.storage.set('saved_accounts', saved_accounts)
             })
             .catch((error) => {
                 console.error(error)
                 throw Error('ERR_SAVE_ACCOUNT')
             })
     }
-     getSavedAccounts() {
-        return this.storage.get('saved_accounts')
+
+    getSessionAccountInfo() {
+        return this.storage.get('account_info')
     }
-     getSavedAccount(account_name) {
+
+    getSavedAccounts() {
         return this.storage.get('saved_accounts')
-            .then((accounts) => accounts[account_name])
+            .then((accounts) => {
+                return accounts ? accounts : []
+            })
+    }
+
+    decryptAccount(content, password) {
+        return this.crypto.decrypt(content, password)
+            .then((decrypted) => JSON.parse(decrypted.toString()))
+            .catch((error) => {
+                console.error(error)
+                throw Error('ERR_DECRYPT_WALLET')
+            })
     }
 
     setPlugins(plugins: Array<any>) {

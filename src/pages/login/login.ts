@@ -13,7 +13,7 @@ import { WalletServiceProvider } from '../../providers/wallet-service/wallet-ser
 export class LoginPage {
 
     public network = ''
-    saved_accounts: any
+    saved_accounts: Array<any> = []
 
     constructor(
         private nav: NavController,
@@ -24,14 +24,12 @@ export class LoginPage {
         private wallet: WalletServiceProvider
     ) {
         this.wallet.getSavedAccounts()
-            .then((accounts) => this.saved_accounts = accounts ? Object.keys(accounts) : [])
+            .then((accounts) => this.saved_accounts = accounts ? accounts : [])
     }
 
     ionViewDidEnter() {
         this.loadNetwork()
 
-        this.wallet.getSavedAccounts()
-            .then((accounts) => this.saved_accounts = accounts ? Object.keys(accounts) : [])
     }
 
     GenerateKeyPage = e => this.nav.push("GenerateKeyPage")

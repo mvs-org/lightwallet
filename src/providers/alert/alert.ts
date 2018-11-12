@@ -112,14 +112,14 @@ export class AlertProvider {
         })
     }
 
-    askInfo(title, message, placeholder, onSubmit) {
+    askInfo(title, message, placeholder, type, onSubmit) {
         this.translate.get(['OK', 'CANCEL', title, message, placeholder]).subscribe((translations: any) => {
             let alert = this.alertCtrl.create({
                 title: translations[title],
                 message: translations[message],
                 enableBackdropDismiss: false,
                 inputs: [
-                    { name: 'info', placeholder: translations[placeholder] }
+                    { name: 'info', placeholder: translations[placeholder], type: type }
                 ],
                 buttons: [
                     {
@@ -129,6 +129,31 @@ export class AlertProvider {
                     {
                         text: translations['OK'],
                         handler: data => onSubmit(data.info)
+                    }
+                ]
+            })
+            alert.present(prompt)
+        })
+    }
+
+    ask2Info(title, message, placeholder1, placeholder2, type1, type2, onSubmit) {
+        this.translate.get(['OK', 'CANCEL', title, message, placeholder1, placeholder2]).subscribe((translations: any) => {
+            let alert = this.alertCtrl.create({
+                title: translations[title],
+                message: translations[message],
+                enableBackdropDismiss: false,
+                inputs: [
+                    { name: 'info1', placeholder: translations[placeholder1], type: type1 },
+                    { name: 'info2', placeholder: translations[placeholder2], type: type2 }
+                ],
+                buttons: [
+                    {
+                        text: translations['CANCEL'],
+                        role: 'cancel'
+                    },
+                    {
+                        text: translations['OK'],
+                        handler: data => onSubmit(data)
                     }
                 ]
             })

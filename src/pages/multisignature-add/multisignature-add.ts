@@ -24,7 +24,7 @@ export class MultisignatureAddPage {
 
     cosigners: Array<string> = []
     nbrSigReq: number;
-    nbrSigReqOptions: Array<number> = [2]
+    nbrSigReqOptions: Array<number> = [1, 2]
     import_address: string = ""
     @ViewChild('importAddressInput') importAddressInput;
     passphrase_import: string = ""
@@ -98,7 +98,7 @@ export class MultisignatureAddPage {
             })
     }
 
-    getAddress(cosigners, nbrSigReq, myPublicKey) {
+    getAddress(cosigners, nbrSigReq, myPublicKey, passphrase) {
         if(!this.myPublicKey) {
             this.alert.showError('MULTISIG_MISSING_MY_PUBLIC_KEY.ERROR', '')
         } else if (!this.validPublicKeys) {
@@ -119,7 +119,7 @@ export class MultisignatureAddPage {
                             "a": multisig.address,
                             "r": multisig.script
                         };
-                        this.addMultisigAddress(newMultisig, true)
+                        this.addMultisigAddress(newMultisig, true, passphrase)
                     })
             } catch (e) {
                 console.error(e);
@@ -166,7 +166,7 @@ export class MultisignatureAddPage {
                                                 newMultisig.s = myPublicKey
                                                 let multisig = this.wallet.getNewMultisigAddress(newMultisig.m, newMultisig.k)
                                                 newMultisig.r = multisig.r
-                                                this.addMultisigAddress(newMultisig, false)
+                                                this.addMultisigAddress(newMultisig, false, passphrase)
                                             } else {
                                                 this.alert.stopLoading()
                                                 this.alert.showError('MULTISIG_ADDRESS_NOT_THIS_WALLET.ERROR', '')
@@ -195,7 +195,7 @@ export class MultisignatureAddPage {
             })
     }
 
-    addMultisigAddress(newMultisig, newAddress: boolean) {
+    addMultisigAddress(newMultisig, newAddress: boolean, passphrase) {
         this.wallet.getMultisigAddresses()
             .then((multisig_addresses) => {
                 if(multisig_addresses.indexOf(newMultisig.a) !== -1) {
@@ -212,6 +212,7 @@ export class MultisignatureAddPage {
                         .then(() => this.mvs.dataReset())
                         .then(() => Promise.all([this.mvs.updateHeight(), this.updateBalances()]))
                         .then(() => this.updateBalances())
+                        .then(() => this.wallet.saveSessionAccount(passphrase))
                         .then(() => this.alert.stopLoading())
                         .then(() => this.alert.showSent(newAddress ? 'SUCCESS_CREATE_MULTISIG' : 'SUCCESS_IMPORT_MULTISIG', newMultisig.a))
                         .then(() => this.navCtrl.pop())
@@ -264,7 +265,7 @@ export class MultisignatureAddPage {
 
     addCosigner() {
         this.cosigners.push('')
-        this.nbrSigReqOptions.push(this.nbrSigReqOptions.length+2)
+        this.nbrSigReqOptions.push(this.nbrSigReqOptions.length+1)
         this.checkPublicKeys();
     }
 

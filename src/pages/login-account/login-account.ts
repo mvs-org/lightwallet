@@ -16,9 +16,7 @@ export class LoginAccountPage {
 
     mnemonic: string;
     loading: Loading;
-    account_name: string
     account: any
-    wallet_info: any
 
     constructor(public nav: NavController,
         public navParams: NavParams,
@@ -31,7 +29,7 @@ export class LoginAccountPage {
         private alertCtrl: AlertController,
         public wallet: WalletServiceProvider) {
 
-            this.account_name = navParams.get('account')
+            this.account = navParams.get('account')
     }
 
     cancel(e) {
@@ -39,20 +37,14 @@ export class LoginAccountPage {
         this.nav.pop()
     }
 
-    importAccount(account_name, password) {
+    importAccount(account, password) {
         this.alert.showLoading()
-            .then(() => this.wallet.getWallet(password))
-            .then((wallet_info) => this.wallet_info = wallet_info)
-            .then(() => this.wallet.getSavedAccount(account_name))
-            .then((account) => {
-                this.account = account ? account : {}
-                return { "index": account.index ? account.index : 10 }
-            })
-            .then((wallet) => this.wallet.setWallet(wallet))
-            .then(() => Promise.all([this.wallet.setMobileWallet(this.account.seed), this.wallet.setAccountName(account_name), this.wallet.setMultisigAddresses(this.account.multisig_addresses), this.wallet.setMultisigInfo(this.account.multisigs), this.wallet.setPlugins(this.account.plugins)]))
-            .then(() => this.wallet.getAddressIndex())
-            .then((index) => this.wallet.generateAddresses(this.wallet_info, 0, index))
+            .then(() => this.wallet.decryptAccount(account.content, password))
+            .then((decryptedAccount) => Promise.all([this.wallet.setWallet(decryptedAccount.wallet), this.wallet.setMobileWallet(decryptedAccount.seed), this.wallet.setAccountName(account.name), this.wallet.setMultisigAddresses(decryptedAccount.multisig_addresses), this.wallet.setMultisigInfo(decryptedAccount.multisigs), this.wallet.setPlugins(decryptedAccount.plugins)]))
+            .then(() => Promise.all([this.wallet.getWallet(password), this.wallet.getAddressIndex()]))
+            .then(([wallet, index]) => this.wallet.generateAddresses(wallet, 0, index))
             .then((addresses) => this.mvs.addAddresses(addresses))
+            .then(() => this.wallet.saveSessionAccount(password))
             .then(() => this.alert.stopLoading())
             .then(() => this.nav.setRoot("AccountPage"))
             .catch((error) => {
@@ -61,6 +53,9 @@ export class LoginAccountPage {
                 switch(error.message){
                     case "ERR_DECRYPT_WALLET":
                         this.alert.showError('MESSAGE.PASSWORD_WRONG', '')
+                        break;
+                    case "ERR_ACCOUNT_NAME_UNKNOWN":
+                        this.alert.showError('MESSAGE.ERR_ACCOUNT_NAME_UNKNOWN', '')
                         break;
                     default:
                         this.alert.showError('MESSAGE.ERR_IMPORT_ACCOUNT', error.message)
