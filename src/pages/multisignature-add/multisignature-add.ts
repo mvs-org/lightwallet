@@ -231,9 +231,8 @@ export class MultisignatureAddPage {
         return this.mvs.getData()
             .then(() => this.mvs.setUpdateTime())
             .then(() => this.mvs.getBalances())
-            .then((_) => {
-                return Promise.all(Object.keys(_.MST).map((symbol) => this.mvs.addAssetToAssetOrder(symbol)))
-            })
+            .then((_) => this.mvs.addAssetsToAssetOrder(Object.keys(_.MST))
+)
             .catch((error) => console.error("Can't update balances: " + error))
     }
 

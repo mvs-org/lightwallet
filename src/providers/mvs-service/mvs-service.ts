@@ -570,14 +570,13 @@ export class MvsServiceProvider {
             .then(() => this.assetOrder())
     }
 
-    addAssetToAssetOrder(name: string) {
-        this.assetOrder()
-            .then((_: string[]) => {
-                if (_.indexOf(name) === -1)
-                    _.push(name)
-                return this.setAssetOrder(_)
-            })
-            .then(() => this.assetOrder())
+    async addAssetsToAssetOrder(names: string[]) {
+        let order = await this.assetOrder()
+        names.forEach(symbol=>{
+            if (order.indexOf(symbol) === -1)
+                order.push(symbol)
+        })
+        return await this.setAssetOrder(order)
     }
 
     send = async (tx) => {

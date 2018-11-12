@@ -15,7 +15,7 @@ export class SettingsPage {
 
     connectcode: any;
     network: string;
-    saved_accounts_name: any;
+    saved_accounts_name: any = [];
 
     constructor(
         public nav: NavController,
