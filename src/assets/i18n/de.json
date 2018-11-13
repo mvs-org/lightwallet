@@ -482,7 +482,7 @@
     "ETH_TO_MVS.DO_ONLY_ONCE": "Dieser Vorgang muss nur einmal vorgenommen werden.",
     "ETH_TO_MVS.SWAP_CENTER_ADDRESS": "Metaverse Swap center Addresse auf Ethereum:",
 
-    "SWAP_MST.INCORRECT_ETH_ADDRESS": "Ungültige Ethereum Adresse."
+    "SWAP_MST.INCORRECT_ETH_ADDRESS": "Ungültige Ethereum Adresse.",
 
     "MULTISIGNATURE": "Multisignatur",
     "MULTISIGNATURE.INFORMATION": "Multisignatur Adressen ermöglichen es, ETP oder Token zu empfangen und benötigen zum erstellen von ausgehenden Transactionen eine vorher festgelegte Anzahl an Signaturen der teilnehmenden Wallets.",
