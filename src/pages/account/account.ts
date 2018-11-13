@@ -42,7 +42,7 @@ export class AccountPage {
     base: string
     domains: any = []
     whitelist: any = []
-    saved_accounts_name: any;
+    saved_accounts_name: any = [];
 
     private syncinterval: any;
 
@@ -60,7 +60,7 @@ export class AccountPage {
         });
 
         this.wallet.getSavedAccounts()
-            .then((accounts) => this.saved_accounts_name = accounts ? accounts.map(account => account.name) : [])
+            .then((accounts) => this.saved_accounts_name = (accounts && accounts.length >= 1) ? accounts.map(account => account.name) : [])
 
     }
 
@@ -128,7 +128,15 @@ export class AccountPage {
     ionViewWillLeave = () => clearInterval(this.syncinterval)
 
     logout() {
-        this.alert.showLogout(this.saveAccountHandler, this.forgetAccountHandler)
+        this.wallet.getSessionAccountInfo()
+            .then((account_info) => {
+                if(account_info) {
+                    this.alert.showLogout(this.saveAccountHandler, this.forgetAccountHandler)
+                } else {
+                    this.alert.showLogoutNoAccount(() => this.mvs.hardReset()
+                          .then(() => this.nav.setRoot("LoginPage")))
+                }
+            })
     }
 
     newUsername(title, message, placeholder) {
@@ -142,10 +150,6 @@ export class AccountPage {
                     this.saveAccount(username);
                 }
             })
-    }
-
-    existingUsername(username, title, message, placeholder) {
-        this.saveAccount(username);
     }
 
     private forgetAccountHandler = () => {
@@ -227,7 +231,7 @@ export class AccountPage {
         return this.mvs.getBalances()
             .then((_) => {
                 this.balances = _
-                return Promise.all(Object.keys(_.MST).map((symbol) => this.mvs.addAssetToAssetOrder(symbol)))
+                return this.mvs.addAssetsToAssetOrder(Object.keys(_.MST))
             })
             .then(() => this.mvs.assetOrder())
             .then((order) => {

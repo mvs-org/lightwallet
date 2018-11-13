@@ -552,12 +552,12 @@
     "MULTISIGNATURE.TX_SUMMARY_SIGN_INFO": "Signatures information",
 
     "ACCOUNT_NAME": "Account name",
-    "RESET_MESSAGE_MOBILE_SAVE_ACCOUNT": "You can choose to Save locally the information about your account in order to easily login with your password, or Delete all the information. If you choose to Delete, you will need your 24 backup words to login.",
+    "RESET_MESSAGE_MOBILE_SAVE_ACCOUNT": "You can choose to Save locally the information about your account in order to easily login with your password, or Forget all the information. If you choose to Forget, you will need your 24 backup words to login.",
     "SAVE": "Save",
     "DELETE": "Forget",
     "BUTTON.DELETE_ACCOUNT": "Forget Account",
     "DELETE_ACCOUNT_TITLE": "Forget account?",
-    "DELETE_ACCOUNT_BODY": "If you choose to forget your account, all it's information saved on your device will be deleted. To login, you will need your 24 backup words.",
+    "DELETE_ACCOUNT_BODY": "If you choose to forget your account, all its information saved on your device will be deleted. To login, you will need your 24 backup words or your keystore file.",
     "ACCOUNT_NAME_ALREADY_USED": "This account name is already used",
     "SUCCESS_ADD_MULTISIG": "The multisiginature address has been successfully added to your wallet!",
 

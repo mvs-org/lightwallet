@@ -204,7 +204,7 @@ ion-modal ion-backdrop {
     }
 }
 
-.alert-button-group-vertical {
+ion-alert:not(.alert-ios) .alert-button-group-vertical {
     height: 70px;
     text-align: center;
 }

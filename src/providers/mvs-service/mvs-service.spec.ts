@@ -39,10 +39,10 @@ describe('MVS Service Provider', () => {
         it('Add asset order entry', (done) => {
             var list = ['a', 'b', 'c']
             return storage.set('asset_order', list)
-                .then(() => mvs.addAssetToAssetOrder('d'))
+                .then(() => mvs.addAssetsToAssetOrder(['d', 'e']))
                 .then(() => storage.get('asset_order'))
                 .then(result => {
-                    expect(result).toEqual(['a', 'b', 'c', 'd'])
+                    expect(result).toEqual(['a', 'b', 'c', 'd','e'])
                     done()
                 })
         });

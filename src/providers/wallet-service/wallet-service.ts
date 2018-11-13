@@ -252,9 +252,9 @@ export class WalletServiceProvider {
     deleteAccount(account_name) {
         return this.storage.get('saved_accounts')
             .then((accounts) => {
-                if(accounts) {
+                if(accounts && accounts.length >= 1) {
                     accounts.find((o, i) => {
-                        if (o.name === account_name) {
+                        if (o && o.name === account_name) {
                             accounts.splice(i, 1)
                             return true; // stop searching
                         }
@@ -293,7 +293,7 @@ export class WalletServiceProvider {
                 let old_account_index = -1;
                 if(saved_accounts) {
                     saved_accounts.find((o, i) => {
-                        if (o.name === account_name) {
+                        if (o && o.name === account_name) {
                             old_account_index = i;
                             return true; // stop searching
                         }
