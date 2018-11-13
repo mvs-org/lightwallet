@@ -128,7 +128,15 @@ export class AccountPage {
     ionViewWillLeave = () => clearInterval(this.syncinterval)
 
     logout() {
-        this.alert.showLogout(this.saveAccountHandler, this.forgetAccountHandler)
+        this.wallet.getSessionAccountInfo()
+            .then((account_info) => {
+                if(account_info) {
+                    this.alert.showLogout(this.saveAccountHandler, this.forgetAccountHandler)
+                } else {
+                    this.alert.showLogoutNoAccount(() => this.mvs.hardReset()
+                          .then(() => this.nav.setRoot("LoginPage")))
+                }
+            })
     }
 
     newUsername(title, message, placeholder) {
@@ -142,10 +150,6 @@ export class AccountPage {
                     this.saveAccount(username);
                 }
             })
-    }
-
-    existingUsername(username, title, message, placeholder) {
-        this.saveAccount(username);
     }
 
     private forgetAccountHandler = () => {
