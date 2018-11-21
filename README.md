@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://www.myetpwallet.com/">
-    <img src="https://mvs.org/images/metaverselogo.png" alt="">
+    <img src="https://raw.githubusercontent.com/mvs-org/lightwallet/master/src/assets/logo.png" alt="">
   </a>
   <br>
   <a href="https://travis-ci.org/mvs-org/lightwallet">
