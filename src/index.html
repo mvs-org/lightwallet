@@ -12,13 +12,6 @@
     <meta name="theme-color" content="#4e8ef7">
     <script src="cordova.js"></script>
     <link href="build/main.css" rel="stylesheet">
-    <script>
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('service-worker.js')
-                .then(() => console.log('service worker installed'))
-                .catch(err => console.log('Error', err));
-        }
-    </script>
 </head>
 
 <body>
