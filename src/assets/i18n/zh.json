@@ -378,7 +378,7 @@
   "ADD": "增加",
   "PLUGIN.REMOVE": "移除",
   "PLUGIN.INFO": "详情",
-  "PLUGIN.URL": "插件网址",
+  "PLUGIN.URL": "插件 URL",
   "PLUGIN.PERMISSION_CREATE_MIT": "创建MIT资产",
   "PLUGIN.PERMISSION_NETWORK": "了解当前网络",
   "PLUGIN.PERMISSION_AVATARS": "获取数字身份列表以及数字身份链接的地址",
@@ -605,7 +605,7 @@
   "MESSAGE.PLUGIN_REMOVED_MESSAGE": "插件已去除。",
 
   "LANGUAGE_SETTINGS_TEXT": "更换语言",
-  "THEME_SETTINGS_TEXT": "更换主题来换钱包颜色。",
-  "INFORMATION.TEXT": "获取更多有关 MyETPWallet 的相关信息。"
+  "THEME_SETTINGS_TEXT": "更换主题来换钱包颜色",
+  "INFORMATION.TEXT": "获取更多有关 MyETPWallet 的相关信息"
 
 }
