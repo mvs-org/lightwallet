@@ -176,7 +176,7 @@ ion-modal ion-backdrop {
 }
 
 
-.md .modal-wrapper {
+.modal-wrapper {
     left: calc(50% - (250px/2));
     top: calc(50% - (280px/2));
     position: absolute;
@@ -186,8 +186,12 @@ ion-modal ion-backdrop {
     overflow: hidden;
 }
 
+.modal-wrapper .card-ios {
+    width: inherit;
+}
+
 @media (min-width: 400px) {
-    .md .modal-wrapper {
+    .modal-wrapper {
         left: calc(50% - (300px/2));
         top: calc(50% - (310px/2));
         width: 300px;
@@ -196,7 +200,7 @@ ion-modal ion-backdrop {
 }
 
 @media (min-width: 600px) {
-    .md .modal-wrapper {
+    .modal-wrapper {
         left: calc(50% - (400px/2));
         top: calc(50% - (370px/2));
         width: 400px;
