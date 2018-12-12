@@ -252,7 +252,7 @@ export class WalletServiceProvider {
     deleteAccount(account_name) {
         return this.storage.get('saved_accounts')
             .then((accounts) => {
-                if(accounts) {
+                if(accounts && accounts.length >= 1) {
                     accounts.find((o, i) => {
                         if (o && o.name === account_name) {
                             accounts.splice(i, 1)

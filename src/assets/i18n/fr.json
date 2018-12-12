@@ -591,7 +591,7 @@
 
     "MULTISIGNATURE.INFORMATION2": "Une adresse multisignature peut envoyer et recevoir des ETP et MST. Cette page affiche automatiquement tous les actifs détenus par chaque adresse.",
 
-    "TOKEN_DROPLET.POWERED_BY": "Proposé par RightBTC",
+    "TOKEN_DROPLET.POWERED_BY": "Powered by RightBTC",
 
     "MESSAGE.ERR_SAVE_ACCOUNT": "Erreur lors de la sauvegarde du compte",
     "MESSAGE.ERR_IMPORT_ACCOUNT": "Erreur lors de l'importation du compte",

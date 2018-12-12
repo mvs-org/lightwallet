@@ -54,6 +54,22 @@ export class AlertProvider {
         })
     }
 
+    showLogoutNoAccount(onLogout) {
+        this.translate.get(['RESET_TITLE', 'RESET_MESSAGE', 'CONFIRM', 'BACK']).subscribe(translations => {
+            this.alertCtrl.create({
+                title: translations.RESET_TITLE,
+                message: translations.RESET_MESSAGE,
+                buttons: [
+                    { text: translations.BACK },
+                    {
+                        text: translations.CONFIRM,
+                        handler: onLogout
+                    }
+                ]
+            }).present()
+        })
+    }
+
     showSendAll(action) {
         this.translate.get(['SEND_ALL_TITLE', 'SEND_ALL_MESSAGE', 'OK', 'CANCEL']).subscribe(translations => {
             this.alertCtrl.create({
