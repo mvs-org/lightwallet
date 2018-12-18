@@ -24,6 +24,7 @@ export class CreateAvatarPage {
     list_all_avatars: Array<string> = [];
     bounty_fee: number = 80
     addressSelectOptions: any
+    message: string = ""
 
     constructor(
         public navCtrl: NavController,
@@ -66,7 +67,13 @@ export class CreateAvatarPage {
 
     create() {
         return this.alert.showLoading()
-            .then(() => this.mvs.createAvatarTx(this.passphrase, this.avatar_address, this.symbol, undefined, this.bounty_fee*100000000/100))
+            .then(() => {
+                let messages = [];
+                if(this.message) {
+                    messages.push(this.message)
+                }
+                return this.mvs.createAvatarTx(this.passphrase, this.avatar_address, this.symbol, undefined, this.bounty_fee*100000000/100, messages)
+            })
             .then(tx => this.mvs.send(tx))
             .then((result) => {
                 this.navCtrl.pop()
@@ -145,5 +152,7 @@ export class CreateAvatarPage {
     validAddress = (avatar_address) => (avatar_address != '')
 
     validSymbol = (symbol) => (symbol.length > 2) && (symbol.length < 64) && (!/[^A-Za-z0-9@_.-]/g.test(symbol)) && (this.list_all_avatars.indexOf(symbol) == -1)
+
+    validMessageLength = (message) => this.mvs.verifyMessageSize(message) < 253
 
 }
