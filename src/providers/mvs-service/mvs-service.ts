@@ -53,7 +53,7 @@ export class MvsServiceProvider {
                     //Set change address to first utxo's address
                     if (change_address == undefined)
                         change_address = result.utxo[0].address;
-                    return Metaverse.transaction_builder.send(result.utxo, recipient_address, recipient_avatar, target, change_address, result.change, undefined, fee, messages);
+                    return Metaverse.transaction_builder.send(result.utxo, recipient_address, recipient_avatar, target, change_address, result.change, result.lockedAssetChange, fee, messages);
                 })
                 .then((tx) => wallet.sign(tx)))
             .catch((error) => {
@@ -441,7 +441,7 @@ export class MvsServiceProvider {
                     delete output['locked_height_range']
                     output.hash = tx.hash
                     outputs.push(output)
-                } else if (asset != 'ETP' && output.attachment && output.attachment.symbol == asset && output.attenuation_model_param && output.attenuation_model_param.lock_period > 0 && output.attenuation_model_param.total_period_nbr == 1 && output.height && addresses.indexOf(output.address) !== -1) {
+                } else if (asset != 'ETP' && output.attachment && output.attachment.symbol == asset && output.attenuation_model_param && output.attenuation_model_param.lock_period > 0 && output.height && addresses.indexOf(output.address) !== -1) {
                     output.locked_until = (output.attenuation_model_param && output.attenuation_model_param.lock_period) ? tx.height + output.attenuation_model_param.lock_period : 0
                     delete output['locked_height_range']
                     output.hash = tx.hash

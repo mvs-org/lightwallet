@@ -101,7 +101,7 @@
                         <h1>{{asset}}</h1>
                         <p *ngFor="let transaction of output.transactions">{{'TRANSACTION'|translate}}: <a href="{{explorerURL(transaction)}}" target="_blank">{{transaction}}</a></p>
                         <p *ngIf="asset == 'ETP'">{{'AMOUNT'|translate}}: {{output.value | format : output.attachment.decimals}}</p>
-                        <p *ngIf="asset != 'ETP'">{{'AMOUNT'|translate}}: {{output.attachment.quantity | format : output.attachment.decimals}}</p>
+                        <p *ngIf="asset != 'ETP'">{{'AMOUNT'|translate}}: {{output.attenuation_model_param.lock_quantity | format : output.attachment.decimals}}</p>
                         <p>{{'LOCKED_SINCE'|translate}}: {{output.height}} ({{output.confirmed_at*1000 | date : 'medium'}})</p>
                         <p>{{'LOCKED_UNTIL'|translate}}: {{output.locked_until}} (~{{((output.locked_until - height) * blocktime * 1000) + current_time  |date : 'medium'}})*</p>
                         <p>{{'LOCKED_FOR_BLOCKS'|translate}}: {{output.locked_until-output.height}} {{'BLOCKS'|translate}}</p>
@@ -128,7 +128,7 @@
                         <h1>{{asset}}</h1>
                         <p *ngFor="let transaction of output.transactions">{{'TRANSACTION'|translate}}: <a href="{{explorerURL(transaction)}}" target="_blank">{{transaction}}</a></p>
                         <p *ngIf="asset == 'ETP'">{{'AMOUNT'|translate}}: {{output.value | format : output.attachment.decimals}}</p>
-                        <p *ngIf="asset != 'ETP'">{{'AMOUNT'|translate}}: {{output.attachment.quantity | format : output.attachment.decimals}}</p>
+                        <p *ngIf="asset != 'ETP'">{{'AMOUNT'|translate}}: {{output.attenuation_model_param.lock_quantity | format : output.attachment.decimals}}</p>
                         <p>{{'LOCKED_SINCE'|translate}}: {{output.height}} ({{output.confirmed_at*1000|date : 'medium'}})</p>
                         <p>{{'LOCKED_UNTIL'|translate}}: {{output.locked_until}}</p>
                         <p>{{'LOCKED_FOR_BLOCKS'|translate}}: {{output.locked_until-output.height}} {{'BLOCKS'|translate}}</p>
