@@ -146,6 +146,30 @@ export class MvsServiceProvider {
             })
     }
 
+    createAssetDepositTx(passphrase: string, recipient_address: string, symbol: string, quantity: number, locktime: number, from_address: string, change_address: string, fee: number, messages: Array<string>) {
+        let target = { [symbol]: quantity };
+        return this.wallet.getWallet(passphrase)
+            .then(wallet => this.getUtxoFrom(from_address)
+                .then((utxo) => this.getHeight().then(height => Metaverse.output.findUtxo(utxo, target, height, fee)))
+                .then((result) => {
+                    if (result.utxo.length > 676) {
+                        throw Error('ERR_TOO_MANY_INPUTS');
+                    }
+                    //Set change address to first utxo's address
+                    if (change_address == undefined)
+                        change_address = result.utxo[0].address;
+                    if (recipient_address == undefined)
+                        recipient_address = result.utxo[0].address;
+                    let attenuation_model = "PN=0;LH=" + locktime + ";TYPE=1;LQ=" + quantity + ";LP=" + locktime + ";UN=1"
+                    return Metaverse.transaction_builder.sendLockedAsset(result.utxo, recipient_address, symbol, quantity, attenuation_model, change_address, result.change, undefined, fee, messages);     
+                })
+                .then((tx) => wallet.sign(tx)))
+            .catch((error) => {
+                console.error(error)
+                throw Error(error.message);
+            })
+    }
+
     createAvatarTx(passphrase: string, avatar_address: string, symbol: string, change_address: string, bounty_fee: number, messages: Array<string>) {
         return this.wallet.getWallet(passphrase)
             .then(wallet => this.getUtxoFrom(avatar_address)

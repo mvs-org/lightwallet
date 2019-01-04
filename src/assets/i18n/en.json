@@ -606,6 +606,9 @@
 
     "LANGUAGE_SETTINGS_TEXT": "Change the language.",
     "THEME_SETTINGS_TEXT": "Change the theme to change the colors of the wallet.",
-    "INFORMATION.TEXT": "Get more information about MyETPWallet."
+    "INFORMATION.TEXT": "Get more information about MyETPWallet.",
+
+    "ASSET_LOCK": "I want to deposit this asset",
+ 	"ASSET_LOCK_PERIOD": "Lock period (in blocks)"
 
 }

@@ -55,6 +55,9 @@ export class AssetTransferPage {
     fee: number = 10000
     sendMoreValidAvatar: boolean = false
     sendMoreValidEachAvatar: Array<boolean> = []
+    lockPeriod: number
+ 	blocktime: number
+ 	lock: boolean = false
 
     constructor(
         public navCtrl: NavController,
@@ -96,6 +99,13 @@ export class AssetTransferPage {
                     }
                 })
                 this.addressbalances = addrblncs
+            })
+
+        mvs.getHeight()
+            .then(height => mvs.getBlocktime(height))
+            .then(blocktime => this.blocktime = blocktime)
+            .catch((error) => {
+                console.error(error.message)
             })
     }
 
@@ -156,17 +166,31 @@ export class AssetTransferPage {
                 }
                 switch(this.transfer_type){
                     case "one":
-                        return this.mvs.createSendTx(
-                            this.passphrase,
-                            this.selectedAsset,
-                            this.recipient_address,
-                            (this.recipient_avatar && this.recipient_avatar_valid) ? this.recipient_avatar : undefined,
-                            Math.round(parseFloat(this.quantity) * Math.pow(10, this.decimals)),
-                            (this.sendFrom != 'auto') ? this.sendFrom : null,
-                            (this.changeAddress != 'auto') ? this.changeAddress : undefined,
-                            this.fee,
-                            (messages !== []) ? messages : undefined
-                        )
+                        if(this.lock) {
+                            return this.mvs.createAssetDepositTx(
+                                this.passphrase,
+                                this.recipient_address,
+                                this.selectedAsset,
+                                Math.round(parseFloat(this.quantity) * Math.pow(10, this.decimals)),
+                                this.lockPeriod,
+                                (this.sendFrom != 'auto') ? this.sendFrom : null,
+                                (this.changeAddress != 'auto') ? this.changeAddress : undefined,
+                                this.fee,
+                                (messages !== []) ? messages : undefined
+                            )
+                        } else {
+                            return this.mvs.createSendTx(
+                                this.passphrase,
+                                this.selectedAsset,
+                                this.recipient_address,
+                                (this.recipient_avatar && this.recipient_avatar_valid) ? this.recipient_avatar : undefined,
+                                Math.round(parseFloat(this.quantity) * Math.pow(10, this.decimals)),
+                                (this.sendFrom != 'auto') ? this.sendFrom : null,
+                                (this.changeAddress != 'auto') ? this.changeAddress : undefined,
+                                this.fee,
+                                (messages !== []) ? messages : undefined
+                            )
+                        }
                     case "more":
                         let target = {}
                         let recipients = JSON.parse(JSON.stringify(this.recipients))
@@ -339,6 +363,8 @@ export class AssetTransferPage {
     validPassword = (passphrase) => (passphrase.length > 0)
 
     validMessageLength = (message) => this.mvs.verifyMessageSize(message) < 253
+
+    validLockPeriod = (lockPeriod) => true
 
     scan() {
         this.translate.get(['SCANNING.MESSAGE_ADDRESS']).subscribe((translations: any) => {
