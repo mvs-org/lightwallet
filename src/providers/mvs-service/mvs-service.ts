@@ -430,14 +430,19 @@ export class MvsServiceProvider {
                     )))
     }
 
-    async getFrozenOutputs() {
+    async getFrozenOutputs(asset) {
         let addresses = await this.getAddresses()
         let transactions = await this.getTxs()
         let outputs = []
         transactions.forEach(tx => {
             tx.outputs.forEach((output) => {
-                if (output.locked_height_range > 0 && output.height && addresses.indexOf(output.address) !== -1) {
+                if (asset == 'ETP' && output.locked_height_range > 0 && output.height && addresses.indexOf(output.address) !== -1) {
                     output.locked_until = (output.locked_height_range) ? tx.height + output.locked_height_range : 0
+                    delete output['locked_height_range']
+                    output.hash = tx.hash
+                    outputs.push(output)
+                } else if (asset != 'ETP' && output.attachment && output.attachment.symbol == asset && output.attenuation_model_param && output.attenuation_model_param.lock_period > 0 && output.attenuation_model_param.total_period_nbr == 1 && output.height && addresses.indexOf(output.address) !== -1) {
+                    output.locked_until = (output.attenuation_model_param && output.attenuation_model_param.lock_period) ? tx.height + output.attenuation_model_param.lock_period : 0
                     delete output['locked_height_range']
                     output.hash = tx.hash
                     outputs.push(output)

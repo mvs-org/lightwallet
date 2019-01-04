@@ -90,13 +90,18 @@ export class TransactionsPage {
     private isMineTXIO = (txio, addresses) => (addresses.indexOf(txio.address) !== -1)
 
     async calculateFrozenOutputs() {
-        let outputs = await this.mvs.getFrozenOutputs()
+        let outputs = await this.mvs.getFrozenOutputs(this.asset)
         this.frozen_outputs_locked = []
         this.frozen_outputs_unlocked = []
         let grouped_frozen_ouputs = {}
         outputs.forEach((output) => {
             grouped_frozen_ouputs[output.height] = grouped_frozen_ouputs[output.height] ? grouped_frozen_ouputs[output.height] : {}
             if (grouped_frozen_ouputs[output.height][output.locked_until]) {
+                if(this.asset == 'ETP') {
+                    grouped_frozen_ouputs[output.height][output.locked_until].value += output.value
+                } else {
+                    grouped_frozen_ouputs[output.height][output.locked_until].attachment.quantity += output.attachment.quantity
+                }
                 grouped_frozen_ouputs[output.height][output.locked_until].value += output.value
                 grouped_frozen_ouputs[output.height][output.locked_until].transactions.push(output.hash)
             } else {
