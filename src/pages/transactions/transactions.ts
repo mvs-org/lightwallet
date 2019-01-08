@@ -27,6 +27,7 @@ export class TransactionsPage {
     direction: number = 0
     blocktime: number
     current_time: number
+    icon: string = 'default_mst'
 
     constructor(
         public navCtrl: NavController,
@@ -35,6 +36,7 @@ export class TransactionsPage {
         private mvs: MvsServiceProvider
     ) {
         this.asset = navParams.get('asset');
+        this.icon = navParams.get('icon');
         this.showTxs({ symbol: this.asset });
         this.loading = true;
         this.current_time = Date.now()

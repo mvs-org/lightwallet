@@ -27,7 +27,7 @@
                     <ion-item *ngIf="!tx.confirmed_at">
                         <ion-item no-lines>
                             <ion-avatar item-start>
-                                <img class="coinlogo" [src]="'assets/icon/'+asset+'.png'" onerror="this.src='assets/icon/default_mst.png'">
+                                <img class="coinlogo" [src]="'assets/icon/'+icon+'.png'" onerror="this.src='assets/icon/default_mst.png'">
                             </ion-avatar>
                             <h1>{{asset}}</h1>
                             <h3>{{'DATE'|translate}}: <span class="warning">{{'PENDING_CONFIRMATION'|translate}}</span></h3>
@@ -41,7 +41,7 @@
                     <ion-item *ngIf="tx.confirmed_at">
                         <ion-item no-lines>
                             <ion-avatar item-start>
-                                <img class="coinlogo" [src]="'assets/icon/'+asset+'.png'" onerror="this.src='assets/icon/default_mst.png'">
+                                <img class="coinlogo" [src]="'assets/icon/'+icon+'.png'" onerror="this.src='assets/icon/default_mst.png'">
                             </ion-avatar>
                             <h1>{{asset}}</h1>
                             <h3>{{'DATE'|translate}}: {{tx.confirmed_at*1000|date : 'medium'}}</h3>
@@ -56,7 +56,7 @@
                 <ion-row>
                     <ion-col></ion-col>
                     <ion-col width-67>
-                        <img class="big-icon" [src]="'assets/icon/'+asset+'.png'" onerror="this.src='assets/icon/default_mst.png'">
+                        <img class="big-icon" [src]="'assets/icon/'+icon+'.png'" onerror="this.src='assets/icon/default_mst.png'">
                     </ion-col>
                     <ion-col></ion-col>
                 </ion-row>
@@ -96,7 +96,7 @@
                 <ion-item *ngFor="let output of frozen_outputs_locked | orderBy: [order_by, direction]">
                     <ion-item no-lines>
                         <ion-avatar item-start>
-                            <img class="coinlogo" [src]="'assets/icon/'+asset+'.png'" onerror="this.src='assets/icon/default_mst.png'">
+                            <img class="coinlogo" [src]="'assets/icon/'+icon+'.png'" onerror="this.src='assets/icon/default_mst.png'">
                         </ion-avatar>
                         <h1>{{asset}}</h1>
                         <p *ngFor="let transaction of output.transactions">{{'TRANSACTION'|translate}}: <a href="{{explorerURL(transaction)}}" target="_blank">{{transaction}}</a></p>
@@ -125,7 +125,7 @@
                 <ion-item *ngFor="let output of frozen_outputs_unlocked | orderBy: [order_by, direction]">
                     <ion-item no-lines>
                         <ion-avatar item-start>
-                            <img class="coinlogo" [src]="'assets/icon/'+asset+'.png'" onerror="this.src='assets/icon/default_mst.png'">
+                            <img class="coinlogo" [src]="'assets/icon/'+icon+'.png'" onerror="this.src='assets/icon/default_mst.png'">
                         </ion-avatar>
                         <h1>{{asset}}</h1>
                         <p *ngFor="let transaction of output.transactions">{{'TRANSACTION'|translate}}: <a href="{{explorerURL(transaction)}}" target="_blank">{{transaction}}</a></p>
@@ -147,7 +147,7 @@
                 <ion-row>
                     <ion-col></ion-col>
                     <ion-col width-67>
-                        <img class="big-icon" [src]="'assets/icon/'+asset+'.png'" onerror="this.src='assets/icon/default_mst.png'">
+                        <img class="big-icon" [src]="'assets/icon/'+icon+'.png'" onerror="this.src='assets/icon/default_mst.png'">
                     </ion-col>
                     <ion-col></ion-col>
                 </ion-row>

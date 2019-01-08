@@ -19,7 +19,7 @@ export class MSTCardComponent {
 
     errorImg = e => e.target.remove()
 
-    gotoTransactions = () => this.nav.push("transactions-page", { asset: this.symbol })
+    gotoTransactions = () => this.nav.push("transactions-page", { asset: this.symbol, icon: this.icon })
 
     gotoTransfer = () => this.nav.push("transfer-page", { asset: this.symbol })
 
