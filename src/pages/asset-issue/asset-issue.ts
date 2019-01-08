@@ -378,6 +378,10 @@ export class AssetIssuePage {
             })
     }
 
+    setAttenuationModel = (model: string) => {
+        console.log('attenuation model: ', model)
+    }
+
     symbolChanged = () => {
         if (this.symbol && this.symbol.length >= 3) {
             let symbol = this.symbol.toUpperCase()

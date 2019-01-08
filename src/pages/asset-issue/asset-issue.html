@@ -116,6 +116,8 @@
 
             <div *ngIf="showAdvanced">
                 <br>
+                <attenuation-model-selector (modelChanged)="setAttenuationModel($event)"></attenuation-model-selector>
+                <br>
                 <ion-item no-lines>
                     <ion-label color="primary">{{"TRANSFER_FEE_DISTRIBUTION" | translate}}</ion-label>
                 </ion-item>
