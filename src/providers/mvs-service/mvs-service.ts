@@ -442,10 +442,23 @@ export class MvsServiceProvider {
                     output.hash = tx.hash
                     outputs.push(output)
                 } else if (asset != 'ETP' && output.attachment && output.attachment.symbol == asset && output.attenuation_model_param && output.attenuation_model_param.lock_period > 0 && output.height && addresses.indexOf(output.address) !== -1) {
-                    output.locked_until = (output.attenuation_model_param && output.attenuation_model_param.lock_period) ? tx.height + output.attenuation_model_param.lock_period : 0
                     delete output['locked_height_range']
                     output.hash = tx.hash
-                    outputs.push(output)
+                    switch (output.attenuation_model_param.type) {
+                        case 1:
+                            if(output.attenuation_model_param.current_period_nbr == 0 && output.attenuation_model_param.next_interval == output.attenuation_model_param.lock_period / output.attenuation_model_param.total_period_nbr) {
+                                output.locked_until = (output.attenuation_model_param && output.attenuation_model_param.lock_period) ? tx.height + output.attenuation_model_param.lock_period : 0
+                                outputs.push(output)
+                            }
+                            break;
+                        case 2:
+                        case 3:
+                            if(output.attenuation_model_param.current_period_nbr == 0 && output.attenuation_model_param.next_interval == output.attenuation_model_param.locked[0].number) {
+                                output.locked_until = (output.attenuation_model_param && output.attenuation_model_param.lock_period) ? tx.height + output.attenuation_model_param.lock_period : 0
+                                outputs.push(output)
+                            }
+                            break;
+                    }
                 }
             })
         })
