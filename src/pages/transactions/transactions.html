@@ -100,7 +100,7 @@
                         </ion-avatar>
                         <h1>{{asset}}</h1>
                         <p *ngFor="let transaction of output.transactions">{{'TRANSACTION'|translate}}: <a href="{{explorerURL(transaction)}}" target="_blank">{{transaction}}</a></p>
-                        <p>{{'AMOUNT'|translate}}: 
+                        <p>{{'AMOUNT'|translate}}:
                             <span *ngIf="asset == 'ETP'">{{output.value | format : output.attachment.decimals}}</span>
                             <span *ngIf="asset != 'ETP'">{{output.attenuation_model_param.lock_quantity | format : output.attachment.decimals}}</span>
                         </p>
@@ -129,7 +129,7 @@
                         </ion-avatar>
                         <h1>{{asset}}</h1>
                         <p *ngFor="let transaction of output.transactions">{{'TRANSACTION'|translate}}: <a href="{{explorerURL(transaction)}}" target="_blank">{{transaction}}</a></p>
-                        <p>{{'AMOUNT'|translate}}: 
+                        <p>{{'AMOUNT'|translate}}:
                             <span *ngIf="asset == 'ETP'">{{output.value | format : output.attachment.decimals}}</span>
                             <span *ngIf="asset != 'ETP'">{{output.attenuation_model_param.lock_quantity | format : output.attachment.decimals}}</span>
                         </p>
@@ -154,7 +154,7 @@
 
                 <ion-card-content>
                     <ion-card-title class="center" [translate]="'HISTORY.NO_DEPOSIT_YET'"></ion-card-title>
-                    <p class="center" [translate]="'HISTORY.NO_DEPOSIT_YET_TEXT'">
+                    <p *ngIf="asset == 'ETP'" class="center" [translate]="'HISTORY.NO_DEPOSIT_YET_TEXT'">
                     </p>
                 </ion-card-content>
             </div>
