@@ -53,7 +53,6 @@ export class AssetTransferPage {
     total: number
     message: string = ""
     fee: number = 10000
-    sendMoreValidAvatar: boolean = false
     sendMoreValidEachAvatar: Array<boolean> = []
     attenuation_model: string
  	blocktime: number

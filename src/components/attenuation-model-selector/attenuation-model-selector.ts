@@ -2,8 +2,8 @@ import { Component, Input, Output, EventEmitter, SimpleChanges, SimpleChange } f
 
 class Period {
     constructor(
-        public duration: number,
-        public quantity: number
+        public locktime: string,
+        public quantity: string
     ) { }
 }
 
@@ -15,6 +15,7 @@ export class AttenuationModelSelectorComponent {
 
     @Input() quantity: string;              //Displayed quantity
     @Input() decimals: number;
+    @Input() asset: string;
 
     type: string = 'simple'
     periods: Array<Period> = []
@@ -23,6 +24,8 @@ export class AttenuationModelSelectorComponent {
     locktime: number
     nbrPeriod: number
     attenuation_model: string
+    total_quantity: number = 0
+    total_locktime: number = 0
 
     @Output() modelChanged : EventEmitter<string> = new EventEmitter<string>();
 
@@ -49,9 +52,8 @@ export class AttenuationModelSelectorComponent {
     inputChange(event) {
         let attenuation_model: string = undefined
         let quantity = Math.round(parseFloat(this.quantity) * Math.pow(10, this.decimals))
-                                
-        if(this.quantity)
-            switch(this.type){
+
+        switch(this.type){
             case "simple":
                 if(this.validLocktime(this.locktime))
                     attenuation_model = "PN=0;LH=" + this.locktime + ";TYPE=1;LQ=" + quantity + ";LP=" + this.locktime + ";UN=1"                     
@@ -61,19 +63,49 @@ export class AttenuationModelSelectorComponent {
                     attenuation_model = "PN=0;LH=" + Math.floor(this.locktime/this.nbrPeriod) + ";TYPE=1;LQ=" + quantity + ";LP=" + this.locktime + ";UN=" + this.nbrPeriod                     
                 break;
             case "custom":
+                let valid: boolean = true
+                let total_quantity: number = 0
+                let total_locktime: number = 0
+                let UQ: string
+                let UC: string
+                for(let i = 0; i < this.periods.length; i ++) {
+                    let period = this.periods[i]
+                    if(period.quantity)
+                        total_quantity += parseFloat(period.quantity)
+                    if(period.locktime)
+                        total_locktime += parseFloat(period.locktime)
+                    UQ = i == 0 ? Math.round(parseFloat(period.quantity) * Math.pow(10, this.decimals)) +'' : UQ + ',' + Math.round(parseFloat(period.quantity) * Math.pow(10, this.decimals))
+                    UC = i == 0 ? period.locktime : UC + ',' + period.locktime
+                    if(!this.validQuantity(period.quantity) || !this.validLocktime(period.locktime))
+                        valid = false
+                }
+                this.total_quantity = total_quantity
+                this.total_locktime = total_locktime
+                if(valid && this.validLocktime(total_locktime) && this.total_quantity <= parseFloat(this.quantity))
+                    attenuation_model = "PN=0;LH=" + this.periods[0].locktime + ";TYPE=2;LQ=" + Math.round(total_quantity * Math.pow(10, this.decimals)) + ";LP=" + total_locktime + ";UN=" + this.periods.length + ";UC=" + UC + ";UQ=" + UQ
                 break;
-            }
-        if(this.attenuation_model != attenuation_model) {
+        }
+
+        if(this.attenuation_model != attenuation_model && this.quantity) {
             this.modelChanged.emit(attenuation_model)
             this.attenuation_model = attenuation_model
         }
         
     }
 
-    validLocktime = (locktime) => locktime && locktime > 0 && !/[^0-9]/g.test(locktime)
+    validLocktime = (locktime) => locktime && locktime > 0 && this.countDecimals(locktime) == 0 && locktime < 100000000
 
-    validNbrPeriod = (nbrPeriod) => nbrPeriod && nbrPeriod > 0 && nbrPeriod <= 1000 && !/[^0-9]/g.test(nbrPeriod)
+    validNbrPeriod = (nbrPeriod) => nbrPeriod && nbrPeriod > 0 && nbrPeriod <= 1000 && this.countDecimals(nbrPeriod) == 0
 
-    validLockPeriod = (lockPeriod) => lockPeriod && lockPeriod > 0 && !/[^0-9]/g.test(lockPeriod) && lockPeriod < 1000000
+    validQuantity = (quantity) => quantity != undefined
+        && this.countDecimals(quantity) <= this.decimals
+        && parseFloat(this.quantity) >= parseFloat(quantity)
+        && (quantity > 0)
+
+    countDecimals(value) {
+        if (Math.floor(value) !== value && value.toString().split(".").length > 1)
+            return value.toString().split(".")[1].length || 0;
+        return 0;
+    }
 
 }

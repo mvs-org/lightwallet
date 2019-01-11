@@ -7,9 +7,9 @@
             <ion-segment-button value="recurrent">
                 {{ "ASSET_LOCK.RECURRENT" | translate}}
             </ion-segment-button>
-            <!--ion-segment-button value="custom">
+            <ion-segment-button value="custom">
                 {{ "ASSET_LOCK.CUSTOM" | translate}}
-            </ion-segment-button-->
+            </ion-segment-button>
         </ion-segment>
     </ion-item>
 
@@ -29,19 +29,12 @@
         
     </ion-list>
 
-    <!--ion-list *ngIf="type == 'custom'">
-
-        <ion-item [ngClass]="{'error-border':!validNbrPeriod(nbrPeriod), 'valid-border': validNbrPeriod(nbrPeriod)}">
-            <ion-label floating>{{"ASSET_LOCK.NBR_PERIOD" | translate}}</ion-label>
-            <ion-input name="nbrPeriod" type="number" min="0" step="1" [(ngModel)]="nbrPeriod" (ngModelChange)="inputChange($event)"></ion-input>
-        </ion-item>
-        <div no-lines class="advice">{{"HELP.ASSET_LOCK_NBR_PERIOD" | translate}}</div>
-        <br>
+    <ion-list *ngIf="type == 'custom'">
         
         <ion-card class="card-block" *ngFor="let period of periods; let i = index" [attr.data-index]="i">
             <ion-row>
                 <ion-col col-6>
-                    <h2 class="recipient-title">{{"PERIOD"|translate}} {{i+1}}</h2>
+                    <h2 class="recipient-title" [translate]="'ASSET_LOCK.PERIOD_NBR'" [translateParams]="{period_nbr: i+1}"></h2>
                 </ion-col>
                 <ion-col col-6>
                     <button type="button" tabIndex="-1" class="remove-button" ion-button clear icon-left color="primary" (click)="removePeriod(i)">
@@ -49,17 +42,18 @@
                     </button>
                 </ion-col>
                 <ion-col col-md-6 col-sm-12 col-12>
-                    <ion-item [ngClass]="{'error-border':false, 'valid-border': true}">
-                        <ion-label color="primary" floating>{{"RECIPIENT_AVATAR"|translate}} {{i+1}}</ion-label>
-                        <ion-input [(ngModel)]="period.duration" (ngModelChange)="inputChange($event)" [ngModelOptions]="{standalone:true}" required></ion-input>
+                    <ion-item [ngClass]="{'error-border': !validLocktime(period.locktime), 'valid-border': validLocktime(period.locktime)}">
+                        <ion-label [translate]="'ASSET_LOCK.DURATION_CUSTOM_PERIOD'" [translateParams]="{period_nbr: i+1}" color="primary" floating></ion-label>
+                        <ion-input [(ngModel)]="period.locktime" (ngModelChange)="inputChange($event)" [ngModelOptions]="{standalone:true}" required></ion-input>
                     </ion-item>
                 </ion-col>
                 <ion-col col-md-6 col-sm-12 col-12>
-                    <ion-item [ngClass]="{'error-border':false, 'valid-border': period.quantity}">
-                        <ion-label color="primary" floating>{{"AMOUNT" | translate}} {{i+1}}</ion-label>
-                        <ion-input type="number" min="0" [(ngModel)]="period.quantity" (ngModelChange)="inputChange($event)" [ngModelOptions]="{standalone:true}" (ngModelChange)="quantityETPChanged($event)" required></ion-input>
+                    <ion-item [ngClass]="{'error-border': !validQuantity(period.quanity), 'valid-border': validQuantity(period.quantity)}">
+                        <ion-label [translate]="'ASSET_LOCK.AMOUNT_CUSTOM_PERIOD'" [translateParams]="{period_nbr: i+1}" color="primary" floating></ion-label>
+                        <ion-input type="number" min="0" [(ngModel)]="period.quantity" (ngModelChange)="inputChange($event)" [ngModelOptions]="{standalone:true}" required></ion-input>
                     </ion-item>
                 </ion-col>
+                
             </ion-row>
         </ion-card>
 
@@ -68,10 +62,26 @@
             {{"ADD_RECIPIENT" | translate}}
         </button>
 
-        <ion-item>
-            <ion-label floating>{{"ASSET_LOCK.TOTAL_QUANTITY" | translate}}</ion-label>
-            <ion-input name="lockQuantity" type="number" [(ngModel)]="lockQuantity"></ion-input>
+        <ion-item [ngClass]="{'error-border': !validLocktime(total_locktime)}">
+            <ion-label color="primary">
+                {{"ASSET_LOCK.TOTAL_DURATION" | translate}}:
+                <p class="inline">
+                    {{total_locktime}} {{"BLOCKS" | translate}}
+                </p>
+            </ion-label>
         </ion-item>
-        <div no-lines class="advice">{{"HELP.ASSET_LOCK_TOTAL_QUANTITY" | translate}}</div>
-    </ion-list-->
+        <br>
+            
+        <ion-item [ngClass]="{'error-border': total_quantity > quantity}">
+            <ion-label color="primary">
+                {{"TOTAL_TO_SEND" | translate}}:
+                <p class="inline">
+                    {{total_quantity}} {{asset}}
+                </p>
+            </ion-label>
+        </ion-item>
+        <ion-item *ngIf="total_quantity > quantity" no-lines class="wrong-input">{{"ASSET_LOCK.TOTAL_MORE_SEND" | translate}}</ion-item>
+        <br>    
+
+    </ion-list>
 </div>

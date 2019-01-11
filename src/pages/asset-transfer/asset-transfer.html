@@ -105,7 +105,7 @@
                     <ion-label>{{"ASSET_LOCK"|translate}}</ion-label>
                     <ion-toggle [(ngModel)]="lock" name="lock"></ion-toggle>
                 </ion-item>
-                <attenuation-model-selector *ngIf="lock" (modelChanged)="setAttenuationModel($event)" [quantity]="validQuantity(quantity) ? quantity : undefined" [decimals]="decimals"></attenuation-model-selector>
+                <attenuation-model-selector *ngIf="lock" (modelChanged)="setAttenuationModel($event)" [quantity]="validQuantity(quantity) ? quantity : undefined" [decimals]="decimals" [asset]="selectedAsset"></attenuation-model-selector>
                 <br>
                 <button ion-button full [disabled]="!sendForm.form.valid||!validaddress(recipient_address)||!validQuantity(quantity)||!validPassword(passphrase)||!validMessageLength(message)||(lock && !attenuation_model)" (click)="preview()" color="primary">
                     {{"PREVIEW" | translate}}

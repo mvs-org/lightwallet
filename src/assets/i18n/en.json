@@ -619,7 +619,10 @@
 
     "HELP.ASSET_LOCK_NBR_PERIOD": "This is the total number of periods that will be used.",
     "HELP.ASSET_LOCK_TOTAL_QUANTITY": "This is the total number of assets that will be locked.",
-    "HELP.ASSET_LOCK_TOTAL_DURATION": "This is the total number of blocks until the last period terminates."
+    "HELP.ASSET_LOCK_TOTAL_DURATION": "This is the total number of blocks until the last period terminates.",
     
-
+    "ASSET_LOCK.PERIOD_NBR": "Period {{period_nbr}}",
+    "ASSET_LOCK.DURATION_CUSTOM_PERIOD": "Duration of period {{period_nbr}} (in blocks)",
+    "ASSET_LOCK.AMOUNT_CUSTOM_PERIOD": "Amount unlocked at the end of period {{period_nbr}}",
+    "ASSET_LOCK.TOTAL_MORE_SEND": "The sum of the amounts of each period is higher than the send amount specified above"
 }
