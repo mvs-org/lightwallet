@@ -105,11 +105,9 @@
                     <ion-label>{{"ASSET_LOCK"|translate}}</ion-label>
                     <ion-toggle [(ngModel)]="lock" name="lock"></ion-toggle>
                 </ion-item>
-                <ion-item *ngIf="lock" [ngClass]="{'error-border':!validLockPeriod(lockPeriod), 'valid-border': validLockPeriod(lockPeriod)}">
-                    <ion-label floating>{{"ASSET_LOCK_PERIOD" | translate}}</ion-label>
-                    <ion-input name="lockPeriod" type="number" min="0" step="1" [(ngModel)]="lockPeriod"></ion-input>
-                </ion-item>
-                <button ion-button full [disabled]="!sendForm.form.valid||!validaddress(recipient_address)||!validQuantity(quantity)||!validPassword(passphrase)||!validMessageLength(message)||(lock && !validLockPeriod(lockPeriod))" (click)="preview()" color="primary">
+                <attenuation-model-selector *ngIf="lock" (modelChanged)="setAttenuationModel($event)" [quantity]="validQuantity(quantity) ? quantity : undefined" [decimals]="decimals"></attenuation-model-selector>
+                <br>
+                <button ion-button full [disabled]="!sendForm.form.valid||!validaddress(recipient_address)||!validQuantity(quantity)||!validPassword(passphrase)||!validMessageLength(message)||(lock && !attenuation_model)" (click)="preview()" color="primary">
                     {{"PREVIEW" | translate}}
                 </button>
                 <div *ngIf="rawtx">
@@ -122,7 +120,7 @@
         </ion-list>
         <ion-row class="padding-bottom">
             <ion-col>
-                <button type="submit" ion-button full icon-left [disabled]="!sendForm.form.valid||!validaddress(recipient_address)||!validQuantity(quantity)||!validPassword(passphrase)||!validMessageLength(message)||(lock && !validLockPeriod(lockPeriod))" (click)="send()" color="secondary">
+                <button type="submit" ion-button full icon-left [disabled]="!sendForm.form.valid||!validaddress(recipient_address)||!validQuantity(quantity)||!validPassword(passphrase)||!validMessageLength(message)||(lock && !attenuation_model)" (click)="send()" color="secondary">
                     <ion-icon disabled="checked" name="send"></ion-icon>
                     {{"SEND" | translate}}
                 </button>

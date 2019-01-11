@@ -55,7 +55,7 @@ export class AssetTransferPage {
     fee: number = 10000
     sendMoreValidAvatar: boolean = false
     sendMoreValidEachAvatar: Array<boolean> = []
-    lockPeriod: number
+    attenuation_model: string
  	blocktime: number
  	lock: boolean = false
 
@@ -170,9 +170,10 @@ export class AssetTransferPage {
                             return this.mvs.createAssetDepositTx(
                                 this.passphrase,
                                 this.recipient_address,
+                                (this.recipient_avatar && this.recipient_avatar_valid) ? this.recipient_avatar : undefined,
                                 this.selectedAsset,
                                 Math.round(parseFloat(this.quantity) * Math.pow(10, this.decimals)),
-                                this.lockPeriod,
+                                this.attenuation_model,
                                 (this.sendFrom != 'auto') ? this.sendFrom : null,
                                 (this.changeAddress != 'auto') ? this.changeAddress : undefined,
                                 this.fee,
@@ -364,8 +365,6 @@ export class AssetTransferPage {
 
     validMessageLength = (message) => this.mvs.verifyMessageSize(message) < 253
 
-    validLockPeriod = (lockPeriod) => true
-
     scan() {
         this.translate.get(['SCANNING.MESSAGE_ADDRESS']).subscribe((translations: any) => {
             this.barcodeScanner.scan(
@@ -513,6 +512,10 @@ export class AssetTransferPage {
         else {
             pom.click();
         }
+    }
+
+    setAttenuationModel = (model: string) => {
+        this.attenuation_model = model
     }
 
 }

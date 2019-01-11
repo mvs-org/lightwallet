@@ -216,7 +216,7 @@
     "MESSAGE.NETWORK_MISMATCH": "Network does not match",
     "MESSAGE.PASSWORD_WRONG": "Incorrect password",
     "MESSAGE.CREATE_TRANSACTION": "Unable to create transaction.",
-    "MESSAGE.BROADCAST_ERROR": "Unable to broadcast transaction.",
+    "MESSAGE.BROADCAST_ERROR": "Unable to broadcast transaction, please try again later.",
 
     "LOGIN": "Login",
     "HOW_TO_IMPORT_WALLET_MOBILE": "How to Import",
@@ -280,7 +280,6 @@
     "AVATARS.SECONDARY_ISSUE": "Secondary Issue",
     "AVATARS.DOMAIN": "Domain",
     "AVATARS.NAMING": "Naming",
-    "OWNER": "Owner",
     "HASH": "Hash",
     "RECEIVE.ADDRESS_NO_MST": "This address doesn't have any MST",
 
@@ -608,7 +607,19 @@
     "THEME_SETTINGS_TEXT": "Change the theme to change the colors of the wallet.",
     "INFORMATION.TEXT": "Get more information about MyETPWallet.",
 
-    "ASSET_LOCK": "I want to deposit this asset",
- 	"ASSET_LOCK_PERIOD": "Lock period (in blocks)"
+    "ASSET_LOCK": "I want to lock this asset",
+    "ASSET_LOCK_PERIOD": "Lock period (in blocks)",
+     
+    "ASSET_LOCK.SIMPLE": "Simple unlock",
+    "ASSET_LOCK.RECURRENT": "Recurrent unlock",
+    "ASSET_LOCK.CUSTOM": "Custom unlock",
+    "ASSET_LOCK.NBR_PERIOD": "Number of periods",
+    "ASSET_LOCK.TOTAL_QUANTITY": "Total locked quantity",
+    "ASSET_LOCK.TOTAL_DURATION": "Total locked duration (in blocks)",
+
+    "HELP.ASSET_LOCK_NBR_PERIOD": "This is the total number of periods that will be used.",
+    "HELP.ASSET_LOCK_TOTAL_QUANTITY": "This is the total number of assets that will be locked.",
+    "HELP.ASSET_LOCK_TOTAL_DURATION": "This is the total number of blocks until the last period terminates."
+    
 
 }

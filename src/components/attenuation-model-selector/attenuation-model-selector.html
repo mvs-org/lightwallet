@@ -1,3 +1,77 @@
 <div>
-  <button (click)="setModel()">click me</button>
+    <ion-item no-lines>
+        <ion-segment [(ngModel)]="type" color="primary" (ngModelChange)="inputChange($event)">
+            <ion-segment-button value="simple">
+                {{ "ASSET_LOCK.SIMPLE" | translate}}
+            </ion-segment-button>
+            <ion-segment-button value="recurrent">
+                {{ "ASSET_LOCK.RECURRENT" | translate}}
+            </ion-segment-button>
+            <!--ion-segment-button value="custom">
+                {{ "ASSET_LOCK.CUSTOM" | translate}}
+            </ion-segment-button-->
+        </ion-segment>
+    </ion-item>
+
+    <ion-list *ngIf="type == 'simple' || type == 'recurrent'">
+
+        <ion-item [ngClass]="{'error-border':!validLocktime(locktime), 'valid-border': validLocktime(locktime)}">
+            <ion-label floating>{{"ASSET_LOCK.TOTAL_DURATION" | translate}}</ion-label>
+            <ion-input name="locktime" type="number" min="0" step="1" [(ngModel)]="locktime" (ngModelChange)="inputChange($event)"></ion-input>
+        </ion-item>
+        <div no-lines class="advice">{{"HELP.ASSET_LOCK_TOTAL_DURATION" | translate}}</div>
+        
+        <ion-item *ngIf="type == 'recurrent'" [ngClass]="{'error-border':!validNbrPeriod(nbrPeriod), 'valid-border': validNbrPeriod(nbrPeriod)}">
+            <ion-label floating>{{"ASSET_LOCK.NBR_PERIOD" | translate}}</ion-label>
+            <ion-input name="nbrPeriod" type="number" min="0" step="1" [(ngModel)]="nbrPeriod" (ngModelChange)="inputChange($event)"></ion-input>
+        </ion-item>
+        <div *ngIf="type == 'recurrent'" no-lines class="advice">{{"HELP.ASSET_LOCK_NBR_PERIOD" | translate}}</div>
+        
+    </ion-list>
+
+    <!--ion-list *ngIf="type == 'custom'">
+
+        <ion-item [ngClass]="{'error-border':!validNbrPeriod(nbrPeriod), 'valid-border': validNbrPeriod(nbrPeriod)}">
+            <ion-label floating>{{"ASSET_LOCK.NBR_PERIOD" | translate}}</ion-label>
+            <ion-input name="nbrPeriod" type="number" min="0" step="1" [(ngModel)]="nbrPeriod" (ngModelChange)="inputChange($event)"></ion-input>
+        </ion-item>
+        <div no-lines class="advice">{{"HELP.ASSET_LOCK_NBR_PERIOD" | translate}}</div>
+        <br>
+        
+        <ion-card class="card-block" *ngFor="let period of periods; let i = index" [attr.data-index]="i">
+            <ion-row>
+                <ion-col col-6>
+                    <h2 class="recipient-title">{{"PERIOD"|translate}} {{i+1}}</h2>
+                </ion-col>
+                <ion-col col-6>
+                    <button type="button" tabIndex="-1" class="remove-button" ion-button clear icon-left color="primary" (click)="removePeriod(i)">
+                        X
+                    </button>
+                </ion-col>
+                <ion-col col-md-6 col-sm-12 col-12>
+                    <ion-item [ngClass]="{'error-border':false, 'valid-border': true}">
+                        <ion-label color="primary" floating>{{"RECIPIENT_AVATAR"|translate}} {{i+1}}</ion-label>
+                        <ion-input [(ngModel)]="period.duration" (ngModelChange)="inputChange($event)" [ngModelOptions]="{standalone:true}" required></ion-input>
+                    </ion-item>
+                </ion-col>
+                <ion-col col-md-6 col-sm-12 col-12>
+                    <ion-item [ngClass]="{'error-border':false, 'valid-border': period.quantity}">
+                        <ion-label color="primary" floating>{{"AMOUNT" | translate}} {{i+1}}</ion-label>
+                        <ion-input type="number" min="0" [(ngModel)]="period.quantity" (ngModelChange)="inputChange($event)" [ngModelOptions]="{standalone:true}" (ngModelChange)="quantityETPChanged($event)" required></ion-input>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+        </ion-card>
+
+        <button *ngIf="periods.length < periods_nbr_limit" type="button" class="right-buttons" ion-button icon-left color="primary" (click)="addPeriod()">
+            <ion-icon name="add"></ion-icon>
+            {{"ADD_RECIPIENT" | translate}}
+        </button>
+
+        <ion-item>
+            <ion-label floating>{{"ASSET_LOCK.TOTAL_QUANTITY" | translate}}</ion-label>
+            <ion-input name="lockQuantity" type="number" [(ngModel)]="lockQuantity"></ion-input>
+        </ion-item>
+        <div no-lines class="advice">{{"HELP.ASSET_LOCK_TOTAL_QUANTITY" | translate}}</div>
+    </ion-list-->
 </div>

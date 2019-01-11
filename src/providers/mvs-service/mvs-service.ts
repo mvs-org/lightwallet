@@ -146,7 +146,7 @@ export class MvsServiceProvider {
             })
     }
 
-    createAssetDepositTx(passphrase: string, recipient_address: string, symbol: string, quantity: number, locktime: number, from_address: string, change_address: string, fee: number, messages: Array<string>) {
+    createAssetDepositTx(passphrase: string, recipient_address: string, recipient_avatar: string, symbol: string, quantity: number, attenuation_model: string, from_address: string, change_address: string, fee: number, messages: Array<string>) {
         let target = { [symbol]: quantity };
         return this.wallet.getWallet(passphrase)
             .then(wallet => this.getUtxoFrom(from_address)
@@ -160,8 +160,7 @@ export class MvsServiceProvider {
                         change_address = result.utxo[0].address;
                     if (recipient_address == undefined)
                         recipient_address = result.utxo[0].address;
-                    let attenuation_model = "PN=0;LH=" + locktime + ";TYPE=1;LQ=" + quantity + ";LP=" + locktime + ";UN=1"
-                    return Metaverse.transaction_builder.sendLockedAsset(result.utxo, recipient_address, symbol, quantity, attenuation_model, change_address, result.change, undefined, fee, messages);     
+                    return Metaverse.transaction_builder.sendLockedAsset(result.utxo, recipient_address, recipient_avatar, symbol, quantity, attenuation_model, change_address, result.change, undefined, fee, messages);  
                 })
                 .then((tx) => wallet.sign(tx)))
             .catch((error) => {
