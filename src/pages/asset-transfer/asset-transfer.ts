@@ -458,7 +458,7 @@ export class AssetTransferPage {
                     }
                 }
                 if(data.length > this.sendMore_limit)
-                    this.alert.showTooManyRecipients(this.sendMore_limit)
+                    this.alert.showLimitReached('MESSAGE.SEND_MORE_IMPORT_CSV_TOO_MANY_RECIPIENT_TITLE', 'MESSAGE.SEND_MORE_IMPORT_CSV_TOO_MANY_RECIPIENT_BODY', this.sendMore_limit)
                 if(this.selectedAsset == 'ETP'){
                     this.quantityETPChanged()
                 } else {
@@ -514,6 +514,7 @@ export class AssetTransferPage {
     }
 
     setAttenuationModel = (model: string) => {
+        console.log(model)
         this.attenuation_model = model
     }
 

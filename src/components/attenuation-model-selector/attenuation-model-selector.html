@@ -30,6 +30,11 @@
     </ion-list>
 
     <ion-list *ngIf="type == 'custom'">
+
+        <ion-row *ngIf="!platform.is('mobile')">
+            <input type="file" name="file" id="file" class="inputfile" accept=".csv" (change)="import($event)" />
+            <label for="file"> <ion-icon name="document"></ion-icon> {{"IMPORT_FROM_CSV"|translate}}</label>
+        </ion-row>
         
         <ion-card class="card-block" *ngFor="let period of periods; let i = index" [attr.data-index]="i">
             <ion-row>
@@ -57,6 +62,8 @@
             </ion-row>
         </ion-card>
 
+        <button *ngIf="!platform.is('mobile')" type="button" class="right-buttons" ion-button icon-left color="secondary" (click)="download()"><ion-icon name="download"></ion-icon> {{"EXPORT_CSV" | translate}}</button>
+        <button *ngIf="!platform.is('mobile')" type="button" class="right-buttons" ion-button icon-left color="light" (click)="csvExample()"><ion-icon name="download"></ion-icon> {{"DOWNLOAD_CSV_EXAMPLE" | translate}}</button>
         <button *ngIf="periods.length < periods_nbr_limit" type="button" class="right-buttons" ion-button icon-left color="primary" (click)="addPeriod()">
             <ion-icon name="add"></ion-icon>
             {{"ADD_RECIPIENT" | translate}}

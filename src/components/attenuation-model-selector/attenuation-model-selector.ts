@@ -1,4 +1,6 @@
 import { Component, Input, Output, EventEmitter, SimpleChanges, SimpleChange } from '@angular/core';
+import { Platform } from 'ionic-angular';
+import { AlertProvider } from '../../providers/alert/alert';
 
 class Period {
     constructor(
@@ -29,8 +31,11 @@ export class AttenuationModelSelectorComponent {
 
     @Output() modelChanged : EventEmitter<string> = new EventEmitter<string>();
 
-    constructor() {
-        this.periods.push(new Period(undefined, undefined))     
+    constructor(
+        public platform: Platform,
+        private alert: AlertProvider
+    ) {
+        this.periods.push(new Period(undefined, undefined))
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -99,13 +104,83 @@ export class AttenuationModelSelectorComponent {
 
     validQuantity = (quantity) => quantity != undefined
         && this.countDecimals(quantity) <= this.decimals
-        && parseFloat(this.quantity) >= parseFloat(quantity)
         && (quantity > 0)
 
     countDecimals(value) {
         if (Math.floor(value) !== value && value.toString().split(".").length > 1)
             return value.toString().split(".")[1].length || 0;
         return 0;
+    }
+
+    import(e) {
+        this.alert.showLoading()
+            .then(() => {
+                setTimeout(() => {
+                    this.open(e)
+                }, 500);
+            })
+    }
+
+    open(e) {
+        let file = e.target.files
+        let reader = new FileReader();
+        reader.onload = (e: any) => {
+            let content = e.target.result;
+            try {
+                let data = content.split('\n');
+                if(data.length > this.periods_nbr_limit) {
+                    this.alert.showLimitReached('MESSAGE.LOCK_IMPORT_CSV_TOO_MANY_PERIODS_TITLE', 'MESSAGE.LOCK_IMPORT_CSV_TOO_MANY_PERIOD_BODY', this.periods_nbr_limit)
+                } else {
+                    this.periods = []
+                    for(let i=0;i<data.length;i++){
+                        if(data[i]) {
+                            let period = data[i].split(',');
+                            period[0] = period[0] ? period[0].trim() : period[0]
+                            this.periods.push(new Period(period[0], period[1]))
+                        }
+                    }
+                    this.inputChange(event)
+                }
+                this.alert.stopLoading()
+            } catch (e) {
+                this.alert.stopLoading()
+                console.error(e);
+                this.alert.showMessage('WRONG_FILE', '', 'SEND_MORE.WRONG_FILE')
+            }
+        };
+        if(file[0])
+            reader.readAsText(file[0]);
+    }
+
+    download() {
+        var text = ''
+        var filename = 'lock_model.csv'
+        this.periods.forEach((period) => {
+            let line = period.locktime + ',' + period.quantity + '\n'
+            text += line
+        })
+        this.downloadFile(filename, text)
+    }
+
+    csvExample() {
+        var text = 'Locktime in Block,Amount,Please delete this line before import\n10,1000\n20,2000\n50,10000';
+        var filename = 'mvs_example.csv'
+        this.downloadFile(filename, text)
+    }
+
+    downloadFile(filename, text) {
+        var pom = document.createElement('a');
+        pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+        pom.setAttribute('download', filename);
+
+        if (document.createEvent) {
+            var event = document.createEvent('MouseEvents');
+            event.initEvent('click', true, true);
+            pom.dispatchEvent(event);
+        }
+        else {
+            pom.click();
+        }
     }
 
 }

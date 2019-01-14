@@ -338,7 +338,7 @@
     "TOTAL_TO_SEND": "Total to send",
 
     "SEND_MORE.TOTAL_MORE_AVAILABLE": "The total is higher than your available balance",
-    "SEND_MORE.WRONG_FILE": "Impossible to read this file. Please check the format. In advanced options, you can export to CSV file and follow this template",
+    "SEND_MORE.WRONG_FILE": "Impossible to read this file, please check the format. You can download the CSV example file and follow this template",
 
     "IMPORT_FROM_CSV": "Import from CSV",
     "DOWNLOAD_CSV": "Download CSV",
@@ -624,5 +624,9 @@
     "ASSET_LOCK.PERIOD_NBR": "Period {{period_nbr}}",
     "ASSET_LOCK.DURATION_CUSTOM_PERIOD": "Duration of period {{period_nbr}} (in blocks)",
     "ASSET_LOCK.AMOUNT_CUSTOM_PERIOD": "Amount unlocked at the end of period {{period_nbr}}",
-    "ASSET_LOCK.TOTAL_MORE_SEND": "The sum of the amounts of each period is higher than the send amount specified above"
+    "ASSET_LOCK.TOTAL_MORE_SEND": "The sum of the amounts of each period is higher than the send amount specified above",
+
+    "MESSAGE.LOCK_IMPORT_CSV_TOO_MANY_PERIODS_TITLE": "Too many periods",
+    "MESSAGE.LOCK_IMPORT_CSV_TOO_MANY_PERIOD_BODY": "This file contains too many periods. The maximum number of periods is limited to "
+
 }
