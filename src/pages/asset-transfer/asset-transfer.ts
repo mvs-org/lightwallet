@@ -514,7 +514,6 @@ export class AssetTransferPage {
     }
 
     setAttenuationModel = (model: string) => {
-        console.log(model)
         this.attenuation_model = model
     }
 

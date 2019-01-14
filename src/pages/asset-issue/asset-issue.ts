@@ -48,6 +48,9 @@ export class AssetIssuePage {
     no_avatar: boolean = false;
     no_avatar_placeholder: string
     bounty_fee: number = 80
+    attenuation_model: string
+    blocktime: number
+    lock: boolean = false
 
     constructor(
         public navCtrl: NavController,
@@ -171,7 +174,7 @@ export class AssetIssuePage {
 
     create() {
         return this.showLoading()
-            .then((addresses) => this.mvs.createIssueAssetTx(
+            .then(() => this.mvs.createIssueAssetTx(
                 this.passphrase,
                 this.toUpperCase(this.symbol),
                 Math.floor(parseFloat(this.max_supply == 'custom' ? this.custom_max_supply : this.max_supply) * Math.pow(10, this.asset_decimals)),
@@ -184,7 +187,8 @@ export class AssetIssuePage {
                 undefined,
                 (this.symbol_check == "available"),
                 (this.symbol_check == "naming_owner"),
-                this.bounty_fee*100000000/100*10
+                this.bounty_fee*100000000/100*10,
+                this.lock ? this.attenuation_model : undefined
             ))
             .catch((error) => {
                 console.error(error)
@@ -379,7 +383,7 @@ export class AssetIssuePage {
     }
 
     setAttenuationModel = (model: string) => {
-        console.log('attenuation model: ', model)
+        this.attenuation_model = model
     }
 
     symbolChanged = () => {
