@@ -216,7 +216,7 @@
   "MESSAGE.NETWORK_MISMATCH": "网络不匹配",
   "MESSAGE.PASSWORD_WRONG": "密码不正确",
   "MESSAGE.CREATE_TRANSACTION" : "无法创建交易.",
-  "MESSAGE.BROADCAST_ERROR": "无法广播交易.",
+  "MESSAGE.BROADCAST_ERROR": "钱包与主网区块高度还未同步一致，请稍候刷新重试。",
 
   "LOGIN": "登录",
   "HOW_TO_IMPORT_WALLET_MOBILE": "如何导入",
@@ -231,7 +231,7 @@
   "SCANNING.MESSAGE_ADDRESS": "扫描 ETP 地址",
 
   "MESSAGE.NOT_ETP_ADDRESS_TITLE": "地址错误",
-  "MESSAGE.NOT_ETP_ADDRESS_TEXT": "这不是正确的 ETP 地址，请扫描 ETP 地址.",
+  "MESSAGE.NOT_ETP_ADDRESS_TEXT": "这不是正确的 ETP 地址，请扫描 ETP 地址。",
 
   "SEND_ALL_BUTTON": "发送全部资产",
 
@@ -280,7 +280,6 @@
   "AVATARS.SECONDARY_ISSUE": "二次增发",
   "AVATARS.DOMAIN": "域名",
   "AVATARS.NAMING": "冠名",
-  "OWNER": "拥有者",
   "HASH": "哈希",
   "RECEIVE.ADDRESS_NO_MST": "此地址没有MST资产",
 

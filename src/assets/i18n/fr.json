@@ -280,7 +280,6 @@
     "AVATARS.SECONDARY_ISSUE": "Augmentation de capital",
     "AVATARS.DOMAIN": "Domaine",
     "AVATARS.NAMING": "Nom",
-    "OWNER": "Propriétaire",
     "HASH": "Hash",
     "RECEIVE.ADDRESS_NO_MST": "Cette adresse ne possède aucun MST",
 

@@ -6,6 +6,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { Keyboard } from '@ionic-native/keyboard';
 import { AlertProvider } from '../../providers/alert/alert';
 import { PipesModule } from '../../pipes/pipes.module';
+import { ComponentsModule } from '../../components/attenuation-model-selector/attenuation-model-selector.module';
 
 @NgModule({
     declarations: [
@@ -14,6 +15,7 @@ import { PipesModule } from '../../pipes/pipes.module';
     imports: [
         IonicPageModule.forChild(AssetTransferPage),
         PipesModule,
+        ComponentsModule,
         TranslateModule
     ],
     providers:[
