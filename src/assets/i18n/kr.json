@@ -280,7 +280,6 @@
     "AVATARS.SECONDARY_ISSUE": "2차 문제",
     "AVATARS.DOMAIN": "도메인",
     "AVATARS.NAMING": "이름 짓기",
-    "OWNER": "소유자",
     "HASH": "해쉬",
     "RECEIVE.ADDRESS_NO_MST": "이 주소에는 어떠한 MST도 없습니다.",
 

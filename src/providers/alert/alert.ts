@@ -148,7 +148,7 @@ export class AlertProvider {
                     }
                 ]
             })
-            alert.present(prompt)
+            alert.present(alert)
         })
     }
 
@@ -173,7 +173,7 @@ export class AlertProvider {
                     }
                 ]
             })
-            alert.present(prompt)
+            alert.present(alert)
         })
     }
 
@@ -232,11 +232,11 @@ export class AlertProvider {
         })
     }
 
-    showTooManyRecipients(limit) {
-        this.translate.get(['MESSAGE.SEND_MORE_IMPORT_CSV_TOO_MANY_RECIPIENT_TITLE', 'MESSAGE.SEND_MORE_IMPORT_CSV_TOO_MANY_RECIPIENT_BODY', 'OK']).subscribe((translations: any) => {
+    showLimitReached(title, message, limit) {
+        this.translate.get([title, message, 'OK']).subscribe((translations: any) => {
             let alert = this.alertCtrl.create({
-                title: translations['MESSAGE.SEND_MORE_IMPORT_CSV_TOO_MANY_RECIPIENT_TITLE'],
-                message: translations['MESSAGE.SEND_MORE_IMPORT_CSV_TOO_MANY_RECIPIENT_BODY'] + limit,
+                title: translations[title],
+                message: translations[message] + limit,
                 buttons: [{
                     text: translations['OK']
                 }]

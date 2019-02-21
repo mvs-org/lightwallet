@@ -15,9 +15,7 @@ export class EtpCardComponent {
         private nav: NavController
     ) { }
 
-    gotoDeposit = () => this.nav.push("DepositPage", { asset: 'ETP' })
-
-    gotoTransactions = () => this.nav.push("transactions-page", { asset: 'ETP' })
+    gotoTransactions = () => this.nav.push("transactions-page", { asset: 'ETP', icon: 'ETP' })
 
     gotoTransfer = () => this.nav.push("transfer-page", { asset: 'ETP' })
 

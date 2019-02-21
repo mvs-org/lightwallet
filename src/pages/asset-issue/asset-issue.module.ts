@@ -4,6 +4,7 @@ import { AssetIssuePage } from './asset-issue';
 import { TranslateModule} from '@ngx-translate/core';
 import { AlertProvider } from '../../providers/alert/alert';
 import { PipesModule } from '../../pipes/pipes.module';
+import { ComponentsModule } from '../../components/attenuation-model-selector/attenuation-model-selector.module';
 
 @NgModule({
     declarations: [
@@ -12,6 +13,7 @@ import { PipesModule } from '../../pipes/pipes.module';
     imports: [
         IonicPageModule.forChild(AssetIssuePage),
         PipesModule,
+        ComponentsModule,
         TranslateModule
     ],
     providers: [

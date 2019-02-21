@@ -216,7 +216,7 @@
   "MESSAGE.NETWORK_MISMATCH": "网络不匹配",
   "MESSAGE.PASSWORD_WRONG": "密码不正确",
   "MESSAGE.CREATE_TRANSACTION" : "无法创建交易.",
-  "MESSAGE.BROADCAST_ERROR": "无法广播交易.",
+  "MESSAGE.BROADCAST_ERROR": "钱包与主网区块高度还未同步一致，请稍候刷新重试。",
 
   "LOGIN": "登录",
   "HOW_TO_IMPORT_WALLET_MOBILE": "如何导入",
@@ -231,7 +231,7 @@
   "SCANNING.MESSAGE_ADDRESS": "扫描 ETP 地址",
 
   "MESSAGE.NOT_ETP_ADDRESS_TITLE": "地址错误",
-  "MESSAGE.NOT_ETP_ADDRESS_TEXT": "这不是正确的 ETP 地址，请扫描 ETP 地址.",
+  "MESSAGE.NOT_ETP_ADDRESS_TEXT": "这不是正确的 ETP 地址，请扫描 ETP 地址。",
 
   "SEND_ALL_BUTTON": "发送全部资产",
 
@@ -280,7 +280,6 @@
   "AVATARS.SECONDARY_ISSUE": "二次增发",
   "AVATARS.DOMAIN": "域名",
   "AVATARS.NAMING": "冠名",
-  "OWNER": "拥有者",
   "HASH": "哈希",
   "RECEIVE.ADDRESS_NO_MST": "此地址没有MST资产",
 
@@ -606,6 +605,29 @@
 
   "LANGUAGE_SETTINGS_TEXT": "更换语言",
   "THEME_SETTINGS_TEXT": "更换主题来换钱包颜色",
-  "INFORMATION.TEXT": "获取更多有关 MyETPWallet 的相关信息"
+  "INFORMATION.TEXT": "获取更多有关 MyETPWallet 的相关信息",
+
+  "ASSET_LOCK": "我想锁仓该资产",
+  "ASSET_LOCK_PERIOD": "锁仓时长 (区块数)",
+   
+  "ASSET_LOCK.SIMPLE": "简单解锁",
+  "ASSET_LOCK.RECURRENT": "周期解锁",
+  "ASSET_LOCK.CUSTOM": "自定义解锁",
+  "ASSET_LOCK.NBR_PERIOD": "周期数",
+  "ASSET_LOCK.TOTAL_QUANTITY": "锁仓总额",
+  "ASSET_LOCK.TOTAL_DURATION": "锁仓总时长 (区块数)",
+
+  "HELP.ASSET_LOCK_NBR_PERIOD": "这是锁仓的总周期数。",
+  "HELP.ASSET_LOCK_TOTAL_QUANTITY": "这是锁仓资产的总额。",
+  "HELP.ASSET_LOCK_TOTAL_DURATION": "这是锁仓的总时长。",
+  
+  "ASSET_LOCK.PERIOD_NBR": "周期 {{period_nbr}}",
+  "ASSET_LOCK.DURATION_CUSTOM_PERIOD": "周期 {{period_nbr}} 时长 (区块数)",
+  "ASSET_LOCK.AMOUNT_CUSTOM_PERIOD": "周期 {{period_nbr}} 将解锁的资产数额",
+  "ASSET_LOCK.TOTAL_MORE_SEND": "资产不足，每周期锁仓数额的总和超出了发送资产的总额。",
+
+  "MESSAGE.LOCK_IMPORT_CSV_TOO_MANY_PERIODS_TITLE": "周期过多",
+  "MESSAGE.LOCK_IMPORT_CSV_TOO_MANY_PERIOD_BODY": "该文件包含的周期数超出了限制，最大周期数限制为："
+
 
 }
