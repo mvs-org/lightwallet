@@ -53,7 +53,7 @@ export class MvsServiceProvider {
                     //Set change address to first utxo's address
                     if (change_address == undefined)
                         change_address = result.utxo[0].address;
-                    return Metaverse.transaction_builder.send(result.utxo, recipient_address, recipient_avatar, target, change_address, result.change, undefined, fee, messages);
+                    return Metaverse.transaction_builder.send(result.utxo, recipient_address, recipient_avatar, target, change_address, result.change, result.lockedAssetChange, fee, messages);
                 })
                 .then((tx) => wallet.sign(tx)))
             .catch((error) => {
@@ -123,8 +123,8 @@ export class MvsServiceProvider {
             })
     }
 
-    createDepositTx(passphrase: string, recipient_address: string, quantity: number, locktime: number, from_address: string, change_address: string, fee: number, messages: Array<string>) {
-        let target = { ETP: quantity };
+    createAssetDepositTx(passphrase: string, recipient_address: string, recipient_avatar: string, symbol: string, quantity: number, attenuation_model: string, from_address: string, change_address: string, fee: number, messages: Array<string>) {
+        let target = { [symbol]: quantity };
         return this.wallet.getWallet(passphrase)
             .then(wallet => this.getUtxoFrom(from_address)
                 .then((utxo) => this.getHeight().then(height => Metaverse.output.findUtxo(utxo, target, height, fee)))
@@ -137,7 +137,7 @@ export class MvsServiceProvider {
                         change_address = result.utxo[0].address;
                     if (recipient_address == undefined)
                         recipient_address = result.utxo[0].address;
-                    return Metaverse.transaction_builder.deposit(result.utxo, recipient_address, quantity, locktime, change_address, result.change, fee, Metaverse.networks[this.globals.network], messages);
+                    return Metaverse.transaction_builder.sendLockedAsset(result.utxo, recipient_address, recipient_avatar, symbol, quantity, attenuation_model, change_address, result.change, undefined, fee, messages);  
                 })
                 .then((tx) => wallet.sign(tx)))
             .catch((error) => {
@@ -201,7 +201,7 @@ export class MvsServiceProvider {
             })
     }
 
-    createIssueAssetTx(passphrase: string, symbol: string, quantity: number, precision: number, issuer: string, description: string, secondaryissue_threshold: number, is_secondaryissue: boolean, issue_address: string, change_address: string, create_new_domain_cert: boolean, use_naming_cert: boolean, bounty_fee: number) {
+    createIssueAssetTx(passphrase: string, symbol: string, quantity: number, precision: number, issuer: string, description: string, secondaryissue_threshold: number, is_secondaryissue: boolean, issue_address: string, change_address: string, create_new_domain_cert: boolean, use_naming_cert: boolean, bounty_fee: number, attenuation_model: string) {
         return this.getUtxoFrom(issue_address)
             .then(utxo => {
                 return this.wallet.getWallet(passphrase)
@@ -225,7 +225,7 @@ export class MvsServiceProvider {
                                         return false;
                                     }
                                 })
-                                return Metaverse.transaction_builder.issueAsset(result.utxo.concat(certs), issue_address, symbol, quantity, precision, issuer, description, secondaryissue_threshold, is_secondaryissue, change_address, result.change, create_new_domain_cert, bounty_fee, this.globals.network)
+                                return Metaverse.transaction_builder.issueAsset(result.utxo.concat(certs), issue_address, symbol, quantity, precision, issuer, description, secondaryissue_threshold, is_secondaryissue, change_address, result.change, create_new_domain_cert, bounty_fee, this.globals.network, attenuation_model)
                             })
                             .then((tx) => wallet.sign(tx))
                     })
@@ -406,17 +406,35 @@ export class MvsServiceProvider {
                     )))
     }
 
-    async getFrozenOutputs() {
+    async getFrozenOutputs(asset) {
         let addresses = await this.getAddresses()
         let transactions = await this.getTxs()
         let outputs = []
         transactions.forEach(tx => {
             tx.outputs.forEach((output) => {
-                if (output.locked_height_range > 0 && output.height && addresses.indexOf(output.address) !== -1) {
+                if (asset == 'ETP' && output.locked_height_range > 0 && output.height && addresses.indexOf(output.address) !== -1) {
                     output.locked_until = (output.locked_height_range) ? tx.height + output.locked_height_range : 0
                     delete output['locked_height_range']
                     output.hash = tx.hash
                     outputs.push(output)
+                } else if (asset != 'ETP' && output.attachment && output.attachment.symbol == asset && output.attenuation_model_param && output.attenuation_model_param.lock_period > 0 && output.height && addresses.indexOf(output.address) !== -1) {
+                    delete output['locked_height_range']
+                    output.hash = tx.hash
+                    switch (output.attenuation_model_param.type) {
+                        case 1:
+                            if(output.attenuation_model_param.current_period_nbr == 0 && output.attenuation_model_param.next_interval == output.attenuation_model_param.lock_period / output.attenuation_model_param.total_period_nbr) {
+                                output.locked_until = (output.attenuation_model_param && output.attenuation_model_param.lock_period) ? tx.height + output.attenuation_model_param.lock_period : 0
+                                outputs.push(output)
+                            }
+                            break;
+                        case 2:
+                        case 3:
+                            if(output.attenuation_model_param.current_period_nbr == 0 && output.attenuation_model_param.next_interval == output.attenuation_model_param.locked[0].number) {
+                                output.locked_until = (output.attenuation_model_param && output.attenuation_model_param.lock_period) ? tx.height + output.attenuation_model_param.lock_period : 0
+                                outputs.push(output)
+                            }
+                            break;
+                    }
                 }
             })
         })

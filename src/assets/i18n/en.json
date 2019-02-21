@@ -216,7 +216,7 @@
     "MESSAGE.NETWORK_MISMATCH": "Network does not match",
     "MESSAGE.PASSWORD_WRONG": "Incorrect password",
     "MESSAGE.CREATE_TRANSACTION": "Unable to create transaction.",
-    "MESSAGE.BROADCAST_ERROR": "Unable to broadcast transaction.",
+    "MESSAGE.BROADCAST_ERROR": "Unable to broadcast transaction, please try again later.",
 
     "LOGIN": "Login",
     "HOW_TO_IMPORT_WALLET_MOBILE": "How to Import",
@@ -280,7 +280,6 @@
     "AVATARS.SECONDARY_ISSUE": "Secondary Issue",
     "AVATARS.DOMAIN": "Domain",
     "AVATARS.NAMING": "Naming",
-    "OWNER": "Owner",
     "HASH": "Hash",
     "RECEIVE.ADDRESS_NO_MST": "This address doesn't have any MST",
 
@@ -339,7 +338,7 @@
     "TOTAL_TO_SEND": "Total to send",
 
     "SEND_MORE.TOTAL_MORE_AVAILABLE": "The total is higher than your available balance",
-    "SEND_MORE.WRONG_FILE": "Impossible to read this file. Please check the format. In advanced options, you can export to CSV file and follow this template",
+    "SEND_MORE.WRONG_FILE": "Impossible to read this file, please check the format. You can download the CSV example file and follow this template",
 
     "IMPORT_FROM_CSV": "Import from CSV",
     "DOWNLOAD_CSV": "Download CSV",
@@ -606,6 +605,28 @@
 
     "LANGUAGE_SETTINGS_TEXT": "Change the language.",
     "THEME_SETTINGS_TEXT": "Change the theme to change the colors of the wallet.",
-    "INFORMATION.TEXT": "Get more information about MyETPWallet."
+    "INFORMATION.TEXT": "Get more information about MyETPWallet.",
+
+    "ASSET_LOCK": "I want to lock this asset",
+    "ASSET_LOCK_PERIOD": "Lock period (in blocks)",
+     
+    "ASSET_LOCK.SIMPLE": "Simple unlock",
+    "ASSET_LOCK.RECURRENT": "Recurrent unlock",
+    "ASSET_LOCK.CUSTOM": "Custom unlock",
+    "ASSET_LOCK.NBR_PERIOD": "Number of periods",
+    "ASSET_LOCK.TOTAL_QUANTITY": "Total locked quantity",
+    "ASSET_LOCK.TOTAL_DURATION": "Total locked duration (in blocks)",
+
+    "HELP.ASSET_LOCK_NBR_PERIOD": "This is the total number of periods that will be used.",
+    "HELP.ASSET_LOCK_TOTAL_QUANTITY": "This is the total number of assets that will be locked.",
+    "HELP.ASSET_LOCK_TOTAL_DURATION": "This is the total number of blocks until the last period terminates.",
+    
+    "ASSET_LOCK.PERIOD_NBR": "Period {{period_nbr}}",
+    "ASSET_LOCK.DURATION_CUSTOM_PERIOD": "Duration of period {{period_nbr}} (in blocks)",
+    "ASSET_LOCK.AMOUNT_CUSTOM_PERIOD": "Amount unlocked at the end of period {{period_nbr}}",
+    "ASSET_LOCK.TOTAL_MORE_SEND": "The sum of the amounts of each period is higher than the send amount specified above",
+
+    "MESSAGE.LOCK_IMPORT_CSV_TOO_MANY_PERIODS_TITLE": "Too many periods",
+    "MESSAGE.LOCK_IMPORT_CSV_TOO_MANY_PERIOD_BODY": "This file contains too many periods. The maximum number of periods is limited to "
 
 }

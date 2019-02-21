@@ -122,7 +122,6 @@ export class MyETPWallet {
             .then(plugins => {
                 return Promise.all([
                     { title: 'ACCOUNT.TITLE', component: "AccountPage", icon: 'home', root: true },
-                    { title: 'ETP_DEPOSIT', component: "DepositPage", icon: 'log-in' },
                     { title: 'AVATARS', component: "AvatarsPage", icon: 'person' },
                     { title: 'REGISTER_MST', component: "AssetIssuePage", icon: 'globe' },
                     { title: 'REGISTER_MIT', component: "MITRegisterPage", icon: 'create' },

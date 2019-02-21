@@ -53,8 +53,10 @@ export class AssetTransferPage {
     total: number
     message: string = ""
     fee: number = 10000
-    sendMoreValidAvatar: boolean = false
     sendMoreValidEachAvatar: Array<boolean> = []
+    attenuation_model: string
+ 	blocktime: number
+ 	lock: boolean = false
 
     constructor(
         public navCtrl: NavController,
@@ -96,6 +98,13 @@ export class AssetTransferPage {
                     }
                 })
                 this.addressbalances = addrblncs
+            })
+
+        mvs.getHeight()
+            .then(height => mvs.getBlocktime(height))
+            .then(blocktime => this.blocktime = blocktime)
+            .catch((error) => {
+                console.error(error.message)
             })
     }
 
@@ -156,17 +165,32 @@ export class AssetTransferPage {
                 }
                 switch(this.transfer_type){
                     case "one":
-                        return this.mvs.createSendTx(
-                            this.passphrase,
-                            this.selectedAsset,
-                            this.recipient_address,
-                            (this.recipient_avatar && this.recipient_avatar_valid) ? this.recipient_avatar : undefined,
-                            Math.round(parseFloat(this.quantity) * Math.pow(10, this.decimals)),
-                            (this.sendFrom != 'auto') ? this.sendFrom : null,
-                            (this.changeAddress != 'auto') ? this.changeAddress : undefined,
-                            this.fee,
-                            (messages !== []) ? messages : undefined
-                        )
+                        if(this.lock) {
+                            return this.mvs.createAssetDepositTx(
+                                this.passphrase,
+                                this.recipient_address,
+                                (this.recipient_avatar && this.recipient_avatar_valid) ? this.recipient_avatar : undefined,
+                                this.selectedAsset,
+                                Math.round(parseFloat(this.quantity) * Math.pow(10, this.decimals)),
+                                this.attenuation_model,
+                                (this.sendFrom != 'auto') ? this.sendFrom : null,
+                                (this.changeAddress != 'auto') ? this.changeAddress : undefined,
+                                this.fee,
+                                (messages !== []) ? messages : undefined
+                            )
+                        } else {
+                            return this.mvs.createSendTx(
+                                this.passphrase,
+                                this.selectedAsset,
+                                this.recipient_address,
+                                (this.recipient_avatar && this.recipient_avatar_valid) ? this.recipient_avatar : undefined,
+                                Math.round(parseFloat(this.quantity) * Math.pow(10, this.decimals)),
+                                (this.sendFrom != 'auto') ? this.sendFrom : null,
+                                (this.changeAddress != 'auto') ? this.changeAddress : undefined,
+                                this.fee,
+                                (messages !== []) ? messages : undefined
+                            )
+                        }
                     case "more":
                         let target = {}
                         let recipients = JSON.parse(JSON.stringify(this.recipients))
@@ -434,7 +458,7 @@ export class AssetTransferPage {
                     }
                 }
                 if(data.length > this.sendMore_limit)
-                    this.alert.showTooManyRecipients(this.sendMore_limit)
+                    this.alert.showLimitReached('MESSAGE.SEND_MORE_IMPORT_CSV_TOO_MANY_RECIPIENT_TITLE', 'MESSAGE.SEND_MORE_IMPORT_CSV_TOO_MANY_RECIPIENT_BODY', this.sendMore_limit)
                 if(this.selectedAsset == 'ETP'){
                     this.quantityETPChanged()
                 } else {
@@ -487,6 +511,10 @@ export class AssetTransferPage {
         else {
             pom.click();
         }
+    }
+
+    setAttenuationModel = (model: string) => {
+        this.attenuation_model = model
     }
 
 }
