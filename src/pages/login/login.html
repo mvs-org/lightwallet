@@ -53,7 +53,7 @@
             </button>
         </ion-row>
 
-        <ion-row *ngIf="platform.is('mobile')" class="browser-button">
+        <ion-row *ngIf="platform.is('mobile') && !platform.is('mobileweb')" class="browser-button">
             <button ion-button full icon-left class="large-btn" id="open-wallet-button" color="secondary" (click)="loginFromMobile()">
                 <ion-icon name="qr-scanner"></ion-icon>
                 {{"OPEN_FROM_QRCODE"|translate}}
@@ -65,7 +65,7 @@
                 {{"OPEN_FROM_BACKUP_WORDS"|translate}}
             </button>
         </ion-row>
-        <ion-row *ngIf="platform.is('mobile')" class="browser-button">
+        <ion-row *ngIf="platform.is('mobile') && !platform.is('mobileweb')" class="browser-button">
             <button ion-button full icon-left class="large-btn" id="open-howto-mobile-button" color="primary" (click)="howToMobile()">
                 <ion-icon name="information-circle"></ion-icon>
                 {{"HOW_TO_IMPORT_WALLET_MOBILE"|translate}}
