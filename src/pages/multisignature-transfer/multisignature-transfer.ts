@@ -52,6 +52,7 @@ export class MultisignatureTransferPage {
     nbr_sign_before_sign: number
     nbr_sign_after_sign: number
     decimals_mst: any = {}
+    isApp: boolean
 
     constructor(
         public navCtrl: NavController,
@@ -69,6 +70,7 @@ export class MultisignatureTransferPage {
         this.sendFrom = navParams.get('address')
         this.total_to_send[this.selectedAsset] = 0
         this.total = 0
+        this.isApp = (!document.URL.startsWith('http') || document.URL.startsWith('http://localhost:8080'));
 
         //Load addresses
         mvs.getAddresses()
