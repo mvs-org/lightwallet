@@ -56,7 +56,8 @@ export class AssetTransferPage {
     sendMoreValidEachAvatar: Array<boolean> = []
     attenuation_model: string
  	blocktime: number
- 	lock: boolean = false
+    lock: boolean = false
+    isApp: boolean
 
     constructor(
         public navCtrl: NavController,
@@ -77,6 +78,7 @@ export class AssetTransferPage {
         }
         this.total_to_send[this.selectedAsset] = 0
         this.total = 0
+        this.isApp = (!document.URL.startsWith('http') || document.URL.startsWith('http://localhost:8080'));
 
         //Load addresses and balances
         Promise.all([this.mvs.getBalances(), this.mvs.getAddresses(), this.mvs.getAddressBalances()])

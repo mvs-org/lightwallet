@@ -29,6 +29,7 @@ export class MultisignatureAddPage {
     @ViewChild('importAddressInput') importAddressInput;
     passphrase_import: string = ""
     validPublicKeys: boolean = false
+    isApp: boolean
 
     customTrackBy(index: number, obj: any): any {
         return index;
@@ -47,6 +48,8 @@ export class MultisignatureAddPage {
     ) {
 
         this.cosigners.push('')
+
+        this.isApp = (!document.URL.startsWith('http') || document.URL.startsWith('http://localhost:8080'));
 
         //Load addresses and balances
         Promise.all([this.mvs.getAddresses(), this.mvs.getAddressBalances()])
