@@ -426,8 +426,8 @@
     "SEND_ALL_TITLE": "Alles senden?",
     "SEND_ALL_MESSAGE": "Wollen Sie wirklich vie verfügbare Menge senden?",
 
-    "DEPOSIT.DURATION_ESTIMATION": "Ihre ETP werden in vorraussichtlich {{duration_days}} Tagen und {{duration_hours}} Stunden verfügbar. Dies ist nur eine Schätzung anhand der Blockzeit der letzten 1000 Blöcke ({{blocktime}} Sekunden), und kann variieren.",
-    "HISTORY.UNLOCK_APPROXIMATION_INFORMATION": "* Bitte beachten Sie, dass die Angabe der vorraussichtlichen Entsperrzeit nur eine Schätzung darstellt, die anhand der Blockzeit der letzten 1000 Blöcke erstellt wird. Die tatsächliche Entsperrung variiert je nach Blockzeit.",
+    "DEPOSIT.DURATION_ESTIMATION": "Ihre MST werden in vorraussichtlich {{duration_days}} Tagen und {{duration_hours}} Stunden verfügbar. Dies ist nur eine Schätzung anhand der Blockzeit der letzten 10000 Blöcke ({{blocktime}} Sekunden), und kann variieren.",
+    "HISTORY.UNLOCK_APPROXIMATION_INFORMATION": "* Bitte beachten Sie, dass die Angabe der vorraussichtlichen Entsperrzeit nur eine Schätzung darstellt, die anhand der Blockzeit der letzten 10000 Blöcke erstellt wird. Die tatsächliche Entsperrung variiert je nach Blockzeit.",
 
     "RECIPIENT_ADDRESS_OR_AVATAR": "Empfänger Avatar oder Adresse",
     "HELP.RECIPIENT_ADDRESS_OR_AVATAR": "Es kann entweder ein Avatar oder eine Adresse eingegeben werden.",

@@ -687,10 +687,11 @@ export class MvsServiceProvider {
     }
 
     getBlocktime(current_height) {
+        let downscale = 10;
         return this.storage.get('blocktime')
             .then((blocktime) => {
                 if (blocktime == undefined || blocktime.height == undefined || current_height > blocktime.height + 1000) {
-                    return this.blockchain.block.blocktime(1000)
+                    return this.blockchain.block.blocktime(downscale)
                         .then((time) => {
                             this.setBlocktime(time, current_height)
                             return time

@@ -427,8 +427,8 @@
   "SEND_ALL_TITLE": "全部发送么？",
   "SEND_ALL_MESSAGE": "您确认发送所有余额么？",
 
-  "DEPOSIT.DURATION_ESTIMATION": "您的ETP预估锁定时间为{{duration_days}}天 {{duration_hours}}小时。这个时间 ({{blocktime}}秒)是根据最近的1000个区块的解锁时间确定的，可能会随着出块速度而变化。",
-  "HISTORY.UNLOCK_APPROXIMATION_INFORMATION": "*请注意此“解锁时间”是由最近的1000个区块的平均出块时间预估所得，可能会随着出块速度而变化。",
+  "DEPOSIT.DURATION_ESTIMATION": "您的MST预估锁定时间为{{duration_days}}天 {{duration_hours}}小时。这个时间 ({{blocktime}}秒)是根据最近的10000个区块的解锁时间确定的，可能会随着出块速度而变化。",
+  "HISTORY.UNLOCK_APPROXIMATION_INFORMATION": "*请注意此“解锁时间”是由最近的10000个区块的平均出块时间预估所得，可能会随着出块速度而变化。",
 
   "RECIPIENT_ADDRESS_OR_AVATAR": "接收者的数字身份或钱包地址",
   "HELP.RECIPIENT_ADDRESS_OR_AVATAR": "您可以输入接收者的数字身份或钱包地址。",
