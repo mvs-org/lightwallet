@@ -104,7 +104,6 @@ export class TransactionsPage {
                 } else {
                     grouped_frozen_ouputs[output.height][output.locked_until].attachment.quantity += output.attachment.quantity
                 }
-                grouped_frozen_ouputs[output.height][output.locked_until].value += output.value
                 grouped_frozen_ouputs[output.height][output.locked_until].transactions.push(output.hash)
             } else {
                 output.transactions = [output.hash]
