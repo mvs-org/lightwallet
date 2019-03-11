@@ -4,6 +4,7 @@ import { TransactionsPage } from './transactions';
 import { TranslateModule} from '@ngx-translate/core';
 import { PipesModule } from '../../pipes/pipes.module';
 import { ProgressBarModule } from 'angular-progress-bar';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
     declarations: [
@@ -13,7 +14,8 @@ import { ProgressBarModule } from 'angular-progress-bar';
         IonicPageModule.forChild(TransactionsPage),
         PipesModule,
         ProgressBarModule,
-        TranslateModule
+        TranslateModule,
+        NgxPaginationModule,
     ],
     exports: [
         TransactionsPage
