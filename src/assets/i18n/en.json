@@ -627,6 +627,8 @@
     "ASSET_LOCK.TOTAL_MORE_SEND": "The sum of the amounts of each period is higher than the send amount specified above",
 
     "MESSAGE.LOCK_IMPORT_CSV_TOO_MANY_PERIODS_TITLE": "Too many periods",
-    "MESSAGE.LOCK_IMPORT_CSV_TOO_MANY_PERIOD_BODY": "This file contains too many periods. The maximum number of periods is limited to "
+    "MESSAGE.LOCK_IMPORT_CSV_TOO_MANY_PERIOD_BODY": "This file contains too many periods. The maximum number of periods is limited to ",
+    
+    "AVATARS.MINING": "Mining"
 
 }
