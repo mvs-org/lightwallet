@@ -41,6 +41,7 @@ export class MvsServiceProvider {
     }
 
     createSendTx(passphrase: string, asset: string, recipient_address: string, recipient_avatar: string, quantity: number, from_address: string, change_address: string, fee: number, messages: Array<string>) {
+        console.log(passphrase, asset, recipient_address, recipient_avatar, quantity, from_address, change_address, fee, messages)
         let target = {};
         target[asset] = quantity;
         return this.wallet.getWallet(passphrase)

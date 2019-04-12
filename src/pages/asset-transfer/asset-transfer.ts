@@ -159,8 +159,7 @@ export class AssetTransferPage {
 
     create() {
         return this.alert.showLoading()
-            .then(() => this.mvs.getAddresses())
-            .then((addresses) => {
+            .then(() => {
                 let messages = [];
                 if(this.message) {
                     messages.push(this.message)

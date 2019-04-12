@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, Response } from '@angular/http';
+import { Headers, RequestOptions } from '@angular/http';
 import { AppGlobals } from '../../app/app.global';
 import 'rxjs/add/operator/map';
 import { Storage } from '@ionic/storage';
@@ -337,5 +338,45 @@ export class WalletServiceProvider {
     setPlugins(plugins: Array<any>) {
         this.storage.set('plugins', plugins ? plugins : [])
     }
+
+    getSwftRate(depositCoinCode, receiveCoinCode) {
+        let headers = new Headers({
+            "Content-Type": "application/json",
+            "cache-control": "no-cache"
+        });
+        let options = new RequestOptions({ 
+            headers: headers
+            
+            /*"hostname": [
+                "transfer",
+                "swft",
+                "pro"
+            ],
+            "path": [
+                "api",
+                "v1",
+                "getBaseInfo"
+            ]*/
+        });
+        let param = {
+            depositCoinCode: depositCoinCode,
+            receiveCoinCode: receiveCoinCode
+        }
+        return this.http.post("https://transfer.swft.pro/api/v1/getBaseInfo", param, options).toPromise()
+                .then(this.extractData)
+                .catch(this.handleErrorPromise);
+
+    }
+    
+    extractData(res: Response) {
+        let body = res.json();
+        console.log(body)
+        return body || {};
+    }
+
+    handleErrorPromise (error: Response | any) {
+        console.error(error.message || error);
+        return Promise.reject(error.message || error);
+    } 
 
 }
