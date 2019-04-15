@@ -198,8 +198,8 @@ export class AccountPage {
             this.syncing = true
             this.syncingSmall = true
             return Promise.all([this.mvs.updateHeight(), this.updateBalances()])
-                .then((results) => {
-                    this.height = results[0]
+                .then(([height, balances]) => {
+                    this.height = height
                     this.syncing = false
                     this.syncingSmall = false
                     if (refresher)

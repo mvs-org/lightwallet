@@ -137,7 +137,7 @@ export class MvsServiceProvider {
                         change_address = result.utxo[0].address;
                     if (recipient_address == undefined)
                         recipient_address = result.utxo[0].address;
-                    return Metaverse.transaction_builder.sendLockedAsset(result.utxo, recipient_address, recipient_avatar, symbol, quantity, attenuation_model, change_address, result.change, undefined, fee, messages);  
+                    return Metaverse.transaction_builder.sendLockedAsset(result.utxo, recipient_address, recipient_avatar, symbol, quantity, attenuation_model, change_address, result.change, undefined, fee, messages);
                 })
                 .then((tx) => wallet.sign(tx)))
             .catch((error) => {
@@ -265,7 +265,7 @@ export class MvsServiceProvider {
 
     getUtxo() {
         return this.getTxs()
-            .then((txs: Array<any>) => txs.sort(function(a, b) {
+            .then((txs: Array<any>) => txs.sort(function (a, b) {
                 return b.height - a.height;
             }))
             .then((txs: Array<any>) => this.getAddresses()
@@ -291,7 +291,7 @@ export class MvsServiceProvider {
 
     getUtxoFromMultisig(address: any) {
         return this.getTxs()
-            .then((txs: Array<any>) => txs.sort(function(a, b) {
+            .then((txs: Array<any>) => txs.sort(function (a, b) {
                 return b.height - a.height;
             }))
             .then((txs: Array<any>) => Metaverse.output.calculateUtxo(txs, [address]));
@@ -341,7 +341,7 @@ export class MvsServiceProvider {
     }
 
     loadNewTxs(addresses: Array<string>, start: number) {
-        return this.blockchain.addresses.txs(addresses, { min_height: start })
+        return this.blockchain.addresses.listTxs(addresses, { min_height: start })
     }
 
     getAddressBalances() {
@@ -366,16 +366,12 @@ export class MvsServiceProvider {
             })
     }
 
-    getData(): Promise<any> {
-        var balances: {};
-        return this.getBalances()
-            .then(_ => {
-                balances = _;
-                return Promise.all([this.getAddresses(), this.getLastTxHeight(), this.getHeight(), this.getTxs(), this.wallet.getMultisigAddresses()])
-            })
-            .then(results => { return this.getNewTxs(results[0].concat(results[4]), results[1], results[3]) })
-            .then(() => this.calculateBalances())
-            .then(() => { return balances })
+    async getData(): Promise<any> {
+        const addresses = await this.getAddresses()
+        addresses.concat(await this.wallet.getMultisigAddresses())
+        while (await this.getNewTxs(addresses, await this.getLastTxHeight())) { }
+        await this.calculateBalances()
+        return await this.getBalances()
     }
 
     getUpdateNeeded() {
@@ -422,14 +418,14 @@ export class MvsServiceProvider {
                     output.hash = tx.hash
                     switch (output.attenuation_model_param.type) {
                         case 1:
-                            if(output.attenuation_model_param.current_period_nbr == 0 && output.attenuation_model_param.next_interval == output.attenuation_model_param.lock_period / output.attenuation_model_param.total_period_nbr) {
+                            if (output.attenuation_model_param.current_period_nbr == 0 && output.attenuation_model_param.next_interval == output.attenuation_model_param.lock_period / output.attenuation_model_param.total_period_nbr) {
                                 output.locked_until = (output.attenuation_model_param && output.attenuation_model_param.lock_period) ? tx.height + output.attenuation_model_param.lock_period : 0
                                 outputs.push(output)
                             }
                             break;
                         case 2:
                         case 3:
-                            if(output.attenuation_model_param.current_period_nbr == 0 && output.attenuation_model_param.next_interval == output.attenuation_model_param.locked[0].number) {
+                            if (output.attenuation_model_param.current_period_nbr == 0 && output.attenuation_model_param.next_interval == output.attenuation_model_param.locked[0].number) {
                                 output.locked_until = (output.attenuation_model_param && output.attenuation_model_param.lock_period) ? tx.height + output.attenuation_model_param.lock_period : 0
                                 outputs.push(output)
                             }
@@ -494,14 +490,11 @@ export class MvsServiceProvider {
         return Promise.all(['mvs_last_tx_height', 'mvs_height', 'utxo', 'last_update', 'addressbalances', 'balances', 'mvs_txs', 'asset_order'].map((key) => this.storage.remove(key)))
     }
 
-    getNewTxs(addresses: Array<string>, lastKnownHeight: number, txs: any): Promise<any> {
-        if (typeof txs == 'undefined')
-            txs = []
-        return this.loadNewTxs(addresses, lastKnownHeight + 1)
-            .then((newTxs: any) => {
-                txs = txs.concat(newTxs.transactions)
-                return this.addTxs(txs).then(() => txs)
-            })
+    async getNewTxs(addresses: Array<string>, lastKnownHeight: number): Promise<any> {
+        console.log(`get new transactions starting from ${lastKnownHeight}`)
+        const newTxs = await this.loadNewTxs(addresses, lastKnownHeight + 1)
+        await this.addTxs(newTxs)
+        return newTxs.length
     }
 
     getDbVersion() {
@@ -540,29 +533,37 @@ export class MvsServiceProvider {
             .then(() => this.event.publish('settings_update', {}))
     }
 
-    addTxs(newtxs: Array<any>) {
-        return this.getTxs()
-            .then((txs: any[]) => {
-                if (newtxs.length)
-                    newtxs.forEach((newtx) => {
-                        let found = 0;
-                        txs.forEach((oldtx, index) => {
-                            if (newtx.hash == oldtx.hash) {
-                                found = 1;
-                                txs[index] = newtx;
-                            }
-                        })
-                        if (found == 0) {
-                            txs.push(newtx)
-                        }
-                    })
-                return this.storage.set('mvs_txs', txs)
-            })
-            .then(() => {
-                if (newtxs.length)
-                    this.setLastTxHeight(newtxs[0].height)
-                return this.getTxs()
-            })
+    async addTxs(newtxs: Array<any>) {
+        console.log(newtxs)
+        if (newtxs === undefined || newtxs.length === 0) {
+            return
+        }
+        let txs = await this.getTxs()
+        newtxs = newtxs.sort((a: any,b: any)=> a.height - b.height)
+        newtxs.forEach((newtx) => {
+            let found = this.findTxIndexByHash(txs, newtx.hash)
+            if (found == -1) {
+                txs = [newtx].concat(txs)
+            } else {
+                txs[found] = newtx;
+            }
+        })
+        await this.storage.set('mvs_txs', txs)
+        console.log(txs)
+
+        console.log(`set max height to ${txs[0].height}`)
+        await this.setLastTxHeight(txs[0].height)
+
+        return newtxs.length
+    }
+
+    private findTxIndexByHash(txs, hash) {
+        txs.forEach((tx, index) => {
+            if (tx.hash === hash) {
+                return index
+            }
+        })
+        return -1
     }
 
     getTickers = () => {
@@ -590,7 +591,7 @@ export class MvsServiceProvider {
 
     async addAssetsToAssetOrder(names: string[]) {
         let order = await this.assetOrder()
-        names.forEach(symbol=>{
+        names.forEach(symbol => {
             if (order.indexOf(symbol) === -1)
                 order.push(symbol)
         })
@@ -723,21 +724,21 @@ export class MvsServiceProvider {
         return this.blockchain.multisig.get(address)
     }
 
-    async decodeTx(rawtx){
+    async decodeTx(rawtx) {
         let transactions = await this.getTxs()
         let tx = Metaverse.transaction.decode(rawtx);
-        tx.inputs.forEach(input=>{
-            let found=false
-            transactions.forEach(t=>{
-                if(input.previous_output.hash==t.hash){
-                    found=true
-                    input.previous_output.script=t.outputs[input.previous_output.index].script
+        tx.inputs.forEach(input => {
+            let found = false
+            transactions.forEach(t => {
+                if (input.previous_output.hash == t.hash) {
+                    found = true
+                    input.previous_output.script = t.outputs[input.previous_output.index].script
                     input.previous_output.address = t.outputs[input.previous_output.index].address
                     input.previous_output.value = t.outputs[input.previous_output.index].value
                     input.previous_output.attachment = t.outputs[input.previous_output.index].attachment
                 }
             })
-            if(!found) throw `Error finding previous output script for ${input.previous_output.hash}-${input.previous_output.index}`
+            if (!found) throw `Error finding previous output script for ${input.previous_output.hash}-${input.previous_output.index}`
         })
         return tx
     }
