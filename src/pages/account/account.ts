@@ -72,7 +72,12 @@ export class AccountPage {
         if (await this.checkAccess()) {
             this.loadTickers()
             this.initialize()
-            this.whitelist = await this.mvs.getWhitelist()
+            try {
+                this.whitelist = await this.mvs.getWhitelist()
+            } catch (e) {
+                console.error(e);
+            }
+            
         }
         else
             this.nav.setRoot("LoginPage")

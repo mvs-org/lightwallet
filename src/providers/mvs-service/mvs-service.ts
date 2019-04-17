@@ -342,6 +342,10 @@ export class MvsServiceProvider {
 
     loadNewTxs(addresses: Array<string>, start: number) {
         return this.blockchain.addresses.listTxs(addresses, { min_height: start })
+            .catch(error => {
+                console.log('error loading transactions')
+                throw (error.message)
+            })
     }
 
     getAddressBalances() {
@@ -369,18 +373,21 @@ export class MvsServiceProvider {
     async getData(): Promise<any> {
         const addresses = await this.getAddresses()
         addresses.concat(await this.wallet.getMultisigAddresses())
-        while (await this.getNewTxs(addresses, await this.getLastTxHeight())) { }
+        let newTxs = await this.getNewTxs(addresses, await this.getLastTxHeight())
+        while (newTxs && newTxs.length) {
+            this.event.publish('last_tx_height_update', await this.getLastTxHeight());
+            newTxs = await this.getNewTxs(addresses, await this.getLastTxHeight())
+        }
         await this.calculateBalances()
         return await this.getBalances()
     }
 
-    getUpdateNeeded() {
+    getUpdateNeeded(update_interval = 20) {
         return new Promise((resolve, reject) => {
-            var UPDATE_INTERVAL = 20
             this.getUpdateTime()
                 .then((date: Date) => {
                     var now = new Date()
-                    resolve(typeof date === 'undefined' || (+now - +date) / 1000 > UPDATE_INTERVAL)
+                    resolve(typeof date === 'undefined' || (+now - +date) / 1000 > update_interval)
                 }, reject)
         })
     }
@@ -491,10 +498,8 @@ export class MvsServiceProvider {
     }
 
     async getNewTxs(addresses: Array<string>, lastKnownHeight: number): Promise<any> {
-        console.log(`get new transactions starting from ${lastKnownHeight}`)
         const newTxs = await this.loadNewTxs(addresses, lastKnownHeight + 1)
-        await this.addTxs(newTxs)
-        return newTxs.length
+        return this.addTxs(newTxs)
     }
 
     getDbVersion() {
@@ -534,12 +539,11 @@ export class MvsServiceProvider {
     }
 
     async addTxs(newtxs: Array<any>) {
-        console.log(newtxs)
         if (newtxs === undefined || newtxs.length === 0) {
-            return
+            return newtxs
         }
         let txs = await this.getTxs()
-        newtxs = newtxs.sort((a: any,b: any)=> a.height - b.height)
+        newtxs = newtxs.sort((a: any, b: any) => a.height - b.height)
         newtxs.forEach((newtx) => {
             let found = this.findTxIndexByHash(txs, newtx.hash)
             if (found == -1) {
@@ -549,12 +553,9 @@ export class MvsServiceProvider {
             }
         })
         await this.storage.set('mvs_txs', txs)
-        console.log(txs)
-
-        console.log(`set max height to ${txs[0].height}`)
         await this.setLastTxHeight(txs[0].height)
 
-        return newtxs.length
+        return newtxs
     }
 
     private findTxIndexByHash(txs, hash) {
@@ -664,7 +665,7 @@ export class MvsServiceProvider {
         return this.storage.get('eth_swap')
             .then((eth_swap) => {
                 let current_time = new Date();
-                if (eth_swap == undefined || eth_swap.whitelist == undefined || eth_swap.last_update == undefined || current_time.getTime() - eth_swap.last_update.getTime() > 3600000) {
+                if (!eth_swap || !eth_swap.whitelist || eth_swap.last_update == undefined || current_time.getTime() - eth_swap.last_update.getTime() > 3600000) {
                     return this.blockchain.bridge.whitelist()
                         .then((whitelist) => {
                             this.setWhitelist(whitelist, current_time)

@@ -7,6 +7,7 @@ import { Keyboard } from '@ionic-native/keyboard'
 import { AppGlobals } from './app.global'
 import { Storage } from '@ionic/storage'
 import { PluginProvider } from '../providers/plugin/plugin'
+import { MvsServiceProvider } from '../providers/mvs-service/mvs-service';
 
 @Component({
     templateUrl: 'app.html'
@@ -24,6 +25,7 @@ export class MyETPWallet {
         private plugins: PluginProvider,
         public translate: TranslateService,
         private event: Events,
+        private mvs: MvsServiceProvider,
         private globals: AppGlobals,
         public statusBar: StatusBar,
         public keyboard: Keyboard
@@ -37,7 +39,8 @@ export class MyETPWallet {
             .then(() => this.isLoggedIn())
             .then((loggedin) => {
                 if (loggedin) {
-                    this.rootPage = "AccountPage"
+                    return this.mvs.getUpdateNeeded(60*5).then(needUpdate => needUpdate ? this.rootPage = "LoadingPage" :this.rootPage = "AccountPage" )
+                    
                 } else {
                     this.rootPage = "LoginPage"
                 }

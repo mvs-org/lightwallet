@@ -629,6 +629,13 @@
     "MESSAGE.LOCK_IMPORT_CSV_TOO_MANY_PERIODS_TITLE": "Too many periods",
     "MESSAGE.LOCK_IMPORT_CSV_TOO_MANY_PERIOD_BODY": "This file contains too many periods. The maximum number of periods is limited to ",
     
-    "AVATARS.MINING": "Mining"
+    "AVATARS.MINING": "Mining",
+
+    "LOADING.TITLE": "LOADING THE NEW REALITY",
+    "LOADING.RETRY": "Retry",
+    "LOADING.CURRENT_HEIGHT": "Currently loaded till height: {{height}}",
+    "LOADING.STOPPED": "Unable to synchonize your transactions. Please check you internet connection or try again later.",
+    "RETURN_LOGIN": "Return to login",
+    "LOADING.FULLY_LOADED": "Fully loaded! Entering the Metaverse..."
 
 }
