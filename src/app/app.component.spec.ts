@@ -4,6 +4,7 @@ import { AppGlobals } from './app.global';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { WalletServiceProvider } from '../providers/wallet-service/wallet-service';
 import { MvsServiceProvider } from '../providers/mvs-service/mvs-service';
+import { CryptoServiceProvider } from '../providers/crypto-service/crypto-service';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -54,6 +55,7 @@ describe('MyETPWallet Component', () => {
                 AppGlobals,
                 { provide: ErrorHandler, useClass: IonicErrorHandler },
                 MvsServiceProvider,
+                CryptoServiceProvider,
                 Keyboard,
                 StatusBar,
                 SplashScreen,

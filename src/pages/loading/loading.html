@@ -12,7 +12,7 @@
     </ion-row>
     
     <div *ngIf="!showRestartOption" class="mini-loader"></div>
-    <progress-bar [progress]="progress"></progress-bar>
+    <progress-bar id="load_progress" [progress]="progress"></progress-bar>
     <h4 *ngIf="progress != 100" [translate]="'LOADING.CURRENT_HEIGHT'" [translateParams]="{height: loadingHeight}"></h4>
     <h4 class="valid-input" *ngIf="progress == 100" [translate]="'LOADING.FULLY_LOADED'"></h4>
     
