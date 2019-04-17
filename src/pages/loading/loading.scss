@@ -20,4 +20,8 @@ page-loading {
         outline: 0;
         background-size: 100%;
     }
+
+    .progress-inner {
+        min-width: 30px !important;
+    }
 }

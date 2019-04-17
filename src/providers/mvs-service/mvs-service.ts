@@ -311,8 +311,6 @@ export class MvsServiceProvider {
 
     getGlobalMit = (symbol) => this.blockchain.MIT.get(symbol)
 
-    getListAvatar = () => this.blockchain.avatar.list()
-
     getListMst = () => this.blockchain.MST.list()
 
     getListMit = () => this.blockchain.MIT.list()

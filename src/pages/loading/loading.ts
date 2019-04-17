@@ -60,7 +60,7 @@ export class LoadingPage {
     }
 
     calculateProgress() {
-        return Math.max(1, Math.min(99, Math.round((this.loadingHeight - this.firstTxHeight) / (this.maxHeight - this.firstTxHeight) * 100)))
+        return (this.loadingHeight && this.maxHeight && this.firstTxHeight) ? Math.max(1, Math.min(99, Math.round((this.loadingHeight - this.firstTxHeight) / (this.maxHeight - this.firstTxHeight) * 100))) : 1
     }
 
     cancel() {

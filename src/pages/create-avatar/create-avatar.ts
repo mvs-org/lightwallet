@@ -21,10 +21,10 @@ export class CreateAvatarPage {
     avatar_address: string = ""
     passphrase: string = ""
     addressbalances: Array<AddressBalance> = []
-    list_all_avatars: Array<string> = [];
     bounty_fee: number = 80
     addressSelectOptions: any
     message: string = ""
+    available_symbol: boolean = false
 
     constructor(
         public navCtrl: NavController,
@@ -57,8 +57,6 @@ export class CreateAvatarPage {
                 subTitle: message
             };
         })
-        this.loadListAvatars()
-            .catch(console.error);
     }
 
     cancel() {
@@ -135,24 +133,31 @@ export class CreateAvatarPage {
       });
     }
 
-    loadListAvatars(){
-        return this.mvs.getListAvatar()
-            .then((avatars) => {
-                avatars.result.forEach((avatar) => {
-                    this.list_all_avatars.push(avatar.symbol)
-                })
-            })
-            .catch((error) => {
-                console.error(error)
-            })
-    }
-
     validPassword = (passphrase) => (passphrase.length > 0)
 
     validAddress = (avatar_address) => (avatar_address != '')
 
-    validSymbol = (symbol) => (symbol.length > 2) && (symbol.length < 64) && (!/[^A-Za-z0-9@_.-]/g.test(symbol)) && (this.list_all_avatars.indexOf(symbol) == -1)
+    validSymbol = (symbol) => (symbol.length > 2) && (symbol.length < 64) && (!/[^A-Za-z0-9@_.-]/g.test(symbol)) && this.available_symbol
 
     validMessageLength = (message) => this.mvs.verifyMessageSize(message) < 253
+
+    symbolChanged = () => {
+        if (this.symbol && this.symbol.length >= 3) {
+            this.symbol = this.symbol.trim()
+            this.mvs.getGlobalAvatar(this.symbol)
+                .then(result => {
+                    if(!result) {
+                        this.available_symbol = true
+                    } else if (this.symbol != result[1]) {
+                        throw ''
+                    } else {
+                        this.available_symbol = false
+                    }
+                })
+                .catch((e) => {
+                    this.available_symbol = false
+                })
+        }
+    }
 
 }
