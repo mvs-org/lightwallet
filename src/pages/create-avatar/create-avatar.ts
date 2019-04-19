@@ -25,6 +25,7 @@ export class CreateAvatarPage {
     addressSelectOptions: any
     message: string = ""
     available_symbol: boolean = false
+    showAdvanced: boolean = false
 
     constructor(
         public navCtrl: NavController,
@@ -70,7 +71,14 @@ export class CreateAvatarPage {
                 if(this.message) {
                     messages.push(this.message)
                 }
-                return this.mvs.createAvatarTx(this.passphrase, this.avatar_address, this.symbol, undefined, this.bounty_fee*100000000/100, messages)
+                return this.mvs.createAvatarTx(
+                    this.passphrase,
+                    this.avatar_address,
+                    this.symbol,
+                    undefined,
+                    (this.showAdvanced) ? this.bounty_fee*100000000/100 : 80000000,
+                    messages
+                )
             })
             .then(tx => this.mvs.send(tx))
             .then((result) => {
