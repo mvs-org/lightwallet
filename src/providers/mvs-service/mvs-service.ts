@@ -380,14 +380,9 @@ export class MvsServiceProvider {
         return await this.getBalances()
     }
 
-    getUpdateNeeded(update_interval = 20) {
-        return new Promise((resolve, reject) => {
-            this.getUpdateTime()
-                .then((date: Date) => {
-                    var now = new Date()
-                    resolve(typeof date === 'undefined' || (+now - +date) / 1000 > update_interval)
-                }, reject)
-        })
+    async getUpdateNeeded(update_interval = this.globals.update_interval) {
+        const lastUpdateTime = await this.getUpdateTime()
+        return typeof lastUpdateTime === 'undefined' || (+(new Date()) - +lastUpdateTime) / 1000 > update_interval
     }
 
     calculateBalances() {
