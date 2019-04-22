@@ -34,7 +34,8 @@ export class LoadingPage {
     }
 
     ionViewDidEnter() {
-        setTimeout(()=>this.updateBalances(), 1000)
+        this.mvs.dataReset()
+            .then(() => setTimeout(()=>this.updateBalances(), 1000))
     }
 
     private getHeight() {

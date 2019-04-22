@@ -42,8 +42,7 @@ export class SettingsPage {
     }
 
     reset() {
-        this.mvs.dataReset()
-            .then(() => this.nav.setRoot("LoadingPage"))
+        this.nav.setRoot("LoadingPage")
     }
 
     BaseCurrencyPage = () => this.nav.push("BaseCurrencyPage")
