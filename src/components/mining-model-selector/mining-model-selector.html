@@ -15,7 +15,7 @@
 
     <ion-item no-lines>
         <ion-label color="primary">{{"MST_MINING.BASE" | translate}}</ion-label>
-        <ion-badge item-end color="primary">{{basePercent}}</ion-badge>
+        <ion-badge item-end color="primary">{{basePercent}}%</ion-badge>
     </ion-item>
     <ion-item>
         <ion-range min="0" max="100" step="1" pin="true" snaps="true" color="primary" [(ngModel)]="basePercent" name="basePercent" (ngModelChange)="inputChange($event)">
