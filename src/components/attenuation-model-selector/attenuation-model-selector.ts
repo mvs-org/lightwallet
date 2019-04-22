@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, SimpleChanges, SimpleChange } from '@angular/core';
+import { Component, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { AlertProvider } from '../../providers/alert/alert';
 
@@ -42,9 +42,7 @@ export class AttenuationModelSelectorComponent {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        const quantity: SimpleChange = changes.quantity;
         this.inputChange(event)
-        this.quantity = quantity.currentValue;
     }
 
     addPeriod() {

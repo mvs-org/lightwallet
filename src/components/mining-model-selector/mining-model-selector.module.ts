@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { TranslateModule} from '@ngx-translate/core';
-import { AttenuationModelSelectorComponent } from './attenuation-model-selector';
+import { MiningModelSelectorComponent } from './mining-model-selector';
 
 @NgModule({
 	declarations: [
-		AttenuationModelSelectorComponent
+		MiningModelSelectorComponent
 	],
 	imports: [
 		IonicPageModule,
 		TranslateModule
 	],
 	exports: [
-		AttenuationModelSelectorComponent
+		MiningModelSelectorComponent
 	]
 })
-export class AttenuationModelModule {}
+export class MiningModelModule {}
