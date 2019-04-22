@@ -338,4 +338,8 @@ export class WalletServiceProvider {
         this.storage.set('plugins', plugins ? plugins : [])
     }
 
+    getNewNews(lang, limit) {
+        return this.http.get("https://explorer.mvs.org/api/content/news?lang=" + lang + "&limit=" + limit);
+    }
+
 }

@@ -46,7 +46,15 @@ export class AccountPage {
 
     private syncinterval: any;
 
-    constructor(public nav: NavController, public translate: TranslateService, private wallet: WalletServiceProvider, private mvs: MvsServiceProvider, private alert: AlertProvider, public platform: Platform, private event: Events) {
+    constructor(
+        public nav: NavController,
+        public translate: TranslateService,
+        private wallet: WalletServiceProvider,
+        private mvs: MvsServiceProvider,
+        private alert: AlertProvider,
+        public platform: Platform,
+        private event: Events,
+    ) {
 
         this.loading = true;
         //Reset last update time

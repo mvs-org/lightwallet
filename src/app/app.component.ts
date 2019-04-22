@@ -106,6 +106,7 @@ export class MyETPWallet {
     setPublicMenu() {
         return Promise.all([
             { title: 'LOGIN', component: "LoginPage", icon: 'log-in', root: true },
+            { title: 'NEWS', component: "NewsPage", icon: 'paper' },
             { title: 'REPORT_BUG', newtab: 'https://github.com/mvs-org/lightwallet/issues', icon: 'bug' },
             { title: 'INFORMATION.TITLE', component: "InformationPage", icon: 'information-circle' }
         ].map((entry) => this.addToMenu(entry)))
@@ -131,6 +132,7 @@ export class MyETPWallet {
                     { title: 'ETH_BRIDGE', component: "EthBridgePage", icon: 'swap' },
                     { title: 'MULTISIGNATURE', component: "MultisignaturePage", icon: 'people', beta: true },
                     { title: 'SETTINGS.PLUGINS', component: "PluginSettingsPage", icon: 'cube', beta: true },
+                    { title: 'NEWS', component: "NewsPage", icon: 'paper' },
                     { title: 'SETTINGS', component: "SettingsPage", icon: 'settings' },
                     { title: 'REPORT_BUG', component: "ReportPage", icon: 'bug' }
                 ].concat(plugins).map((entry) => this.addToMenu(entry)))
