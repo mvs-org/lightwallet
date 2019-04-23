@@ -22,11 +22,18 @@ export class NewsPage {
     }
 
     ionViewDidLoad() {
-        console.log('ionViewDidLoad NewsPage');
+    	this.wallet.getLanguage().then((lang) => this.updatenews(lang == "zh" ? "zh-cn" : "en-us"))
     }
+	
+	updatenews(lang = "en-us") {
+		Promise.all([this.wallet.getNewNews(lang, 25).toPromise(), this.wallet.getNews(lang)])
+                .then(([newNews, storedNews]) => {
+					this.listNews = newNews.json().results ? newNews.json().results : storedNews
 
-    ionViewDidEnter() {
-        this.wallet.getNewNews("en-us", 25).toPromise().then((response) => this.listNews = response.json().results)
-    }
+					if(this.listNews)
+						this.wallet.setNews(this.listNews, lang)
+				})
+
+	}
 
 }

@@ -3,7 +3,7 @@
 		<button ion-button menuToggle>
 		<ion-icon name="menu"></ion-icon>
 	</button>
-		<ion-title>{{'NEWS'|translate}}</ion-title>
+		<ion-title>{{'NEWS.TITLE'|translate}}</ion-title>
 	</ion-navbar>
 </ion-header>
 
@@ -16,7 +16,7 @@
 			<ion-row>
 				<ion-item>
 					<h1>{{news.title}}</h1>
-					{{news.content}}
+					<div class="content" [innerHTML]="news.content"></div>
 					<a href="news.link.url">{{news.link.url}}</a>
 				</ion-item>
 			</ion-row>

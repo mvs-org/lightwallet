@@ -645,6 +645,9 @@
     "MST_MINING.BASE": "Reward decrease per interval",
     "HELP.MST_MINING_INITIAL": "This is the initial reward of this MST, received by the miner, per block. For instance, this value was 3 for ETP and 50 for BTC",
     "HELP.MST_MINING_INTERVAL": "This is the number of blocks between each decrease of reward per block. For instance this value is 500 000 blocks for ETP and 210 000 blocks (4 years) for BTC",
-    "HELP.MST_MINING_BASE": "This is the base to define the new block reward amount at the end of an interval. For instance this value is 5% decrease per period for ETP and 50% decrease, or halving, for BTC"
+    "HELP.MST_MINING_BASE": "This is the base to define the new block reward amount at the end of an interval. For instance this value is 5% decrease per period for ETP and 50% decrease, or halving, for BTC",
+
+    "NEWS": "News",
+    "NEWS.TITLE": "Metaverse News"
 
 }
