@@ -15,9 +15,9 @@
 		<ion-grid>
 			<ion-row>
 				<ion-item>
-					<h1>{{news.title}}</h1>
-					<div class="content" [innerHTML]="news.content"></div>
-					<a href="news.link.url">{{news.link.url}}</a>
+					<h1 class="manual-copy">{{news.title}}</h1>
+					<div class="content manual-copy" [innerHTML]="news.content"></div>
+					<a href="{{news.link.url}}" target="_blank">{{news.link.url}}</a>
 				</ion-item>
 			</ion-row>
 		</ion-grid>
