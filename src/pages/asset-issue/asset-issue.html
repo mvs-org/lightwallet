@@ -158,7 +158,7 @@
 
         <ion-row>
             <ion-col>
-                <button ion-button full [disabled]="!sendForm.form.valid||!validSymbol(symbol)||symbol_check=='exist'||symbol_check=='not_cert_owner'||!validMaxSupply(max_supply, asset_decimals)||(max_supply=='custom' && !validMaxSupplyCustom(custom_max_supply, asset_decimals))||!validDecimals(asset_decimals)||!validName(issuer_name)||!validAddress(issue_address)||!validDescription(description)||(issue_address=='custom' && !validIssueAddress(custom_issue_address))||!validPassword(passphrase)||((!addressbalances || !addressbalances[issue_address] || !addressbalances[issue_address][selectedAsset] || addressbalances[issue_address][selectedAsset].available<1000000000))||(lock && !attenuation_model)" (click)="confirm()" icon-left color="secondary">
+                <button ion-button full [disabled]="!sendForm.form.valid||!validSymbol(symbol)||symbol_check=='exist'||symbol_check=='not_cert_owner'||!validMaxSupply(max_supply, asset_decimals)||(max_supply=='custom' && !validMaxSupplyCustom(custom_max_supply, asset_decimals))||!validDecimals(asset_decimals)||!validName(issuer_name)||!validAddress(issue_address)||!validDescription(description)||(issue_address=='custom' && !validIssueAddress(custom_issue_address))||!validPassword(passphrase)||((!addressbalances || !addressbalances[issue_address] || !addressbalances[issue_address][selectedAsset] || addressbalances[issue_address][selectedAsset].available<1000000000))||(lock && !attenuation_model)||(mining && !mst_mining_model)" (click)="confirm()" icon-left color="secondary">
                     <ion-icon disabled="checked" name="send"></ion-icon>
                     {{"REGISTER_MST" | translate}}
                 </button>

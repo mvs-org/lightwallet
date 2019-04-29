@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Events } from 'ionic-angular';
 import { AppGlobals } from '../../app/app.global';
-import 'rxjs/add/operator/map';
 import { Storage } from '@ionic/storage';
 import { WalletServiceProvider } from '../wallet-service/wallet-service';
 import Metaverse from 'metaversejs/index.js';
