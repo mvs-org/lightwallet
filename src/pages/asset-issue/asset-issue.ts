@@ -51,6 +51,9 @@ export class AssetIssuePage {
     attenuation_model: string
     blocktime: number
     lock: boolean = false
+    mining: boolean = false
+    mst_mining_model: any
+    showAdvanced: boolean = false
 
     constructor(
         public navCtrl: NavController,
@@ -187,8 +190,9 @@ export class AssetIssuePage {
                 undefined,
                 (this.symbol_check == "available"),
                 (this.symbol_check == "naming_owner"),
-                this.bounty_fee*100000000/100*10,
-                this.lock ? this.attenuation_model : undefined
+                (this.showAdvanced) ? this.bounty_fee*100000000/100*10 : 800000000,
+                (this.showAdvanced && this.lock) ? this.attenuation_model : undefined,
+                this.mining ? this.mst_mining_model : undefined
             ))
             .catch((error) => {
                 console.error(error)
@@ -384,6 +388,10 @@ export class AssetIssuePage {
 
     setAttenuationModel = (model: string) => {
         this.attenuation_model = model
+    }
+
+    setMiningModel = (model: string) => {
+        this.mst_mining_model = model
     }
 
     symbolChanged = () => {

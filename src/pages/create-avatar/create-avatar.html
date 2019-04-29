@@ -21,12 +21,12 @@
         <ion-list style="padding-bottom: 0;">
             <ion-item [ngClass]="{'error-border':!validSymbol(symbol)}">
                 <ion-label color="primary" floating>{{"CREATE_AVATAR.SYMBOL" | translate}}</ion-label>
-                <ion-input name="symbol" [(ngModel)]="symbol" maxlength="63" required></ion-input>
+                <ion-input name="symbol" [(ngModel)]="symbol" maxlength="63" (ngModelChange)="symbolChanged($event)" required></ion-input>
             </ion-item>
             <div no-lines class="advice">{{"HELP.CREATE_AVATAR_NAME" | translate}}</div>
-            <ion-item *ngIf="list_all_avatars.indexOf(symbol) !== -1" no-lines class="wrong-input">{{"CREATE_AVATAR.AVATAR_ALREADY_EXIST" | translate}}</ion-item>
             <ion-item *ngIf="symbol.length > 0 && symbol.length < 3" no-lines class="wrong-input">{{"CREATE_AVATAR.AVATAR_NAME_TOO_SHORT" | translate}}</ion-item>
-
+            <ion-item *ngIf="symbol.length >= 3 && !available_symbol" no-lines class="wrong-input">{{"CREATE_AVATAR.AVATAR_ALREADY_EXIST" | translate}}</ion-item>
+            
             <ion-item [ngClass]="{'error-border': !validAddress(avatar_address)}">
                 <ion-label color="primary" floating>{{"CREATE_AVATAR.ADDRESS"|translate}}</ion-label>
                 <ion-select *ngIf="addressbalances.length != 0" [(ngModel)]="avatar_address" name="avatar_address" multiple="false" okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}" [selectOptions]="addressSelectOptions">

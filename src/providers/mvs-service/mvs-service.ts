@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Events } from 'ionic-angular';
 import { AppGlobals } from '../../app/app.global';
-import 'rxjs/add/operator/map';
 import { Storage } from '@ionic/storage';
 import { WalletServiceProvider } from '../wallet-service/wallet-service';
 import Metaverse from 'metaversejs/index.js';
@@ -138,7 +137,7 @@ export class MvsServiceProvider {
                         change_address = result.utxo[0].address;
                     if (recipient_address == undefined)
                         recipient_address = result.utxo[0].address;
-                    return Metaverse.transaction_builder.sendLockedAsset(result.utxo, recipient_address, recipient_avatar, symbol, quantity, attenuation_model, change_address, result.change, undefined, fee, messages);  
+                    return Metaverse.transaction_builder.sendLockedAsset(result.utxo, recipient_address, recipient_avatar, symbol, quantity, attenuation_model, change_address, result.change, undefined, fee, messages);
                 })
                 .then((tx) => wallet.sign(tx)))
             .catch((error) => {
@@ -202,7 +201,7 @@ export class MvsServiceProvider {
             })
     }
 
-    createIssueAssetTx(passphrase: string, symbol: string, quantity: number, precision: number, issuer: string, description: string, secondaryissue_threshold: number, is_secondaryissue: boolean, issue_address: string, change_address: string, create_new_domain_cert: boolean, use_naming_cert: boolean, bounty_fee: number, attenuation_model: string) {
+    createIssueAssetTx(passphrase: string, symbol: string, quantity: number, precision: number, issuer: string, description: string, secondaryissue_threshold: number, is_secondaryissue: boolean, issue_address: string, change_address: string, create_new_domain_cert: boolean, use_naming_cert: boolean, bounty_fee: number, attenuation_model: string, mst_mining_model: any) {
         return this.getUtxoFrom(issue_address)
             .then(utxo => {
                 return this.wallet.getWallet(passphrase)
@@ -226,7 +225,7 @@ export class MvsServiceProvider {
                                         return false;
                                     }
                                 })
-                                return Metaverse.transaction_builder.issueAsset(result.utxo.concat(certs), issue_address, symbol, quantity, precision, issuer, description, secondaryissue_threshold, is_secondaryissue, change_address, result.change, create_new_domain_cert, bounty_fee, this.globals.network, attenuation_model)
+                                return Metaverse.transaction_builder.issueAsset(result.utxo.concat(certs), issue_address, symbol, quantity, precision, issuer, description, secondaryissue_threshold, is_secondaryissue, change_address, result.change, create_new_domain_cert, bounty_fee, this.globals.network, attenuation_model, mst_mining_model)
                             })
                             .then((tx) => wallet.sign(tx))
                     })
@@ -266,7 +265,7 @@ export class MvsServiceProvider {
 
     getUtxo() {
         return this.getTxs()
-            .then((txs: Array<any>) => txs.sort(function(a, b) {
+            .then((txs: Array<any>) => txs.sort(function (a, b) {
                 return b.height - a.height;
             }))
             .then((txs: Array<any>) => this.getAddresses()
@@ -292,7 +291,7 @@ export class MvsServiceProvider {
 
     getUtxoFromMultisig(address: any) {
         return this.getTxs()
-            .then((txs: Array<any>) => txs.sort(function(a, b) {
+            .then((txs: Array<any>) => txs.sort(function (a, b) {
                 return b.height - a.height;
             }))
             .then((txs: Array<any>) => Metaverse.output.calculateUtxo(txs, [address]));
@@ -311,8 +310,6 @@ export class MvsServiceProvider {
     getGlobalAvatar = (symbol) => this.blockchain.avatar.get(symbol)
 
     getGlobalMit = (symbol) => this.blockchain.MIT.get(symbol)
-
-    getListAvatar = () => this.blockchain.avatar.list()
 
     getListMst = () => this.blockchain.MST.list()
 
@@ -342,7 +339,11 @@ export class MvsServiceProvider {
     }
 
     loadNewTxs(addresses: Array<string>, start: number) {
-        return this.blockchain.addresses.txs(addresses, { min_height: start })
+        return this.blockchain.addresses.listTxs(addresses, { min_height: start })
+            .catch(error => {
+                console.log('error loading transactions')
+                throw (error.message)
+            })
     }
 
     getAddressBalances() {
@@ -367,27 +368,21 @@ export class MvsServiceProvider {
             })
     }
 
-    getData(): Promise<any> {
-        var balances: {};
-        return this.getBalances()
-            .then(_ => {
-                balances = _;
-                return Promise.all([this.getAddresses(), this.getLastTxHeight(), this.getHeight(), this.getTxs(), this.wallet.getMultisigAddresses()])
-            })
-            .then(results => { return this.getNewTxs(results[0].concat(results[4]), results[1], results[3]) })
-            .then(() => this.calculateBalances())
-            .then(() => { return balances })
+    async getData(): Promise<any> {
+        const addresses = await this.getAddresses()
+        addresses.concat(await this.wallet.getMultisigAddresses())
+        let newTxs = await this.getNewTxs(addresses, await this.getLastTxHeight())
+        while (newTxs && newTxs.length) {
+            this.event.publish('last_tx_height_update', await this.getLastTxHeight());
+            newTxs = await this.getNewTxs(addresses, await this.getLastTxHeight())
+        }
+        await this.calculateBalances()
+        return await this.getBalances()
     }
 
-    getUpdateNeeded() {
-        return new Promise((resolve, reject) => {
-            var UPDATE_INTERVAL = 20
-            this.getUpdateTime()
-                .then((date: Date) => {
-                    var now = new Date()
-                    resolve(typeof date === 'undefined' || (+now - +date) / 1000 > UPDATE_INTERVAL)
-                }, reject)
-        })
+    async getUpdateNeeded(update_interval = this.globals.update_interval) {
+        const lastUpdateTime = await this.getUpdateTime()
+        return typeof lastUpdateTime === 'undefined' || (+(new Date()) - +lastUpdateTime) / 1000 > update_interval
     }
 
     calculateBalances() {
@@ -423,14 +418,14 @@ export class MvsServiceProvider {
                     output.hash = tx.hash
                     switch (output.attenuation_model_param.type) {
                         case 1:
-                            if(output.attenuation_model_param.current_period_nbr == 0 && output.attenuation_model_param.next_interval == output.attenuation_model_param.lock_period / output.attenuation_model_param.total_period_nbr) {
+                            if (output.attenuation_model_param.current_period_nbr == 0 && output.attenuation_model_param.next_interval == output.attenuation_model_param.lock_period / output.attenuation_model_param.total_period_nbr) {
                                 output.locked_until = (output.attenuation_model_param && output.attenuation_model_param.lock_period) ? tx.height + output.attenuation_model_param.lock_period : 0
                                 outputs.push(output)
                             }
                             break;
                         case 2:
                         case 3:
-                            if(output.attenuation_model_param.current_period_nbr == 0 && output.attenuation_model_param.next_interval == output.attenuation_model_param.locked[0].number) {
+                            if (output.attenuation_model_param.current_period_nbr == 0 && output.attenuation_model_param.next_interval == output.attenuation_model_param.locked[0].number) {
                                 output.locked_until = (output.attenuation_model_param && output.attenuation_model_param.lock_period) ? tx.height + output.attenuation_model_param.lock_period : 0
                                 outputs.push(output)
                             }
@@ -495,14 +490,9 @@ export class MvsServiceProvider {
         return Promise.all(['mvs_last_tx_height', 'mvs_height', 'utxo', 'last_update', 'addressbalances', 'balances', 'mvs_txs', 'asset_order'].map((key) => this.storage.remove(key)))
     }
 
-    getNewTxs(addresses: Array<string>, lastKnownHeight: number, txs: any): Promise<any> {
-        if (typeof txs == 'undefined')
-            txs = []
-        return this.loadNewTxs(addresses, lastKnownHeight + 1)
-            .then((newTxs: any) => {
-                txs = txs.concat(newTxs.transactions)
-                return this.addTxs(txs).then(() => txs)
-            })
+    async getNewTxs(addresses: Array<string>, lastKnownHeight: number): Promise<any> {
+        const newTxs = await this.loadNewTxs(addresses, lastKnownHeight + 1)
+        return this.addTxs(newTxs)
     }
 
     getDbVersion() {
@@ -541,29 +531,33 @@ export class MvsServiceProvider {
             .then(() => this.event.publish('settings_update', {}))
     }
 
-    addTxs(newtxs: Array<any>) {
-        return this.getTxs()
-            .then((txs: any[]) => {
-                if (newtxs.length)
-                    newtxs.forEach((newtx) => {
-                        let found = 0;
-                        txs.forEach((oldtx, index) => {
-                            if (newtx.hash == oldtx.hash) {
-                                found = 1;
-                                txs[index] = newtx;
-                            }
-                        })
-                        if (found == 0) {
-                            txs.push(newtx)
-                        }
-                    })
-                return this.storage.set('mvs_txs', txs)
-            })
-            .then(() => {
-                if (newtxs.length)
-                    this.setLastTxHeight(newtxs[0].height)
-                return this.getTxs()
-            })
+    async addTxs(newtxs: Array<any>) {
+        if (newtxs === undefined || newtxs.length === 0) {
+            return newtxs
+        }
+        let txs = await this.getTxs()
+        newtxs = newtxs.sort((a: any, b: any) => a.height - b.height)
+        newtxs.forEach((newtx) => {
+            let found = this.findTxIndexByHash(txs, newtx.hash)
+            if (found == -1) {
+                txs = [newtx].concat(txs)
+            } else {
+                txs[found] = newtx;
+            }
+        })
+        await this.storage.set('mvs_txs', txs)
+        await this.setLastTxHeight(txs[0].height)
+
+        return newtxs
+    }
+
+    private findTxIndexByHash(txs, hash) {
+        txs.forEach((tx, index) => {
+            if (tx.hash === hash) {
+                return index
+            }
+        })
+        return -1
     }
 
     getTickers = () => {
@@ -591,7 +585,7 @@ export class MvsServiceProvider {
 
     async addAssetsToAssetOrder(names: string[]) {
         let order = await this.assetOrder()
-        names.forEach(symbol=>{
+        names.forEach(symbol => {
             if (order.indexOf(symbol) === -1)
                 order.push(symbol)
         })
@@ -664,7 +658,7 @@ export class MvsServiceProvider {
         return this.storage.get('eth_swap')
             .then((eth_swap) => {
                 let current_time = new Date();
-                if (eth_swap == undefined || eth_swap.whitelist == undefined || eth_swap.last_update == undefined || current_time.getTime() - eth_swap.last_update.getTime() > 3600000) {
+                if (!eth_swap || !eth_swap.whitelist || eth_swap.last_update == undefined || current_time.getTime() - eth_swap.last_update.getTime() > 3600000) {
                     return this.blockchain.bridge.whitelist()
                         .then((whitelist) => {
                             this.setWhitelist(whitelist, current_time)
@@ -724,21 +718,21 @@ export class MvsServiceProvider {
         return this.blockchain.multisig.get(address)
     }
 
-    async decodeTx(rawtx){
+    async decodeTx(rawtx) {
         let transactions = await this.getTxs()
         let tx = Metaverse.transaction.decode(rawtx);
-        tx.inputs.forEach(input=>{
-            let found=false
-            transactions.forEach(t=>{
-                if(input.previous_output.hash==t.hash){
-                    found=true
-                    input.previous_output.script=t.outputs[input.previous_output.index].script
+        tx.inputs.forEach(input => {
+            let found = false
+            transactions.forEach(t => {
+                if (input.previous_output.hash == t.hash) {
+                    found = true
+                    input.previous_output.script = t.outputs[input.previous_output.index].script
                     input.previous_output.address = t.outputs[input.previous_output.index].address
                     input.previous_output.value = t.outputs[input.previous_output.index].value
                     input.previous_output.attachment = t.outputs[input.previous_output.index].attachment
                 }
             })
-            if(!found) throw `Error finding previous output script for ${input.previous_output.hash}-${input.previous_output.index}`
+            if (!found) throw `Error finding previous output script for ${input.previous_output.hash}-${input.previous_output.index}`
         })
         return tx
     }

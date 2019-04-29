@@ -33,6 +33,7 @@ export class EthSwapPage {
     fee: number = 10000
     eth_address: string
     swap_fee: number = 100000000
+    showAdvanced: boolean = false
 
     constructor(
         public navCtrl: NavController,
@@ -151,10 +152,10 @@ export class EthSwapPage {
                     this.recipient_avatar,
                     Math.round(parseFloat(this.quantity) * Math.pow(10, this.decimals)),
                     (this.sendFrom != 'auto') ? this.sendFrom : null,
-                    (this.changeAddress != 'auto') ? this.changeAddress : undefined,
-                    this.fee,
-                    messages,
-                    this.swap_fee
+                    (this.showAdvanced && this.changeAddress != 'auto') ? this.changeAddress : undefined,
+                    (this.showAdvanced) ? this.fee : 10000,
+                    (this.showAdvanced && messages !== []) ? messages : undefined,
+                    (this.showAdvanced) ? this.swap_fee : 100000000
                 )
             })
             .catch((error) => {

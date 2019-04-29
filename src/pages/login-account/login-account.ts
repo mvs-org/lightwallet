@@ -46,7 +46,7 @@ export class LoginAccountPage {
             .then((addresses) => this.mvs.addAddresses(addresses))
             .then(() => this.wallet.saveSessionAccount(password))
             .then(() => this.alert.stopLoading())
-            .then(() => this.nav.setRoot("AccountPage"))
+            .then(() => this.nav.setRoot("LoadingPage"))
             .catch((error) => {
                 console.error(error.message)
                 this.alert.stopLoading()

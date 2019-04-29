@@ -629,6 +629,25 @@
     "MESSAGE.LOCK_IMPORT_CSV_TOO_MANY_PERIODS_TITLE": "Too many periods",
     "MESSAGE.LOCK_IMPORT_CSV_TOO_MANY_PERIOD_BODY": "This file contains too many periods. The maximum number of periods is limited to ",
     
-    "AVATARS.MINING": "Mining"
+    "AVATARS.MINING": "Mining",
+
+    "LOADING.TITLE": "LOADING THE NEW REALITY",
+    "LOADING.RETRY": "Retry",
+    "LOADING.CURRENT_HEIGHT": "Currently loaded till height: {{height}}",
+    "LOADING.STOPPED": "Unable to synchonize your transactions. Please check you internet connection or try again later.",
+    "RETURN_LOGIN": "Return to login",
+    "LOADING.FULLY_LOADED": "Fully loaded! Entering the Metaverse...",
+
+    "MST_MINING.OPTION": "Allow this MST to be mined",
+    "HELP.MST_MINING_OPTION": "MST mining will allow miners to mine this MST. New tokens will be created in each block mined by a miner who choosed to mine it, according the the model selected below",
+    "MST_MINING.INITIAL_REWARD": "Initial reward per block",
+    "MST_MINING.INTERVAL": "Reward decrease interval",
+    "MST_MINING.BASE": "Reward decrease per interval",
+    "HELP.MST_MINING_INITIAL": "This is the initial reward of this MST, received by the miner, per block. For instance, this value was 3 for ETP and 50 for BTC",
+    "HELP.MST_MINING_INTERVAL": "This is the number of blocks between each decrease of reward per block. For instance this value is 500 000 blocks for ETP and 210 000 blocks (4 years) for BTC",
+    "HELP.MST_MINING_BASE": "This is the base to define the new block reward amount at the end of an interval. For instance this value is 5% decrease per period for ETP and 50% decrease, or halving, for BTC",
+
+    "NEWS": "News",
+    "NEWS.TITLE": "Metaverse News"
 
 }

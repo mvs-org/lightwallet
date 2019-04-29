@@ -53,6 +53,7 @@ export class MultisignatureTransferPage {
     nbr_sign_after_sign: number
     decimals_mst: any = {}
     isApp: boolean
+    showAdvanced: boolean = false
 
     constructor(
         public navCtrl: NavController,
@@ -166,9 +167,9 @@ export class MultisignatureTransferPage {
                     (this.recipient_avatar && this.recipient_avatar_valid) ? this.recipient_avatar : undefined,
                     Math.round(parseFloat(this.quantity) * Math.pow(10, this.decimals)),
                     this.sendFrom,
-                    (this.changeAddress != 'auto') ? this.changeAddress : undefined,
-                    this.fee,
-                    (messages !== []) ? messages : undefined,
+                    (this.showAdvanced && this.changeAddress != 'auto') ? this.changeAddress : undefined,
+                    (this.showAdvanced) ? this.fee : 10000,
+                    (this.showAdvanced && messages !== []) ? messages : undefined,
                     this.address_info
                 )
             })

@@ -1,0 +1,13 @@
+page-news {
+    
+    h1, .content {
+        text-overflow: initial;
+        white-space: initial;
+    }
+    
+    .content {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        widows: 100%;
+    }
+}

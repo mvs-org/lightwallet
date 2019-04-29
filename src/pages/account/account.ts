@@ -46,7 +46,15 @@ export class AccountPage {
 
     private syncinterval: any;
 
-    constructor(public nav: NavController, public translate: TranslateService, private wallet: WalletServiceProvider, private mvs: MvsServiceProvider, private alert: AlertProvider, public platform: Platform, private event: Events) {
+    constructor(
+        public nav: NavController,
+        public translate: TranslateService,
+        private wallet: WalletServiceProvider,
+        private mvs: MvsServiceProvider,
+        private alert: AlertProvider,
+        public platform: Platform,
+        private event: Events,
+    ) {
 
         this.loading = true;
         //Reset last update time
@@ -72,7 +80,12 @@ export class AccountPage {
         if (await this.checkAccess()) {
             this.loadTickers()
             this.initialize()
-            this.whitelist = await this.mvs.getWhitelist()
+            try {
+                this.whitelist = await this.mvs.getWhitelist()
+            } catch (e) {
+                console.error(e);
+            }
+            
         }
         else
             this.nav.setRoot("LoginPage")
@@ -198,8 +211,8 @@ export class AccountPage {
             this.syncing = true
             this.syncingSmall = true
             return Promise.all([this.mvs.updateHeight(), this.updateBalances()])
-                .then((results) => {
-                    this.height = results[0]
+                .then(([height, balances]) => {
+                    this.height = height
                     this.syncing = false
                     this.syncingSmall = false
                     if (refresher)

@@ -379,4 +379,24 @@ export class WalletServiceProvider {
         return Promise.reject(error.message || error);
     } 
 
+    getNewNews(lang, limit) {
+        return this.http.get("https://explorer.mvs.org/api/content/news?lang=" + lang + "&limit=" + limit);
+    }
+
+    getNews(lang = 'en-us') {
+        return this.storage.get('news').then((news) => news && news[lang] ? news[lang] : [])
+    }
+
+    setNews(news, lang = 'en-us') {
+        this.storage.get('news').then((allLangNews) => {
+            allLangNews = allLangNews ? allLangNews : {}
+            allLangNews[lang] = news
+            this.storage.set('news', allLangNews)
+        })
+    }
+
+    getLanguage() {
+        return this.storage.get('language').then((lang) => lang ? lang : "en")
+    }
+
 }
