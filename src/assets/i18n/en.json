@@ -648,6 +648,18 @@
     "HELP.MST_MINING_BASE": "This is the base to define the new block reward amount at the end of an interval. For instance this value is 5% decrease per period for ETP and 50% decrease, or halving, for BTC",
 
     "NEWS": "News",
-    "NEWS.TITLE": "Metaverse News"
+    "NEWS.TITLE": "Metaverse News",
+
+    "ETP_BRIDGE": "ETP bridge",
+    "ETP_BRIDGE.RECIPIENT_ADDRESS": "Recipient address",
+    "ETP_BRIDGE.FROM_ASSET": "Send",
+    "ETP_BRIDGE.AMOUNT_SEND": "Amount",
+    "ETP_BRIDGE.TO_ASSET": "Receive",
+    "ETP_BRIDGE.AMOUNT_RECEIVE": "Amount",
+    "ETP_BRIDGE.MIN_MAX_DEPOSIT": "Min-max deposit range: {{min}}-{{max}} {{symbol}}, deposit fee: {{fee}}%",
+    "ETP_BRIDGE.RATE": "Rate: {{rate}}",
+    "ETP_BRIDGE.RECEIVE_COIN_FEE": "Receive coin fee: {{fee}} {{symbol}}",
+    "ETP_BRIDGE.REFUND_ADDRESS": "{{symbol}} refund address",
+    "ETP_BRIDGE.RECEIVE_ADDRESS": "{{symbol}} receive address"
 
 }

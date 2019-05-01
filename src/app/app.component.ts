@@ -130,7 +130,7 @@ export class MyETPWallet {
                     { title: 'REGISTER_MST', component: "AssetIssuePage", icon: 'globe' },
                     { title: 'REGISTER_MIT', component: "MITRegisterPage", icon: 'create' },
                     { title: 'ETH_BRIDGE', component: "EthBridgePage", icon: 'swap' },
-                    { title: 'BUY_SELL_ETP', component: "BuyEtpPage", icon: 'cash' },
+                    { title: 'ETP_BRIDGE', component: "EtpBridgePage", icon: 'cash' },
                     { title: 'MULTISIGNATURE', component: "MultisignaturePage", icon: 'people', beta: true },
                     { title: 'SETTINGS.PLUGINS', component: "PluginSettingsPage", icon: 'cube', beta: true },
                     { title: 'NEWS', component: "NewsPage", icon: 'paper' },
