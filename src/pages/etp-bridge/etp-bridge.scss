@@ -2,25 +2,16 @@ page-etp-bridge {
 
     .right {
         text-align: right;
+        float: right;
     }
 
     .padding-bottom {
         padding-bottom: 20px;
     }
 
-    #scanButton {
-        height: 34px;
-        width: 34px;
-        margin-top: 20px;
-    }
-
-    #sendAll {
-        height: 34px;
-        margin-top: 20px;
-    }
-
-    .card-block {
+    .card-block, .card-order-history {
         padding: 10px;
+        margin-bottom: 40px;
     }
 
     .buttons-row {

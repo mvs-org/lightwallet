@@ -7,9 +7,11 @@
     </ion-navbar>
 </ion-header>
 
-<ion-content padding style="padding-bottom: 0;">
+<ion-content>
 
-    <form #sendForm="ngForm" style="padding-bottom: 0;">
+    <div class="mini-loader" *ngIf="!bridgePairs"></div>
+
+    <form *ngIf="bridgePairs">
     
         <p align="center" *ngIf="etpBalance<fee/100000000" class="wrong-input">{{"NOTICE_TRANSACTION_FEE_UNCOVERED"|translate}}</p>
         <ion-row>
@@ -22,7 +24,7 @@
         </ion-row>
 
 
-        <ion-card class="card-block" *ngIf="bridgePairs">
+        <ion-card class="card-block">
             <ion-row>
                 <ion-col col-md-5 col-sm-12 col-12>
 
@@ -39,14 +41,14 @@
                     </ion-item>
                     <div *ngIf="bridgeRate" no-lines class="advice" [translate]="'ETP_BRIDGE.MIN_MAX_DEPOSIT'" [translateParams]="{min: bridgeRate.depositMin, max: bridgeRate.depositMax, symbol: createOrderParameters.depositSymbol, fee: bridgeRate.depositCoinFeeRate*100}"></div>  
 
-                    <ion-item *ngIf="" [ngClass]="{'error-border': !validRefundAddress()}">
+                    <ion-item *ngIf="isMetaverseSymbol(createOrderParameters.refundAddress)" [ngClass]="{'error-border': !validRefundAddress()}">
                         <ion-label color="primary" floating [translate]="'ETP_BRIDGE.REFUND_ADDRESS'" [translateParams]="{symbol: createOrderParameters.depositSymbol}"></ion-label>
                         <ion-select [(ngModel)]="createOrderParameters.refundAddress" name="refundAddress" multiple="false" okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}">
                             <ion-option *ngFor="let addressbalance of addressbalances" value="{{addressbalance.identifier}}">{{addressbalance.identifier}} - {{addressbalance.balance | format : 8}} ETP</ion-option>
                         </ion-select>
                     </ion-item>
 
-                    <ion-item *ngIf="" [ngClass]="{'error-border': !validRefundAddress()}">
+                    <ion-item *ngIf="!isMetaverseSymbol(createOrderParameters.refundAddress)" [ngClass]="{'error-border': !validRefundAddress()}">
                         <ion-label color="primary" floating [translate]="'ETP_BRIDGE.REFUND_ADDRESS'" [translateParams]="{symbol: createOrderParameters.depositSymbol}"></ion-label>
                         <ion-input [(ngModel)]="createOrderParameters.refundAddress" name="refundAddress" type="text"></ion-input>
                     </ion-item>
@@ -72,11 +74,16 @@
                     </ion-item>
                     <div *ngIf="bridgeRate" no-lines class="advice" [translate]="'ETP_BRIDGE.RECEIVE_COIN_FEE'" [translateParams]="{fee: bridgeRate.receiveCoinFee, symbol: createOrderParameters.receiveSymbol}"></div>  
 
-                    <ion-item *ngIf="" [ngClass]="{'error-border': !validRefundAddress()}">
+                    <ion-item *ngIf="isMetaverseSymbol(createOrderParameters.receiveAddress)" [ngClass]="{'error-border': !validRecipientAddress()}">
                         <ion-label color="primary" floating [translate]="'ETP_BRIDGE.RECEIVE_ADDRESS'" [translateParams]="{symbol: createOrderParameters.receiveSymbol}"></ion-label>
                         <ion-select [(ngModel)]="createOrderParameters.receiveAddress" name="receiveAddress" multiple="false" okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}">
                             <ion-option *ngFor="let addressbalance of addressbalances" value="{{addressbalance.identifier}}">{{addressbalance.identifier}} - {{addressbalance.balance | format : 8}} ETP</ion-option>
                         </ion-select>
+                    </ion-item>
+
+                    <ion-item *ngIf="!isMetaverseSymbol(createOrderParameters.receiveAddress)" [ngClass]="{'error-border': !validRecipientAddress()}">
+                        <ion-label color="primary" floating [translate]="'ETP_BRIDGE.RECEIVE_ADDRESS'" [translateParams]="{symbol: createOrderParameters.receiveSymbol}"></ion-label>
+                        <ion-input [(ngModel)]="createOrderParameters.receiveAddress" name="receiveAddress" type="text"></ion-input>
                     </ion-item>
                 
                 </ion-col>
@@ -84,7 +91,7 @@
 
             <ion-row class="buttons-row">
                 <ion-col>
-                    <button type="submit" ion-button full icon-left (click)="sell()" color="secondary">
+                    <button type="submit" ion-button full icon-left (click)="createOrder()" color="secondary">
                         <ion-icon disabled="checked" name="send"></ion-icon>
                         {{"SWAP" | translate}}
                     </button>
@@ -96,10 +103,53 @@
                     </button>
                 </ion-col>
             </ion-row>
-        </ion-card>
-
-        
+        </ion-card>      
 
     </form>
+
+    <h3>{{"ETP_BRIDGE.HISTORY_TITLE" | translate}}</h3>
+    <p>{{"ETP_BRIDGE.HISTORY_DESCRIPTION" | translate}}</p>
+
+    <ion-card class="card-order-history" *ngFor="let order of orders" (click)="gotoDetails(order.id)">
+        <ion-row>
+            <ion-col col-md-12 col-sm-12 col-12>
+                <ion-item>
+                    <h3>{{order.id}}</h3>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col col-md-6 col-sm-12 col-12>
+                <ion-item>
+                    <h4>
+                        {{'ETP_BRIDGE.FROM_ASSET'|translate}}
+                        <span class="right">{{order.deposit.amount}} {{order.deposit.symbol}}</span>
+                    </h4>  
+                    <h4>
+                        <span [translate]="'ETP_BRIDGE.REFUND_ADDRESS'" [translateParams]="{symbol: order.deposit.symbol}"></span>
+                        <span class="right">{{order.refund.address}}</span>
+                    </h4>
+                </ion-item>
+            </ion-col>
+            <ion-col col-md-6 col-sm-12 col-12>
+                <ion-item>
+                    <h4>
+                        {{'ETP_BRIDGE.TO_ASSET'|translate}}
+                        <span class="right">{{order.receive.amount}} {{order.receive.symbol}}</span>
+                    </h4>
+                    <h4>
+                        <span [translate]="'ETP_BRIDGE.RECEIVE_ADDRESS'" [translateParams]="{symbol: order.receive.symbol}"></span>
+                        <span class="right">{{order.receive.address}}</span>
+                    </h4>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+
+        <ion-row>
+
+        </ion-row>
+        
+            
+    </ion-card>  
 
 </ion-content>

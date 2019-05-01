@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core'
 import { Http } from '@angular/http'
 import { Observable } from 'rxjs'
+import { Storage } from '@ionic/storage'
 
 import 'rxjs/add/operator/map'
 
@@ -9,8 +10,10 @@ export class EtpBridgeServiceProvider {
 
   private URL = "https://bridge.mvs.org/api"
 
-  constructor(public http: Http) {
-  }
+  constructor(
+    private http: Http,
+    private storage: Storage,
+  ) { }
 
   getBridgeRate(depositSymbol, receiveSymbol): Observable<Rate> {
     return this.http.get(`${this.URL}/rate/${depositSymbol}/${receiveSymbol}`)
@@ -30,6 +33,33 @@ export class EtpBridgeServiceProvider {
   createOrder(order: CreateOrderParameters): Observable<OrderDetails> {
     return this.http.post(`${this.URL}/order`, order)
       .map(response => response.json())
+  }
+
+  getOrders(): Promise<OrderDetails[]> {
+    return this.storage.get('etp-bridge-orders')
+      .then(orders => orders || [])
+  }
+
+  setOrders(orders: OrderDetails[]): Promise<OrderDetails[]> {
+    return this.storage.set('etp-bridge-orders', orders)
+  }
+
+  saveOrder(order: OrderDetails) {
+    return this.getOrders()
+      .then(orders => {
+        let update = false
+        orders = orders.map(o => {
+          if (o.id = order.id) {
+            update = true
+            return order
+          }
+          return o
+        })
+        if (!update) {
+          orders.push(order)
+        }
+        return this.setOrders(orders)
+      })
   }
 
 }

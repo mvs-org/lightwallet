@@ -2,8 +2,7 @@ import { Component, ViewChild } from '@angular/core'
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular'
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service'
 import { AlertProvider } from '../../providers/alert/alert'
-import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service'
-import { EtpBridgeServiceProvider, CreateOrderParameters } from '../../providers/etp-bridge-service/etp-bridge-service'
+import { EtpBridgeServiceProvider, CreateOrderParameters, OrderDetails } from '../../providers/etp-bridge-service/etp-bridge-service'
 
 @IonicPage()
 @Component({
@@ -14,21 +13,13 @@ import { EtpBridgeServiceProvider, CreateOrderParameters } from '../../providers
 export class EtpBridgePage {
 
     addresses: Array<string>
+    etpBalance: number = 0
     addressbalances: Array<any>
-    sendFrom: string = "auto"
-    changeAddress: string
-    feeAddress: string = "auto"
-    passphrase: string = ""
-    etpBalance: number
-    rawtx: string
-    selectedAsset: string = "ETP"
-    decimals: number = 8
-    fee: number = 10000
-    quantity: string = ""
-    message: string = ""
     bridgeRate: any
     bridgePairs: any
     depositSymbolList: Array<string> = []
+
+    orders: OrderDetails[] = []
 
     createOrderParameters: CreateOrderParameters = {
         depositSymbol: "ETP",
@@ -48,10 +39,10 @@ export class EtpBridgePage {
         private mvs: MvsServiceProvider,
         private etpBridgeService: EtpBridgeServiceProvider,
         private alert: AlertProvider,
-        private wallet: WalletServiceProvider,
     ) {
 
         this.getRate()
+        this.loadOrders()
 
         etpBridgeService.getBridgePairs().toPromise().then(pairs => {
             this.bridgePairs = pairs
@@ -87,27 +78,25 @@ export class EtpBridgePage {
         });
     }
 
-    sell() {
-        this.create()
-            .then(tx => this.mvs.send(tx))
-            .then((result) => {
-                this.navCtrl.pop()
+    async loadOrders(){
+      this.orders = await this.etpBridgeService.getOrders()
+      console.log(this.orders)
+      return this.orders
+    }
+
+    createOrder() {
+        return this.alert.showLoading()
+            .then(() => this.etpBridgeService.createOrder(this.createOrderParameters).toPromise())
+            .then((order: OrderDetails) => this.etpBridgeService.saveOrder(order))
+            .then(() => this.loadOrders())
+            .then(() => {
                 this.alert.stopLoading()
-                this.alert.showSent('SUCCESS_SEND_TEXT', result.hash)
+                this.alert.showMessage('SUCCESS_CREATE_SWFT_TITLE', 'SUCCESS_CREATE_SWFT_BODY', '')
             })
             .catch((error) => {
                 console.error(error)
                 this.alert.stopLoading()
-                switch (error.message) {
-                    case "ERR_CONNECTION":
-                        this.alert.showError('ERROR_SEND_TEXT', '')
-                        break;
-                    case "ERR_CREATE_TX":
-                        //already handle in create function
-                        break;
-                    default:
-                        this.alert.showError('MESSAGE.BROADCAST_ERROR', error.message)
-                }
+                this.alert.showError('MESSAGE.CREATE_SWFT_ORDER_ERROR', error.message)
             })
     }
 
@@ -184,5 +173,6 @@ export class EtpBridgePage {
         return validSymbols.indexOf(symbol) !== -1
     }
 
+    gotoDetails = (id) => this.navCtrl.push("etp-bridge-details-page", { id: id })
 
 }

@@ -660,6 +660,17 @@
     "ETP_BRIDGE.RATE": "Rate: {{rate}}",
     "ETP_BRIDGE.RECEIVE_COIN_FEE": "Receive coin fee: {{fee}} {{symbol}}",
     "ETP_BRIDGE.REFUND_ADDRESS": "{{symbol}} refund address",
-    "ETP_BRIDGE.RECEIVE_ADDRESS": "{{symbol}} receive address"
+    "ETP_BRIDGE.RECEIVE_ADDRESS": "{{symbol}} receive address",
 
+    "SUCCESS_CREATE_SWFT_TITLE": "Order created",
+    "SUCCESS_CREATE_SWFT_BODY": "Your order has been created. The next step is to do the deposit.",
+    "MESSAGE.CREATE_SWFT_ORDER_ERROR": "Error while creating the order. Please check your inputs and try again.",
+    "ETP_BRIDGE.HISTORY_TITLE": "History",
+    "ETP_BRIDGE.HISTORY_DESCRIPTION": "This history is only saved locally. A transaction will only appear on the device used to generate it.",
+    "ETP_BRIDGE_DETAILS": "Transaction details",
+    "ETP_BRIDGE.STATUS": "Status",
+    "ETP_BRIDGE.STATUS_WAIT_DEPOSIT_SEND": "Waiting for deposit",
+    "ETP_BRIDGE.STATUS_WAIT_EXCHANGE": "Exchanging...",
+    "ETP_BRIDGE.STATUS_TIMEOUT": "Order timeout",
+    "ETP_BRIDGE.STATUS_FAIL": "Order fail"
 }
