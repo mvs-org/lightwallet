@@ -60,7 +60,7 @@ export class TransactionsPage {
         this.loading = false
     }
 
-    explorerURL = (tx) => (this.globals.network == 'mainnet') ? 'https://explorer.mvs.org/#!/tx/' + tx : 'https://explorer-testnet.mvs.org/#!/tx/' + tx
+    explorerURL = (tx) => (this.globals.network == 'mainnet') ? 'https://explorer.mvs.org/tx/' + tx : 'https://explorer-testnet.mvs.org/tx/' + tx
 
     private filterTxs(txs: any[], symbol, addresses) {
         return Promise.all(txs.filter((tx) => this.filterTx(tx, symbol, addresses)))

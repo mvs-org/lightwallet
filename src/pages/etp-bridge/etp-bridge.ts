@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular'
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service'
 import { AlertProvider } from '../../providers/alert/alert'
 import { EtpBridgeServiceProvider, CreateOrderParameters, OrderDetails } from '../../providers/etp-bridge-service/etp-bridge-service'
+import { AppGlobals } from '../../app/app.global';
 
 @IonicPage()
 @Component({
@@ -39,6 +40,7 @@ export class EtpBridgePage {
         private mvs: MvsServiceProvider,
         private etpBridgeService: EtpBridgeServiceProvider,
         private alert: AlertProvider,
+        private globals: AppGlobals,
     ) {
 
         this.getRate()
@@ -85,6 +87,7 @@ export class EtpBridgePage {
     }
 
     createOrder() {
+        console.log(this.createOrderParameters)
         return this.alert.showLoading()
             .then(() => this.etpBridgeService.createOrder(this.createOrderParameters).toPromise())
             .then((order: OrderDetails) => this.etpBridgeService.saveOrder(order))
@@ -120,7 +123,7 @@ export class EtpBridgePage {
     }
 
     changeDepositSymbol(newSymbol: string) {
-        if (!this.isMetaverseSymbol(newSymbol) && !this.isMetaverseSymbol(this.createOrderParameters.receiveSymbol)) {
+        if (!this.etpBridgeService.isMetaverseSymbol(newSymbol) && !this.etpBridgeService.isMetaverseSymbol(this.createOrderParameters.receiveSymbol)) {
             this.createOrderParameters.receiveSymbol = "ETP"
         } else if (newSymbol === this.createOrderParameters.receiveSymbol){
             this.createOrderParameters.receiveSymbol = this.createOrderParameters.depositSymbol
@@ -130,7 +133,7 @@ export class EtpBridgePage {
     }
 
     changeReceiveSymbol(newSymbol: string) {
-        if (!this.isMetaverseSymbol(newSymbol) && !this.isMetaverseSymbol(this.createOrderParameters.depositSymbol)) {
+        if (!this.etpBridgeService.isMetaverseSymbol(newSymbol) && !this.etpBridgeService.isMetaverseSymbol(this.createOrderParameters.depositSymbol)) {
             this.createOrderParameters.depositSymbol = "ETP"
         } else if (newSymbol === this.createOrderParameters.depositSymbol){
             this.createOrderParameters.depositSymbol = this.createOrderParameters.receiveSymbol
@@ -140,7 +143,10 @@ export class EtpBridgePage {
     }
 
     updateReceiveAmount() {
-        this.createOrderParameters.receiveAmount = this.bridgeRate ? this.createOrderParameters.depositAmount * this.bridgeRate.instantRate * (1 - this.bridgeRate.depositCoinFeeRate) - this.bridgeRate.receiveCoinFee : 0
+        let amount = this.bridgeRate ? this.createOrderParameters.depositAmount * this.bridgeRate.instantRate * (1 - this.bridgeRate.depositCoinFeeRate) : 0
+        let stringAmount = amount.toString().split(".")
+        stringAmount[1] = stringAmount[1] ? stringAmount[1].substring(0, 6) : '0'
+        this.createOrderParameters.receiveAmount = parseFloat(stringAmount[0] + '.' + stringAmount[1])
     }
 
     switch() {
@@ -158,7 +164,7 @@ export class EtpBridgePage {
 
     validAddress = (address, symbol) => {
         if(address === undefined || address == "") return false
-        if(this.isMetaverseSymbol(symbol)){
+        if(this.etpBridgeService.isMetaverseSymbol(symbol)){
             return this.mvs.validAddress(address)
         }
         return true
@@ -168,10 +174,7 @@ export class EtpBridgePage {
 
     validRefundAddress = () => this.validAddress(this.createOrderParameters.refundAddress, this.createOrderParameters.depositSymbol)
 
-    private isMetaverseSymbol = (symbol: string = "") => {
-        const validSymbols = ["ETP"] // at least 1 of these symbol is required
-        return validSymbols.indexOf(symbol) !== -1
-    }
+    explorerURL = (type, data) => (this.globals.network == 'mainnet') ? 'https://explorer.mvs.org/' + type + '/' + data : 'https://explorer-testnet.mvs.org/' + type + '/' + data
 
     gotoDetails = (id) => this.navCtrl.push("etp-bridge-details-page", { id: id })
 

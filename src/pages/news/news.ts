@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
 
 @IonicPage()
@@ -15,7 +14,6 @@ export class NewsPage {
     constructor(
         public navCtrl: NavController, 
         public navParams: NavParams, 
-		private mvs: MvsServiceProvider,
 		private wallet: WalletServiceProvider,
     ) {
     

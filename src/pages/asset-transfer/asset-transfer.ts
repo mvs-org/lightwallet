@@ -29,7 +29,7 @@ export class AssetTransferPage {
     balance: number
     decimals: number
     showBalance: number
-    recipient_address: string = ""
+    recipient_address: string
     recipient_avatar: string
     recipient_avatar_valid: boolean
     quantity: string = ""
@@ -73,6 +73,7 @@ export class AssetTransferPage {
 
         this.selectedAsset = navParams.get('asset')
         this.quantity = navParams.get('amount') || ""
+        this.recipient_address = navParams.get('recipient') || ""
 
         if(this.selectedAsset == 'ETP') {
             this.recipients.push(new RecipientSendMore('', '', {"ETP": undefined}))

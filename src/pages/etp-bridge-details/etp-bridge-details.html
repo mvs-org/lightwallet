@@ -10,7 +10,7 @@
 <ion-content>
     <div class="mini-loader" *ngIf="!order"></div>
 
-    <ion-card class="card-order-history" *ngIf="order">
+    <ion-card class="card-order-history manual-copy" *ngIf="order">
         <ion-row>
             <ion-col col-md-12 col-sm-12 col-12>
                 <ion-item>
@@ -31,7 +31,8 @@
                     </h4>  
                     <h4>
                         <span [translate]="'ETP_BRIDGE.REFUND_ADDRESS'" [translateParams]="{symbol: order.deposit.symbol}"></span>
-                        <span class="right">{{order.refund.address}}</span>
+                        <a *ngIf="etpBridgeService.isMetaverseSymbol(order.deposit.symbol)" href="{{explorerURL('adr', order.refund.address)}}" target="_blank" class="right">{{order.receive.address}}</a>
+                        <span *ngIf="!etpBridgeService.isMetaverseSymbol(order.deposit.symbol)" class="right">{{order.refund.address}}</span>
                     </h4>
                 </ion-item>
             </ion-col>
@@ -43,11 +44,23 @@
                     </h4>
                     <h4>
                         <span [translate]="'ETP_BRIDGE.RECEIVE_ADDRESS'" [translateParams]="{symbol: order.receive.symbol}"></span>
-                        <span class="right">{{order.receive.address}}</span>
+                        <a *ngIf="etpBridgeService.isMetaverseSymbol(order.receive.symbol)" href="{{explorerURL('adr', order.receive.address)}}" target="_blank" class="right">{{order.receive.address}}</a>
+                        <span *ngIf="!etpBridgeService.isMetaverseSymbol(order.receive.symbol)" class="right">{{order.receive.address}}</span>
                     </h4>
                 </ion-item>
             </ion-col>
         </ion-row> 
+        <ion-row class="buttons-row" *ngIf="etpBridgeService.isMetaverseSymbol(order.deposit.symbol) && order.status == 'wait_deposit_send'">
+            <ion-col>
+
+            </ion-col>
+            <ion-col>
+                    <button type="submit" ion-button full icon-left (click)="gotoAssetTransfer()" color="secondary">
+                        <ion-icon disabled="checked" name="send"></ion-icon>
+                        {{"DEPOSIT" | translate}}
+                    </button>
+            </ion-col>
+        </ion-row>
     </ion-card>      
 
 </ion-content>

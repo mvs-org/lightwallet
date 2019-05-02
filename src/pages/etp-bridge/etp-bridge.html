@@ -41,14 +41,14 @@
                     </ion-item>
                     <div *ngIf="bridgeRate" no-lines class="advice" [translate]="'ETP_BRIDGE.MIN_MAX_DEPOSIT'" [translateParams]="{min: bridgeRate.depositMin, max: bridgeRate.depositMax, symbol: createOrderParameters.depositSymbol, fee: bridgeRate.depositCoinFeeRate*100}"></div>  
 
-                    <ion-item *ngIf="isMetaverseSymbol(createOrderParameters.refundAddress)" [ngClass]="{'error-border': !validRefundAddress()}">
+                    <ion-item *ngIf="etpBridgeService.isMetaverseSymbol(createOrderParameters.refundAddress)" [ngClass]="{'error-border': !validRefundAddress()}">
                         <ion-label color="primary" floating [translate]="'ETP_BRIDGE.REFUND_ADDRESS'" [translateParams]="{symbol: createOrderParameters.depositSymbol}"></ion-label>
                         <ion-select [(ngModel)]="createOrderParameters.refundAddress" name="refundAddress" multiple="false" okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}">
                             <ion-option *ngFor="let addressbalance of addressbalances" value="{{addressbalance.identifier}}">{{addressbalance.identifier}} - {{addressbalance.balance | format : 8}} ETP</ion-option>
                         </ion-select>
                     </ion-item>
 
-                    <ion-item *ngIf="!isMetaverseSymbol(createOrderParameters.refundAddress)" [ngClass]="{'error-border': !validRefundAddress()}">
+                    <ion-item *ngIf="!etpBridgeService.isMetaverseSymbol(createOrderParameters.refundAddress)" [ngClass]="{'error-border': !validRefundAddress()}">
                         <ion-label color="primary" floating [translate]="'ETP_BRIDGE.REFUND_ADDRESS'" [translateParams]="{symbol: createOrderParameters.depositSymbol}"></ion-label>
                         <ion-input [(ngModel)]="createOrderParameters.refundAddress" name="refundAddress" type="text"></ion-input>
                     </ion-item>
@@ -74,14 +74,14 @@
                     </ion-item>
                     <div *ngIf="bridgeRate" no-lines class="advice" [translate]="'ETP_BRIDGE.RECEIVE_COIN_FEE'" [translateParams]="{fee: bridgeRate.receiveCoinFee, symbol: createOrderParameters.receiveSymbol}"></div>  
 
-                    <ion-item *ngIf="isMetaverseSymbol(createOrderParameters.receiveAddress)" [ngClass]="{'error-border': !validRecipientAddress()}">
+                    <ion-item *ngIf="etpBridgeService.isMetaverseSymbol(createOrderParameters.receiveAddress)" [ngClass]="{'error-border': !validRecipientAddress()}">
                         <ion-label color="primary" floating [translate]="'ETP_BRIDGE.RECEIVE_ADDRESS'" [translateParams]="{symbol: createOrderParameters.receiveSymbol}"></ion-label>
                         <ion-select [(ngModel)]="createOrderParameters.receiveAddress" name="receiveAddress" multiple="false" okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}">
                             <ion-option *ngFor="let addressbalance of addressbalances" value="{{addressbalance.identifier}}">{{addressbalance.identifier}} - {{addressbalance.balance | format : 8}} ETP</ion-option>
                         </ion-select>
                     </ion-item>
 
-                    <ion-item *ngIf="!isMetaverseSymbol(createOrderParameters.receiveAddress)" [ngClass]="{'error-border': !validRecipientAddress()}">
+                    <ion-item *ngIf="!etpBridgeService.isMetaverseSymbol(createOrderParameters.receiveAddress)" [ngClass]="{'error-border': !validRecipientAddress()}">
                         <ion-label color="primary" floating [translate]="'ETP_BRIDGE.RECEIVE_ADDRESS'" [translateParams]="{symbol: createOrderParameters.receiveSymbol}"></ion-label>
                         <ion-input [(ngModel)]="createOrderParameters.receiveAddress" name="receiveAddress" type="text"></ion-input>
                     </ion-item>
@@ -127,7 +127,8 @@
                     </h4>  
                     <h4>
                         <span [translate]="'ETP_BRIDGE.REFUND_ADDRESS'" [translateParams]="{symbol: order.deposit.symbol}"></span>
-                        <span class="right">{{order.refund.address}}</span>
+                        <a *ngIf="etpBridgeService.isMetaverseSymbol(order.deposit.symbol)" href="{{explorerURL('adr', order.refund.address)}}" target="_blank" class="right">{{order.receive.address}}</a>
+                        <span *ngIf="!etpBridgeService.isMetaverseSymbol(order.deposit.symbol)" class="right">{{order.refund.address}}</span>
                     </h4>
                 </ion-item>
             </ion-col>
@@ -139,17 +140,13 @@
                     </h4>
                     <h4>
                         <span [translate]="'ETP_BRIDGE.RECEIVE_ADDRESS'" [translateParams]="{symbol: order.receive.symbol}"></span>
-                        <span class="right">{{order.receive.address}}</span>
+                        <a *ngIf="etpBridgeService.isMetaverseSymbol(order.receive.symbol)" href="{{explorerURL('adr', order.receive.address)}}" target="_blank" class="right">{{order.receive.address}}</a>
+                        <span *ngIf="!etpBridgeService.isMetaverseSymbol(order.receive.symbol)" class="right">{{order.receive.address}}</span>
                     </h4>
                 </ion-item>
             </ion-col>
-        </ion-row>
-
-        <ion-row>
-
-        </ion-row>
-        
+        </ion-row>       
             
-    </ion-card>  
+    </ion-card>
 
 </ion-content>

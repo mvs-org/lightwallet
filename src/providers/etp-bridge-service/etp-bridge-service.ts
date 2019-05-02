@@ -62,6 +62,11 @@ export class EtpBridgeServiceProvider {
       })
   }
 
+  isMetaverseSymbol (symbol: string = "") {
+    const validSymbols = ["ETP"] // at least 1 of these symbol is required
+    return validSymbols.indexOf(symbol) !== -1
+  }
+
 }
 
 export interface CreateOrderParameters {
