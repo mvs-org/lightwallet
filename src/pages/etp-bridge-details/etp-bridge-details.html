@@ -52,7 +52,7 @@
                         <a *ngIf="etpBridgeService.isMetaverseSymbol(order.receive.symbol)" href="{{explorerURL('adr', order.receive.address)}}" target="_blank" class="right">{{order.receive.address}}</a>
                         <span *ngIf="!etpBridgeService.isMetaverseSymbol(order.receive.symbol)" (click)="show(order.receive.address)" class="right">{{order.receive.address}}</span>
                     </h4>
-                    <div no-lines class="smallAdvice" [translate]="'ETP_BRIDGE.RECEIVE_ADDRESS_ADVICE'" [translateParams]="{symbol: order.receive.address}"></div>  
+                    <div no-lines class="smallAdvice" [translate]="'ETP_BRIDGE.RECEIVE_ADDRESS_ADVICE'" [translateParams]="{symbol: order.receive.symbol}"></div>  
                 </ion-item>
             </ion-col>
         </ion-row> 
@@ -61,10 +61,10 @@
 
             </ion-col>
             <ion-col>
-                    <button type="submit" ion-button full icon-left (click)="gotoAssetTransfer(order.deposit.symbol, order.deposit.address, order.deposit.amount)" color="secondary">
-                        <ion-icon disabled="checked" name="send"></ion-icon>
-                        {{"DEPOSIT" | translate}}
-                    </button>
+                <button type="submit" ion-button full icon-left (click)="gotoAssetTransfer(order.deposit.symbol, order.deposit.address, order.deposit.amount)" color="secondary">
+                    <ion-icon disabled="checked" name="send"></ion-icon>
+                    {{"DEPOSIT" | translate}}
+                </button>
             </ion-col>
         </ion-row>
     </ion-card>      

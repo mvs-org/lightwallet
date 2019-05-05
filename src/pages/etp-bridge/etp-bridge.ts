@@ -93,14 +93,18 @@ export class EtpBridgePage {
 
     createOrder() {
         console.log(this.createOrderParameters)
+        var newOrder = undefined
         return this.alert.showLoading()
             .then(() => this.etpBridgeService.createOrder(this.createOrderParameters).toPromise())
-            .then((order: OrderDetails) => this.etpBridgeService.saveOrder(order))
+            .then((order: OrderDetails) => {
+                newOrder = order
+                this.etpBridgeService.saveOrder(order)
+            })
             .then(() => this.loadOrders())
             .then(() => {
                 this.alert.stopLoading()
                 this.alert.showMessage('SUCCESS_CREATE_SWFT_TITLE', 'SUCCESS_CREATE_SWFT_BODY', '')
-                //this.navCtrl.push('AvatarsPage')
+                this.gotoDetails(newOrder.id)
             })
             .catch((error) => {
                 console.error(error)
@@ -118,7 +122,6 @@ export class EtpBridgePage {
             .then(() => {
                 this.alert.stopLoading()
                 this.alert.showMessage('SUCCESS_IMPORT_SWFT_TITLE', 'SUCCESS_IMPORT_SWFT_BODY', '')
-                //this.navCtrl.push('AvatarsPage')
             })
             .catch((error) => {
                 console.error(error)
@@ -218,9 +221,9 @@ export class EtpBridgePage {
         return true
     }
 
-    validRecipientAddress = () => this.validAddress(this.createOrderParameters.receiveAddress, this.createOrderParameters.receiveSymbol)
-
     validRefundAddress = () => this.validAddress(this.createOrderParameters.refundAddress, this.createOrderParameters.depositSymbol)
+
+    validRecipientAddress = () => this.validAddress(this.createOrderParameters.receiveAddress, this.createOrderParameters.receiveSymbol)
 
     validId = () => this.importFromId
 

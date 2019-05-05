@@ -11,7 +11,7 @@
 
     <div class="mini-loader" *ngIf="!bridgePairs"></div>
 
-    <form *ngIf="bridgePairs">
+    <form #swapForm="ngForm" *ngIf="bridgePairs">
 
         <h3>{{"ETP_BRIDGE.CREATE_ORDER" | translate}}</h3>
 
@@ -59,7 +59,7 @@
                         </ion-select>
                     </ion-item>
 
-                    <ion-item [ngClass]="{'error-border': true, 'valid-border': false}">
+                    <ion-item [ngClass]="{'valid-border': true}">
                         <ion-label color="primary" floating>{{"ETP_BRIDGE.AMOUNT_RECEIVE" | translate}}</ion-label>
                         <ion-input [(ngModel)]="createOrderParameters.receiveAmount" name="receiveAmount" type="number" disabled></ion-input>
                     </ion-item>
@@ -82,7 +82,7 @@
 
             <ion-row class="buttons-row">
                 <ion-col>
-                    <button type="submit" ion-button full icon-left (click)="createOrder()" color="secondary">
+                    <button type="submit" ion-button full icon-left (click)="createOrder()" color="secondary" [disabled]="!swapForm.form.valid||!validDepositAmount(depositAmount)||!validRefundAddress()||!validRecipientAddress()">
                         <ion-icon disabled="checked" name="send"></ion-icon>
                         {{"SWAP" | translate}}
                     </button>
@@ -115,7 +115,12 @@
                     <h4>
                         {{'ETP_BRIDGE.FROM_ASSET'|translate}}
                         <span class="right">{{order.deposit.amount}} {{order.deposit.symbol}}</span>
-                    </h4>  
+                    </h4>
+                    <h4>
+                        <span [translate]="'ETP_BRIDGE.DEPOSIT_ADDRESS'" [translateParams]="{symbol: order.deposit.symbol}"></span>
+                        <a *ngIf="etpBridgeService.isMetaverseSymbol(order.deposit.symbol)" href="{{explorerURL('adr', order.deposit.address)}}" target="_blank" class="right">{{order.deposit.address}}</a>
+                        <span *ngIf="!etpBridgeService.isMetaverseSymbol(order.deposit.symbol)" (click)="show(order.deposit.address)" class="right">{{order.deposit.address}}</span>
+                    </h4>
                     <h4>
                         <span [translate]="'ETP_BRIDGE.REFUND_ADDRESS'" [translateParams]="{symbol: order.deposit.symbol}"></span>
                         <a *ngIf="etpBridgeService.isMetaverseSymbol(order.deposit.symbol)" href="{{explorerURL('adr', order.refund.address)}}" target="_blank" class="right">{{order.receive.address}}</a>
@@ -152,7 +157,7 @@
         </ion-item>
 
         <ion-row class="buttons-row right">
-            <button class="right" ion-button color="primary" item-right icon-left (click)="importOrder($event)">
+            <button class="right" ion-button color="primary" item-right icon-left (click)="importOrder($event)" [disabled]="!validId(importFromId)">
                 <ion-icon name="add"></ion-icon>
                 {{'ETP_BRIDGE.IMPORT_ORDER_BUTTON'|translate}}
             </button>
