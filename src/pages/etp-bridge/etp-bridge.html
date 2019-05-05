@@ -89,7 +89,7 @@
                 </ion-col>
                 <ion-col>
                     <button ion-button color="danger" full item-right icon-left (click)="cancel($event)">
-                        <ion-icon name="cancel"></ion-icon>
+                        <ion-icon name="close"></ion-icon>
                         {{'CANCEL'|translate}}
                     </button>
                 </ion-col>
@@ -101,7 +101,7 @@
     <h3>{{"ETP_BRIDGE.HISTORY_TITLE" | translate}}</h3>
     <p>{{"ETP_BRIDGE.HISTORY_DESCRIPTION" | translate}}</p>
 
-    <ion-card class="card-order-history" *ngFor="let order of orders" (click)="gotoDetails(order.id)">
+    <ion-card class="card-order-history" *ngFor="let order of orders">
         <ion-row>
             <ion-col col-md-12 col-sm-12 col-12>
                 <ion-item>
@@ -141,7 +141,13 @@
                     </h4>
                 </ion-item>
             </ion-col>
-        </ion-row>       
+        </ion-row>
+        <ion-row class="buttons-row right">
+            <button class="right" ion-button color="primary" item-right icon-left (click)="gotoDetails(order.id)">
+                <ion-icon name="send"></ion-icon>
+                {{'ETP_BRIDGE.SEE_DETAILS_BUTTON'|translate}}
+            </button>
+        </ion-row>    
             
     </ion-card>
 

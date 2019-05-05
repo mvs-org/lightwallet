@@ -689,6 +689,7 @@
     "ETP_BRIDGE.ORDER_ID": "Order ID",
     "ETP_BRIDGE.IMPORT_ORDER_BUTTON": "Import order",
     "SUCCESS_IMPORT_SWFT_TITLE": "Order imported!",
-    "SUCCESS_IMPORT_SWFT_BODY": "Order importer successfully"
+    "SUCCESS_IMPORT_SWFT_BODY": "Order importer successfully",
+    "ETP_BRIDGE.SEE_DETAILS_BUTTON": "See details"
 
 }

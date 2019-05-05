@@ -132,7 +132,14 @@ export class EtpBridgePage {
 
     cancel(e) {
         e.preventDefault()
-        this.navCtrl.pop()
+        this.createOrderParameters = {
+            depositSymbol: "ETP",
+            receiveSymbol: "BTC",
+            receiveAmount: null,
+            refundAddress: "",
+            receiveAddress: "",
+            depositAmount: null,
+        }
     }
 
     create() {

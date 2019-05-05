@@ -10,6 +10,7 @@
 
 <ion-content padding>
 
+	<div class="mini-loader" *ngIf="!listNews"></div>
 
 	<ion-card class="news-card" *ngFor="let news of listNews">
 		<ion-grid>
