@@ -4,6 +4,8 @@ import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service'
 import { AlertProvider } from '../../providers/alert/alert'
 import { EtpBridgeServiceProvider, CreateOrderParameters, OrderDetails } from '../../providers/etp-bridge-service/etp-bridge-service'
 import { AppGlobals } from '../../app/app.global';
+import { TranslateService } from '@ngx-translate/core';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 @IonicPage()
 @Component({
@@ -21,6 +23,7 @@ export class EtpBridgePage {
     depositSymbolList: Array<string> = []
 
     orders: OrderDetails[] = []
+    importFromId: string
 
     createOrderParameters: CreateOrderParameters = {
         depositSymbol: "ETP",
@@ -41,6 +44,8 @@ export class EtpBridgePage {
         private etpBridgeService: EtpBridgeServiceProvider,
         private alert: AlertProvider,
         private globals: AppGlobals,
+        private translate: TranslateService,
+        private barcodeScanner: BarcodeScanner,
     ) {
 
         this.getRate()
@@ -95,6 +100,25 @@ export class EtpBridgePage {
             .then(() => {
                 this.alert.stopLoading()
                 this.alert.showMessage('SUCCESS_CREATE_SWFT_TITLE', 'SUCCESS_CREATE_SWFT_BODY', '')
+                //this.navCtrl.push('AvatarsPage')
+            })
+            .catch((error) => {
+                console.error(error)
+                this.alert.stopLoading()
+                this.alert.showError('MESSAGE.CREATE_SWFT_ORDER_ERROR', error.message)
+            })
+    }
+
+    importOrder() {
+        console.log(this.importFromId)
+        return this.alert.showLoading()
+            .then(() => this.etpBridgeService.getOrder(this.importFromId).toPromise())
+            .then((order: OrderDetails) => this.etpBridgeService.saveOrder(order))
+            .then(() => this.loadOrders())
+            .then(() => {
+                this.alert.stopLoading()
+                this.alert.showMessage('SUCCESS_IMPORT_SWFT_TITLE', 'SUCCESS_IMPORT_SWFT_BODY', '')
+                //this.navCtrl.push('AvatarsPage')
             })
             .catch((error) => {
                 console.error(error)
@@ -160,6 +184,30 @@ export class EtpBridgePage {
         this.getRate()
     }
 
+    scan() {
+        this.translate.get(['SCANNING.MESSAGE_ADDRESS']).subscribe((translations: any) => {
+            this.barcodeScanner.scan(
+                {
+                    preferFrontCamera: false,
+                    showFlipCameraButton: false,
+                    showTorchButton: false,
+                    torchOn: false,
+                    prompt: translations['SCANNING.MESSAGE_ADDRESS'],
+                    resultDisplayDuration: 0,
+                    formats: "QR_CODE",
+                }).then((result) => {
+                    if (!result.cancelled) {
+                        let content = result.text.toString().split('&')
+                        if (this.mvs.validAddress(content[0]) == true) {
+                            this.importFromId = content[0]
+                        } else {
+                            this.alert.showWrongAddress()
+                        }
+                    }
+                })
+        })
+    }
+
     validDepositAmount = () => this.bridgeRate && this.createOrderParameters.depositAmount >= this.bridgeRate.depositMin && this.createOrderParameters.depositAmount <= this.bridgeRate.depositMax
 
     validAddress = (address, symbol) => {
@@ -173,6 +221,8 @@ export class EtpBridgePage {
     validRecipientAddress = () => this.validAddress(this.createOrderParameters.receiveAddress, this.createOrderParameters.receiveSymbol)
 
     validRefundAddress = () => this.validAddress(this.createOrderParameters.refundAddress, this.createOrderParameters.depositSymbol)
+
+    validId = () => this.importFromId
 
     explorerURL = (type, data) => (this.globals.network == 'mainnet') ? 'https://explorer.mvs.org/' + type + '/' + data : 'https://explorer-testnet.mvs.org/' + type + '/' + data
 

@@ -12,17 +12,8 @@
     <div class="mini-loader" *ngIf="!bridgePairs"></div>
 
     <form *ngIf="bridgePairs">
-    
-        <p align="center" *ngIf="etpBalance<fee/100000000" class="wrong-input">{{"NOTICE_TRANSACTION_FEE_UNCOVERED"|translate}}</p>
-        <ion-row>
-            <ion-col>
-                <p>{{"AVAILABLE_BALANCE" | translate}}: <br *ngIf="platform.is('mobile')">{{etpBalance | format : 8}} ETP</p>
-            </ion-col>
-            <ion-col>
-                <p class="right">{{"FEE"|translate}}:<br *ngIf="platform.is('mobile')"> {{fee | format : 8}} ETP</p>
-            </ion-col>
-        </ion-row>
 
+        <h3>{{"ETP_BRIDGE.CREATE_ORDER" | translate}}</h3>
 
         <ion-card class="card-block">
             <ion-row>
@@ -147,6 +138,25 @@
             </ion-col>
         </ion-row>       
             
+    </ion-card>
+
+    <h3>{{"ETP_BRIDGE.IMPORT_ORDER" | translate}}</h3>
+
+    <ion-card class="card-block">
+        <ion-item [ngClass]="{'error-border':!validId(importFromId), 'valid-border':validId(importFromId)}">
+            <ion-label color="primary" floating>{{"ETP_BRIDGE.ORDER_ID"|translate}}</ion-label>
+            <ion-input name="importFromId" [(ngModel)]="importFromId"></ion-input>
+            <button id="scanButton" *ngIf="isApp" ion-button item-right (click)="scan()">
+                <ion-icon name="qr-scanner"></ion-icon>
+            </button>
+        </ion-item>
+
+        <ion-row class="buttons-row right">
+            <button class="right" ion-button color="primary" item-right icon-left (click)="importOrder($event)">
+                <ion-icon name="add"></ion-icon>
+                {{'ETP_BRIDGE.IMPORT_ORDER_BUTTON'|translate}}
+            </button>
+        </ion-row>
     </ion-card>
 
 </ion-content>

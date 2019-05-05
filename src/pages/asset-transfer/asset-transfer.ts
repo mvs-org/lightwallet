@@ -68,7 +68,7 @@ export class AssetTransferPage {
         private alert: AlertProvider,
         private barcodeScanner: BarcodeScanner,
         private keyboard: Keyboard,
-        private translate: TranslateService
+        private translate: TranslateService,
     ) {
 
         this.selectedAsset = navParams.get('asset')
