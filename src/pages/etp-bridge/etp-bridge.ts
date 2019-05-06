@@ -54,9 +54,7 @@ export class EtpBridgePage {
 
         etpBridgeService.getBridgePairs().toPromise().then(pairs => {
             this.bridgePairs = pairs
-            console.log(this.bridgePairs)
             this.depositSymbolList = Object.keys(this.bridgePairs)
-            console.log(this.depositSymbolList)
         });
 
         //Load addresses and balances
@@ -82,18 +80,15 @@ export class EtpBridgePage {
         this.bridgeRate = undefined
         this.etpBridgeService.getBridgeRate(this.createOrderParameters.depositSymbol, this.createOrderParameters.receiveSymbol).toPromise().then(rate => {
             this.bridgeRate = rate
-            console.log(this.bridgeRate)
         });
     }
 
     async loadOrders(){
       this.orders = await this.etpBridgeService.getOrders()
-      console.log(this.orders)
       return this.orders
     }
 
     createOrder() {
-        console.log(this.createOrderParameters)
         var newOrder = undefined
         return this.alert.showLoading()
             .then(() => this.etpBridgeService.createOrder(this.createOrderParameters).toPromise())
@@ -115,7 +110,6 @@ export class EtpBridgePage {
     }
 
     importOrder() {
-        console.log(this.importFromId)
         return this.alert.showLoading()
             .then(() => this.etpBridgeService.getOrder(this.importFromId).toPromise())
             .then((order: OrderDetails) => this.etpBridgeService.saveOrder(order))
@@ -191,6 +185,8 @@ export class EtpBridgePage {
 
         this.createOrderParameters.receiveAmount = 0
         this.createOrderParameters.depositAmount = 0
+        this.createOrderParameters.refundAddress = ""
+        this.createOrderParameters.receiveAddress = ""
 
         this.getRate()
     }

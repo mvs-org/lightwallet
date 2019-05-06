@@ -31,7 +31,6 @@ export class EtpBridgeDetailsPage {
         try {
             this.order = await this.etpBridgeService.getOrder(id).toPromise()
             if(this.order) await this.etpBridgeService.saveOrder(this.order)
-            console.log(this.order)
         } catch (error) {
             console.error(error)
         }
