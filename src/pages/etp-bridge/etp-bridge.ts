@@ -80,6 +80,7 @@ export class EtpBridgePage {
         this.bridgeRate = undefined
         this.etpBridgeService.getBridgeRate(this.createOrderParameters.depositSymbol, this.createOrderParameters.receiveSymbol).toPromise().then(rate => {
             this.bridgeRate = rate
+            this.updateReceiveAmount()
         });
     }
 
@@ -94,7 +95,7 @@ export class EtpBridgePage {
             .then(() => this.etpBridgeService.createOrder(this.createOrderParameters).toPromise())
             .then((order: OrderDetails) => {
                 newOrder = order
-                this.etpBridgeService.saveOrder(order)
+                return this.etpBridgeService.saveOrder(order)
             })
             .then(() => this.loadOrders())
             .then(() => {
