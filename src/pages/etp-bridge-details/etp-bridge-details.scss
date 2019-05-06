@@ -5,9 +5,28 @@ page-etp-bridge-details {
         float: right;
     }
 
+    .card-order-history {
+        padding: 10px;
+        margin-bottom: 40px;
+    }
+
     .smallAdvice {
         font-size: 1.2rem;
         color: #949494;
+        text-overflow: initial;
+        white-space: initial;
+    }
+
+    [padding] h3:first-child, [padding] h4:first-child {
+        margin-top: 0;
+    }
+
+    .col a {
+        width: 100%;
+    }
+
+    .row {
+        margin-bottom: 10px;
     }
 
 }

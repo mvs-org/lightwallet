@@ -29,4 +29,16 @@ page-etp-bridge {
         text-align: center;
     }
 
+    [padding] h3:first-child, [padding] h4:first-child {
+        margin-top: 0;
+    }
+
+    ion-col a {
+        width: 100%;
+    }
+
+    ion-row {
+        margin-bottom: 10px;
+    }
+
 }

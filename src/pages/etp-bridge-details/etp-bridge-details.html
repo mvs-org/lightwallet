@@ -7,55 +7,72 @@
     </ion-navbar>
 </ion-header>
 
-<ion-content>
+<ion-content padding>
     <div class="mini-loader" *ngIf="!order"></div>
 
     <ion-card class="card-order-history manual-copy" *ngIf="order">
         <ion-row>
             <ion-col col-md-12 col-sm-12 col-12>
-                <ion-item>
-                    <h1 (click)="show(order.id)">{{order.id}}</h1>
-                    <h2>{{"ETP_BRIDGE.STATUS_" + order.status|translate}}</h2>
-                </ion-item>
+                <ion-row>
+                    <ion-col col-md-12 col-sm-12 col-12>
+                        <h1 (click)="show(order.id)">{{order.id}}</h1>
+                        <h2>{{"ETP_BRIDGE.STATUS_" + order.status|translate}}</h2>
+                    </ion-col>
+                </ion-row>  
             </ion-col>
         </ion-row>
+
         <ion-row>
             <ion-col col-md-6 col-sm-12 col-12>
-                <ion-item>
-                    <h4>
-                        {{'ETP_BRIDGE.FROM_ASSET'|translate}}
-                        <span class="right">{{order.deposit.amount}} {{order.deposit.symbol}}</span>
-                    </h4>
-                    <h4>
-                        <span [translate]="'ETP_BRIDGE.DEPOSIT_ADDRESS'" [translateParams]="{symbol: order.deposit.symbol}"></span>
-                        <a *ngIf="etpBridgeService.isMetaverseSymbol(order.deposit.symbol)" href="{{explorerURL('adr', order.deposit.address)}}" target="_blank" class="right">{{order.deposit.address}}</a>
-                        <a *ngIf="!etpBridgeService.isMetaverseSymbol(order.deposit.symbol)" (click)="show(order.deposit.address)" class="right">{{order.deposit.address}}</a>
-                    </h4>
-                    <div no-lines *ngIf="order.status == 'wait_deposit_send'" class="smallAdvice" [translate]="'ETP_BRIDGE.DEPOSIT_ADDRESS_ADVICE'" [translateParams]="{amount: order.deposit.amount, symbol: order.deposit.symbol}"></div>  
-                    <br>
-                    <h4>
-                        <span [translate]="'ETP_BRIDGE.REFUND_ADDRESS'" [translateParams]="{symbol: order.deposit.symbol}"></span>
-                        <a *ngIf="etpBridgeService.isMetaverseSymbol(order.deposit.symbol)" href="{{explorerURL('adr', order.refund.address)}}" target="_blank" class="right">{{order.refund.address}}</a>
-                        <a *ngIf="!etpBridgeService.isMetaverseSymbol(order.deposit.symbol)" (click)="show(order.refund.address)" class="right">{{order.refund.address}}</a>
-                    </h4>
-                    <div no-lines class="smallAdvice" [translate]="'ETP_BRIDGE.REFUND_ADDRESS_ADVICE'" [translateParams]="{symbol: order.deposit.symbol}"></div>  
-                </ion-item>
+                <ion-row>
+                    <ion-col col-sm-6 col-12>{{'ETP_BRIDGE.FROM_ASSET'|translate}}</ion-col>
+                    <ion-col col-sm-6 col-12 class="right">{{order.deposit.amount}} {{order.deposit.symbol}}</ion-col>                  
+                </ion-row>
+                <ion-row>
+                    <ion-col col-sm-6 col-12>
+                        <div [translate]="'ETP_BRIDGE.DEPOSIT_ADDRESS'" [translateParams]="{symbol: order.deposit.symbol}"></div>
+                        <div no-lines *ngIf="order.status == 'wait_deposit_send'" class="smallAdvice" [translate]="'ETP_BRIDGE.DEPOSIT_ADDRESS_ADVICE'" [translateParams]="{amount: order.deposit.amount, symbol: order.deposit.symbol}"></div>
+                    </ion-col>
+                    <ion-col col-sm-6 col-12>
+                        <h4 class="break-words">
+                            <a *ngIf="etpBridgeService.isMetaverseSymbol(order.deposit.symbol)" href="{{explorerURL('adr', order.deposit.address)}}" target="_blank" class="right break-words">{{order.deposit.address}}</a>
+                            <a *ngIf="!etpBridgeService.isMetaverseSymbol(order.deposit.symbol)" (click)="show(order.deposit.address)" class="right">{{order.deposit.address}}</a>
+                        </h4>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col col-sm-6 col-12>
+                        <div [translate]="'ETP_BRIDGE.REFUND_ADDRESS'" [translateParams]="{symbol: order.deposit.symbol}"></div>
+                        <div no-lines class="smallAdvice" [translate]="'ETP_BRIDGE.REFUND_ADDRESS_ADVICE'" [translateParams]="{symbol: order.deposit.symbol}"></div>  
+                    </ion-col>
+                    <ion-col col-sm-6 col-12>
+                        <h4 class="break-words">
+                            <a *ngIf="etpBridgeService.isMetaverseSymbol(order.deposit.symbol)" href="{{explorerURL('adr', order.refund.address)}}" target="_blank" class="right overflow">{{order.receive.address}}</a>
+                            <a *ngIf="!etpBridgeService.isMetaverseSymbol(order.deposit.symbol)" (click)="show(order.refund.address)" class="right">{{order.refund.address}}</a>
+                        </h4>
+                    </ion-col>
+                </ion-row>
             </ion-col>
             <ion-col col-md-6 col-sm-12 col-12>
-                <ion-item>
-                    <h4>
-                        {{'ETP_BRIDGE.TO_ASSET'|translate}}
-                        <span class="right">{{order.receive.amount}} {{order.receive.symbol}}</span>
-                    </h4>
-                    <h4>
-                        <span [translate]="'ETP_BRIDGE.RECEIVE_ADDRESS'" [translateParams]="{symbol: order.receive.symbol}"></span>
-                        <a *ngIf="etpBridgeService.isMetaverseSymbol(order.receive.symbol)" href="{{explorerURL('adr', order.receive.address)}}" target="_blank" class="right">{{order.receive.address}}</a>
-                        <a *ngIf="!etpBridgeService.isMetaverseSymbol(order.receive.symbol)" (click)="show(order.receive.address)" class="right">{{order.receive.address}}</a>
-                    </h4>
-                    <div no-lines class="smallAdvice" [translate]="'ETP_BRIDGE.RECEIVE_ADDRESS_ADVICE'" [translateParams]="{symbol: order.receive.symbol}"></div>  
-                </ion-item>
+                <ion-row>
+                    <ion-col col-sm-6 col-12>{{'ETP_BRIDGE.TO_ASSET'|translate}}</ion-col>
+                    <ion-col col-sm-6 col-12 class="right">{{order.receive.amount}} {{order.receive.symbol}}</ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col col-sm-6 col-12>
+                        <div [translate]="'ETP_BRIDGE.RECEIVE_ADDRESS'" [translateParams]="{symbol: order.receive.symbol}"></div>
+                        <div no-lines class="smallAdvice" [translate]="'ETP_BRIDGE.RECEIVE_ADDRESS_ADVICE'" [translateParams]="{symbol: order.receive.symbol}"></div>  
+                    </ion-col>
+                    <ion-col col-sm-6 col-12>
+                        <h4 class="break-words">
+                            <a *ngIf="etpBridgeService.isMetaverseSymbol(order.receive.symbol)" href="{{explorerURL('adr', order.receive.address)}}" target="_blank" class="right">{{order.receive.address}}</a>
+                            <a *ngIf="!etpBridgeService.isMetaverseSymbol(order.receive.symbol)" (click)="show(order.receive.address)" class="right">{{order.receive.address}}</a>
+                        </h4>
+                    </ion-col>
+                </ion-row>
             </ion-col>
-        </ion-row> 
+        </ion-row>
+
         <ion-row class="buttons-row" *ngIf="etpBridgeService.isMetaverseSymbol(order.deposit.symbol) && order.status == 'wait_deposit_send'">
             <ion-col>
 
