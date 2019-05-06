@@ -31,7 +31,7 @@
                         <a *ngIf="etpBridgeService.isMetaverseSymbol(order.deposit.symbol)" href="{{explorerURL('adr', order.deposit.address)}}" target="_blank" class="right">{{order.deposit.address}}</a>
                         <a *ngIf="!etpBridgeService.isMetaverseSymbol(order.deposit.symbol)" (click)="show(order.deposit.address)" class="right">{{order.deposit.address}}</a>
                     </h4>
-                    <div no-lines class="smallAdvice" [translate]="'ETP_BRIDGE.DEPOSIT_ADDRESS_ADVICE'" [translateParams]="{amount: order.deposit.amount, symbol: order.deposit.symbol}"></div>  
+                    <div no-lines *ngIf="order.status == 'wait_deposit_send'" class="smallAdvice" [translate]="'ETP_BRIDGE.DEPOSIT_ADDRESS_ADVICE'" [translateParams]="{amount: order.deposit.amount, symbol: order.deposit.symbol}"></div>  
                     <br>
                     <h4>
                         <span [translate]="'ETP_BRIDGE.REFUND_ADDRESS'" [translateParams]="{symbol: order.deposit.symbol}"></span>
