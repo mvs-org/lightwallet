@@ -119,12 +119,12 @@
                     <h4>
                         <span [translate]="'ETP_BRIDGE.DEPOSIT_ADDRESS'" [translateParams]="{symbol: order.deposit.symbol}"></span>
                         <a *ngIf="etpBridgeService.isMetaverseSymbol(order.deposit.symbol)" href="{{explorerURL('adr', order.deposit.address)}}" target="_blank" class="right">{{order.deposit.address}}</a>
-                        <span *ngIf="!etpBridgeService.isMetaverseSymbol(order.deposit.symbol)" (click)="show(order.deposit.address)" class="right">{{order.deposit.address}}</span>
+                        <a *ngIf="!etpBridgeService.isMetaverseSymbol(order.deposit.symbol)" (click)="show(order.deposit.address)" class="right">{{order.deposit.address}}</a>
                     </h4>
                     <h4>
                         <span [translate]="'ETP_BRIDGE.REFUND_ADDRESS'" [translateParams]="{symbol: order.deposit.symbol}"></span>
                         <a *ngIf="etpBridgeService.isMetaverseSymbol(order.deposit.symbol)" href="{{explorerURL('adr', order.refund.address)}}" target="_blank" class="right">{{order.receive.address}}</a>
-                        <span *ngIf="!etpBridgeService.isMetaverseSymbol(order.deposit.symbol)" class="right">{{order.refund.address}}</span>
+                        <a *ngIf="!etpBridgeService.isMetaverseSymbol(order.deposit.symbol)" (click)="show(order.refund.address)" class="right">{{order.refund.address}}</a>
                     </h4>
                 </ion-item>
             </ion-col>
@@ -137,7 +137,7 @@
                     <h4>
                         <span [translate]="'ETP_BRIDGE.RECEIVE_ADDRESS'" [translateParams]="{symbol: order.receive.symbol}"></span>
                         <a *ngIf="etpBridgeService.isMetaverseSymbol(order.receive.symbol)" href="{{explorerURL('adr', order.receive.address)}}" target="_blank" class="right">{{order.receive.address}}</a>
-                        <span *ngIf="!etpBridgeService.isMetaverseSymbol(order.receive.symbol)" class="right">{{order.receive.address}}</span>
+                        <a *ngIf="!etpBridgeService.isMetaverseSymbol(order.receive.symbol)" (click)="show(order.receive.address)" class="right">{{order.receive.address}}</a>
                     </h4>
                 </ion-item>
             </ion-col>

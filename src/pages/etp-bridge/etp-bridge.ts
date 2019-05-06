@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core'
-import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular'
+import { IonicPage, NavController, NavParams, Platform, ModalController } from 'ionic-angular'
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service'
 import { AlertProvider } from '../../providers/alert/alert'
 import { EtpBridgeServiceProvider, CreateOrderParameters, OrderDetails } from '../../providers/etp-bridge-service/etp-bridge-service'
@@ -46,6 +46,7 @@ export class EtpBridgePage {
         private globals: AppGlobals,
         private translate: TranslateService,
         private barcodeScanner: BarcodeScanner,
+        public modalCtrl: ModalController,
     ) {
 
         this.getRate()
@@ -216,6 +217,11 @@ export class EtpBridgePage {
                     }
                 })
         })
+    }
+
+    show(address) {
+        let profileModal = this.modalCtrl.create('QRCodePage', { value: address });
+        profileModal.present();
     }
 
     validDepositAmount = () => this.bridgeRate && this.createOrderParameters.depositAmount >= this.bridgeRate.depositMin && this.createOrderParameters.depositAmount <= this.bridgeRate.depositMax
