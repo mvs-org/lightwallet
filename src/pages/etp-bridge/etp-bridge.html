@@ -138,7 +138,7 @@
                     </ion-col>
                     <ion-col col-sm-6 col-12>
                         <h4 class="break-words">
-                            <a *ngIf="etpBridgeService.isMetaverseSymbol(order.deposit.symbol)" href="{{explorerURL('adr', order.deposit.address)}}" target="_blank" class="right break-words">{{order.deposit.address}}</a>
+                            <a *ngIf="etpBridgeService.isMetaverseSymbol(order.deposit.symbol)" href="{{explorerURL('adr', order.deposit.address)}}" target="_blank" class="right">{{order.deposit.address}}</a>
                             <a *ngIf="!etpBridgeService.isMetaverseSymbol(order.deposit.symbol)" (click)="show(order.deposit.address)" class="right">{{order.deposit.address}}</a>
                         </h4>
                     </ion-col>
@@ -149,7 +149,7 @@
                     </ion-col>
                     <ion-col col-sm-6 col-12>
                         <h4 class="break-words">
-                            <a *ngIf="etpBridgeService.isMetaverseSymbol(order.deposit.symbol)" href="{{explorerURL('adr', order.refund.address)}}" target="_blank" class="right overflow">{{order.receive.address}}</a>
+                            <a *ngIf="etpBridgeService.isMetaverseSymbol(order.deposit.symbol)" href="{{explorerURL('adr', order.refund.address)}}" target="_blank" class="right">{{order.receive.address}}</a>
                             <a *ngIf="!etpBridgeService.isMetaverseSymbol(order.deposit.symbol)" (click)="show(order.refund.address)" class="right">{{order.refund.address}}</a>
                         </h4>
                     </ion-col>
