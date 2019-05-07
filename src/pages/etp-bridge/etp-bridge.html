@@ -27,6 +27,7 @@
     <form #swapForm="ngForm" *ngIf="bridgePairs">
 
         <h3>{{"ETP_BRIDGE.CREATE_ORDER" | translate}}</h3>
+        <p>{{"ETP_BRIDGE.CREATE_ORDER_DESCRIPTION" | translate}}</p>
 
         <ion-card class="card-block">
             <ion-row>
@@ -113,9 +114,6 @@
 
     <h3>{{"ETP_BRIDGE.HISTORY_TITLE" | translate}}</h3>
     <p>{{"ETP_BRIDGE.HISTORY_DESCRIPTION" | translate}}</p>
-
-
-
 
     <ion-card class="card-order-history" *ngFor="let order of orders">
         <ion-row>

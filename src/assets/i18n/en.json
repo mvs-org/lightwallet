@@ -686,13 +686,15 @@
     "ETP_BRIDGE.RECEIVE_ADDRESS_ADVICE": "You will receive the {{symbol}} on this address",
     "ETP_BRIDGE.IMPORT_ORDER": "Import existing order",
     "ETP_BRIDGE.CREATE_ORDER": "Create a new order",
+    "ETP_BRIDGE.CREATE_ORDER_DESCRIPTION": "Create an order to buy or sell ETP from or to many other coins. After creating the order, don't forget to do the Deposit.",
     "ETP_BRIDGE.ORDER_ID": "Order ID",
     "ETP_BRIDGE.IMPORT_ORDER_BUTTON": "Import order",
     "SUCCESS_IMPORT_SWFT_TITLE": "Order imported!",
     "SUCCESS_IMPORT_SWFT_BODY": "Order importer successfully",
     "ETP_BRIDGE.SEE_DETAILS_BUTTON": "See details",
 
-    "ETP_BRIDGE.INFORMATION": "This service is provided by SWFT. In case of issue, please contact SWFT support ",
-    "ETP_BRIDGE.INFORMATION_LINK": "on Telegram"
+    "ETP_BRIDGE.INFORMATION": "This service is provided by SWFT. In case of issue, please contact SWFT support on ",
+    "ETP_BRIDGE.INFORMATION_LINK": "Telegram"
+
 
 }
