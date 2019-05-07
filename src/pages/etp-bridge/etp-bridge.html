@@ -9,6 +9,19 @@
 
 <ion-content padding>
 
+    <a class="swft-logo" href="https://www.swft.pro" target="_blank">
+        <img [src]="'assets/images/swft-logo.png'">
+    </a>
+
+    <ion-row class="swft-info">
+        <ion-col>
+            <p align="center">
+                {{"ETP_BRIDGE.INFORMATION" | translate}}
+                <a href="https://t.me/SWFTBlockchain" target="_blank">{{"ETP_BRIDGE.INFORMATION_LINK" | translate}}</a>
+            </p>
+        </ion-col>
+    </ion-row>
+
     <div class="mini-loader" *ngIf="!bridgePairs"></div>
 
     <form #swapForm="ngForm" *ngIf="bridgePairs">

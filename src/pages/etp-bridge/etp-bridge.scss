@@ -33,12 +33,31 @@ page-etp-bridge {
         margin-top: 0;
     }
 
-    ion-col a {
+    .col a {
         width: 100%;
     }
 
-    ion-row {
+    .row {
         margin-bottom: 10px;
+    }
+
+    .swft-info {
+        width: 100%;
+    }
+
+    .swft-logo {
+        float: right;
+        margin-right: 50px;
+    }
+
+    .swft-logo img {
+        width: 100px;
+        height: auto;
+    }
+
+    .swft-logo p {
+        margin: 0;
+        text-align: center;
     }
 
 }

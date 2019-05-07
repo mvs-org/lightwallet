@@ -690,6 +690,9 @@
     "ETP_BRIDGE.IMPORT_ORDER_BUTTON": "Import order",
     "SUCCESS_IMPORT_SWFT_TITLE": "Order imported!",
     "SUCCESS_IMPORT_SWFT_BODY": "Order importer successfully",
-    "ETP_BRIDGE.SEE_DETAILS_BUTTON": "See details"
+    "ETP_BRIDGE.SEE_DETAILS_BUTTON": "See details",
+
+    "ETP_BRIDGE.INFORMATION": "This service is provided by SWFT. In case of issue, please contact SWFT support ",
+    "ETP_BRIDGE.INFORMATION_LINK": "on Telegram"
 
 }
