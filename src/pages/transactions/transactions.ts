@@ -28,8 +28,9 @@ export class TransactionsPage {
     blocktime: number
     current_time: number
     icon: string = 'default_mst'
-    page_tx: number = 1;
-    page_deposit_unlocked: number = 1;
+    page_tx: number = 1
+    page_deposit_unlocked: number = 1
+    items_per_page: number = 25
 
     constructor(
         public navCtrl: NavController,
