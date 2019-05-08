@@ -36,12 +36,12 @@ export class EtpBridgeServiceProvider {
   }
 
   getOrders(): Promise<OrderDetails[]> {
-    return this.storage.get('etp-bridge-orders')
+    return this.storage.get('etp_bridge_orders')
       .then(orders => orders || [])
   }
 
   setOrders(orders: OrderDetails[]): Promise<OrderDetails[]> {
-    return this.storage.set('etp-bridge-orders', orders)
+    return this.storage.set('etp_bridge_orders', orders)
   }
 
   saveOrder(order: OrderDetails) {

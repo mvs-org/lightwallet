@@ -314,6 +314,14 @@ export class WalletServiceProvider {
             })
     }
 
+    setupAccount(accountName, decryptedAccount) {
+        return Promise.all([this.setWallet(decryptedAccount.wallet), this.setMobileWallet(decryptedAccount.seed), this.setAccountName(accountName), this.setMultisigAddresses(decryptedAccount.multisig_addresses), this.setMultisigInfo(decryptedAccount.multisigs), this.setPlugins(decryptedAccount.plugins)])
+            .catch((error) => {
+                console.error(error)
+                throw Error('ERR_SETUP_ACCOUNT')
+            })
+    }
+
     getSessionAccountInfo() {
         return this.storage.get('account_info')
     }
