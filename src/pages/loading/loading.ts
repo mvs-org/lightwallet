@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, Platform, Events } from 'ionic-angular';
+import { IonicPage, NavController, Platform, Events, NavParams } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 
@@ -14,6 +14,7 @@ export class LoadingPage {
     maxHeight: number
     progress: number = 1
     firstTxHeight: number
+    reset: boolean
 
     showRestartOption = false
 
@@ -21,7 +22,11 @@ export class LoadingPage {
         private mvs: MvsServiceProvider,
         public translate: TranslateService,
         public platform: Platform,
-        private event: Events) {
+        private event: Events,
+        public navParams: NavParams,
+    ) {
+
+        this.reset = navParams.get('reset') || false;
 
         this.event.subscribe("last_tx_height_update", (height) => {
             this.loadingHeight = height
@@ -34,8 +39,12 @@ export class LoadingPage {
     }
 
     ionViewDidEnter() {
-        this.mvs.dataReset()
-            .then(() => setTimeout(()=>this.updateBalances(), 1000))
+        if(this.reset) {
+            this.mvs.dataReset()
+                .then(() => setTimeout(()=>this.updateBalances(), 1000))
+        } else {
+            this.updateBalances()
+        }
     }
 
     private getHeight() {

@@ -42,7 +42,7 @@ export class SettingsPage {
     }
 
     reset() {
-        this.nav.setRoot("LoadingPage")
+        this.nav.setRoot("LoadingPage", { reset: true })
     }
 
     BaseCurrencyPage = () => this.nav.push("BaseCurrencyPage")
