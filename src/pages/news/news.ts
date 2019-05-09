@@ -20,17 +20,23 @@ export class NewsPage {
     }
 
     ionViewDidLoad() {
-    	this.wallet.getLanguage().then((lang) => this.updatenews(lang == "zh" ? "zh-cn" : "en-us"))
+        let newsLang
+        this.wallet.getLanguage()
+            .then((lang) => {
+                newsLang = lang == "zh" ? "zh-cn" : "en-us"
+                return this.wallet.getNews(newsLang)
+            })
+            .then((localNews) => this.listNews = localNews)
+            .then(() => this.updatenews(newsLang))
     }
 	
 	updatenews(lang = "en-us") {
-		Promise.all([this.wallet.getNewNews(lang, 25).toPromise(), this.wallet.getNews(lang)])
-                .then(([newNews, storedNews]) => {
-					this.listNews = newNews.json().results ? newNews.json().results : storedNews
-
-					if(this.listNews)
-						this.wallet.setNews(this.listNews, lang)
-				})
+		this.wallet.getNewNews(lang, 25).toPromise()
+            .then((newNews) => {
+                this.listNews = newNews.json().results ? newNews.json().results : this.listNews
+                if(this.listNews)
+                    this.wallet.setNews(this.listNews, lang)
+            })
 
 	}
 
