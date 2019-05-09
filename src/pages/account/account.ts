@@ -59,7 +59,6 @@ export class AccountPage {
         this.loading = true;
         //Reset last update time
         var lastupdate = new Date()
-        lastupdate.setDate(0)
         this.mvs.setUpdateTime(lastupdate)
 
         this.theme = document.getElementById('theme').className
