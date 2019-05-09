@@ -39,8 +39,7 @@ export class MyETPWallet {
             .then(() => this.isLoggedIn())
             .then((loggedin) => {
                 if (loggedin) {
-                    return this.mvs.getUpdateNeeded(60*5).then(needUpdate => needUpdate ? this.rootPage = "LoadingPage" :this.rootPage = "AccountPage" )
-                    
+                    return this.mvs.getUpdateNeeded(60*60*24*7).then(needUpdate => needUpdate ? this.rootPage = "LoadingPage" :this.rootPage = "AccountPage" )
                 } else {
                     this.rootPage = "LoginPage"
                 }
