@@ -41,7 +41,7 @@ export class EthSwapPage {
         private mvs: MvsServiceProvider,
         public platform: Platform,
         private alert: AlertProvider,
-        private globals: AppGlobals
+        private globals: AppGlobals,
     ) {
 
         this.selectedAsset = navParams.get('asset')

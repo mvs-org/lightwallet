@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, Platform, Events, NavParams } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
+import { AppGlobals } from '../../app/app.global';
 
 @IonicPage()
 @Component({
@@ -24,6 +25,7 @@ export class LoadingPage {
         public platform: Platform,
         private event: Events,
         public navParams: NavParams,
+        private globals: AppGlobals,
     ) {
 
         this.reset = navParams.get('reset') || false;
@@ -39,12 +41,13 @@ export class LoadingPage {
     }
 
     ionViewDidEnter() {
-        if(this.reset) {
-            this.mvs.dataReset()
-                .then(() => setTimeout(()=>this.updateBalances(), 1000))
-        } else {
-            this.updateBalances()
-        }
+        this.mvs.getDbUpdateNeeded()
+            .then((target: any) => {
+                if (this.reset || target)
+                    return this.mvs.dataReset()
+                        .then(() => this.mvs.setDbVersion(this.globals.db_version))
+            })
+            .then(() => setTimeout(()=>this.updateBalances(), 1000))
     }
 
     private getHeight() {
@@ -55,6 +58,7 @@ export class LoadingPage {
     }
 
     private updateBalances = () => {
+        console.log("In update balances")
         this.showRestartOption = false
         return this.getHeight()
             .then(() => this.mvs.getData())

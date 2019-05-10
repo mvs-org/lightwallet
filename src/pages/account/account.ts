@@ -123,8 +123,7 @@ export class AccountPage {
         return this.mvs.getDbUpdateNeeded()
             .then((target: any) => {
                 if (target)
-                    return this.mvs.dataReset()
-                        .then(() => this.mvs.setDbVersion(target))
+                    this.nav.setRoot("LoadingPage", { reset: true })
                 return this.loadFromCache()
             })
             .then(() => this.update())
