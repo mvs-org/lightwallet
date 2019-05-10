@@ -50,7 +50,7 @@ export class ImportWalletPage {
             .then((results) => this.wallet.generateAddresses(results[0], 0, results[1]))
             .then((addresses) => this.mvs.setAddresses(addresses))
             .then(() => this.wallet.saveSessionAccount(password))
-            .then(() => this.nav.setRoot("AccountPage", { reset: true }))
+            .then(() => this.nav.setRoot("LoadingPage", { reset: true }))
             .catch((e) => {
                 console.error(e);
                 this.showError('MESSAGE.PASSWORD_WRONG');

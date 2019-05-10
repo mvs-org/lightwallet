@@ -52,6 +52,8 @@ export class MultisignatureTransferPage {
     nbr_sign_before_sign: number
     nbr_sign_after_sign: number
     decimals_mst: any = {}
+    isApp: boolean
+    showAdvanced: boolean = false
 
     constructor(
         public navCtrl: NavController,
@@ -69,6 +71,7 @@ export class MultisignatureTransferPage {
         this.sendFrom = navParams.get('address')
         this.total_to_send[this.selectedAsset] = 0
         this.total = 0
+        this.isApp = (!document.URL.startsWith('http') || document.URL.startsWith('http://localhost:8080'));
 
         //Load addresses
         mvs.getAddresses()
@@ -164,9 +167,9 @@ export class MultisignatureTransferPage {
                     (this.recipient_avatar && this.recipient_avatar_valid) ? this.recipient_avatar : undefined,
                     Math.round(parseFloat(this.quantity) * Math.pow(10, this.decimals)),
                     this.sendFrom,
-                    (this.changeAddress != 'auto') ? this.changeAddress : undefined,
-                    this.fee,
-                    (messages !== []) ? messages : undefined,
+                    (this.showAdvanced && this.changeAddress != 'auto') ? this.changeAddress : undefined,
+                    (this.showAdvanced) ? this.fee : 10000,
+                    (this.showAdvanced && messages !== []) ? messages : undefined,
                     this.address_info
                 )
             })

@@ -40,13 +40,13 @@ export class LoginAccountPage {
     importAccount(account, password) {
         this.alert.showLoading()
             .then(() => this.wallet.decryptAccount(account.content, password))
-            .then((decryptedAccount) => Promise.all([this.wallet.setWallet(decryptedAccount.wallet), this.wallet.setMobileWallet(decryptedAccount.seed), this.wallet.setAccountName(account.name), this.wallet.setMultisigAddresses(decryptedAccount.multisig_addresses), this.wallet.setMultisigInfo(decryptedAccount.multisigs), this.wallet.setPlugins(decryptedAccount.plugins)]))
+            .then((decryptedAccount) => this.wallet.setupAccount(account.name, decryptedAccount))
             .then(() => Promise.all([this.wallet.getWallet(password), this.wallet.getAddressIndex()]))
             .then(([wallet, index]) => this.wallet.generateAddresses(wallet, 0, index))
             .then((addresses) => this.mvs.addAddresses(addresses))
             .then(() => this.wallet.saveSessionAccount(password))
             .then(() => this.alert.stopLoading())
-            .then(() => this.nav.setRoot("AccountPage"))
+            .then(() => this.nav.setRoot("LoadingPage"))
             .catch((error) => {
                 console.error(error.message)
                 this.alert.stopLoading()

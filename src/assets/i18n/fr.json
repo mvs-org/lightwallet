@@ -427,8 +427,8 @@
     "SEND_ALL_TITLE": "Tout envoyer?",
     "SEND_ALL_MESSAGE": "Êtes vous sûr de vouloir envoyer la totalité de votre balance disponible?",
 
-    "DEPOSIT.DURATION_ESTIMATION": "Vos ETP seront bloqués pendant environ {{duration_days}} jours et {{duration_hours}} heures. Veuillez noter que cette estimation est basée sur la vitesse de génération des 1000 derniers blocs ({{blocktime}} sec.), et peut varier suivant l'évolution de la vitesse de générationon des blocs.",
-    "HISTORY.UNLOCK_APPROXIMATION_INFORMATION": "*Veuillez noter que la date 'Déposés jusqu'à' est une estimation basée sur le nombre de blocs restant the la vitesse moyenne de génération des 1000 derniers blocs. Cette date varie en fonction de la vitesse de génération des blocs.",
+    "DEPOSIT.DURATION_ESTIMATION": "Vos MST seront bloqués pendant environ {{duration_days}} jours et {{duration_hours}} heures. Veuillez noter que cette estimation est basée sur la vitesse de génération des 10000 derniers blocs ({{blocktime}} sec.), et peut varier suivant l'évolution de la vitesse de générationon des blocs.",
+    "HISTORY.UNLOCK_APPROXIMATION_INFORMATION": "*Veuillez noter que la date 'Déposés jusqu'à' est une estimation basée sur le nombre de blocs restant the la vitesse moyenne de génération des 10000 derniers blocs. Cette date varie en fonction de la vitesse de génération des blocs.",
 
     "RECIPIENT_ADDRESS_OR_AVATAR": "Destinataire Avatar ou adresse",
     "HELP.RECIPIENT_ADDRESS_OR_AVATAR": "Vous pouvez entrer l'Avatar ou l'adresse du destinataire.",

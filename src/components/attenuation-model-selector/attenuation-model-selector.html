@@ -20,6 +20,9 @@
             <ion-input name="locktime" type="number" min="0" step="1" [(ngModel)]="locktime" (ngModelChange)="inputChange($event)"></ion-input>
         </ion-item>
         <div no-lines class="advice">{{"HELP.ASSET_LOCK_TOTAL_DURATION" | translate}}</div>
+        <ion-item class="info-input" *ngIf="validLocktime(locktime)" no-lines>
+            <span [translate]="'DEPOSIT.DURATION_ESTIMATION'" [translateParams]="{blocktime: blocktime, duration_days: duration_days, duration_hours: duration_hours}"></span>
+        </ion-item>
         
         <ion-item *ngIf="type == 'recurrent'" [ngClass]="{'error-border':!validNbrPeriod(nbrPeriod), 'valid-border': validNbrPeriod(nbrPeriod)}">
             <ion-label floating>{{"ASSET_LOCK.NBR_PERIOD" | translate}}</ion-label>
@@ -82,7 +85,7 @@
         <ion-item [ngClass]="{'error-border': total_quantity > quantity}">
             <ion-label color="primary">
                 {{"TOTAL_TO_SEND" | translate}}:
-                <p class="inline">
+                <p class="inline uppercase">
                     {{total_quantity}} {{asset}}
                 </p>
             </ion-label>

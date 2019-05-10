@@ -20,9 +20,8 @@ export class MITTransferPage {
     loading: Loading
     etpBalance: number
     addressbalances: Array<any>
-    sendFrom: string = 'auto'
-    changeAddress: string = 'auto'
     fee: number = 10000
+    showAdvanced: boolean = false
 
     constructor(
         public navCtrl: NavController,
@@ -66,9 +65,9 @@ export class MITTransferPage {
                 this.recipient_address,
                 this.recipient_avatar,
                 this.symbol,
-                (this.sendFrom != 'auto') ? this.sendFrom : undefined,
-                (this.changeAddress != 'auto') ? this.changeAddress : undefined,
-                this.fee
+                undefined,
+                undefined,
+                (this.showAdvanced) ? this.fee : 10000
             ))
             .then(tx => this.mvs.send(tx))
             .then((result) => {

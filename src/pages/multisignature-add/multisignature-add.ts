@@ -29,6 +29,7 @@ export class MultisignatureAddPage {
     @ViewChild('importAddressInput') importAddressInput;
     passphrase_import: string = ""
     validPublicKeys: boolean = false
+    isApp: boolean
 
     customTrackBy(index: number, obj: any): any {
         return index;
@@ -47,6 +48,8 @@ export class MultisignatureAddPage {
     ) {
 
         this.cosigners.push('')
+
+        this.isApp = (!document.URL.startsWith('http') || document.URL.startsWith('http://localhost:8080'));
 
         //Load addresses and balances
         Promise.all([this.mvs.getAddresses(), this.mvs.getAddressBalances()])
@@ -209,15 +212,10 @@ export class MultisignatureAddPage {
                         console.error(error);
                     }
                     this.wallet.addMultisig(newMultisig)
-                        .then(() => this.mvs.dataReset())
-                        .then(() => Promise.all([this.mvs.updateHeight(), this.updateBalances()]))
-                        .then(() => this.updateBalances())
                         .then(() => this.wallet.saveSessionAccount(passphrase))
                         .then(() => this.alert.stopLoading())
                         .then(() => this.alert.showSent(newAddress ? 'SUCCESS_CREATE_MULTISIG' : 'SUCCESS_IMPORT_MULTISIG', newMultisig.a))
-                        .then(() => this.navCtrl.pop())
-                        .then(() => this.navCtrl.pop())
-                        .then(() => this.navCtrl.push('MultisignaturePage'))
+                        .then(() => this.navCtrl.setRoot("LoadingPage"))
                         .catch(error=>{
                             console.error(error)
                             this.alert.stopLoading()
@@ -225,15 +223,6 @@ export class MultisignatureAddPage {
                         })
                 }
             })
-    }
-
-    private updateBalances = () => {
-        return this.mvs.getData()
-            .then(() => this.mvs.setUpdateTime())
-            .then(() => this.mvs.getBalances())
-            .then((_) => this.mvs.addAssetsToAssetOrder(Object.keys(_.MST))
-)
-            .catch((error) => console.error("Can't update balances: " + error))
     }
 
     scan() {

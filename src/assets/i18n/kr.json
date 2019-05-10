@@ -427,8 +427,8 @@
     "SEND_ALL_TITLE": "모두 보내시겠습니까?",
     "SEND_ALL_MESSAGE": "정말 모두 보내시겠습니까?",
 
-    "DEPOSIT.DURATION_ESTIMATION": "ETP는 약 {지속기간}일 및 {지속시간}시간 동안 잠깁니다. 이 추정은 마지막 1000블록({블록타임}초)의 블록 시간을 기준으로 하며, 블록 생성 속도에 따라 달라질 수 있습니다.",
-    "HISTORY.UNLOCK_APPROXIMATION_INFORMATION": "*'잠긴 시간' 날짜는 남은 블록 수와 마지막 1000 블록의 평균 블록 시간을 기준으로 한 근사치입니다. 블록 생성 속도에 따라 달라질 수 있습니다.",
+    "DEPOSIT.DURATION_ESTIMATION": "MST는 약 {지속기간}일 및 {지속시간}시간 동안 잠깁니다. 이 추정은 마지막 10000블록({블록타임}초)의 블록 시간을 기준으로 하며, 블록 생성 속도에 따라 달라질 수 있습니다.",
+    "HISTORY.UNLOCK_APPROXIMATION_INFORMATION": "*'잠긴 시간' 날짜는 남은 블록 수와 마지막 10000 블록의 평균 블록 시간을 기준으로 한 근사치입니다. 블록 생성 속도에 따라 달라질 수 있습니다.",
 
     "RECIPIENT_ADDRESS_OR_AVATAR": "받는이 아바타 또는 주소",
     "HELP.RECIPIENT_ADDRESS_OR_AVATAR": "받는이 아바타 또는 주소를 입력해 주세요.",

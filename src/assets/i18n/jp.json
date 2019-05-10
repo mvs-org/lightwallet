@@ -427,8 +427,8 @@
   "SEND_ALL_TITLE": "すべておくりしてもよろしいですか",
   "SEND_ALL_MESSAGE": "使用可能額をすべておくりしてもよろしいですか",
 
-  "DEPOSIT.DURATION_ESTIMATION": "このETPは{{duration_days}}天 {{duration_hours}}時間後に使用可能です。この時間（{{blocktime}}秒）は、最終の1000ブロックの使用可能の時間に基づいて決定されます。これはブロックの速度によって異なります。",
-  "HISTORY.UNLOCK_APPROXIMATION_INFORMATION": "*この「使用可能の時間」は、最後の1000ブロックの平均使用可能の時間から推定され、ブロックの速度によって異なる場合があります。",
+  "DEPOSIT.DURATION_ESTIMATION": "このMSTは{{duration_days}}天 {{duration_hours}}時間後に使用可能です。この時間（{{blocktime}}秒）は、最終の10000ブロックの使用可能の時間に基づいて決定されます。これはブロックの速度によって異なります。",
+  "HISTORY.UNLOCK_APPROXIMATION_INFORMATION": "*この「使用可能の時間」は、最後の10000ブロックの平均使用可能の時間から推定され、ブロックの速度によって異なる場合があります。",
 
   "RECIPIENT_ADDRESS_OR_AVATAR": "受信者のデジタルIDまたはウォレットアドレス",
   "HELP.RECIPIENT_ADDRESS_OR_AVATAR": "受信者のデジタルIDまたはウォレットアドレスを入力してください",
