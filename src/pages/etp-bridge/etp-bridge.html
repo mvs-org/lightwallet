@@ -7,7 +7,7 @@
     </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content padding style="padding-bottom: 0;">
 
     <a class="swft-logo" href="https://www.swft.pro" target="_blank">
         <img [src]="'assets/images/swft-logo.png'">
@@ -24,10 +24,10 @@
 
     <div class="mini-loader" *ngIf="!bridgePairs"></div>
 
-    <form #swapForm="ngForm" *ngIf="bridgePairs">
+    <h3>{{"ETP_BRIDGE.CREATE_ORDER" | translate}}</h3>
+    <p>{{"ETP_BRIDGE.CREATE_ORDER_DESCRIPTION" | translate}}</p>
 
-        <h3>{{"ETP_BRIDGE.CREATE_ORDER" | translate}}</h3>
-        <p>{{"ETP_BRIDGE.CREATE_ORDER_DESCRIPTION" | translate}}</p>
+    <form #swapForm="ngForm" *ngIf="bridgePairs">
 
         <ion-card class="card-block">
             <ion-row>
@@ -205,6 +205,7 @@
     </ion-card>
 
     <h3>{{"ETP_BRIDGE.IMPORT_ORDER" | translate}}</h3>
+    <p>{{"ETP_BRIDGE.IMPORT_ORDER_DESCRIPTION" | translate}}</p>
 
     <ion-card class="card-block">
         <ion-item [ngClass]="{'error-border':!validId(importFromId), 'valid-border':validId(importFromId)}">
