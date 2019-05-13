@@ -33,6 +33,7 @@
                             <ion-col *ngIf="cert.cert_type == 'issue'" class="cert-type">{{"AVATARS.SECONDARY_ISSUE" | translate}}</ion-col>
                             <ion-col *ngIf="cert.cert_type == 'domain'" class="cert-type">{{"AVATARS.DOMAIN" | translate}}</ion-col>
                             <ion-col *ngIf="cert.cert_type == 'naming'" class="cert-type">{{"AVATARS.NAMING" | translate}}</ion-col>
+                            <ion-col *ngIf="cert.cert_type == 'mining'" class="cert-type">{{"AVATARS.MINING" | translate}}</ion-col>
                             <ion-col>{{cert.symbol}}</ion-col>
                         </ion-row>
                     </ion-item>

@@ -4,7 +4,7 @@ import { Storage } from '@ionic/storage';
 
 @Injectable()
 export class AppGlobals {
-    readonly version: string = '0.7.0';
+    readonly version: string = '0.7.1';
     readonly db_version = 4;
     readonly name: string = 'Pillars of Creation';
     readonly algo: string = 'aes';
@@ -16,6 +16,7 @@ export class AppGlobals {
     readonly ETPMap = '0xa52b0a032139e6303b86cfeb0bb9ae780a610354';
     readonly SwapAddress = '0xc1e5fd24fa2b4a3581335fc3f2850f717dd09c86';
     readonly crosschain_avatar = 'droplet'
+    readonly update_interval = 29
 
     readonly DEFAULT_NETWORK = 'mainnet'
 

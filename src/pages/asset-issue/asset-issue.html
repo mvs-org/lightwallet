@@ -86,6 +86,13 @@
                 </ion-range>
             </ion-item>
 
+            <ion-item>
+                <ion-label>{{"MST_MINING.OPTION"|translate}}</ion-label>
+                <ion-toggle [(ngModel)]="mining" name="mining"></ion-toggle>
+            </ion-item>
+            <mining-model-selector *ngIf="mining" (modelChanged)="setMiningModel($event)" [decimals]="asset_decimals" [asset]="symbol"></mining-model-selector>
+            <br>
+
             <ion-item [ngClass]="{'error-border':!validName(issuer_name) || !addressbalances || !addressbalances[issue_address] || !addressbalances[issue_address][selectedAsset] || addressbalances[issue_address][selectedAsset].available<1000000000}">
                 <ion-label color="primary" floating>{{"ISSUE.ISSUER_NAME" | translate}}</ion-label>
                 <ion-select *ngIf="!no_avatar" [(ngModel)]="issuer_name" name="issuer_name" multiple="false" okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}" (ngModelChange)="issuerChanged($event)">
@@ -137,7 +144,7 @@
                 </ion-item>
                 <attenuation-model-selector *ngIf="lock" (modelChanged)="setAttenuationModel($event)" [quantity]="max_supply == 'custom' ? custom_max_supply : max_supply" [decimals]="asset_decimals" [asset]="symbol"></attenuation-model-selector>
                 <br>
-                <button ion-button full [disabled]="!sendForm.form.valid||!validSymbol(symbol)||symbol_check=='exist'||symbol_check=='not_cert_owner'||!validMaxSupply(max_supply, asset_decimals)||(max_supply=='custom' && !validMaxSupplyCustom(custom_max_supply, asset_decimals))||!validDecimals(asset_decimals)||!validDescription(description)||(issue_address=='custom' && !validIssueAddress(custom_issue_address))||!validPassword(passphrase)||((!addressbalances || !addressbalances[issue_address] || !addressbalances[issue_address][selectedAsset] || addressbalances[issue_address][selectedAsset].available<1000000000))||(lock && !attenuation_model)" (click)="preview()" color="primary">
+                <button ion-button full [disabled]="!sendForm.form.valid||!validSymbol(symbol)||symbol_check=='exist'||symbol_check=='not_cert_owner'||!validMaxSupply(max_supply, asset_decimals)||(max_supply=='custom' && !validMaxSupplyCustom(custom_max_supply, asset_decimals))||!validDecimals(asset_decimals)||!validDescription(description)||(issue_address=='custom' && !validIssueAddress(custom_issue_address))||!validPassword(passphrase)||((!addressbalances || !addressbalances[issue_address] || !addressbalances[issue_address][selectedAsset] || addressbalances[issue_address][selectedAsset].available<1000000000))||(lock && !attenuation_model)||(mining && !mst_mining_model)" (click)="preview()" color="primary">
                     {{"PREVIEW" | translate}}
                 </button>
                 <div *ngIf="rawtx">
@@ -151,14 +158,14 @@
 
         <ion-row>
             <ion-col>
-                <button ion-button full [disabled]="!sendForm.form.valid||!validSymbol(symbol)||symbol_check=='exist'||symbol_check=='not_cert_owner'||!validMaxSupply(max_supply, asset_decimals)||(max_supply=='custom' && !validMaxSupplyCustom(custom_max_supply, asset_decimals))||!validDecimals(asset_decimals)||!validName(issuer_name)||!validAddress(issue_address)||!validDescription(description)||(issue_address=='custom' && !validIssueAddress(custom_issue_address))||!validPassword(passphrase)||((!addressbalances || !addressbalances[issue_address] || !addressbalances[issue_address][selectedAsset] || addressbalances[issue_address][selectedAsset].available<1000000000))||(lock && !attenuation_model)" (click)="confirm()" icon-left color="secondary">
+                <button ion-button full [disabled]="!sendForm.form.valid||!validSymbol(symbol)||symbol_check=='exist'||symbol_check=='not_cert_owner'||!validMaxSupply(max_supply, asset_decimals)||(max_supply=='custom' && !validMaxSupplyCustom(custom_max_supply, asset_decimals))||!validDecimals(asset_decimals)||!validName(issuer_name)||!validAddress(issue_address)||!validDescription(description)||(issue_address=='custom' && !validIssueAddress(custom_issue_address))||!validPassword(passphrase)||((!addressbalances || !addressbalances[issue_address] || !addressbalances[issue_address][selectedAsset] || addressbalances[issue_address][selectedAsset].available<1000000000))||(lock && !attenuation_model)||(mining && !mst_mining_model)" (click)="confirm()" icon-left color="secondary">
                     <ion-icon disabled="checked" name="send"></ion-icon>
                     {{"REGISTER_MST" | translate}}
                 </button>
             </ion-col>
             <ion-col>
                 <button ion-button color="danger" full item-right icon-left (click)="cancel($event)">
-                <ion-icon name="cancel"></ion-icon>
+                <ion-icon name="close"></ion-icon>
                 {{'CANCEL'|translate}}
             </button>
             </ion-col>

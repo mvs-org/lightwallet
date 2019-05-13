@@ -45,7 +45,7 @@
             <ion-item [ngClass]="{'error-border':!validaddress(recipient_address), 'valid-border':validaddress(recipient_address)}">
                 <ion-label color="primary" floating>{{"RECIPIENT_ADDRESS"|translate}}</ion-label>
                 <ion-input #recipientAddressInput name="recipient_address" [(ngModel)]="recipient_address" (ngModelChange)="recipientChanged($event)" [disabled]="sendToAvatar" required></ion-input>
-                <button id="scanButton" *ngIf="platform.is('mobile')" ion-button item-right (click)="scan()">
+                <button id="scanButton" *ngIf="isApp" ion-button item-right (click)="scan()">
                     <ion-icon name="qr-scanner"></ion-icon>
                 </button>
             </ion-item>
@@ -105,7 +105,7 @@
                     <ion-label>{{"ASSET_LOCK"|translate}}</ion-label>
                     <ion-toggle [(ngModel)]="lock" name="lock"></ion-toggle>
                 </ion-item>
-                <attenuation-model-selector *ngIf="lock" (modelChanged)="setAttenuationModel($event)" [quantity]="validQuantity(quantity) ? quantity : undefined" [decimals]="decimals" [asset]="selectedAsset"></attenuation-model-selector>
+                <attenuation-model-selector *ngIf="lock" (modelChanged)="setAttenuationModel($event)" [quantity]="validQuantity(quantity) ? quantity : undefined" [decimals]="decimals" [asset]="selectedAsset" [blocktime]="blocktime"></attenuation-model-selector>
                 <br>
                 <button ion-button full [disabled]="!sendForm.form.valid||!validaddress(recipient_address)||!validQuantity(quantity)||!validPassword(passphrase)||!validMessageLength(message)||(lock && !attenuation_model)" (click)="preview()" color="primary">
                     {{"PREVIEW" | translate}}
@@ -127,7 +127,7 @@
             </ion-col>
             <ion-col>
                 <button ion-button color="danger" full item-right icon-left (click)="cancel($event)">
-                    <ion-icon name="cancel"></ion-icon>
+                    <ion-icon name="close"></ion-icon>
                     {{'CANCEL'|translate}}
                 </button>
             </ion-col>
@@ -251,7 +251,7 @@
             </ion-col>
             <ion-col>
                 <button ion-button color="danger" full item-right icon-left (click)="cancel($event)">
-                    <ion-icon name="cancel"></ion-icon>
+                    <ion-icon name="close"></ion-icon>
                     {{'CANCEL'|translate}}
                 </button>
             </ion-col>

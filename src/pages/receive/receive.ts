@@ -23,7 +23,7 @@ export class ReceivePage {
         private navParams: NavParams,
         private platform: Platform,
         private mvs: MvsServiceProvider,
-        public modalCtrl: ModalController
+        public modalCtrl: ModalController,
     ) {
         this.addressbalances = {};
         this.selectedAsset = this.navParams.get('asset')

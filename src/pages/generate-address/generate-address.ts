@@ -43,13 +43,10 @@ export class GenerateAddressPage {
                 let addresses = this.wallet.generateAddresses(wallet, 0, this.index )
                 return this.mvs.setAddresses(addresses)
             })
-            .then(() => this.mvs.dataReset())
-            .then(() => Promise.all([this.mvs.updateHeight(), this.updateBalances()]))
-            .then(() => this.updateBalances())
             .then(() => this.wallet.setAddressIndex(this.index))
             .then(() => this.wallet.saveSessionAccount(this.passphrase))
             .then(() => this.alert.stopLoading())
-            .then(() => this.navCtrl.pop())
+            .then(() => this.navCtrl.setRoot("LoadingPage"))
             .catch(error=>{
                 console.error(error)
                 this.alert.stopLoading()
@@ -63,14 +60,6 @@ export class GenerateAddressPage {
                 }
             })
 
-    }
-
-    private updateBalances = () => {
-        return this.mvs.getData()
-            .then(() => this.mvs.setUpdateTime())
-            .then(() => this.mvs.getBalances())
-            .then((_) => this.mvs.addAssetsToAssetOrder(Object.keys(_.MST)))
-            .catch((error) => console.error("Can't update balances: " + error))
     }
 
     validIndex = (index: number) => index >= 1 && index <= 50

@@ -15,4 +15,4 @@ import { AttenuationModelSelectorComponent } from './attenuation-model-selector'
 		AttenuationModelSelectorComponent
 	]
 })
-export class ComponentsModule {}
+export class AttenuationModelModule {}

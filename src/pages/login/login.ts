@@ -14,6 +14,7 @@ export class LoginPage {
 
     public network = ''
     saved_accounts: Array<any> = []
+    isApp: boolean
 
     constructor(
         private nav: NavController,
@@ -23,6 +24,8 @@ export class LoginPage {
         private event: Events,
         private wallet: WalletServiceProvider
     ) {
+        this.isApp = (!document.URL.startsWith('http') || document.URL.startsWith('http://localhost:8080'));
+
         this.wallet.getSavedAccounts()
             .then((accounts) => this.saved_accounts = accounts ? accounts : [])
     }

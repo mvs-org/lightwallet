@@ -37,7 +37,7 @@
                         </ion-item>
                     </ion-item>
                 </div>
-                <div *ngFor="let tx of txs">
+                <div *ngFor="let tx of txs | paginate: { itemsPerPage: items_per_page, currentPage: page_tx }">
                     <ion-item *ngIf="tx.confirmed_at">
                         <ion-item no-lines>
                             <ion-avatar item-start>
@@ -52,6 +52,7 @@
                     </ion-item>
                 </div>
             </ion-list>
+            <pagination-controls (pageChange)="page_tx = $event" *ngIf="txs && txs.length > items_per_page"></pagination-controls>
             <div [hidden]="txs && txs.length">
                 <ion-row>
                     <ion-col></ion-col>
@@ -108,7 +109,7 @@
                         <p>{{'LOCKED_UNTIL'|translate}}: {{output.locked_until}} (~{{((output.locked_until - height) * blocktime * 1000) + current_time  |date : 'medium'}})*</p>
                         <p>{{'LOCKED_FOR_BLOCKS'|translate}}: {{asset == 'ETP' ? output.locked_until-output.height : output.attenuation_model_param.lock_period}} {{'BLOCKS'|translate}}</p>
                         <div *ngIf="output.height<= height">
-                            <progress-bar *ngIf="height<=output.locked_until && depositProgress(output.height, output.locked_until)>0" [progress]="depositProgress(output.height, output.locked_until)" ></progress-bar>
+                            <progress-bar *ngIf="height<=output.locked_until && depositProgress(output.height, output.locked_until)>0" [progress]="depositProgress(output.height, output.locked_until)"></progress-bar>
                         </div>
                     </ion-item>
                 </ion-item>
@@ -122,7 +123,7 @@
 
             <ion-list [hidden]="!frozen_outputs_unlocked.length">
                 <h2 class="center" >{{"HISTORY.UNFROZEN_TX"|translate}}</h2>
-                <ion-item *ngFor="let output of frozen_outputs_unlocked | orderBy: [order_by, direction]">
+                <ion-item *ngFor="let output of frozen_outputs_unlocked | orderBy: [order_by, direction] | paginate: { itemsPerPage: items_per_page, currentPage: page_deposit_unlocked }">
                     <ion-item no-lines>
                         <ion-avatar item-start>
                             <img class="coinlogo" [src]="'assets/icon/'+icon+'.png'" onerror="this.src='assets/icon/default_mst.png'">
@@ -141,6 +142,7 @@
                         </div>
                     </ion-item>
                 </ion-item>
+                <pagination-controls (pageChange)="page_deposit_unlocked = $event" *ngIf="frozen_outputs_unlocked && frozen_outputs_unlocked.length > items_per_page"></pagination-controls>
             </ion-list>
 
             <div [hidden]="frozen_outputs_unlocked.length || frozen_outputs_locked.length">
