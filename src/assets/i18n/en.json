@@ -669,7 +669,7 @@
     "SUCCESS_CREATE_SWFT_BODY": "Your order has been created. The next step is to do the deposit.",
     "MESSAGE.CREATE_SWFT_ORDER_ERROR": "Error while creating the order. Please check your inputs and try again.",
     "ETP_BRIDGE.HISTORY_TITLE": "History",
-    "ETP_BRIDGE.HISTORY_DESCRIPTION": "This history is only saved locally. A transaction will only appear on the device used to generate it.",
+    "ETP_BRIDGE.HISTORY_DESCRIPTION": "This history is only saved locally. An order will only appear on the device used to generate it and till you logout. If you need a record, please save the order ID.",
     "ETP_BRIDGE_DETAILS": "Order details",
     "ETP_BRIDGE.STATUS" : {
         "wait_deposit_send": "Waiting for deposit",
@@ -677,7 +677,7 @@
         "wait_exchange_return": "Exchanging...",
         "wait_refund_send": "Exchange failure, preparing refund",
         "wait_refund_confirm": "Tokens returned, awaiting blockchain confirmation",
-        "wait_refund_complete": "Ordered failed, token successfully returned",
+        "wait_refund_complete": "Order failed, token successfully returned",
         "wait_receive_send": "Sending tokens",
         "wait_receive_confirm": "Tokens sent, awaiting blockchain confirmation",
         "receive_complete": "Order completed",
@@ -706,7 +706,7 @@
     "ETP_BRIDGE.ORDER_ID": "Order ID",
     "ETP_BRIDGE.IMPORT_ORDER_BUTTON": "Import order",
     "SUCCESS_IMPORT_SWFT_TITLE": "Order imported!",
-    "SUCCESS_IMPORT_SWFT_BODY": "Order importer successfully",
+    "SUCCESS_IMPORT_SWFT_BODY": "Order imported successfully",
     "ETP_BRIDGE.SEE_DETAILS_BUTTON": "See details",
 
     "ETP_BRIDGE.INFORMATION": "This service is provided by SWFT. In case of issue, please contact SWFT support on ",
