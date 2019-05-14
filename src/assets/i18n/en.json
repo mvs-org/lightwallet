@@ -709,7 +709,8 @@
     "ETP_BRIDGE.INFORMATION": "This service is provided by SWFT. In case of issue, please contact SWFT support on ",
     "ETP_BRIDGE.INFORMATION_LINK": "Telegram",
 
-    "ETP_BRIDGE.IMPORT_ORDER_DESCRIPTION": "If you created an order from another device or directly from SWFT website, you can import it with the ID to follow its status."
+    "ETP_BRIDGE.IMPORT_ORDER_DESCRIPTION": "If you created an order from another device or directly from SWFT website, you can import it with the order ID to follow its status.",
+    "ETP_BRIDGE.UNABLE_CONNECT_SWFT": "Unable to connect to SWFT. Please check your internet connection or try again later."
 
 
 }
