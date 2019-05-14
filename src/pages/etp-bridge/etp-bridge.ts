@@ -20,6 +20,7 @@ export class EtpBridgePage {
     addressbalances: Array<any>
     bridgeRate: any
     bridgePairs: any
+    loadingPair: boolean = true
     depositSymbolList: Array<string> = []
 
     orders: OrderDetails[] = []
@@ -52,10 +53,16 @@ export class EtpBridgePage {
         this.getRate()
         this.loadOrders()
 
-        etpBridgeService.getBridgePairs().toPromise().then(pairs => {
-            this.bridgePairs = pairs
-            this.depositSymbolList = Object.keys(this.bridgePairs)
-        });
+        etpBridgeService.getBridgePairs().toPromise()
+            .then(pairs => {
+                this.loadingPair = false;
+                this.bridgePairs = pairs
+                this.depositSymbolList = Object.keys(this.bridgePairs)
+            })
+            .catch((error) => {
+                this.loadingPair = false;
+                console.error(error)
+            });
 
         //Load addresses and balances
         Promise.all([this.mvs.getBalances(), this.mvs.getAddresses(), this.mvs.getAddressBalances()])

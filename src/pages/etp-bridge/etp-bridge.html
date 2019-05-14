@@ -22,12 +22,14 @@
         </ion-col>
     </ion-row>
 
-    <div class="mini-loader" *ngIf="!bridgePairs"></div>
-
     <h3>{{"ETP_BRIDGE.CREATE_ORDER" | translate}}</h3>
     <p>{{"ETP_BRIDGE.CREATE_ORDER_DESCRIPTION" | translate}}</p>
 
-    <form #swapForm="ngForm" *ngIf="bridgePairs">
+    <div class="mini-loader" *ngIf="loadingPair"></div>
+
+    <h4 *ngIf="!loadingPair && !bridgePairs" class="wrong-input center">{{"ETP_BRIDGE.UNABLE_CONNECT_SWFT" | translate}}</h4>
+
+    <form #swapForm="ngForm" *ngIf="!loadingPair && bridgePairs">
 
         <ion-card class="card-block">
             <ion-row>

@@ -23,6 +23,9 @@ export class EtpBridgeServiceProvider {
   getBridgePairs(): Observable<Pairs> {
     return this.http.get(`${this.URL}/pairs`)
       .map(response => response.json())
+      .catch((err) => {
+        return Observable.throw(err)
+    })
   }
 
   getOrder(id: string): Observable<OrderDetails> {

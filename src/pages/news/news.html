@@ -4,6 +4,9 @@
 		<ion-icon name="menu"></ion-icon>
 	</button>
 		<ion-title>{{'NEWS.TITLE'|translate}}</ion-title>
+		<ion-buttons end>
+			<ion-spinner *ngIf="updatingNews"></ion-spinner>
+		</ion-buttons>
 	</ion-navbar>
 </ion-header>
 
