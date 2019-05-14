@@ -605,6 +605,114 @@
 
     "LANGUAGE_SETTINGS_TEXT": "Changer la langue.",
     "THEME_SETTINGS_TEXT": "Changer le thême et les couleurs du protefeuille.",
-    "INFORMATION.TEXT": "Obtenir plus d'information à propos de MyETPWallet."
+    "INFORMATION.TEXT": "Obtenir plus d'information à propos de MyETPWallet.",
+
+    "ASSET_LOCK": "Je veux blocker cet MST",
+    "ASSET_LOCK_PERIOD": "Période de blockage (en nombre de blocs)",
+     
+    "ASSET_LOCK.SIMPLE": "Déblocage simple",
+    "ASSET_LOCK.RECURRENT": "Déblocage récurrent",
+    "ASSET_LOCK.CUSTOM": "Déblocage personnalisé",
+    "ASSET_LOCK.NBR_PERIOD": "Nombre de périodes",
+    "ASSET_LOCK.TOTAL_QUANTITY": "Quantitée totale bloquée",
+    "ASSET_LOCK.TOTAL_DURATION": "Durée totale du blocage (en nombre de blocs)",
+
+    "HELP.ASSET_LOCK_NBR_PERIOD": "Ceci est le nombre de total de périodes qui seront utilisées.",
+    "HELP.ASSET_LOCK_TOTAL_QUANTITY": "Ceci est la quantité totale qui sera bloquée.",
+    "HELP.ASSET_LOCK_TOTAL_DURATION": "Ceci est the nombre total de blocs jusqu'à la fin de la dernière période.",
+    
+    "ASSET_LOCK.PERIOD_NBR": "Période {{period_nbr}}",
+    "ASSET_LOCK.DURATION_CUSTOM_PERIOD": "Durée de la période {{period_nbr}} (en nombre de blocs)",
+    "ASSET_LOCK.AMOUNT_CUSTOM_PERIOD": "Quantité débloquée à la fin de la période {{period_nbr}}",
+    "ASSET_LOCK.TOTAL_MORE_SEND": "La somme de la quantité de chaque période est supérieure au montant à envoyer spécifié ci-dessus",
+
+    "MESSAGE.LOCK_IMPORT_CSV_TOO_MANY_PERIODS_TITLE": "Trop de périodes",
+    "MESSAGE.LOCK_IMPORT_CSV_TOO_MANY_PERIOD_BODY": "Ce fichier contient trop de périodes. Le nombre de périodes est limité à ",
+    
+    "AVATARS.MINING": "Minage",
+
+    "LOADING.TITLE": "TELECHARGEMENT DE LA NOUVELLE REALITEE",
+    "LOADING.RETRY": "Réessayer",
+    "LOADING.CURRENT_HEIGHT": "Actuellement téléchargé jusqu'au block: {{height}}",
+    "LOADING.STOPPED": "Impossible de synchroniser vos transactions. Veuillez vérifier votre connexion internet ou réessayer plus tard.",
+    "RETURN_LOGIN": "Retourner à la page de connexion",
+    "LOADING.FULLY_LOADED": "Téléchargement terminé! Prêt à rejoindre Metaverse...",
+
+    "MST_MINING.OPTION": "Autoriser cet MST à être miné",
+    "HELP.MST_MINING_OPTION": "Le minage de MST autorise les mineurs à miner cet MST. De nouveau jetons seront créés dans chaque bloc miné par mineur choisissant de miner cet MST, la quantité étant définie par les paramètres spécifiés ci-dessous",
+    "MST_MINING.INITIAL_REWARD": "Récompense initiale par bloc",
+    "MST_MINING.INTERVAL": "Fréquence de décroissante de la récompense",
+    "MST_MINING.BASE": "Décroissance de la récompense par interval",
+    "HELP.MST_MINING_INITIAL": "Ceci est la récompense initiale de cet MST, reçue par le mineur, par bloc. Par exemple, cette valeur était 3 pour ETP et 50 pour BTC",
+    "HELP.MST_MINING_INTERVAL": "Ceci est le nombre de blocs entre chaque réduction de la récompense. Par exemple, cette valeur est de 500 000 blocks pour ETP et 210 000 blocks (4 années) pour BTC",
+    "HELP.MST_MINING_BASE": "Ceci est la base pour définir la nouvelle récompense à la fin de chaque période. Par exemple, cette valeure est de 5% de décroissance par période pour ETP et 50% de décroissance, ou 'halving', pour BTC",
+
+    "NEWS": "News",
+    "NEWS.TITLE": "Metaverse News",
+
+    "ETP_BRIDGE": "Pont ETP",
+    "ETP_BRIDGE.RECIPIENT_ADDRESS": "Adresse du destinataire",
+    "ETP_BRIDGE.FROM_ASSET": "Envoyer",
+    "ETP_BRIDGE.AMOUNT_SEND": "Montant",
+    "ETP_BRIDGE.TO_ASSET": "Recevoir",
+    "ETP_BRIDGE.AMOUNT_RECEIVE": "Montant",
+    "ETP_BRIDGE.MIN_MAX_DEPOSIT": "Montant min-max du dépôt : {{min}}-{{max}} {{symbol}}, frais de déposit: {{fee}}%",
+    "ETP_BRIDGE.RATE": "Taux: {{rate}}",
+    "ETP_BRIDGE.RECEIVE_COIN_FEE": "Frais de reception: {{fee}} {{symbol}}",
+    "ETP_BRIDGE.DEPOSIT_ADDRESS": "Adresses {{symbol}} de dépôt",
+    "ETP_BRIDGE.REFUND_ADDRESS": "Adresses {{symbol}} de remboursement",
+    "ETP_BRIDGE.RECEIVE_ADDRESS": "Adresses {{symbol}} de réception",
+    "ETP_BRIDGE.REFUND_TX": "Transaction {{symbol}} de remboursement",
+    "ETP_BRIDGE.RECEIVE_TX": "Transaction {{symbol}} de réception",
+
+    "SUCCESS_CREATE_SWFT_TITLE": "Ordre créé!",
+    "SUCCESS_CREATE_SWFT_BODY": "Votre ordre à été créé. L'étape suivante est de réalisé le dépôt.",
+    "MESSAGE.CREATE_SWFT_ORDER_ERROR": "Erreure lors de la création de l'ordre. Veuillez vérifier les paramètres et réessayer.",
+    "ETP_BRIDGE.HISTORY_TITLE": "Historique",
+    "ETP_BRIDGE.HISTORY_DESCRIPTION": "Cet historique est uniquement sauvegarder localement. Un ordre apparaîtra seulement sur l'appareil utilisé pour créer l'ordre et jusqu'à la déconnexion. Si vous souhaitez garder votre historique, veuillez sauvegarder l'identifiant de vos ordres.",
+    "ETP_BRIDGE_DETAILS": "Détails de l'ordre",
+    "ETP_BRIDGE.STATUS" : {
+        "wait_deposit_send": "En attente du dépôt",
+        "wait_exchange_push": "Echange en cours...",
+        "wait_exchange_return": "Echange en cours...",
+        "wait_refund_send": "Echec de l'échange, prépapration du remboursement",
+        "wait_refund_confirm": "Crypto-monnaie remboursées, en attente de la confirmation",
+        "wait_refund_complete": "Echec de l'ordre, succès du remboursement",
+        "wait_receive_send": "Crypto-monnaie en cours d'envoi",
+        "wait_receive_confirm": "Crypto-monnaie envoyée, en attente de la confirmation",
+        "receive_complete": "Ordre terminé avec succès",
+        "timeout": "Ordre expiré",
+        "fail": "Echec"
+    },
+    "ETP_BRIDGE.STATUS_DESCRIPTION": {
+        "wait_deposit_send": "L'ordre a été créé. Veuillez déposer votre crypto-monnaie sur l'adresse spécifiée ci-dessous. Si vous avez déjà effectué le dépôt, veuillez patienter.",
+        "wait_exchange_push": "Votre crypto-monnaie a bien été reçue et est en train d'être échangée au taux actuel.",
+        "wait_exchange_return": "Votre crypto-monnaie a bien été reçue et est en train d'être échangée au taux actuel.",
+        "wait_refund_send": "Echec de l'ordre, votre dépôt sera renvoyé vers votre adresse de remboursement.",
+        "wait_refund_confirm": "Echec de l'ordre. Le remboursement a été envoyé vers votre adresses de remboursement, en attente de confirmation.",
+        "wait_refund_complete": "Echec de l'ordre. Le remboursement a été envoyé avec succès vers votre adresses de remboursement.",
+        "wait_receive_send": "Votre dépôt et l'échange ont été réalisés avec succès, votre crypto-monnaie est en train d'être envoyée.",
+        "wait_receive_confirm": "Succès de l'échange, votre crypto-monnaie a été envoyée, en attente de confirmation.",
+        "receive_complete": "L'ordre a terminé avec succès, votre crypto-monnaie a été envoyée et confirmée.",
+        "timeout": "Le dépôt n'a pas été réalisé dans le temps imparti, l'ordre est désormais expiré",
+        "fail": "Echec de l'ordre"
+    },
+    "ETP_BRIDGE.DEPOSIT_ADDRESS_ADVICE": "Veuillez dépôser {{amount}} {{symbol}} sur cette adresse",
+    "ETP_BRIDGE.REFUND_ADDRESS_ADVICE": "Ceci est votre adresses de remboursement. En cas de problème, votre dépôt sera renvoyé à cette adresse.",
+    "ETP_BRIDGE.RECEIVE_ADDRESS_ADVICE": "Vous recevrez les {{symbol}} sur cette adresse",
+    "ETP_BRIDGE.IMPORT_ORDER": "Importer un ordre existant",
+    "ETP_BRIDGE.CREATE_ORDER": "Créer un nouvel ordre",
+    "ETP_BRIDGE.CREATE_ORDER_DESCRIPTION": "Créez un ordre pour acheter ou vendre des ETP avec de nombreuses autres crypto-monnaies. Après création de l'ordre, n'oubliez pas de faire le dépôt.",
+    "ETP_BRIDGE.ORDER_ID": "Identifiant de l'ordre",
+    "ETP_BRIDGE.IMPORT_ORDER_BUTTON": "Importer un ordre",
+    "SUCCESS_IMPORT_SWFT_TITLE": "Ordre importé!",
+    "SUCCESS_IMPORT_SWFT_BODY": "Order importé avec succès",
+    "ETP_BRIDGE.SEE_DETAILS_BUTTON": "Voir détails",
+
+    "ETP_BRIDGE.INFORMATION": "Ce service est fournit par SWFT. En cas de problème ou question, veuillez les contacter via ",
+    "ETP_BRIDGE.INFORMATION_LINK": "Telegram",
+
+    "ETP_BRIDGE.IMPORT_ORDER_DESCRIPTION": "Si vous avez créé un ordre depuis un autre terminal ou directement via le site internet de SWFT, vous pouvez importer vos ordres via leur identifiant pour suivre leur status.",
+    "ETP_BRIDGE.UNABLE_CONNECT_SWFT": "Impossible de se connecter à SWFT. Veuillez vérifier votre connexion internet ou réessayer plus tard."
 
 }
