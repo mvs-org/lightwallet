@@ -113,7 +113,7 @@ export class EtpBridgePage {
             .catch((error) => {
                 console.error(error)
                 this.alert.stopLoading()
-                this.alert.showError('MESSAGE.CREATE_SWFT_ORDER_ERROR', error.message)
+                this.alert.showError('MESSAGE.CREATE_SWFT_ORDER_ERROR', error._body)
             })
     }
 
