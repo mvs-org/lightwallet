@@ -1,8 +1,8 @@
 <ion-header>
     <ion-navbar>
         <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
+            <ion-icon name="menu"></ion-icon>
+        </button>
         <ion-title>{{'ACCOUNT.TITLE'|translate}}</ion-title>
         <ion-buttons end>
             <ion-spinner *ngIf="isSyncing()"></ion-spinner>
@@ -10,17 +10,17 @@
         </ion-buttons>
         <ion-buttons end>
             <button *ngIf="!isSyncing() && !platform.is('mobile')" ion-button (click)="sync()" icon-left>
-        <ion-icon name="refresh"></ion-icon>
-        <span [translate]="'RESYNC'"></span>
-      </button>
+                <ion-icon name="refresh"></ion-icon>
+                <span [translate]="'RESYNC'"></span>
+            </button>
             <button *ngIf="!platform.is('mobile')" ion-button icon-left (click)="logout()">
-          <ion-icon name="log-out"></ion-icon>
-          <span [translate]="'LOGOUT'"></span>
-      </button>
+                <ion-icon name="log-out"></ion-icon>
+                <span [translate]="'LOGOUT'"></span>
+            </button>
             <button ion-button icon-left>
-          <span *ngIf="platform.is('mobile')&&platform.is('ios')&&!isSyncing()" class="block-iPhone">{{height}} <ion-icon name="cube"></ion-icon></span>
-          <span *ngIf="!(platform.is('mobile')&&platform.is('ios'))"><span [translate]="'HEIGHT'"></span>: {{height}}</span>
-      </button>
+                <span *ngIf="platform.is('mobile')&&platform.is('ios')&&!isSyncing()" class="block-iPhone">{{height}} <ion-icon name="cube"></ion-icon></span>
+                <span *ngIf="!(platform.is('mobile')&&platform.is('ios'))"><span [translate]="'HEIGHT'"></span>: {{height}}</span>
+            </button>
         </ion-buttons>
     </ion-navbar>
 </ion-header>

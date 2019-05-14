@@ -10,6 +10,7 @@ import { WalletServiceProvider } from '../../providers/wallet-service/wallet-ser
 export class NewsPage {
 
     listNews: any[]
+    updatingNews: boolean = true
 
     constructor(
         public navCtrl: NavController, 
@@ -33,6 +34,7 @@ export class NewsPage {
 	updatenews(lang = "en-us") {
 		this.wallet.getNewNews(lang, 25).toPromise()
             .then((newNews) => {
+                this.updatingNews = false;
                 this.listNews = newNews.json().results ? newNews.json().results : this.listNews
                 if(this.listNews)
                     this.wallet.setNews(this.listNews, lang)
