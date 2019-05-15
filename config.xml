@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget android-versionCode="701" id="app.myetpwallet.com" version="0.7.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget android-versionCode="710" id="app.myetpwallet.com" version="0.7.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>MyETPWallet</name>
     <description>The Metaverse lightwallet.</description>
     <author email="info@mvs.org" href="https://www.myetpwallet.com/">My ETP Wallet</author>
@@ -92,5 +92,5 @@
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.1.2" />
     <plugin name="cordova-plugin-splashscreen" spec="^5.0.2" />
     <engine name="browser" spec="^5.0.4" />
-    <engine name="ios" spec="^4.5.4" />
+    <engine name="ios" spec="4.5.5" />
 </widget>

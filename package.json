@@ -1,6 +1,6 @@
 {
   "name": "mvs-lightwallet",
-  "version": "0.7.1c",
+  "version": "0.7.2",
   "author": "Sven Mutzl",
   "homepage": "https://www.myetpwallet.com/",
   "private": true,
@@ -40,7 +40,7 @@
     "angular2-elastic": "^0.13.0",
     "angular2-qrcode": "^2.0.1",
     "cordova-browser": "^5.0.4",
-    "cordova-ios": "^4.5.4",
+    "cordova-ios": "4.5.5",
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-ionic-keyboard": "^2.1.2",
     "cordova-plugin-ionic-webview": "^3.0.0",
@@ -64,7 +64,7 @@
     "zone.js": "0.8.12"
   },
   "devDependencies": {
-    "@ionic/app-scripts": "^3.2.3",
+    "@ionic/app-scripts": "3.2.3",
     "@types/jasmine": "^2.8.8",
     "@types/node": "^8.10.21",
     "angular2-template-loader": "^0.6.2",
