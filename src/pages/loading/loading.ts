@@ -78,7 +78,7 @@ export class LoadingPage {
     }
 
     cancel() {
-        this.mvs.dataReset()
+        this.mvs.hardReset()
             .then(() => this.nav.setRoot("LoginPage"))
     }
 
