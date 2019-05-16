@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { ConfigService } from 'src/app/services/config.service';
 import { WalletService } from 'src/app/services/wallet.service';
+import { MetaverseService } from 'src/app/services/metaverse.service';
 
 @Component({
   selector: 'app-select-passphrase',
@@ -18,26 +19,33 @@ export class SelectPassphrasePage implements OnInit {
     private formBuilder: FormBuilder,
     public config: ConfigService,
     private wallet: WalletService,
+    private metaverse: MetaverseService,
     private router: Router,
   ) {
 
     const passphrase = new FormControl('', [Validators.required, Validators.minLength(8)]);
+    const repeat = new FormControl('', [Validators.required]);
     this.form = this.formBuilder.group({
       passphrase,
-      repeat: new FormControl('', [Validators.required, this.isSame(passphrase)])
-    });
+      repeat
+    }, {
+        validators: [this.isSame(passphrase, repeat)]
+      });
   }
 
-  isSame(checkControl: FormControl) {
-    return (control: FormControl) => checkControl.value === control.value ? null : { notSame: true };
+  isSame(targetControl: FormControl, checkControl: FormControl) {
+    return () => checkControl.value === targetControl.value ? null : { notSame: true };
   }
 
-  getError(control: FormControl) {
+  getError(control: FormControl, group?: FormGroup) {
     if (control.pristine) {
       return;
     }
     if (control.errors) {
       return Object.entries(control.errors)[0];
+    }
+    if (group !== undefined && group.errors) {
+      return Object.entries(group.errors)[0];
     }
     return;
   }
@@ -49,7 +57,7 @@ export class SelectPassphrasePage implements OnInit {
     const passphrase = this.form.value.passphrase;
     const encryptedWallet = await this.wallet.encryptWallet(wallet, passphrase);
     // this.downloadFile('mvs_keystore.json', JSON.stringify(encryptedWallet));
-    this.wallet.import(encryptedWallet, passphrase);
+    this.wallet.import(encryptedWallet, passphrase, this.metaverse.network);
     this.router.navigate(['/account']);
   }
 
