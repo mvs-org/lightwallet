@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
+import { Netork } from '../services/metaverse.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ConfigService {
 
-  network = 'mainnet';
+  defaultNetwork: Netork = "mainnet";
   version = '0.8.0';
 
   readonly defaultAddresses = 10;

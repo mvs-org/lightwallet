@@ -28,6 +28,8 @@ export interface Balances {
   MIT: any[];
 }
 
+export type Netork = "mainnet" | "testnet";
+
 @Injectable({
   providedIn: 'root'
 })
@@ -37,6 +39,8 @@ export class MetaverseService {
   transactions$ = new BehaviorSubject<Transaction[]>([]);
   height$ = new BehaviorSubject<number>(0);
 
+  readonly network = this.config.defaultNetwork;
+
   blockchain: any;
 
   constructor(
@@ -45,8 +49,12 @@ export class MetaverseService {
     private wallet: WalletService,
     private multisig: MultisigService,
   ) {
-    this.blockchain = Blockchain({ network: this.config.network });
+    this.setNetwork(this.config.defaultNetwork)
     this.restoreTransactions().then(txs => this.transactions$.next(txs));
+  }
+
+  setNetwork(network: Netork){
+    this.blockchain = Blockchain({ network: this.network });
   }
 
   utxos$ = (addresses$: Observable<string[]>) => combineLatest([

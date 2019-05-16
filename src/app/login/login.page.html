@@ -20,14 +20,14 @@
         
         <div class="info-text">
           <div style="text-align: center;">{{config.version}}
-            <span style="text-align: center;" id="label-network" value="mainnet" *ngIf="config.network=='mainnet'"
+            <span style="text-align: center;" id="label-network" value="mainnet" *ngIf="metaverse.network=='mainnet'"
               [translate]="'MAINNET'"></span>
-            <span style="text-align: center;" id="label-network" value="testnet" *ngIf="config.network=='testnet'"
+            <span style="text-align: center;" id="label-network" value="testnet" *ngIf="metaverse.network=='testnet'"
               [translate]="'TESTNET'"></span>
           </div>
         </div>
 
-          <ion-segment [(ngModel)]="config.network" color="primary" id="network-switch">
+          <ion-segment (ionChange)="metaverse.setNetwork($event)" color="primary" id="network-switch">
             <ion-segment-button id="network-switch-option-mainnet" value="mainnet" [translate]="'MAINNET'">
             </ion-segment-button>
             <ion-segment-button id="network-switch-option-testnet" value="testnet" [translate]="'TESTNET'">

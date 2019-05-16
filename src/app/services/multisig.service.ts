@@ -37,8 +37,8 @@ export class MultisigService {
         })
       )
 
-  async signMultisigTx(address: string, tx: any, passphrase: string) {
-    const wallet = await this.wallet.getHDNode(passphrase);
+  async signMultisigTx(address: string, tx: any, passphrase: string, network: string) {
+    const wallet = await this.wallet.getHDNode(passphrase, network);
     const parameters = await this.getMultisigInfoFromAddress(address);
     return wallet.signMultisig(tx, parameters)
       .catch((error: any) => {

@@ -95,25 +95,20 @@ export class WalletService {
     return (await this.storage.get('wallet')).index;
   }
 
-  async getHDNode(passphrase: string) {
+  async getHDNode(passphrase: string, network: string) {
     const seed = await this.decryptData(await this.storage.get('seed'), passphrase);
-    return this.getHDNodeFromSeed(Buffer.from(seed, 'hex'));
+    return this.getHDNodeFromSeed(Buffer.from(seed, 'hex'), network);
   }
 
-  async import(encryptedWallet: EncryptedWallet, passphrase: string) {
+  async import(encryptedWallet: EncryptedWallet, passphrase: string, network: string) {
     const mnemonic = await this.decryptData(encryptedWallet.mnemonic, passphrase);
-    const seed = await Metaverse.wallet.mnemonicToSeed(mnemonic, Metaverse.networks[this.config.network]);
+    const seed = await Metaverse.wallet.mnemonicToSeed(mnemonic, Metaverse.networks[network]);
     await this.storage.set('wallet', JSON.stringify(encryptedWallet));
     return this.storage.set('seed', await this.encryptData(seed, passphrase));
   }
 
-  private getHDNodeFromSeed(seed: any) {
-    return Metaverse.wallet.fromSeed(seed, Metaverse.networks[this.config.network]);
-  }
-
-  async mnemonicToSeed(mnemonic: string, format?: string) {
-    const seed = await Metaverse.wallet.mnemonicToSeed(mnemonic, Metaverse.networks[this.config.network]);
-    return seed.toString(format || 'hex');
+  private getHDNodeFromSeed(seed: any, network: string) {
+    return Metaverse.wallet.fromSeed(seed, Metaverse.networks[network]);
   }
 
   async exportWallet(wallet: { mnemonic: string }): Promise<EncryptedWallet> {
