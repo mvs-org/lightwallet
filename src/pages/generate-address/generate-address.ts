@@ -46,7 +46,7 @@ export class GenerateAddressPage {
             .then(() => this.wallet.setAddressIndex(this.index))
             .then(() => this.wallet.saveSessionAccount(this.passphrase))
             .then(() => this.alert.stopLoading())
-            .then(() => this.navCtrl.setRoot("LoadingPage"))
+            .then(() => this.navCtrl.setRoot("LoadingPage", { reset: true }))
             .catch(error=>{
                 console.error(error)
                 this.alert.stopLoading()

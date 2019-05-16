@@ -215,7 +215,7 @@ export class MultisignatureAddPage {
                         .then(() => this.wallet.saveSessionAccount(passphrase))
                         .then(() => this.alert.stopLoading())
                         .then(() => this.alert.showSent(newAddress ? 'SUCCESS_CREATE_MULTISIG' : 'SUCCESS_IMPORT_MULTISIG', newMultisig.a))
-                        .then(() => this.navCtrl.setRoot("LoadingPage"))
+                        .then(() => this.navCtrl.setRoot("LoadingPage", { reset: true }))
                         .catch(error=>{
                             console.error(error)
                             this.alert.stopLoading()
