@@ -1,80 +1,47 @@
-import { async, TestBed } from '@angular/core/testing';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { TestBed, async } from '@angular/core/testing';
 
-import { AppGlobals } from './app.global';
-import { ErrorHandler, NgModule } from '@angular/core';
-import { WalletServiceProvider } from '../providers/wallet-service/wallet-service';
-import { MvsServiceProvider } from '../providers/mvs-service/mvs-service';
-import { CryptoServiceProvider } from '../providers/crypto-service/crypto-service';
-import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
-import { SplashScreen } from '@ionic-native/splash-screen';
-import { StatusBar } from '@ionic-native/status-bar';
-import { Keyboard } from '@ionic-native/keyboard';
+import { Platform } from '@ionic/angular';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
 
+import { AppComponent } from './app.component';
 
-import { BrowserModule } from '@angular/platform-browser';
-import { HttpModule, Http } from '@angular/http';
-import { ClipboardModule } from 'ngx-clipboard/dist';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { IonicStorageModule } from '@ionic/storage';
-import { QRCodeModule } from 'angular2-qrcode';
-import { MyETPWallet } from './app.component';
-import { PluginProvider } from '../providers/plugin/plugin';
+describe('AppComponent', () => {
 
-export function HttpLoaderFactory(http: Http) {
-    return new TranslateHttpLoader(http, '/assets/i18n/', '.json');
-}
+  let statusBarSpy, splashScreenSpy, platformReadySpy, platformSpy;
 
-describe('MyETPWallet Component', () => {
-    let fixture;
-    let component;
+  beforeEach(async(() => {
+    statusBarSpy = jasmine.createSpyObj('StatusBar', ['styleDefault']);
+    splashScreenSpy = jasmine.createSpyObj('SplashScreen', ['hide']);
+    platformReadySpy = Promise.resolve();
+    platformSpy = jasmine.createSpyObj('Platform', { ready: platformReadySpy });
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [MyETPWallet],
-            imports: [
-                IonicModule.forRoot(MyETPWallet),
-                BrowserModule,
-                QRCodeModule,
-                HttpModule,
-                ClipboardModule,
-                IonicModule.forRoot(MyETPWallet),
-                TranslateModule.forRoot({
-                    loader: {
-                        provide: TranslateLoader,
-                        useFactory: (HttpLoaderFactory),
-                        deps: [Http]
-                    }
-                }),
-                IonicStorageModule.forRoot({
-                    name: '__myetpwallet',
-                    driverOrder: ['indexeddb', 'localstorage']
-                })
-            ],
-            providers: [
-                AppGlobals,
-                { provide: ErrorHandler, useClass: IonicErrorHandler },
-                MvsServiceProvider,
-                CryptoServiceProvider,
-                Keyboard,
-                StatusBar,
-                SplashScreen,
-                PluginProvider,
-                WalletServiceProvider
-            ]
-        })
-    }));
+    TestBed.configureTestingModule({
+      declarations: [AppComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      providers: [
+        { provide: StatusBar, useValue: statusBarSpy },
+        { provide: SplashScreen, useValue: splashScreenSpy },
+        { provide: Platform, useValue: platformSpy },
+      ],
+    }).compileComponents();
+  }));
 
+  it('should create the app', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.debugElement.componentInstance;
+    expect(app).toBeTruthy();
+  });
 
+  it('should initialize the app', async () => {
+    TestBed.createComponent(AppComponent);
+    expect(platformSpy.ready).toHaveBeenCalled();
+    await platformReadySpy;
+    expect(statusBarSpy.styleDefault).toHaveBeenCalled();
+    expect(splashScreenSpy.hide).toHaveBeenCalled();
+  });
 
-    beforeEach(() => {
-        fixture = TestBed.createComponent(MyETPWallet);
-        component = fixture.componentInstance;
-    });
-
-
-    it('should be created', () => {
-        expect(component instanceof MyETPWallet).toBe(true);
-    });
+  // TODO: add more tests!
 
 });

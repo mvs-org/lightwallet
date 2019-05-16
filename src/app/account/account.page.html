@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>account</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  {{balances$|async|json}}
+  <!-- <ion-card>{{(balances|async).ETP | json}}</ion-card> -->
+  <!-- <ion-card *ngFor="let balance of entries((balances|async).MST)">{{balance | json}}</ion-card> -->
+  <!-- <ion-card *ngFor="let balance of Object.values({foo: 'bar'})">{{balance | json}}</ion-card> -->
+
+  <a routerLink="/account/history">History</a>
+
+</ion-content>

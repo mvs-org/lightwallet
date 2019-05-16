@@ -1,0 +1,15 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/login"></ion-back-button>
+    </ion-buttons>
+    <ion-title translate="NEWS.TITLE"></ion-title>
+    <ion-buttons slot="end">
+      <ion-spinner *ngIf="loading !== false"></ion-spinner>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <news-item *ngFor="let news of newsList" [news]="news"></news-item>
+</ion-content>

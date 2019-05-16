@@ -1,65 +1,48 @@
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ErrorHandler, NgModule } from '@angular/core';
-import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
-import { HttpModule, Http } from '@angular/http';
+import { RouteReuseStrategy } from '@angular/router';
+
+import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
+
 import { IonicStorageModule } from '@ionic/storage';
+
+
+import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { MyETPWallet } from './app.component';
-import { AppGlobals } from './app.global';
-import { MvsServiceProvider } from '../providers/mvs-service/mvs-service';
-import { WalletServiceProvider } from '../providers/wallet-service/wallet-service';
-import { CryptoServiceProvider } from '../providers/crypto-service/crypto-service';
-import { SplashScreen } from '@ionic-native/splash-screen';
-import { StatusBar } from '@ionic-native/status-bar';
-import { Keyboard } from '@ionic-native/keyboard';
-import { PluginProvider } from '../providers/plugin/plugin';
-import { EtpBridgeServiceProvider } from '../providers/etp-bridge-service/etp-bridge-service';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
-var pckg = require('../../package.json');
 
-export function HttpLoaderFactory(http: Http) {
-    return new TranslateHttpLoader(http, './assets/i18n/', '.json?v=' + pckg.version);
+export function createTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
+
 
 @NgModule({
-    declarations: [
-        MyETPWallet
-    ],
-    imports: [
-        BrowserModule,
-        HttpModule,
-        IonicModule.forRoot(MyETPWallet, { scrollAssist: false }),
-        TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: (HttpLoaderFactory),
-                deps: [Http]
-            }
-        }),
-        IonicStorageModule.forRoot({
-            name: '__myetpwallet',
-            driverOrder: ['indexeddb', 'localstorage']
-        })
-    ],
-    bootstrap: [IonicApp],
-    entryComponents: [
-        MyETPWallet
-    ],
-    providers: [
-        AppGlobals,
-        { provide: ErrorHandler, useClass: IonicErrorHandler },
-        MvsServiceProvider,
-        SplashScreen,
-        WalletServiceProvider,
-        CryptoServiceProvider,
-        StatusBar,
-        Keyboard,
-        PluginProvider,
-        EtpBridgeServiceProvider,
-    ]
+  declarations: [AppComponent],
+  entryComponents: [],
+  imports: [
+    HttpClientModule,
+    BrowserModule,
+    IonicModule.forRoot(),
+    AppRoutingModule,
+    IonicStorageModule.forRoot(),
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (createTranslateLoader),
+        deps: [HttpClient]
+      }
+    })],
+  providers: [
+    StatusBar,
+    SplashScreen,
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+  ],
+  bootstrap: [AppComponent]
 })
-export class AppModule {
-    constructor() {
-    }
-}
+export class AppModule { }

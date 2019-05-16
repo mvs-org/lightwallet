@@ -1,0 +1,10 @@
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>{{news.title}}</ion-card-title>
+    <ion-card-subtitle>{{news.date}}</ion-card-subtitle>
+  </ion-card-header>
+  <ion-card-content>
+    <div [innerHTML]="news.content"></div>
+    <a float-right [href]="news.link.url" target="_blank" [translate]="'NEWS.LINK'"></a>
+  </ion-card-content>
+</ion-card>
