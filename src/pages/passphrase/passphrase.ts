@@ -49,7 +49,6 @@ export class PassphrasePage {
         this.showLoading();
         let wallet = {};
         wallet = { "index": 10 }
-        console.log('wallet set 10')
         this.wallet.setWallet(wallet)
             .then((wallet) => this.wallet.setSeedMobile(password, this.mnemonic))
             .then((seed) => this.wallet.setMobileWallet(seed))
@@ -57,7 +56,7 @@ export class PassphrasePage {
             .then((results) => this.wallet.generateAddresses(results[0], 0, results[1]))
             .then((addresses) => this.mvs.addAddresses(addresses))
             .then(() => this.wallet.saveSessionAccount(password))
-            .then(() => this.nav.setRoot("LoadingPage"))
+            .then(() => this.nav.setRoot("LoadingPage", { reset: true }))
             .catch((e) => {
                 console.error(e);
             });
