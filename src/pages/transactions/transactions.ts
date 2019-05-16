@@ -28,6 +28,9 @@ export class TransactionsPage {
     blocktime: number
     current_time: number
     icon: string = 'default_mst'
+    page_tx: number = 1
+    page_deposit_unlocked: number = 1
+    items_per_page: number = 25
 
     constructor(
         public navCtrl: NavController,
@@ -58,7 +61,7 @@ export class TransactionsPage {
         this.loading = false
     }
 
-    explorerURL = (tx) => (this.globals.network == 'mainnet') ? 'https://explorer.mvs.org/#!/tx/' + tx : 'https://explorer-testnet.mvs.org/#!/tx/' + tx
+    explorerURL = (tx) => (this.globals.network == 'mainnet') ? 'https://explorer.mvs.org/tx/' + tx : 'https://explorer-testnet.mvs.org/tx/' + tx
 
     private filterTxs(txs: any[], symbol, addresses) {
         return Promise.all(txs.filter((tx) => this.filterTx(tx, symbol, addresses)))
@@ -104,7 +107,6 @@ export class TransactionsPage {
                 } else {
                     grouped_frozen_ouputs[output.height][output.locked_until].attachment.quantity += output.attachment.quantity
                 }
-                grouped_frozen_ouputs[output.height][output.locked_until].value += output.value
                 grouped_frozen_ouputs[output.height][output.locked_until].transactions.push(output.hash)
             } else {
                 output.transactions = [output.hash]

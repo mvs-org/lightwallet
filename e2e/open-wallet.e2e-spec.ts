@@ -53,8 +53,8 @@ describe('Load Wallet', () => {
                 .then(() => enterPassphrase('password123'))
                 .then(() => page.waitForUrlChange())
                 .then(() => {
-                    page.getTitle()
-                        .then(title => expect(title).toBe('Portfolio'))
+                    page.hasId('load_progress')
+                        .then(hasProgressbar => expect(hasProgressbar).toBe(true))
                 })
         });
 

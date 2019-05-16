@@ -1,0 +1,30 @@
+<ion-header>
+	<ion-navbar>
+		<button ion-button menuToggle>
+		<ion-icon name="menu"></ion-icon>
+	</button>
+		<ion-title>{{'NEWS.TITLE'|translate}}</ion-title>
+		<ion-buttons end>
+			<ion-spinner *ngIf="updatingNews"></ion-spinner>
+		</ion-buttons>
+	</ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+
+	<div class="mini-loader" *ngIf="!listNews"></div>
+
+	<ion-card class="news-card" *ngFor="let news of listNews">
+		<ion-grid>
+			<ion-row>
+				<ion-item>
+					<h1 class="manual-copy">{{news.title}}</h1>
+					<div class="content manual-copy" [innerHTML]="news.content"></div>
+					<a href="{{news.link.url}}" target="_blank">{{news.link.url}}</a>
+				</ion-item>
+			</ion-row>
+		</ion-grid>
+	</ion-card>
+
+</ion-content>

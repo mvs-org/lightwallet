@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AlertController, LoadingController, Loading } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
-import 'rxjs/add/operator/map';
 
 @Injectable()
 export class AlertProvider {

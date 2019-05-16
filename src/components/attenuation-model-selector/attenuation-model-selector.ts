@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, SimpleChanges, SimpleChange } from '@angular/core';
+import { Component, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { AlertProvider } from '../../providers/alert/alert';
 
@@ -18,6 +18,7 @@ export class AttenuationModelSelectorComponent {
     @Input() quantity: string;              //Displayed quantity
     @Input() decimals: number;
     @Input() asset: string;
+    @Input() blocktime: number;
 
     type: string = 'simple'
     periods: Array<Period> = []
@@ -28,6 +29,8 @@ export class AttenuationModelSelectorComponent {
     attenuation_model: string
     total_quantity: number = 0
     total_locktime: number = 0
+    duration_days: number = 0
+    duration_hours: number = 0
 
     @Output() modelChanged : EventEmitter<string> = new EventEmitter<string>();
 
@@ -39,9 +42,7 @@ export class AttenuationModelSelectorComponent {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        const quantity: SimpleChange = changes.quantity;
         this.inputChange(event)
-        this.quantity = quantity.currentValue;
     }
 
     addPeriod() {
@@ -57,6 +58,8 @@ export class AttenuationModelSelectorComponent {
     inputChange(event) {
         let attenuation_model: string = undefined
         let quantity = Math.round(parseFloat(this.quantity) * Math.pow(10, this.decimals))
+        this.duration_days = Math.floor(this.blocktime * this.locktime / (24 * 60 * 60))
+        this.duration_hours = Math.floor((this.blocktime * this.locktime / (60 * 60)) - (24 * this.duration_days))
 
         switch(this.type){
             case "simple":

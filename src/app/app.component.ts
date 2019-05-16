@@ -7,6 +7,7 @@ import { Keyboard } from '@ionic-native/keyboard'
 import { AppGlobals } from './app.global'
 import { Storage } from '@ionic/storage'
 import { PluginProvider } from '../providers/plugin/plugin'
+import { MvsServiceProvider } from '../providers/mvs-service/mvs-service';
 
 @Component({
     templateUrl: 'app.html'
@@ -24,6 +25,7 @@ export class MyETPWallet {
         private plugins: PluginProvider,
         public translate: TranslateService,
         private event: Events,
+        private mvs: MvsServiceProvider,
         private globals: AppGlobals,
         public statusBar: StatusBar,
         public keyboard: Keyboard
@@ -37,7 +39,7 @@ export class MyETPWallet {
             .then(() => this.isLoggedIn())
             .then((loggedin) => {
                 if (loggedin) {
-                    this.rootPage = "AccountPage"
+                    return this.mvs.getUpdateNeeded(this.globals.show_loading_screen_after_unused_time).then(needUpdate => needUpdate ? this.rootPage = "LoadingPage" :this.rootPage = "AccountPage" )
                 } else {
                     this.rootPage = "LoginPage"
                 }
@@ -103,6 +105,7 @@ export class MyETPWallet {
     setPublicMenu() {
         return Promise.all([
             { title: 'LOGIN', component: "LoginPage", icon: 'log-in', root: true },
+            { title: 'NEWS', component: "NewsPage", icon: 'paper' },
             { title: 'REPORT_BUG', newtab: 'https://github.com/mvs-org/lightwallet/issues', icon: 'bug' },
             { title: 'INFORMATION.TITLE', component: "InformationPage", icon: 'information-circle' }
         ].map((entry) => this.addToMenu(entry)))
@@ -126,8 +129,10 @@ export class MyETPWallet {
                     { title: 'REGISTER_MST', component: "AssetIssuePage", icon: 'globe' },
                     { title: 'REGISTER_MIT', component: "MITRegisterPage", icon: 'create' },
                     { title: 'ETH_BRIDGE', component: "EthBridgePage", icon: 'swap' },
+                    ... (this.globals.network==='mainnet' ? [{ title: 'ETP_BRIDGE', component: "EtpBridgePage", icon: 'cash' }] : []),
                     { title: 'MULTISIGNATURE', component: "MultisignaturePage", icon: 'people', beta: true },
                     { title: 'SETTINGS.PLUGINS', component: "PluginSettingsPage", icon: 'cube', beta: true },
+                    { title: 'NEWS', component: "NewsPage", icon: 'paper' },
                     { title: 'SETTINGS', component: "SettingsPage", icon: 'settings' },
                     { title: 'REPORT_BUG', component: "ReportPage", icon: 'bug' }
                 ].concat(plugins).map((entry) => this.addToMenu(entry)))

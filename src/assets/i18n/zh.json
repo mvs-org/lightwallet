@@ -427,8 +427,8 @@
   "SEND_ALL_TITLE": "全部发送么？",
   "SEND_ALL_MESSAGE": "您确认发送所有余额么？",
 
-  "DEPOSIT.DURATION_ESTIMATION": "您的ETP预估锁定时间为{{duration_days}}天 {{duration_hours}}小时。这个时间 ({{blocktime}}秒)是根据最近的1000个区块的解锁时间确定的，可能会随着出块速度而变化。",
-  "HISTORY.UNLOCK_APPROXIMATION_INFORMATION": "*请注意此“解锁时间”是由最近的1000个区块的平均出块时间预估所得，可能会随着出块速度而变化。",
+  "DEPOSIT.DURATION_ESTIMATION": "您的MST预估锁定时间为{{duration_days}}天 {{duration_hours}}小时。这个时间 ({{blocktime}}秒)是根据最近的10000个区块的解锁时间确定的，可能会随着出块速度而变化。",
+  "HISTORY.UNLOCK_APPROXIMATION_INFORMATION": "*请注意此“解锁时间”是由最近的10000个区块的平均出块时间预估所得，可能会随着出块速度而变化。",
 
   "RECIPIENT_ADDRESS_OR_AVATAR": "接收者的数字身份或钱包地址",
   "HELP.RECIPIENT_ADDRESS_OR_AVATAR": "您可以输入接收者的数字身份或钱包地址。",
@@ -627,7 +627,92 @@
   "ASSET_LOCK.TOTAL_MORE_SEND": "资产不足，每周期锁仓数额的总和超出了发送资产的总额。",
 
   "MESSAGE.LOCK_IMPORT_CSV_TOO_MANY_PERIODS_TITLE": "周期过多",
-  "MESSAGE.LOCK_IMPORT_CSV_TOO_MANY_PERIOD_BODY": "该文件包含的周期数超出了限制，最大周期数限制为："
+  "MESSAGE.LOCK_IMPORT_CSV_TOO_MANY_PERIOD_BODY": "该文件包含的周期数超出了限制，最大周期数限制为：",
 
+  "AVATARS.MINING": "挖矿",
+
+  "LOADING.TITLE": "THE NEW REALITY载入中",
+  "LOADING.RETRY": "重试",
+  "LOADING.CURRENT_HEIGHT": "当前载入高度{{height}}",
+  "LOADING.STOPPED": "无法同步您的处理，请检查您的网络设施或稍后重试",
+  "RETURN_LOGIN": "返回到登陆",
+  "LOADING.FULLY_LOADED": "加载完毕，进入元界...",
+
+  "MST_MINING.OPTION": "允许该MST被挖矿",
+  "HELP.MST_MINING_OPTION": "MST挖矿将允许矿工对此MST进行挖矿，新的代币将会根据下面选择的模版，在选择挖掘它的矿工挖掘的每个区块中创建",
+  "MST_MINING.INITIAL_REWARD": "每个区块最初的奖励",
+  "MST_MINING.INTERVAL": "奖励减少间隔",
+  "MST_MINING.BASE": "每次间隔的奖励减少",
+  "HELP.MST_MINING_INITIAL": "这是此MST的最初奖励，接收方为矿工。例如，这个数值是ETP为3,BTC为50",
+  "HELP.MST_MINING_INTERVAL": "这是每一块奖励减少之间的区块数。例如，ETP的该数值为500,000块，BTC该数值为210,000块(4年)",
+  "HELP.MST_MINING_BASE": "这是在间隔结束时，定义新的块奖励金额的基础。例如，ETP每周期下降5%，BTC每周期下降50%或一半",
+
+  "NEWS": "新闻",
+  "NEWS.TITLE": "元界新闻",
+
+  "ETP_BRIDGE": "置换ETP",
+  "ETP_BRIDGE.RECIPIENT_ADDRESS": "接收地址",
+  "ETP_BRIDGE.FROM_ASSET": "发送",
+  "ETP_BRIDGE.AMOUNT_SEND": "数量",
+  "ETP_BRIDGE.TO_ASSET": "接收",
+  "ETP_BRIDGE.AMOUNT_RECEIVE": "数量",
+  "ETP_BRIDGE.MIN_MAX_DEPOSIT": "最小-最大存款范围：{{min}}-{{max}} {{symbol}}，存款手续费：{{fee}}%",
+  "ETP_BRIDGE.RATE": "比率：{{rate}}",
+  "ETP_BRIDGE.RECEIVE_COIN_FEE": "接收代币手续费：{{fee}} {{symbol}}",
+  "ETP_BRIDGE.DEPOSIT_ADDRESS": "{{symbol}} 存款地址",
+  "ETP_BRIDGE.REFUND_ADDRESS": "{{symbol}} 退还地址",
+  "ETP_BRIDGE.RECEIVE_ADDRESS": "{{symbol}} 接收地址",
+  "ETP_BRIDGE.REFUND_TX": "{{symbol}} 退还交易",
+  "ETP_BRIDGE.RECEIVE_TX": "{{symbol}} 接收交易",
+
+  "SUCCESS_CREATE_SWFT_TITLE": "指令已创建",
+  "SUCCESS_CREATE_SWFT_BODY": "您的指令已创建，下一步请进行存款操作",
+  "MESSAGE.CREATE_SWFT_ORDER_ERROR": "创建指令错误，请检查您的输入并重试",
+  "ETP_BRIDGE.HISTORY_TITLE": "历史",
+  "ETP_BRIDGE.HISTORY_DESCRIPTION": "此历史记录仅在本地保存。转账只会出现在生成它的设备上。",
+  "ETP_BRIDGE_DETAILS": "指令细节",
+  "ETP_BRIDGE.STATUS" : {
+    "wait_deposit_send": "等待存款",
+    "wait_exchange_push": "兑换中...",
+    "wait_exchange_return": "兑换中...",
+    "wait_refund_send": "兑换失败，准备退还",
+    "wait_refund_confirm": "代币已退还，等待区块确认中",
+    "wait_refund_complete": "指令失败，代币成功退还",
+    "wait_receive_send": "发送代币",
+    "wait_receive_confirm": "代币已发送，等待区块确认中",
+    "receive_complete": "指令完成",
+    "timeout": "指令超时",
+    "fail": "指令失败"
+  },
+  "ETP_BRIDGE.STATUS_DESCRIPTION" : {
+    "wait_deposit_send": "指令已经创建。请将您的代币存入下面指定的地址。如果您已经进行存款，请稍等。",
+    "wait_exchange_push": "您的代币已收到，正在按照实时汇率兑换",
+    "wait_exchange_return": "您的代币已收到，正在按照实时汇率兑换",
+    "wait_refund_send": "交易失败，您的存款将会被退回到您的退还地址",
+    "wait_refund_confirm": "指令失败，您的存款已经退回到您的退还地址",
+    "wait_refund_complete": "指令失败，您的存款已经成功退回到您的退还地址",
+    "wait_receive_send": "您的存款和交易已经成功完成，您的代币将会发送",
+    "wait_receive_confirm": "交易成功，您的代币已经发送，正在等待区块确认",
+    "receive_complete": "指令完成，您的代币已经确认发送",
+    "timeout": "存款没有按时完成，指令已超时",
+    "fail": "指令失败"
+  },
+  "ETP_BRIDGE.DEPOSIT_ADDRESS_ADVICE": "请存款 {{amount}} {{symbol}} 到该地址",
+  "ETP_BRIDGE.REFUND_ADDRESS_ADVICE": "这是您的退还地址。如果有问题，您的存款将被退回到这个地址",
+  "ETP_BRIDGE.RECEIVE_ADDRESS_ADVICE": "您将会收到 {{symbol}} 在这个地址上",
+  "ETP_BRIDGE.IMPORT_ORDER": "导入现有指令",
+  "ETP_BRIDGE.CREATE_ORDER": "创建新的指令",
+  "ETP_BRIDGE.CREATE_ORDER_DESCRIPTION": "创建一个指令，通过多个其他代币买卖ETP。创建订单后，请不要忘记存入存款",
+  "ETP_BRIDGE.ORDER_ID": "订单编号",
+  "ETP_BRIDGE.IMPORT_ORDER_BUTTON": "输入订单",
+  "SUCCESS_IMPORT_SWFT_TITLE": "订单已输入",
+  "SUCCESS_IMPORT_SWFT_BODY": "订单输入成功",
+  "ETP_BRIDGE.SEE_DETAILS_BUTTON": "查看详情",
+
+  "ETP_BRIDGE.INFORMATION": "此服务提供商为SWFT,如有任何问题，请联系SWFT支持",
+  "ETP_BRIDGE.INFORMATION_LINK": "电报",
+
+  "ETP_BRIDGE.IMPORT_ORDER_DESCRIPTION": "如果您从其他设备或直接从SWFT网站创建订单，您可以使用订单ID导入订单，以跟踪其状态",             
+  "ETP_BRIDGE.UNABLE_CONNECT_SWFT": "无法连接到SWFT。请检查您的互联网连接或稍后重试"
 
 }

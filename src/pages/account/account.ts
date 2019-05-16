@@ -46,12 +46,19 @@ export class AccountPage {
 
     private syncinterval: any;
 
-    constructor(public nav: NavController, public translate: TranslateService, private wallet: WalletServiceProvider, private mvs: MvsServiceProvider, private alert: AlertProvider, public platform: Platform, private event: Events) {
+    constructor(
+        public nav: NavController,
+        public translate: TranslateService,
+        private wallet: WalletServiceProvider,
+        private mvs: MvsServiceProvider,
+        private alert: AlertProvider,
+        public platform: Platform,
+        private event: Events,
+    ) {
 
         this.loading = true;
         //Reset last update time
         var lastupdate = new Date()
-        lastupdate.setDate(0)
         this.mvs.setUpdateTime(lastupdate)
 
         this.theme = document.getElementById('theme').className
@@ -72,7 +79,12 @@ export class AccountPage {
         if (await this.checkAccess()) {
             this.loadTickers()
             this.initialize()
-            this.whitelist = await this.mvs.getWhitelist()
+            try {
+                this.whitelist = await this.mvs.getWhitelist()
+            } catch (e) {
+                console.error(e);
+            }
+            
         }
         else
             this.nav.setRoot("LoginPage")
@@ -111,8 +123,7 @@ export class AccountPage {
         return this.mvs.getDbUpdateNeeded()
             .then((target: any) => {
                 if (target)
-                    return this.mvs.dataReset()
-                        .then(() => this.mvs.setDbVersion(target))
+                    this.nav.setRoot("LoadingPage", { reset: true })
                 return this.loadFromCache()
             })
             .then(() => this.update())
@@ -198,8 +209,8 @@ export class AccountPage {
             this.syncing = true
             this.syncingSmall = true
             return Promise.all([this.mvs.updateHeight(), this.updateBalances()])
-                .then((results) => {
-                    this.height = results[0]
+                .then(([height, balances]) => {
+                    this.height = height
                     this.syncing = false
                     this.syncingSmall = false
                     if (refresher)

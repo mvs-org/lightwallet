@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, Response } from '@angular/http';
 import { AppGlobals } from '../../app/app.global';
 import 'rxjs/add/operator/map';
 import { Storage } from '@ionic/storage';
@@ -314,6 +314,14 @@ export class WalletServiceProvider {
             })
     }
 
+    setupAccount(accountName, decryptedAccount) {
+        return Promise.all([this.setWallet(decryptedAccount.wallet), this.setMobileWallet(decryptedAccount.seed), this.setAccountName(accountName), this.setMultisigAddresses(decryptedAccount.multisig_addresses), this.setMultisigInfo(decryptedAccount.multisigs), this.setPlugins(decryptedAccount.plugins)])
+            .catch((error) => {
+                console.error(error)
+                throw Error('ERR_SETUP_ACCOUNT')
+            })
+    }
+
     getSessionAccountInfo() {
         return this.storage.get('account_info')
     }
@@ -337,5 +345,36 @@ export class WalletServiceProvider {
     setPlugins(plugins: Array<any>) {
         this.storage.set('plugins', plugins ? plugins : [])
     }
+
+    getNewNews(lang, limit) {
+        return this.http.get("https://explorer.mvs.org/api/content/news?lang=" + lang + "&limit=" + limit);
+    }
+
+    getNews(lang = 'en-us') {
+        return this.storage.get('news').then((news) => news && news[lang] ? news[lang] : [])
+    }
+
+    setNews(news, lang = 'en-us') {
+        this.storage.get('news').then((allLangNews) => {
+            allLangNews = allLangNews ? allLangNews : {}
+            allLangNews[lang] = news
+            this.storage.set('news', allLangNews)
+        })
+    }
+
+    getLanguage() {
+        return this.storage.get('language').then((lang) => lang ? lang : "en")
+    }
+    
+    extractData(res: Response) {
+        let body = res.json();
+        console.log(body)
+        return body || {};
+    }
+
+    handleErrorPromise (error: Response | any) {
+        console.error(error.message || error);
+        return Promise.reject(error.message || error);
+    } 
 
 }

@@ -29,7 +29,7 @@ export class AssetTransferPage {
     balance: number
     decimals: number
     showBalance: number
-    recipient_address: string = ""
+    recipient_address: string
     recipient_avatar: string
     recipient_avatar_valid: boolean
     quantity: string = ""
@@ -58,6 +58,7 @@ export class AssetTransferPage {
  	blocktime: number
     lock: boolean = false
     isApp: boolean
+    showAdvanced: boolean = false
 
     constructor(
         public navCtrl: NavController,
@@ -67,10 +68,13 @@ export class AssetTransferPage {
         private alert: AlertProvider,
         private barcodeScanner: BarcodeScanner,
         private keyboard: Keyboard,
-        private translate: TranslateService
+        private translate: TranslateService,
     ) {
 
         this.selectedAsset = navParams.get('asset')
+        this.quantity = navParams.get('amount') || ""
+        this.recipient_address = navParams.get('recipient') || ""
+
         if(this.selectedAsset == 'ETP') {
             this.recipients.push(new RecipientSendMore('', '', {"ETP": undefined}))
         } else {
@@ -159,8 +163,7 @@ export class AssetTransferPage {
 
     create() {
         return this.alert.showLoading()
-            .then(() => this.mvs.getAddresses())
-            .then((addresses) => {
+            .then(() => {
                 let messages = [];
                 if(this.message) {
                     messages.push(this.message)
@@ -176,9 +179,9 @@ export class AssetTransferPage {
                                 Math.round(parseFloat(this.quantity) * Math.pow(10, this.decimals)),
                                 this.attenuation_model,
                                 (this.sendFrom != 'auto') ? this.sendFrom : null,
-                                (this.changeAddress != 'auto') ? this.changeAddress : undefined,
-                                this.fee,
-                                (messages !== []) ? messages : undefined
+                                (this.showAdvanced && this.changeAddress != 'auto') ? this.changeAddress : undefined,
+                                (this.showAdvanced) ? this.fee : 10000,
+                                (this.showAdvanced && messages !== []) ? messages : undefined
                             )
                         } else {
                             return this.mvs.createSendTx(
@@ -188,9 +191,9 @@ export class AssetTransferPage {
                                 (this.recipient_avatar && this.recipient_avatar_valid) ? this.recipient_avatar : undefined,
                                 Math.round(parseFloat(this.quantity) * Math.pow(10, this.decimals)),
                                 (this.sendFrom != 'auto') ? this.sendFrom : null,
-                                (this.changeAddress != 'auto') ? this.changeAddress : undefined,
-                                this.fee,
-                                (messages !== []) ? messages : undefined
+                                (this.showAdvanced && this.changeAddress != 'auto') ? this.changeAddress : undefined,
+                                (this.showAdvanced) ? this.fee : 10000,
+                                (this.showAdvanced && messages !== []) ? messages : undefined
                             )
                         }
                     case "more":
@@ -207,8 +210,8 @@ export class AssetTransferPage {
                             target,
                             recipients,
                             (this.sendFrom != 'auto') ? this.sendFrom : null,
-                            (this.changeAddress != 'auto') ? this.changeAddress : undefined,
-                            (messages !== []) ? messages : undefined
+                            (this.showAdvanced && this.changeAddress != 'auto') ? this.changeAddress : undefined,
+                            (this.showAdvanced && messages !== []) ? messages : undefined
                         )
                     default:
                         this.alert.showError('MESSAGE.UNKNOWN_TX_TYPE', '')
