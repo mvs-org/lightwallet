@@ -12,7 +12,7 @@ const routes: Routes = [
   { path: 'login/select-passphrase', loadChildren: './login/select-passphrase/select-passphrase.module#SelectPassphrasePageModule' },
   { path: 'news', loadChildren: './news/news.module#NewsPageModule' },
   { path: 'account', loadChildren: './account/account.module#AccountPageModule' },
-  { path: 'account/history', loadChildren: './transaction-history/transaction-history.module#TransactionHistoryPageModule' },
+  { path: 'account/history', loadChildren: './account/transaction-history/transaction-history.module#TransactionHistoryPageModule' },
 ];
 
 @NgModule({

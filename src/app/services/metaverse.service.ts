@@ -28,7 +28,7 @@ export interface Balances {
   MIT: any[];
 }
 
-export type Netork = "mainnet" | "testnet";
+export type Network = "mainnet" | "testnet";
 
 @Injectable({
   providedIn: 'root'
@@ -53,7 +53,7 @@ export class MetaverseService {
     this.restoreTransactions().then(txs => this.transactions$.next(txs));
   }
 
-  setNetwork(network: Netork){
+  setNetwork(network: Network){
     this.blockchain = Blockchain({ network: this.network });
   }
 

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MetaverseService } from '../services/metaverse.service';
+import { MetaverseService } from '../../services/metaverse.service';
 
 @Component({
   selector: 'app-transaction-history',

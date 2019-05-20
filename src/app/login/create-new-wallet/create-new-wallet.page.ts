@@ -35,7 +35,7 @@ export class CreateNewWalletPage implements OnInit {
   }
 
   enterPassphrase() {
-    this.router.navigate(['/login/select-passphrase'],
+    this.router.navigate(['login', 'select-passphrase'],
       {
         skipLocationChange: true,
         queryParams: this.wallet

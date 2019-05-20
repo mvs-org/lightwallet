@@ -9,7 +9,6 @@
 
 <ion-content>
 
-  <ion-card *ngFor="let transaction of (transactions | async)">
-    {{transaction | json }}
-  </ion-card>
+  <app-history-item *ngFor="let transaction of (transactions | async)" [transaction] = "transaction">
+  </app-history-item>
 </ion-content>

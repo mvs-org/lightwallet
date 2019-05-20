@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfigService } from '../services/config.service';
 import { Platform } from '@ionic/angular';
-import { MetaverseService } from '../services/metaverse.service';
+import { MetaverseService, Network } from '../services/metaverse.service';
 
 @Component({
   selector: 'app-login',
@@ -10,6 +10,8 @@ import { MetaverseService } from '../services/metaverse.service';
 })
 export class LoginPage implements OnInit {
 
+  network: Network
+
   constructor(
     public config: ConfigService,
     public metaverse: MetaverseService,
@@ -17,6 +19,7 @@ export class LoginPage implements OnInit {
     ) { }
 
   ngOnInit() {
+    //this.network = this.metaverse.getNetwork()
   }
 
 }
