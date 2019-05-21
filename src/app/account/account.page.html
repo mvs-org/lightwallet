@@ -8,9 +8,18 @@
 </ion-header>
 
 <ion-content>
-  <etp-card *ngIf="balances" [tickers]="tickers && tickers.ETP" [balance]="balances.ETP" [base]="base"></etp-card>
+  <ion-grid>
+    <ion-row>
+      <etp-card col-4 *ngIf="balances" [tickers]="tickers && tickers.ETP" [balance]="balances.ETP" [base]="base">
+      </etp-card>
+    </ion-row>
+  </ion-grid>
   <h2>MST</h2>
-  <mst-card *ngFor="let symbol of MSTSymbols" [symbol]="symbol" [balance]="balances.MST[symbol]"></mst-card>
+  <ion-grid>
+    <ion-row>
+      <mst-card col-4 *ngFor="let symbol of MSTSymbols" [symbol]="symbol" [balance]="balances.MST[symbol]"></mst-card>
+    </ion-row>
+  </ion-grid>
   <!-- <ion-card *ngFor="let balance of Object.values({foo: 'bar'})">{{balance | json}}</ion-card> -->
 
   <a routerLink="/account/history">History</a>

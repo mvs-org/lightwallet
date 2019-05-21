@@ -1,4 +1,4 @@
-<ion-card class="card-block">
+<ion-card>
     <ion-grid>
         <ion-row>
             <ion-col>
@@ -7,33 +7,29 @@
                         <img class="coinlogo" [src]="'assets/icon/'+icon+'.png'" (error)="errorImg($event)"
                             [ngClass]="{'csdLogoDefault':symbol == 'CSD.CSD' && theme == 'theme-default', 'default-logo': icon == 'default_mst'}">
                     </ion-avatar>
-                    <h1 class="symbol overflow">
-                        {{symbol}}
-                        <ion-button *ngIf="swap" fill="clear" color="danger" icon-left routerLink="['swap']"
-                            class="swap-buton">
-                            <ion-icon name="swap"></ion-icon>{{"SWAP"|translate}}
-                        </ion-button>
-                    </h1>
-                    <h2 class="balances balance-text">
-                        <div class="balance-field">
-                            {{"ACCOUNT.TOTAL"|translate}}
-                        </div>
-                        <div class="balance-field">
-                            {{"ACCOUNT.FROZEN"|translate}}
-                        </div>
-                    </h2>
-                    <h2 class="balances frozen-balances">
-                        <div class="balance-field">
-                            <div>{{balance.available + balance.frozen | format : balance.decimals}}</div>
-                        </div>
-                        <div class="balance-field">
-                            <div>{{balance.frozen | format : balance.decimals}}</div>
-                        </div>
-                    </h2>
+                    <ion-label>
+                        <ion-row>
+                            <ion-col>
+                            <h1>{{symbol}}</h1>
+                                <ion-button *ngIf="swap" fill="clear" color="danger" icon-left routerLink="['swap']"
+                                    class="swap-buton">
+                                    <ion-icon name="swap"></ion-icon>{{"SWAP"|translate}}
+                                </ion-button>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col col-4>{{"ACCOUNT.TOTAL"|translate}}</ion-col>
+                            <ion-col col-4 class="ion-text-right">{{balance.available + balance.frozen | format : balance.decimals}}</ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col col-4>{{"ACCOUNT.FROZEN"|translate}}</ion-col>
+                            <ion-col col-4 class="ion-text-right">{{balance.frozen | format : balance.decimals}}</ion-col>
+                        </ion-row>
+                    </ion-label>
                 </ion-item>
             </ion-col>
         </ion-row>
-        <ion-row col-12 class="row-buttons">
+        <ion-row>
             <ion-col col-4>
                 <ion-button expand="full" fill="clear" color="secondary" icon-left [routerLink]="['addresses', symbol]">
                     <ion-icon name="download"></ion-icon>{{"RECEIVE" | translate}}
