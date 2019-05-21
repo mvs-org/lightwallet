@@ -8,16 +8,20 @@
 </ion-header>
 
 <ion-content>
-  <ion-grid>
+  <ion-grid no-padding>
     <ion-row>
-      <etp-card col-4 *ngIf="balances" [tickers]="tickers && tickers.ETP" [balance]="balances.ETP" [base]="base">
-      </etp-card>
+      <ion-col size-lg="4">
+        <etp-card col-4 *ngIf="balances" [tickers]="tickers && tickers.ETP" [balance]="balances.ETP" [base]="base">
+        </etp-card>
+      </ion-col>
     </ion-row>
   </ion-grid>
   <h2>MST</h2>
-  <ion-grid>
+  <ion-grid no-padding>
     <ion-row>
-      <mst-card col-4 *ngFor="let symbol of MSTSymbols" [symbol]="symbol" [balance]="balances.MST[symbol]"></mst-card>
+      <ion-col *ngFor="let symbol of MSTSymbols" size-lg="4" size="12">
+        <mst-card [symbol]="symbol" [balance]="balances.MST[symbol]"></mst-card>
+      </ion-col>
     </ion-row>
   </ion-grid>
   <!-- <ion-card *ngFor="let balance of Object.values({foo: 'bar'})">{{balance | json}}</ion-card> -->

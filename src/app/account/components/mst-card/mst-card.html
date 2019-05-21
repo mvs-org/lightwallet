@@ -18,30 +18,32 @@
                             </ion-col>
                         </ion-row>
                         <ion-row>
-                            <ion-col col-4>{{"ACCOUNT.TOTAL"|translate}}</ion-col>
-                            <ion-col col-4 class="ion-text-right">{{balance.available + balance.frozen | format : balance.decimals}}</ion-col>
+                            <ion-col size="4">{{"ACCOUNT.TOTAL"|translate}}</ion-col>
+                            <ion-col size="4" class="ion-text-right">{{balance.available + balance.frozen | format : balance.decimals}}</ion-col>
                         </ion-row>
                         <ion-row>
-                            <ion-col col-4>{{"ACCOUNT.FROZEN"|translate}}</ion-col>
-                            <ion-col col-4 class="ion-text-right">{{balance.frozen | format : balance.decimals}}</ion-col>
+                            <ion-col size="4">{{"ACCOUNT.FROZEN"|translate}}</ion-col>
+                            <ion-col size="4" class="ion-text-right">{{balance.frozen | format : balance.decimals}}</ion-col>
                         </ion-row>
                     </ion-label>
                 </ion-item>
             </ion-col>
         </ion-row>
+    </ion-grid>
+    <ion-grid no-padding class="button-row" fixed>
         <ion-row>
             <ion-col col-4>
-                <ion-button expand="full" fill="clear" color="secondary" icon-left [routerLink]="['addresses', symbol]">
+                <ion-button fill="clear" color="secondary" icon-left [routerLink]="['addresses', symbol]">
                     <ion-icon name="download"></ion-icon>{{"RECEIVE" | translate}}
                 </ion-button>
             </ion-col>
             <ion-col col-4>
-                <ion-button expand="full" fill="clear" color="danger" icon-left [routerLink]="['send', symbol]">
+                <ion-button fill="clear" color="danger" icon-left [routerLink]="['send', symbol]">
                     <ion-icon name="send"></ion-icon>{{ "SEND" | translate }}
                 </ion-button>
             </ion-col>
             <ion-col col-4>
-                <ion-button expand="full" fill="clear" color="primary" icon-left [routerLink]="['history', symbol]">
+                <ion-button fill="clear" color="primary" icon-left [routerLink]="['history', symbol]">
                     <ion-icon name="time"></ion-icon>{{ "HISTORY" | translate }}
                 </ion-button>
             </ion-col>

@@ -2,7 +2,8 @@ import { Component, Input } from '@angular/core';
 
 @Component({
     selector: 'mst-card',
-    templateUrl: 'mst-card.html'
+    templateUrl: 'mst-card.html',
+    styleUrls: ['./mst-card.scss']
 })
 export class MSTCardComponent {
 
