@@ -18,19 +18,19 @@
                             </ion-col>
                         </ion-row>
                         <ion-row>
-                            <ion-col size="4">{{"ACCOUNT.TOTAL"|translate}}</ion-col>
-                            <ion-col size="4" class="ion-text-right">{{balance.available + balance.frozen | format : balance.decimals}}</ion-col>
+                            <ion-col >{{"ACCOUNT.TOTAL"|translate}}</ion-col>
+                            <ion-col class="ion-text-right">{{balance.available + balance.frozen | format : balance.decimals}}</ion-col>
                         </ion-row>
                         <ion-row>
-                            <ion-col size="4">{{"ACCOUNT.FROZEN"|translate}}</ion-col>
-                            <ion-col size="4" class="ion-text-right">{{balance.frozen | format : balance.decimals}}</ion-col>
+                            <ion-col >{{"ACCOUNT.FROZEN"|translate}}</ion-col>
+                            <ion-col  class="ion-text-right">{{balance.frozen | format : balance.decimals}}</ion-col>
                         </ion-row>
                     </ion-label>
                 </ion-item>
             </ion-col>
         </ion-row>
     </ion-grid>
-    <ion-grid no-padding class="button-row" fixed>
+    <ion-grid no-padding class="button-row" >
         <ion-row>
             <ion-col col-4>
                 <ion-button fill="clear" color="secondary" icon-left [routerLink]="['addresses', symbol]">

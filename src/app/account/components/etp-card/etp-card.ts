@@ -3,7 +3,8 @@ import { Balance } from 'src/app/services/metaverse.service';
 
 @Component({
     selector: 'etp-card',
-    templateUrl: 'etp-card.html'
+    templateUrl: 'etp-card.html',
+    styleUrls: ['./etp-card.scss'],
 })
 export class EtpCardComponent {
 
