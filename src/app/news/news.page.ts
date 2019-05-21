@@ -46,7 +46,7 @@ export class NewsPage implements OnInit {
   }
 
   ngOnInit() {
-    this.translate.setDefaultLang('en')
+    this.translate.setDefaultLang('en');
     this.getNews();
   }
 

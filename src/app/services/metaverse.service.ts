@@ -53,7 +53,7 @@ export class MetaverseService {
     this.restoreTransactions().then(txs => this.transactions$.next(txs));
   }
 
-  setNetwork(network: Network){
+  setNetwork(network: Network) {
     this.blockchain = Blockchain({ network: this.network });
   }
 
@@ -135,5 +135,6 @@ export class MetaverseService {
     return b.height - a.height;
   }
 
+  getTickers = () => this.blockchain.pricing.tickers();
 
 }

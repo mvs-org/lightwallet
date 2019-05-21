@@ -1,0 +1,58 @@
+<ion-card>
+    <ion-grid>
+        <ion-row>
+            <ion-col>
+                <ion-item>
+                    <ion-avatar item-start>
+                        <img class="coinlogo" [src]="'assets/icon/ETP.png'">
+                    </ion-avatar>
+                    <ion-label>
+                        <h1 class="symbol">ETP</h1>
+                        <h2 class="balances balance-text">
+                            <div class="balance-field">
+                                {{"ACCOUNT.TOTAL"|translate}}
+                            </div>
+                            <div class="balance-field">
+                                {{"ACCOUNT.FROZEN"|translate}}
+                            </div>
+                        </h2>
+                        <h2 class="balances">
+                            <div class="balance-field">
+                                <div>{{balance.available + balance.frozen | format : balance.decimals}}</div>
+                                <div *ngIf="tickers!==undefined && tickers[base]" class="fiat">
+                                    ≈{{base}}
+                                    {{(balance.available + balance.frozen)/100000000*tickers[base].price | number : '1.0-2'}}
+                                </div>
+                            </div>
+                            <div class="balance-field">
+                                <div class="frozen-balance">
+                                    {{balance.frozen | format : balance.decimals}}
+                                </div>
+                                <div *ngIf="tickers!==undefined && tickers[base]" class="fiat">
+                                    ≈{{base}} {{(balance.frozen)/100000000*tickers[base].price | number : '1.0-2'}}
+                                </div>
+                            </div>
+                        </h2>
+                    </ion-label>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+        <ion-row col-12 class="row-buttons">
+            <ion-col col-4>
+                <ion-button expand="full" fill="clear" color="secondary" icon-lef [routerLink]="['addresses','ETP']" t>
+                    <ion-icon name="download"></ion-icon>{{ "ACCOUNT.BUTTON.RECEIVE" | translate }}
+                </ion-button>
+            </ion-col>
+            <ion-col col-4>
+                <ion-button expand="full" fill="clear" color="danger" icon-left [routerLink]="['send','ETP']">
+                    <ion-icon name="send"></ion-icon>{{ "ACCOUNT.BUTTON.SEND" | translate }}
+                </ion-button>
+            </ion-col>
+            <ion-col col-4>
+                <ion-button expand="full" fill="clear" color="primary" icon-left [routerLink]="['history', 'ETP']">
+                    <ion-icon name="time"></ion-icon>{{ "ACCOUNT.BUTTON.HISTORY" | translate }}
+                </ion-button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-card>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MetaverseService, Balance } from '../services/metaverse.service';
+import { MetaverseService, Balance, Balances } from '../services/metaverse.service';
 import { WalletService } from '../services/wallet.service';
 
 @Component({
@@ -9,15 +9,35 @@ import { WalletService } from '../services/wallet.service';
 })
 export class AccountPage implements OnInit {
 
-  balances$ = this.wallet.balances(this.metaverse);
+  balances: Balances;
+
+  MSTSymbols = []
+
+  base = 'USD';
+
+  tickers;
 
   constructor(
     private metaverse: MetaverseService,
     private wallet: WalletService,
-  ) { }
+  ) {
+    this.wallet.balances(this.metaverse)
+      .subscribe(balances => {
+        this.balances = balances;
+        this.MSTSymbols = Object.keys(balances.MST);
+      });
+  }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.metaverse.getData();
+    this.tickers = await this.metaverse.getTickers();
+  }
+
+  getMSTs(){
+    return Object.entries(this.balances.MST).map(([symbol, balance]: [string, Balance])=>({
+      symbol,
+      balance
+    }));
   }
 
   entries = (o: object) => Object.entries(o);
