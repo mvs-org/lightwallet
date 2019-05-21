@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import Metaverse from 'metaversejs/dist/metaverse.js';
 import { ConfigService } from './config.service';
-import { Observable, BehaviorSubject, Subject } from 'rxjs';
+import { Observable, BehaviorSubject, Subject, interval } from 'rxjs';
 import { flatMap, first } from 'rxjs/operators';
 import { combineLatest } from 'rxjs/observable/combineLatest';
 import { WalletService } from './wallet.service';
@@ -35,10 +35,11 @@ export type Network = "mainnet" | "testnet";
 })
 export class MetaverseService {
 
-  syncing = new Subject<boolean>();
+  syncing$ = new BehaviorSubject<boolean>(false);
   transactions$ = new BehaviorSubject<Transaction[]>([]);
   height$ = new BehaviorSubject<number>(0);
 
+  heartbeat$ = interval(5000);
   readonly network = this.config.defaultNetwork;
 
   blockchain: any;
@@ -49,8 +50,26 @@ export class MetaverseService {
     private wallet: WalletService,
     private multisig: MultisigService,
   ) {
-    this.setNetwork(this.config.defaultNetwork)
+    this.setNetwork(this.config.defaultNetwork);
+    this.getData();
+    this.heartbeat$.subscribe(() => this.sync());
     this.restoreTransactions().then(txs => this.transactions$.next(txs));
+  }
+
+
+  async sync() {
+    if (await this.syncing$.value === true) {
+      return;
+    }
+    this.syncing$.next(true);
+    try {
+      await this.updateHeight();
+      await this.getData();
+    } catch (error) {
+      console.error(error);
+      this.syncing$.next(false);
+    }
+    this.syncing$.next(false);
   }
 
   setNetwork(network: Network) {
@@ -64,8 +83,7 @@ export class MetaverseService {
     flatMap(([transactions, addresses]) => Metaverse.output.calculateUtxo(transactions, addresses))
   )
 
-  async getData(): Promise<any> {
-    this.syncing.next(true);
+  private async getData(): Promise<any> {
     const addresses = await this.wallet.getAddresses();
     addresses.concat(await this.multisig.getMultisigAddresses());
     let newTxs = await this.getNewTxs(addresses, await this.getLastTxHeight());
@@ -77,6 +95,11 @@ export class MetaverseService {
     if (newTransactionsFound) {
       this.transactions$.next(await this.restoreTransactions());
     }
+  }
+
+  async updateHeight() {
+    const height = await this.blockchain.height();
+    this.height$.next(height);
   }
 
   async getLastTxHeight() {

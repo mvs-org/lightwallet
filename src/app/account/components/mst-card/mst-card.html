@@ -33,17 +33,17 @@
     <ion-grid no-padding class="button-row" >
         <ion-row>
             <ion-col col-4>
-                <ion-button fill="clear" color="secondary" icon-left [routerLink]="['addresses', symbol]">
+                <ion-button expand="full" fill="clear" color="secondary" icon-left [routerLink]="['addresses', symbol]">
                     <ion-icon name="download"></ion-icon>{{"RECEIVE" | translate}}
                 </ion-button>
             </ion-col>
             <ion-col col-4>
-                <ion-button fill="clear" color="danger" icon-left [routerLink]="['send', symbol]">
+                <ion-button expand="full" fill="clear" color="danger" icon-left [routerLink]="['send', symbol]">
                     <ion-icon name="send"></ion-icon>{{ "SEND" | translate }}
                 </ion-button>
             </ion-col>
             <ion-col col-4>
-                <ion-button fill="clear" color="primary" icon-left [routerLink]="['history', symbol]">
+                <ion-button expand="full" fill="clear" color="primary" icon-left [routerLink]="['history', symbol]">
                     <ion-icon name="time"></ion-icon>{{ "HISTORY" | translate }}
                 </ion-button>
             </ion-col>

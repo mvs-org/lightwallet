@@ -4,6 +4,10 @@
       <ion-menu-button autoHide="false"></ion-menu-button>
     </ion-buttons>
     <ion-title translate="ACCOUNT.TITLE"></ion-title>
+    <ion-buttons slot="end">
+      <ion-spinner *ngIf="syncing!==false"></ion-spinner>
+      {{height$|async}}
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 

@@ -15,7 +15,7 @@ export class TransactionHistoryPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.metaverse.getData();
+    this.metaverse.sync();
   }
 
 }
