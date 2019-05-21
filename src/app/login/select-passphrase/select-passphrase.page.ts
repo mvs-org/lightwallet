@@ -29,8 +29,8 @@ export class SelectPassphrasePage implements OnInit {
       passphrase,
       repeat
     }, {
-        validators: [this.isSame(passphrase, repeat)]
-      });
+      validators: [this.isSame(passphrase, repeat)]
+    });
   }
 
   isSame(targetControl: FormControl, checkControl: FormControl) {

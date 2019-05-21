@@ -104,7 +104,11 @@ export class WalletService {
     const mnemonic = await this.decryptData(encryptedWallet.mnemonic, passphrase);
     const seed = await Metaverse.wallet.mnemonicToSeed(mnemonic, Metaverse.networks[network]);
     await this.storage.set('wallet', JSON.stringify(encryptedWallet));
-    return this.storage.set('seed', await this.encryptData(seed, passphrase));
+    await this.storage.set('seed', await this.encryptData(seed, passphrase));
+    const hdNode = await this.getHDNode(passphrase, network);
+    const addresses = await this.generateAddresses(hdNode, 0, await this.getAddressIndex());
+    this.addresses$.next(addresses);
+    return await this.storage.set('addresses', addresses);
   }
 
   private getHDNodeFromSeed(seed: any, network: string) {

@@ -9,6 +9,6 @@
 
 <ion-content>
 
-  <app-history-item *ngFor="let transaction of (transactions | async)" [transaction] = "transaction">
+  <app-history-item *ngFor="let transaction of (transactions | async)" [transaction]="transaction">
   </app-history-item>
 </ion-content>
