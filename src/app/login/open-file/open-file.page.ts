@@ -24,6 +24,7 @@ export class OpenFilePage implements OnInit {
     public metaverse: MetaverseService,
     private router: Router,
     private formBuilder: FormBuilder,
+    private alertCtrl: AlertController,
   ) { }
 
   async ngOnInit() {
@@ -46,21 +47,42 @@ export class OpenFilePage implements OnInit {
 
       try {
         this.fileData = JSON.parse(content)
-        console.log(this.fileData)
-        //this.wallet.import(encryptedWallet, passphrase, this.metaverse.network);
-        //this.wallet.setWallet(this.fileData).then(() => this.fileLoaded = true)
+        if(!this.fileData.mnemonic) {
+          this.wrongFile();
+        }
       } catch (e) {
         console.error(e);
+        this.wrongFile();
       }
     };
     if(file[0])
       reader.readAsText(file[0]);
   }
 
+  async wrongFile() {
+    const translations = await this.translate.get([
+      'TITLE',
+      'TEXT',
+      'BUTTON.OK',
+    ].map(key => 'OPEN_FILE.WRONG_FILE.' + key)).toPromise();
+    const alert = await this.alertCtrl.create({
+      header: translations['OPEN_FILE.WRONG_FILE.TITLE'],
+      message: translations['OPEN_FILE.WRONG_FILE.TEXT'],
+      buttons: [
+        {
+          text: translations['OPEN_FILE.WRONG_FILE.BUTTON.OK']
+        }
+      ]
+    });
+    alert.present();
 
-  async decrypt(passphrase) {
-    this.walletService.import(this.fileData.mnemonic, passphrase, this.metaverse.network);
-    this.router.navigate(['/account']);
+  }
+
+
+  async decrypt() {
+    const passphrase = this.form.value.passphrase;
+    await this.walletService.import(this.fileData, passphrase, this.metaverse.network);
+    return this.router.navigate(['/account']);
     /*this.showLoading()
     this.mvs.dataReset()
       .then(() => this.wallet.setSeed(password))
