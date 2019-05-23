@@ -70,6 +70,7 @@ export class WalletService {
   }
 
   async generateAddresses(hdNode: any, startIndex: number, count: number) {
+    console.log("Generating " + count + " addresses")
     const addresses = [];
     for (let i = startIndex; i < startIndex + count; i++) {
       addresses.push(await this.generateAddress(hdNode, i));
@@ -103,7 +104,7 @@ export class WalletService {
   async import(encryptedWallet: EncryptedWallet, passphrase: string, network: string) {
     const mnemonic = await this.decryptData(encryptedWallet.mnemonic, passphrase);
     const seed = await Metaverse.wallet.mnemonicToSeed(mnemonic, Metaverse.networks[network]);
-    await this.storage.set('wallet', JSON.stringify(encryptedWallet));
+    await this.storage.set('wallet', encryptedWallet);
     await this.storage.set('seed', await this.encryptData(seed, passphrase));
     const hdNode = await this.getHDNode(passphrase, network);
     const addresses = await this.generateAddresses(hdNode, 0, await this.getAddressIndex());

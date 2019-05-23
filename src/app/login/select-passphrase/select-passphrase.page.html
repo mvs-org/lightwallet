@@ -21,7 +21,7 @@
       <ion-label *ngIf="!getError(form.controls.repeat, form)" position="floating">Confirm password</ion-label>
       <ion-label *ngIf="getError(form.controls.repeat, form)" position="floating" color="danger">
         {{ 'SELECT_PASSPHRASE.ERROR.' + getError(form.controls.repeat, form)[0] | uppercase | translate}}</ion-label>
-      <ion-input formControlName="repeat" clearOnEdit="false"></ion-input>
+      <ion-input formControlName="repeat" type="password" clearOnEdit="false"></ion-input>
     </ion-item>
     <ion-button *ngIf="!config.isApp" [disabled]="!form.valid" type="submit" expand="full">Download</ion-button>
   </form>
