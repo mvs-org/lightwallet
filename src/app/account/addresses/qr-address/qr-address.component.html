@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button translate="QR_ADDRESS.CLOSE" (click)="close()"></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-text-center">
+    <ngx-qrcode 
+    [qrc-value] = "address"
+    qrc-class = "qr-address"
+    qrc-width=256
+    qrc-scale=10
+    qrc-errorCorrectionLevel = "L">
+    </ngx-qrcode>
+  <p>{{address}}</p>
+</ion-content>
+
+<ion-footer>
+  <ion-button expand="full"  (click)="copy()" translate="QR_ADDRESS.COPY"></ion-button>
+</ion-footer>
