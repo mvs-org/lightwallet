@@ -14,20 +14,6 @@ export interface Transaction {
   hash: string;
 }
 
-export interface Balance {
-  frozen: number;
-  available: number;
-  decimals: number;
-}
-
-export interface Balances {
-  ETP: Balance;
-  MST: {
-    [symbol: string]: Balance
-  };
-  MIT: any[];
-}
-
 export type Network = "mainnet" | "testnet";
 
 @Injectable({
@@ -51,9 +37,9 @@ export class MetaverseService {
     private multisig: MultisigService,
   ) {
     this.setNetwork(this.config.defaultNetwork);
-    this.getData();
-    this.heartbeat$.subscribe(() => this.sync());
     this.restoreTransactions().then(txs => this.transactions$.next(txs));
+    this.sync();
+    this.heartbeat$.subscribe(() => this.sync());
   }
 
 

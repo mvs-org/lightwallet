@@ -4,11 +4,25 @@ import { AES, enc } from 'crypto-js';
 import { ConfigService } from './config.service';
 import { Storage } from '@ionic/storage';
 import { Buffer } from 'buffer';
-import { MetaverseService, Balances } from './metaverse.service';
-import { BehaviorSubject } from 'rxjs';
+import { MetaverseService } from './metaverse.service';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { combineLatest } from 'rxjs/observable/combineLatest';
 import { map } from 'rxjs/operators';
-import { merge } from 'lodash';
+import { merge, Dictionary } from 'lodash';
+
+export interface Balance {
+  frozen: number;
+  available: number;
+  decimals: number;
+}
+
+export interface Balances {
+  ETP: Balance;
+  MST: {
+    [symbol: string]: Balance
+  };
+  MIT: any[];
+}
 
 export interface GeneratedWallet {
   mnemonic: string;
@@ -46,10 +60,10 @@ export class WalletService {
       map((balances: Balances) => merge(
         this.config.defaultBalances,
         balances,
-        )),
+      )),
     )
 
-  addressBalances = (metaverse: MetaverseService) => combineLatest([
+  addressBalances = (metaverse: MetaverseService): Observable<Dictionary<Balances>> => combineLatest([
     metaverse.utxos$(this.addresses$),
     this.addresses$,
     metaverse.height$,

@@ -14,6 +14,7 @@ const routes: Routes = [
   { path: 'account', loadChildren: './account/account.module#AccountPageModule' },
   { path: 'account/history', loadChildren: './account/transaction-history/transaction-history.module#TransactionHistoryPageModule' },
   { path: 'account/history/:symbol', loadChildren: './account/transaction-history/transaction-history.module#TransactionHistoryPageModule' },
+  { path: 'account/addresses/:symbol', loadChildren: './account/addresses/addresses.module#AddressesPageModule' },
 ];
 
 @NgModule({

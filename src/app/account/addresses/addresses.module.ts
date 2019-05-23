@@ -5,17 +5,17 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { AccountPage } from './account.page';
-import { EtpCardComponent } from './components/etp-card/etp-card';
-import { MSTCardComponent } from './components/mst-card/mst-card';
-import { MITCardComponent } from './components/mit-card/mit-card';
+import { AddressesPage } from './addresses.page';
 import { TranslateModule } from '@ngx-translate/core';
-import { PipesModule } from '../pipes/pipes.module';
+import { PipesModule } from 'src/app/pipes/pipes.module';
+import { QrAddressComponent } from './qr-address/qr-address.component';
+import { QRAddressModule } from './qr-address/qr-address.module';
+import { FormatPipe } from 'src/app/pipes/format/format';
 
 const routes: Routes = [
   {
     path: '',
-    component: AccountPage
+    component: AddressesPage
   }
 ];
 
@@ -23,16 +23,15 @@ const routes: Routes = [
   imports: [
     CommonModule,
     FormsModule,
+    QRAddressModule,
     IonicModule,
     RouterModule.forChild(routes),
     TranslateModule.forChild(),
     PipesModule,
   ],
-  declarations: [
-    AccountPage,
-    EtpCardComponent,
-    MSTCardComponent,
-    MITCardComponent,
-  ]
+  providers:[
+    FormatPipe,
+  ],
+  declarations: [AddressesPage]
 })
-export class AccountPageModule {}
+export class AddressesPageModule {}

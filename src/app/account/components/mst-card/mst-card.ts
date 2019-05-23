@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Balance } from 'src/app/services/wallet.service';
 
 @Component({
     selector: 'mst-card',
@@ -7,7 +8,7 @@ import { Component, Input } from '@angular/core';
 })
 export class MSTCardComponent {
 
-    @Input() balance: any;
+    @Input() balance: Balance;
     @Input() symbol: string;
     @Input() theme: string;
     @Input() icon: string;

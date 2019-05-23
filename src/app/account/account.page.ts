@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { MetaverseService, Balance, Balances } from '../services/metaverse.service';
-import { WalletService } from '../services/wallet.service';
+import { MetaverseService} from '../services/metaverse.service';
+import { WalletService, Balances, Balance } from '../services/wallet.service';
 
 @Component({
   selector: 'app-account',
