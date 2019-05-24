@@ -59,7 +59,7 @@ export class SelectPassphrasePage implements OnInit {
     const passphrase = this.form.value.passphrase;
     const encryptedWallet = await this.wallet.encryptWallet(wallet, passphrase);
     if(this.platform.is('mobile')) {
-      this.wallet.import(encryptedWallet, passphrase, this.metaverse.network);
+      await this.wallet.import(encryptedWallet, passphrase, this.metaverse.network);
       this.router.navigate(['/account']);
     } else {
       this.downloadFile('mvs_keystore.json', JSON.stringify(encryptedWallet));
