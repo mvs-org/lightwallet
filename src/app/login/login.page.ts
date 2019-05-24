@@ -19,7 +19,7 @@ export class LoginPage implements OnInit {
     ) { }
 
   ngOnInit() {
-    //this.network = this.metaverse.getNetwork()
+    this.network = this.metaverse.network
   }
 
 }

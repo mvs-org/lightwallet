@@ -23,6 +23,8 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     TranslateModule.forChild(),
   ],
-  declarations: [ImportWalletMnemonicPage]
+  declarations: [
+    ImportWalletMnemonicPage,
+  ]
 })
 export class ImportWalletMnemonicPageModule {}

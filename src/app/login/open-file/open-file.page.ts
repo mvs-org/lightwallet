@@ -83,18 +83,6 @@ export class OpenFilePage implements OnInit {
     const passphrase = this.form.value.passphrase;
     await this.walletService.import(this.fileData, passphrase, this.metaverse.network);
     return this.router.navigate(['/account']);
-    /*this.showLoading()
-    this.mvs.dataReset()
-      .then(() => this.wallet.setSeed(password))
-      .then(() => Promise.all([this.wallet.getWallet(password), this.wallet.getAddressIndex()]))
-      .then((results) => this.wallet.generateAddresses(results[0], 0, results[1]))
-      .then((addresses) => this.mvs.setAddresses(addresses))
-      .then(() => this.wallet.saveSessionAccount(password))
-      .then(() => this.nav.setRoot("LoadingPage", { reset: true }))
-      .catch((e) => {
-        console.error(e);
-        this.showError('MESSAGE.PASSWORD_WRONG');
-      });*/
   }
 
 }
