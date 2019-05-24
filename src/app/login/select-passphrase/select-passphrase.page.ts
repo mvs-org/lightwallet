@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 import { ConfigService } from 'src/app/services/config.service';
 import { WalletService } from 'src/app/services/wallet.service';
 import { MetaverseService } from 'src/app/services/metaverse.service';
+import { Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-select-passphrase',
@@ -21,6 +22,7 @@ export class SelectPassphrasePage implements OnInit {
     private wallet: WalletService,
     private metaverse: MetaverseService,
     private router: Router,
+    public platform: Platform,
   ) {
 
     const passphrase = new FormControl('', [Validators.required, Validators.minLength(8)]);
@@ -56,9 +58,15 @@ export class SelectPassphrasePage implements OnInit {
     };
     const passphrase = this.form.value.passphrase;
     const encryptedWallet = await this.wallet.encryptWallet(wallet, passphrase);
-    // this.downloadFile('mvs_keystore.json', JSON.stringify(encryptedWallet));
-    this.wallet.import(encryptedWallet, passphrase, this.metaverse.network);
-    this.router.navigate(['/account']);
+    if(this.platform.is('mobile')) {
+      this.wallet.import(encryptedWallet, passphrase, this.metaverse.network);
+      this.router.navigate(['/account']);
+    } else {
+      this.downloadFile('mvs_keystore.json', JSON.stringify(encryptedWallet));
+      this.router.navigate(['/login']);
+    }
+
+
   }
 
   ngOnInit() {
