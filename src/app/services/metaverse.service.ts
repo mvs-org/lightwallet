@@ -23,7 +23,7 @@ export class MetaverseService {
 
   syncing$ = new BehaviorSubject<boolean>(false);
   transactions$ = new BehaviorSubject<Transaction[]>([]);
-  height$ = new BehaviorSubject<number>(0);
+  height$ = new BehaviorSubject<number>(undefined);
 
   heartbeat$ = interval(5000);
   readonly network = this.config.defaultNetwork;
@@ -42,9 +42,18 @@ export class MetaverseService {
     this.heartbeat$.subscribe(() => this.sync());
   }
 
+  reset() {
+    this.height$.next(undefined);
+    this.transactions$.next([]);
+  }
+
+  loaderCondition() {
+    return this.wallet.addresses$.value &&
+      this.wallet.addresses$.value.length;
+  }
 
   async sync() {
-    if (await this.syncing$.value === true) {
+    if (await this.syncing$.value === true || !this.loaderCondition()) {
       return;
     }
     this.syncing$.next(true);

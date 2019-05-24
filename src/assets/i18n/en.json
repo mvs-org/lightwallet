@@ -110,5 +110,10 @@
         "CLOSE": "Close",
         "COPY": "Copy to clipboard",
         "COPY_SUCCESS": "Address copied to clipboard."
+    },
+    "SETTINGS": {
+        "MENU_ENTRY": "Settings",
+        "TITLE": "Settings",
+        "LOGOUT": "Logout"
     }
 }

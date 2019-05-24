@@ -26,6 +26,10 @@ export class MultisigService {
     private wallet: WalletService,
   ) { }
 
+  reset() {
+    this.addresses$.next(undefined);
+  }
+
   multisigAddressBalances$ = (metaverse: MetaverseService) => combineLatest([
       metaverse.utxos$,
       this.addresses$,

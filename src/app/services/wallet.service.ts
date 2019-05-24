@@ -40,12 +40,16 @@ export interface EncryptedWallet {
 })
 export class WalletService {
 
-  addresses$ = new BehaviorSubject<string[]>(['MSCHL3unfVqzsZbRVCJ3yVp7RgAmXiuGN3', 'abc']);
+  addresses$ = new BehaviorSubject<string[]>([]);
 
   constructor(
     private config: ConfigService,
     private storage: Storage,
   ) {
+  }
+
+  reset() {
+    this.addresses$.next(undefined);
   }
 
   balances = (metaverse: MetaverseService) => combineLatest([
@@ -75,7 +79,7 @@ export class WalletService {
     )
 
   async getAddresses() {
-    return await this.storage.get('addresses') || ['MSCHL3unfVqzsZbRVCJ3yVp7RgAmXiuGN3', 'abc'];
+    return await this.storage.get('addresses') || [];
   }
 
   async generateWallet(): Promise<GeneratedWallet> {
