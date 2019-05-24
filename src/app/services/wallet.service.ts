@@ -46,6 +46,9 @@ export class WalletService {
     private config: ConfigService,
     private storage: Storage,
   ) {
+    this.getAddresses().then(addresses => {
+      this.addresses$.next(addresses || []);
+    })
   }
 
   reset() {

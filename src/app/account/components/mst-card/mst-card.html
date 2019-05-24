@@ -34,17 +34,17 @@
         <ion-row>
             <ion-col col-4>
                 <ion-button expand="full" fill="clear" color="secondary" icon-left [routerLink]="['addresses', symbol]">
-                    <ion-icon name="download"></ion-icon>{{"RECEIVE" | translate}}
+                    <ion-icon name="download"></ion-icon>{{"ACCOUNT.BUTTON.RECEIVE" | translate}}
                 </ion-button>
             </ion-col>
             <ion-col col-4>
                 <ion-button expand="full" fill="clear" color="danger" icon-left [routerLink]="['send', symbol]">
-                    <ion-icon name="send"></ion-icon>{{ "SEND" | translate }}
+                    <ion-icon name="send"></ion-icon>{{ "ACCOUNT.BUTTON.SEND" | translate }}
                 </ion-button>
             </ion-col>
             <ion-col col-4>
                 <ion-button expand="full" fill="clear" color="primary" icon-left [routerLink]="['history', symbol]">
-                    <ion-icon name="time"></ion-icon>{{ "HISTORY" | translate }}
+                    <ion-icon name="time"></ion-icon>{{ "ACCOUNT.BUTTON.HISTORY" | translate }}
                 </ion-button>
             </ion-col>
         </ion-row>

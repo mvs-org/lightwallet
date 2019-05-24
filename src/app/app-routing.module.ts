@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { WalletGuard } from './guards/wallet.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -11,11 +12,11 @@ const routes: Routes = [
   { path: 'login/how-to-import', loadChildren: './login/help-mobile/help-mobile.module#HelpMobilePageModule' },
   { path: 'login/select-passphrase', loadChildren: './login/select-passphrase/select-passphrase.module#SelectPassphrasePageModule' },
   { path: 'news', loadChildren: './news/news.module#NewsPageModule' },
-  { path: 'account', loadChildren: './account/account.module#AccountPageModule' },
-  { path: 'account/history', loadChildren: './account/transaction-history/transaction-history.module#TransactionHistoryPageModule' },
-  { path: 'account/history/:symbol', loadChildren: './account/transaction-history/transaction-history.module#TransactionHistoryPageModule' },
-  { path: 'account/addresses/:symbol', loadChildren: './account/addresses/addresses.module#AddressesPageModule' },
+  {
+    path: 'account', loadChildren: './account/account.module#AccountPageModule', canActivate: [WalletGuard]
+  },
   { path: 'settings', loadChildren: './settings/settings.module#SettingsPageModule' },
+  { path: 'settings/language', loadChildren: './settings/language/language.module#LanguagePageModule' },
 ];
 
 @NgModule({
