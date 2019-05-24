@@ -153,4 +153,12 @@ export class WalletService {
     return AES.encrypt(JSON.stringify(data), passphrase).toString();
   }
 
+  async getdictionary(lang: "EN") {
+    return Metaverse.wallet.wordlists[lang]
+  }
+
+  async checkmnemonic(mnemonic, wordlist) {
+    return Metaverse.wallet.validateMnemonic(mnemonic, wordlist)
+  }
+
 }

@@ -119,5 +119,17 @@
     },
     "LANGUAGE": {
         "TITLE": "Change Language"
+    },
+    "IMPORT_WALLET_MNEMONIC": {
+        "TITLE": "Import from words",
+        "TWO_WAYS_TITLE": "Two ways to enter your backup words:",
+        "VIA_TEXTBOX": "Use the texbox",
+        "OR": "Or",
+        "WORD_BY_WORD": "Enter word by word",
+        "WORDS_REMAINING": "{{nbr_words}} words remaining",
+        "IMPORT_BUTTON": "Import account",
+        "RESET": "Reset",
+        "BOTTOM_TEXT": "A wallet file will be created for you. This file will enable you to access your wallet.",
+        "BOTTOM_TEXT_MOBILE": "Your private key will be stored and encrypted via your password on your device."
     }
 }
