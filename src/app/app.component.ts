@@ -7,6 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { routerNgProbeToken } from '@angular/router/src/router_module';
 import { filter } from 'rxjs/operators';
+import { LanguageService } from './services/language.service';
 
 @Component({
   selector: 'app-root',
@@ -19,7 +20,7 @@ export class AppComponent {
     private statusBar: StatusBar,
     private router: Router,
     private menuCtrl: MenuController,
-    private translate: TranslateService,
+    private language: LanguageService,
   ) {
     this.initializeApp();
   }
@@ -42,6 +43,6 @@ export class AppComponent {
   }
 
   initializeLanguage() {
-    this.translate.setDefaultLang('en');
+    this.language.init();
   }
 }

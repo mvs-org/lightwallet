@@ -1,9 +1,9 @@
 {
     "LOGIN": {
-        "MENU_ENTRY": "Login",
+        "MENU_ENTRY": "登录",
         "TITLE": "MyETPWallet - THE NEW REALITY",
         "BUTTON": {
-            "CREATE_NEW_WALLET": "Create new wallet",
+            "CREATE_NEW_WALLET": "创建新的钱包",
             "CREATE_FROM_BACKUP_WORDS": "Create file from backup words",
             "OPEN_WALLET_FILE": "Open wallet from file",
             "THEME_SETTINGS": "Theme switcher",
@@ -112,12 +112,12 @@
         "COPY_SUCCESS": "Address copied to clipboard."
     },
     "SETTINGS": {
-        "MENU_ENTRY": "Settings",
-        "TITLE": "Settings",
-        "LANGUAGE": "Language",
+        "MENU_ENTRY": "设置",
+        "TITLE": "设置",
+        "LANGUAGE": "语言设置",
         "LOGOUT": "Logout"
     },
     "LANGUAGE": {
-        "TITLE": "Change Language"
+        "TITLE": "语言设置"
     }
 }

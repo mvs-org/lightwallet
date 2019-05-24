@@ -3,6 +3,7 @@ import { WalletService } from '../services/wallet.service';
 import { MultisigService } from '../services/multisig.service';
 import { MetaverseService } from '../services/metaverse.service';
 import { Router } from '@angular/router';
+import { WalletGuard } from '../guards/wallet.guard';
 
 @Component({
   selector: 'app-settings',
@@ -12,21 +13,14 @@ import { Router } from '@angular/router';
 export class SettingsPage implements OnInit {
 
   constructor(
-    private wallet: WalletService,
-    private multisig: MultisigService,
-    private metaverse: MetaverseService,
-    private router: Router,
+    private auth: WalletGuard
   ) { }
 
   ngOnInit() {
   }
 
   logout(){
-    this.wallet.reset();
-    this.multisig.reset();
-    this.metaverse.reset();
-    this.router.dispose();
-    this.router.navigate(['login']);
+    this.auth.logout()
   }
 
 }

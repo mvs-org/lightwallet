@@ -11,6 +11,8 @@ export class ConfigService {
 
   readonly defaultAddresses = 10;
 
+  readonly defaultLanguage = 'en';
+
   readonly shortToastDuration = 2000;
 
   isApp: boolean;
