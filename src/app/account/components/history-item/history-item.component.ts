@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { WalletService, Balances, Balance } from 'src/app/services/wallet.service';
+
 
 @Component({
   selector: 'app-history-item',
@@ -9,17 +10,37 @@ import { BehaviorSubject } from 'rxjs';
 export class HistoryItemComponent implements OnInit {
 
   @Input() transaction: any;
-  addresses$ = new BehaviorSubject<string[]>([]);
+  addresses$ = this.wallet.addresses$;
+  totalInputs: any = {ETP: 0}
+  totalOutputs: any = {ETP: 0}
+  totalPersonalInputs: any = {ETP: 0}
+  totalPersonalOutputs: any = {ETP: 0}
+  txFee: number = 0
 
-  constructor() { }
+  constructor(
+    private wallet: WalletService,
+  ) { }
 
   ngOnInit() {
 
     this.transaction.inputs.forEach(input => {
-      console.log(input)
-      //input.personnal = this.addresses$.indexOf(input.address) > -1
-      
+      this.totalInputs.ETP += input.value
+      if(this.addresses$.value.indexOf(input.address) > -1) {
+        this.totalPersonalInputs.ETP += input.value
+        input.personal = true
+      }
     });
+
+    this.transaction.outputs.forEach(output => {
+      this.totalOutputs.ETP += output.value
+      if(this.addresses$.value.indexOf(output.address) > -1) {
+        this.totalPersonalOutputs.ETP += output.value
+        output.personal = true
+      }
+    });
+
+    this.txFee = this.totalInputs.ETP - this.totalOutputs.ETP
+
   }
 
 }

@@ -2,3 +2,24 @@
     text-align: right;
     width: 100%;
 }
+
+.personal-address ion-item {
+    font-weight: bold;
+}
+
+.sendAmount {
+    color: var(--ion-color-danger);
+    font-size: 20px;
+    float: right;
+}
+
+.receiveAmount {
+    color: var(--ion-color-success);
+    font-size: 20px;
+    float: right;
+}
+
+.hash {
+    color: black;
+    font-size: 20px;
+}

@@ -1,16 +1,30 @@
 <p (click)="show_content = !show_content">
-  {{transaction | json}}
   <ion-card>
     <ion-card-header>
-      <ion-card-title>{{transaction.hash}}</ion-card-title>
-      <ion-card-subtitle>{{transaction.confirmed_at*1000|date : 'medium'}}</ion-card-subtitle>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <div class="hash">{{transaction.hash}}</div>
+            {{transaction.confirmed_at*1000|date : 'medium'}}
+            
+          </ion-col>
+          <ion-col>
+            <span *ngIf="totalPersonalInputs.ETP" class="sendAmount">
+              -{{totalPersonalInputs.ETP - totalPersonalOutputs.ETP - txFee | format : 8}} ETP
+            </span>
+            <span *ngIf="!totalPersonalInputs.ETP" class="receiveAmount">
+              +{{totalPersonalOutputs.ETP | format : 8}} ETP
+            </span>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-card-header>
   
     <ion-card-content *ngIf="show_content">
       <ion-grid>
         <ion-row>
           <ion-col size="6">
-            <div  *ngFor="let input of transaction.inputs">
+            <div *ngFor="let input of transaction.inputs" [ngClass]="{'personal-address': input.personal}">
               <ion-item *ngIf="input.value != 0 || input.address == ''">
                 <div *ngIf="input.address !== ''">{{input.address}}</div>
                 <div *ngIf="input.address == ''">{{'TX.INPUT_COINBASE'|translate}}</div>
@@ -25,18 +39,48 @@
             </div>
           </ion-col>
           <ion-col size="6">
-            <ion-item *ngFor="let output of transaction.outputs">
+            <div *ngFor="let output of transaction.outputs" [ngClass]="{'personal-address': output.personal}">
                 <ion-item *ngIf="output.value != 0 || output.attachment.symbol == 'ETP'">
-                  <div>{{output.address}}</div>
-                  <div class="right">{{input.value | format : 8}} ETP</div>
+                  <div *ngIf="output.attachment.to_did">{{output.attachment.to_did}}</div>
+                  <div *ngIf="!output.attachment.to_did">{{output.address}}</div>
+                  <div class="right">{{output.value | format : 8}} ETP</div>
                 </ion-item>
                 <ion-item *ngIf="output.attachment.symbol != 'ETP'">
                   <div *ngIf="output.attachment.to_did">{{output.attachment.to_did}}</div>
                   <div *ngIf="!output.attachment.to_did">{{output.address}}</div>
+
                   <div class="right" *ngIf="output.attachment.type == 'message'" class="txType">{{'TX.TYPE_MESSAGE'|translate}}</div>
-                  <div class="right" *ngIf="output.attachment.type != 'message' || output.value != 0">{{output.value | numberFormat:8}} ETP</div>
+                  <div class="right" *ngIf="output.attachment.type != 'message' || output.value != 0">{{output.value | format : 8}} ETP</div>
                   <div class="right" *ngIf="output.unlock_block">{{'TX.FROZEN_UNTIL_BLOCK'|translate}} {{output.unlock_block}}</div>
                 </ion-item>
+              </div>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="totalInputs && totalOutputs">
+          <ion-col size="6">
+            <ion-item>
+              {{'HISTORY.TOTAL_INPUTS'|translate}}
+              <div class="right">{{totalInputs.ETP | format : 8}} ETP</div>
+            </ion-item>
+          </ion-col>
+          <ion-col size="6">
+            <ion-item>
+              {{'HISTORY.TOTAL_OUTPUTS'|translate}}
+              <div class="right">{{totalOutputs.ETP | format : 8}} ETP</div>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="totalPersonalInputs && totalPersonalOutputs">
+          <ion-col size="6">
+            <ion-item>
+              Total my inputs
+              <div class="right">{{totalPersonalInputs.ETP | format : 8}} ETP</div>
+            </ion-item>
+          </ion-col>
+          <ion-col size="6">
+            <ion-item>
+              Total my ouputs
+              <div class="right">{{totalPersonalOutputs.ETP | format : 8}} ETP</div>
             </ion-item>
           </ion-col>
         </ion-row>

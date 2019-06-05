@@ -131,5 +131,9 @@
         "RESET": "Reset",
         "BOTTOM_TEXT": "A wallet file will be created for you. This file will enable you to access your wallet.",
         "BOTTOM_TEXT_MOBILE": "Your private key will be stored and encrypted via your password on your device."
+    },
+    "HISTORY": {
+        "TOTAL_INPUTS": "Total inputs",
+        "TOTAL_OUTPUTS": "Total outputs"
     }
 }
