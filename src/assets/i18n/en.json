@@ -149,6 +149,17 @@
                 "witness": "Witness certificate"
             }
         },
-        "FROZEN_UNTIL_BLOCK": "Frozen until"
+        "FROZEN_UNTIL_BLOCK": "Frozen until",
+        "TX_TYPE": {
+            "ETP": "ETP transfer",
+            "ASSET": "Asset transfer",
+            "ISSUE": "MST issue",
+            "CERT": "Certificate",
+            "DID_REGISTER": "Avatar creation",
+            "DID_TRANSFER": "Avatar transfer",
+            "MIT": "MIT",
+            "COINSTAKE": "Coinstake transaction",
+            "MST_MINING": "Mining reward"
+        }
     }
 }

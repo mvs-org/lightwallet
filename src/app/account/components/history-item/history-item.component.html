@@ -15,7 +15,8 @@
             <span *ngIf="!totalPersonalInputs.ETP" class="receiveAmount">
               +{{totalPersonalOutputs.ETP | format : 8}} ETP
             </span>
-            Fee: {{txFee | format : 8}} ETP
+            <div>Fee: {{txFee | format : 8}} ETP</div>
+            <div>Type: {{'HISTORY.TX_TYPE.' + txType | translate}}</div>
           </ion-col>
         </ion-row>
       </ion-grid>
