@@ -15,6 +15,7 @@
             <span *ngIf="!totalPersonalInputs.ETP" class="receiveAmount">
               +{{totalPersonalOutputs.ETP | format : 8}} ETP
             </span>
+            Fee: {{txFee | format : 8}} ETP
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -26,47 +27,72 @@
           <ion-col size="6">
             <div *ngFor="let input of transaction.inputs" [ngClass]="{'personal-address': input.personal}">
               <ion-item *ngIf="input.value != 0 || input.address == ''">
-                <div *ngIf="input.address !== ''">{{input.address}}</div>
-                <div *ngIf="input.address == ''">{{'TX.INPUT_COINBASE'|translate}}</div>
-
-                <div class="right">{{input.value | format : 8}} ETP</div>
+                <ion-col>
+                  <div *ngIf="input.address !== ''">{{input.address}}</div>
+                  <div *ngIf="input.address == ''">{{'HISTORY.INPUT_COINBASE'|translate}}</div>
+                </ion-col>
+                <ion-col class="right">
+                  {{input.value | format : 8}} ETP
+                </ion-col>
               </ion-item>
               <ion-item *ngIf="input.attachment.symbol != 'ETP'">
-                <div *ngIf="input.attachment.type == 'did-register' || input.attachment.type == 'did-transfer' || input.attachment.type == 'mit'">{{'TX.TYPE_' + input.attachment.type | translate}}: {{input.attachment.symbol}}</div>
-                <div *ngIf="input.attachment.cert">{{'TX.TYPE_ASSET_CERT_' + input.attachment.cert | translate}}: {{input.attachment.symbol}}</div>
-                <div *ngIf="input.attachment.type != 'did-register' && input.attachment.type != 'did-transfer' && input.attachment.type != 'mit' && !input.attachment.cert">{{input.attachment.quantity | format:input.attachment.decimals}} {{input.attachment.symbol}}</div>
+                <ion-col>
+                  {{input.address}}
+                </ion-col>
+                <ion-col class="right">
+                  <div *ngIf="input.attachment.type == 'did-register' || input.attachment.type == 'did-transfer' || input.attachment.type == 'mit'"><div class="txType">{{'HISTORY.TYPE.' + input.attachment.type | translate}}:</div>{{input.attachment.symbol}}</div>
+                  <div *ngIf="input.attachment.cert"><div class="txType">{{'HISTORY.TYPE.CERT.' + input.attachment.cert | translate}}:</div>{{input.attachment.symbol}}</div>
+                  <div *ngIf="input.attachment.type != 'did-register' && input.attachment.type != 'did-transfer' && input.attachment.type != 'mit' && !input.attachment.cert">{{input.attachment.quantity | format:input.attachment.decimals}} {{input.attachment.symbol}}</div>
+                </ion-col>
               </ion-item>
             </div>
           </ion-col>
           <ion-col size="6">
             <div *ngFor="let output of transaction.outputs" [ngClass]="{'personal-address': output.personal}">
-                <ion-item *ngIf="output.value != 0 || output.attachment.symbol == 'ETP'">
+              <ion-item *ngIf="output.value != 0 || output.attachment.symbol == 'ETP'">
+                <ion-col>
                   <div *ngIf="output.attachment.to_did">{{output.attachment.to_did}}</div>
                   <div *ngIf="!output.attachment.to_did">{{output.address}}</div>
-                  <div class="right">{{output.value | format : 8}} ETP</div>
-                </ion-item>
-                <ion-item *ngIf="output.attachment.symbol != 'ETP'">
+                </ion-col>
+                <ion-col class="right">
+                  <div *ngIf="output.attachment.type == 'message'" class="txType">{{'HISTORY.TYPE.message'|translate}}</div>
+                  <div *ngIf="output.attachment.type != 'message' || output.value != 0">{{output.value | format : 8}} ETP</div>
+                  <div *ngIf="output.unlock_block">{{'HISTORY.FROZEN_UNTIL_BLOCK'|translate}} {{output.unlock_block}}</div>
+                </ion-col>
+              </ion-item>
+              <ion-item *ngIf="output.attachment.symbol != 'ETP'">
+                <ion-col>
                   <div *ngIf="output.attachment.to_did">{{output.attachment.to_did}}</div>
                   <div *ngIf="!output.attachment.to_did">{{output.address}}</div>
-
-                  <div class="right" *ngIf="output.attachment.type == 'message'" class="txType">{{'TX.TYPE_MESSAGE'|translate}}</div>
-                  <div class="right" *ngIf="output.attachment.type != 'message' || output.value != 0">{{output.value | format : 8}} ETP</div>
-                  <div class="right" *ngIf="output.unlock_block">{{'TX.FROZEN_UNTIL_BLOCK'|translate}} {{output.unlock_block}}</div>
-                </ion-item>
-              </div>
+                </ion-col>
+                <ion-col class="right">
+                  <div *ngIf="output.attachment.type == 'did-register' || output.attachment.type == 'did-transfer' || output.attachment.type == 'mit'">{{'HISTORY.TYPE.' + output.attachment.type | translate}}: {{output.attachment.symbol}}</div>
+                  <div *ngIf="output.attachment.cert">{{'HISTORY.TYPE.CERT.' + output.attachment.cert | translate}}: {{output.attachment.symbol}}</div>
+                  <div *ngIf="output.attachment.type != 'did-register' && output.attachment.type != 'did-transfer' && output.attachment.type != 'mit' && !output.attachment.cert">{{output.attachment.quantity | format:output.attachment.decimals}} {{output.attachment.symbol}}</div>
+                </ion-col>
+              </ion-item>
+            </div>
           </ion-col>
         </ion-row>
         <ion-row *ngIf="totalInputs && totalOutputs">
           <ion-col size="6">
             <ion-item>
-              {{'HISTORY.TOTAL_INPUTS'|translate}}
-              <div class="right">{{totalInputs.ETP | format : 8}} ETP</div>
+              <ion-col>
+                {{'HISTORY.TOTAL_INPUTS'|translate}}
+              </ion-col>
+              <ion-col class="right">
+                <div>{{totalInputs.ETP | format : 8}} ETP</div>
+              </ion-col>
             </ion-item>
           </ion-col>
           <ion-col size="6">
             <ion-item>
-              {{'HISTORY.TOTAL_OUTPUTS'|translate}}
-              <div class="right">{{totalOutputs.ETP | format : 8}} ETP</div>
+              <ion-col>
+                {{'HISTORY.TOTAL_OUTPUTS'|translate}}
+              </ion-col>
+              <ion-col class="right">
+                {{totalOutputs.ETP | format : 8}} ETP
+              </ion-col>
             </ion-item>
           </ion-col>
         </ion-row>

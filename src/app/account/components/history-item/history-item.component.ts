@@ -16,6 +16,7 @@ export class HistoryItemComponent implements OnInit {
   totalPersonalInputs: any = {ETP: 0}
   totalPersonalOutputs: any = {ETP: 0}
   txFee: number = 0
+  devAvatar: string = "developer-community"
 
   constructor(
     private wallet: WalletService,
@@ -37,9 +38,11 @@ export class HistoryItemComponent implements OnInit {
         this.totalPersonalOutputs.ETP += output.value
         output.personal = true
       }
+      if(output.attachment.to_did == this.devAvatar)
+        this.txFee += output.value
     });
 
-    this.txFee = this.totalInputs.ETP - this.totalOutputs.ETP
+    this.txFee += this.totalInputs.ETP - this.totalOutputs.ETP
 
   }
 

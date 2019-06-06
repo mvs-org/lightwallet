@@ -134,6 +134,21 @@
     },
     "HISTORY": {
         "TOTAL_INPUTS": "Total inputs",
-        "TOTAL_OUTPUTS": "Total outputs"
+        "TOTAL_OUTPUTS": "Total outputs",
+        "INPUT_COINBASE": "From coinbase",
+        "TYPE": {
+            "did-register": "Asset issue",
+            "did-transfer": "Avatar transfer",
+            "mit": "MIT",
+            "message": "Public message or data",
+            "CERT": {
+                "issue": "Secondary Issue certificate",
+                "domain": "Domain certificate",
+                "naming": "Naming certificate",
+                "mining": "Mining certificate",
+                "witness": "Witness certificate"
+            }
+        },
+        "FROZEN_UNTIL_BLOCK": "Frozen until"
     }
 }
