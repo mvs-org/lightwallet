@@ -21,15 +21,15 @@ const routes: Routes = [
   },
   {
     path: 'history/:symbol',
-    loadChildren: './account/transaction-history/transaction-history.module#TransactionHistoryPageModule'
+    loadChildren: './transaction-history/transaction-history.module#TransactionHistoryPageModule'
   },
   {
     path: 'history',
-    loadChildren: './account/transaction-history/transaction-history.module#TransactionHistoryPageModule'
+    loadChildren: './transaction-history/transaction-history.module#TransactionHistoryPageModule'
   },
   {
     path: 'addresses/:symbol',
-    loadChildren: './account/addresses/addresses.module#AddressesPageModule'
+    loadChildren: './addresses/addresses.module#AddressesPageModule'
   },
 ];
 
