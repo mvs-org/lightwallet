@@ -137,7 +137,7 @@
         "TOTAL_OUTPUTS": "Total outputs",
         "INPUT_COINBASE": "From coinbase",
         "TYPE": {
-            "did-register": "Asset issue",
+            "did-register": "Avatar creation",
             "did-transfer": "Avatar transfer",
             "mit": "MIT",
             "message": "Public message or data",
@@ -152,7 +152,7 @@
         "FROZEN_UNTIL_BLOCK": "Frozen until",
         "TX_TYPE": {
             "ETP": "ETP transfer",
-            "ASSET": "Asset transfer",
+            "ASSET": "MST transfer",
             "ISSUE": "MST issue",
             "CERT": "Certificate transfer",
             "CERT_TYPE": {
