@@ -154,7 +154,14 @@
             "ETP": "ETP transfer",
             "ASSET": "Asset transfer",
             "ISSUE": "MST issue",
-            "CERT": "Certificate",
+            "CERT": "Certificate transfer",
+            "CERT_TYPE": {
+                "issue": "Secondary Issue certificate",
+                "domain": "Domain certificate",
+                "naming": "Naming certificate",
+                "mining": "Mining certificate",
+                "witness": "Witness certificate"
+            },
             "DID_REGISTER": "Avatar creation",
             "DID_TRANSFER": "Avatar transfer",
             "MIT": "MIT",

@@ -8,15 +8,34 @@
             {{transaction.confirmed_at*1000|date : 'medium'}}
             
           </ion-col>
-          <ion-col>
-            <span *ngIf="totalPersonalInputs.ETP" class="sendAmount">
-              -{{totalPersonalInputs.ETP - totalPersonalOutputs.ETP - txFee | format : 8}} ETP
-            </span>
-            <span *ngIf="!totalPersonalInputs.ETP" class="receiveAmount">
-              +{{totalPersonalOutputs.ETP | format : 8}} ETP
-            </span>
+          <ion-col class="right">
+            <div class="summaryTxType">{{'HISTORY.TX_TYPE.' + txType | translate}}</div>
+            <div class="summaryAmount">
+              <div *ngIf="txType == 'ETP' || txType == 'COINSTAKE'">
+                <div *ngIf="totalPersonalInputs.ETP" class="sendAmount">
+                  -{{totalPersonalInputs.ETP - totalPersonalOutputs.ETP - txFee | format : 8}} ETP
+                </div>
+                <div *ngIf="!totalPersonalInputs.ETP" class="receiveAmount">
+                  +{{totalPersonalOutputs.ETP | format : 8}} ETP
+                </div>
+              </div>
+              <div *ngIf="txType == 'ASSET' || txType == 'ISSUE' || txType == 'MST_MINING'">
+                <div *ngIf="totalPersonalInputs.MST[txTypeValue]" class="sendAmount">
+                  -{{totalPersonalInputs.MST[txTypeValue] - totalPersonalOutputs.MST[txTypeValue] | format : decimals.MST[txTypeValue]}} {{txTypeValue}}
+                </div>
+                <div *ngIf="!totalPersonalInputs.MST[txTypeValue]" class="receiveAmount">
+                  +{{totalPersonalOutputs.MST[txTypeValue] | format : decimals.MST[txTypeValue]}} {{txTypeValue}}
+                </div>
+              </div>
+              <div *ngIf="txType == 'CERT'">
+                {{'HISTORY.TX_TYPE.CERT_TYPE.' + txTypeCert | translate}} {{txTypeValue}}
+              </div>
+              <div *ngIf="txType == 'MIT' || txType == 'DID_REGISTER' || txType == 'DID_TRANSFER'">
+                {{txTypeValue}}
+              </div>
+              
+            </div>
             <div>Fee: {{txFee | format : 8}} ETP</div>
-            <div>Type: {{'HISTORY.TX_TYPE.' + txType | translate}}</div>
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -67,8 +86,8 @@
                   <div *ngIf="!output.attachment.to_did">{{output.address}}</div>
                 </ion-col>
                 <ion-col class="right">
-                  <div *ngIf="output.attachment.type == 'did-register' || output.attachment.type == 'did-transfer' || output.attachment.type == 'mit'">{{'HISTORY.TYPE.' + output.attachment.type | translate}}: {{output.attachment.symbol}}</div>
-                  <div *ngIf="output.attachment.cert">{{'HISTORY.TYPE.CERT.' + output.attachment.cert | translate}}: {{output.attachment.symbol}}</div>
+                  <div *ngIf="output.attachment.type == 'did-register' || output.attachment.type == 'did-transfer' || output.attachment.type == 'mit'"><div class="txType">{{'HISTORY.TYPE.' + output.attachment.type | translate}}:</div>{{output.attachment.symbol}}</div>
+                  <div *ngIf="output.attachment.cert"><div class="txType">{{'HISTORY.TYPE.CERT.' + output.attachment.cert | translate}}:</div>{{output.attachment.symbol}}</div>
                   <div *ngIf="output.attachment.type != 'did-register' && output.attachment.type != 'did-transfer' && output.attachment.type != 'mit' && !output.attachment.cert">{{output.attachment.quantity | format:output.attachment.decimals}} {{output.attachment.symbol}}</div>
                 </ion-col>
               </ion-item>
@@ -94,20 +113,6 @@
               <ion-col class="right">
                 {{totalOutputs.ETP | format : 8}} ETP
               </ion-col>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-        <ion-row *ngIf="totalPersonalInputs && totalPersonalOutputs">
-          <ion-col size="6">
-            <ion-item>
-              Total my inputs
-              <div class="right">{{totalPersonalInputs.ETP | format : 8}} ETP</div>
-            </ion-item>
-          </ion-col>
-          <ion-col size="6">
-            <ion-item>
-              Total my ouputs
-              <div class="right">{{totalPersonalOutputs.ETP | format : 8}} ETP</div>
             </ion-item>
           </ion-col>
         </ion-row>
