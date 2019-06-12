@@ -168,5 +168,31 @@
             "COINSTAKE": "Coinstake transaction",
             "MST_MINING": "Mining reward"
         }
+    },
+    "ACCOUNT_MANAGEMENT": {
+        "LOGOUT": {
+            "TITLE": "Are you sure?",
+            "TEXT": "You can choose to locally save the information of your account, including your encrypted private key, in order to easily login with your password.",
+            "BUTTON": {
+                "SAVE": "Save",
+                "FORGET": "Forget",
+                "BACK": "Back"
+            }
+        },
+        "LOGOUT_ASK_USERNAME": {
+            "TITLE_DEFAULT": "Choose an account name",
+            "TEXT_DEFAULT": "Please give a name to the account. This account name will only be used locally to identify your accounts.",
+            "TITLE_NO_NAME": "Please enter an Account name",
+            "TEXT_NO_NAME": "Please give a name to the account. This account name will only be used locally to identify your accounts.",
+            "TITLE_ALREADY_EXIST": "Account name already used",
+            "TEXT_ALREADY_EXIST": "This Account name has already been saved. Please use a different Account name.",
+            "INPUT": {
+                "PLACEHOLDER": "Account name"
+            },
+            "BUTTON": {
+                "OK": "OK"
+            }
+        }
     }
+
 }

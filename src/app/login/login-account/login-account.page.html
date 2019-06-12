@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/login"></ion-back-button>
+    </ion-buttons>
+    <ion-title>login-account</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <form *ngIf="form" [formGroup]="form" (ngSubmit)="importAccount(account, password)">
+    <ion-row>
+      <h2>{{account.name}}</h2>
+    </ion-row>
+
+    <ion-item>
+
+      <ion-label *ngIf="!form.controls.passphrase.errors" position="floating">Password</ion-label>
+      <ion-label *ngIf="form.controls.passphrase.errors" position="floating" color="danger">
+        {{"PASSWORD.ERROR." + (form.controls.passphrase | firstError) |translate}}
+      </ion-label>
+      <ion-input formControlName="passphrase" type="password" clearOnEdit="false"></ion-input>
+    </ion-item>
+  </form>
+
+</ion-content>

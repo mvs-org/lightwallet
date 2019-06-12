@@ -5,6 +5,7 @@ import { WalletService } from 'src/app/services/wallet.service';
 import { MetaverseService } from '../../services/metaverse.service';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { AccountService } from '../../services/account.service';
 
 @Component({
   selector: 'app-open-file',
@@ -25,6 +26,7 @@ export class OpenFilePage implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private alertCtrl: AlertController,
+    private account: AccountService,
   ) { }
 
   async ngOnInit() {
@@ -82,6 +84,7 @@ export class OpenFilePage implements OnInit {
   async decrypt() {
     const passphrase = this.form.value.passphrase;
     await this.walletService.import(this.fileData, passphrase, this.metaverse.network);
+    await this.account.saveSessionAccount(passphrase)
     return this.router.navigate(['/account']);
   }
 

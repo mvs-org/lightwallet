@@ -64,6 +64,10 @@ export class MultisigService {
     return await this.storage.get('multisig_addresses') || [];
   }
 
+  setMultisigAddresses(multisig: Array<any>) {
+    this.storage.set('multisig_addresses', multisig ? multisig : [])
+  }
+
   async addMultisigAddresses(newAddresses: string[]) {
     const addresses = await this.getMultisigAddresses();
     return this.storage.set('multisig_addresses', addresses.concat(newAddresses));

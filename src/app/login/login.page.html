@@ -17,7 +17,7 @@
             <div class="banner"></div>
           </ion-col>
         </ion-row>
-        
+
         <div class="info-text">
           <div style="text-align: center;">{{config.version}}
             <span style="text-align: center;" id="label-network" value="mainnet" *ngIf="metaverse.network=='mainnet'"
@@ -34,32 +34,37 @@
           </ion-segment-button>
         </ion-segment>
 
+        <ion-button expand="full" icon-left *ngFor="let account of saved_accounts" (click)="loginViaAccount(account)">
+          <ion-icon name="contact"></ion-icon>
+          {{account.name}}
+        </ion-button>
+
         <ion-button expand="full" routerLink="/login/create" icon-left>
           <ion-icon name="add"></ion-icon>
           {{"LOGIN.BUTTON.CREATE_NEW_WALLET"|translate}}
         </ion-button>
 
-      <ion-button routerLink="/login/import-backup" expand="full" icon-left>
-        <ion-icon name="download"></ion-icon> 
-        <span [translate]="!platform.is('mobile') ? 'LOGIN.BUTTON.CREATE_FROM_BACKUP_WORDS' : 'OPEN_FROM_BACKUP_WORDS'"></span>
-      </ion-button>
+        <ion-button routerLink="/login/import-backup" expand="full" icon-left>
+          <ion-icon name="download"></ion-icon>
+          <span [translate]="!platform.is('mobile') ? 'LOGIN.BUTTON.CREATE_FROM_BACKUP_WORDS' : 'OPEN_FROM_BACKUP_WORDS'"></span>
+        </ion-button>
 
-      <ion-button *ngIf="!platform.is('mobile')" routerLink="/login/open-file" expand="full" icon-left color="secondary">
-        <ion-icon name="download"></ion-icon>
-        {{"LOGIN.BUTTON.OPEN_WALLET_FILE"|translate}}
-      </ion-button>
+        <ion-button *ngIf="!platform.is('mobile')" routerLink="/login/open-file" expand="full" icon-left color="secondary">
+          <ion-icon name="download"></ion-icon>
+          {{"LOGIN.BUTTON.OPEN_WALLET_FILE"|translate}}
+        </ion-button>
 
-      <ion-button *ngIf="isApp" expand="full" icon-left color="secondary" routerLink="/login/scan">
-        <ion-icon name="qr-scanner"></ion-icon>
-        {{"LOGIN.BUTTON.OPEN_FROM_QRCODE"|translate}}
-      </ion-button>
+        <ion-button *ngIf="isApp" expand="full" icon-left color="secondary" routerLink="/login/scan">
+          <ion-icon name="qr-scanner"></ion-icon>
+          {{"LOGIN.BUTTON.OPEN_FROM_QRCODE"|translate}}
+        </ion-button>
 
-      <ion-button *ngIf="isApp" expand="full" icon-left color="primary" routerLink="/login/how-to-import">
-        <ion-icon name="information-circle"></ion-icon>
-        {{"LOGIN.BUTTON.HOW_TO_IMPORT_WALLET_MOBILE"|translate}}
-      </ion-button>
+        <ion-button *ngIf="isApp" expand="full" icon-left color="primary" routerLink="/login/how-to-import">
+          <ion-icon name="information-circle"></ion-icon>
+          {{"LOGIN.BUTTON.HOW_TO_IMPORT_WALLET_MOBILE"|translate}}
+        </ion-button>
 
-      <p *ngIf="!platform.is('mobile')">{{"LOGIN.INFO_TEXT_BROWSER"|translate}}</p>
+        <p *ngIf="!platform.is('mobile')">{{"LOGIN.INFO_TEXT_BROWSER"|translate}}</p>
 
       </ion-col>
     </ion-row>

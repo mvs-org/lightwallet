@@ -11,6 +11,7 @@ const routes: Routes = [
   { path: 'login/scan', loadChildren: './login/scan/scan.module#ScanPageModule' },
   { path: 'login/how-to-import', loadChildren: './login/help-mobile/help-mobile.module#HelpMobilePageModule' },
   { path: 'login/select-passphrase', loadChildren: './login/select-passphrase/select-passphrase.module#SelectPassphrasePageModule' },
+  { path: 'login/account', loadChildren: './login/login-account/login-account.module#LoginAccountPageModule' },
   { path: 'news', loadChildren: './news/news.module#NewsPageModule' },
   {
     path: 'account', loadChildren: './account/account.module#AccountPageModule', canActivate: [WalletGuard]
