@@ -4,28 +4,30 @@ import { Observable } from 'rxjs';
 import { WalletService } from '../services/wallet.service';
 import { MultisigService } from '../services/multisig.service';
 import { MetaverseService } from '../services/metaverse.service';
+import { Storage } from '@ionic/storage';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WalletGuard implements CanActivate {
   constructor(
+    private storage: Storage,
     private wallet: WalletService,
     private multisig: MultisigService,
     private metaverse: MetaverseService,
     private router: Router,
   ) { }
 
-  canActivate(
+  async canActivate(
     next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    const walletReady = this.wallet.addresses$.value.length > 0;
+    state: RouterStateSnapshot): Promise<boolean> {
+    const walletReady = await this.storage.get('wallet') !== undefined;
 
     if (walletReady) {
       return true;
     }
 
-    this.router.navigate(['login']);
+    this.logout();
     return false;
 
   }
@@ -35,7 +37,6 @@ export class WalletGuard implements CanActivate {
     this.wallet.reset();
     this.multisig.reset();
     this.metaverse.reset();
-    this.router.dispose();
     this.router.navigate(['login']);
   }
 }

@@ -53,6 +53,9 @@ export class WalletService {
 
   reset() {
     this.addresses$.next(undefined);
+    this.storage.remove('wallet');
+    this.storage.remove('addresses');
+    this.storage.remove('seed');
   }
 
   balances = (metaverse: MetaverseService) => combineLatest([

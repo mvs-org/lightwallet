@@ -44,6 +44,7 @@ export class MetaverseService {
 
   reset() {
     this.height$.next(undefined);
+    this.storage.remove('transactions');
     this.transactions$.next([]);
   }
 
@@ -79,6 +80,7 @@ export class MetaverseService {
   )
 
   private async getData(): Promise<any> {
+    console.log('getting data')
     const addresses = await this.wallet.getAddresses();
     addresses.concat(await this.multisig.getMultisigAddresses());
     let newTxs = await this.getNewTxs(addresses, await this.getLastTxHeight());
@@ -132,21 +134,14 @@ export class MetaverseService {
         txs[found] = newtx;
       }
     });
-    await this.storage.set('mvs_txs', txs);
+    await this.storage.set('transactions', txs);
     return newtxs;
   }
 
-  private findTxIndexByHash(txs: Transaction[], hash: string) {
-    txs.forEach((tx, index) => {
-      if (tx.hash === hash) {
-        return index;
-      }
-    });
-    return -1;
-  }
+  private findTxIndexByHash = (txs: Transaction[], hash: string) => txs.findIndex(tx => tx.hash === hash)
 
   async restoreTransactions() {
-    return await this.storage.get('mvs_txs') || [];
+    return await this.storage.get('transactions') || [];
   }
 
   public sortByTransactionHeight(a: Transaction, b: Transaction) {
