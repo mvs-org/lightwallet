@@ -15,13 +15,25 @@
     </ion-row>
 
     <ion-item>
-
       <ion-label *ngIf="!form.controls.passphrase.errors" position="floating">Password</ion-label>
       <ion-label *ngIf="form.controls.passphrase.errors" position="floating" color="danger">
         {{"PASSWORD.ERROR." + (form.controls.passphrase | firstError) |translate}}
       </ion-label>
       <ion-input formControlName="passphrase" type="password" clearOnEdit="false"></ion-input>
     </ion-item>
+
+    <ion-row>
+      <ion-col>
+        <ion-button type="submit" icon-left expand="full" color="primary" [disabled]="!form.valid">
+          <ion-icon name="send"></ion-icon> {{"LOGIN_ACCOUNT.LOGIN_BUTTON"|translate}}
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button icon-left expand="full" color="danger" (click)="forgetAccount()">
+          <ion-icon name="trash"></ion-icon> {{"LOGIN_ACCOUNT.FORGET_BUTTON"|translate}}
+        </ion-button>
+      </ion-col>
+    </ion-row>
   </form>
 
 </ion-content>

@@ -193,6 +193,18 @@
                 "OK": "OK"
             }
         }
+    },
+    "LOGIN_ACCOUNT": {
+        "LOGIN_BUTTON": "Next",
+        "FORGET_BUTTON": "Forget account",
+        "FORGET": {
+            "TITLE": "Forget account?",
+            "TEXT": "If you choose to forget your account, all its information saved on your device will be deleted. To login, you will need your 24 backup words or your keystore file.",
+            "BUTTON": {
+                "BACK": "Back",
+                "FORGET": "Forget"
+            }
+        }
     }
 
 }

@@ -22,13 +22,17 @@ export class LoginPage implements OnInit {
     private account: AccountService,
     private router: Router,
   ) {
-    this.account.getSavedAccounts()
-      .then((accounts) => this.saved_accounts = accounts ? accounts : [])
+
   }
 
   ngOnInit() {
     this.network = this.metaverse.network
   }
+
+  ionViewWillEnter() {
+    this.account.getSavedAccounts()
+      .then((accounts) => this.saved_accounts = accounts ? accounts : [])
+}
 
   loginViaAccount(account) {
     console.log(account)

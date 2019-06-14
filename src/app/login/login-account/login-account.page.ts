@@ -7,6 +7,7 @@ import { WalletService } from 'src/app/services/wallet.service';
 import { MetaverseService } from '../../services/metaverse.service';
 import { Router } from '@angular/router';
 import { AccountService } from '../../services/account.service';
+import { AlertService } from '../../services/alert.service';
 
 @Component({
   selector: 'app-login-account',
@@ -28,6 +29,7 @@ export class LoginAccountPage implements OnInit {
     public metaverse: MetaverseService,
     private router: Router,
     private accountService: AccountService,
+    private alertService: AlertService,
   ) {
     this.account = this.activatedRoute.snapshot.queryParams
     
@@ -44,9 +46,6 @@ export class LoginAccountPage implements OnInit {
       spinner: 'crescent',
       message: await this.translate.get('CREATE_WALLET.GENERATING_TEXT').toPromise(),
     });
-    //await loader.present();
-
-    //await loader.dismiss();
 
   }
 
@@ -59,40 +58,16 @@ export class LoginAccountPage implements OnInit {
     await this.accountService.saveSessionAccount(passphrase)
     await this.loader.dismiss();
     return this.router.navigate(['/account']);
-
   }
 
-  /*deleteAccount(account_name) {
-    this.translate.get('DELETE_ACCOUNT_TITLE').subscribe(title => {
-      this.translate.get(this.platform.is('mobile') ? 'RESET_MESSAGE_MOBILE_SAVE_ACCOUNT' : 'DELETE_ACCOUNT_BODY').subscribe(message => {
-        this.translate.get('DELETE').subscribe(no => {
-          this.translate.get('BACK').subscribe(back => {
-            let confirm = this.alertCtrl.create({
-              title: title,
-              message: message,
-              buttons: [
-                {
-                  text: back,
-                  handler: () => {
-                    console.log('Disagree clicked')
-                  }
-                },
-                {
-                  text: no,
-                  handler: () => {
-                    this.wallet.deleteAccount(account_name).then(() => {
-                      this.nav.setRoot("LoginPage")
-                    })
-                  }
-                },
+  async forgetAccount() {
+    const alert = await this.alertService.alert('LOGIN_ACCOUNT', 'FORGET', 'TITLE', 'TEXT', ['BUTTON.BACK', 'BUTTON.FORGET'], '')
 
-              ]
-            });
-            confirm.present()
-          })
-        })
-      })
+    alert.onDidDismiss().then((data) => {
+      if(data.data == 'BUTTON.FORGET') {
+        return this.accountService.deleteAccount(this.account.name).then(() => this.router.navigate(['/login']))
+      }
     })
-  }*/
+  }
 
 }
