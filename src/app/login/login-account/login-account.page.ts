@@ -51,25 +51,13 @@ export class LoginAccountPage implements OnInit {
   }
 
 
-  async importAccount(account, password) {
-    /*await this.loader.present();
-    let decryptedAccount = await this.account.decryptAccount(account.content, password)
-    await this.account.setupAccount(account.name, decryptedAccount)
-    let wallet = await this.walletService.getHDNode(password, this.metaverse.network);
-    let index = await this.walletService.getAddressIndex()
-    let addresses = await this.walletService.generateAddresses(wallet, 0, index)
-    await this.mvs.addAddresses(addresses)
-      .then(() => this.account.saveSessionAccount(password))
-      .then(() => this.alert.stopLoading())
-      .then(() => this.nav.setRoot("LoadingPage", { reset: true }))*/
+  async importAccount(account) {
+    await this.loader.present();
     const passphrase = this.form.value.passphrase;
-    console.log(account.content)
-    console.log(passphrase)
     let decryptedAccount = await this.accountService.decryptAccount(account.content, passphrase)
-    console.log(decryptedAccount)
     await this.walletService.import(decryptedAccount.wallet, passphrase, this.metaverse.network);
-    console.log("Import completed")
-    await this.account.saveSessionAccount(passphrase)
+    await this.accountService.saveSessionAccount(passphrase)
+    await this.loader.dismiss();
     return this.router.navigate(['/account']);
 
   }

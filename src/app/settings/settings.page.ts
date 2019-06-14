@@ -35,10 +35,10 @@ export class SettingsPage implements OnInit {
     this.accountService.getSessionAccountInfo()
       .then((account_info) => {
         if (account_info) {
+          //Already has an account
           this.alertShowLogout()
-          console.log("Oh, you have some account info")
         } else {
-          console.log("No account info, direct logout")
+          //No account yet
           this.auth.logout()
         }
       })

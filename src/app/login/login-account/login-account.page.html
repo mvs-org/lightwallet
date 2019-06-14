@@ -9,7 +9,7 @@
 
 <ion-content>
 
-  <form *ngIf="form" [formGroup]="form" (ngSubmit)="importAccount(account, password)">
+  <form *ngIf="form" [formGroup]="form" (ngSubmit)="importAccount(account)">
     <ion-row>
       <h2>{{account.name}}</h2>
     </ion-row>
