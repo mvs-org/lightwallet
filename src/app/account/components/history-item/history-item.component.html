@@ -11,19 +11,25 @@
             <div class="summaryTxType">{{'HISTORY.TX_TYPE.' + txType | translate}}</div>
             <div class="summaryAmount">
               <div *ngIf="txType == 'ETP' || txType == 'COINSTAKE'">
-                <div *ngIf="totalPersonalInputs.ETP" class="sendAmount">
+                <div *ngIf="totalPersonalInputs.ETP && totalPersonalInputs.ETP - totalPersonalOutputs.ETP - txFee != 0" class="sendAmount">
                   -{{totalPersonalInputs.ETP - totalPersonalOutputs.ETP - txFee | format : 8}} ETP
                 </div>
                 <div *ngIf="!totalPersonalInputs.ETP" class="receiveAmount">
                   +{{totalPersonalOutputs.ETP | format : 8}} ETP
                 </div>
+                <div *ngIf="totalPersonalInputs.ETP - totalPersonalOutputs.ETP - txFee == 0">
+                  {{'HISTORY.INTRAWALLET' | translate}}
+                </div>
               </div>
               <div *ngIf="txType == 'ASSET' || txType == 'ISSUE' || txType == 'MST_MINING'">
-                <div *ngIf="totalPersonalInputs.MST[txTypeValue]" class="sendAmount">
+                <div *ngIf="totalPersonalInputs.MST[txTypeValue] && totalPersonalInputs.MST[txTypeValue] - totalPersonalOutputs.MST[txTypeValue] != 0" class="sendAmount">
                   -{{totalPersonalInputs.MST[txTypeValue] - totalPersonalOutputs.MST[txTypeValue] | format : decimals.MST[txTypeValue]}} {{txTypeValue}}
                 </div>
                 <div *ngIf="!totalPersonalInputs.MST[txTypeValue]" class="receiveAmount">
                   +{{totalPersonalOutputs.MST[txTypeValue] | format : decimals.MST[txTypeValue]}} {{txTypeValue}}
+                </div>
+                <div *ngIf="totalPersonalInputs.MST[txTypeValue] - totalPersonalOutputs.MST[txTypeValue] == 0">
+                  {{'HISTORY.INTRAWALLET' | translate}}
                 </div>
               </div>
               <div *ngIf="txType == 'CERT'">
@@ -32,8 +38,11 @@
               <div *ngIf="txType == 'MIT' || txType == 'DID_REGISTER' || txType == 'DID_TRANSFER'">
                 {{txTypeValue}}
               </div>
-              
+              <div *ngIf="txType == 'MST_LOCK' || txType == 'ETP_LOCK'">
+                {{transaction.locked_quantity | format : decimals.MST[txTypeValue]}} {{txTypeValue}}
+              </div>
             </div>
+            <div *ngIf="transaction.locked_until" [translate]="'HISTORY.LOCKED_UNTIL_BLOCK'" [translateParams]="{block: transaction.locked_until}"></div>
             <div>Fee: {{txFee | format : 8}} ETP</div>
           </ion-col>
         </ion-row>
@@ -76,7 +85,7 @@
                 <ion-col class="right">
                   <div *ngIf="output.attachment.type == 'message'" class="txType">{{'HISTORY.TYPE.message'|translate}}</div>
                   <div *ngIf="output.attachment.type != 'message' || output.value != 0">{{output.value | format : 8}} ETP</div>
-                  <div *ngIf="output.unlock_block">{{'HISTORY.FROZEN_UNTIL_BLOCK'|translate}} {{output.unlock_block}}</div>
+                  <div *ngIf="output.unlock_block"  [translate]="'HISTORY.LOCKED_UNTIL_BLOCK'" [translateParams]="{block: output.unlock_block}"></div>
                 </ion-col>
               </ion-item>
               <ion-item *ngIf="output.attachment.symbol != 'ETP'">

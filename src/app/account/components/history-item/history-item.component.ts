@@ -29,7 +29,9 @@ export class HistoryItemComponent implements OnInit {
   ngOnInit() {
 
     const TX_TYPE_ETP = 'ETP';
+    const TX_TYPE_ETP_LOCK = 'ETP_LOCK';
     const TX_TYPE_ASSET = 'ASSET';
+    const TX_TYPE_MST_LOCK = 'MST_LOCK';
     const TX_TYPE_ISSUE = 'ISSUE';
     const TX_TYPE_CERT = 'CERT';
     const TX_TYPE_DID_REGISTER = 'DID_REGISTER';
@@ -60,12 +62,15 @@ export class HistoryItemComponent implements OnInit {
         this.txType = TX_TYPE_ISSUE
         this.txTypeValue = output.attachment.symbol
       } else if (output.attachment.type === 'asset-transfer' && this.txType != TX_TYPE_ISSUE) {
+        this.txTypeValue = output.attachment.symbol
         if(this.transaction.inputs != undefined && Array.isArray(this.transaction.inputs) && this.transaction.inputs[0] && this.transaction.inputs[0].address=='') {
           this.txType = TX_TYPE_MST_MINING
-          this.txTypeValue = output.attachment.symbol
-        } else {
+        } else if (output.attenuation_model_param) {
+          this.transaction.locked_until = this.transaction.height + output.attenuation_model_param.lock_period
+          this.transaction.locked_quantity = output.attenuation_model_param.lock_quantity
+          this.txType = TX_TYPE_MST_LOCK
+        } else if (this.txType != TX_TYPE_MST_LOCK) {
           this.txType = TX_TYPE_ASSET
-          this.txTypeValue = output.attachment.symbol
         }
       } else if (output.attachment.type === 'asset-cert' && this.txType != TX_TYPE_ISSUE) {
         this.txType = TX_TYPE_CERT
@@ -82,6 +87,11 @@ export class HistoryItemComponent implements OnInit {
         this.txTypeValue = output.attachment.symbol
       } else if (output.attachment.type === 'coinstake') {
         this.txType = TX_TYPE_COINSTAKE
+      } else if (output.attachment.type == 'etp' && output.locked_height_range) {
+        this.transaction.locked_until = this.transaction.height + output.locked_height_range
+        this.transaction.locked_quantity = output.value
+        this.txType = TX_TYPE_ETP_LOCK
+        this.txTypeValue = 'ETP'
       }
 
       this.totalOutputs.ETP += output.value

@@ -145,7 +145,8 @@
                 "witness": "Witness certificate"
             }
         },
-        "FROZEN_UNTIL_BLOCK": "Frozen until",
+        "LOCKED_UNTIL_BLOCK": "Locked until block {{block}}",
+        "INTRAWALLET": "Intrawallet",
         "TX_TYPE": {
             "ETP": "ETP transfer",
             "ASSET": "MST transfer",
@@ -162,7 +163,9 @@
             "DID_TRANSFER": "Avatar transfer",
             "MIT": "MIT",
             "COINSTAKE": "Coinstake transaction",
-            "MST_MINING": "Mining reward"
+            "MST_MINING": "Mining reward",
+            "ETP_LOCK": "ETP lock",
+            "MST_LOCK": "MST lock"
         }
     },
     "ACCOUNT_MANAGEMENT": {
