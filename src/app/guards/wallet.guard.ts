@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { WalletService } from '../services/wallet.service';
 import { MultisigService } from '../services/multisig.service';
 import { MetaverseService } from '../services/metaverse.service';
+import { AccountService } from '../services/account.service';
 import { Storage } from '@ionic/storage';
 
 @Injectable({
@@ -15,6 +16,7 @@ export class WalletGuard implements CanActivate {
     private wallet: WalletService,
     private multisig: MultisigService,
     private metaverse: MetaverseService,
+    private account: AccountService,
     private router: Router,
   ) { }
 
@@ -37,6 +39,7 @@ export class WalletGuard implements CanActivate {
     this.wallet.reset();
     this.multisig.reset();
     this.metaverse.reset();
+    this.account.reset();
     this.router.navigate(['login']);
   }
 }

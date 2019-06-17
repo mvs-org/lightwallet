@@ -120,4 +120,9 @@ export class AccountService {
       })
   }
 
+  reset() {
+    this.storage.remove('account_info');
+    this.storage.remove('account_name');
+  }
+
 }
