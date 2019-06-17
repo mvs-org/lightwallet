@@ -35,7 +35,6 @@ export class LoginPage implements OnInit {
 }
 
   loginViaAccount(account) {
-    console.log(account)
     this.router.navigate(['login', 'account'],
       {
         skipLocationChange: true,

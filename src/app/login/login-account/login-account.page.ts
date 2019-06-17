@@ -61,10 +61,10 @@ export class LoginAccountPage implements OnInit {
   }
 
   async forgetAccount() {
-    const alert = await this.alertService.alert('LOGIN_ACCOUNT', 'FORGET', 'TITLE', 'TEXT', ['BUTTON.BACK', 'BUTTON.FORGET'], '')
+    const alert = await this.alertService.alert('LOGIN_ACCOUNT', 'FORGET', 'TITLE', 'TEXT', ['BACK', 'FORGET'])
 
     alert.onDidDismiss().then((data) => {
-      if(data.data == 'BUTTON.FORGET') {
+      if(data.data == 'FORGET') {
         return this.accountService.deleteAccount(this.account.name).then(() => this.router.navigate(['/login']))
       }
     })

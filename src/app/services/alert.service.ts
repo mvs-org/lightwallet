@@ -12,27 +12,19 @@ export class AlertService {
     private translate: TranslateService,
   ) { }
 
-  async alert(page, alert_name, title, text, buttons_text, input_placeholder) {
+  async alert(page, alert_name, title, text, buttons_text) {
     const translations = await this.translate.get([
       title,
       text,
-      input_placeholder,
-      buttons_text[0],
-      buttons_text[1],
-      buttons_text[2],
+      'BUTTON.' + buttons_text[0],
+      'BUTTON.' + buttons_text[1],
+      'BUTTON.' + buttons_text[2],
     ].map(key => page + '.' + alert_name + '.' + key)).toPromise();
-    
-    let inputs = []
-    if (input_placeholder) {
-      inputs = [
-        { name: 'info', placeholder: translations[page + '.' + alert_name + '.' + input_placeholder], type: 'text' }
-      ]
-    }
 
     let buttons = []
     buttons_text.forEach((text) => {
       let button = {
-        text: translations[page + '.' + alert_name + '.' + text],
+        text: translations[page + '.' + alert_name + '.BUTTON.' + text],
         handler: () => alert.dismiss(text)
       }
       buttons.push(button)
@@ -41,11 +33,43 @@ export class AlertService {
     const alert = await this.alertCtrl.create({
       header: translations[page + '.' + alert_name + '.' + title],
       message: translations[page + '.' + alert_name + '.' + text],
-      inputs: inputs,
       buttons: buttons
     });
 
-    alert.present();
+    alert.present()
+    return alert
+  }
+
+  async alertInput(page, alert_name, title, text) {
+    const translations = await this.translate.get([
+      title,
+      text,
+      'INPUT.PLACEHOLDER',
+      'BUTTON.BACK',
+      'BUTTON.OK',
+    ].map(key => page + '.' + alert_name + '.' + key)).toPromise();
+
+    let inputs = [
+      { name: 'input', placeholder: translations[page + '.' + alert_name + '.INPUT.PLACEHOLDER'], type: text }
+    ]
+
+    const alert = await this.alertCtrl.create({
+      header: translations[page + '.' + alert_name + '.' + title],
+      message: translations[page + '.' + alert_name + '.' + text],
+      inputs: inputs,
+      buttons: [
+        {
+          text: translations[page + '.' + alert_name + '.BUTTON.BACK'],
+          handler: () => alert.dismiss(false)
+        },
+        {
+          text: translations[page + '.' + alert_name + '.BUTTON.OK'],
+          handler: (data) => alert.dismiss(data.input)
+        }
+      ]
+    });
+
+    alert.present()
     return alert
   }
 

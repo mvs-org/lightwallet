@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { WalletGuard } from '../guards/wallet.guard';
-import { AlertController } from '@ionic/angular';
+import { AlertService } from '../services/alert.service';
 import { AccountService } from '../services/account.service';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -15,7 +15,7 @@ export class SettingsPage implements OnInit {
 
   constructor(
     private auth: WalletGuard,
-    private alertCtrl: AlertController,
+    private alertService: AlertService,
     private accountService: AccountService,
     private translate: TranslateService,
   ) {
@@ -70,52 +70,29 @@ export class SettingsPage implements OnInit {
   }
 
   async alertShowLogout() {
-    const translations = await this.translate.get([
-      'TITLE',
-      'TEXT',
-      'BUTTON.SAVE',
-      'BUTTON.FORGET',
-      'BUTTON.BACK',
-    ].map(key => 'ACCOUNT_MANAGEMENT.LOGOUT.' + key)).toPromise();
-    const alert = await this.alertCtrl.create({
-      header: translations['ACCOUNT_MANAGEMENT.LOGOUT.TITLE'],
-      message: translations['ACCOUNT_MANAGEMENT.LOGOUT.TEXT'],
-      buttons: [
-        {
-          text: translations['ACCOUNT_MANAGEMENT.LOGOUT.BUTTON.SAVE'],
-          handler: () => this.saveAccountHandler()
-        }, {
-          text: translations['ACCOUNT_MANAGEMENT.LOGOUT.BUTTON.FORGET'],
-          handler: () => this.forgetAccountHandler()
-        }, {
-          text: translations['ACCOUNT_MANAGEMENT.LOGOUT.BUTTON.BACK'],
-        }
-      ]
-    });
-    alert.present();
+    const alert = await this.alertService.alert('ACCOUNT_MANAGEMENT', 'LOGOUT', 'TITLE', 'TEXT', ['SAVE', 'FORGET', 'BACK'])
+
+    alert.onDidDismiss().then((data) => {
+      switch (data.data) {
+        case 'SAVE':
+          this.saveAccountHandler()
+          return
+        case 'FORGET':
+          this.forgetAccountHandler()
+          return
+        default:
+          return
+      }
+    })
   }
 
   async alertAskUsername(title, text) {
-    const translations = await this.translate.get([
-      title,
-      text,
-      'INPUT.PLACEHOLDER',
-      'BUTTON.OK',
-    ].map(key => 'ACCOUNT_MANAGEMENT.LOGOUT_ASK_USERNAME.' + key)).toPromise();
-    const alert = await this.alertCtrl.create({
-      header: translations['ACCOUNT_MANAGEMENT.LOGOUT_ASK_USERNAME.' + title],
-      message: translations['ACCOUNT_MANAGEMENT.LOGOUT_ASK_USERNAME.' + text],
-      inputs: [
-        { name: 'username', placeholder: translations['ACCOUNT_MANAGEMENT.LOGOUT_ASK_USERNAME.INPUT.PLACEHOLDER'], type: 'text' }
-      ],
-      buttons: [
-        {
-          text: translations['ACCOUNT_MANAGEMENT.LOGOUT_ASK_USERNAME.BUTTON.OK'],
-          handler: (data) => this.checkUsername(data.username)
-        }
-      ]
-    });
-    alert.present();
+    const alert = await this.alertService.alertInput('ACCOUNT_MANAGEMENT', 'LOGOUT_ASK_USERNAME', title, text)
+
+    alert.onDidDismiss().then((data) => {
+      if (data.data)
+        this.checkUsername(data.data)
+    })
   }
 
   checkUsername(username) {
