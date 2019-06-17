@@ -112,7 +112,6 @@ export class AccountService {
   decryptAccount(content, passphrase) {
     return this.walletService.decryptData(content, passphrase)
       .then((decrypted) => {
-        console.log(decrypted)
         return JSON.parse(decrypted.toString())
       })
       .catch((error) => {

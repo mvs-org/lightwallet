@@ -56,6 +56,7 @@ export class LoginAccountPage implements OnInit {
     let decryptedAccount = await this.accountService.decryptAccount(account.content, passphrase)
     await this.walletService.import(decryptedAccount.wallet, passphrase, this.metaverse.network);
     await this.accountService.saveSessionAccount(passphrase)
+    await this.accountService.setAccountName(account.name)
     await this.loader.dismiss();
     return this.router.navigate(['/account']);
   }
