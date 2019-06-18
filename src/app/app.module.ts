@@ -16,6 +16,7 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FormatPipe } from './pipes/format/format';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 export function createTranslateLoader(http: HttpClient) {
@@ -38,7 +39,8 @@ export function createTranslateLoader(http: HttpClient) {
         useFactory: (createTranslateLoader),
         deps: [HttpClient]
       }
-    })],
+    }),
+    BrowserAnimationsModule],
   providers: [
     StatusBar,
     SplashScreen,
