@@ -9,6 +9,8 @@ import { TransactionHistoryPage } from './transaction-history.page';
 import { HistoryItemComponent } from '../components/history-item/history-item.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { PipesModule } from '../../pipes/pipes.module';
+import { MatExpansionModule } from '@angular/material/expansion';
+
 
 const routes: Routes = [
   {
@@ -25,6 +27,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     TranslateModule.forChild(),
     PipesModule,
+    MatExpansionModule,
   ],
   declarations: [
     TransactionHistoryPage,

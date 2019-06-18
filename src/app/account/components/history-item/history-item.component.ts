@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { WalletService, Balances, Balance } from 'src/app/services/wallet.service';
+import { WalletService } from 'src/app/services/wallet.service';
 
 
 @Component({
