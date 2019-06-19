@@ -9,8 +9,9 @@ import { WalletService } from 'src/app/services/wallet.service';
 })
 export class HistoryItemComponent implements OnInit {
 
-  @Input() transaction: any;
-  @Input() height$: any;
+  @Input() transaction: any
+  @Input() height$: any
+  @Input() blocktime: number
   height: number
   addresses$ = this.wallet.addresses$;
   totalInputs: any = {ETP: 0, MST: {}}
@@ -23,10 +24,13 @@ export class HistoryItemComponent implements OnInit {
   txTypeValue: string = ''
   txTypeCert: string = ''
   devAvatar: string = "developer-community"
+  current_time: number
 
   constructor(
     private wallet: WalletService,
-  ) { }
+  ) { 
+    this.current_time = Date.now()
+  }
 
   ngOnInit() {
 

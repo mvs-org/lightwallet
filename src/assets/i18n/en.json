@@ -146,7 +146,8 @@
                 "witness": "Witness certificate"
             }
         },
-        "LOCKED_UNTIL_BLOCK": "Locked until block {{block}}",
+        "LOCKED_SINCE_BLOCK": "Locked since block {{block}} ({{time}})",
+        "LOCKED_UNTIL_BLOCK": "Locked until block {{block}} (~{{time}})",
         "INTRAWALLET": "Intrawallet",
         "TX_TYPE": {
             "ETP": "ETP transfer",

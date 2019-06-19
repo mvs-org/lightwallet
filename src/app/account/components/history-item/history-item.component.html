@@ -45,7 +45,8 @@
               {{transaction.locked_quantity | format : decimals.MST[txTypeValue]}} {{txTypeValue}}
             </div>
           </div>
-          <div *ngIf="transaction.locked_until" [translate]="'HISTORY.LOCKED_UNTIL_BLOCK'" [translateParams]="{block: transaction.locked_until}"></div>
+          <div *ngIf="transaction.locked_until" [translate]="'HISTORY.LOCKED_SINCE_BLOCK'" [translateParams]="{block: transaction.locked_until, time: transaction.confirmed_at*1000 | date : 'medium'}"></div>
+          <div *ngIf="transaction.locked_until" [translate]="'HISTORY.LOCKED_UNTIL_BLOCK'" [translateParams]="{block: transaction.locked_until, time: (((transaction.locked_until - height) * blocktime * 1000) + current_time) | date : 'medium'}"></div>
           <div>Fee: {{txFee | format : 8}} ETP</div>
         </ion-col>
       </ion-row>

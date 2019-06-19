@@ -150,4 +150,32 @@ export class MetaverseService {
 
   getTickers = () => this.blockchain.pricing.tickers();
 
+  getBlocktime(current_height) {
+    console.log("Getting blocktime from height " + current_height)
+    let downscale = 10;
+    return this.storage.get('blocktime')
+      .then((blocktime) => {
+        if (blocktime == undefined || blocktime.height == undefined || current_height > blocktime.height + 1000) {
+          return this.blockchain.block.blocktime(downscale)
+            .then((time) => {
+              this.setBlocktime(time, current_height)
+              return time
+            })
+        } else {
+          return blocktime.time
+        }
+      })
+      .catch((error) => {
+        console.error(error)
+        throw Error('ERR_GET_BLOCKTIME')
+      })
+  }
+
+  setBlocktime(time, height) {
+    var blocktime = {};
+    blocktime['time'] = time
+    blocktime['height'] = height
+    return this.storage.set('blocktime', blocktime)
+  }
+
 }

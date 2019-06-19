@@ -12,6 +12,6 @@
 </ion-header>
 
 <ion-content>
-  <app-history-item *ngFor="let transaction of (transactions | async)" [transaction]="transaction" [height$]="height$">
+  <app-history-item *ngFor="let transaction of (transactions | async)" [transaction]="transaction" [height$]="height$" [blocktime]="blocktime">
   </app-history-item>
 </ion-content>

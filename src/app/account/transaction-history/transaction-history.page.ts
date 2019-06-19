@@ -8,20 +8,27 @@ import { MetaverseService } from '../../services/metaverse.service';
 })
 export class TransactionHistoryPage implements OnInit {
 
-  transactions = this.metaverse.transactions$;
-  height$ = this.metaverse.height$;
-  syncing: boolean;
+  transactions = this.metaverse.transactions$
+  height$ = this.metaverse.height$
+  syncing: boolean
+  blocktime: number
 
   constructor(
     private metaverse: MetaverseService,
-  ) { 
+  ) {
+
     this.metaverse.syncing$.subscribe((syncing) => {
       this.syncing = syncing;
     });
+
   }
 
-  ngOnInit() {
-    this.metaverse.sync();
+  async ngOnInit() {
+    this.metaverse.sync()
+    this.height$.subscribe((height) => {
+      if(height && !this.blocktime)
+        this.metaverse.getBlocktime(height).then((blocktime => this.blocktime = blocktime))
+    })
   }
 
 }
