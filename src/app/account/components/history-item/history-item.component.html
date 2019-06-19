@@ -41,7 +41,7 @@
             <div *ngIf="txType == 'MIT' || txType == 'DID_REGISTER' || txType == 'DID_TRANSFER'">
               {{txTypeValue}}
             </div>
-            <div *ngIf="txType == 'MST_LOCK' || txType == 'ETP_LOCK'">
+            <div *ngIf="txType == 'MST_LOCK' || txType == 'ETP_LOCK' || txType == 'ETP_LOCK_REWARD'">
               {{transaction.locked_quantity | format : decimals.MST[txTypeValue]}} {{txTypeValue}}
             </div>
           </div>

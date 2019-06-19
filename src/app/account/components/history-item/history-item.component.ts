@@ -42,6 +42,7 @@ export class HistoryItemComponent implements OnInit {
 
     const TX_TYPE_ETP = 'ETP';
     const TX_TYPE_ETP_LOCK = 'ETP_LOCK';
+    const TX_TYPE_ETP_LOCK_REWARD = 'ETP_LOCK_REWARD';
     const TX_TYPE_ASSET = 'ASSET';
     const TX_TYPE_MST_LOCK = 'MST_LOCK';
     const TX_TYPE_ISSUE = 'ISSUE';
@@ -102,7 +103,7 @@ export class HistoryItemComponent implements OnInit {
       } else if (output.attachment.type == 'etp' && output.locked_height_range) {
         this.transaction.locked_until = this.transaction.height + output.locked_height_range
         this.transaction.locked_quantity = output.value
-        this.txType = TX_TYPE_ETP_LOCK
+        this.txType = this.transaction.inputs[0].previous_output.hash == "0000000000000000000000000000000000000000000000000000000000000000" ? TX_TYPE_ETP_LOCK_REWARD : TX_TYPE_ETP_LOCK
         this.txTypeValue = 'ETP'
       }
 

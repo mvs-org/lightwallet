@@ -167,6 +167,7 @@
             "COINSTAKE": "Coinstake transaction",
             "MST_MINING": "Mining reward",
             "ETP_LOCK": "ETP lock",
+            "ETP_LOCK_REWARD": "ETP lock reward",
             "MST_LOCK": "MST lock"
         }
     },
