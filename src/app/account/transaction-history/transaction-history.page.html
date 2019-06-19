@@ -3,12 +3,15 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/account"></ion-back-button>
     </ion-buttons>
-    <ion-title>transaction-history</ion-title>
+    <ion-title translate="HISTORY.TITLE"></ion-title>
+    <ion-buttons slot="end">
+      <ion-spinner *ngIf="syncing!==false"></ion-spinner>
+      {{height$|async}}
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
-  <app-history-item *ngFor="let transaction of (transactions | async)" [transaction]="transaction">
+  <app-history-item *ngFor="let transaction of (transactions | async)" [transaction]="transaction" [height$]="height$">
   </app-history-item>
 </ion-content>

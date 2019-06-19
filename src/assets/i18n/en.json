@@ -129,6 +129,7 @@
         "BOTTOM_TEXT_MOBILE": "Your private key will be stored and encrypted via your password on your device."
     },
     "HISTORY": {
+        "TITLE": "Transaction history",
         "TOTAL_INPUTS": "Total inputs",
         "TOTAL_OUTPUTS": "Total outputs",
         "INPUT_COINBASE": "From coinbase",

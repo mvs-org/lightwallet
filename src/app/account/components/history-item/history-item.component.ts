@@ -10,6 +10,8 @@ import { WalletService } from 'src/app/services/wallet.service';
 export class HistoryItemComponent implements OnInit {
 
   @Input() transaction: any;
+  @Input() height$: any;
+  height: number
   addresses$ = this.wallet.addresses$;
   totalInputs: any = {ETP: 0, MST: {}}
   totalOutputs: any = {ETP: 0, MST: {}}
@@ -27,6 +29,12 @@ export class HistoryItemComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
+    this.height$.subscribe((data) => {
+      this.height = data
+      if(this.transaction.locked_until && this.transaction.locked_until > this.height) 
+        this.transaction.locked_progression = this.depositProgress(this.transaction.outputs[0].height, this.height, this.transaction.locked_until)
+    })
 
     const TX_TYPE_ETP = 'ETP';
     const TX_TYPE_ETP_LOCK = 'ETP_LOCK';
@@ -116,6 +124,10 @@ export class HistoryItemComponent implements OnInit {
     if(this.txFee < 0)
       this.txFee = 0
 
+  }
+
+  depositProgress(start, now, end) {
+    return Math.max(1, Math.min(99, Math.round((now - start) / (end - start) * 100)))
   }
 
 }

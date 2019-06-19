@@ -1,4 +1,5 @@
 <mat-expansion-panel>
+  
   <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
     <ion-grid>
       <ion-row>
@@ -48,6 +49,8 @@
           <div>Fee: {{txFee | format : 8}} ETP</div>
         </ion-col>
       </ion-row>
+      <mat-progress-bar *ngIf="transaction.locked_until && transaction.locked_until > height" mode="determinate" [value]="transaction.locked_progression"></mat-progress-bar>
+      <mat-progress-bar *ngIf="transaction.locked_until && transaction.locked_until <= height" mode="determinate" [value]="100" class="lockComplete"></mat-progress-bar>
     </ion-grid>
   </mat-expansion-panel-header>
   <ion-grid>
