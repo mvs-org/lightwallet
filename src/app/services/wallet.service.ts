@@ -55,7 +55,7 @@ export class WalletService {
     this.addresses$.next(undefined);
     this.storage.remove('wallet');
     this.storage.remove('addresses');
-    this.storage.remove('mvs_txs');
+    this.storage.remove('transactions');
     this.storage.remove('seed');
   }
 

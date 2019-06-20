@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MetaverseService } from '../../services/metaverse.service';
+import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 
 @Component({
   selector: 'app-transaction-history',
@@ -7,6 +8,9 @@ import { MetaverseService } from '../../services/metaverse.service';
   styleUrls: ['./transaction-history.page.scss'],
 })
 export class TransactionHistoryPage implements OnInit {
+
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator; 
 
   transactions = this.metaverse.transactions$
   height$ = this.metaverse.height$
@@ -23,7 +27,12 @@ export class TransactionHistoryPage implements OnInit {
 
   }
 
+  dataSource = new MatTableDataSource(this.transactions.value);
+
   async ngOnInit() {
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+    
     this.metaverse.sync()
     this.height$.subscribe((height) => {
       if(height && !this.blocktime)
