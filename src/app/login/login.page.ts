@@ -38,8 +38,8 @@ export class LoginPage implements OnInit {
     this.router.navigate(['login', 'account'],
       {
         skipLocationChange: true,
-        queryParams: account
-      });
+        queryParams: account,
+      })
   }
 
 }

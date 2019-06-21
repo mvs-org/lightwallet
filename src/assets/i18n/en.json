@@ -210,6 +210,11 @@
             }
         }
     },
+    "SEND": {
+        "TITLE": "Transfer",
+        "SEND_SINGLE": "Send to one",
+        "SEND_MANY": "Send to many" 
+    },
     "ERROR": {
         "PASSWORD": {
             "required": "Please enter your password",

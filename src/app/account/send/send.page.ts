@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, RouterLinkActive } from '@angular/router';
+import { Component, OnInit } from '@angular/core'
+import { Router, RouterLinkActive } from '@angular/router'
+import { ActivatedRoute } from '@angular/router'
 
 @Component({
   selector: 'app-send',
@@ -11,20 +12,26 @@ export class SendPage implements OnInit {
   navLinks = [
     {
       label: 'SEND.SEND_SINGLE',
-      path: ['/account', 'send', 'single'],
+      path: ['/account', 'send', 'ETP', 'single'],
     },
     {
       label: 'SEND.SEND_MANY',
-      path: ['/account', 'send', 'many'],
+      path: ['/account', 'send', 'ETP', 'many'],
     },
   ]
 
-  activeLinkIndex = 0
+  symbol: string
 
-  constructor(private router: Router) {
-  }
+  constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+  ) { }
 
   ngOnInit() {
+    this.activatedRoute.params
+      .subscribe(params => {
+        this.symbol = params.symbol
+      })
   }
 
 }

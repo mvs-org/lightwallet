@@ -1,19 +1,22 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>send</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/account"></ion-back-button>
+    </ion-buttons>
+    <ion-title translate="SEND.TITLE"></ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
-  <nav mat-tab-nav-bar>
+  <nav mat-tab-nav-bar mat-align-tabs="center">
     <a mat-tab-link
       *ngFor="let link of navLinks"
       [routerLink]="link.path"
       routerLinkActive
       #rla="routerLinkActive"
       [active]="rla.isActive">
-      {{link.label}}
+      {{link.label | translate}}
     </a>
   </nav>
 
