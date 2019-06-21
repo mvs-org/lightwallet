@@ -20,6 +20,10 @@ const routes: Routes = [
     component: AccountPage,
   },
   {
+    path: 'send',
+    loadChildren: './send/send.module#SendPageModule'
+  },
+  {
     path: 'history/:symbol',
     loadChildren: './transaction-history/transaction-history.module#TransactionHistoryPageModule'
   },

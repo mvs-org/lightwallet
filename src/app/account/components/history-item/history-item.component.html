@@ -8,7 +8,7 @@
           {{transaction.confirmed_at*1000|date : 'medium'}}
         </ion-col>
         <ion-col class="right">
-          <div class="summaryTxType">{{'HISTORY.TX_TYPE.' + txType | translate}}</div>
+          <div class="summaryTxType" [translate]="'HISTORY.TX_TYPE.' + txType"></div>
           <div class="summaryAmount">
             <div *ngIf="txType == 'ETP' || txType == 'COINSTAKE'">
               <div *ngIf="totalPersonalInputs.ETP && totalPersonalInputs.ETP - totalPersonalOutputs.ETP - txFee != 0"

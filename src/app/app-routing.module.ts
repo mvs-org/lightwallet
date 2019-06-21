@@ -18,6 +18,9 @@ const routes: Routes = [
   },
   { path: 'settings', loadChildren: './settings/settings.module#SettingsPageModule' },
   { path: 'settings/language', loadChildren: './settings/language/language.module#LanguagePageModule' },
+  { path: 'send', loadChildren: './account/send/send.module#SendPageModule' },
+  { path: 'send-single', loadChildren: './account/send/send-single/send-single.module#SendSinglePageModule' },
+  { path: 'send-many', loadChildren: './account/send/send-many/send-many.module#SendManyPageModule' },
 ];
 
 @NgModule({
