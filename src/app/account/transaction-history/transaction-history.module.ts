@@ -18,7 +18,7 @@ import { MatTableModule } from '@angular/material/table';
 const routes: Routes = [
   {
     path: '',
-    component: TransactionHistoryPage
+    component: TransactionHistoryPage,
   }
 ];
 

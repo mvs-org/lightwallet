@@ -1,16 +1,19 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MetaverseService } from '../../services/metaverse.service';
-import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
+import { Component, OnInit, ViewChild } from '@angular/core'
+import { MetaverseService } from '../../services/metaverse.service'
+import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material'
+import { first } from 'rxjs/operators'
 
 @Component({
   selector: 'app-transaction-history',
   templateUrl: './transaction-history.page.html',
-  styleUrls: ['./transaction-history.page.scss'],
+  styleUrls: [
+    './transaction-history.page.scss',
+  ],
 })
 export class TransactionHistoryPage implements OnInit {
 
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatPaginator) paginator: MatPaginator; 
+  @ViewChild(MatSort) sort: MatSort
+  @ViewChild(MatPaginator) paginator: MatPaginator
 
   transactions = this.metaverse.transactions$
   height$ = this.metaverse.height$
@@ -22,21 +25,24 @@ export class TransactionHistoryPage implements OnInit {
   ) {
 
     this.metaverse.syncing$.subscribe((syncing) => {
-      this.syncing = syncing;
-    });
+      this.syncing = syncing
+    })
 
   }
 
-  dataSource = new MatTableDataSource(this.transactions.value);
+  dataSource = new MatTableDataSource()
 
   async ngOnInit() {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
-    
-    this.metaverse.sync()
-    this.height$.subscribe((height) => {
-      if(height && !this.blocktime)
-        this.metaverse.getBlocktime(height).then((blocktime => this.blocktime = blocktime))
+    this.dataSource.sort = this.sort
+    this.dataSource.paginator = this.paginator
+    // TODO: Merge transaction arrays for better ux
+    this.transactions.subscribe(transactions => {
+      this.dataSource.data = transactions
+    })
+    this.height$.subscribe(async (height) => {
+      if (height && !this.blocktime) {
+        this.blocktime = await this.metaverse.getBlocktime(height)
+      }
     })
   }
 

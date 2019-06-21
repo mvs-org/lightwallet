@@ -1,34 +1,34 @@
-import { Injectable } from '@angular/core';
-import Metaverse from 'metaversejs/dist/metaverse.js';
-import { ConfigService } from './config.service';
-import { Observable, BehaviorSubject, Subject, interval } from 'rxjs';
-import { flatMap, first } from 'rxjs/operators';
-import { combineLatest } from 'rxjs/observable/combineLatest';
-import { WalletService } from './wallet.service';
-import { MultisigService } from './multisig.service';
-import { Storage } from '@ionic/storage';
-import Blockchain from 'mvs-blockchain/dist/index';
+import { Injectable } from '@angular/core'
+import Metaverse from 'metaversejs/dist/metaverse.js'
+import { ConfigService } from './config.service'
+import { Observable, BehaviorSubject, Subject, interval } from 'rxjs'
+import { flatMap, first } from 'rxjs/operators'
+import { combineLatest } from 'rxjs/observable/combineLatest'
+import { WalletService } from './wallet.service'
+import { MultisigService } from './multisig.service'
+import { Storage } from '@ionic/storage'
+import Blockchain from 'mvs-blockchain/dist/index'
 
 export interface Transaction {
-  height: number;
-  hash: string;
+  height: number
+  hash: string
 }
 
-export type Network = "mainnet" | "testnet";
+export type Network = "mainnet" | "testnet"
 
 @Injectable({
   providedIn: 'root'
 })
 export class MetaverseService {
 
-  syncing$ = new BehaviorSubject<boolean>(false);
-  transactions$ = new BehaviorSubject<Transaction[]>([]);
-  height$ = new BehaviorSubject<number>(undefined);
+  syncing$ = new BehaviorSubject<boolean>(false)
+  transactions$ = new BehaviorSubject<Transaction[]>([])
+  height$ = new BehaviorSubject<number>(undefined)
 
-  heartbeat$ = interval(5000);
-  readonly network = this.config.defaultNetwork;
+  heartbeat$ = interval(5000)
+  readonly network = this.config.defaultNetwork
 
-  blockchain: any;
+  blockchain: any
 
   constructor(
     private config: ConfigService,
@@ -36,40 +36,40 @@ export class MetaverseService {
     private wallet: WalletService,
     private multisig: MultisigService,
   ) {
-    this.setNetwork(this.config.defaultNetwork);
-    this.restoreTransactions().then(txs => this.transactions$.next(txs));
-    this.sync();
-    this.heartbeat$.subscribe(() => this.sync());
+    this.setNetwork(this.config.defaultNetwork)
+    this.restoreTransactions().then(txs => this.transactions$.next(txs))
+    this.sync()
+    this.heartbeat$.subscribe(() => this.sync())
   }
 
   reset() {
-    this.height$.next(undefined);
-    this.storage.remove('transactions');
-    this.transactions$.next([]);
+    this.height$.next(undefined)
+    this.storage.remove('transactions')
+    this.transactions$.next([])
   }
 
   loaderCondition() {
     return this.wallet.addresses$.value &&
-      this.wallet.addresses$.value.length;
+      this.wallet.addresses$.value.length
   }
 
   async sync() {
     if (await this.syncing$.value === true || !this.loaderCondition()) {
-      return;
+      return
     }
-    this.syncing$.next(true);
+    this.syncing$.next(true)
     try {
-      await this.updateHeight();
-      await this.getData();
+      await this.updateHeight()
+      await this.getData()
     } catch (error) {
-      console.error(error);
-      this.syncing$.next(false);
+      console.error(error)
+      this.syncing$.next(false)
     }
-    this.syncing$.next(false);
+    this.syncing$.next(false)
   }
 
   setNetwork(network: Network) {
-    this.blockchain = Blockchain({ network: this.network });
+    this.blockchain = Blockchain({ network: this.network })
   }
 
   utxos$ = (addresses$: Observable<string[]>) => combineLatest([
@@ -81,101 +81,100 @@ export class MetaverseService {
 
   private async getData(): Promise<any> {
     console.log('getting data')
-    const addresses = await this.wallet.getAddresses();
-    addresses.concat(await this.multisig.getMultisigAddresses());
-    let newTxs = await this.getNewTxs(addresses, await this.getLastTxHeight());
-    const newTransactionsFound = newTxs && newTxs.length;
+    const addresses = await this.wallet.getAddresses()
+    addresses.concat(await this.multisig.getMultisigAddresses())
+    let newTxs = await this.getNewTxs(addresses, await this.getLastTxHeight())
+    const newTransactionsFound = newTxs && newTxs.length
     while (newTxs && newTxs.length) {
-      newTxs = await this.getNewTxs(addresses, await this.getLastTxHeight());
-      this.transactions$.next(await this.restoreTransactions());
+      newTxs = await this.getNewTxs(addresses, await this.getLastTxHeight())
+      this.transactions$.next(await this.restoreTransactions())
     }
     if (newTransactionsFound) {
-      this.transactions$.next(await this.restoreTransactions());
+      this.transactions$.next(await this.restoreTransactions())
     }
   }
 
   async updateHeight() {
-    const height = await this.blockchain.height();
-    this.height$.next(height);
+    const height = await this.blockchain.height()
+    this.height$.next(height)
   }
 
   async getLastTxHeight() {
-    const transactions = await (this.transactions$.pipe(first())).toPromise();
+    const transactions = await (this.transactions$.pipe(first())).toPromise()
     if (!transactions || transactions.length === 0) {
-      return 0;
+      return 0
     }
-    return transactions[0].height;
+    return transactions[0].height
   }
 
   async getNewTxs(addresses: Array<string>, lastKnownHeight: number): Promise<any> {
-    const newTxs = await this.loadNewTxs(addresses, lastKnownHeight + 1);
-    return this.storeTransactions(newTxs);
+    const newTxs = await this.loadNewTxs(addresses, lastKnownHeight + 1)
+    return this.storeTransactions(newTxs)
   }
 
   loadNewTxs(addresses: Array<string>, start: number) {
     return this.blockchain.addresses.listTxs(addresses, { min_height: start })
       .catch((error: Error) => {
-        console.log('error loading transactions');
-        throw Error('ERR_SYNC_NEW_TRANSACTIONS');
-      });
+        console.log('error loading transactions')
+        throw Error('ERR_SYNC_NEW_TRANSACTIONS')
+      })
   }
 
   async storeTransactions(newtxs: Array<any>) {
     if (newtxs === undefined || newtxs.length === 0) {
-      return newtxs;
+      return newtxs
     }
-    let txs = await this.restoreTransactions();
-    newtxs = newtxs.sort((a: any, b: any) => a.height - b.height);
+    let txs = await this.restoreTransactions()
+    newtxs = newtxs.sort((a: any, b: any) => a.height - b.height)
     newtxs.forEach((newtx) => {
-      const found = this.findTxIndexByHash(txs, newtx.hash);
+      const found = this.findTxIndexByHash(txs, newtx.hash)
       if (found === -1) {
-        txs = [newtx].concat(txs);
+        txs = [newtx].concat(txs)
       } else {
-        txs[found] = newtx;
+        txs[found] = newtx
       }
-    });
-    await this.storage.set('transactions', txs);
-    return newtxs;
+    })
+    await this.storage.set('transactions', txs)
+    return newtxs
   }
 
   private findTxIndexByHash = (txs: Transaction[], hash: string) => txs.findIndex(tx => tx.hash === hash)
 
   async restoreTransactions() {
-    return await this.storage.get('transactions') || [];
+    return await this.storage.get('transactions') || []
   }
 
   public sortByTransactionHeight(a: Transaction, b: Transaction) {
-    return b.height - a.height;
+    return b.height - a.height
   }
 
-  getTickers = () => this.blockchain.pricing.tickers();
+  getTickers = () => this.blockchain.pricing.tickers()
 
-  getBlocktime(current_height) {
-    console.log("Getting blocktime from height " + current_height)
-    let downscale = 10;
-    return this.storage.get('blocktime')
-      .then((blocktime) => {
-        if (blocktime == undefined || blocktime.height == undefined || current_height > blocktime.height + 1000) {
-          return this.blockchain.block.blocktime(downscale)
-            .then((time) => {
-              this.setBlocktime(time, current_height)
-              return time
-            })
-        } else {
-          return blocktime.time
-        }
-      })
-      .catch((error) => {
+  async getBlocktime(currentHeight: number) {
+    const blocktime = await this.storage.get('blocktime')
+    if (blocktime === undefined || blocktime.height === undefined || currentHeight > blocktime.height + 1000) {
+      try {
+        const downscale = 10
+        const time = await this.blockchain.block.blocktime(downscale)
+        await this.setBlocktime(time, currentHeight)
+        return time
+      } catch (error) {
         console.error(error)
         throw Error('ERR_GET_BLOCKTIME')
-      })
+      }
+    } else {
+      return blocktime.time
+    }
   }
 
-  setBlocktime(time, height) {
-    var blocktime = {};
-    blocktime['time'] = time
-    blocktime['height'] = height
-    return this.storage.set('blocktime', blocktime)
+  /**
+   * Stores the blocktime information
+   *
+   * @param time Blocktime in seconds
+   * @param height In blocks
+   */
+  setBlocktime(time: number, height: number) {
+    return this.storage.set('blocktime', { time, height})
   }
 
 }
