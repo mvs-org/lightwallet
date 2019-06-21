@@ -21,7 +21,7 @@ const routes: Routes = [
   },
   {
     path: 'send',
-    loadChildren: './send/send.module#SendPageModule'
+    loadChildren: './send/send.module#SendPageModule',
   },
   {
     path: 'history/:symbol',
