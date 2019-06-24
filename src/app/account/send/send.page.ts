@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterLinkActive } from '@angular/router';
+import { DatastoreService } from '../../services/datastore.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-send',
@@ -21,7 +23,12 @@ export class SendPage implements OnInit {
 
   activeLinkIndex = 0
 
-  constructor(private router: Router) {
+  transactions: Observable<any[]>
+
+  constructor(public datastore: DatastoreService) {
+    // datastore.transactionCollection().then(collection => {
+    //   this.transactions = collection.find().$
+    // })
   }
 
   ngOnInit() {

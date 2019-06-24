@@ -15,7 +15,7 @@ export class TransactionHistoryPage implements OnInit {
   @ViewChild(MatSort) sort: MatSort
   @ViewChild(MatPaginator) paginator: MatPaginator
 
-  transactions = this.metaverse.transactions$
+  //transactions = this.metaverse.transactions$
   height$ = this.metaverse.height$
   syncing: boolean
   blocktime: number
@@ -36,7 +36,8 @@ export class TransactionHistoryPage implements OnInit {
     this.dataSource.sort = this.sort
     this.dataSource.paginator = this.paginator
     // TODO: Merge transaction arrays for better ux
-    this.transactions.subscribe(transactions => {
+    const transactionStream = await this.metaverse.transactionStream()
+    transactionStream.subscribe(transactions => {
       this.dataSource.data = transactions
     })
     this.height$.subscribe(async (height) => {

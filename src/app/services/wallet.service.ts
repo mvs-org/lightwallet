@@ -55,12 +55,11 @@ export class WalletService {
     this.addresses$.next(undefined);
     this.storage.remove('wallet');
     this.storage.remove('addresses');
-    this.storage.remove('transactions');
     this.storage.remove('seed');
   }
 
-  balances = (metaverse: MetaverseService) => combineLatest([
-    metaverse.utxos$(this.addresses$),
+  balances = async (metaverse: MetaverseService) => combineLatest([
+    await metaverse.utxoStrem(this.addresses$),
     this.addresses$,
     metaverse.height$
   ])
@@ -74,8 +73,8 @@ export class WalletService {
       )),
     )
 
-  addressBalances = (metaverse: MetaverseService): Observable<Dictionary<Balances>> => combineLatest([
-    metaverse.utxos$(this.addresses$),
+  addressBalances = async (metaverse: MetaverseService): Promise<Observable<Dictionary<Balances>>> => combineLatest([
+    await metaverse.utxoStrem(this.addresses$),
     this.addresses$,
     metaverse.height$,
   ])
