@@ -1,6 +1,6 @@
-import { NgModule } from '@angular/core';
-import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { WalletGuard } from './guards/wallet.guard';
+import { NgModule } from '@angular/core'
+import { PreloadAllModules, RouterModule, Routes } from '@angular/router'
+import { WalletGuard } from './guards/wallet.guard'
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -19,7 +19,7 @@ const routes: Routes = [
   { path: 'settings', loadChildren: './settings/settings.module#SettingsPageModule' },
   { path: 'settings/language', loadChildren: './settings/language/language.module#LanguagePageModule' },
   { path: 'send', loadChildren: './account/send/send.module#SendPageModule' },
-];
+]
 
 @NgModule({
   imports: [

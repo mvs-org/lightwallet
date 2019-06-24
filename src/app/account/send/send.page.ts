@@ -1,7 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, RouterLinkActive } from '@angular/router';
-import { DatastoreService } from '../../services/datastore.service';
-import { Observable } from 'rxjs';
+import { Component, OnInit } from '@angular/core'
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-send',
@@ -13,25 +11,26 @@ export class SendPage implements OnInit {
   navLinks = [
     {
       label: 'SEND.SEND_SINGLE',
-      path: ['/account', 'send', 'single'],
+      path: ['/account', 'send', 'ETP', 'single'],
     },
     {
       label: 'SEND.SEND_MANY',
-      path: ['/account', 'send', 'many'],
+      path: ['/account', 'send', 'ETP', 'many'],
     },
   ]
 
-  activeLinkIndex = 0
+  symbol: string
 
-  transactions: Observable<any[]>
-
-  constructor(public datastore: DatastoreService) {
-    // datastore.transactionCollection().then(collection => {
-    //   this.transactions = collection.find().$
-    // })
-  }
+  constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+  ) { }
 
   ngOnInit() {
+    this.activatedRoute.params
+      .subscribe(params => {
+        this.symbol = params.symbol
+      })
   }
 
 }

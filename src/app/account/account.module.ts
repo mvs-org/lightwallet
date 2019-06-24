@@ -20,7 +20,7 @@ const routes: Routes = [
     component: AccountPage,
   },
   {
-    path: 'send',
+    path: 'send/:symbol',
     loadChildren: './send/send.module#SendPageModule',
   },
   {
@@ -33,7 +33,7 @@ const routes: Routes = [
   },
   {
     path: 'addresses/:symbol',
-    loadChildren: './addresses/addresses.module#AddressesPageModule'
+    loadChildren: './addresses/addresses.module#AddressesPageModule',
   },
 ];
 

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core'
+import { ActivatedRoute } from '@angular/router'
 
 @Component({
   selector: 'app-send-single',
@@ -7,8 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SendSingleComponent implements OnInit {
 
-  constructor() { }
+  symbol: string
 
-  ngOnInit() {}
+  constructor(
+    private activatedRoute: ActivatedRoute,
+  ) { }
+
+  ngOnInit() {
+    this.activatedRoute.parent.params.subscribe(params => {
+      this.symbol = params.symbol
+      })
+  }
 
 }

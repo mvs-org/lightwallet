@@ -28,7 +28,7 @@ export class AddressesPage implements OnInit {
     private activatedRoute: ActivatedRoute,
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.wallet.addressBalances(this.metaverse)
       .then(addressBalanceStream => {
         addressBalanceStream
