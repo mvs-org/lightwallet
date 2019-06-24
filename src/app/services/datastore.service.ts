@@ -12,6 +12,8 @@ export class DatastoreService {
 
   db: Promise<RxDatabase>
 
+  transactions: RxCollection<Transaction[]>
+
   constructor() {
 
     this.db = create({
@@ -23,6 +25,9 @@ export class DatastoreService {
   }
 
   async transactionCollection() {
+    if(this.transactions){
+      return this.transactions
+    }
     const db = await this.db
     if (db.transaction) {
       return db.transaction
@@ -61,7 +66,7 @@ export class DatastoreService {
   }
 
   async saveTransactions(transactions: Transaction[]) {
-    console.log('insert ', transactions)
+    console.log('insert batch', transactions)
     const transactionCollection = await this.transactionCollection()
     for (const tx of transactions) {
       await this.saveTransaction(tx)
@@ -70,11 +75,14 @@ export class DatastoreService {
   }
 
   async saveTransaction(transaction: Transaction) {
+    console.log('insert ', transaction)
     const collection = await this.transactionCollection()
-    const oldTx = await collection.findOne({ hash: transaction.hash }).exec()
-    if (oldTx) {
-      console.log('already exists', oldTx)
+    const oldTxs = await collection.findOne({ hash: transaction.hash }).exec()
+    if (oldTxs) {
+      console.log('already exists. updating', transaction.hash)
+      return await collection.findOne().where('hash').equals(transaction.hash).update({$set: transaction})
     } else {
+      console.log('add new transaction', transaction)
       return await collection.insert(transaction)
     }
   }

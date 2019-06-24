@@ -13,6 +13,18 @@ import { DatastoreService } from './datastore.service';
 export interface Transaction {
   height: number
   hash: string
+  confirmed_at?: number
+  inputs: any[]
+  outputs: any[]
+}
+
+export interface Output {
+  address?: string
+  attachment: any
+  index: number
+  locked_height_range?: number
+  script?: string
+  value: number
 }
 
 export type Network = 'mainnet' | 'testnet'
@@ -164,7 +176,7 @@ export class MetaverseService {
     fee: number,
     messages: Array<string>,
     network: string,
-    ) {
+  ) {
 
     const target = {}
     target[asset] = quantity
@@ -210,40 +222,67 @@ export class MetaverseService {
   }
 
   send = async (tx, balances) => {
-    tx.hash = (await this.broadcast(tx.encode().toString('hex'))).hash
-    tx.height = await this.height$.toPromise()
-    tx.unconfirmed = true
-    tx.outputs.forEach((output, index) => {
-      output.index = index
-      output.locked_height_range = (output.locktime) ? output.locktime : 0
-      output.locked_until = (output.locktime) ? tx.height + output.locked_height_range : 0
-      switch (output.attachment.type) {
-        case Metaverse.constants.ATTACHMENT.TYPE.MST:
-          switch (output.attachment.status) {
-            case Metaverse.constants.MST.STATUS.REGISTER:
-              output.attachment.type = 'asset-issue'
-              break
-            case Metaverse.constants.MST.STATUS.TRANSFER:
-              output.attachment.type = 'asset-transfer'
-              if (balances && balances.MST && balances.MST[output.attachment.symbol]) {
-                output.attachment.decimals = balances.MST[output.attachment.symbol].decimals
-              }
-              break
-          }
-          break
-        case Metaverse.constants.ATTACHMENT.TYPE.MIT:
-          output.attachment.type = 'mit'
-          break
-        case Metaverse.constants.ATTACHMENT.TYPE.ETP_TRANSFER:
-          output.attachment.type = 'etp'
-          output.attachment.symbol = 'ETP'
-          output.attachment.decimals = 8
-          break
-      }
-    })
-    return this.datastore.saveTransaction(tx)
-      .then(() => this.getData())
-      .then(() => tx)
+    try {
+      const raw = await tx.encode().toString('hex')
+      const broadcastResponse = await this.broadcast(raw)
+      tx.hash = broadcastResponse.hash
+      tx.confirmed_at = 0
+      tx.height = await this.height$.pipe(take(1)).toPromise()
+
+      tx.inputs = tx.inputs.map(input => {
+        return {
+          previous_output: {
+            hash: input.previous_output.hash,
+            index: input.previous_output.index,
+          },
+        }
+      })
+      tx.outputs = tx.outputs.map((output, index): Output => {
+        return {
+          index: output.index,
+          locked_height_range: (output.locktime) ? output.locktime : 0,
+          attachment: this.formatAttachment(output),
+          value: output.value,
+        }
+      })
+      delete tx.version
+      delete tx.lock_time
+      await this.datastore.saveTransaction({
+        hash: tx.hash,
+        height: tx.height,
+        confirmed_at: tx.confirmed_at,
+        outputs: tx.outputs,
+        inputs: tx.inputs,
+      })
+      return tx
+    } catch (error) {
+      console.log(error)
+      throw error
+    }
+  }
+
+  formatAttachment(output) {
+    switch (output.attachment.type) {
+      case Metaverse.constants.ATTACHMENT.TYPE.MST:
+        switch (output.attachment.status) {
+          case Metaverse.constants.MST.STATUS.REGISTER:
+            output.attachment.type = 'asset-issue'
+            break
+          case Metaverse.constants.MST.STATUS.TRANSFER:
+            output.attachment.type = 'asset-transfer'
+            break
+        }
+        break
+      case Metaverse.constants.ATTACHMENT.TYPE.MIT:
+        output.attachment.type = 'mit'
+        break
+      case Metaverse.constants.ATTACHMENT.TYPE.ETP_TRANSFER:
+        output.attachment.type = 'etp'
+        output.attachment.symbol = 'ETP'
+        output.attachment.decimals = 8
+        break
+    }
+    return output.attachment
   }
 
   broadcast(rawtx: string) {
