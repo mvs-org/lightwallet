@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core'
 import Metaverse from 'metaversejs/dist/metaverse.js'
 import { ConfigService } from './config.service'
 import { Observable, BehaviorSubject, Subject, interval, of } from 'rxjs'
-import { flatMap, first } from 'rxjs/operators'
+import { flatMap, first, last, take } from 'rxjs/operators'
 import { combineLatest } from 'rxjs/observable/combineLatest'
-import { WalletService } from './wallet.service'
+import { WalletService, Balances } from './wallet.service'
 import { MultisigService } from './multisig.service'
 import { Storage } from '@ionic/storage'
 import Blockchain from 'mvs-blockchain/dist/index'
@@ -15,10 +15,10 @@ export interface Transaction {
   hash: string
 }
 
-export type Network = "mainnet" | "testnet"
+export type Network = 'mainnet' | 'testnet'
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MetaverseService {
 
@@ -63,7 +63,8 @@ export class MetaverseService {
     this.syncing$.next(true)
     try {
       await this.updateHeight()
-      await this.getData()
+      const newTxCount = await this.getData()
+      console.log(newTxCount)
     } catch (error) {
       console.error(error)
       this.syncing$.next(false)
@@ -75,21 +76,24 @@ export class MetaverseService {
     this.blockchain = Blockchain({ network: this.network })
   }
 
-  utxoStrem = async (addresses$: Observable<string[]>) => combineLatest([
-    await this.transactionStream(),
-    addresses$,
-  ]).pipe(
-    flatMap(([transactions, addresses]) => Metaverse.output.calculateUtxo(transactions, addresses))
-  )
+  utxoStream = async (addresses$: Observable<string[]>) => {
+    return combineLatest([
+      await this.transactionStream(),
+      addresses$,
+    ]).pipe(flatMap(([transactions, addresses]) => Metaverse.output.calculateUtxo(transactions, addresses)))
+  }
 
   private async getData(): Promise<any> {
     console.log('getting data')
     const addresses = await this.wallet.getAddresses()
     addresses.concat(await this.multisig.getMultisigAddresses())
     let newTxs = await this.getNewTxs(addresses, await this.getLastTxHeight())
+    let counter = newTxs.length
     while (newTxs && newTxs.length) {
       newTxs = await this.getNewTxs(addresses, await this.getLastTxHeight())
+      counter += newTxs.length
     }
+    return counter
   }
 
   async updateHeight() {
@@ -148,5 +152,103 @@ export class MetaverseService {
   setBlocktime(time: number, height: number) {
     return this.storage.set('blocktime', { time, height })
   }
+
+  async createSendTx(
+    passphrase: string,
+    asset: string,
+    recipientAddress: string,
+    recipientAvatar: string,
+    quantity: number,
+    fromAddress: string,
+    changeAddress: string,
+    fee: number,
+    messages: Array<string>,
+    network: string,
+    ) {
+
+    const target = {}
+    target[asset] = quantity
+    try {
+      const wallet = await this.wallet.getHDNode(passphrase, network)
+      const utxos = await this.getUtxoFrom(fromAddress)
+      const height = await this.height$.pipe(take(1)).toPromise()
+      console.log(height)
+      const seletedUtxos = await Metaverse.output.findUtxo(utxos, target, height, fee)
+
+      if (seletedUtxos.utxo.length > 676) {
+        throw Error('ERR_TOO_MANY_INPUTS')
+      }
+      if (changeAddress === undefined) {
+        changeAddress = seletedUtxos.utxo[0].address
+      }
+      const transaction = await Metaverse.transaction_builder.send(
+        seletedUtxos.utxo,
+        recipientAddress,
+        recipientAvatar,
+        target,
+        changeAddress,
+        seletedUtxos.change,
+        seletedUtxos.lockedAssetChange,
+        fee, messages,
+      )
+
+      return wallet.sign(transaction)
+
+    } catch (error) {
+      console.error(error)
+      throw Error(error.message)
+    }
+  }
+
+  getUtxoFrom(address?: string) {
+    if (address) {
+      return this.utxoStream(of([address]))
+        .then(stream => stream.pipe(take(1)).toPromise())
+    }
+    return this.utxoStream(this.wallet.addresses$)
+      .then(stream => stream.pipe(take(1)).toPromise())
+  }
+
+  send = async (tx, balances) => {
+    tx.hash = (await this.broadcast(tx.encode().toString('hex'))).hash
+    tx.height = await this.height$.toPromise()
+    tx.unconfirmed = true
+    tx.outputs.forEach((output, index) => {
+      output.index = index
+      output.locked_height_range = (output.locktime) ? output.locktime : 0
+      output.locked_until = (output.locktime) ? tx.height + output.locked_height_range : 0
+      switch (output.attachment.type) {
+        case Metaverse.constants.ATTACHMENT.TYPE.MST:
+          switch (output.attachment.status) {
+            case Metaverse.constants.MST.STATUS.REGISTER:
+              output.attachment.type = 'asset-issue'
+              break
+            case Metaverse.constants.MST.STATUS.TRANSFER:
+              output.attachment.type = 'asset-transfer'
+              if (balances && balances.MST && balances.MST[output.attachment.symbol]) {
+                output.attachment.decimals = balances.MST[output.attachment.symbol].decimals
+              }
+              break
+          }
+          break
+        case Metaverse.constants.ATTACHMENT.TYPE.MIT:
+          output.attachment.type = 'mit'
+          break
+        case Metaverse.constants.ATTACHMENT.TYPE.ETP_TRANSFER:
+          output.attachment.type = 'etp'
+          output.attachment.symbol = 'ETP'
+          output.attachment.decimals = 8
+          break
+      }
+    })
+    return this.datastore.saveTransaction(tx)
+      .then(() => this.getData())
+      .then(() => tx)
+  }
+
+  broadcast(rawtx: string) {
+    return this.blockchain.transaction.broadcast(rawtx)
+  }
+
 
 }

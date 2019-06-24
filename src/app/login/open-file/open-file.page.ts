@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { LoadingController, AlertController } from '@ionic/angular';
-import { TranslateService } from '@ngx-translate/core';
-import { WalletService } from 'src/app/services/wallet.service';
-import { MetaverseService } from '../../services/metaverse.service';
-import { Router } from '@angular/router';
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { AccountService } from '../../services/account.service';
+import { Component, OnInit } from '@angular/core'
+import { LoadingController, AlertController } from '@ionic/angular'
+import { TranslateService } from '@ngx-translate/core'
+import { WalletService } from 'src/app/services/wallet.service'
+import { MetaverseService } from '../../services/metaverse.service'
+import { Router } from '@angular/router'
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
+import { AccountService } from '../../services/account.service'
 
 @Component({
   selector: 'app-open-file',
@@ -34,31 +34,31 @@ export class OpenFilePage implements OnInit {
       animated: true,
       spinner: 'crescent',
       message: await this.translate.get('OPEN_FILE.LOADER').toPromise(),
-    });
+    })
 
     this.form = this.formBuilder.group({
-      passphrase: new FormControl('', [Validators.required, Validators.minLength(4)])
-    });
+      passphrase: new FormControl('', [Validators.required, Validators.minLength(4)]),
+    })
   }
 
   open(e) {
     let file = e.target.files
-    let reader = new FileReader();
+    let reader = new FileReader()
     reader.onload = (e: any) => {
-      let content = e.target.result;
+      let content = e.target.result
 
       try {
         this.fileData = JSON.parse(content)
         if(!this.fileData.mnemonic) {
-          this.wrongFile();
+          this.wrongFile()
         }
       } catch (e) {
-        console.error(e);
-        this.wrongFile();
+        console.error(e)
+        this.wrongFile()
       }
-    };
+    }
     if(file[0])
-      reader.readAsText(file[0]);
+      reader.readAsText(file[0])
   }
 
   async wrongFile() {
@@ -66,26 +66,26 @@ export class OpenFilePage implements OnInit {
       'TITLE',
       'TEXT',
       'BUTTON.OK',
-    ].map(key => 'OPEN_FILE.WRONG_FILE.' + key)).toPromise();
+    ].map(key => 'OPEN_FILE.WRONG_FILE.' + key)).toPromise()
     const alert = await this.alertCtrl.create({
       header: translations['OPEN_FILE.WRONG_FILE.TITLE'],
       message: translations['OPEN_FILE.WRONG_FILE.TEXT'],
       buttons: [
         {
-          text: translations['OPEN_FILE.WRONG_FILE.BUTTON.OK']
-        }
-      ]
-    });
-    alert.present();
+          text: translations['OPEN_FILE.WRONG_FILE.BUTTON.OK'],
+        },
+      ],
+    })
+    alert.present()
 
   }
 
 
   async decrypt() {
-    const passphrase = this.form.value.passphrase;
-    await this.walletService.import(this.fileData, passphrase, this.metaverse.network);
+    const passphrase = this.form.value.passphrase
+    await this.walletService.import(this.fileData, passphrase, this.metaverse.network)
     await this.account.saveSessionAccount(passphrase)
-    return this.router.navigate(['/account']);
+    return this.router.navigate(['/account'])
   }
 
 }

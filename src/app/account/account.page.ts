@@ -41,10 +41,11 @@ export class AccountPage implements OnInit {
   }
 
   getMSTs() {
-    return Object.entries(this.balances.MST).map(([symbol, balance]: [string, Balance]) => ({
-      symbol,
-      balance,
-    }))
+    return Object.entries(this.balances.MST)
+      .map(([symbol, balance]: [string, Balance]) => ({
+        symbol,
+        balance,
+      }))
   }
 
   entries = (o: object) => Object.entries(o)

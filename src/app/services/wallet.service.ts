@@ -59,7 +59,7 @@ export class WalletService {
   }
 
   balances = async (metaverse: MetaverseService) => combineLatest([
-    await metaverse.utxoStrem(this.addresses$),
+    await metaverse.utxoStream(this.addresses$),
     this.addresses$,
     metaverse.height$,
   ])
@@ -74,7 +74,7 @@ export class WalletService {
     )
 
   addressBalances = async (metaverse: MetaverseService): Promise<Observable<Dictionary<Balances>>> => combineLatest([
-    await metaverse.utxoStrem(this.addresses$),
+    await metaverse.utxoStream(this.addresses$),
     this.addresses$,
     metaverse.height$,
   ])

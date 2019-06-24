@@ -30,8 +30,8 @@ export class MultisigService {
     this.addresses$.next(undefined);
   }
 
-  multisigAddressBalances$ = (metaverse: MetaverseService) => combineLatest([
-      metaverse.utxos$,
+  multisigAddressBalances$ = async (metaverse: MetaverseService) => combineLatest([
+      await metaverse.utxoStream(this.addresses$),
       this.addresses$,
       metaverse.height$,
     ])
