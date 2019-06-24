@@ -1,3 +1,39 @@
-<p>
-  Sending {{symbol}} to one
-</p>
+<form *ngIf="form" [formGroup]="form" (ngSubmit)="send()">
+  <ion-item>
+    <ion-label *ngIf="!getError(form.controls.recipientAddress)" position="floating">Recipient Address</ion-label>
+    <ion-label *ngIf="getError(form.controls.recipientAddress)" position="floating" color="danger">
+      {{ 'ERROR.RECIPIENT_ADDRESS' + getError(form.controls.recipientAddress)[0] | uppercase | translate :
+      getError(form.controls.recipientAddress)[1]}}
+    </ion-label>
+    <ion-input formControlName="recipientAddress" type="address" clearOnEdit="false"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label *ngIf="!getError(form.controls.amount)" position="floating">Amount</ion-label>
+    <ion-label *ngIf="getError(form.controls.amount)" position="floating" color="danger">
+      {{ 'ERROR.AMOUNT' + getError(form.controls.amount)[0] | uppercase | translate :
+      getError(form.controls.amount)[1]}}
+    </ion-label>
+    <ion-input formControlName="amount" type="number" clearOnEdit="false"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label *ngIf="!getError(form.controls.passphrase)" position="floating">Choose password</ion-label>
+    <ion-label *ngIf="getError(form.controls.passphrase)" position="floating" color="danger">
+      {{ 'SELECT_PASSPHRASE.ERROR.' + getError(form.controls.passphrase)[0] | uppercase | translate :
+      getError(form.controls.passphrase)[1]}}
+    </ion-label>
+    <ion-input formControlName="passphrase" type="password" clearOnEdit="false"></ion-input>
+  </ion-item>
+
+  <ion-row>
+    <ion-col>
+      <ion-button type="submit" icon-left expand="full" color="primary" [disabled]="!form.valid">
+        <ion-icon name="send"></ion-icon> {{"SEND_SINGLE.SEND_BUTTON"|translate}}
+      </ion-button>
+    </ion-col>
+    <ion-col>
+      <ion-button icon-left expand="full" color="danger" routerLink="/account">
+        <ion-icon name="trash"></ion-icon> {{"SEND_SINGLE.CANCEL_BUTTON"|translate}}
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</form>

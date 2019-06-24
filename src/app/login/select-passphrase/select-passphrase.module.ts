@@ -1,19 +1,19 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Routes, RouterModule } from '@angular/router';
+import { NgModule } from '@angular/core'
+import { CommonModule } from '@angular/common'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { Routes, RouterModule } from '@angular/router'
 
-import { IonicModule } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular'
 
-import { SelectPassphrasePage } from './select-passphrase.page';
-import { TranslateModule } from '@ngx-translate/core';
+import { SelectPassphrasePage } from './select-passphrase.page'
+import { TranslateModule } from '@ngx-translate/core'
 
 const routes: Routes = [
   {
     path: '',
-    component: SelectPassphrasePage
-  }
-];
+    component: SelectPassphrasePage,
+  },
+]
 
 @NgModule({
   imports: [
@@ -24,6 +24,6 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     TranslateModule.forChild(),
   ],
-  declarations: [SelectPassphrasePage]
+  declarations: [SelectPassphrasePage],
 })
 export class SelectPassphrasePageModule {}
