@@ -47,6 +47,7 @@ export class DatastoreService {
     return db.collection({
       name: 'transaction',
       schema: transactionSchema,
+      statics: transactionCollectionMethods,
     })
   }
 
