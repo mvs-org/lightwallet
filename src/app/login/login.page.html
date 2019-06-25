@@ -27,7 +27,7 @@
           </div>
         </div>
 
-        <ion-segment [(ngModel)]="network" (ionChange)="metaverse.setNetwork($event)" color="primary" id="network-switch">
+        <ion-segment [(ngModel)]="network" (ionChange)="setNetwork($event)" color="primary" id="network-switch">
           <ion-segment-button id="network-switch-option-mainnet" value="mainnet" [translate]="'MAINNET'">
           </ion-segment-button>
           <ion-segment-button id="network-switch-option-testnet" value="testnet" [translate]="'TESTNET'">

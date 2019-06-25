@@ -37,7 +37,7 @@ export class MetaverseService {
   syncing$ = new BehaviorSubject<boolean>(false)
   height$ = new BehaviorSubject<number>(undefined)
 
-  readonly network = this.config.defaultNetwork
+  network = this.config.defaultNetwork
 
   blockchain: any
 
@@ -90,6 +90,7 @@ export class MetaverseService {
   }
 
   setNetwork(network: Network) {
+    this.network = network
     this.blockchain = Blockchain({ network: this.network })
   }
 

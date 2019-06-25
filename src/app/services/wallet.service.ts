@@ -2,14 +2,13 @@ import { Injectable } from '@angular/core'
 import Metaverse from 'metaversejs/dist/metaverse.js'
 import { AES, enc } from 'crypto-js'
 import { ConfigService } from './config.service'
-import { Storage } from '@ionic/storage'
 import { Buffer } from 'buffer'
 import { MetaverseService } from './metaverse.service'
-import { BehaviorSubject, Observable } from 'rxjs'
+import { Observable } from 'rxjs'
 import { combineLatest } from 'rxjs/observable/combineLatest'
 import { map, take } from 'rxjs/operators'
 import { merge, Dictionary } from 'lodash'
-import { DatastoreService } from './datastore.service';
+import { DatastoreService } from './datastore.service'
 
 export interface Balance {
   frozen: number
@@ -51,7 +50,7 @@ export class WalletService {
 
   async addresses$() {
     const collection = await this.datastore.configCollection()
-    return collection.findOne().where('key').equals('addresses').$.pipe( map(conf => conf ? conf.toJSON().value : []))
+    return collection.findOne().where('key').equals('addresses').$.pipe(map(conf => conf ? conf.toJSON().value : []))
   }
   async reset() {
     const configCollection = await this.datastore.configCollection()
@@ -88,7 +87,9 @@ export class WalletService {
 
   async getAddresses() {
     const collection = await this.datastore.configCollection()
-    return collection.findOne().where('key').equals('addresses').$.pipe(take(1), map(conf => conf ? conf.toJSON().value : [])).toPromise()
+    return collection.findOne().where('key').equals('addresses').$
+      .pipe(take(1), map(conf => conf ? conf.toJSON().value : []))
+      .toPromise()
   }
 
   async generateWallet(): Promise<GeneratedWallet> {
@@ -114,25 +115,33 @@ export class WalletService {
 
   async setIndex(index: number) {
     const collection = await this.datastore.configCollection()
-    const wallet = await collection.findOne().where('key').equals('wallet').$.pipe(take(1), map(conf => conf.toJSON().value)).toPromise()
+    const wallet = await collection.findOne().where('key').equals('wallet').$
+      .pipe(take(1), map(conf => conf.toJSON().value))
+      .toPromise()
     wallet.index = index
     return collection.findOne().where('key').equals('wallet').update({ $set: { value: wallet } })
   }
 
   async getAddressIndex() {
     const collection = await this.datastore.configCollection()
-    const wallet = await collection.findOne().where('key').equals('wallet').$.pipe(take(1), map(conf => conf.toJSON().value)).toPromise()
+    const wallet = await collection.findOne().where('key').equals('wallet').$
+      .pipe(take(1), map(conf => conf.toJSON().value))
+      .toPromise()
     return wallet.index
   }
 
   async getWallet() {
     const collection = await this.datastore.configCollection()
-    return collection.findOne().where('key').equals('wallet').$.pipe(take(1), map(conf => conf.toJSON().value)).toPromise()
+    return collection.findOne().where('key').equals('wallet').$
+      .pipe(take(1), map(conf => conf.toJSON().value))
+      .toPromise()
   }
 
   async getSeed() {
     const collection = await this.datastore.configCollection()
-    return collection.findOne().where('key').equals('seed').$.pipe(take(1), map(conf => conf.toJSON().value)).toPromise()
+    return collection.findOne().where('key').equals('seed').$
+      .pipe(take(1), map(conf => conf.toJSON().value))
+      .toPromise()
   }
 
   async setSeed(seed) {

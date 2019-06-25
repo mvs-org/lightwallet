@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { ConfigService } from '../services/config.service';
-import { Platform } from '@ionic/angular';
-import { MetaverseService, Network } from '../services/metaverse.service';
-import { AccountService } from '../services/account.service';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core'
+import { ConfigService } from '../services/config.service'
+import { Platform } from '@ionic/angular'
+import { MetaverseService, Network } from '../services/metaverse.service'
+import { AccountService } from '../services/account.service'
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-login',
@@ -32,7 +32,11 @@ export class LoginPage implements OnInit {
   ionViewWillEnter() {
     this.account.getSavedAccounts()
       .then((accounts) => this.saved_accounts = accounts ? accounts : [])
-}
+  }
+
+  setNetwork(event: CustomEvent) {
+    this.metaverse.setNetwork(event.detail.value)
+  }
 
   loginViaAccount(account) {
     this.router.navigate(['login', 'account'],
