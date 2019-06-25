@@ -36,7 +36,6 @@ export class AccountPage implements OnInit {
   }
 
   async ngOnInit() {
-    this.metaverse.sync()
     this.tickers = await this.metaverse.getTickers()
   }
 

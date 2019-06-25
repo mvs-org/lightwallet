@@ -37,7 +37,6 @@ export class MetaverseService {
   syncing$ = new BehaviorSubject<boolean>(false)
   height$ = new BehaviorSubject<number>(undefined)
 
-  heartbeat$ = interval(5000)
   readonly network = this.config.defaultNetwork
 
   blockchain: any
@@ -50,8 +49,14 @@ export class MetaverseService {
     private multisig: MultisigService,
   ) {
     this.setNetwork(this.config.defaultNetwork)
-    this.sync()
-    this.heartbeat$.subscribe(() => this.sync())
+    this.datastore.waitForLeadership()
+      .then(() => {
+        console.info('taking lead of transaction synchronization')
+        this.sync()
+        setInterval(() => {
+          this.sync()
+        }, 5000)
+      })
   }
 
 
@@ -221,8 +226,9 @@ export class MetaverseService {
       .then(stream => stream.pipe(take(1)).toPromise())
   }
 
-  send = async (tx, balances) => {
+  send = async (tx) => {
     try {
+      console.log(tx)
       const raw = await tx.encode().toString('hex')
       const broadcastResponse = await this.broadcast(raw)
       tx.hash = broadcastResponse.hash
@@ -239,7 +245,7 @@ export class MetaverseService {
       })
       tx.outputs = tx.outputs.map((output, index): Output => {
         return {
-          index: output.index,
+          index,
           locked_height_range: (output.locktime) ? output.locktime : 0,
           attachment: this.formatAttachment(output),
           value: output.value,

@@ -131,9 +131,9 @@ export class SendSingleComponent implements OnInit {
     try {
       await this.loaderCreateTx.present()
       const tx = await this.create()
-      await this.loaderSendTx.present()
       await this.loaderCreateTx.dismiss()
-      const result = await this.metaverse.send(tx, this.balances)
+      await this.loaderSendTx.present()
+      const result = await this.metaverse.send(tx)
       await this.loaderSendTx.dismiss()
       return this.router.navigate(['/account'])
       //this.alert.showSent('SUCCESS_SEND_TEXT', result.hash)
