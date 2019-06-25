@@ -23,18 +23,13 @@ export type TransactionDocument = RxDocument<TransactionDocType, TransactionDocM
 export type TransactionCollection = RxCollection<TransactionDocType, TransactionDocMethods, TransactionCollectionMethods>
 
 export interface TransactionCollectionMethods {
-    [key: string]: (any) => any
-    getTransaction: (string) => Promise<TransactionDocType>
+    [key: string]: () => any | Promise<any> | Observable<any>
     countAll: () => Promise<number>
     watch: () => Observable<RxDocumentTypeWithRev<TransactionDocType>[]>
     latest: () => Promise<TransactionDocType>
 }
 
 export const transactionCollectionMethods: TransactionCollectionMethods = {
-    getTransaction: async function (this: TransactionCollection, hash: string) {
-        return await this.findOne().where('hash').equals(hash).exec()
-            .then(tx => tx.toJSON())
-    },
     countAll: async function (this: TransactionCollection) {
         const allDocs = await this.find().exec()
         return allDocs.length

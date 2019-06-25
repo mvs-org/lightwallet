@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core'
 import Metaverse from 'metaversejs/dist/metaverse.js'
 import { ConfigService } from './config.service'
-import { Observable, BehaviorSubject, Subject, interval, of } from 'rxjs'
-import { flatMap, first, last, take } from 'rxjs/operators'
+import { Observable, BehaviorSubject, of } from 'rxjs'
+import { flatMap, first, take } from 'rxjs/operators'
 import { combineLatest } from 'rxjs/observable/combineLatest'
-import { WalletService, Balances } from './wallet.service'
+import { WalletService } from './wallet.service'
 import { MultisigService } from './multisig.service'
 import { Storage } from '@ionic/storage'
 import Blockchain from 'mvs-blockchain/dist/index'
-import { DatastoreService } from './datastore.service';
-import { threadId } from 'worker_threads';
+import { DatastoreService } from './datastore.service'
 
 export interface Transaction {
   height: number
@@ -80,11 +79,12 @@ export class MetaverseService {
       return true
     }
     const collection = await this.datastore.transactionCollection()
-    const txs = await collection.find().exec()
-    return Promise.all(txs.map(tx => {
-      console.log(tx.toJSON())
-      return remove(tx)
-    }))
+    return collection.remove().then(console.log)
+    // const txs = await collection.find().exec()
+    // return Promise.all(txs.map(tx => {
+    //   console.log(tx.toJSON())
+    //   return remove(tx)
+    // }))
   }
 
   async loaderCondition() {

@@ -2,9 +2,14 @@ import { Injectable } from '@angular/core'
 import { create, RxDatabase, plugin, RxCollection } from 'rxdb'
 import * as idb from 'pouchdb-adapter-idb'
 import { Transaction } from './metaverse.service'
-import { map } from 'rxjs/operators'
 plugin(idb)
-import { transactionSchema, transactionDocMethods, transactionCollectionMethods, TransactionCollectionMethods, TransactionCollection } from '../store/transaction.datastore'
+import {
+  transactionSchema,
+  transactionCollectionMethods,
+  TransactionCollectionMethods,
+  TransactionCollection,
+  TransactionDocType,
+} from '../store/transaction.datastore'
 
 type MyETPWalletDatabaseCollections = {
   transaction: TransactionCollection
@@ -18,7 +23,7 @@ export class DatastoreService {
 
   db: Promise<RxDatabase<MyETPWalletDatabaseCollections>>
 
-  transactions: TransactionCollection
+  transactions: RxCollection<TransactionDocType>
   config: RxCollection<any>
 
   constructor() {
@@ -31,7 +36,7 @@ export class DatastoreService {
     })
   }
 
-  async transactionCollection(): Promise<TransactionCollection> {
+  async transactionCollection(): Promise<RxCollection<TransactionDocType>> {
     if (this.transactions) {
       return this.transactions
     }
@@ -42,7 +47,6 @@ export class DatastoreService {
     return db.collection({
       name: 'transaction',
       schema: transactionSchema,
-      statics: transactionCollectionMethods,
     })
   }
 
