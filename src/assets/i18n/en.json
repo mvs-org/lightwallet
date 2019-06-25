@@ -68,6 +68,10 @@
             "BUTTON": {
                 "OK": "OK"
             }
+        },
+        "LOADER": {
+            "OPENING_FILE": "Opening file...",
+            "ENTERING_WALLET": "Entering the wallet..."
         }
     },
     "DISCLAIMER": {

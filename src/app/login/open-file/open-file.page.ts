@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core'
-import { LoadingController, AlertController } from '@ionic/angular'
-import { TranslateService } from '@ngx-translate/core'
 import { WalletService } from 'src/app/services/wallet.service'
 import { MetaverseService } from '../../services/metaverse.service'
 import { Router } from '@angular/router'
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 import { AccountService } from '../../services/account.service'
+import { AlertService } from '../../services/alert.service'
 
 @Component({
   selector: 'app-open-file',
@@ -17,39 +16,35 @@ export class OpenFilePage implements OnInit {
   form: FormGroup
   fileData: any
   fileLoaded: boolean
+  loader: any
 
   constructor(
-    private loadingCtrl: LoadingController,
-    private translate: TranslateService,
     private walletService: WalletService,
     public metaverse: MetaverseService,
     private router: Router,
     private formBuilder: FormBuilder,
-    private alertCtrl: AlertController,
     private account: AccountService,
+    private alertService: AlertService,
   ) { }
 
   async ngOnInit() {
-    const loader = await this.loadingCtrl.create({
-      animated: true,
-      spinner: 'crescent',
-      message: await this.translate.get('OPEN_FILE.LOADER').toPromise(),
-    })
+    this.loader = await this.alertService.loading('OPEN_FILE.LOADER')
 
     this.form = this.formBuilder.group({
       passphrase: new FormControl('', [Validators.required, Validators.minLength(4)]),
     })
   }
 
-  open(e) {
-    let file = e.target.files
-    let reader = new FileReader()
+  async open(e) {
+    this.loader = await this.alertService.loading('OPEN_FILE.LOADER.OPENING_FILE')
+    await this.loader.present()
+    const file = e.target.files
+    const reader = new FileReader()
     reader.onload = (e: any) => {
-      let content = e.target.result
-
+      const content = e.target.result
       try {
         this.fileData = JSON.parse(content)
-        if(!this.fileData.mnemonic) {
+        if (!this.fileData.mnemonic) {
           this.wrongFile()
         }
       } catch (e) {
@@ -57,35 +52,25 @@ export class OpenFilePage implements OnInit {
         this.wrongFile()
       }
     }
-    if(file[0])
+    if (file[0]) {
       reader.readAsText(file[0])
+    }
+    await this.loader.dismiss()
   }
 
   async wrongFile() {
-    const translations = await this.translate.get([
-      'TITLE',
-      'TEXT',
-      'BUTTON.OK',
-    ].map(key => 'OPEN_FILE.WRONG_FILE.' + key)).toPromise()
-    const alert = await this.alertCtrl.create({
-      header: translations['OPEN_FILE.WRONG_FILE.TITLE'],
-      message: translations['OPEN_FILE.WRONG_FILE.TEXT'],
-      buttons: [
-        {
-          text: translations['OPEN_FILE.WRONG_FILE.BUTTON.OK'],
-        },
-      ],
-    })
-    alert.present()
-
+    await this.alertService.alert('OPEN_FILE', 'WRONG_FILE', 'TITLE', 'TEXT', ['OK'])
   }
 
 
   async decrypt() {
+    this.loader = await this.alertService.loading('OPEN_FILE.LOADER.ENTERING_WALLET')
+    await this.loader.present()
     const passphrase = this.form.value.passphrase
     await this.walletService.import(this.fileData, passphrase, this.metaverse.network)
     await this.account.saveSessionAccount(passphrase)
-    return this.router.navigate(['/account'])
+    this.router.navigate(['/account'])
+    return this.loader.dismiss()
   }
 
 }

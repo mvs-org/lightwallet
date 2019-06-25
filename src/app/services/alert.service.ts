@@ -1,15 +1,17 @@
-import { Injectable } from '@angular/core';
-import { AlertController } from '@ionic/angular';
-import { TranslateService } from '@ngx-translate/core';
+import { Injectable } from '@angular/core'
+import { AlertController } from '@ionic/angular'
+import { TranslateService } from '@ngx-translate/core'
+import { LoadingController } from '@ionic/angular'
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AlertService {
 
   constructor(
     private alertCtrl: AlertController,
     private translate: TranslateService,
+    private loadingCtrl: LoadingController,
   ) { }
 
   async alert(page, alert_name, title, text, buttons_text) {
@@ -19,13 +21,13 @@ export class AlertService {
       'BUTTON.' + buttons_text[0],
       'BUTTON.' + buttons_text[1],
       'BUTTON.' + buttons_text[2],
-    ].map(key => page + '.' + alert_name + '.' + key)).toPromise();
+    ].map(key => page + '.' + alert_name + '.' + key)).toPromise()
 
-    let buttons = []
+    const buttons = []
     buttons_text.forEach((text) => {
-      let button = {
+      const button = {
         text: translations[page + '.' + alert_name + '.BUTTON.' + text],
-        handler: () => alert.dismiss(text)
+        handler: () => alert.dismiss(text),
       }
       buttons.push(button)
     })
@@ -33,8 +35,8 @@ export class AlertService {
     const alert = await this.alertCtrl.create({
       header: translations[page + '.' + alert_name + '.' + title],
       message: translations[page + '.' + alert_name + '.' + text],
-      buttons: buttons
-    });
+      buttons
+    })
 
     alert.present()
     return alert
@@ -47,30 +49,38 @@ export class AlertService {
       'INPUT.PLACEHOLDER',
       'BUTTON.BACK',
       'BUTTON.OK',
-    ].map(key => page + '.' + alert_name + '.' + key)).toPromise();
+    ].map(key => page + '.' + alert_name + '.' + key)).toPromise()
 
-    let inputs = [
-      { name: 'input', placeholder: translations[page + '.' + alert_name + '.INPUT.PLACEHOLDER'], type: text }
+    const inputs = [
+      { name: 'input', placeholder: translations[page + '.' + alert_name + '.INPUT.PLACEHOLDER'], type: text },
     ]
 
     const alert = await this.alertCtrl.create({
       header: translations[page + '.' + alert_name + '.' + title],
       message: translations[page + '.' + alert_name + '.' + text],
-      inputs: inputs,
+      inputs,
       buttons: [
         {
           text: translations[page + '.' + alert_name + '.BUTTON.BACK'],
-          handler: () => alert.dismiss(false)
+          handler: () => alert.dismiss(false),
         },
         {
           text: translations[page + '.' + alert_name + '.BUTTON.OK'],
-          handler: (data) => alert.dismiss(data.input)
-        }
-      ]
-    });
+          handler: (data) => alert.dismiss(data.input),
+        },
+      ],
+    })
 
     alert.present()
     return alert
+  }
+
+  async loading(text) {
+    return await this.loadingCtrl.create({
+      animated: true,
+      spinner: 'crescent',
+      message: await this.translate.get(text).toPromise(),
+    })
   }
 
 }
