@@ -26,7 +26,6 @@ export interface TransactionCollectionMethods {
     [key: string]: (any) => any
     getTransaction: (string) => Promise<TransactionDocType>
     countAll: () => Promise<number>
-    clear: () => Promise<any>
     watch: () => Observable<RxDocumentTypeWithRev<TransactionDocType>[]>
     latest: () => Promise<TransactionDocType>
 }
@@ -43,9 +42,6 @@ export const transactionCollectionMethods: TransactionCollectionMethods = {
     watch: function(this: TransactionCollection){
     return this.find().sort({ height: -1 }).$
       .pipe(map(txs => txs.map(tx => tx.toJSON())))
-    },
-    clear: async function(this: TransactionCollection){
-        return this.find({}).remove()
     },
     latest: async function (this: TransactionCollection) {
         const allDocs = await this.find().sort({ height: -1 }).exec()

@@ -54,9 +54,12 @@ export class WalletService {
   }
   async reset() {
     const configCollection = await this.datastore.configCollection()
-    configCollection.findOne().where('key').equals('wallet').remove()
-    configCollection.findOne().where('key').equals('addresses').remove()
-    configCollection.findOne().where('key').equals('seed').remove()
+    await configCollection.findOne().where('key').equals('wallet').exec()
+      .then(record => record ? record.remove() : null)
+    configCollection.findOne().where('key').equals('addresses').exec()
+      .then(record => record ? record.remove() : null)
+    configCollection.findOne().where('key').equals('seed').exec()
+      .then(record => record ? record.remove() : null)
   }
 
   balances = async (metaverse: MetaverseService) => combineLatest([

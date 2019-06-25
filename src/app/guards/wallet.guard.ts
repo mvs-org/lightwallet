@@ -38,10 +38,14 @@ export class WalletGuard implements CanActivate {
 
   logout() {
     console.log('start clear process')
-    this.wallet.reset()
-    this.multisig.reset()
-    this.metaverse.reset()
-    this.account.reset()
-    this.router.navigate(['/login'])
+    Promise.all([
+      this.wallet.reset(),
+      this.multisig.reset(),
+      this.metaverse.reset(),
+      this.account.reset(),
+    ])
+      .then(() => {
+        this.router.navigate(['/login'])
+      })
   }
 }

@@ -9,6 +9,7 @@ import { MultisigService } from './multisig.service'
 import { Storage } from '@ionic/storage'
 import Blockchain from 'mvs-blockchain/dist/index'
 import { DatastoreService } from './datastore.service';
+import { threadId } from 'worker_threads';
 
 export interface Transaction {
   height: number
@@ -65,10 +66,25 @@ export class MetaverseService {
     return collection.watch()
   }
 
-  reset() {
-    this.height$.next(undefined)
-    this.storage.remove('transactions')
-    this.datastore.transactions.clear()
+  async reset() {
+    console.log('reset metaverse data')
+    console.log('remove txs')
+    const remove = async item => {
+      try {
+        await item.remove()
+      } catch (e) {
+        // loop on document conflicts to delete all revisions
+        console.log('err', e)
+        await remove(item)
+      }
+      return true
+    }
+    const collection = await this.datastore.transactionCollection()
+    const txs = await collection.find().exec()
+    return Promise.all(txs.map(tx => {
+      console.log(tx.toJSON())
+      return remove(tx)
+    }))
   }
 
   async loaderCondition() {
