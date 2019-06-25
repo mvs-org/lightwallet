@@ -6,7 +6,7 @@ import { MetaverseService } from 'src/app/services/metaverse.service'
 import { FormatPipe } from 'src/app/pipes/format/format'
 import { QrAddressComponent } from './qr-address/qr-address.component'
 import { keyBy, Dictionary } from 'lodash'
-import { fromEventPattern } from 'rxjs'
+import { fromEventPattern, Observable } from 'rxjs'
 
 @Component({
   selector: 'app-addresses',
@@ -17,7 +17,7 @@ export class AddressesPage implements OnInit {
 
   selectedAsset: string
   addressBalances: Dictionary<Balances>
-  addresses$ = this.wallet.addresses$
+  addresses$: Observable<string[]>
   displayType: string
 
   constructor(
@@ -29,6 +29,7 @@ export class AddressesPage implements OnInit {
   ) { }
 
   async ngOnInit() {
+    this.addresses$ = await this.wallet.addresses$()
     this.wallet.addressBalances(this.metaverse)
       .then(addressBalanceStream => {
         addressBalanceStream

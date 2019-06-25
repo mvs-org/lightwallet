@@ -68,13 +68,13 @@ export class MetaverseService {
     this.datastore.clearTransactions()
   }
 
-  loaderCondition() {
-    return this.wallet.addresses$.value &&
-      this.wallet.addresses$.value.length
+  async loaderCondition() {
+    const addresses = await this.wallet.getAddresses()
+    return addresses && addresses.length
   }
 
   async sync() {
-    if (await this.syncing$.value === true || !this.loaderCondition()) {
+    if (await this.syncing$.value === true || !await this.loaderCondition()) {
       return
     }
     this.syncing$.next(true)
@@ -217,12 +217,12 @@ export class MetaverseService {
     }
   }
 
-  getUtxoFrom(address?: string) {
+  async getUtxoFrom(address?: string) {
     if (address) {
       return this.utxoStream(of([address]))
         .then(stream => stream.pipe(take(1)).toPromise())
     }
-    return this.utxoStream(this.wallet.addresses$)
+    return this.utxoStream(await this.wallet.addresses$())
       .then(stream => stream.pipe(take(1)).toPromise())
   }
 

@@ -13,6 +13,7 @@ export class DatastoreService {
   db: Promise<RxDatabase>
 
   transactions: RxCollection<Transaction>
+  config: RxCollection<any>
 
   constructor() {
 
@@ -115,6 +116,34 @@ export class DatastoreService {
   async getTransaction(hash: string) {
     const collection = await this.transactionCollection()
     return collection.findOne({ hash }).exec().then(tx => tx.toJSON())
+  }
+
+  async configCollection() {
+    if (this.config) {
+      return this.config
+    }
+    const db = await this.db
+    if (db.config) {
+      return db.config
+    }
+    return db.collection({
+      name: 'config',
+      schema: {
+        title: 'config',
+        version: 0,
+        description: 'Metaverse wallet configuration',
+        type: 'object',
+        properties: {
+          key: {
+            type: 'string',
+            primary: true,
+          },
+          value: {
+            type: ['string', 'integer', 'object', 'array'],
+          },
+        },
+      },
+    })
   }
 
 

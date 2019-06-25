@@ -49,7 +49,7 @@ export class AccountService {
 
 
   saveSessionAccount(password) {
-    return Promise.all([this.storage.get('seed'), this.storage.get('wallet'), this.storage.get('multisig_addresses'), this.storage.get('multisigs'), this.storage.get('plugins')])
+    return Promise.all([this.walletService.getSeed(), this.walletService.getWallet(), this.storage.get('multisig_addresses'), this.storage.get('multisigs'), this.storage.get('plugins')])
       .then(([seed, wallet, multisig_addresses, multisigs, plugins]) => {
         let new_account_content = {
           seed: seed,

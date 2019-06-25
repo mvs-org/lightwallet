@@ -13,7 +13,6 @@ export class HistoryItemComponent implements OnInit {
   @Input() height$: any
   @Input() blocktime: number
   height: number
-  addresses$ = this.wallet.addresses$;
   totalInputs: any = {ETP: 0, MST: {}}
   totalOutputs: any = {ETP: 0, MST: {}}
   totalPersonalInputs: any = {ETP: 0, MST: {}}
@@ -32,7 +31,7 @@ export class HistoryItemComponent implements OnInit {
     this.current_time = Date.now()
   }
 
-  ngOnInit() {
+  async ngOnInit() {
 
     this.height$.subscribe((data) => {
       this.height = data
@@ -55,13 +54,15 @@ export class HistoryItemComponent implements OnInit {
 
     this.txType = TX_TYPE_ETP
 
+    const addresses = await this.wallet.getAddresses()
+
     this.transaction.inputs.forEach(input => {
       if(input.attachment && (input.attachment.type == 'asset-issue' || input.attachment.type == 'asset-transfer')) {
         this.totalInputs.MST[input.attachment.symbol] = this.totalInputs.MST[input.attachment.symbol] ? this.totalInputs.MST[input.attachment.symbol] + input.attachment.quantity : input.attachment.quantity
         this.decimals.MST[input.attachment.symbol] = input.attachment.decimals
       }
       this.totalInputs.ETP += input.value
-      if(this.addresses$.value.indexOf(input.address) > -1) {
+      if(addresses.indexOf(input.address) > -1) {
         this.totalPersonalInputs.ETP += input.value
         if(input.attachment && (input.attachment.type == 'asset-issue' || input.attachment.type == 'asset-transfer')) {
           this.totalPersonalInputs.MST[input.attachment.symbol] = this.totalPersonalInputs.MST[input.attachment.symbol] ? this.totalPersonalInputs.MST[input.attachment.symbol] + input.attachment.quantity : input.attachment.quantity
@@ -113,7 +114,7 @@ export class HistoryItemComponent implements OnInit {
         this.totalOutputs.MST[output.attachment.symbol] = this.totalOutputs.MST[output.attachment.symbol] ? this.totalOutputs.MST[output.attachment.symbol] + output.attachment.quantity : output.attachment.quantity
       }
 
-      if(this.addresses$.value.indexOf(output.address) > -1) {
+      if(addresses.indexOf(output.address) > -1) {
         this.totalPersonalOutputs.ETP += output.value
         if(output.attachment && (output.attachment.type == 'asset-issue' || output.attachment.type == 'asset-transfer')) {
           this.totalPersonalOutputs.MST[output.attachment.symbol] = this.totalPersonalOutputs.MST[output.attachment.symbol] ? this.totalPersonalOutputs.MST[output.attachment.symbol] + output.attachment.quantity : output.attachment.quantity

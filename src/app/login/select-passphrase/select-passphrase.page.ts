@@ -31,8 +31,8 @@ export class SelectPassphrasePage implements OnInit {
       passphrase,
       repeat,
     }, {
-      validators: [this.isSame(passphrase, repeat)],
-    })
+        validators: [this.isSame(passphrase, repeat)],
+      })
   }
 
   isSame(targetControl: FormControl, checkControl: FormControl) {
@@ -58,7 +58,7 @@ export class SelectPassphrasePage implements OnInit {
     }
     const passphrase = this.form.value.passphrase
     const encryptedWallet = await this.wallet.encryptWallet(wallet, passphrase)
-    if(this.platform.is('mobile')) {
+    if (this.platform.is('mobile')) {
       await this.wallet.import(encryptedWallet, passphrase, this.metaverse.network)
       this.router.navigate(['/account'])
     } else {

@@ -7,8 +7,9 @@ import { Buffer } from 'buffer'
 import { MetaverseService } from './metaverse.service'
 import { BehaviorSubject, Observable } from 'rxjs'
 import { combineLatest } from 'rxjs/observable/combineLatest'
-import { map } from 'rxjs/operators'
+import { map, take } from 'rxjs/operators'
 import { merge, Dictionary } from 'lodash'
+import { DatastoreService } from './datastore.service';
 
 export interface Balance {
   frozen: number
@@ -40,27 +41,28 @@ export interface EncryptedWallet {
 })
 export class WalletService {
 
-  addresses$ = new BehaviorSubject<string[]>([])
 
   constructor(
     private config: ConfigService,
-    private storage: Storage,
+    // private storage: Storage,
+    private datastore: DatastoreService,
   ) {
-    this.getAddresses().then(addresses => {
-      this.addresses$.next(addresses || [])
-    })
   }
 
-  reset() {
-    this.addresses$.next(undefined)
-    this.storage.remove('wallet')
-    this.storage.remove('addresses')
-    this.storage.remove('seed')
+  async addresses$() {
+    const collection = await this.datastore.configCollection()
+    return collection.findOne().where('key').equals('addresses').$.pipe( map(conf => conf ? conf.toJSON().value : []))
+  }
+  async reset() {
+    const configCollection = await this.datastore.configCollection()
+    configCollection.findOne().where('key').equals('wallet').remove()
+    configCollection.findOne().where('key').equals('addresses').remove()
+    configCollection.findOne().where('key').equals('seed').remove()
   }
 
   balances = async (metaverse: MetaverseService) => combineLatest([
-    await metaverse.utxoStream(this.addresses$),
-    this.addresses$,
+    await metaverse.utxoStream(await this.addresses$()),
+    await this.addresses$(),
     metaverse.height$,
   ])
     .pipe(
@@ -74,8 +76,8 @@ export class WalletService {
     )
 
   addressBalances = async (metaverse: MetaverseService): Promise<Observable<Dictionary<Balances>>> => combineLatest([
-    await metaverse.utxoStream(this.addresses$),
-    this.addresses$,
+    await metaverse.utxoStream(await this.addresses$()),
+    await this.addresses$(),
     metaverse.height$,
   ])
     .pipe(
@@ -85,7 +87,8 @@ export class WalletService {
     )
 
   async getAddresses() {
-    return await this.storage.get('addresses') || []
+    const collection = await this.datastore.configCollection()
+    return collection.findOne().where('key').equals('addresses').$.pipe(take(1), map(conf => conf ? conf.toJSON().value : [])).toPromise()
   }
 
   async generateWallet(): Promise<GeneratedWallet> {
@@ -110,29 +113,64 @@ export class WalletService {
   }
 
   async setIndex(index: number) {
-    const wallet = await this.storage.get('wallet')
+    const collection = await this.datastore.configCollection()
+    const wallet = await collection.findOne().where('key').equals('wallet').$.pipe(take(1), map(conf => conf.toJSON().value)).toPromise()
     wallet.index = index
-    return this.storage.set('wallet', wallet)
+    return collection.findOne().where('key').equals('wallet').update({ $set: { value: wallet } })
   }
 
   async getAddressIndex() {
-    return (await this.storage.get('wallet')).index
+    const collection = await this.datastore.configCollection()
+    const wallet = await collection.findOne().where('key').equals('wallet').$.pipe(take(1), map(conf => conf.toJSON().value)).toPromise()
+    return wallet.index
+  }
+
+  async getWallet() {
+    const collection = await this.datastore.configCollection()
+    return collection.findOne().where('key').equals('wallet').$.pipe(take(1), map(conf => conf.toJSON().value)).toPromise()
+  }
+
+  async getSeed() {
+    const collection = await this.datastore.configCollection()
+    return collection.findOne().where('key').equals('seed').$.pipe(take(1), map(conf => conf.toJSON().value)).toPromise()
+  }
+
+  async setSeed(seed) {
+    const collection = await this.datastore.configCollection()
+    return collection.insert({ key: 'seed', value: seed })
+  }
+
+  async setWallet(seed) {
+    const collection = await this.datastore.configCollection()
+    return collection.insert({ key: 'wallet', value: seed })
   }
 
   async getHDNode(passphrase: string, network: string) {
-    const seed = await this.decryptData(await this.storage.get('seed'), passphrase)
+    const seed = await this.decryptData(await this.getSeed(), passphrase)
     return this.getHDNodeFromSeed(Buffer.from(seed, 'hex'), network)
+  }
+
+  async setAddresses(addresses) {
+    const collection = await this.datastore.configCollection()
+    const oldAddresses = await collection.findOne({ key: 'addresses' }).exec()
+    if (oldAddresses) {
+      console.info('update addresses')
+      return await collection.findOne().where('key').equals('addresses').update({ $set: { value: addresses } })
+    } else {
+      console.info('set addresses')
+      return await collection.insert({ key: 'addresses', value: addresses })
+    }
   }
 
   async import(encryptedWallet: EncryptedWallet, passphrase: string, network: string) {
     const mnemonic = await this.decryptData(encryptedWallet.mnemonic, passphrase)
     const seed = await Metaverse.wallet.mnemonicToSeed(mnemonic, Metaverse.networks[network])
-    await this.storage.set('wallet', encryptedWallet)
-    await this.storage.set('seed', await this.encryptData(seed, passphrase))
+    await this.setWallet(encryptedWallet)
+    await this.setSeed(await this.encryptData(seed, passphrase))
     const hdNode = await this.getHDNode(passphrase, network)
+    console.log(hdNode)
     const addresses = await this.generateAddresses(hdNode, 0, await this.getAddressIndex())
-    this.addresses$.next(addresses)
-    return await this.storage.set('addresses', addresses)
+    return await this.setAddresses(addresses)
   }
 
   private getHDNodeFromSeed(seed: any, network: string) {
