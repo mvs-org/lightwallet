@@ -67,24 +67,8 @@ export class MetaverseService {
 
   async reset() {
     console.log('reset metaverse data')
-    console.log('remove txs')
-    const remove = async item => {
-      try {
-        await item.remove()
-      } catch (e) {
-        // loop on document conflicts to delete all revisions
-        console.log('err', e)
-        await remove(item)
-      }
-      return true
-    }
     const collection = await this.datastore.transactionCollection()
-    return collection.remove().then(console.log)
-    // const txs = await collection.find().exec()
-    // return Promise.all(txs.map(tx => {
-    //   console.log(tx.toJSON())
-    //   return remove(tx)
-    // }))
+    return collection.remove()
   }
 
   async loaderCondition() {

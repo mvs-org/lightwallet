@@ -55,7 +55,7 @@ export class DatastoreService {
     console.log('insert batch', transactions)
     const transactionCollection = await this.transactionCollection()
     for (const tx of transactions) {
-      await this.saveTransaction(tx)
+      await transactionCollection.atomicUpsert(tx)
     }
     return transactions
   }
