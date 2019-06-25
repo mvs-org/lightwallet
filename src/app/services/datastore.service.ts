@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core'
 import { create, RxDatabase, plugin, RxCollection } from 'rxdb'
 import * as idb from 'pouchdb-adapter-idb'
-import { Transaction } from './metaverse.service';
-import { map } from 'rxjs/operators';
+import { Transaction } from './metaverse.service'
+import { map } from 'rxjs/operators'
 plugin(idb)
 
 @Injectable({
@@ -60,7 +60,7 @@ export class DatastoreService {
           },
           confirmed_at: {
             type: 'integer',
-          }
+          },
         },
       },
     })

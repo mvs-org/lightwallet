@@ -6,8 +6,8 @@ import { MultisigService } from '../services/multisig.service'
 import { MetaverseService } from '../services/metaverse.service'
 import { AccountService } from '../services/account.service'
 import { Storage } from '@ionic/storage'
-import { DatastoreService } from '../services/datastore.service';
-import { map } from 'rxjs/operators';
+import { DatastoreService } from '../services/datastore.service'
+import { map } from 'rxjs/operators'
 
 @Injectable({
   providedIn: 'root',
@@ -29,14 +29,10 @@ export class WalletGuard implements CanActivate {
     return new Observable<boolean>((subscriber) => {
       this.wallet.addresses$()
         .then(collection => {
-          console.log(collection)
           return collection.subscribe((addresses => {
-            console.log('addresses',addresses)
             if (addresses && addresses.length > 0) {
-              console.info('can access account')
               subscriber.next(true)
             } else {
-              console.info('cannot access account')
               this.logout()
               subscriber.next(false)
             }

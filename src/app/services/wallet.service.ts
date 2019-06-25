@@ -168,7 +168,6 @@ export class WalletService {
     await this.setWallet(encryptedWallet)
     await this.setSeed(await this.encryptData(seed, passphrase))
     const hdNode = await this.getHDNode(passphrase, network)
-    console.log(hdNode)
     const addresses = await this.generateAddresses(hdNode, 0, await this.getAddressIndex())
     return await this.setAddresses(addresses)
   }

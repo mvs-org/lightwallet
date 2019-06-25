@@ -8,14 +8,11 @@
 </ion-header>
 
 <ion-content>
-
   <ion-list>
     <ion-item *ngFor="let language of languages | keyvalue" (click)="set(language.key)">
       <ion-label>
-        {{language|json}}
         <span [innerHTML]="language.value.name"></span>
       </ion-label>
     </ion-item>
   </ion-list>
-
 </ion-content>
