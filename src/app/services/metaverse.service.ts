@@ -60,12 +60,15 @@ export class MetaverseService {
   }
 
 
-  transactionStream = (): Promise<Observable<Transaction[]>> => this.datastore.watchTransactions()
+  transactionStream = async (): Promise<Observable<Transaction[]>> => {
+    const collection = await this.datastore.transactionCollection()
+    return collection.watch()
+  }
 
   reset() {
     this.height$.next(undefined)
     this.storage.remove('transactions')
-    this.datastore.clearTransactions()
+    this.datastore.transactions.clear()
   }
 
   async loaderCondition() {

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { MetaverseService } from '../services/metaverse.service'
 import { WalletService, Balances, Balance } from '../services/wallet.service'
+import { DatastoreService } from '../services/datastore.service';
 
 @Component({
   selector: 'app-account',
@@ -20,6 +21,7 @@ export class AccountPage implements OnInit {
   tickers
 
   constructor(
+    private datastore: DatastoreService,
     private metaverse: MetaverseService,
     private wallet: WalletService,
   ) {

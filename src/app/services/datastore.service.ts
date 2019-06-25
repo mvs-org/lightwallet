@@ -4,15 +4,21 @@ import * as idb from 'pouchdb-adapter-idb'
 import { Transaction } from './metaverse.service'
 import { map } from 'rxjs/operators'
 plugin(idb)
+import { transactionSchema, transactionDocMethods, transactionCollectionMethods, TransactionCollectionMethods, TransactionCollection } from '../store/transaction.datastore'
+
+type MyETPWalletDatabaseCollections = {
+  transaction: TransactionCollection
+  config: RxCollection<any>
+}
 
 @Injectable({
   providedIn: 'root',
 })
 export class DatastoreService {
 
-  db: Promise<RxDatabase>
+  db: Promise<RxDatabase<MyETPWalletDatabaseCollections>>
 
-  transactions: RxCollection<Transaction>
+  transactions: TransactionCollection
   config: RxCollection<any>
 
   constructor() {
@@ -25,7 +31,7 @@ export class DatastoreService {
     })
   }
 
-  async transactionCollection() {
+  async transactionCollection(): Promise<TransactionCollection> {
     if (this.transactions) {
       return this.transactions
     }
@@ -35,34 +41,8 @@ export class DatastoreService {
     }
     return db.collection({
       name: 'transaction',
-      schema: {
-        title: 'transaction',
-        version: 0,
-        description: 'Metaverse transactions',
-        type: 'object',
-        properties: {
-          hash: {
-            type: 'string',
-            primary: true,
-          },
-          inputs: {
-            type: 'array',
-          },
-          outputs: {
-            type: 'array',
-          },
-          lock_time: {
-            type: 'integer',
-          },
-          height: {
-            type: 'integer',
-            index: true,
-          },
-          confirmed_at: {
-            type: 'integer',
-          },
-        },
-      },
+      schema: transactionSchema,
+      statics: transactionCollectionMethods,
     })
   }
 
@@ -96,26 +76,6 @@ export class DatastoreService {
   async getTransactions() {
     const collection = await this.transactionCollection()
     return collection.find().exec().then(txs => txs.map(tx => tx.toJSON()))
-  }
-
-  async watchTransactions() {
-    const collection = await this.transactionCollection()
-    return collection.find().sort({ height: -1 }).$
-      .pipe(map(txs => txs.map(tx => tx.toJSON())))
-  }
-
-  async clearTransactions() {
-    const collection = await this.transactionCollection()
-    return collection.find({}).remove()
-  }
-
-  async latestTransaction() {
-    const collection = await this.transactionCollection()
-  }
-
-  async getTransaction(hash: string) {
-    const collection = await this.transactionCollection()
-    return collection.findOne({ hash }).exec().then(tx => tx.toJSON())
   }
 
   async configCollection() {
