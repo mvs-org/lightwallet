@@ -217,7 +217,7 @@
     "SEND": {
         "TITLE": "Transfer",
         "SEND_SINGLE": "Send to one",
-        "SEND_MANY": "Send to many" 
+        "SEND_MANY": "Send to many"
     },
     "ERROR": {
         "PASSWORD": {
@@ -227,6 +227,20 @@
     },
     "SEND_SINGLE": {
         "GENERATING_TX_TEXT": "Generating transaction...",
-        "SENDING_TX_TEXT": "Sending transaction..."
+        "SENDING_TX_TEXT": "Sending transaction...",
+        "SEND_BUTTON": "Send",
+        "CANCEL_BUTTON": "Cancel",
+        "UNKNOWN_ERROR": {
+            "TITLE": "Something went wrong",
+            "BUTTON": {
+                "OK": "Ok"
+            }
+        }
+    },
+    "TOAST": {
+        "WRONG_PASSWORD": "Wrong password, please try again",
+        "ERR_CONNECTION": "Unable to broadcast the transaction. Please check you internet connection or try again later.",
+        "ERR_INSUFFICIENT_BALANCE": "Insufficient balance. Please double check your available balance.",
+        "ERR_TOO_MANY_INPUTS": "This transaction contains too many inputs. Please try a smaller amount."
     }
 }

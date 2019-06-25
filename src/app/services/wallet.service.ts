@@ -197,7 +197,12 @@ export class WalletService {
   }
 
   async decryptData(data: string, passphrase: string) {
-    return JSON.parse(AES.decrypt(data, passphrase).toString(enc.Utf8))
+    try {
+      return JSON.parse(AES.decrypt(data, passphrase).toString(enc.Utf8))
+    } catch (error) {
+      console.error(error)
+      throw Error('ERR_DECRYPT_WALLET')
+    }
   }
 
   async encryptData(data: any, passphrase: string) {

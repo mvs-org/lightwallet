@@ -149,7 +149,7 @@ export class MetaverseService {
 
   async getBlocktime(currentHeight: number) {
     const blocktime = await this.storage.get('blocktime')
-    if (blocktime === undefined || blocktime.height === undefined || currentHeight > blocktime.height + 1000) {
+    if (blocktime === undefined || blocktime === null || blocktime.height === undefined || currentHeight > blocktime.height + 1000) {
       try {
         const downscale = 10
         const time = await this.blockchain.block.blocktime(downscale)

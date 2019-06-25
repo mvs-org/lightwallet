@@ -6,6 +6,7 @@ import { WalletService, Balances } from '../../../services/wallet.service'
 import { Router } from '@angular/router'
 import { TranslateService } from '@ngx-translate/core'
 import { AlertService } from '../../../services/alert.service'
+import { ConfigService } from 'src/app/services/config.service'
 
 @Component({
   selector: 'app-send-single',
@@ -28,6 +29,7 @@ export class SendSingleComponent implements OnInit {
     private router: Router,
     private translate: TranslateService,
     private alertService: AlertService,
+    private config: ConfigService,
   ) {
 
     this.form = this.formBuilder.group({
@@ -65,7 +67,7 @@ export class SendSingleComponent implements OnInit {
     return
   }
 
-  create() {
+  async create() {
     /*let messages = [];
     if (this.message) {
       messages.push(this.message)
@@ -84,59 +86,51 @@ export class SendSingleComponent implements OnInit {
         (this.showAdvanced && messages !== []) ? messages : undefined
       )
     } else {*/
+
     return this.metaverse.createSendTx(
       this.form.value.passphrase,
       this.symbol,
       this.form.value.recipientAddress,
       undefined, // (this.recipient_avatar && this.recipient_avatar_valid) ? this.recipient_avatar : undefined,
       Math.round(parseFloat(this.form.value.amount) * Math.pow(10, this.decimals)),
-      null, //(this.sendFrom != 'auto') ? this.sendFrom : null,
-      undefined, //(this.showAdvanced && this.changeAddress != 'auto') ? this.changeAddress : undefined,
-      undefined, //(this.showAdvanced) ? this.fee : 10000,
+      null, // (this.sendFrom != 'auto') ? this.sendFrom : null,
+      undefined, // (this.showAdvanced && this.changeAddress != 'auto') ? this.changeAddress : undefined,
+      undefined, // (this.showAdvanced) ? this.fee : 10000,
       undefined, // (this.showAdvanced && messages !== []) ? messages : undefined,
-      this.metaverse.network,  //this.network
+      this.metaverse.network,
     )
-      .catch((error) => {
-        console.error(error.message)
-        switch (error.message) {
-          case 'ERR_DECRYPT_WALLET':
-            //this.alert.showError('MESSAGE.PASSWORD_WRONG', '')
-            throw Error('ERR_CREATE_TX')
-          case 'ERR_INSUFFICIENT_BALANCE':
-            //this.alert.showError('MESSAGE.INSUFFICIENT_BALANCE', '')
-            throw Error('ERR_CREATE_TX')
-          case 'ERR_TOO_MANY_INPUTS':
-            //this.alert.showErrorTranslated('ERROR_TOO_MANY_INPUTS', 'ERROR_TOO_MANY_INPUTS_TEXT')
-            throw Error('ERR_CREATE_TX')
-          default:
-            //this.alert.showError('MESSAGE.CREATE_TRANSACTION', error.message)
-            throw Error('ERR_CREATE_TX')
-        }
-      })
+
   }
 
   async send() {
     try {
-      this.loader.message = await this.translate.get('SEND_SINGLE.GENERATING_TX_TEXT').toPromise()
+      this.loader = await this.alertService.loading('SEND_SINGLE.GENERATING_TX_TEXT')
       await this.loader.present()
       const tx = await this.create()
-      this.loader.message =  await this.translate.get('SEND_SINGLE.SENDING_TX_TEXT').toPromise()
+      this.loader.message = await this.translate.get('SEND_SINGLE.SENDING_TX_TEXT').toPromise()
       const result = await this.metaverse.send(tx)
       await this.loader.dismiss()
       return this.router.navigate(['/account'])
-      //this.alert.showSent('SUCCESS_SEND_TEXT', result.hash)
+      // this.alert.showSent('SUCCESS_SEND_TEXT', result.hash)
     } catch (e) {
       console.error(e)
-      //this.alert.stopLoading()
+      await this.loader.dismiss()
       switch (e.message) {
         case 'ERR_CONNECTION':
-          //this.alert.showError('ERROR_SEND_TEXT', '')
-          break;
-        case 'ERR_CREATE_TX':
-          //already handle in create function
-          break;
+          this.alertService.toast('TOAST.ERR_CONNECTION', this.config.longToastDuration, 'top', 'danger')
+          break
+        case 'ERR_DECRYPT_WALLET':
+          this.alertService.toast('TOAST.WRONG_PASSWORD', this.config.longToastDuration, 'top', 'danger')
+          break
+        case 'ERR_INSUFFICIENT_BALANCE':
+        case 'ERR_INSUFFICIENT_UTXO':
+          this.alertService.toast('TOAST.ERR_INSUFFICIENT_BALANCE', this.config.longToastDuration, 'top', 'danger')
+          break
+        case 'ERR_TOO_MANY_INPUTS':
+          this.alertService.toast('TOAST.ERR_TOO_MANY_INPUTS', this.config.longToastDuration, 'top', 'danger')
+          break
         default:
-        //this.alert.showError('MESSAGE.BROADCAST_ERROR', error.message)
+          this.alertService.alert('SEND_SINGLE', 'UNKNOWN_ERROR', 'TITLE', e.message, ['OK'])
       }
     }
   }

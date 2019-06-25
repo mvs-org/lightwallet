@@ -1,21 +1,23 @@
-import { Injectable } from '@angular/core';
-import { Network } from '../services/metaverse.service';
+import { Injectable } from '@angular/core'
+import { Network } from '../services/metaverse.service'
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ConfigService {
 
-  defaultNetwork: Network = "mainnet";
-  version = '0.8.0';
+  defaultNetwork: Network = 'mainnet'
+  version = '0.8.0'
 
-  readonly defaultAddresses = 10;
+  readonly defaultAddresses = 10
 
-  readonly defaultLanguage = 'en';
+  readonly defaultLanguage = 'en'
 
-  readonly shortToastDuration = 2000;
+  readonly shortToastDuration = 2000
+  readonly mediumToastDuration = 5000
+  readonly longToastDuration = 10000
 
-  isApp: boolean;
+  isApp: boolean
 
 
   readonly defaultBalances = {
@@ -27,11 +29,11 @@ export class ConfigService {
       'MVS.ZDC': { frozen: 0, available: 0, decimals: 6 },
       SDG: { frozen: 0, available: 0, decimals: 8 },
     },
-    MIT: []
-  };
+    MIT: [],
+  }
 
   constructor() {
-    this.isApp = !document.URL.startsWith('http') || document.URL.startsWith('http://localhost:8080');
+    this.isApp = !document.URL.startsWith('http') || document.URL.startsWith('http://localhost:8080')
   }
 
 }

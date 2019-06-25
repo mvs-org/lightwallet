@@ -1,12 +1,12 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing'
 
-import { MetaverseService } from './metaverse.service';
+import { MetaverseService } from './metaverse.service'
 
 describe('MetaverseService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+  beforeEach(() => TestBed.configureTestingModule({}))
 
   it('should be created', () => {
-    const service: MetaverseService = TestBed.get(MetaverseService);
-    expect(service).toBeTruthy();
-  });
-});
+    const service: MetaverseService = TestBed.get(MetaverseService)
+    expect(service).toBeTruthy()
+  })
+})
