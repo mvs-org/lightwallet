@@ -4,8 +4,8 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 import { MetaverseService } from '../../../services/metaverse.service'
 import { WalletService, Balances } from '../../../services/wallet.service'
 import { Router } from '@angular/router'
-import { LoadingController } from '@ionic/angular'
 import { TranslateService } from '@ngx-translate/core'
+import { AlertService } from '../../../services/alert.service'
 
 @Component({
   selector: 'app-send-single',
@@ -18,8 +18,7 @@ export class SendSingleComponent implements OnInit {
   form: FormGroup
   balances: Balances
   decimals: number
-  loaderCreateTx: any
-  loaderSendTx: any
+  loader: any
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -27,8 +26,8 @@ export class SendSingleComponent implements OnInit {
     public metaverse: MetaverseService,
     private wallet: WalletService,
     private router: Router,
-    private loadingCtrl: LoadingController,
     private translate: TranslateService,
+    private alertService: AlertService,
   ) {
 
     this.form = this.formBuilder.group({
@@ -50,18 +49,7 @@ export class SendSingleComponent implements OnInit {
   }
 
   async ngOnInit() {
-
-    this.loaderCreateTx = await this.loadingCtrl.create({
-      animated: true,
-      spinner: 'crescent',
-      message: await this.translate.get('SEND_SINGLE.GENERATING_TX_TEXT').toPromise(),
-    })
-
-    this.loaderSendTx = await this.loadingCtrl.create({
-      animated: true,
-      spinner: 'crescent',
-      message: await this.translate.get('SEND_SINGLE.SENDING_TX_TEXT').toPromise(),
-    })
+    this.loader = await this.alertService.loading('SEND_SINGLE.GENERATING_TX_TEXT')
   }
 
   getError(control: FormControl, group?: FormGroup) {
@@ -106,7 +94,7 @@ export class SendSingleComponent implements OnInit {
       undefined, //(this.showAdvanced && this.changeAddress != 'auto') ? this.changeAddress : undefined,
       undefined, //(this.showAdvanced) ? this.fee : 10000,
       undefined, // (this.showAdvanced && messages !== []) ? messages : undefined,
-      'mainnet',  //this.network
+      this.metaverse.network,  //this.network
     )
       .catch((error) => {
         console.error(error.message)
@@ -129,12 +117,12 @@ export class SendSingleComponent implements OnInit {
 
   async send() {
     try {
-      await this.loaderCreateTx.present()
+      this.loader.message = await this.translate.get('SEND_SINGLE.GENERATING_TX_TEXT').toPromise()
+      await this.loader.present()
       const tx = await this.create()
-      await this.loaderCreateTx.dismiss()
-      await this.loaderSendTx.present()
+      this.loader.message =  await this.translate.get('SEND_SINGLE.SENDING_TX_TEXT').toPromise()
       const result = await this.metaverse.send(tx)
-      await this.loaderSendTx.dismiss()
+      await this.loader.dismiss()
       return this.router.navigate(['/account'])
       //this.alert.showSent('SUCCESS_SEND_TEXT', result.hash)
     } catch (e) {
