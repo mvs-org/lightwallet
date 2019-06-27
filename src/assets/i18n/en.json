@@ -560,7 +560,7 @@
     "ACCOUNT_NAME_ALREADY_USED": "This account name is already used",
     "SUCCESS_ADD_MULTISIG": "The multisiginature address has been successfully added to your wallet!",
 
-    "SAVE_ACCOUNT_TITLE": "Choose a account name",
+    "SAVE_ACCOUNT_TITLE": "Choose an account name",
     "SAVE_ACCOUNT_MESSAGE": "Please give a name to the account. This account name will only be used locally to identify your accounts.",
     "SAVE_ACCOUNT_PLACEHOLDER": "Account name",
     "SAVE_ACCOUNT_TITLE_NO_NAME": "Please enter an Account name",
@@ -713,6 +713,16 @@
     "ETP_BRIDGE.INFORMATION_LINK": "Telegram",
 
     "ETP_BRIDGE.IMPORT_ORDER_DESCRIPTION": "If you created an order from another device or directly from SWFT website, you can import it with the order ID to follow its status.",
-    "ETP_BRIDGE.UNABLE_CONNECT_SWFT": "Unable to connect to SWFT. Please check your internet connection or try again later."
+    "ETP_BRIDGE.UNABLE_CONNECT_SWFT": "Unable to connect to SWFT. Please check your internet connection or try again later.",
+
+    "SIGN_TX": "Sign transaction",
+    "CONFIRM_TX.TX_TO_SIGN": "Transaction to sign",
+    "CONFIRM_TX.DECODE": "Decode",
+    "CONFIRM_TX.SIGN": "Sign and send",
+    "MESSAGE.ERROR_DECODE_TX_SUBTITLE": "Cannot decode this raw transaction",
+    "MESSAGE.ERROR_DECODE_TX_BODY": "This raw transaction cannot be decoded. Please make sure this raw transaction is correct.",
+    "CONFIRM_TX.TX_SUMMARY": "Transaction summary",
+    "CONFIRM_TX.TX_SUMMARY_INPUTS": "Inputs",
+    "CONFIRM_TX.TX_SUMMARY_OUTPUTS": "Outputs"
 
 }
