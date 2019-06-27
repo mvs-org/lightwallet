@@ -226,6 +226,10 @@
         }
     },
     "SEND_SINGLE": {
+        "RECIPIENT_ADDRESS": "Recipient address",
+        "AMOUNT": "Amount",
+        "PASSWORD": "Password",
+        "SEND_FROM": "Select source address (optional)",
         "GENERATING_TX_TEXT": "Generating transaction...",
         "SENDING_TX_TEXT": "Sending transaction...",
         "SEND_BUTTON": "Send",

@@ -22,6 +22,9 @@ export interface Balances {
     [symbol: string]: Balance
   }
   MIT: any[]
+  AVATAR?: string
+  ADDRESS?: string
+  IDENTIFIER?: string
 }
 
 export interface GeneratedWallet {

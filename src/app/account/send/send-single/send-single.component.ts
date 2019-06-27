@@ -2,11 +2,13 @@ import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 import { MetaverseService } from '../../../services/metaverse.service'
-import { WalletService, Balances } from '../../../services/wallet.service'
+import { WalletService, Balance, Balances } from '../../../services/wallet.service'
 import { Router } from '@angular/router'
 import { TranslateService } from '@ngx-translate/core'
 import { AlertService } from '../../../services/alert.service'
 import { ConfigService } from 'src/app/services/config.service'
+import { Dictionary } from 'lodash'
+import { Observable } from 'rxjs'
 
 @Component({
   selector: 'app-send-single',
@@ -18,6 +20,8 @@ export class SendSingleComponent implements OnInit {
   symbol: string
   form: FormGroup
   balances: Balances
+  addressBalances: Dictionary<Balances>
+  addresses$: Observable<string[]>
   decimals: number
   loader: any
 
@@ -36,6 +40,7 @@ export class SendSingleComponent implements OnInit {
       recipientAddress: new FormControl('', [Validators.required, Validators.minLength(34), Validators.maxLength(34)]),
       amount: new FormControl('', [Validators.required]),
       passphrase: new FormControl('', [Validators.required, Validators.minLength(4)]),
+      sendFrom: new FormControl('', []),
     })
 
     this.activatedRoute.parent.params.subscribe(params => {
@@ -47,11 +52,20 @@ export class SendSingleComponent implements OnInit {
         this.balances = balances
         this.decimals = this.symbol === 'ETP' ? 8 : this.balances.MST[this.symbol].decimals
       }))
-
   }
 
   async ngOnInit() {
     this.loader = await this.alertService.loading('SEND_SINGLE.GENERATING_TX_TEXT')
+    this.addresses$ = await this.wallet.addresses$()
+    console.log(this.addresses$)
+    this.wallet.addressBalances(this.metaverse)
+      .then(addressBalanceStream => {
+        addressBalanceStream
+          .subscribe(addressBalances => {
+            this.addressBalances = addressBalances
+            console.log(this.addressBalances)
+          })
+      })
   }
 
   getError(control: FormControl, group?: FormGroup) {
@@ -93,7 +107,7 @@ export class SendSingleComponent implements OnInit {
       this.form.value.recipientAddress,
       undefined, // (this.recipient_avatar && this.recipient_avatar_valid) ? this.recipient_avatar : undefined,
       Math.round(parseFloat(this.form.value.amount) * Math.pow(10, this.decimals)),
-      null, // (this.sendFrom != 'auto') ? this.sendFrom : null,
+      (this.form.value.sendFrom !== 'auto') ? this.form.value.sendFrom : null,
       undefined, // (this.showAdvanced && this.changeAddress != 'auto') ? this.changeAddress : undefined,
       undefined, // (this.showAdvanced) ? this.fee : 10000,
       undefined, // (this.showAdvanced && messages !== []) ? messages : undefined,
