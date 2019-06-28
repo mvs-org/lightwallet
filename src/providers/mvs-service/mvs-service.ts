@@ -54,8 +54,7 @@ export class MvsServiceProvider {
                     if (change_address == undefined)
                         change_address = result.utxo[0].address;
                     return Metaverse.transaction_builder.send(result.utxo, recipient_address, recipient_avatar, target, change_address, result.change, result.lockedAssetChange, fee, messages);
-                })
-                .then((tx) => wallet.sign(tx)))
+                }))
             .catch((error) => {
                 console.error(error)
                 throw Error(error.message);
