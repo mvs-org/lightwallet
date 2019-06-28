@@ -1,0 +1,29 @@
+<ion-card>
+    <ion-grid>
+        <ion-row>
+            <ion-item>
+                <h1>{{'CONFIRM_TX.TX_SUMMARY'|translate}}</h1>
+            </ion-item>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <ion-item>
+                    <h2>{{'CONFIRM_TX.TX_SUMMARY_INPUTS'|translate}}:</h2>
+                </ion-item>
+            </ion-col>
+            <ion-col>
+                <ion-item>
+                    <h2>{{'CONFIRM_TX.TX_SUMMARY_OUTPUTS'|translate}}:</h2>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <input-item *ngFor="let input of tx.inputs" [input]="input"></input-item>
+            </ion-col>
+            <ion-col>
+                <output-item *ngFor="let output of tx.outputs" [output]="output" [decimalsMst]="decimalsMst"></output-item>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-card>

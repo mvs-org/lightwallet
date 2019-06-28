@@ -185,7 +185,6 @@ export class AssetTransferPage {
                             )
                         } else {
                             return this.mvs.createSendTx(
-                                this.passphrase,
                                 this.selectedAsset,
                                 this.recipient_address,
                                 (this.recipient_avatar && this.recipient_avatar_valid) ? this.recipient_avatar : undefined,

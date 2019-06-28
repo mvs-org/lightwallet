@@ -12,7 +12,6 @@ import { AlertProvider } from '../../providers/alert/alert';
 export class ConfirmTxPage {
 
     decodedTx: any
-    decimalsMst: any = {}
     passphrase: string = ''
     input: string
 
@@ -29,13 +28,7 @@ export class ConfirmTxPage {
 
     decode(tx) {
         this.mvs.decodeTx(tx)
-            .then((result) => {
-                this.decodedTx = result
-                this.decodedTx.inputs.forEach((input) => {
-                    if(input.previous_output.attachment && input.previous_output.attachment.symbol)
-                        this.decimalsMst[input.previous_output.attachment.symbol] = input.previous_output.attachment.decimals
-                })
-            })
+            .then((result) => this.decodedTx = result)
             .catch((error) => {
                 console.error(error);
                 this.alert.showErrorTranslated('MESSAGE.ERROR_DECODE_TX_SUBTITLE', 'MESSAGE.ERROR_DECODE_TX_BODY')
