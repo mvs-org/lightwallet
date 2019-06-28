@@ -145,7 +145,7 @@ export class AccountPage {
                     this.alert.showLogout(this.saveAccountHandler, this.forgetAccountHandler)
                 } else {
                     this.alert.showLogoutNoAccount(() => this.mvs.hardReset()
-                          .then(() => this.nav.setRoot("LoginPage")))
+                        .then(() => this.nav.setRoot("LoginPage")))
                 }
             })
     }

@@ -1,0 +1,15 @@
+<ion-item *ngIf="input.previous_output.value != 0">
+    <ion-row>
+        <ion-col *ngIf="!input.previous_output.attachment.to_did">{{input.previous_output.address}}</ion-col>
+        <ion-col class="right">{{input.previous_output.value | format : 8}} ETP</ion-col>
+    </ion-row>
+</ion-item>
+<ion-item *ngIf="input.previous_output.attachment && input.previous_output.attachment.symbol && input.previous_output.attachment.symbol != 'ETP'">
+    <ion-row>
+        <ion-col>{{input.previous_output.address}}</ion-col>
+        <ion-col class="right">{{input.previous_output.attachment.quantity | format :
+            input.previous_output.attachment.decimals}}
+            {{input.previous_output.attachment.symbol}}
+        </ion-col>
+    </ion-row>
+</ion-item>

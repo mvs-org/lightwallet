@@ -132,6 +132,7 @@ export class MyETPWallet {
                     ... (this.globals.network==='mainnet' ? [{ title: 'ETP_BRIDGE', component: "EtpBridgePage", icon: 'cash' }] : []),
                     { title: 'MULTISIGNATURE', component: "MultisignaturePage", icon: 'people', beta: true },
                     { title: 'SETTINGS.PLUGINS', component: "PluginSettingsPage", icon: 'cube', beta: true },
+                    { title: 'SIGN_TX', component: "ConfirmTxPage", icon: 'key' },
                     { title: 'NEWS', component: "NewsPage", icon: 'paper' },
                     { title: 'SETTINGS', component: "SettingsPage", icon: 'settings' },
                     { title: 'REPORT_BUG', component: "ReportPage", icon: 'bug' }
