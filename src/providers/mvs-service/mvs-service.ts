@@ -592,6 +592,12 @@ export class MvsServiceProvider {
         return await this.setAssetOrder(order)
     }
 
+    async sign(transaction: string, passphrase: string) {
+        const wallet = await this.wallet.getWallet(passphrase)
+        const signed = await wallet.sign(transaction)
+        return signed
+    }
+
     send = async (tx) => {
         tx.hash = (await this.broadcast(tx.encode().toString('hex'))).hash
         tx.height = await this.getHeight()
