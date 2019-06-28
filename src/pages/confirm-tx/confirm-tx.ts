@@ -14,6 +14,7 @@ export class ConfirmTxPage {
     decodedTx: any
     decimalsMst: any = {}
     passphrase: string = ''
+    input: string
 
     constructor(
         public navCtrl: NavController,
@@ -31,7 +32,6 @@ export class ConfirmTxPage {
             .then((result) => {
                 this.decodedTx = result
                 this.decodedTx.inputs.forEach((input) => {
-                    console.log(input)
                     if(input.previous_output.attachment && input.previous_output.attachment.symbol)
                         this.decimalsMst[input.previous_output.attachment.symbol] = input.previous_output.attachment.decimals
                 })
@@ -47,5 +47,9 @@ export class ConfirmTxPage {
     }
 
     validPassword = (passphrase) => (passphrase.length > 0)
+
+    onInputChange() {
+        this.input = this.input.split(/[\n ]+/).join('')
+    }
 
 }

@@ -15,7 +15,7 @@
         <ion-list>
             <ion-card-content>
                 <h4>{{"CONFIRM_TX.TX_TO_SIGN"|translate}}:</h4>
-                <ion-textarea fz-elastic [(ngModel)]="input" name="input"></ion-textarea>
+                <ion-textarea fz-elastic [(ngModel)]="input" name="input" ngTrim="true" (change)="onInputChange()"></ion-textarea>
             </ion-card-content>
         </ion-list>
         <ion-row>
@@ -58,44 +58,10 @@
                 </ion-row>
                 <ion-row>
                     <ion-col>
-                        <div *ngFor="let input of decodedTx.inputs">
-                            <ion-item *ngIf="input.previous_output.value != 0">
-                                <ion-row>
-                                    <ion-col *ngIf="input.previous_output.attachment.to_did">{{input.previous_output.attachment.to_did}}</ion-col>
-                                    <ion-col *ngIf="!input.previous_output.attachment.to_did">{{input.previous_output.address}}</ion-col>
-                                    <ion-col class="right">{{input.previous_output.value | format : 8}} ETP</ion-col>
-                                </ion-row>
-                            </ion-item>
-                            <ion-item *ngIf="input.attachment && input.attachment.asset">
-                                <ion-row>
-                                    <ion-col *ngIf="input.previous_output.attachment.to_did">{{input.previous_output.attachment.to_did}}</ion-col>
-                                    <ion-col *ngIf="!input.previous_output.attachment.to_did">{{input.previous_output.address}}</ion-col>
-                                    <ion-col class="right">{{input.previous_output.attachment.quantity | format :
-                                        decimals_mst[input.previous_output.attachment.asset]}}
-                                        {{input.previous_output.attachment.asset}}
-                                    </ion-col>
-                                </ion-row>
-                            </ion-item>
-                        </div>
+                        <input-item *ngFor="let input of decodedTx.inputs" [input]="input"></input-item>
                     </ion-col>
                     <ion-col>
-                        <div *ngFor="let output of decodedTx.outputs">
-                            <ion-item *ngIf="output.value != 0">
-                                <ion-row>
-                                    <ion-col *ngIf="output.attachment.to_did">{{output.attachment.to_did}}</ion-col>
-                                    <ion-col *ngIf="!output.attachment.to_did">{{output.address}}</ion-col>
-                                    <ion-col class="right">{{output.value | format : 8}} ETP</ion-col>
-                                </ion-row>
-                            </ion-item>
-                            <ion-item *ngIf="output.attachment && output.attachment.asset">
-                                <ion-row>
-                                    <ion-col *ngIf="output.attachment.to_did">{{output.attachment.to_did}}</ion-col>
-                                    <ion-col *ngIf="!output.attachment.to_did">{{output.address}}</ion-col>
-                                    <ion-col class="right">{{output.attachment.quantity | format : decimals_mst[output.attachment.asset]}}
-                                        {{output.attachment.asset}}</ion-col>
-                                </ion-row>
-                            </ion-item>
-                        </div>
+                        <output-item *ngFor="let output of decodedTx.outputs" [output]="output" [decimalsMst]="decimalsMst"></output-item>
                     </ion-col>
                 </ion-row>
             </ion-grid>
