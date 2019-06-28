@@ -39,22 +39,20 @@ export class MvsServiceProvider {
             })
     }
 
-    createSendTx(passphrase: string, asset: string, recipient_address: string, recipient_avatar: string, quantity: number, from_address: string, change_address: string, fee: number, messages: Array<string>) {
-        console.log(passphrase, asset, recipient_address, recipient_avatar, quantity, from_address, change_address, fee, messages)
+    createSendTx(asset: string, recipient_address: string, recipient_avatar: string, quantity: number, from_address: string, change_address: string, fee: number, messages: Array<string>) {
         let target = {};
         target[asset] = quantity;
-        return this.wallet.getWallet(passphrase)
-            .then(wallet => this.getUtxoFrom(from_address)
-                .then((utxo) => this.getHeight().then(height => Metaverse.output.findUtxo(utxo, target, height, fee)))
-                .then((result) => {
-                    if (result.utxo.length > 676) {
-                        throw Error('ERR_TOO_MANY_INPUTS');
-                    }
-                    //Set change address to first utxo's address
-                    if (change_address == undefined)
-                        change_address = result.utxo[0].address;
-                    return Metaverse.transaction_builder.send(result.utxo, recipient_address, recipient_avatar, target, change_address, result.change, result.lockedAssetChange, fee, messages);
-                }))
+        this.getUtxoFrom(from_address)
+            .then((utxo) => this.getHeight().then(height => Metaverse.output.findUtxo(utxo, target, height, fee)))
+            .then((result) => {
+                if (result.utxo.length > 676) {
+                    throw Error('ERR_TOO_MANY_INPUTS');
+                }
+                //Set change address to first utxo's address
+                if (change_address == undefined)
+                    change_address = result.utxo[0].address;
+                return Metaverse.transaction_builder.send(result.utxo, recipient_address, recipient_avatar, target, change_address, result.change, result.lockedAssetChange, fee, messages);
+            })
             .catch((error) => {
                 console.error(error)
                 throw Error(error.message);
