@@ -738,6 +738,51 @@ export class MvsServiceProvider {
             })
             if (!found) throw `Error finding previous output script for ${input.previous_output.hash}-${input.previous_output.index}`
         })
+        tx.outputs.forEach(output => {
+            switch (output.attachment.type) {
+                case 0:
+                    output.attachment.type = 'etp'
+                    break;
+                case 2:
+                    switch (output.attachment.status) {
+                        case 1:
+                            output.attachment.type = 'asset-issue'
+                            break;
+                        case 2:
+                            output.attachment.type = 'asset-transfer'
+                            break;
+                        default:
+                            throw Error("Asset status unknown");
+                    }
+                    break;
+                case 3:
+                    output.attachment.type = 'message'
+                    break;
+                case 4:
+                    switch (output.attachment.status) {
+                        case 1:
+                            output.attachment.type = 'did-register'
+                            break;
+                        case 2:
+                            output.attachment.type = 'did-transfer'
+                            break;
+                        default:
+                            throw Error("Avatar status unknown");
+                    }
+                    break;
+                case 5:
+                    output.attachment.type = 'asset-cert'
+                    break;
+                case 6:
+                    output.attachment.type = 'mit'
+                    break;
+                case 4294967295:
+                    output.attachment.type = 'coinstake'
+                    break;
+                default:
+                    throw Error("What kind of an output is that?!");
+            }
+        })
         return tx
     }
 
