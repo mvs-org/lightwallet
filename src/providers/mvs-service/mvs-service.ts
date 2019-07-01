@@ -722,8 +722,9 @@ export class MvsServiceProvider {
     }
 
     async decodeTx(rawtx) {
+        const network = await this.globals.getNetwork()
         let transactions = await this.getTxs()
-        let tx = Metaverse.transaction.decode(rawtx);
+        let tx = Metaverse.transaction.decode(rawtx, network);
         tx.inputs.forEach(input => {
             let found = false
             transactions.forEach(t => {
