@@ -721,7 +721,51 @@
     "CONFIRM_TX.SIGN": "Sign and send",
     "MESSAGE.ERROR_DECODE_TX_SUBTITLE": "Cannot decode this raw transaction",
     "MESSAGE.ERROR_DECODE_TX_BODY": "This raw transaction cannot be decoded. Please make sure this raw transaction is correct.",
-    "CONFIRM_TX.TX_SUMMARY": "Transaction summary",
-    "CONFIRM_TX.TX_SUMMARY_INPUTS": "Inputs",
-    "CONFIRM_TX.TX_SUMMARY_OUTPUTS": "Outputs"
+    "TX": {
+        "INPUTS": "Inputs",
+        "OUTPUTS": "Outputs",
+        "TX_SUMMARY": "Transaction summary",
+        "TOTAL_INPUTS": "Total inputs",
+        "TOTAL_OUTPUTS": "Total outputs",
+        "INPUT_COINBASE": "From coinbase",
+        "TYPE": {
+            "did-register": "Avatar creation",
+            "did-transfer": "Avatar transfer",
+            "mit": "MIT",
+            "message": "Public message or data",
+            "CERT": {
+                "issue": "Secondary Issue certificate",
+                "domain": "Domain certificate",
+                "naming": "Naming certificate",
+                "mining": "Mining certificate",
+                "witness": "Witness certificate"
+            }
+        },
+        "TX_FEE": "Fee",
+        "LOCKED_SINCE_BLOCK": "Locked since block {{block}} ({{time}})",
+        "LOCKED_UNTIL_BLOCK": "Locked until block {{block}} (~{{time}})",
+        "INTRAWALLET": "Intrawallet",
+        "TX_TYPE": {
+            "ETP": "ETP transfer",
+            "ASSET": "MST transfer",
+            "ISSUE": "MST issue",
+            "CERT": "Certificate transfer",
+            "CERT_TYPE": {
+                "issue": "Secondary Issue certificate",
+                "domain": "Domain certificate",
+                "naming": "Naming certificate",
+                "mining": "Mining certificate",
+                "witness": "Witness certificate"
+            },
+            "DID_REGISTER": "Avatar creation",
+            "DID_TRANSFER": "Avatar transfer",
+            "MIT": "MIT",
+            "COINSTAKE": "Coinstake transaction",
+            "MST_MINING": "Mining reward",
+            "ETP_LOCK": "ETP lock",
+            "ETP_LOCK_REWARD": "ETP lock reward",
+            "MST_LOCK": "MST lock",
+            "UNKNOWN": "Unknown transaction type"
+        }
+    }
 }

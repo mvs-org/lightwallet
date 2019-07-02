@@ -16,6 +16,7 @@ export class TxItemComponent {
     totalOutputs: any = { ETP: 0, MST: {} }
     totalPersonalInputs: any = { ETP: 0, MST: {} }
     totalPersonalOutputs: any = { ETP: 0, MST: {} }
+    involvedMst: Array<string>
     txFee: number = 0
     txType: string = ''
     txTypeValue: string = ''
@@ -62,6 +63,7 @@ export class TxItemComponent {
             }
         })
 
+        this.txType = TX_TYPE_UNKNOWN
         this.tx.outputs.forEach(output => {
             switch (output.attachment.type) {
                 case 'asset-issue':
@@ -104,23 +106,26 @@ export class TxItemComponent {
                 case 'coinstake':
                     this.txType = TX_TYPE_COINSTAKE
                     break;
+                case 'message':
+                    this.txType = TX_TYPE_ETP
+                    break;
                 case 'etp':
-                    if (output.locked_height_range) {
+                    if(this.txType === TX_TYPE_UNKNOWN) {
+                        if (output.locked_height_range) {
                         this.tx.locked_until = this.tx.height + output.locked_height_range
                         this.tx.locked_quantity = output.value
                         this.txType = this.tx.inputs[0].previous_output.hash == "0000000000000000000000000000000000000000000000000000000000000000" ? TX_TYPE_ETP_LOCK_REWARD : TX_TYPE_ETP_LOCK
-                    } else {
-                        this.txType = TX_TYPE_ETP
+                        } else {
+                            this.txType = TX_TYPE_ETP
+                        }
+                        this.txTypeValue = 'ETP'
                     }
-                    this.txTypeValue = 'ETP'
                     break;
                 default:
-                    this.txType = TX_TYPE_UNKNOWN
                     break;
             }
 
             this.totalOutputs.ETP += output.value
-            console.log(output)
             if (output.attachment && (output.attachment.type == 'asset-issue' || output.attachment.type == 'asset-transfer')) {
                 this.totalOutputs.MST[output.attachment.symbol] = this.totalOutputs.MST[output.attachment.symbol] ? this.totalOutputs.MST[output.attachment.symbol] + output.attachment.quantity : output.attachment.quantity
             }
@@ -136,6 +141,8 @@ export class TxItemComponent {
                 this.txFee += output.value
 
         });
+
+        this.involvedMst = Object.keys(this.decimalsMst)
 
         this.txFee += this.totalInputs.ETP - this.totalOutputs.ETP
         if(this.txFee < 0)
