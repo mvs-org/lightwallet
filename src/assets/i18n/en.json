@@ -715,9 +715,11 @@
     "ETP_BRIDGE.IMPORT_ORDER_DESCRIPTION": "If you created an order from another device or directly from SWFT website, you can import it with the order ID to follow its status.",
     "ETP_BRIDGE.UNABLE_CONNECT_SWFT": "Unable to connect to SWFT. Please check your internet connection or try again later.",
 
+    "DECODE_TX": "Decode transaction",
+    "DECODE_TX.TX_TO_SIGN": "Transaction to sign",
+    "DECODE_TX.DECODE": "Decode",
+
     "SIGN_TX": "Sign transaction",
-    "CONFIRM_TX.TX_TO_SIGN": "Transaction to sign",
-    "CONFIRM_TX.DECODE": "Decode",
     "CONFIRM_TX.SIGN": "Sign and send",
     "MESSAGE.ERROR_DECODE_TX_SUBTITLE": "Cannot decode this raw transaction",
     "MESSAGE.ERROR_DECODE_TX_BODY": "This raw transaction cannot be decoded. Please make sure this raw transaction is correct.",

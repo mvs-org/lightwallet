@@ -3,7 +3,6 @@ import { IonicPageModule } from 'ionic-angular';
 import { ConfirmTxPage } from './confirm-tx';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule} from '@ngx-translate/core';
-import { ElasticModule } from 'angular2-elastic';
 import { PipesModule } from '../../pipes/pipes.module';
 import { AlertProvider } from '../../providers/alert/alert';
 import { TxItemComponent } from '../../components/tx-item/tx-item';
@@ -22,11 +21,10 @@ import { OutputItemComponent } from '../../components/output-item/output-item';
     ReactiveFormsModule,
     FormsModule,
     TranslateModule,
-    ElasticModule,
     PipesModule,
   ],
   providers:[
     AlertProvider,
   ],
 })
-export class ConfirmtxPageModule {}
+export class ConfirmTxPageModule {}
