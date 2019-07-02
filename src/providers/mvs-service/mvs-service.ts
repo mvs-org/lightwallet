@@ -42,7 +42,7 @@ export class MvsServiceProvider {
     createSendTx(asset: string, recipient_address: string, recipient_avatar: string, quantity: number, from_address: string, change_address: string, fee: number, messages: Array<string>) {
         let target = {};
         target[asset] = quantity;
-        this.getUtxoFrom(from_address)
+        return this.getUtxoFrom(from_address)
             .then((utxo) => this.getHeight().then(height => Metaverse.output.findUtxo(utxo, target, height, fee)))
             .then((result) => {
                 if (result.utxo.length > 676) {
@@ -723,8 +723,12 @@ export class MvsServiceProvider {
 
     async decodeTx(rawtx) {
         const network = await this.globals.getNetwork()
-        let transactions = await this.getTxs()
         let tx = Metaverse.transaction.decode(rawtx, network);
+        return tx
+    }
+
+    async organizeDecodedTx(tx) {
+        let transactions = await this.getTxs()
         tx.inputs.forEach(input => {
             let found = false
             transactions.forEach(t => {

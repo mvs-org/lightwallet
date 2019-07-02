@@ -231,7 +231,7 @@
                         <ion-option *ngFor="let address of addresses" value="{{address}}">{{address}}</ion-option>
                     </ion-select>
                 </ion-item>
-                <button ion-button full [disabled]="!sendForm.form.valid||!sendMoreValidQuantity||!sendMoreValidAddress||!validPassword(passphrase)||total > showBalance||!validMessageLength(message)" (click)="preview()" color="primary">
+                <button ion-button full [disabled]="!sendForm.form.valid||!sendMoreValidQuantity||!sendMoreValidAddress||total > showBalance||!validMessageLength(message)" (click)="preview()" color="primary">
                     {{"PREVIEW" | translate}}
                 </button>
                 <div *ngIf="rawtx">
@@ -244,7 +244,7 @@
         </ion-list>
         <ion-row class="padding-bottom">
             <ion-col>
-                <button type="submit" ion-button full icon-left [disabled]="!sendForm.form.valid||!sendMoreValidQuantity||!sendMoreValidAddress||!validPassword(passphrase)||total > showBalance||!validMessageLength(message)" (click)="send()" color="secondary">
+                <button type="submit" ion-button full icon-left [disabled]="!sendForm.form.valid||!sendMoreValidQuantity||!sendMoreValidAddress||total > showBalance||!validMessageLength(message)" (click)="send()" color="secondary">
                     <ion-icon disabled="checked" name="send"></ion-icon>
                     {{"SEND" | translate}}
                 </button>

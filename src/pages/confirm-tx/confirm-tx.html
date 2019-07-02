@@ -18,6 +18,21 @@
             <ion-input name="passphrase" type="password" [(ngModel)]="passphrase" required></ion-input>
         </ion-item>
         <br>
+        <ion-item>
+            <ion-label>{{"SHOW_ADVANCED"|translate}}</ion-label>
+            <ion-toggle [(ngModel)]="showAdvanced" name="showAdvanced" checked="false"></ion-toggle>
+        </ion-item>
+        <div *ngIf="showAdvanced">
+            <button ion-button full [disabled]="!signTxForm.form.valid||!validPassword(passphrase)" (click)="preview()" color="primary">
+                {{"PREVIEW" | translate}}
+            </button>
+            <div *ngIf="rawtx">
+                <br><br>
+                <h2>{{"TRANSACTION_PREVIEW_TEXT"|translate}}</h2>
+                <p class="rawtx">{{signedTx}}</p>
+                <br><br>
+            </div>
+        </div>
         <ion-row>
             <ion-col>
                 <button type="submit" ion-button full icon-left (click)="sign(input)" [disabled]="!input" color="secondary">

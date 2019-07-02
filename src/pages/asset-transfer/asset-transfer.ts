@@ -238,11 +238,9 @@ export class AssetTransferPage {
 
     send() {
         this.create()
-            .then(tx => this.mvs.send(tx))
             .then((result) => {
-                this.navCtrl.pop()
+                this.navCtrl.push("confirm-tx-page", { tx: result })
                 this.alert.stopLoading()
-                this.alert.showSent('SUCCESS_SEND_TEXT', result.hash)
             })
             .catch((error) => {
                 console.error(error)
