@@ -9,9 +9,20 @@
 
 <ion-content padding style="padding-bottom: 0;">
 
-    <tx-item *ngIf="decodedTx" [tx]="decodedTx"></tx-item>
+    <h1>{{"SIGN_TX.PAGE_TITLE" | translate}}</h1>
 
     <form #signTxForm="ngForm" class="padding-bottom">
+
+        <ion-item>
+            <ion-label>{{"TX.SELECT_MODE"|translate}}</ion-label>
+            <ion-select [(ngModel)]="mode" name="mode" multiple="false" okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}">
+                <ion-option value="simple">{{"TX.MODE.SIMPLE"| translate}}</ion-option>
+                <ion-option selected="true" value="advanced">{{"TX.MODE.ADVANCED"| translate}}</ion-option>
+                <ion-option value="satoshi">{{"TX.MODE.SATOSHI"| translate}}</ion-option>
+            </ion-select>
+        </ion-item>
+
+        <tx-item *ngIf="decodedTx" [tx]="decodedTx" [mode]="mode"></tx-item>
 
         <ion-item [ngClass]="{'error-border': !validPassword(passphrase)}">
             <ion-label color="primary" floating>{{"PASSWORD" | translate}}</ion-label>
@@ -23,7 +34,8 @@
             <ion-toggle [(ngModel)]="showAdvanced" name="showAdvanced" checked="false"></ion-toggle>
         </ion-item>
         <div *ngIf="showAdvanced">
-            <button ion-button full [disabled]="!signTxForm.form.valid||!validPassword(passphrase)" (click)="preview()" color="primary">
+            <button ion-button full [disabled]="!signTxForm.form.valid||!validPassword(passphrase)" (click)="preview()"
+                color="primary">
                 {{"PREVIEW" | translate}}
             </button>
             <div *ngIf="rawtx">

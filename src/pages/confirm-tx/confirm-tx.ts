@@ -18,6 +18,7 @@ export class ConfirmTxPage {
     passphrase: string = ''
     input: string
     signedTx: string
+    mode: string = 'advanced'
 
     constructor(
         public navCtrl: NavController,

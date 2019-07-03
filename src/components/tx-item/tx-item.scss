@@ -37,4 +37,8 @@ tx-item {
         color: black;
         font-size: 16px;
     }
+
+    .unsigned {
+        color: color($colors, primary);
+    }
 }

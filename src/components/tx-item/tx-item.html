@@ -1,4 +1,4 @@
-<ion-card>
+<ion-card class="manual-copy display-overflow">
     <ion-grid>
         <ion-row>
             <ion-item>
@@ -7,7 +7,12 @@
         </ion-row>
         <ion-row>
             <ion-col>
-                <ion-item class="summaryTxType">{{'TX.TX_TYPE.' + txType | translate}}</ion-item>
+                <ion-item class="summaryTxType">
+                    {{'TX.TX_TYPE.' + txType | translate}}
+                    <div *ngIf="!tx.inputs[0].script" class="unsigned">
+                        {{'TX.UNSIGNED_TX' | translate}}
+                    </div>
+                </ion-item>
             </ion-col>
             <ion-col>
                 <ion-item class="right summaryAmount">
@@ -52,7 +57,7 @@
             <!--div *ngIf="transaction.locked_until" [translate]="'TX.LOCKED_SINCE_BLOCK'" [translateParams]="{block: transaction.locked_until, time: transaction.confirmed_at*1000 | date : 'medium'}"></div>
             <div *ngIf="transaction.locked_until" [translate]="'TX.LOCKED_UNTIL_BLOCK'" [translateParams]="{block: transaction.locked_until, time: (((transaction.locked_until - height) * blocktime * 1000) + current_time) | date : 'medium'}"></div-->
         </ion-row>
-        <ion-row>
+        <ion-row *ngIf="mode == 'advanced' || mode == 'satoshi'">
             <ion-col>
                 <ion-row>
                     <ion-col>
@@ -63,7 +68,7 @@
                 </ion-row>
                 <ion-row>
                     <ion-col>
-                        <input-item *ngFor="let input of tx.inputs" [input]="input"></input-item>
+                        <input-item *ngFor="let input of tx.inputs" [input]="input" [mode]="mode"></input-item>
                     </ion-col>
                 </ion-row>
             </ion-col>
@@ -77,12 +82,12 @@
                 </ion-row>
                 <ion-row>
                     <ion-col>
-                        <output-item *ngFor="let output of tx.outputs" [output]="output" [decimalsMst]="decimalsMst"></output-item>
+                        <output-item *ngFor="let output of tx.outputs" [output]="output" [decimalsMst]="decimalsMst" [mode]="mode"></output-item>
                     </ion-col>
                 </ion-row>
             </ion-col>
         </ion-row>
-        <ion-row>
+        <ion-row *ngIf="mode == 'advanced' || mode == 'satoshi'">
             <ion-col>
                 <ion-item>
                     <ion-row>

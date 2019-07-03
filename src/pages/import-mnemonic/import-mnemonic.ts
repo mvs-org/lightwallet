@@ -40,7 +40,7 @@ export class ImportMnemonicPage {
             this.words[i] = '';
             this.validword[i] = false;
         }
-       	this.all_words = '';
+        this.all_words = '';
         this.amount_words = 0;
         this.first_wrong = 0;
         this.validmnemonic = false;

@@ -5,6 +5,11 @@
             <ion-col *ngIf="!output.attachment.to_did">{{output.address}}</ion-col>
             <ion-col class="right">{{output.value | format : 8}} ETP</ion-col>
         </ion-row>
+        <ion-row *ngIf="mode == 'satoshi'">
+            <ion-col class="script">
+                {{output.script}}
+            </ion-col>
+        </ion-row>
     </ion-item>
     <ion-item *ngIf="output.attachment && output.attachment.symbol && output.attachment.symbol != 'ETP'">
         <ion-row>
@@ -12,6 +17,11 @@
             <ion-col *ngIf="!output.attachment.to_did">{{output.address}}</ion-col>
             <ion-col class="right">{{output.attachment.quantity | format : decimalsMst[output.attachment.symbol]}}
                 {{output.attachment.symbol}}</ion-col>
+        </ion-row>
+        <ion-row *ngIf="mode == 'satoshi'">
+            <ion-col class="script">
+                {{output.script}}
+            </ion-col>
         </ion-row>
     </ion-item>
 </div>

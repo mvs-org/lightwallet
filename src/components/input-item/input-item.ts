@@ -7,6 +7,7 @@ import { Component, Input } from '@angular/core';
 export class InputItemComponent {
 
     @Input() input: any;
+    @Input() mode: string;
 
     constructor() {
     }

@@ -1,8 +1,8 @@
 <ion-header>
     <ion-navbar>
         <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
+            <ion-icon name="menu"></ion-icon>
+        </button>
         <ion-title>{{ "MULTISIGNATURE" | translate}}</ion-title>
     </ion-navbar>
 </ion-header>
@@ -36,12 +36,15 @@
                         <ion-row class="asset-balance">
                             <ion-col>
                                 <div class="asset-balance-text">{{"ACCOUNT.AVAILABLE" | translate}}:
-                                    <span *ngIf="addressBalancesObject[multisig.a] && addressBalancesObject[multisig.a].ETP">{{addressBalancesObject[multisig.a].ETP.available | format : addressBalancesObject[multisig.a].ETP.decimals}} ETP</span>
-                                    <span *ngIf="!addressBalancesObject[multisig.a] || !addressBalancesObject[multisig.a].ETP">0 ETP</span>
+                                    <span *ngIf="addressBalancesObject[multisig.a] && addressBalancesObject[multisig.a].ETP">{{addressBalancesObject[multisig.a].ETP.available
+                                        | format : addressBalancesObject[multisig.a].ETP.decimals}} ETP</span>
+                                    <span *ngIf="!addressBalancesObject[multisig.a] || !addressBalancesObject[multisig.a].ETP">0
+                                        ETP</span>
                                 </div>
                             </ion-col>
                             <ion-col>
-                                <button class="right-buttons" ion-button clear icon-left color="danger" icon-left (click)="gotoMultisigTransfer('ETP', multisig.a)">
+                                <button class="right-buttons" ion-button clear icon-left color="danger" icon-left
+                                    (click)="gotoMultisigTransfer('ETP', multisig.a)">
                                     <ion-icon name="send"></ion-icon>
                                     {{"SEND_MULTISIG" | translate}}
                                 </button>
@@ -50,10 +53,12 @@
                         <div *ngIf="addressbalances[multisig.a]">
                             <ion-row class="asset-balance" *ngFor="let mst of addressbalances[multisig.a]">
                                 <ion-col>
-                                    <div class="asset-balance-text">{{mst.available | format : mst.decimals}} {{mst.name}}</div>
+                                    <div class="asset-balance-text">{{mst.available | format : mst.decimals}}
+                                        {{mst.name}}</div>
                                 </ion-col>
                                 <ion-col>
-                                    <button class="right-buttons" ion-button clear icon-left color="danger" icon-left (click)="gotoMultisigTransfer(mst.name, multisig.a)">
+                                    <button class="right-buttons" ion-button clear icon-left color="danger" icon-left
+                                        (click)="gotoMultisigTransfer(mst.name, multisig.a)">
                                         <ion-icon name="send"></ion-icon>
                                         {{"SEND" | translate}} {{mst.name}}
                                     </button>
@@ -65,7 +70,9 @@
             </ion-row>
             <ion-row>
                 <ion-item>
-                    <h2 class="certificates-title"><ion-icon name="paper"></ion-icon> {{"MULTISIGNATURE.DETAILS" | translate}}:</h2>
+                    <h2 class="certificates-title">
+                        <ion-icon name="paper"></ion-icon> {{"MULTISIGNATURE.DETAILS" | translate}}:
+                    </h2>
                     <ion-row>
                         <ion-col>{{"MULTISIGNATURE.NBR_PERSON" | translate}}</ion-col>
                         <ion-col>{{multisig.n}}</ion-col>
@@ -77,7 +84,8 @@
                     <ion-row>
                         <ion-col>{{"MULTISIGNATURE.PUBLIC_KEYS" | translate}}</ion-col>
                         <ion-col>
-                            <div *ngFor="let publicKey of multisig.k" class="public-key manual-copy display-overflow" [ngClass]="{'self-publickey': publicKey == multisig.s}">{{publicKey}}</div>
+                            <div *ngFor="let publicKey of multisig.k" class="public-key manual-copy display-overflow"
+                                [ngClass]="{'self-publickey': publicKey == multisig.s}">{{publicKey}}</div>
                         </ion-col>
                     </ion-row>
                 </ion-item>

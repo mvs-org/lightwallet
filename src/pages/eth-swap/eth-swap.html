@@ -1,8 +1,8 @@
 <ion-header>
     <ion-navbar>
         <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
+            <ion-icon name="menu"></ion-icon>
+        </button>
         <ion-title>{{selectedAsset}} {{ "SWAP" | translate}}</ion-title>
     </ion-navbar>
 </ion-header>
@@ -12,7 +12,8 @@
     <p align="center" *ngIf="etpBalance<(fee+swap_fee)/100000000">{{"NOTICE_TRANSACTION_FEE_UNCOVERED"|translate}}</p>
     <ion-row>
         <ion-col>
-            <p>{{"AVAILABLE_BALANCE" | translate}}: <br *ngIf="platform.is('mobile')">{{showBalance | format : decimals}} {{selectedAsset}}</p>
+            <p>{{"AVAILABLE_BALANCE" | translate}}: <br *ngIf="platform.is('mobile')">{{showBalance | format :
+                decimals}} {{selectedAsset}}</p>
         </ion-col>
         <ion-col>
             <p class="right">{{"FEE"|translate}}:<br *ngIf="platform.is('mobile')"> {{fee+swap_fee | format : 8}} ETP</p>
@@ -24,7 +25,8 @@
 
             <ion-item class="valid-border">
                 <ion-label color="primary" floating>{{"RECIPIENT_AVATAR"|translate}}</ion-label>
-                <ion-input #recipientAvatarInput name="recipient_avatar" [(ngModel)]="recipient_avatar" required disabled></ion-input>
+                <ion-input #recipientAvatarInput name="recipient_avatar" [(ngModel)]="recipient_avatar" required
+                    disabled></ion-input>
             </ion-item>
             <div no-lines class="advice" [translate]="'HELP.ETH_SWAP_RECIPIENT'" [translateParams]="{crosschain_avatar: globals.crosschain_avatar}"></div>
 
@@ -41,7 +43,8 @@
                 <ion-input name="eth_address" type="eth_address" [(ngModel)]="eth_address" required></ion-input>
             </ion-item>
             <div no-lines class="advice" [translate]="'HELP.ETH_ADDRESS'"></div>
-            <ion-item *ngIf="eth_address && eth_address.length != 0 && !validEthereumAddress(eth_address)" no-lines class="wrong-input">{{"SWAP_MST.INCORRECT_ETH_ADDRESS" | translate}}</ion-item>
+            <ion-item *ngIf="eth_address && eth_address.length != 0 && !validEthereumAddress(eth_address)" no-lines
+                class="wrong-input">{{"SWAP_MST.INCORRECT_ETH_ADDRESS" | translate}}</ion-item>
 
             <ion-item [ngClass]="{'error-border': !validPassword(passphrase)}">
                 <ion-label color="primary" floating>{{"PASSWORD" | translate}}</ion-label>
@@ -50,9 +53,11 @@
             <br>
             <ion-item>
                 <ion-label>{{"SELECT_FROM_ADDRESS"|translate}}</ion-label>
-                <ion-select [(ngModel)]="sendFrom" name="sendfrom" multiple="false" (ngModelChange)="onFromAddressChange($event)" okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}">
+                <ion-select [(ngModel)]="sendFrom" name="sendfrom" multiple="false" (ngModelChange)="onFromAddressChange($event)"
+                    okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}">
                     <ion-option selected="true" value="auto">{{"AUTO"| translate}}</ion-option>
-                    <ion-option *ngFor="let addressbalance of addressbalances" value="{{addressbalance.address}}">{{addressbalance.address}} - {{addressbalance.balance | format : decimals}} {{selectedAsset}}</ion-option>
+                    <ion-option *ngFor="let addressbalance of addressbalances" value="{{addressbalance.address}}">{{addressbalance.address}}
+                        - {{addressbalance.balance | format : decimals}} {{selectedAsset}}</ion-option>
                 </ion-select>
             </ion-item>
             <br>
@@ -79,7 +84,8 @@
                 </ion-item>
                 <div no-lines class="advice">{{"HELP.SWAP_TX_SWAP_FEE" | translate}}</div>
                 <ion-item>
-                    <ion-range min="100000000" max="1000000000" step="10000" color="primary" [(ngModel)]="swap_fee" name="swap_fee">
+                    <ion-range min="100000000" max="1000000000" step="10000" color="primary" [(ngModel)]="swap_fee"
+                        name="swap_fee">
                         <ion-label range-left>{{100000000 | format : 8}}</ion-label>
                         <ion-label range-right>{{1000000000 | format : 8}}</ion-label>
                     </ion-range>
@@ -90,7 +96,8 @@
                     <ion-input name="message" [(ngModel)]="message"></ion-input>
                 </ion-item>
                 <div no-lines class="advice">{{"HELP.MESSAGE" | translate}}</div>
-                <ion-item *ngIf="!validMessageLength(message)" no-lines class="wrong-input">{{"MESSAGE_TOO_LONG" | translate}}</ion-item>
+                <ion-item *ngIf="!validMessageLength(message)" no-lines class="wrong-input">{{"MESSAGE_TOO_LONG" |
+                    translate}}</ion-item>
                 <br>
                 <ion-item>
                     <ion-label>{{"SELECT_CHANGE_ADDRESS"|translate}}</ion-label>
@@ -99,7 +106,8 @@
                         <ion-option *ngFor="let address of addresses" value="{{address}}">{{address}}</ion-option>
                     </ion-select>
                 </ion-item>
-                <button ion-button full [disabled]="!sendForm.form.valid||!validQuantity(quantity)||!validPassword(passphrase)||!validMessageLength(message)" (click)="preview()" color="primary">
+                <button ion-button full [disabled]="!sendForm.form.valid||!validQuantity(quantity)||!validPassword(passphrase)||!validMessageLength(message)"
+                    (click)="preview()" color="primary">
                     {{"PREVIEW" | translate}}
                 </button>
                 <div *ngIf="rawtx">
@@ -112,7 +120,8 @@
         </ion-list>
         <ion-row class="padding-bottom">
             <ion-col>
-                <button type="submit" ion-button full icon-left [disabled]="!sendForm.form.valid||!validQuantity(quantity)||!validPassword(passphrase)||!validMessageLength(message)" (click)="send()" color="secondary">
+                <button type="submit" ion-button full icon-left [disabled]="!sendForm.form.valid||!validQuantity(quantity)||!validPassword(passphrase)||!validMessageLength(message)"
+                    (click)="send()" color="secondary">
                     <ion-icon disabled="checked" name="send"></ion-icon>
                     {{"SEND" | translate}}
                 </button>

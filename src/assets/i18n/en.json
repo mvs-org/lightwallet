@@ -768,6 +768,14 @@
             "ETP_LOCK_REWARD": "ETP lock reward",
             "MST_LOCK": "MST lock",
             "UNKNOWN": "Unknown transaction type"
-        }
-    }
+        },
+        "SELECT_MODE": "Visualisation mode",
+        "MODE": {
+            "SIMPLE": "Simple mode",
+            "ADVANCED": "Advanced mode",
+            "SATOSHI": "Satoshi mode"
+        },
+        "UNSIGNED_TX": "Unsigned transaction"
+    },
+    "SIGN_TX.PAGE_TITLE": "Review and sign the transaction"
 }

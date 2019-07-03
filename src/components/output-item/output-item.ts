@@ -8,6 +8,7 @@ export class OutputItemComponent {
 
     @Input() output: any;
     @Input() decimalsMst: any;
+    @Input() mode: string;
 
     constructor() {
     }

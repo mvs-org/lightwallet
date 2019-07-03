@@ -9,6 +9,7 @@ import { AppGlobals } from '../../app/app.global';
 export class TxItemComponent {
 
     @Input() tx: any;
+    @Input() mode: string;
 
     decimalsMst: any = {}
     myAddresses: Array<string> = []
