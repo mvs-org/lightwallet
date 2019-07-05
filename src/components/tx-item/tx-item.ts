@@ -58,7 +58,7 @@ export class TxItemComponent {
             if (this.myAddresses.indexOf(input.previous_output.address) > -1) {
                 this.totalPersonalInputs.ETP += input.previous_output.value
                 if (input.previous_output.attachment && (input.previous_output.attachment.type == 'asset-issue' || input.previous_output.attachment.type == 'asset-transfer')) {
-                    this.totalPersonalInputs.MST[input.previous_output.attachment.symbol] = this.totalPersonalInputs.MST[input.previous_output.attachment.symbol] ? this.totalPersonalInputs.MST[input.previous_output.attachment.symbol] + input.attachment.quantity : input.previous_output.attachment.quantity
+                    this.totalPersonalInputs.MST[input.previous_output.attachment.symbol] = this.totalPersonalInputs.MST[input.previous_output.attachment.symbol] ? this.totalPersonalInputs.MST[input.previous_output.attachment.symbol] + input.previous_output.attachment.quantity : input.previous_output.attachment.quantity
 
                     //If there is no change output for the MST, we put the personal output to 0
                     if(!this.totalPersonalOutputs.MST[input.previous_output.attachment.symbol]) {

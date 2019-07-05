@@ -172,7 +172,6 @@ export class AssetTransferPage {
                     case "one":
                         if(this.lock) {
                             return this.mvs.createAssetDepositTx(
-                                this.passphrase,
                                 this.recipient_address,
                                 (this.recipient_avatar && this.recipient_avatar_valid) ? this.recipient_avatar : undefined,
                                 this.selectedAsset,
