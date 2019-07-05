@@ -590,6 +590,7 @@ export class MvsServiceProvider {
     }
 
     async sign(transaction: string, passphrase: string) {
+        console.log(transaction)
         const wallet = await this.wallet.getWallet(passphrase)
         const signed = await wallet.sign(transaction)
         return signed
@@ -724,10 +725,6 @@ export class MvsServiceProvider {
     async decodeTx(rawtx) {
         const network = await this.globals.getNetwork()
         let tx = Metaverse.transaction.decode(rawtx, network);
-        return tx
-    }
-
-    async organizeDecodedTx(tx) {
         let transactions = await this.getTxs()
         tx.inputs.forEach(input => {
             let found = false
@@ -738,10 +735,15 @@ export class MvsServiceProvider {
                     input.previous_output.address = t.outputs[input.previous_output.index].address
                     input.previous_output.value = t.outputs[input.previous_output.index].value
                     input.previous_output.attachment = t.outputs[input.previous_output.index].attachment
+                    input.address = input.previous_output.address
                 }
             })
             if (!found) throw `Error finding previous output script for ${input.previous_output.hash}-${input.previous_output.index}`
         })
+        return tx
+    }
+
+    async organizeDecodedTx(tx) {
         tx.outputs.forEach(output => {
             switch (output.attachment.type) {
                 case 0:

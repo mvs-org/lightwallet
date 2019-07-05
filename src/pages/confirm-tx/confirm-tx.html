@@ -22,7 +22,7 @@
             </ion-select>
         </ion-item>
 
-        <tx-item *ngIf="decodedTx" [tx]="decodedTx" [mode]="mode"></tx-item>
+        <tx-item *ngIf="displayedTx" [tx]="displayedTx" [mode]="mode"></tx-item>
 
         <ion-item [ngClass]="{'error-border': !validPassword(passphrase)}">
             <ion-label color="primary" floating>{{"PASSWORD" | translate}}</ion-label>
@@ -47,7 +47,7 @@
         </div>
         <ion-row>
             <ion-col>
-                <button type="submit" ion-button full icon-left (click)="sign(input)" [disabled]="!input" color="secondary">
+                <button type="submit" ion-button full icon-left (click)="send(input)" [disabled]="!signTxForm.form.valid||!validPassword(passphrase)" color="secondary">
                     <ion-icon disabled="checked" name="send"></ion-icon>
                     {{"CONFIRM_TX.SIGN" | translate}}
                 </button>

@@ -92,12 +92,12 @@
                 <ion-item>
                     <ion-row>
                         <ion-col>
-                            {{'TX.TOTAL_OUTPUTS'|translate}}
+                            {{'TX.TOTAL_INPUTS'|translate}}
                         </ion-col>
                         <ion-col class="right">
-                            {{totalOutputs.ETP | format : 8}} ETP
+                            {{totalInputs.ETP | format : 8}} ETP
                             <div *ngFor="let mst of involvedMst">
-                                {{totalOutputs.MST[mst] | format : decimalsMst[mst]}} {{mst}}
+                                {{totalInputs.MST[mst] | format : decimalsMst[mst]}} {{mst}}
                             </div>
                         </ion-col>
                     </ion-row>
@@ -107,12 +107,12 @@
                 <ion-item>
                     <ion-row>
                         <ion-col>
-                            {{'TX.TOTAL_INPUTS'|translate}}
+                            {{'TX.TOTAL_OUTPUTS'|translate}}
                         </ion-col>
                         <ion-col class="right">
-                            {{totalInputs.ETP | format : 8}} ETP
+                            {{totalOutputs.ETP | format : 8}} ETP
                             <div *ngFor="let mst of involvedMst">
-                                {{totalInputs.MST[mst] | format : decimalsMst[mst]}} {{mst}}
+                                {{totalOutputs.MST[mst] | format : decimalsMst[mst]}} {{mst}}
                             </div>
                         </ion-col>
                     </ion-row>

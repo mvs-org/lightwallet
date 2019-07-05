@@ -15,6 +15,7 @@ import { AlertProvider } from '../../providers/alert/alert';
 export class ConfirmTxPage {
 
     decodedTx: any
+    displayedTx: any
     passphrase: string = ''
     input: string
     signedTx: string
@@ -28,7 +29,15 @@ export class ConfirmTxPage {
     ) { }
 
     async ionViewDidEnter() {
-        this.decodedTx = await this.mvs.organizeDecodedTx(this.navParams.get('tx'))
+        if(this.navParams.get('tx') === undefined) {
+            this.navCtrl.setRoot('AccountPage')
+        } else {
+            //Do a copy of the decodedTx to sign and send
+            this.decodedTx = JSON.parse(JSON.stringify(this.navParams.get('tx')))
+
+            //displayedTx contians more information usefull for the display
+            this.displayedTx = await this.mvs.organizeDecodedTx(this.decodedTx)
+        }
     }
 
     cancel(e) {
@@ -39,11 +48,27 @@ export class ConfirmTxPage {
     preview() {
         this.sign()
             .then((tx) => {
+                console.log(tx)
                 this.signedTx = tx.encode().toString('hex')
+                console.log(this.signedTx)
                 this.alert.stopLoading()
             })
             .catch((error) => {
                 this.alert.stopLoading()
+                console.error(error.message)
+            })
+    }
+
+    send() {
+        this.sign()
+            .then((tx) => {
+                //send tx
+                console.log(tx)
+                this.alert.stopLoading()
+            })
+            .catch((error) => {
+                this.alert.stopLoading()
+                console.error(error.message)
             })
     }
 
@@ -54,7 +79,7 @@ export class ConfirmTxPage {
             })
             .catch((error) => {
                 console.error(error.message)
-                switch(error.message){
+                switch (error.message) {
                     case "ERR_DECRYPT_WALLET":
                         this.alert.showError('MESSAGE.PASSWORD_WRONG', '')
                         throw Error('ERR_SIGN_TX')
