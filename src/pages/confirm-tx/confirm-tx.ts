@@ -32,11 +32,11 @@ export class ConfirmTxPage {
         if(this.navParams.get('tx') === undefined) {
             this.navCtrl.setRoot('AccountPage')
         } else {
-            //Do a copy of the decodedTx to sign and send
-            this.decodedTx = JSON.parse(JSON.stringify(this.navParams.get('tx')))
+            //decodedTx is the tx to sign and send
+            this.decodedTx = await this.mvs.decodeTx(this.navParams.get('tx'))
 
-            //displayedTx contians more information usefull for the display
-            this.displayedTx = await this.mvs.organizeDecodedTx(this.decodedTx)
+            //displayedTx contains more information usefull for the display
+            this.displayedTx = await this.mvs.organizeDecodedTx(JSON.parse(JSON.stringify(this.decodedTx)))
         }
     }
 
