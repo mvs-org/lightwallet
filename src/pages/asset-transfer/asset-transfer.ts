@@ -40,7 +40,6 @@ export class AssetTransferPage {
     sendFrom: string = "auto"
     changeAddress: string
     feeAddress: string = "auto"
-    passphrase: string = ""
     etpBalance: number
     @ViewChild('recipientAddressInput') recipientAddressInput;
     @ViewChild('quantityInput') quantityInput;
@@ -204,7 +203,6 @@ export class AssetTransferPage {
                             recipients.forEach((recipient) => recipient.target['MST'][this.selectedAsset] = Math.round(parseFloat(recipient.target['MST'][this.selectedAsset]) * Math.pow(10, this.decimals)))
                         }
                         return this.mvs.createSendMoreTx(
-                            this.passphrase,
                             target,
                             recipients,
                             (this.sendFrom != 'auto') ? this.sendFrom : null,
@@ -360,8 +358,6 @@ export class AssetTransferPage {
         })
         this.sendMoreValidAddress = valid
     }
-
-    validPassword = (passphrase) => (passphrase.length > 0)
 
     validMessageLength = (message) => this.mvs.verifyMessageSize(message) < 253
 

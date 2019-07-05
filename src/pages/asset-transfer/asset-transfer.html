@@ -201,11 +201,6 @@
                     <ion-option *ngFor="let addressbalance of addressbalances" value="{{addressbalance.address}}">{{addressbalance.identifier}} - {{addressbalance.balance | format : decimals}} {{selectedAsset}}</ion-option>
                 </ion-select>
             </ion-item>
-            <ion-item [ngClass]="{'error-border': !validPassword(passphrase)}">
-                <ion-label color="primary" floating>{{"PASSWORD" | translate}}</ion-label>
-                <ion-input name="passphrase" type="password" [(ngModel)]="passphrase" required></ion-input>
-            </ion-item>
-            <br>
 
             <ion-item>
                 <ion-label>{{"SHOW_ADVANCED"|translate}}</ion-label>
