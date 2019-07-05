@@ -29,7 +29,7 @@ export class ConfirmTxPage {
     ) { }
 
     async ionViewDidEnter() {
-        if(this.navParams.get('tx') === undefined) {
+        if (this.navParams.get('tx') === undefined) {
             this.navCtrl.setRoot('AccountPage')
         } else {
             //decodedTx is the tx to sign and send
@@ -48,9 +48,7 @@ export class ConfirmTxPage {
     preview() {
         this.sign()
             .then((tx) => {
-                console.log(tx)
                 this.signedTx = tx.encode().toString('hex')
-                console.log(this.signedTx)
                 this.alert.stopLoading()
             })
             .catch((error) => {
@@ -61,10 +59,12 @@ export class ConfirmTxPage {
 
     send() {
         this.sign()
-            .then((tx) => {
-                //send tx
-                console.log(tx)
+            .then(tx => this.mvs.send(tx))
+            .then((result) => {
+                this.navCtrl.setRoot('AccountPage')
                 this.alert.stopLoading()
+                this.alert.showSent('SUCCESS_SEND_TEXT', result.hash)
+
             })
             .catch((error) => {
                 this.alert.stopLoading()
@@ -95,8 +95,6 @@ export class ConfirmTxPage {
                 }
             })
     }
-
-    //this.alert.showSent('SUCCESS_SEND_TEXT', result.hash)
 
     validPassword = (passphrase) => (passphrase.length > 0)
 

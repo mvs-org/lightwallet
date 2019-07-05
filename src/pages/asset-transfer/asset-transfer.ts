@@ -239,7 +239,7 @@ export class AssetTransferPage {
     send() {
         this.create()
             .then((result) => {
-                this.navCtrl.push("confirm-tx-page", { tx: result })
+                this.navCtrl.push("confirm-tx-page", { tx: result.encode().toString('hex') })
                 this.alert.stopLoading()
             })
             .catch((error) => {

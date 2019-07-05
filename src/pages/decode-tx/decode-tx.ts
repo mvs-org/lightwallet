@@ -28,7 +28,7 @@ export class DecodeTxPage {
 
     decode(tx) {
         this.mvs.decodeTx(tx)
-            .then((result) => this.nav.push("confirm-tx-page", { tx: result }))
+            .then((result) => this.nav.push("confirm-tx-page", { tx: tx }))
             .catch((error) => {
                 console.error(error);
                 this.alert.showErrorTranslated('MESSAGE.ERROR_DECODE_TX_SUBTITLE', 'MESSAGE.ERROR_DECODE_TX_BODY')
