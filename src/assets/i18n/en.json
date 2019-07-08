@@ -775,7 +775,10 @@
             "ADVANCED": "Advanced mode",
             "SATOSHI": "Satoshi mode"
         },
-        "UNSIGNED_TX": "Unsigned transaction"
+        "UNSIGNED_TX": "Unsigned transaction",
+        "OUTPUT": {
+            "LOCKED_UNTIL_BLOCK": "Locked until block {{block}} (~{{time}})"
+        }
     },
     "SIGN_TX.PAGE_TITLE": "Review and sign the transaction",
     "CREATE_TX": "Create"

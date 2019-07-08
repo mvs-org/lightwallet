@@ -1,9 +1,17 @@
 <div [ngClass]="{'personal': output.personal}">
-    <ion-item *ngIf="output.value != 0">
+    <ion-item *ngIf="output.value != 0 || output.attachment.symbol == 'ETP'">
         <ion-row>
-            <ion-col *ngIf="output.attachment.to_did">{{output.attachment.to_did}}</ion-col>
-            <ion-col *ngIf="!output.attachment.to_did">{{output.address}}</ion-col>
-            <ion-col class="right">{{output.value | format : 8}} ETP</ion-col>
+            <!--Left column-->
+            <ion-col>
+                <div *ngIf="output.attachment.to_did">{{output.attachment.to_did}}</div>
+                <div *ngIf="!output.attachment.to_did">{{output.address}}</div>
+            </ion-col>
+            <!--Right column-->
+            <ion-col class="right">
+                <div *ngIf="output.attachment.type == 'message'" class="txType">{{'TX.TYPE.message'|translate}}</div>
+                <div *ngIf="output.attachment.type != 'message' || output.value != 0">{{output.value | format : 8}} ETP</div>
+                <div *ngIf="output.unlock_block" [translate]="'TX.OUTPUT.LOCKED_UNTIL_BLOCK'" [translateParams]="{block: output.unlock_block}"></div>
+            </ion-col>
         </ion-row>
         <ion-row *ngIf="mode == 'satoshi'">
             <ion-col class="script">
@@ -13,10 +21,21 @@
     </ion-item>
     <ion-item *ngIf="output.attachment && output.attachment.symbol && output.attachment.symbol != 'ETP'">
         <ion-row>
-            <ion-col *ngIf="output.attachment.to_did">{{output.attachment.to_did}}</ion-col>
-            <ion-col *ngIf="!output.attachment.to_did">{{output.address}}</ion-col>
-            <ion-col class="right">{{output.attachment.quantity | format : decimalsMst[output.attachment.symbol]}}
-                {{output.attachment.symbol}}</ion-col>
+            <!--Left column-->
+            <ion-col>
+                <div *ngIf="output.attachment.to_did">{{output.attachment.to_did}}</div>
+                <div *ngIf="!output.attachment.to_did">{{output.address}}</div>
+            </ion-col>
+            <!--Right column-->
+            <ion-col class="right">
+                <div *ngIf="output.attachment.type == 'did-register' || output.attachment.type == 'did-transfer' || output.attachment.type == 'mit'">
+                    <div class="txType">{{'TX.TYPE.' + output.attachment.type | translate}}:</div>{{output.attachment.symbol}}
+                </div>
+                <div *ngIf="output.attachment.cert">
+                    <div class="txType">{{'TX.TYPE.CERT.' + output.attachment.cert | translate}}:</div>{{output.attachment.symbol}}
+                </div>
+                <div *ngIf="output.attachment.type != 'did-register' && output.attachment.type != 'did-transfer' && output.attachment.type != 'mit' && !output.attachment.cert">{{output.attachment.quantity | format : decimalsMst[output.attachment.symbol]}} {{output.attachment.symbol}}</div>
+            </ion-col>
         </ion-row>
         <ion-row *ngIf="mode == 'satoshi'">
             <ion-col class="script">

@@ -8,13 +8,14 @@
 
 <ion-content padding style="padding-bottom: 0;">
     <p align="center" *ngIf="etpBalance<fee">{{"NOTICE_TRANSACTION_FEE_UNCOVERED"|translate}}</p>
-            <p class="right">{{"FEE"|translate}}:<br *ngIf="platform.is('mobile')"> {{fee | format : 8}} ETP</p>
+    <p class="right">{{"FEE"|translate}}:<br *ngIf="platform.is('mobile')"> {{fee | format : 8}} ETP</p>
 
     <form #sendForm="ngForm" style="padding-bottom: 0;">
         <ion-list style="padding-bottom: 0;">
             <ion-item [ngClass]="{'error-border':!validAvatar(recipient_avatar)}">
                 <ion-label color="primary" floating>{{"RECIPIENT_AVATAR"|translate}}</ion-label>
-                <ion-input #recipientAvatarInput name="recipient_avatar" [(ngModel)]="recipient_avatar" (ngModelChange)="recipientAvatarChanged($event)" required></ion-input>
+                <ion-input #recipientAvatarInput name="recipient_avatar" [(ngModel)]="recipient_avatar" (ngModelChange)="recipientAvatarChanged($event)"
+                    required></ion-input>
             </ion-item>
             <ion-item class="info-input" *ngIf="recipient_address" no-lines>
                 <span [translate]="'AVATAR_RECIPIENT_ADDRESS'" [translateParams]="{address: recipient_address, last_update: recipient_address_last_update*1000|date : 'medium'}"></span>
@@ -26,8 +27,8 @@
             </ion-item>
             <br>
             <ion-item>
-              <ion-label>{{"SHOW_ADVANCED"|translate}}</ion-label>
-              <ion-toggle [(ngModel)]="showAdvanced" name="showAdvanced" checked="false"></ion-toggle>
+                <ion-label>{{"SHOW_ADVANCED"|translate}}</ion-label>
+                <ion-toggle [(ngModel)]="showAdvanced" name="showAdvanced" checked="false"></ion-toggle>
             </ion-item>
             <div *ngIf="showAdvanced">
                 <ion-item no-lines>
@@ -44,16 +45,17 @@
         </ion-list>
         <ion-row class="padding-bottom">
             <ion-col>
-                <button ion-button full [disabled]="!sendForm.form.valid||!validrecipient(recipient_address)||!validAvatar(recipient_avatar)||!validPassword(passphrase)" (click)="send()" icon-left color="secondary">
+                <button ion-button full [disabled]="!sendForm.form.valid||!validrecipient(recipient_address)||!validAvatar(recipient_avatar)||!validPassword(passphrase)"
+                    (click)="send()" icon-left color="secondary">
                     <ion-icon disabled="checked" name="send"></ion-icon>
                     {{"TRANSFER_MIT" | translate}}
                 </button>
             </ion-col>
             <ion-col>
                 <button ion-button color="danger" full item-right icon-left (click)="cancel($event)">
-                <ion-icon name="close"></ion-icon>
-                {{"CANCEL" | translate}}
-            </button>
+                    <ion-icon name="close"></ion-icon>
+                    {{"CANCEL" | translate}}
+                </button>
             </ion-col>
         </ion-row>
     </form>
