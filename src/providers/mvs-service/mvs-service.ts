@@ -131,8 +131,8 @@ export class MvsServiceProvider {
                     change_address = result.utxo[0].address;
                 if (recipient_address == undefined)
                     recipient_address = result.utxo[0].address;
-                    console.log(result.utxo, recipient_address, recipient_avatar, symbol, quantity, attenuation_model, change_address, result.change, undefined, fee, messages)
-                    console.log(Metaverse.transaction_builder.sendLockedAsset(result.utxo, recipient_address, recipient_avatar, symbol, quantity, attenuation_model, change_address, result.change, undefined, fee, messages))
+                console.log(result.utxo, recipient_address, recipient_avatar, symbol, quantity, attenuation_model, change_address, result.change, undefined, fee, messages)
+                console.log(Metaverse.transaction_builder.sendLockedAsset(result.utxo, recipient_address, recipient_avatar, symbol, quantity, attenuation_model, change_address, result.change, undefined, fee, messages))
                 return Metaverse.transaction_builder.sendLockedAsset(result.utxo, recipient_address, recipient_avatar, symbol, quantity, attenuation_model, change_address, result.change, undefined, fee, messages);
             })
             .catch((error) => {
@@ -141,17 +141,15 @@ export class MvsServiceProvider {
             })
     }
 
-    createAvatarTx(passphrase: string, avatar_address: string, symbol: string, change_address: string, bounty_fee: number, messages: Array<string>) {
-        return this.wallet.getWallet(passphrase)
-            .then(wallet => this.getUtxoFrom(avatar_address)
-                .then((utxo) => this.getHeight().then(height => Metaverse.output.findUtxo(utxo, {}, height, Metaverse.constants.FEE.AVATAR_REGISTER)))
-                .then((result) => {
-                    //Set change address to first utxo's address
-                    if (change_address == undefined)
-                        change_address = result.utxo[0].address;
-                    return Metaverse.transaction_builder.issueDid(result.utxo, avatar_address, symbol, change_address, result.change, bounty_fee, this.globals.network, messages);
-                })
-                .then((tx) => wallet.sign(tx)))
+    createAvatarTx(avatar_address: string, symbol: string, change_address: string, bounty_fee: number, messages: Array<string>) {
+        return this.getUtxoFrom(avatar_address)
+            .then((utxo) => this.getHeight().then(height => Metaverse.output.findUtxo(utxo, {}, height, Metaverse.constants.FEE.AVATAR_REGISTER)))
+            .then((result) => {
+                //Set change address to first utxo's address
+                if (change_address == undefined)
+                    change_address = result.utxo[0].address;
+                return Metaverse.transaction_builder.issueDid(result.utxo, avatar_address, symbol, change_address, result.change, bounty_fee, this.globals.network, messages);
+            })
             .catch((error) => {
                 console.error(error)
                 throw Error(error.message);

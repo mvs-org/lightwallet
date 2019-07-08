@@ -45,12 +45,6 @@
             <ion-item *ngIf="!validMessageLength(message)" no-lines class="wrong-input">{{"MESSAGE_TOO_LONG" | translate}}</ion-item>
             <br>
 
-            <ion-item [ngClass]="{'error-border': !validPassword(passphrase)}">
-                <ion-label color="primary" floating>{{"PASSWORD" | translate}}</ion-label>
-                <ion-input name="passphrase" type="password" [(ngModel)]="passphrase" required></ion-input>
-            </ion-item>
-            <br>
-
             <ion-item>
                 <ion-label>{{"SHOW_ADVANCED"|translate}}</ion-label>
                 <ion-toggle [(ngModel)]="showAdvanced" name="showAdvanced" checked="false"></ion-toggle>
@@ -76,8 +70,8 @@
         </ion-list>
         <ion-row class="padding-bottom">
             <ion-col>
-                <button ion-button full [disabled]="!sendForm.form.valid||!validSymbol(symbol)||!validAddress(avatar_address)||!validPassword(passphrase)||!validMessageLength(message)" (click)="confirm()" icon-left color="secondary">
-                    <ion-icon disabled="checked" name="send"></ion-icon>
+                <button ion-button full [disabled]="!sendForm.form.valid||!validSymbol(symbol)||!validAddress(avatar_address)||!validMessageLength(message)" (click)="confirm()" icon-left color="secondary">
+                    <ion-icon disabled="checked" name="cog"></ion-icon>
                     {{"CREATE_AVATAR.CREATE_BTN" | translate}}
                 </button>
             </ion-col>

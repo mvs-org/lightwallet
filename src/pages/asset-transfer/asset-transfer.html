@@ -116,8 +116,8 @@
         <ion-row class="padding-bottom">
             <ion-col>
                 <button type="submit" ion-button full icon-left [disabled]="!sendForm.form.valid||!validaddress(recipient_address)||!validQuantity(quantity)||!validMessageLength(message)||(lock && !attenuation_model)" (click)="send()" color="secondary">
-                    <ion-icon disabled="checked" name="send"></ion-icon>
-                    {{"SEND" | translate}}
+                    <ion-icon disabled="checked" name="cog"></ion-icon>
+                    {{"CREATE_TX" | translate}}
                 </button>
             </ion-col>
             <ion-col>
@@ -235,8 +235,8 @@
         <ion-row class="padding-bottom">
             <ion-col>
                 <button type="submit" ion-button full icon-left [disabled]="!sendForm.form.valid||!sendMoreValidQuantity||!sendMoreValidAddress||total > showBalance||!validMessageLength(message)" (click)="send()" color="secondary">
-                    <ion-icon disabled="checked" name="send"></ion-icon>
-                    {{"SEND" | translate}}
+                    <ion-icon disabled="checked" name="cog"></ion-icon>
+                    {{"CREATE_TX" | translate}}
                 </button>
             </ion-col>
             <ion-col>

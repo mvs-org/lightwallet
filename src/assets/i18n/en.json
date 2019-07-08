@@ -777,5 +777,6 @@
         },
         "UNSIGNED_TX": "Unsigned transaction"
     },
-    "SIGN_TX.PAGE_TITLE": "Review and sign the transaction"
+    "SIGN_TX.PAGE_TITLE": "Review and sign the transaction",
+    "CREATE_TX": "Create"
 }

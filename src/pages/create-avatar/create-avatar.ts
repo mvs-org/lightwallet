@@ -19,7 +19,6 @@ export class CreateAvatarPage {
 
     symbol: string = ""
     avatar_address: string = ""
-    passphrase: string = ""
     addressbalances: Array<AddressBalance> = []
     bounty_fee: number = 80
     addressSelectOptions: any
@@ -68,24 +67,20 @@ export class CreateAvatarPage {
         return this.alert.showLoading()
             .then(() => {
                 let messages = [];
-                if(this.message) {
+                if (this.message) {
                     messages.push(this.message)
                 }
                 return this.mvs.createAvatarTx(
-                    this.passphrase,
                     this.avatar_address,
                     this.symbol,
                     undefined,
-                    (this.showAdvanced) ? this.bounty_fee*100000000/100 : 80000000,
+                    (this.showAdvanced) ? this.bounty_fee * 100000000 / 100 : 80000000,
                     messages
                 )
             })
-            .then(tx => this.mvs.send(tx))
             .then((result) => {
-                this.navCtrl.pop()
-                this.navCtrl.pop()
-                this.navCtrl.push('AvatarsPage')
-                this.alert.showSent('SUCCESS_SEND_TEXT', result.hash)
+                this.navCtrl.push('confirm-tx-page', { tx: result.encode().toString('hex') })
+                this.alert.stopLoading()
             })
             .catch((error) => {
                 console.error(error)
@@ -117,31 +112,29 @@ export class CreateAvatarPage {
             this.translate.get('CREATE_AVATAR.CONFIRMATION_SUBTITLE').subscribe((txt_subtitle: string) => {
                 this.translate.get('CREATE_AVATAR.CREATE_BTN').subscribe((txt_create: string) => {
                     this.translate.get('CANCEL').subscribe((txt_cancel: string) => {
-                    const alert = this.alertCtrl.create({
-                        title: txt_title,
-                        subTitle: txt_subtitle,
-                        buttons: [
-                            {
-                                text: txt_create,
-                                handler: data => {
-                                    // need error handling
-                                    this.create()
+                        const alert = this.alertCtrl.create({
+                            title: txt_title,
+                            subTitle: txt_subtitle,
+                            buttons: [
+                                {
+                                    text: txt_create,
+                                    handler: data => {
+                                        // need error handling
+                                        this.create()
+                                    }
+                                },
+                                {
+                                    text: txt_cancel,
+                                    role: 'cancel'
                                 }
-                            },
-                            {
-                                  text: txt_cancel,
-                                  role: 'cancel'
-                            }
-                        ]
+                            ]
+                        });
+                        alert.present()
                     });
-                    alert.present()
-                  });
-              });
-          });
-      });
+                });
+            });
+        });
     }
-
-    validPassword = (passphrase) => (passphrase.length > 0)
 
     validAddress = (avatar_address) => (avatar_address != '')
 
@@ -154,7 +147,7 @@ export class CreateAvatarPage {
             this.symbol = this.symbol.trim()
             this.mvs.getGlobalAvatar(this.symbol)
                 .then(result => {
-                    if(!result) {
+                    if (!result) {
                         this.available_symbol = true
                     } else if (this.symbol != result[1]) {
                         throw ''
