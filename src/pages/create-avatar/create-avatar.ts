@@ -25,6 +25,7 @@ export class CreateAvatarPage {
     message: string = ""
     available_symbol: boolean = false
     showAdvanced: boolean = false
+    rawtx: string
 
     constructor(
         public navCtrl: NavController,
@@ -63,6 +64,17 @@ export class CreateAvatarPage {
         this.navCtrl.pop();
     }
 
+    preview() {
+        this.create()
+            .then((tx) => {
+                this.rawtx = tx.encode().toString('hex')
+                this.alert.stopLoading()
+            })
+            .catch((error) => {
+                this.alert.stopLoading()
+            })
+    }
+
     create() {
         return this.alert.showLoading()
             .then(() => {
@@ -77,10 +89,6 @@ export class CreateAvatarPage {
                     (this.showAdvanced) ? this.bounty_fee * 100000000 / 100 : 80000000,
                     messages
                 )
-            })
-            .then((result) => {
-                this.navCtrl.push('confirm-tx-page', { tx: result.encode().toString('hex') })
-                this.alert.stopLoading()
             })
             .catch((error) => {
                 console.error(error)
@@ -107,6 +115,14 @@ export class CreateAvatarPage {
             })
     }
 
+    send() {
+        this.create()
+            .then((result) => {
+                this.navCtrl.push("confirm-tx-page", { tx: result.encode().toString('hex') })
+                this.alert.stopLoading()
+            })
+    }
+
     confirm() {
         this.translate.get('CREATE_AVATAR.CONFIRMATION_TITLE').subscribe((txt_title: string) => {
             this.translate.get('CREATE_AVATAR.CONFIRMATION_SUBTITLE').subscribe((txt_subtitle: string) => {
@@ -120,7 +136,7 @@ export class CreateAvatarPage {
                                     text: txt_create,
                                     handler: data => {
                                         // need error handling
-                                        this.create()
+                                        this.send()
                                     }
                                 },
                                 {

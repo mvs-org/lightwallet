@@ -66,6 +66,15 @@
                         <ion-label range-right class="right">{{bounty_fee/100}} ETP</ion-label>
                     </ion-range>
                 </ion-item>
+                <button ion-button full [disabled]="!sendForm.form.valid||!validSymbol(symbol)||!validAddress(avatar_address)||!validMessageLength(message)" (click)="preview()" color="primary">
+                    {{"PREVIEW" | translate}}
+                </button>
+                <div *ngIf="rawtx">
+                    <br><br>
+                    <h2>{{"TRANSACTION_PREVIEW_TEXT"|translate}}</h2>
+                    <p class="rawtx">{{rawtx}}</p>
+                    <br><br>
+                </div>
             </div>
         </ion-list>
         <ion-row class="padding-bottom">
