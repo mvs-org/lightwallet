@@ -68,6 +68,8 @@ export class ConfirmTxPage {
             .catch((error) => {
                 this.alert.stopLoading()
                 console.error(error.message)
+                this.alert.showError('MESSAGE.BROADCAST_TRANSACTION', error.message)
+                throw Error('ERR_BORADCAST_TX')
             })
     }
 

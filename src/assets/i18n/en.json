@@ -733,8 +733,11 @@
         "TYPE": {
             "did-register": "Avatar creation",
             "did-transfer": "Avatar transfer",
-            "mit": "MIT",
             "message": "Public message or data",
+            "MIT": {
+                "1": "MIT Creation",
+                "2": "MIT Transfer"
+            },
             "CERT": {
                 "issue": "Secondary Issue certificate",
                 "domain": "Domain certificate",
@@ -781,5 +784,6 @@
         }
     },
     "SIGN_TX.PAGE_TITLE": "Review and sign the transaction",
-    "CREATE_TX": "Create"
+    "CREATE_TX": "Create",
+    "MESSAGE.BROADCAST_TRANSACTION": "Unable to broadcast the transaction."
 }

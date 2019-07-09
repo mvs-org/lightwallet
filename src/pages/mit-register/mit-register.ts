@@ -13,7 +13,6 @@ export class MITRegisterPage {
 
 
     symbol: string = ""
-    passphrase: string = ""
     recipient_address: string = ""
     recipient_avatar: string = ""
     content: string = ""
@@ -24,6 +23,7 @@ export class MITRegisterPage {
     no_avatar_placeholder: string
     list_all_mits: Array<string> = [];
     fee: number = 10000
+    rawtx: string
 
     constructor(
         public navCtrl: NavController,
@@ -77,8 +77,6 @@ export class MITRegisterPage {
         this.navCtrl.pop();
     }
 
-    validPassword = (passphrase) => (passphrase.length > 0)
-
     validSymbol = (symbol) => /^[A-Za-z0-9._\-]{3,64}$/g.test(symbol) && this.list_all_mits.indexOf(symbol) == -1
 
     validContent = (content) => content == undefined || content.length<253
@@ -87,10 +85,20 @@ export class MITRegisterPage {
 
     validAddress = (recipient_address) => (recipient_address !== undefined && recipient_address.length > 0)
 
+    preview() {
+        this.create()
+            .then((tx) => {
+                this.rawtx = tx.encode().toString('hex')
+                this.alert.stopLoading()
+            })
+            .catch((error) => {
+                this.alert.stopLoading()
+            })
+    }
+
     create() {
         return this.alert.showLoading()
             .then(() => this.mvs.createRegisterMITTx(
-                this.passphrase,
                 this.recipient_address,
                 this.recipient_avatar,
                 this.symbol,
@@ -98,16 +106,9 @@ export class MITRegisterPage {
                 undefined,
                 this.fee)
             )
-            .then(tx => this.mvs.send(tx))
-            .then((result) => {
-                this.navCtrl.pop()
-                this.translate.get('SUCCESS_SEND_TEXT').subscribe((message: string) => {
-                    this.showSent(message, result.hash)
-                })
-            })
             .catch((error) => {
                 console.error(error)
-                this.loading.dismiss()
+                this.alert.stopLoading()
                 switch (error.message) {
                     case 'ERR_CONNECTION':
                         this.alert.showError('ERROR_SEND_TEXT', '')
@@ -117,15 +118,20 @@ export class MITRegisterPage {
                             this.alert.showError('MESSAGE.BROADCAST_ERROR', message)
                         })
                         break;
-                    case "ERR_DECRYPT_WALLET":
-                        this.alert.showError('MESSAGE.PASSWORD_WRONG', '')
-                        break;
                     case "ERR_INSUFFICIENT_BALANCE":
                         this.alert.showError('MESSAGE.INSUFFICIENT_BALANCE', '')
                         break;
                     default:
                         this.alert.showError('MESSAGE.CREATE_TRANSACTION', error.message)
                 }
+            })
+    }
+
+    send() {
+        this.create()
+            .then((result) => {
+                this.navCtrl.push("confirm-tx-page", { tx: result.encode().toString('hex') })
+                this.alert.stopLoading()
             })
     }
 

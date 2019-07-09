@@ -29,8 +29,11 @@
                 {{input.previous_output.attachment.symbol}}
             </ion-col>
             <ion-col class="right">
-                <div *ngIf="input.previous_output.attachment.type == 'did-register' || input.previous_output.attachment.type == 'did-transfer' || input.previous_output.attachment.type == 'mit'">
+                <div *ngIf="input.previous_output.attachment.type == 'did-register' || input.previous_output.attachment.type == 'did-transfer'">
                     <div class="txType">{{'TX.TYPE.' + input.previous_output.attachment.type | translate}}:</div>{{input.previous_output.attachment.symbol}}
+                </div>
+                <div *ngIf="input.previous_output.attachment.type == 'mit'">
+                    <div class="txType">{{'TX.TYPE.MIT.' + input.previous_output.attachment.status | translate}}:</div>{{input.previous_output.attachment.symbol}}
                 </div>
                 <div *ngIf="input.previous_output.attachment.cert">
                     <div class="txType">{{'TX.TYPE.CERT.' + input.previous_output.attachment.cert | translate}}:</div>{{input.previous_output.attachment.symbol}}

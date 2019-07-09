@@ -28,8 +28,11 @@
             </ion-col>
             <!--Right column-->
             <ion-col class="right">
-                <div *ngIf="output.attachment.type == 'did-register' || output.attachment.type == 'did-transfer' || output.attachment.type == 'mit'">
+                <div *ngIf="output.attachment.type == 'did-register' || output.attachment.type == 'did-transfer'">
                     <div class="txType">{{'TX.TYPE.' + output.attachment.type | translate}}:</div>{{output.attachment.symbol}}
+                </div>
+                <div *ngIf="output.attachment.type == 'mit'">
+                    <div class="txType">{{'TX.TYPE.MIT.' + output.attachment.status | translate}}:</div>{{output.attachment.symbol}}
                 </div>
                 <div *ngIf="output.attachment.cert">
                     <div class="txType">{{'TX.TYPE.CERT.' + output.attachment.cert | translate}}:</div>{{output.attachment.symbol}}

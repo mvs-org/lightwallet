@@ -17,8 +17,10 @@
                 <ion-label color="primary" floating>{{"MIT_REGISTER.SYMBOL" | translate}}</ion-label>
                 <ion-input name="symbol" [(ngModel)]="symbol" maxlength="63" required></ion-input>
             </ion-item>
-            <ion-item *ngIf="list_all_mits.indexOf(symbol) !== -1" no-lines class="wrong-input">{{"MIT_REGISTER.MIT_ALREADY_EXIST" | translate}}</ion-item>
-            <ion-item *ngIf="symbol.length > 0 && symbol.length < 3" no-lines class="wrong-input">{{"MIT_REGISTER.MIT_SYMBOL_TOO_SHORT" | translate}}</ion-item>
+            <ion-item *ngIf="list_all_mits.indexOf(symbol) !== -1" no-lines class="wrong-input">{{"MIT_REGISTER.MIT_ALREADY_EXIST"
+                | translate}}</ion-item>
+            <ion-item *ngIf="symbol.length > 0 && symbol.length < 3" no-lines class="wrong-input">{{"MIT_REGISTER.MIT_SYMBOL_TOO_SHORT"
+                | translate}}</ion-item>
 
             <ion-item [ngClass]="{'error-border':!validContent(content)}">
                 <ion-label color="primary" floating>{{"MIT_REGISTER.CONTENT" | translate}}</ion-label>
@@ -26,7 +28,8 @@
             </ion-item>
             <ion-item [ngClass]="{'error-border':!validName(recipient_avatar)}">
                 <ion-label color="primary" floating>{{"MIT_REGISTER.AVATAR_NAME" | translate}}</ion-label>
-                <ion-select *ngIf="!no_avatar" [(ngModel)]="recipient_avatar" name="recipient_avatar" multiple="false" okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}" (ngModelChange)="avatarChanged($event)">
+                <ion-select *ngIf="!no_avatar" [(ngModel)]="recipient_avatar" name="recipient_avatar" multiple="false"
+                    okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}" (ngModelChange)="avatarChanged($event)">
                     <ion-option *ngFor="let avatar of avatars" value="{{avatar.symbol}}">{{avatar.symbol}}</ion-option>
                 </ion-select>
                 <ion-input name="no_avatar" *ngIf="no_avatar" [(ngModel)]="no_avatar_placeholder" disabled></ion-input>
@@ -37,14 +40,9 @@
                 <ion-label color="primary" floating>{{"MIT_REGISTER.RECIPIENT_ADDRESS" | translate}}</ion-label>
                 <ion-input name="recipient_address" [(ngModel)]="recipient_address" disabled></ion-input>
             </ion-item>
-            <ion-item [ngClass]="{'error-border': !validPassword(passphrase)}">
-                <ion-label color="primary" floating>{{"PASSWORD" | translate}}</ion-label>
-                <ion-input name="passphrase" type="password" [(ngModel)]="passphrase" required></ion-input>
-            </ion-item>
-            <br>
             <ion-item>
-              <ion-label>{{"SHOW_ADVANCED"|translate}}</ion-label>
-              <ion-toggle [(ngModel)]="showAdvanced" name="showAdvanced" checked="false"></ion-toggle>
+                <ion-label>{{"SHOW_ADVANCED"|translate}}</ion-label>
+                <ion-toggle [(ngModel)]="showAdvanced" name="showAdvanced" checked="false"></ion-toggle>
             </ion-item>
             <div *ngIf="showAdvanced">
                 <ion-item no-lines>
@@ -57,20 +55,31 @@
                         <ion-label range-right>{{10000000 | format : 8}}</ion-label>
                     </ion-range>
                 </ion-item>
+                <button ion-button full [disabled]="!sendForm.form.valid||!validSymbol(symbol)||!validContent(content)||!validName(recipient_avatar)||!validAddress(recipient_address)"
+                    (click)="preview()" color="primary">
+                    {{"PREVIEW" | translate}}
+                </button>
+                <div *ngIf="rawtx">
+                    <br><br>
+                    <h2>{{"TRANSACTION_PREVIEW_TEXT"|translate}}</h2>
+                    <p class="rawtx">{{rawtx}}</p>
+                    <br><br>
+                </div>
             </div>
         </ion-list>
         <ion-row class="padding-bottom">
             <ion-col>
-                <button ion-button full [disabled]="!sendForm.form.valid||!validSymbol(symbol)||!validContent(content)||!validName(recipient_avatar)||!validAddress(recipient_address)||!validPassword(passphrase)" (click)="create()" icon-left color="secondary">
-                    <ion-icon disabled="checked" name="send"></ion-icon>
+                <button ion-button full [disabled]="!sendForm.form.valid||!validSymbol(symbol)||!validContent(content)||!validName(recipient_avatar)||!validAddress(recipient_address)"
+                    (click)="send()" icon-left color="secondary">
+                    <ion-icon disabled="checked" name="cog"></ion-icon>
                     {{"REGISTER_MIT" | translate}}
                 </button>
             </ion-col>
             <ion-col>
                 <button ion-button color="danger" full item-right icon-left (click)="cancel($event)">
-                <ion-icon name="close"></ion-icon>
-                {{"CANCEL" | translate}}
-            </button>
+                    <ion-icon name="close"></ion-icon>
+                    {{"CANCEL" | translate}}
+                </button>
             </ion-col>
         </ion-row>
     </form>

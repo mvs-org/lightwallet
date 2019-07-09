@@ -156,17 +156,15 @@ export class MvsServiceProvider {
             })
     }
 
-    createRegisterMITTx(passphrase: string, recipient_address: string, recipient_avatar, symbol: string, content: string, change_address: string, fee: number) {
-        return this.wallet.getWallet(passphrase)
-            .then(wallet => this.getUtxoFrom(recipient_address)
-                .then((utxo) => this.getHeight().then(height => Metaverse.output.findUtxo(utxo, {}, height, fee)))
-                .then((result) => {
-                    //Set change address to first utxo's address
-                    if (change_address == undefined)
-                        change_address = result.utxo[0].address;
-                    return Metaverse.transaction_builder.registerMIT(result.utxo, recipient_address, recipient_avatar, symbol, content, change_address, result.change, fee)
-                })
-                .then((tx) => wallet.sign(tx)))
+    createRegisterMITTx(recipient_address: string, recipient_avatar, symbol: string, content: string, change_address: string, fee: number) {
+        return this.getUtxoFrom(recipient_address)
+            .then((utxo) => this.getHeight().then(height => Metaverse.output.findUtxo(utxo, {}, height, fee)))
+            .then((result) => {
+                //Set change address to first utxo's address
+                if (change_address == undefined)
+                    change_address = result.utxo[0].address;
+                return Metaverse.transaction_builder.registerMIT(result.utxo, recipient_address, recipient_avatar, symbol, content, change_address, result.change, fee)
+            })
             .catch((error) => {
                 console.error(error)
                 throw Error(error.message);
