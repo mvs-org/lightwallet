@@ -21,11 +21,6 @@
                 <span [translate]="'AVATAR_RECIPIENT_ADDRESS'" [translateParams]="{address: recipient_address, last_update: recipient_address_last_update*1000|date : 'medium'}"></span>
             </ion-item>
 
-            <ion-item [ngClass]="{'error-border': !validPassword(passphrase)}">
-                <ion-label color="primary" floating>{{"PASSWORD" | translate}}</ion-label>
-                <ion-input name="passphrase" type="password" [(ngModel)]="passphrase" required></ion-input>
-            </ion-item>
-            <br>
             <ion-item>
                 <ion-label>{{"SHOW_ADVANCED"|translate}}</ion-label>
                 <ion-toggle [(ngModel)]="showAdvanced" name="showAdvanced" checked="false"></ion-toggle>
@@ -41,11 +36,21 @@
                         <ion-label range-right>{{10000000 | format : 8}}</ion-label>
                     </ion-range>
                 </ion-item>
+                <button ion-button full [disabled]="!sendForm.form.valid||!validrecipient(recipient_address)||!validAvatar(recipient_avatar)"
+                    (click)="preview()" color="primary">
+                    {{"PREVIEW" | translate}}
+                </button>
+                <div *ngIf="rawtx">
+                    <br><br>
+                    <h2>{{"TRANSACTION_PREVIEW_TEXT"|translate}}</h2>
+                    <p class="rawtx">{{rawtx}}</p>
+                    <br><br>
+                </div>
             </div>
         </ion-list>
         <ion-row class="padding-bottom">
             <ion-col>
-                <button ion-button full [disabled]="!sendForm.form.valid||!validrecipient(recipient_address)||!validAvatar(recipient_avatar)||!validPassword(passphrase)"
+                <button ion-button full [disabled]="!sendForm.form.valid||!validrecipient(recipient_address)||!validAvatar(recipient_avatar)"
                     (click)="send()" icon-left color="secondary">
                     <ion-icon disabled="checked" name="send"></ion-icon>
                     {{"TRANSFER_MIT" | translate}}

@@ -25,10 +25,6 @@
             </ion-col>
             <!--Right column-->
             <ion-col class="right">
-                {{input.previous_output.attachment.quantity | format : input.previous_output.attachment.decimals}}
-                {{input.previous_output.attachment.symbol}}
-            </ion-col>
-            <ion-col class="right">
                 <div *ngIf="input.previous_output.attachment.type == 'did-register' || input.previous_output.attachment.type == 'did-transfer'">
                     <div class="txType">{{'TX.TYPE.' + input.previous_output.attachment.type | translate}}:</div>{{input.previous_output.attachment.symbol}}
                 </div>

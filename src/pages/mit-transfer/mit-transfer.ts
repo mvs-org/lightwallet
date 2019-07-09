@@ -14,7 +14,6 @@ export class MITTransferPage {
     recipient_address: string = ""
     recipient_address_last_update: number = 0
     recipient_avatar: string = ""
-    passphrase: string = ""
     symbol: string
     recipient_avatar_valid: boolean = false
     loading: Loading
@@ -22,6 +21,7 @@ export class MITTransferPage {
     addressbalances: Array<any>
     fee: number = 10000
     showAdvanced: boolean = false
+    rawtx: string
 
     constructor(
         public navCtrl: NavController,
@@ -51,16 +51,29 @@ export class MITTransferPage {
             })
     }
 
+    ionViewDidLoad() {
+        console.log('ionViewDidLoad MitTransferPage');
+    }
+
     cancel(e) {
         e.preventDefault()
         this.navCtrl.pop()
     }
 
-    send() {
+    preview() {
+        this.create()
+            .then((tx) => {
+                this.rawtx = tx.encode().toString('hex')
+                this.alert.stopLoading()
+            })
+            .catch((error) => {
+                this.alert.stopLoading()
+            })
+    }
+
+    create() {
         return this.alert.showLoading()
-            .then(() => this.mvs.getAddresses())
-            .then((addresses) => this.mvs.createTransferMITTx(
-                this.passphrase,
+            .then(() => this.mvs.createTransferMITTx(
                 "", //Sender avatar
                 this.recipient_address,
                 this.recipient_avatar,
@@ -69,32 +82,22 @@ export class MITTransferPage {
                 undefined,
                 (this.showAdvanced) ? this.fee : 10000
             ))
-            .then(tx => this.mvs.send(tx))
-            .then((result) => {
-                this.navCtrl.pop()
-                this.translate.get('SUCCESS_SEND_TEXT').subscribe((message: string) => {
-                    if (this.platform.is('mobile')) {
-                        this.showSentMobile(message, result.hash)
-                    } else {
-                        this.showSent(message, result.hash)
-                    }
-
-                })
-            })
             .catch((error) => {
                 console.error(error.message)
                 this.alert.stopLoading()
-                if (error.message == "ERR_DECRYPT_WALLET")
-                    this.showError('MESSAGE.PASSWORD_WRONG', '')
-                else if (error.message == "ERR_INSUFFICIENT_BALANCE")
+                if (error.message == "ERR_INSUFFICIENT_BALANCE")
                     this.showError('MESSAGE.INSUFFICIENT_BALANCE', '')
                 else
                     this.showError('MESSAGE.CREATE_TRANSACTION', error.message)
             })
     }
 
-    ionViewDidLoad() {
-        console.log('ionViewDidLoad MitTransferPage');
+    send() {
+        this.create()
+            .then((result) => {
+                this.navCtrl.push("confirm-tx-page", { tx: result.encode().toString('hex') })
+                this.alert.stopLoading()
+            })
     }
 
     format = (quantity, decimals) => quantity / Math.pow(10, decimals)
@@ -127,39 +130,6 @@ export class MITTransferPage {
                     this.recipientChanged()
                 })
         }
-    }
-
-    validPassword = (passphrase) => (passphrase.length > 0)
-
-    showSent(text, hash) {
-        this.translate.get(['MESSAGE.SUCCESS', 'OK']).subscribe((translations: any) => {
-            let alert = this.alertCtrl.create({
-                title: translations['MESSAGE.SUCCESS'],
-                subTitle: text + hash,
-                buttons: [
-                    {
-                        text: translations['OK'],
-                    }
-                ]
-            })
-            alert.present()
-        })
-    }
-
-
-    showSentMobile(text, hash) {
-        this.translate.get(['MESSAGE.SUCCESS', 'OK', 'COPY']).subscribe((translations: any) => {
-            let alert = this.alertCtrl.create({
-                title: translations['MESSAGE.SUCCESS'],
-                subTitle: text + hash,
-                buttons: [
-                    {
-                        text: translations['OK'],
-                    }
-                ]
-            })
-            alert.present()
-        })
     }
 
     showError(message_key, error) {

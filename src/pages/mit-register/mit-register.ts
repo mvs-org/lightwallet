@@ -135,32 +135,6 @@ export class MITRegisterPage {
             })
     }
 
-    showSent(text, hash) {
-        this.translate.get('MESSAGE.SUCCESS').subscribe((title: string) => {
-            this.translate.get('OK').subscribe((ok: string) => {
-                let alert = this.alertCtrl.create({
-                    title: title,
-                    subTitle: text + hash,
-                    buttons: [ok]
-                })
-                alert.present()
-            })
-        })
-    }
-
-    showAlert(text) {
-        this.translate.get('MESSAGE.ERROR_TITLE').subscribe((title: string) => {
-            this.translate.get('OK').subscribe((ok: string) => {
-                let alert = this.alertCtrl.create({
-                    title: title,
-                    subTitle: text,
-                    buttons: [ok]
-                })
-                alert.present()
-            })
-        })
-    }
-
     showError(message_key, error) {
         this.translate.get(['MESSAGE.ERROR_TITLE', message_key, 'OK']).subscribe((translations: any) => {
             let alert = this.alertCtrl.create({

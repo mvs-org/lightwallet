@@ -609,7 +609,7 @@
 
     "ASSET_LOCK": "I want to lock this asset",
     "ASSET_LOCK_PERIOD": "Lock period (in blocks)",
-     
+
     "ASSET_LOCK.SIMPLE": "Simple unlock",
     "ASSET_LOCK.RECURRENT": "Recurrent unlock",
     "ASSET_LOCK.CUSTOM": "Custom unlock",
@@ -735,8 +735,8 @@
             "did-transfer": "Avatar transfer",
             "message": "Public message or data",
             "MIT": {
-                "1": "MIT Creation",
-                "2": "MIT Transfer"
+                "registered": "MIT Creation",
+                "transfered": "MIT Transfer"
             },
             "CERT": {
                 "issue": "Secondary Issue certificate",

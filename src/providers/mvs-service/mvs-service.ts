@@ -171,21 +171,19 @@ export class MvsServiceProvider {
             })
     }
 
-    createTransferMITTx(passphrase: string, sender_avatar: string, recipient_address: string, recipient_avatar, symbol: string, fee_address: string, change_address: string, fee: number) {
-        return this.wallet.getWallet(passphrase)
-            .then(wallet => this.getUtxoFrom(fee_address)
-                .then((utxo) => Promise.all([this.getHeight().then(height => Metaverse.output.findUtxo(utxo, {}, height, fee)), this.getUtxo().then(utxo => Metaverse.output.filter(utxo, { type: 'mit', symbol: symbol }))]))
-                .then((result) => {
-                    var fee_utxo = result[0]
-                    var mit_utxo = result[1]
-                    if (mit_utxo.length !== 1)
-                        throw Error('ERR_FIND_MIT')
-                    //Set change address to first utxo's address
-                    if (change_address == undefined)
-                        change_address = fee_utxo.utxo[0].address;
-                    return Metaverse.transaction_builder.transferMIT(fee_utxo.utxo.concat(mit_utxo), sender_avatar, recipient_address, recipient_avatar, symbol, change_address, fee_utxo.change, fee)
-                })
-                .then((tx) => wallet.sign(tx)))
+    createTransferMITTx(sender_avatar: string, recipient_address: string, recipient_avatar, symbol: string, fee_address: string, change_address: string, fee: number) {
+        return this.getUtxoFrom(fee_address)
+            .then((utxo) => Promise.all([this.getHeight().then(height => Metaverse.output.findUtxo(utxo, {}, height, fee)), this.getUtxo().then(utxo => Metaverse.output.filter(utxo, { type: 'mit', symbol: symbol }))]))
+            .then((result) => {
+                var fee_utxo = result[0]
+                var mit_utxo = result[1]
+                if (mit_utxo.length !== 1)
+                    throw Error('ERR_FIND_MIT')
+                //Set change address to first utxo's address
+                if (change_address == undefined)
+                    change_address = fee_utxo.utxo[0].address;
+                return Metaverse.transaction_builder.transferMIT(fee_utxo.utxo.concat(mit_utxo), sender_avatar, recipient_address, recipient_avatar, symbol, change_address, fee_utxo.change, fee)
+            })
             .catch((error) => {
                 console.error(error)
                 throw Error(error.message);
@@ -774,6 +772,16 @@ export class MvsServiceProvider {
                     break;
                 case 6:
                     output.attachment.type = 'mit'
+                    switch (output.attachment.status) {
+                        case 1:
+                            output.attachment.status = 'registered'
+                            break;
+                        case 2:
+                            output.attachment.status = 'transfered'
+                            break;
+                        default:
+                            throw Error("MIT status unknown");
+                    }
                     break;
                 case 4294967295:
                     output.attachment.type = 'coinstake'
