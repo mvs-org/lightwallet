@@ -190,35 +190,30 @@ export class MvsServiceProvider {
             })
     }
 
-    createIssueAssetTx(passphrase: string, symbol: string, quantity: number, precision: number, issuer: string, description: string, secondaryissue_threshold: number, is_secondaryissue: boolean, issue_address: string, change_address: string, create_new_domain_cert: boolean, use_naming_cert: boolean, bounty_fee: number, attenuation_model: string, mst_mining_model: any) {
+    createIssueAssetTx(symbol: string, quantity: number, precision: number, issuer: string, description: string, secondaryissue_threshold: number, is_secondaryissue: boolean, issue_address: string, change_address: string, create_new_domain_cert: boolean, use_naming_cert: boolean, bounty_fee: number, attenuation_model: string, mst_mining_model: any) {
         return this.getUtxoFrom(issue_address)
-            .then(utxo => {
-                return this.wallet.getWallet(passphrase)
-                    .then((wallet) => {
-                        return this.getHeight().then(height => Metaverse.output.findUtxo(utxo, {}, height, Metaverse.constants.FEE.MST_REGISTER))
-                            .then((result) => {
-                                //Set change address to first utxo's address
-                                if (change_address == undefined)
-                                    change_address = result.utxo[0].address;
-                                let certs = utxo.filter(output => {
-                                    if (use_naming_cert) {
-                                        if (output.attachment.type == "asset-cert" && output.attachment.symbol == symbol && ['naming'].indexOf(output.attachment.cert) !== -1) {
-                                            return true;
-                                        }
-                                        return false;
-                                    } else {
-                                        if (!use_naming_cert && output.attachment.type == "asset-cert" && output.attachment.symbol == symbol.split('.')[0] && output.attachment.cert == 'domain')
-                                            return true;
-                                        else if (output.attachment.type == "asset-cert" && output.attachment.symbol == symbol && ['naming', 'issue'].indexOf(output.attachment.cert) !== -1)
-                                            return true;
-                                        return false;
-                                    }
-                                })
-                                return Metaverse.transaction_builder.issueAsset(result.utxo.concat(certs), issue_address, symbol, quantity, precision, issuer, description, secondaryissue_threshold, is_secondaryissue, change_address, result.change, create_new_domain_cert, bounty_fee, this.globals.network, attenuation_model, mst_mining_model)
-                            })
-                            .then((tx) => wallet.sign(tx))
+            .then(utxo => this.getHeight().then(height => Metaverse.output.findUtxo(utxo, {}, height, Metaverse.constants.FEE.MST_REGISTER))
+                .then((result) => {
+                    //Set change address to first utxo's address
+                    if (change_address == undefined)
+                        change_address = result.utxo[0].address;
+                    let certs = utxo.filter(output => {
+                        if (use_naming_cert) {
+                            if (output.attachment.type == "asset-cert" && output.attachment.symbol == symbol && ['naming'].indexOf(output.attachment.cert) !== -1) {
+                                return true;
+                            }
+                            return false;
+                        } else {
+                            if (!use_naming_cert && output.attachment.type == "asset-cert" && output.attachment.symbol == symbol.split('.')[0] && output.attachment.cert == 'domain')
+                                return true;
+                            else if (output.attachment.type == "asset-cert" && output.attachment.symbol == symbol && ['naming', 'issue'].indexOf(output.attachment.cert) !== -1)
+                                return true;
+                            return false;
+                        }
                     })
-            })
+                    return Metaverse.transaction_builder.issueAsset(result.utxo.concat(certs), issue_address, symbol, quantity, precision, issuer, description, secondaryissue_threshold, is_secondaryissue, change_address, result.change, create_new_domain_cert, bounty_fee, this.globals.network, attenuation_model, mst_mining_model)
+                })
+            )
             .catch((error) => {
                 console.error(error)
                 throw Error(error.message);
