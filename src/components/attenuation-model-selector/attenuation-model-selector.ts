@@ -19,6 +19,7 @@ export class AttenuationModelSelectorComponent {
     @Input() decimals: number;
     @Input() asset: string;
     @Input() blocktime: number;
+    @Input() toMany: boolean = false;
 
     type: string = 'simple'
     periods: Array<Period> = []
@@ -43,6 +44,9 @@ export class AttenuationModelSelectorComponent {
 
     ngOnChanges(changes: SimpleChanges) {
         this.inputChange(event)
+        if(this.toMany) {
+            this.type = 'simple'
+        }
     }
 
     addPeriod() {
@@ -63,8 +67,14 @@ export class AttenuationModelSelectorComponent {
 
         switch(this.type){
             case "simple":
-                if(this.validLocktime(this.locktime))
-                    attenuation_model = "PN=0;LH=" + this.locktime + ";TYPE=1;LQ=" + quantity + ";LP=" + this.locktime + ";UN=1"                     
+                if(this.validLocktime(this.locktime)) {
+                    if(!this.toMany) {
+                        attenuation_model = "PN=0;LH=" + this.locktime + ";TYPE=1;LQ=" + quantity + ";LP=" + this.locktime + ";UN=1"                     
+                    } else {
+                        //Do not set the quantity if send to many, the quantity LQ is set per recipient
+                        attenuation_model = "PN=0;LH=" + this.locktime + ";TYPE=1;LP=" + this.locktime + ";UN=1"
+                    }
+                }
                 break;
             case "recurrent":
                 if(this.validLocktime(this.locktime) && this.validNbrPeriod(this.nbrPeriod))
@@ -94,7 +104,7 @@ export class AttenuationModelSelectorComponent {
                 break;
         }
 
-        if(this.attenuation_model != attenuation_model && this.quantity) {
+        if(this.attenuation_model != attenuation_model && (this.quantity || this.toMany)) {
             this.modelChanged.emit(attenuation_model)
             this.attenuation_model = attenuation_model
         }

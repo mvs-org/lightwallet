@@ -175,7 +175,7 @@ export class AssetTransferPage {
                                 (this.recipient_avatar && this.recipient_avatar_valid) ? this.recipient_avatar : undefined,
                                 this.selectedAsset,
                                 Math.round(parseFloat(this.quantity) * Math.pow(10, this.decimals)),
-                                this.attenuation_model,
+                                (this.showAdvanced && this.lock) ? this.attenuation_model : undefined,
                                 (this.sendFrom != 'auto') ? this.sendFrom : null,
                                 (this.showAdvanced && this.changeAddress != 'auto') ? this.changeAddress : undefined,
                                 (this.showAdvanced) ? this.fee : 10000,
@@ -197,11 +197,17 @@ export class AssetTransferPage {
                         let target = {}
                         let recipients = JSON.parse(JSON.stringify(this.recipients))
                         target[this.selectedAsset] = Math.round(parseFloat(this.total_to_send[this.selectedAsset]) * Math.pow(10, this.decimals))
-                        if(this.selectedAsset == 'ETP') {
-                            recipients.forEach((recipient) => recipient.target['ETP'] = Math.round(parseFloat(recipient.target['ETP']) * Math.pow(10, this.decimals)))
-                        } else {
-                            recipients.forEach((recipient) => recipient.target['MST'][this.selectedAsset] = Math.round(parseFloat(recipient.target['MST'][this.selectedAsset]) * Math.pow(10, this.decimals)))
-                        }
+                        recipients.forEach((recipient) => {
+                            if(this.selectedAsset == 'ETP') {
+                                recipient.target['ETP'] = Math.round(parseFloat(recipient.target['ETP']) * Math.pow(10, this.decimals))
+                            } else {
+                                let convertedQuantity = Math.round(parseFloat(recipient.target['MST'][this.selectedAsset]) * Math.pow(10, this.decimals))
+                                recipient.target['MST'][this.selectedAsset] = convertedQuantity
+                                if(this.showAdvanced && this.lock && this.attenuation_model) {
+                                    recipient.attenuation_model = this.attenuation_model + ';LQ=' + convertedQuantity
+                                }
+                            }
+                        })
                         return this.mvs.createSendMoreTx(
                             target,
                             recipients,

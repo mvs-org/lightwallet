@@ -221,6 +221,13 @@
                         <ion-option *ngFor="let address of addresses" value="{{address}}">{{address}}</ion-option>
                     </ion-select>
                 </ion-item>
+                <br>
+                <ion-item *ngIf="selectedAsset != 'ETP'">
+                    <ion-label>{{"ASSET_LOCK"|translate}}</ion-label>
+                    <ion-toggle [(ngModel)]="lock" name="lock"></ion-toggle>
+                </ion-item>
+                <attenuation-model-selector *ngIf="lock" (modelChanged)="setAttenuationModel($event)" [quantity]="undefined" [decimals]="decimals" [asset]="selectedAsset" [blocktime]="blocktime" [toMany]="true"></attenuation-model-selector>
+                <br>
                 <button ion-button full [disabled]="!sendForm.form.valid||!sendMoreValidQuantity||!sendMoreValidAddress||total > showBalance||!validMessageLength(message)" (click)="preview()" color="primary">
                     {{"PREVIEW" | translate}}
                 </button>

@@ -161,7 +161,9 @@ export class PluginPage {
             .then(address => {
                 return this.askPassphrase(`Plugin wants to create new MIT ${params.symbol}. It will be issued for by your Avatar ${params.avatar}`)
                     .then((passphrase: string) => {
-                        return this.mvs.createRegisterMITTx(passphrase, address, params.avatar, params.symbol, params.content, undefined, undefined).then(tx => (params.raw) ? tx.encode().toString('hex') : tx)
+                        return this.mvs.createRegisterMITTx(address, params.avatar, params.symbol, params.content, undefined, undefined)
+                            .then(rawtx => this.mvs.sign(rawtx, passphrase))   
+                            .then(tx => (params.raw) ? tx.encode().toString('hex') : tx)
                     })
             })
     }
