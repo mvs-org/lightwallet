@@ -21,9 +21,9 @@ export class MITRegisterPage {
     avatars: Array<any>;
     no_avatar: boolean = false;
     no_avatar_placeholder: string
-    list_all_mits: Array<string> = [];
     fee: number = 10000
     rawtx: string
+    symbol_available: boolean = false
 
     constructor(
         public navCtrl: NavController,
@@ -68,16 +68,11 @@ export class MITRegisterPage {
             })
     }
 
-    ionViewDidLoad() {
-        this.loadMits()
-            .catch(console.error);
-    }
-
     cancel() {
         this.navCtrl.pop();
     }
 
-    validSymbol = (symbol) => /^[A-Za-z0-9._\-]{3,64}$/g.test(symbol) && this.list_all_mits.indexOf(symbol) == -1
+    validSymbol = (symbol) => /^[A-Za-z0-9._\-]{3,64}$/g.test(symbol) && this.symbol_available
 
     validContent = (content) => content == undefined || content.length<253
 
@@ -149,18 +144,6 @@ export class MITRegisterPage {
         })
     }
 
-    loadMits(){
-        return this.mvs.getListMit()
-            .then((mits) => {
-                mits.result.forEach((mit) => {
-                    this.list_all_mits.push(mit.attachment.symbol)
-                })
-            })
-            .catch((error) => {
-                console.error(error)
-            })
-    }
-
     avatarChanged = () => {
         this.avatars.forEach((avatar) => {
             if(avatar.symbol == this.recipient_avatar) {
@@ -168,5 +151,24 @@ export class MITRegisterPage {
                 return
             }
         })
+    }
+
+    symbolChanged = () => {
+        if (this.symbol && this.symbol.length >= 3) {
+            this.symbol = this.symbol.trim()
+            Promise.all([this.mvs.suggestMIT(this.symbol), this.symbol])
+                .then(result => {
+                    if (this.symbol != result[1]) {
+                        throw ''
+                    } else if (result[0][0] === this.symbol) {
+                        this.symbol_available = false
+                    } else {
+                        this.symbol_available = true
+                    }
+                })
+                .catch((e) => {
+                    this.symbol_available = false
+                })
+        }
     }
 }

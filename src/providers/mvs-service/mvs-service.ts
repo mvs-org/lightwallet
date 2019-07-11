@@ -218,10 +218,6 @@ export class MvsServiceProvider {
             })
     }
 
-    getNamingCert(symbol) {
-
-    }
-
     validAddress = (address: string) => {
         if (address.length != 34)
             return false
@@ -601,6 +597,10 @@ export class MvsServiceProvider {
 
     suggestAddress(prefix) {
         return this.blockchain.suggest.address(prefix)
+    }
+
+    suggestMIT(prefix) {
+        return this.blockchain.suggest.mit(prefix)
     }
 
     getdictionary(lang) {
