@@ -68,8 +68,18 @@ export class ConfirmTxPage {
             .catch((error) => {
                 this.alert.stopLoading()
                 console.error(error.message)
-                this.alert.showError('MESSAGE.BROADCAST_TRANSACTION', error.message)
-                throw Error('ERR_BORADCAST_TX')
+                switch(error.message){
+                    case 'ERR_CONNECTION':
+                        this.alert.showError('ERROR_SEND_TEXT', '')
+                        break;
+                    case 'ERR_SIGN_TX':
+                        //already handle in create function
+                        break;
+                    default:
+                        this.alert.showError('MESSAGE.BROADCAST_TRANSACTION', error.message)
+                        throw Error('ERR_BORADCAST_TX')
+                }
+
             })
     }
 
@@ -81,13 +91,16 @@ export class ConfirmTxPage {
             .catch((error) => {
                 console.error(error.message)
                 switch (error.message) {
-                    case "ERR_DECRYPT_WALLET":
+                    case 'ERR_DECRYPT_WALLET':
                         this.alert.showError('MESSAGE.PASSWORD_WRONG', '')
                         throw Error('ERR_SIGN_TX')
-                    case "ERR_INSUFFICIENT_BALANCE":
+                    case 'ERR_DECRYPT_WALLET_FROM_SEED':
+                        this.alert.showError('MESSAGE.PASSWORD_WRONG', '')
+                        throw Error('ERR_SIGN_TX')
+                    case 'ERR_INSUFFICIENT_BALANCE':
                         this.alert.showError('MESSAGE.INSUFFICIENT_BALANCE', '')
                         throw Error('ERR_SIGN_TX')
-                    case "ERR_TOO_MANY_INPUTS":
+                    case 'ERR_TOO_MANY_INPUTS':
                         this.alert.showErrorTranslated('ERROR_TOO_MANY_INPUTS', 'ERROR_TOO_MANY_INPUTS_TEXT')
                         throw Error('ERR_SIGN_TX')
                     default:
