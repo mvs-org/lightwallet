@@ -536,11 +536,11 @@ export class MvsServiceProvider {
     }
 
     private findTxIndexByHash(txs, hash) {
-        txs.forEach((tx, index) => {
-            if (tx.hash === hash) {
-                return index
+        for(let i = 0; i < txs.length; i++) {
+            if (txs[i].hash === hash) {
+                return i
             }
-        })
+        }
         return -1
     }
 
