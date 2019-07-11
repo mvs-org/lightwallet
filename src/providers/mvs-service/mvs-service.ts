@@ -764,6 +764,22 @@ export class MvsServiceProvider {
                     break;
                 case 5:
                     output.attachment.type = 'asset-cert'
+                    switch (output.attachment.cert) {
+                        case 1:
+                            output.attachment.cert = 'issue'
+                            break;
+                        case 2:
+                            output.attachment.cert = 'domain'
+                            break;
+                        case 3:
+                            output.attachment.cert = 'naming'
+                            break;
+                        case 1610612740:
+                            output.attachment.cert = 'mining'
+                            break;
+                        default:
+                            throw Error("Cert type unknown");
+                    }
                     break;
                 case 6:
                     output.attachment.type = 'mit'

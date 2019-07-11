@@ -73,6 +73,10 @@ export class TxItemComponent {
         this.tx.outputs.forEach(output => {
             switch (output.attachment.type) {
                 case 'asset-issue':
+                    this.decimalsMst[output.attachment.symbol] = output.attachment.precision
+                    output.attachment.quantity = output.attachment.max_supply
+                    this.totalInputs.MST[output.attachment.symbol] = this.totalInputs.MST[output.attachment.symbol] || 0
+                    this.totalPersonalInputs.MST[output.attachment.symbol] = this.totalPersonalInputs.MST[output.attachment.symbol] || 0
                     this.txType = TX_TYPE_ISSUE
                     this.txTypeValue = output.attachment.symbol
                     break;
