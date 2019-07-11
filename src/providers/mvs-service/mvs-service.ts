@@ -586,42 +586,7 @@ export class MvsServiceProvider {
         tx.hash = (await this.broadcast(tx.encode().toString('hex'))).hash
         tx.height = await this.getHeight()
         tx.unconfirmed = true
-        let balances = await this.getBalances()
-        tx.outputs.forEach((output, index) => {
-            output.index = index
-            output.locked_height_range = (output.locktime) ? output.locktime : 0
-            output.locked_until = (output.locktime) ? tx.height + output.locked_height_range : 0
-            switch (output.attachment.type) {
-                case Metaverse.constants.ATTACHMENT.TYPE.MST:
-                    switch (output.attachment.status) {
-                        case Metaverse.constants.MST.STATUS.REGISTER:
-                            output.attachment.type = 'asset-issue';
-                            break;
-                        case Metaverse.constants.MST.STATUS.TRANSFER:
-                            output.attachment.type = 'asset-transfer';
-                            if (balances && balances.MST && balances.MST[output.attachment.symbol])
-                                output.attachment.decimals = balances.MST[output.attachment.symbol].decimals
-                            break;
-                    }
-                    break;
-                case Metaverse.constants.ATTACHMENT.TYPE.MIT:
-                    output.attachment.type = 'mit';
-                    switch (output.attachment.status) {
-                        case Metaverse.constants.MIT.STATUS.REGISTER:
-                            output.attachment.status = 'registered'
-                            break;
-                        case Metaverse.constants.MIT.STATUS.TRANSFER:
-                            output.attachment.status = 'transfered'
-                            break;
-                    }
-                    break;
-                case Metaverse.constants.ATTACHMENT.TYPE.ETP_TRANSFER:
-                    output.attachment.type = 'etp';
-                    output.attachment.symbol = 'ETP';
-                    output.attachment.decimals = 8;
-                    break;
-            }
-        })
+        tx = await this.organizeTx(tx)
         return this.addTxs([tx])
             .then(() => this.getData())
             .then(() => tx)
@@ -737,22 +702,29 @@ export class MvsServiceProvider {
         return tx
     }
 
-    async organizeDecodedTx(tx) {
-        tx.outputs.forEach(output => {
+    async organizeTx(tx) {
+        let balances = await this.getBalances()
+        tx.outputs.forEach((output, index) => {
+            output.index = index
+            output.locked_height_range = (output.locktime) ? output.locktime : 0
+            output.locked_until = (output.locktime) ? tx.height + output.locked_height_range : 0
+            
             switch (output.attachment.type) {
                 case Metaverse.constants.ATTACHMENT.TYPE.ETP_TRANSFER:
-                    output.attachment.type = 'etp'
+                    output.attachment.type = 'etp';
+                    output.attachment.symbol = 'ETP';
+                    output.attachment.decimals = 8;
                     break;
                 case Metaverse.constants.ATTACHMENT.TYPE.MST:
                     switch (output.attachment.status) {
                         case Metaverse.constants.MST.STATUS.REGISTER:
-                            output.attachment.type = 'asset-issue'
+                            output.attachment.type = 'asset-issue';
                             break;
                         case Metaverse.constants.MST.STATUS.TRANSFER:
-                            output.attachment.type = 'asset-transfer'
+                            output.attachment.type = 'asset-transfer';
+                            if (balances && balances.MST && balances.MST[output.attachment.symbol])
+                                output.attachment.decimals = balances.MST[output.attachment.symbol].decimals
                             break;
-                        default:
-                            throw Error("Asset status unknown");
                     }
                     break;
                 case Metaverse.constants.ATTACHMENT.TYPE.MESSAGE:

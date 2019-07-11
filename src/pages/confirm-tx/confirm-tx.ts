@@ -36,7 +36,7 @@ export class ConfirmTxPage {
             this.decodedTx = await this.mvs.decodeTx(this.navParams.get('tx'))
 
             //displayedTx contains more information usefull for the display
-            this.displayedTx = await this.mvs.organizeDecodedTx(JSON.parse(JSON.stringify(this.decodedTx)))
+            this.displayedTx = await this.mvs.organizeTx(JSON.parse(JSON.stringify(this.decodedTx)))
         }
     }
 

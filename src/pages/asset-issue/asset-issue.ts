@@ -239,6 +239,9 @@ export class AssetIssuePage {
                     case 'ERR_CONNECTION':
                         this.alert.showError('ERROR_SEND_TEXT', '')
                         break;
+                    case 'ERR_CREATE_TX':
+                        //already handle in create function
+                        break;
                     case 'ERR_BROADCAST':
                         this.translate.get('MESSAGE.ONE_TX_PER_BLOCK').subscribe((message: string) => {
                             this.alert.showError('MESSAGE.BROADCAST_ERROR', message)
