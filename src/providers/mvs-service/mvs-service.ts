@@ -96,22 +96,20 @@ export class MvsServiceProvider {
             })
     }
 
-    createSendSwapTx(passphrase: string, asset: string, recipient_address: string, recipient_avatar: string, quantity: number, from_address: string, change_address: string, fee: number, messages: Array<string>, swap_fee: number) {
+    createSendSwapTx(asset: string, recipient_address: string, recipient_avatar: string, quantity: number, from_address: string, change_address: string, fee: number, messages: Array<string>, swap_fee: number) {
         let target = {};
         target[asset] = quantity;
-        return this.wallet.getWallet(passphrase)
-            .then(wallet => this.getUtxoFrom(from_address)
-                .then((utxo) => this.getHeight().then(height => Metaverse.output.findUtxo(utxo, target, height, fee + swap_fee)))
-                .then((result) => {
-                    if (result.utxo.length > 676) {
-                        throw Error('ERR_TOO_MANY_INPUTS');
-                    }
-                    //Set change address to first utxo's address
-                    if (change_address == undefined)
-                        change_address = result.utxo[0].address;
-                    return Metaverse.transaction_builder.sendSwap(result.utxo, recipient_address, recipient_avatar, target, change_address, result.change, undefined, fee, this.globals.network, messages, swap_fee);
-                })
-                .then((tx) => wallet.sign(tx)))
+        return this.getUtxoFrom(from_address)
+            .then((utxo) => this.getHeight().then(height => Metaverse.output.findUtxo(utxo, target, height, fee + swap_fee)))
+            .then((result) => {
+                if (result.utxo.length > 676) {
+                    throw Error('ERR_TOO_MANY_INPUTS');
+                }
+                //Set change address to first utxo's address
+                if (change_address == undefined)
+                    change_address = result.utxo[0].address;
+                return Metaverse.transaction_builder.sendSwap(result.utxo, recipient_address, recipient_avatar, target, change_address, result.change, undefined, fee, this.globals.network, messages, swap_fee);
+            })
             .catch((error) => {
                 console.error(error)
                 throw Error(error.message);
@@ -536,7 +534,7 @@ export class MvsServiceProvider {
     }
 
     private findTxIndexByHash(txs, hash) {
-        for(let i = 0; i < txs.length; i++) {
+        for (let i = 0; i < txs.length; i++) {
             if (txs[i].hash === hash) {
                 return i
             }
@@ -708,7 +706,7 @@ export class MvsServiceProvider {
             output.index = index
             output.locked_height_range = (output.locktime) ? output.locktime : 0
             output.locked_until = (output.locktime) ? tx.height + output.locked_height_range : 0
-            
+
             switch (output.attachment.type) {
                 case Metaverse.constants.ATTACHMENT.TYPE.ETP_TRANSFER:
                     output.attachment.type = 'etp';

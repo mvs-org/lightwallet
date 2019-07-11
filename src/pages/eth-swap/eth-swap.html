@@ -43,13 +43,10 @@
                 <ion-input name="eth_address" type="eth_address" [(ngModel)]="eth_address" required></ion-input>
             </ion-item>
             <div no-lines class="advice" [translate]="'HELP.ETH_ADDRESS'"></div>
-            <ion-item *ngIf="eth_address && eth_address.length != 0 && !validEthereumAddress(eth_address)" no-lines
-                class="wrong-input">{{"SWAP_MST.INCORRECT_ETH_ADDRESS" | translate}}</ion-item>
-
-            <ion-item [ngClass]="{'error-border': !validPassword(passphrase)}">
-                <ion-label color="primary" floating>{{"PASSWORD" | translate}}</ion-label>
-                <ion-input name="passphrase" type="password" [(ngModel)]="passphrase" required></ion-input>
+            <ion-item *ngIf="eth_address && eth_address.length != 0 && !validEthereumAddress(eth_address)" no-lines class="wrong-input">
+                {{"SWAP_MST.INCORRECT_ETH_ADDRESS" | translate}}
             </ion-item>
+
             <br>
             <ion-item>
                 <ion-label>{{"SELECT_FROM_ADDRESS"|translate}}</ion-label>
@@ -106,7 +103,7 @@
                         <ion-option *ngFor="let address of addresses" value="{{address}}">{{address}}</ion-option>
                     </ion-select>
                 </ion-item>
-                <button ion-button full [disabled]="!sendForm.form.valid||!validQuantity(quantity)||!validPassword(passphrase)||!validMessageLength(message)"
+                <button ion-button full [disabled]="!sendForm.form.valid||!validQuantity(quantity)||!validMessageLength(message)"
                     (click)="preview()" color="primary">
                     {{"PREVIEW" | translate}}
                 </button>
@@ -120,7 +117,7 @@
         </ion-list>
         <ion-row class="padding-bottom">
             <ion-col>
-                <button type="submit" ion-button full icon-left [disabled]="!sendForm.form.valid||!validQuantity(quantity)||!validPassword(passphrase)||!validMessageLength(message)"
+                <button type="submit" ion-button full icon-left [disabled]="!sendForm.form.valid||!validQuantity(quantity)||!validMessageLength(message)"
                     (click)="send()" color="secondary">
                     <ion-icon disabled="checked" name="send"></ion-icon>
                     {{"SEND" | translate}}

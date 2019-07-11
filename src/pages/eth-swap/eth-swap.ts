@@ -26,7 +26,6 @@ export class EthSwapPage {
     addressbalances: Array<any>
     sendFrom: string = "auto"
     changeAddress: string
-    passphrase: string = ""
     etpBalance: number
     @ViewChild('quantityInput') quantityInput;
     message: string = ''
@@ -146,7 +145,6 @@ export class EthSwapPage {
                 let eth_message = '{\"type\":\"ETH\",\"address\":\"' + this.eth_address + '\"}';
                 messages.push(eth_message)
                 return this.mvs.createSendSwapTx(
-                    this.passphrase,
                     this.selectedAsset,
                     this.recipient_address,
                     this.recipient_avatar,
@@ -179,11 +177,9 @@ export class EthSwapPage {
 
     send() {
         this.create()
-            .then(tx => this.mvs.send(tx))
             .then((result) => {
-                this.navCtrl.pop()
+                this.navCtrl.push("confirm-tx-page", { tx: result.encode().toString('hex') })
                 this.alert.stopLoading()
-                this.alert.showSent('SUCCESS_SEND_TEXT', result.hash)
             })
             .catch((error) => {
                 console.error(error)
@@ -209,8 +205,6 @@ export class EthSwapPage {
         }
         this.quantityInput.setFocus()
     })
-
-    validPassword = (passphrase) => (passphrase.length > 0)
 
     validMessageLength = (message) => this.mvs.verifyMessageSize(message) < 253
 
