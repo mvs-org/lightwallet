@@ -606,6 +606,14 @@ export class MvsServiceProvider {
                     break;
                 case Metaverse.constants.ATTACHMENT.TYPE.MIT:
                     output.attachment.type = 'mit';
+                    switch (output.attachment.status) {
+                        case Metaverse.constants.MIT.STATUS.REGISTER:
+                            output.attachment.status = 'registered'
+                            break;
+                        case Metaverse.constants.MIT.STATUS.TRANSFER:
+                            output.attachment.status = 'transfered'
+                            break;
+                    }
                     break;
                 case Metaverse.constants.ATTACHMENT.TYPE.ETP_TRANSFER:
                     output.attachment.type = 'etp';
@@ -732,73 +740,73 @@ export class MvsServiceProvider {
     async organizeDecodedTx(tx) {
         tx.outputs.forEach(output => {
             switch (output.attachment.type) {
-                case 0:
+                case Metaverse.constants.ATTACHMENT.TYPE.ETP_TRANSFER:
                     output.attachment.type = 'etp'
                     break;
-                case 2:
+                case Metaverse.constants.ATTACHMENT.TYPE.MST:
                     switch (output.attachment.status) {
-                        case 1:
+                        case Metaverse.constants.MST.STATUS.REGISTER:
                             output.attachment.type = 'asset-issue'
                             break;
-                        case 2:
+                        case Metaverse.constants.MST.STATUS.TRANSFER:
                             output.attachment.type = 'asset-transfer'
                             break;
                         default:
                             throw Error("Asset status unknown");
                     }
                     break;
-                case 3:
+                case Metaverse.constants.ATTACHMENT.TYPE.MESSAGE:
                     output.attachment.type = 'message'
                     break;
-                case 4:
+                case Metaverse.constants.ATTACHMENT.TYPE.AVATAR:
                     switch (output.attachment.status) {
-                        case 1:
+                        case Metaverse.constants.AVATAR.STATUS.REGISTER:
                             output.attachment.type = 'did-register'
                             break;
-                        case 2:
+                        case Metaverse.constants.AVATAR.STATUS.TRANSFER:
                             output.attachment.type = 'did-transfer'
                             break;
                         default:
                             throw Error("Avatar status unknown");
                     }
                     break;
-                case 5:
+                case Metaverse.constants.ATTACHMENT.TYPE.CERT:
                     output.attachment.type = 'asset-cert'
                     switch (output.attachment.cert) {
-                        case 1:
+                        case Metaverse.constants.CERT.TYPE.ISSUE:
                             output.attachment.cert = 'issue'
                             break;
-                        case 2:
+                        case Metaverse.constants.CERT.TYPE.DOMAIN:
                             output.attachment.cert = 'domain'
                             break;
-                        case 3:
+                        case Metaverse.constants.CERT.TYPE.NAMING:
                             output.attachment.cert = 'naming'
                             break;
-                        case 1610612740:
+                        case Metaverse.constants.CERT.TYPE.MINING:
                             output.attachment.cert = 'mining'
                             break;
                         default:
                             throw Error("Cert type unknown");
                     }
                     break;
-                case 6:
+                case Metaverse.constants.ATTACHMENT.TYPE.MIT:
                     output.attachment.type = 'mit'
                     switch (output.attachment.status) {
-                        case 1:
+                        case Metaverse.constants.MIT.STATUS.REGISTER:
                             output.attachment.status = 'registered'
                             break;
-                        case 2:
+                        case Metaverse.constants.MIT.STATUS.TRANSFER:
                             output.attachment.status = 'transfered'
                             break;
                         default:
                             throw Error("MIT status unknown");
                     }
                     break;
-                case 4294967295:
+                case Metaverse.constants.ATTACHMENT.TYPE.COINSTAKE:
                     output.attachment.type = 'coinstake'
                     break;
                 default:
-                    throw Error("What kind of an output is that?!");
+                    throw Error("What kind of output is that?!");
             }
         })
         return tx
