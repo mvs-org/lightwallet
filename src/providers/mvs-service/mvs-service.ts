@@ -129,8 +129,6 @@ export class MvsServiceProvider {
                     change_address = result.utxo[0].address;
                 if (recipient_address == undefined)
                     recipient_address = result.utxo[0].address;
-                console.log(result.utxo, recipient_address, recipient_avatar, symbol, quantity, attenuation_model, change_address, result.change, undefined, fee, messages)
-                console.log(Metaverse.transaction_builder.sendLockedAsset(result.utxo, recipient_address, recipient_avatar, symbol, quantity, attenuation_model, change_address, result.change, undefined, fee, messages))
                 return Metaverse.transaction_builder.sendLockedAsset(result.utxo, recipient_address, recipient_avatar, symbol, quantity, attenuation_model, change_address, result.change, undefined, fee, messages);
             })
             .catch((error) => {

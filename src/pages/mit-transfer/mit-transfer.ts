@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { IonicPage, NavController, NavParams, AlertController, Platform, Loading } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, Loading } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { AlertProvider } from '../../providers/alert/alert';
 
@@ -25,8 +24,6 @@ export class MITTransferPage {
 
     constructor(
         public navCtrl: NavController,
-        private alertCtrl: AlertController,
-        private translate: TranslateService,
         private mvs: MvsServiceProvider,
         public platform: Platform,
         private alert: AlertProvider,
@@ -85,10 +82,10 @@ export class MITTransferPage {
             .catch((error) => {
                 console.error(error.message)
                 this.alert.stopLoading()
-                if (error.message == "ERR_INSUFFICIENT_BALANCE")
-                    this.showError('MESSAGE.INSUFFICIENT_BALANCE', '')
+                if (error.message == 'ERR_INSUFFICIENT_BALANCE')
+                    this.alert.showError('MESSAGE.INSUFFICIENT_BALANCE', '')
                 else
-                    this.showError('MESSAGE.CREATE_TRANSACTION', error.message)
+                    this.alert.showError('MESSAGE.CREATE_TRANSACTION', error.message)
             })
     }
 
@@ -130,32 +127,5 @@ export class MITTransferPage {
                     this.recipientChanged()
                 })
         }
-    }
-
-    showError(message_key, error) {
-        this.translate.get(['MESSAGE.ERROR_TITLE', message_key, 'OK']).subscribe((translations: any) => {
-            let alert = this.alertCtrl.create({
-                title: translations['MESSAGE.ERROR_TITLE'],
-                subTitle: translations[message_key],
-                message: error,
-                buttons: [{
-                    text: translations['OK']
-                }]
-            });
-            alert.present(alert);
-        })
-    }
-
-    showWrongAddress() {
-        this.translate.get(['MESSAGE.NOT_ETP_ADDRESS_TITLE', 'MESSAGE.NOT_ETP_ADDRESS_TEXT', 'OK']).subscribe((translations: any) => {
-            let alert = this.alertCtrl.create({
-                title: translations['MESSAGE.NOT_ETP_ADDRESS_TITLE'],
-                message: translations['MESSAGE.NOT_ETP_ADDRESS_TEXT'],
-                buttons: [{
-                    text: translations['OK']
-                }]
-            });
-            alert.present(alert);
-        })
     }
 }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, Platform, Loading } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, Loading } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { AlertProvider } from '../../providers/alert/alert';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
@@ -27,7 +27,6 @@ export class MITRegisterPage {
 
     constructor(
         public navCtrl: NavController,
-        private alertCtrl: AlertController,
         private alert: AlertProvider,
         public platform: Platform,
         public navParams: NavParams,
@@ -128,20 +127,6 @@ export class MITRegisterPage {
                 this.navCtrl.push("confirm-tx-page", { tx: result.encode().toString('hex') })
                 this.alert.stopLoading()
             })
-    }
-
-    showError(message_key, error) {
-        this.translate.get(['MESSAGE.ERROR_TITLE', message_key, 'OK']).subscribe((translations: any) => {
-            let alert = this.alertCtrl.create({
-                title: translations['MESSAGE.ERROR_TITLE'],
-                subTitle: translations[message_key],
-                message: error,
-                buttons: [{
-                    text: translations['OK']
-                }]
-            });
-            alert.present(alert);
-        })
     }
 
     avatarChanged = () => {

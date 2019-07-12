@@ -191,9 +191,9 @@ export class AssetIssuePage {
             .catch((error) => {
                 console.error(error)
                 if (error.message == "ERR_INSUFFICIENT_BALANCE")
-                    this.showError('MESSAGE.ISSUE_INSUFFICIENT_BALANCE', '')
+                    this.alert.showError('MESSAGE.ISSUE_INSUFFICIENT_BALANCE', '')
                 else
-                    this.showError('MESSAGE.CREATE_TRANSACTION', error.message)
+                    this.alert.showError('MESSAGE.CREATE_TRANSACTION', error.message)
                 throw Error('ERR_CREATE_TX')
             })
     }
@@ -305,20 +305,6 @@ export class AssetIssuePage {
             textUpperCase = textUpperCase + text.charAt(i).toUpperCase()
         }
         return textUpperCase
-    }
-
-    showError(message_key, error) {
-        this.translate.get(['MESSAGE.ERROR_TITLE', message_key, 'OK']).subscribe((translations: any) => {
-            let alert = this.alertCtrl.create({
-                title: translations['MESSAGE.ERROR_TITLE'],
-                subTitle: translations[message_key],
-                message: error,
-                buttons: [{
-                    text: translations['OK']
-                }]
-            });
-            alert.present(alert);
-        })
     }
 
     loadCerts() {
