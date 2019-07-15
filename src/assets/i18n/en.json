@@ -776,7 +776,8 @@
         "MODE": {
             "SIMPLE": "Basic mode",
             "ADVANCED": "Advanced mode",
-            "SATOSHI": "Satoshi mode"
+            "SATOSHI": "Satoshi mode",
+            "HEX": "Hexadecimal mode"
         },
         "UNSIGNED_TX": "Unsigned transaction",
         "OUTPUT": {

@@ -19,10 +19,11 @@
                 <ion-option value="simple">{{"TX.MODE.SIMPLE"| translate}}</ion-option>
                 <ion-option selected="true" value="advanced">{{"TX.MODE.ADVANCED"| translate}}</ion-option>
                 <ion-option value="satoshi">{{"TX.MODE.SATOSHI"| translate}}</ion-option>
+                <ion-option value="hex">{{"TX.MODE.HEX"| translate}}</ion-option>
             </ion-select>
         </ion-item>
 
-        <tx-item *ngIf="displayedTx" [tx]="displayedTx" [mode]="mode"></tx-item>
+        <tx-item *ngIf="displayedTx" [tx]="displayedTx" [hexTx]="hexTx" [mode]="mode"></tx-item>
 
         <ion-item [ngClass]="{'error-border': !validPassword(passphrase)}">
             <ion-label color="primary" floating>{{"PASSWORD" | translate}}</ion-label>

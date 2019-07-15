@@ -14,6 +14,7 @@ import { AlertProvider } from '../../providers/alert/alert';
 
 export class ConfirmTxPage {
 
+    hexTx: any = this.navParams.get('tx')
     decodedTx: any
     displayedTx: any
     passphrase: string = ''
@@ -33,7 +34,7 @@ export class ConfirmTxPage {
             this.navCtrl.setRoot('AccountPage')
         } else {
             //decodedTx is the tx to sign and send
-            this.decodedTx = await this.mvs.decodeTx(this.navParams.get('tx'))
+            this.decodedTx = await this.mvs.decodeTx(this.hexTx)
 
             //displayedTx contains more information usefull for the display
             this.displayedTx = await this.mvs.organizeTx(JSON.parse(JSON.stringify(this.decodedTx)))

@@ -119,5 +119,12 @@
                 </ion-item>
             </ion-col>
         </ion-row>
+        <ion-row *ngIf="mode == 'hex'">
+            <textarea fz-elastic ion-input full class="hexTx" type="text" #copyHexTx value="{{hexTx}}" readonly>{{hexTx}}</textarea>
+            <button ion-button full item-right icon-left [ngxClipboard]="copyHexTx">
+                <ion-icon name="copy"></ion-icon>
+                {{'COPY'|translate}}
+            </button>
+        </ion-row>
     </ion-grid>
 </ion-card>

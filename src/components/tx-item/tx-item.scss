@@ -41,4 +41,13 @@ tx-item {
     .unsigned {
         color: color($colors, primary);
     }
+
+    textarea{
+        width:100%;
+        border: 0px !important;
+        resize: none;
+        font-size: 1.8rem;
+        margin: 20px;
+    }
+
 }
