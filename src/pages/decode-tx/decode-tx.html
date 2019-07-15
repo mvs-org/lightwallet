@@ -10,13 +10,12 @@
 <ion-content padding style="padding-bottom: 0;">
 
     <form #decodeTxForm="ngForm" class="padding-bottom">
-
-        <ion-list>
-            <ion-card-content>
-                <h4>{{"DECODE_TX.TX_TO_SIGN"|translate}}:</h4>
-                <ion-textarea fz-elastic [(ngModel)]="input" name="input" ngTrim="true" (change)="onInputChange()"></ion-textarea>
-            </ion-card-content>
-        </ion-list>
+        <ion-row>
+            <h3>{{"DECODE_TX.TX_TO_SIGN" | translate}}</h3>
+            <ion-item class="textareaCard" [ngClass]="{'error-border': !input}">
+                <ion-textarea fz-elastic ion-input rows="3" full type="text" name="input" class="textbox" [(ngModel)]="input" (ngModelChange)="onInputChange()"></ion-textarea>
+            </ion-item>
+        </ion-row>
         <ion-row>
             <ion-col>
                 <button type="submit" ion-button full icon-left (click)="decode(input)" [disabled]="!input" color="secondary">

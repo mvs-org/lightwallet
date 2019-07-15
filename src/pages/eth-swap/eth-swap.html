@@ -43,7 +43,8 @@
                 <ion-input name="eth_address" type="eth_address" [(ngModel)]="eth_address" required></ion-input>
             </ion-item>
             <div no-lines class="advice" [translate]="'HELP.ETH_ADDRESS'"></div>
-            <ion-item *ngIf="eth_address && eth_address.length != 0 && !validEthereumAddress(eth_address)" no-lines class="wrong-input">
+            <ion-item *ngIf="eth_address && eth_address.length != 0 && !validEthereumAddress(eth_address)" no-lines
+                class="wrong-input">
                 {{"SWAP_MST.INCORRECT_ETH_ADDRESS" | translate}}
             </ion-item>
 
@@ -109,7 +110,7 @@
                 </button>
                 <div *ngIf="rawtx">
                     <br><br>
-                    <h2>{{"TRANSACTION_PREVIEW_TEXT"|translate}}</h2>
+                    <h2>{{"TRANSACTION_PREVIEW.TEXT_UNSIGNED"|translate}}</h2>
                     <p class="rawtx">{{rawtx}}</p>
                     <br><br>
                 </div>
