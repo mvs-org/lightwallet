@@ -102,23 +102,13 @@
                     <ion-toggle [(ngModel)]="lock" name="lock"></ion-toggle>
                 </ion-item>
                 <attenuation-model-selector *ngIf="lock" (modelChanged)="setAttenuationModel($event)" [quantity]="validQuantity(quantity) ? quantity : undefined" [decimals]="decimals" [asset]="selectedAsset" [blocktime]="blocktime"></attenuation-model-selector>
-                <br>
-                <button ion-button full [disabled]="!sendForm.form.valid||!validaddress(recipient_address)||!validQuantity(quantity)||!validMessageLength(message)||(lock && !attenuation_model)" (click)="preview()" color="primary">
-                    {{"PREVIEW" | translate}}
-                </button>
-                <div *ngIf="rawtx">
-                    <br><br>
-                    <h2>{{"TRANSACTION_PREVIEW.TEXT_UNSIGNED"|translate}}</h2>
-                    <p class="rawtx">{{rawtx}}</p>
-                    <br><br>
-                </div>
             </div>
         </ion-list>
         <ion-row class="padding-bottom">
             <ion-col>
                 <button type="submit" ion-button full icon-left [disabled]="!sendForm.form.valid||!validaddress(recipient_address)||!validQuantity(quantity)||!validMessageLength(message)||(lock && !attenuation_model)" (click)="send()" color="secondary">
                     <ion-icon disabled="checked" name="cog"></ion-icon>
-                    {{"CREATE_TX" | translate}}
+                    {{'NEXT'|translate}}
                 </button>
             </ion-col>
             <ion-col>
@@ -228,23 +218,13 @@
                     <ion-toggle [(ngModel)]="lock" name="lock"></ion-toggle>
                 </ion-item>
                 <attenuation-model-selector *ngIf="lock" (modelChanged)="setAttenuationModel($event)" [quantity]="undefined" [decimals]="decimals" [asset]="selectedAsset" [blocktime]="blocktime" [toMany]="true"></attenuation-model-selector>
-                <br>
-                <button ion-button full [disabled]="!sendForm.form.valid||!sendMoreValidQuantity||!sendMoreValidAddress||total > showBalance||!validMessageLength(message)" (click)="preview()" color="primary">
-                    {{"PREVIEW" | translate}}
-                </button>
-                <div *ngIf="rawtx">
-                    <br><br>
-                    <h2>{{"TRANSACTION_PREVIEW.TEXT_UNSIGNED"|translate}}</h2>
-                    <textarea fz-elastic ion-input full class="rawtx" type="text" #copyCreatedTx value="{{rawtx}}" readonly>{{rawtx}}</textarea>
-                    <br><br>
-                </div>
             </div>
         </ion-list>
         <ion-row class="padding-bottom">
             <ion-col>
                 <button type="submit" ion-button full icon-left [disabled]="!sendForm.form.valid||!sendMoreValidQuantity||!sendMoreValidAddress||total > showBalance||!validMessageLength(message)" (click)="send()" color="secondary">
                     <ion-icon disabled="checked" name="cog"></ion-icon>
-                    {{"CREATE_TX" | translate}}
+                    {{'NEXT' | translate}}
                 </button>
             </ion-col>
             <ion-col>

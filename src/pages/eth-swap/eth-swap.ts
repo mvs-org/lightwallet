@@ -22,7 +22,6 @@ export class EthSwapPage {
     recipient_address: string = ""
     recipient_avatar: string
     quantity: string = ""
-    rawtx: string
     addressbalances: Array<any>
     sendFrom: string = "auto"
     changeAddress: string
@@ -120,17 +119,6 @@ export class EthSwapPage {
     cancel(e) {
         e.preventDefault()
         this.navCtrl.pop()
-    }
-
-    preview() {
-        this.create()
-            .then((tx) => {
-                this.rawtx = tx.encode().toString('hex')
-                this.alert.stopLoading()
-            })
-            .catch((error) => {
-                this.alert.stopLoading()
-            })
     }
 
     create() {

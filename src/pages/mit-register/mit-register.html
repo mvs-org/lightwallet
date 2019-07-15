@@ -56,16 +56,6 @@
                         <ion-label range-right>{{10000000 | format : 8}}</ion-label>
                     </ion-range>
                 </ion-item>
-                <button ion-button full [disabled]="!sendForm.form.valid||!validSymbol(symbol)||!validContent(content)||!validName(recipient_avatar)||!validAddress(recipient_address)"
-                    (click)="preview()" color="primary">
-                    {{"PREVIEW" | translate}}
-                </button>
-                <div *ngIf="rawtx">
-                    <br><br>
-                    <h2>{{"TRANSACTION_PREVIEW.TEXT_UNSIGNED"|translate}}</h2>
-                    <p class="rawtx">{{rawtx}}</p>
-                    <br><br>
-                </div>
             </div>
         </ion-list>
         <ion-row class="padding-bottom">
@@ -73,13 +63,13 @@
                 <button ion-button full [disabled]="!sendForm.form.valid||!validSymbol(symbol)||!validContent(content)||!validName(recipient_avatar)||!validAddress(recipient_address)"
                     (click)="send()" icon-left color="secondary">
                     <ion-icon disabled="checked" name="cog"></ion-icon>
-                    {{"REGISTER_MIT" | translate}}
+                    {{'NEXT'|translate}}
                 </button>
             </ion-col>
             <ion-col>
                 <button ion-button color="danger" full item-right icon-left (click)="cancel($event)">
                     <ion-icon name="close"></ion-icon>
-                    {{"CANCEL" | translate}}
+                    {{'CANCEL' | translate}}
                 </button>
             </ion-col>
         </ion-row>

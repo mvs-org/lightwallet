@@ -104,16 +104,6 @@
                         <ion-option *ngFor="let address of addresses" value="{{address}}">{{address}}</ion-option>
                     </ion-select>
                 </ion-item>
-                <button ion-button full [disabled]="!sendForm.form.valid||!validQuantity(quantity)||!validMessageLength(message)"
-                    (click)="preview()" color="primary">
-                    {{"PREVIEW" | translate}}
-                </button>
-                <div *ngIf="rawtx">
-                    <br><br>
-                    <h2>{{"TRANSACTION_PREVIEW.TEXT_UNSIGNED"|translate}}</h2>
-                    <p class="rawtx">{{rawtx}}</p>
-                    <br><br>
-                </div>
             </div>
         </ion-list>
         <ion-row class="padding-bottom">
@@ -121,7 +111,7 @@
                 <button type="submit" ion-button full icon-left [disabled]="!sendForm.form.valid||!validQuantity(quantity)||!validMessageLength(message)"
                     (click)="send()" color="secondary">
                     <ion-icon disabled="checked" name="send"></ion-icon>
-                    {{"SEND" | translate}}
+                    {{'NEXT'|translate}}
                 </button>
             </ion-col>
             <ion-col>

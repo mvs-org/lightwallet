@@ -18,7 +18,6 @@ export class AssetIssuePage {
     showBalance: number
     loading: Loading
     quantity: string
-    rawtx: string
     addressbalances: Array<any>
     myaddressbalances: Array<any>
     secondaryissue: boolean
@@ -157,17 +156,6 @@ export class AssetIssuePage {
     cancel(e) {
         e.preventDefault()
         this.navCtrl.pop()
-    }
-
-    preview() {
-        this.create()
-            .then((tx) => {
-                this.rawtx = tx.encode().toString('hex')
-                this.loading.dismiss()
-            })
-            .catch((error) => {
-                this.loading.dismiss()
-            })
     }
 
     create() {

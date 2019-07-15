@@ -20,7 +20,6 @@ export class MITTransferPage {
     addressbalances: Array<any>
     fee: number = 10000
     showAdvanced: boolean = false
-    rawtx: string
 
     constructor(
         public navCtrl: NavController,
@@ -55,17 +54,6 @@ export class MITTransferPage {
     cancel(e) {
         e.preventDefault()
         this.navCtrl.pop()
-    }
-
-    preview() {
-        this.create()
-            .then((tx) => {
-                this.rawtx = tx.encode().toString('hex')
-                this.alert.stopLoading()
-            })
-            .catch((error) => {
-                this.alert.stopLoading()
-            })
     }
 
     create() {

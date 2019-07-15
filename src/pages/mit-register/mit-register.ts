@@ -22,7 +22,6 @@ export class MITRegisterPage {
     no_avatar: boolean = false;
     no_avatar_placeholder: string
     fee: number = 10000
-    rawtx: string
     symbol_available: boolean = false
 
     constructor(
@@ -78,17 +77,6 @@ export class MITRegisterPage {
     validName = (recipient_avatar) => (recipient_avatar !== undefined && recipient_avatar.length > 0)
 
     validAddress = (recipient_address) => (recipient_address !== undefined && recipient_address.length > 0)
-
-    preview() {
-        this.create()
-            .then((tx) => {
-                this.rawtx = tx.encode().toString('hex')
-                this.alert.stopLoading()
-            })
-            .catch((error) => {
-                this.alert.stopLoading()
-            })
-    }
 
     create() {
         return this.alert.showLoading()

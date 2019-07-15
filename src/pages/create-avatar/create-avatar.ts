@@ -25,7 +25,6 @@ export class CreateAvatarPage {
     message: string = ""
     available_symbol: boolean = false
     showAdvanced: boolean = false
-    rawtx: string
 
     constructor(
         public navCtrl: NavController,
@@ -62,17 +61,6 @@ export class CreateAvatarPage {
 
     cancel() {
         this.navCtrl.pop();
-    }
-
-    preview() {
-        this.create()
-            .then((tx) => {
-                this.rawtx = tx.encode().toString('hex')
-                this.alert.stopLoading()
-            })
-            .catch((error) => {
-                this.alert.stopLoading()
-            })
     }
 
     create() {

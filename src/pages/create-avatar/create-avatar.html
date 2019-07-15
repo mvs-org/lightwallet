@@ -66,22 +66,13 @@
                         <ion-label range-right class="right">{{bounty_fee/100}} ETP</ion-label>
                     </ion-range>
                 </ion-item>
-                <button ion-button full [disabled]="!sendForm.form.valid||!validSymbol(symbol)||!validAddress(avatar_address)||!validMessageLength(message)" (click)="preview()" color="primary">
-                    {{"PREVIEW" | translate}}
-                </button>
-                <div *ngIf="rawtx">
-                    <br><br>
-                    <h2>{{"TRANSACTION_PREVIEW.TEXT_UNSIGNED"|translate}}</h2>
-                    <p class="rawtx">{{rawtx}}</p>
-                    <br><br>
-                </div>
             </div>
         </ion-list>
         <ion-row class="padding-bottom">
             <ion-col>
                 <button ion-button full [disabled]="!sendForm.form.valid||!validSymbol(symbol)||!validAddress(avatar_address)||!validMessageLength(message)" (click)="confirm()" icon-left color="secondary">
                     <ion-icon disabled="checked" name="cog"></ion-icon>
-                    {{"CREATE_AVATAR.CREATE_BTN" | translate}}
+                    {{'NEXT'|translate}}
                 </button>
             </ion-col>
             <ion-col>

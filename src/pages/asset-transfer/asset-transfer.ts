@@ -34,7 +34,6 @@ export class AssetTransferPage {
     recipient_avatar_valid: boolean
     quantity: string = ""
     builtFor: string
-    rawtx: string
     passcodeSet: any
     addressbalances: Array<any>
     sendFrom: string = "auto"
@@ -147,17 +146,6 @@ export class AssetTransferPage {
     cancel(e) {
         e.preventDefault()
         this.navCtrl.pop()
-    }
-
-    preview() {
-        this.create()
-            .then((tx) => {
-                this.rawtx = tx.encode().toString('hex')
-                this.alert.stopLoading()
-            })
-            .catch((error) => {
-                this.alert.stopLoading()
-            })
     }
 
     create() {
