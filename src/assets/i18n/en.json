@@ -720,8 +720,11 @@
     "DECODE_TX.DECODE": "Decode",
 
     "SIGN_TX": "Sign transaction",
-    "CONFIRM_TX.SIGN_ONLY": "Sign only",
-    "CONFIRM_TX.SIGN_AND_SEND": "Sign and send",
+    "CONFIRM_TX": {
+        "SIGN_ONLY": "Sign only",
+        "SIGN_AND_SEND": "Sign and send",
+        "BROADCAST": "Broadcast"
+    },
     "MESSAGE.ERROR_DECODE_TX_SUBTITLE": "Cannot decode this raw transaction",
     "MESSAGE.ERROR_DECODE_TX_BODY": "This raw transaction cannot be decoded. Please make sure this raw transaction is correct.",
     "TX": {

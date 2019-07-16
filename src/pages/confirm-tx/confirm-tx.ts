@@ -21,6 +21,7 @@ export class ConfirmTxPage {
     input: string
     signedTx: string
     mode: string = 'advanced'
+    signStatus: string
 
     constructor(
         public navCtrl: NavController,
@@ -46,6 +47,7 @@ export class ConfirmTxPage {
         try {
             let tx = await this.sign()
             this.signedTx = await tx.encode().toString('hex')
+            this.hexTx = this.signedTx
             this.decodeAndOrganize(this.signedTx)
             this.alert.stopLoading()
         } catch (error) {
@@ -60,11 +62,17 @@ export class ConfirmTxPage {
 
         //displayedTx contains more information usefull for the display
         this.displayedTx = await this.mvs.organizeTx(JSON.parse(JSON.stringify(this.decodedTx)))
+
+        this.checkTxSignStatus(this.displayedTx)
     }
 
     send() {
         this.sign()
-            .then(tx => this.mvs.send(tx))
+            .then(tx => this.broadcast(tx))
+    }
+
+    broadcast(tx) {
+        this.mvs.send(tx)
             .then((result) => {
                 this.navCtrl.setRoot('AccountPage')
                 this.alert.stopLoading()
@@ -84,7 +92,6 @@ export class ConfirmTxPage {
                         this.alert.showError('MESSAGE.BROADCAST_TRANSACTION', error.message)
                         throw Error('ERR_BORADCAST_TX')
                 }
-
             })
     }
 
@@ -111,6 +118,25 @@ export class ConfirmTxPage {
                         throw Error('ERR_SIGN_TX')
                 }
             })
+    }
+
+    checkTxSignStatus(tx) {
+        let foundSignedInput = false
+        let foundUnisgnedInput = false
+        tx.inputs.forEach(input => {
+            if(input.script) {
+                foundSignedInput = true
+            } else {
+                foundUnisgnedInput = true
+            }
+        });
+        if (foundSignedInput && !foundUnisgnedInput) {
+            this.signStatus = 'SIGNED'
+        } else if (!foundSignedInput && foundUnisgnedInput) {
+            this.signStatus = 'UNSIGNED'
+        } else {
+            this.signStatus = 'PARTIALLY'
+        }
     }
 
     validPassword = (passphrase) => (passphrase.length > 0)

@@ -1,4 +1,4 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { AppGlobals } from '../../app/app.global';
 
@@ -11,6 +11,7 @@ export class TxItemComponent {
     @Input() tx: any;
     @Input() hexTx: any;
     @Input() mode: string;
+    @Input() signStatus: string
 
     decimalsMst: any = {}
     myAddresses: Array<string> = []
@@ -25,7 +26,6 @@ export class TxItemComponent {
     txTypeCert: string = ''
     devAvatar: string
     current_time: number
-    signStatus: string
 
     constructor(
         private mvs: MvsServiceProvider,
@@ -161,30 +161,5 @@ export class TxItemComponent {
             this.txFee = 0
 
     }
-
-    ngOnChanges(changes: SimpleChanges) {
-        this.checkTxSignStatus()
-    }
-
-    checkTxSignStatus() {
-        let foundSignedInput = false
-        let foundUnisgnedInput = false
-        this.tx.inputs.forEach(input => {
-            if(input.script) {
-                foundSignedInput = true
-            } else {
-                foundUnisgnedInput = true
-            }
-        });
-        if (foundSignedInput && !foundUnisgnedInput) {
-            this.signStatus = 'SIGNED'
-        } else if (!foundSignedInput && foundUnisgnedInput) {
-            this.signStatus = 'UNSIGNED'
-        } else {
-            this.signStatus = 'PARTIALLY'
-        }
-    }
-
-
 
 }
