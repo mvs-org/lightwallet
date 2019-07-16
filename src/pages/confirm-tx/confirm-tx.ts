@@ -57,7 +57,8 @@ export class ConfirmTxPage {
     async decodeAndOrganize(tx) {
         //decodedTx is the tx to sign and send
         this.decodedTx = await this.mvs.decodeTx(tx)
-        
+
+        //displayedTx contains more information usefull for the display
         this.displayedTx = await this.mvs.organizeTx(JSON.parse(JSON.stringify(this.decodedTx)))
     }
 

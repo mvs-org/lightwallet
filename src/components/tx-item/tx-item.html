@@ -9,8 +9,8 @@
             <ion-col>
                 <ion-item class="summaryTxType">
                     {{'TX.TX_TYPE.' + txType | translate}}
-                    <div *ngIf="!tx.inputs[0].script" class="unsigned">
-                        {{'TX.UNSIGNED_TX' | translate}}
+                    <div *ngIf="signStatus" class="unsigned">
+                        {{'TX.SIGN_STATUS.' + signStatus | translate}}
                     </div>
                 </ion-item>
             </ion-col>

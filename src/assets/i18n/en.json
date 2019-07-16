@@ -780,7 +780,11 @@
             "SATOSHI": "Satoshi mode",
             "HEX": "Hexadecimal mode"
         },
-        "UNSIGNED_TX": "Unsigned transaction",
+        "SIGN_STATUS": {
+            "SIGNED": "Fully signed transaction",
+            "UNSIGNED": "Unsigned transaction",
+            "PARTIALLY": "Partially signed transaction"
+        },
         "OUTPUT": {
             "LOCKED_UNTIL_BLOCK": "Locked until block {{block}} (~{{time}})"
         }
