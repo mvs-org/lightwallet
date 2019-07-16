@@ -533,7 +533,7 @@
     "MULTISIGNATURE_TRANSFER.TX_TO_SIGN": "Transaction to sign",
     "MULTISIGNATURE_TRANSFER.SIGNED_TX": "Signed transaction",
     "MULTISIGNATURE_TRANSFER.CREATE": "Create transaction",
-    "MULTISIGNATURE_TRANSFER.SIGN": "Sign transaction",
+    "MULTISIGNATURE_TRANSFER.SIGN": "Broadcast transaction",
 
     "MULTISIGNATURE_TRANSFER.DECODE": "Verify transaction",
 
@@ -716,7 +716,7 @@
     "ETP_BRIDGE.UNABLE_CONNECT_SWFT": "Unable to connect to SWFT. Please check your internet connection or try again later.",
 
     "DECODE_TX": "Decode transaction",
-    "DECODE_TX.TX_TO_SIGN": "Transaction to sign",
+    "DECODE_TX.TX_TO_SIGN": "Transaction to sign or broadcast",
     "DECODE_TX.DECODE": "Decode",
 
     "SIGN_TX": "Sign transaction",

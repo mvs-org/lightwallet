@@ -52,11 +52,11 @@
         </div>
         <ion-row>
             <ion-col>
-                <button *ngIf="signStatus != 'SIGNED'" type="submit" ion-button full icon-left (click)="send(input)" [disabled]="!signTxForm.form.valid||!validPassword(passphrase)" color="secondary">
+                <button *ngIf="signStatus != 'SIGNED'" type="submit" ion-button full icon-left (click)="send()" [disabled]="!signTxForm.form.valid||!validPassword(passphrase)" color="secondary">
                     <ion-icon disabled="checked" name="send"></ion-icon>
                     {{"CONFIRM_TX.SIGN_AND_SEND" | translate}}
                 </button>
-                <button *ngIf="signStatus == 'SIGNED'" type="submit" ion-button full icon-left (click)="send(input)" color="secondary">
+                <button *ngIf="signStatus == 'SIGNED'" type="submit" ion-button full icon-left (click)="broadcast(decodedTx)" color="secondary">
                     <ion-icon disabled="checked" name="send"></ion-icon>
                     {{"CONFIRM_TX.BROADCAST" | translate}}
                 </button>
