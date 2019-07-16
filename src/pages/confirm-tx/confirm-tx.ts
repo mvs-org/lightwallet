@@ -90,7 +90,7 @@ export class ConfirmTxPage {
                         break;
                     default:
                         this.alert.showError('MESSAGE.BROADCAST_TRANSACTION', error.message)
-                        throw Error('ERR_BORADCAST_TX')
+                        throw Error('ERR_BROADCAST_TX')
                 }
             })
     }

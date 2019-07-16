@@ -45,7 +45,8 @@ export class TxItemComponent {
         const TX_TYPE_CERT = 'CERT';
         const TX_TYPE_DID_REGISTER = 'DID_REGISTER';
         const TX_TYPE_DID_TRANSFER = 'DID_TRANSFER';
-        const TX_TYPE_MIT = 'MIT';
+        const TX_TYPE_MIT_REGISTERED = 'MIT_REGISTERED';
+        const TX_TYPE_MIT_TRANSFERED = 'MIT_TRANSFERED';
         const TX_TYPE_COINSTAKE = 'COINSTAKE';
         const TX_TYPE_MST_MINING = 'MST_MINING';
         const TX_TYPE_UNKNOWN = 'UNKNOWN'
@@ -112,7 +113,7 @@ export class TxItemComponent {
                     this.txTypeValue = output.attachment.symbol
                     break;
                 case 'mit':
-                    this.txType = TX_TYPE_MIT
+                    this.txType = output.attachment.status == 'registered' ? TX_TYPE_MIT_REGISTERED : TX_TYPE_MIT_TRANSFERED
                     this.txTypeValue = output.attachment.symbol
                     break;
                 case 'coinstake':
