@@ -33,11 +33,7 @@ export class ConfirmTxPage {
         if (this.navParams.get('tx') === undefined) {
             this.navCtrl.setRoot('AccountPage')
         } else {
-            //decodedTx is the tx to sign and send
-            this.decodedTx = await this.mvs.decodeTx(this.hexTx)
-
-            //displayedTx contains more information usefull for the display
-            this.displayedTx = await this.mvs.organizeTx(JSON.parse(JSON.stringify(this.decodedTx)))
+            this.decodeAndOrganize(this.hexTx)
         }
     }
 
@@ -46,16 +42,23 @@ export class ConfirmTxPage {
         this.navCtrl.pop()
     }
 
-    preview() {
-        this.sign()
-            .then((tx) => {
-                this.signedTx = tx.encode().toString('hex')
-                this.alert.stopLoading()
-            })
-            .catch((error) => {
-                this.alert.stopLoading()
-                console.error(error.message)
-            })
+    async preview() {
+        try {
+            let tx = await this.sign()
+            this.signedTx = await tx.encode().toString('hex')
+            this.decodeAndOrganize(this.signedTx)
+            this.alert.stopLoading()
+        } catch (error) {
+            this.alert.stopLoading()
+            console.error(error.message)
+        }
+    }
+
+    async decodeAndOrganize(tx) {
+        //decodedTx is the tx to sign and send
+        this.decodedTx = await this.mvs.decodeTx(tx)
+        
+        this.displayedTx = await this.mvs.organizeTx(JSON.parse(JSON.stringify(this.decodedTx)))
     }
 
     send() {
@@ -86,9 +89,7 @@ export class ConfirmTxPage {
 
     sign() {
         return this.alert.showLoading()
-            .then(() => {
-                return this.mvs.sign(this.decodedTx, this.passphrase)
-            })
+            .then(() => this.mvs.sign(this.decodedTx, this.passphrase))
             .catch((error) => {
                 console.error(error.message)
                 switch (error.message) {

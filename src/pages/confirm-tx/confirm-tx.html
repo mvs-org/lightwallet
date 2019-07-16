@@ -9,9 +9,9 @@
 
 <ion-content padding style="padding-bottom: 0;">
 
-    <h1>{{"SIGN_TX.PAGE_TITLE" | translate}}</h1>
-
     <form #signTxForm="ngForm" class="padding-bottom">
+
+        <h3>{{"SIGN_TX.PAGE_TITLE" | translate}}</h3>
 
         <ion-item>
             <ion-label>{{"TX.SELECT_MODE"|translate}}</ion-label>
@@ -35,22 +35,26 @@
             <ion-toggle [(ngModel)]="showAdvanced" name="showAdvanced" checked="false"></ion-toggle>
         </ion-item>
         <div *ngIf="showAdvanced">
-            <button ion-button full [disabled]="!signTxForm.form.valid||!validPassword(passphrase)" (click)="preview()"
+            <button ion-button full icon-left [disabled]="!signTxForm.form.valid||!validPassword(passphrase)" (click)="preview()"
                 color="primary">
-                {{"PREVIEW" | translate}}
+                <ion-icon name="create"></ion-icon>
+                {{"CONFIRM_TX.SIGN_ONLY" | translate}}
             </button>
             <div *ngIf="signedTx">
-                <br><br>
-                <h2>{{"TRANSACTION_PREVIEW.TEXT_SIGNED"|translate}}</h2>
-                <p class="rawtx">{{signedTx}}</p>
-                <br><br>
+                <br>
+                <h4>{{"TRANSACTION_PREVIEW.TEXT_SIGNED"|translate}}</h4>
+                <textarea fz-elastic ion-input full class="rawtx" type="text" #copySignedTx value="{{signedTx}}" readonly>{{signedTx}}</textarea>
+                <button ion-button full item-right icon-left [ngxClipboard]="copySignedTx">
+                    <ion-icon name="copy"></ion-icon>
+                    {{'COPY'|translate}}
+                </button>
             </div>
         </div>
         <ion-row>
             <ion-col>
                 <button type="submit" ion-button full icon-left (click)="send(input)" [disabled]="!signTxForm.form.valid||!validPassword(passphrase)" color="secondary">
                     <ion-icon disabled="checked" name="send"></ion-icon>
-                    {{"CONFIRM_TX.SIGN" | translate}}
+                    {{"CONFIRM_TX.SIGN_AND_SEND" | translate}}
                 </button>
             </ion-col>
             <ion-col>

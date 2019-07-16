@@ -58,7 +58,7 @@
             <div *ngIf="transaction.locked_until" [translate]="'TX.LOCKED_UNTIL_BLOCK'" [translateParams]="{block: transaction.locked_until, time: (((transaction.locked_until - height) * blocktime * 1000) + current_time) | date : 'medium'}"></div-->
         </ion-row>
         <ion-row *ngIf="mode == 'advanced' || mode == 'satoshi'">
-            <ion-col>
+            <ion-col col-12 col-md-6>
                 <ion-row>
                     <ion-col>
                         <ion-item>
@@ -72,7 +72,7 @@
                     </ion-col>
                 </ion-row>
             </ion-col>
-            <ion-col>
+            <ion-col col-12 col-md-6>
                 <ion-row>
                     <ion-col>
                         <ion-item>

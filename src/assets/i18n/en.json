@@ -720,7 +720,8 @@
     "DECODE_TX.DECODE": "Decode",
 
     "SIGN_TX": "Sign transaction",
-    "CONFIRM_TX.SIGN": "Sign and send",
+    "CONFIRM_TX.SIGN_ONLY": "Sign only",
+    "CONFIRM_TX.SIGN_AND_SEND": "Sign and send",
     "MESSAGE.ERROR_DECODE_TX_SUBTITLE": "Cannot decode this raw transaction",
     "MESSAGE.ERROR_DECODE_TX_BODY": "This raw transaction cannot be decoded. Please make sure this raw transaction is correct.",
     "TX": {
@@ -787,6 +788,5 @@
     "SIGN_TX.PAGE_TITLE": "Review and sign the transaction",
     "CREATE_TX": "Create",
     "MESSAGE.BROADCAST_TRANSACTION": "Unable to broadcast the transaction.",
-    "TRANSACTION_PREVIEW.TEXT_UNSIGNED": "Your unsigned encoded transaction will be:",
-    "TRANSACTION_PREVIEW.TEXT_SIGNED": "Your signed encoded transaction will be:"
+    "TRANSACTION_PREVIEW.TEXT_SIGNED": "Your signed encoded transaction is:"
 }
