@@ -12,6 +12,11 @@
     <form #decodeTxForm="ngForm" class="padding-bottom">
         <ion-row>
             <h3>{{"DECODE_TX.TX_TO_SIGN" | translate}}</h3>
+        </ion-row>
+        <ion-row>
+            <p>{{"SIGN_TX.DESCRIPTION" | translate}}</p>
+        </ion-row>
+        <ion-row>
             <ion-item class="textareaCard" [ngClass]="{'error-border': !input}">
                 <ion-textarea fz-elastic ion-input rows="3" full type="text" name="input" class="textbox" [(ngModel)]="input" (ngModelChange)="onInputChange()"></ion-textarea>
             </ion-item>

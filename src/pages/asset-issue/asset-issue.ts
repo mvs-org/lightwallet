@@ -349,8 +349,8 @@ export class AssetIssuePage {
             })
     }
 
-    setAttenuationModel = (model: string) => {
-        this.attenuation_model = model
+    setAttenuationModel = (output: any) => {
+        this.attenuation_model = output.attenuation_model
     }
 
     setMiningModel = (model: string) => {

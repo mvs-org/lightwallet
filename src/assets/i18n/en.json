@@ -793,7 +793,8 @@
             "LOCKED_UNTIL_BLOCK": "Locked until block {{block}} (~{{time}})"
         }
     },
-    "SIGN_TX.PAGE_TITLE": "Review and sign the transaction",
+    "SIGN_TX.PAGE_TITLE": "Review, sign and send the transaction",
+    "SIGN_TX.DESCRIPTION": "Please enter the raw transaction, in hexadecimal format. The transaction can be signed or unsigned.",
     "CREATE_TX": "Create",
     "MESSAGE.BROADCAST_TRANSACTION": "Unable to broadcast the transaction.",
     "TRANSACTION_PREVIEW.TEXT_SIGNED": "Your signed encoded transaction is:"

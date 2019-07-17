@@ -33,7 +33,7 @@ export class AttenuationModelSelectorComponent {
     duration_days: number = 0
     duration_hours: number = 0
 
-    @Output() modelChanged : EventEmitter<string> = new EventEmitter<string>();
+    @Output() modelChanged : EventEmitter<any> = new EventEmitter<any>();
 
     constructor(
         public platform: Platform,
@@ -105,7 +105,11 @@ export class AttenuationModelSelectorComponent {
         }
 
         if(this.attenuation_model != attenuation_model && (this.quantity || this.toMany)) {
-            this.modelChanged.emit(attenuation_model)
+            let output = {
+                'attenuation_model': attenuation_model,
+                'locktime': this.locktime
+            }
+            this.modelChanged.emit(output)
             this.attenuation_model = attenuation_model
         }
         
