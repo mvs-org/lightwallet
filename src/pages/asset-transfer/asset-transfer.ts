@@ -428,6 +428,8 @@ export class AssetTransferPage {
         const COLUMN_AMOUNT_HEADER = 'amount';
         const COLUMN_LOCK_BLOCK_HEADER = 'lock_blocks';
         const COLUMN_LOCK_MODEL_HEADER = 'lock_model';
+
+        let errorLine = 0
         
         reader.onload = (e: any) => {
             let content = e.target.result;
@@ -451,6 +453,10 @@ export class AssetTransferPage {
                         } else {
                             let attenuation_model = undefined
                             if(columnIndex[COLUMN_LOCK_BLOCK_HEADER] && line[columnIndex[COLUMN_LOCK_BLOCK_HEADER]]) {
+                                if(columnIndex[COLUMN_LOCK_MODEL_HEADER] && line[columnIndex[COLUMN_LOCK_MODEL_HEADER]]) {
+                                    errorLine = i+1
+                                    throw Error('ERR_TWO_LOCK_MODEL')
+                                }
                                 let convertedQuantity = Math.round(parseFloat(amount) * Math.pow(10, this.decimals))
                                 let nbrBlocks = line[columnIndex[COLUMN_LOCK_BLOCK_HEADER]]
                                 attenuation_model = 'PN=0;LH=' + nbrBlocks + ';TYPE=1;LP=' + nbrBlocks + ';UN=1;LQ=' + convertedQuantity
@@ -475,10 +481,17 @@ export class AssetTransferPage {
                 }
                 this.checkSendMoreAddress()
                 this.alert.stopLoading()
-            } catch (e) {
+            } catch (error) {
                 this.alert.stopLoading()
-                console.error(e);
-                this.alert.showMessage('WRONG_FILE', '', 'SEND_MORE.WRONG_FILE')
+                console.error(error.message)
+                switch(error.message){
+                    case "ERR_TWO_LOCK_MODEL":
+                        this.alert.showError('ERROR_TWO_LOCK_MODEL', errorLine)
+                        throw Error('ERR_IMPORT_CSV')
+                    default:
+                        this.alert.showMessage('WRONG_FILE', '', 'SEND_MORE.WRONG_FILE')
+                        throw Error('ERR_IMPORT_CSV')
+                }
             }
         };
         if(file[0])

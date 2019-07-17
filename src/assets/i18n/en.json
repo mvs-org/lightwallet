@@ -797,5 +797,8 @@
     "SIGN_TX.DESCRIPTION": "Please enter the raw transaction, in hexadecimal format. The transaction can be signed or unsigned.",
     "CREATE_TX": "Create",
     "MESSAGE.BROADCAST_TRANSACTION": "Unable to broadcast the transaction.",
-    "TRANSACTION_PREVIEW.TEXT_SIGNED": "Your signed encoded transaction is:"
+    "TRANSACTION_PREVIEW.TEXT_SIGNED": "Your signed encoded transaction is:",
+
+    "ERROR_TWO_LOCK_MODEL": "Please make sure only 1 lock period is specified, don't fill both lock period columns. The following line contains 2 lock periods:"
+
 }
