@@ -20,7 +20,7 @@ export class ConfirmTxPage {
     passphrase: string = ''
     input: string
     signedTx: string
-    mode: string = 'advanced'
+    mode: string = 'default'
     signStatus: string
 
     constructor(

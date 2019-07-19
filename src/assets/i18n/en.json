@@ -779,8 +779,7 @@
         },
         "SELECT_MODE": "Visualisation mode",
         "MODE": {
-            "SIMPLE": "Basic mode",
-            "ADVANCED": "Advanced mode",
+            "DEFAULT": "Default mode",
             "SATOSHI": "Satoshi mode",
             "HEX": "Hexadecimal mode"
         },
