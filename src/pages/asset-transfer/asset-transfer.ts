@@ -524,9 +524,9 @@ export class AssetTransferPage {
     }
 
     csvExample() {
-        var text = 'recipient' + ',' + 'amount'
-        text += 'MAwLwVGwJyFsTBfNj2j5nCUrQXGVRvHzPh,2\n'
-        text += 'MEWdqvhETJex22kBbYDSD999Vs4xFwQ4fo,2\n'
+        var text = 'recipient' + ',' + 'amount' + ',' + 'lock_blocks' + ',' + 'lock_model' + '\n'
+        text += 'MAwLwVGwJyFsTBfNj2j5nCUrQXGVRvHzPh,2,10,\n'
+        text += 'MEWdqvhETJex22kBbYDSD999Vs4xFwQ4fo,2,,PN=0;LH=20;TYPE=1;LP=20;UN=1;LQ=2\n'
         text += 'avatar-name,4';
         var filename = 'mvs_example.csv'
         this.downloadFile(filename, text)
