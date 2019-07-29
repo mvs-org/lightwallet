@@ -34,21 +34,14 @@ export class CreateAvatarPage {
         private alertCtrl: AlertController,
         private mvs: MvsServiceProvider) {
 
-        this.mvs.listAvatars()
-            .then(avatars => this.mvs.getAddressBalances()
-                .then(addressbalances => {
-                    if (Object.keys(addressbalances).length) {
-                        Object.keys(addressbalances).forEach((address) => {
-                            if (addressbalances[address].ETP && addressbalances[address].ETP.available >= 100000000) {
-                                this.addressbalances.push(new AddressBalance(address, addressbalances[address].ETP.available))
-                                avatars.forEach((avatar) => {
-                                    if (avatar.address == address)
-                                        this.addressbalances.pop();
-                                })
-                            }
-                        })
+        Promise.all([this.mvs.getAddresses(), this.mvs.getAddressBalances()])
+            .then(([addresses, addressbalances]) => {
+                addresses.forEach((address) => {
+                    if (addressbalances[address] && addressbalances[address].ETP && addressbalances[address].ETP.available >= 100000000 && addressbalances[address].AVATAR === '') {
+                        this.addressbalances.push(new AddressBalance(address, addressbalances[address].ETP.available))
                     }
-                }))
+                })
+            })
     }
 
     ionViewDidLoad() {
