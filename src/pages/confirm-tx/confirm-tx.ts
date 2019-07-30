@@ -44,6 +44,7 @@ export class ConfirmTxPage {
     }
 
     async preview() {
+        await this.alert.showLoading()
         try {
             let tx = await this.sign()
             this.signedTx = await tx.encode().toString('hex')
@@ -72,7 +73,8 @@ export class ConfirmTxPage {
     }
 
     broadcast(tx) {
-        this.mvs.send(tx)
+        this.alert.showLoading()
+            .then(() => this.mvs.send(tx))
             .then((result) => {
                 this.navCtrl.setRoot('AccountPage')
                 this.alert.stopLoading()
@@ -96,8 +98,7 @@ export class ConfirmTxPage {
     }
 
     sign() {
-        return this.alert.showLoading()
-            .then(() => this.mvs.sign(this.decodedTx, this.passphrase))
+        return this.mvs.sign(this.decodedTx, this.passphrase)
             .catch((error) => {
                 console.error(error.message)
                 switch (error.message) {
