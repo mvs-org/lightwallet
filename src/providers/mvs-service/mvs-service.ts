@@ -575,6 +575,7 @@ export class MvsServiceProvider {
     }
 
     send = async (tx) => {
+        tx.inputs.forEach((input) => input.script = Metaverse.script.fromASM(input.script).chunks)
         tx.hash = (await this.broadcast(tx.encode().toString('hex'))).hash
         tx.height = await this.getHeight()
         tx.unconfirmed = true
