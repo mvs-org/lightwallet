@@ -124,6 +124,7 @@ export class MyETPWallet {
             })
             .then(plugins => {
                 return Promise.all([
+                    { title: 'D2FA', component: "D2faScanPage", icon: 'cube', beta: true },
                     { title: 'ACCOUNT.TITLE', component: "AccountPage", icon: 'home', root: true },
                     { title: 'AVATARS', component: "AvatarsPage", icon: 'person' },
                     { title: 'REGISTER_MST', component: "AssetIssuePage", icon: 'globe' },

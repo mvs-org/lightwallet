@@ -798,6 +798,15 @@
     "MESSAGE.BROADCAST_TRANSACTION": "Unable to broadcast the transaction.",
     "TRANSACTION_PREVIEW.TEXT_SIGNED": "Your signed encoded transaction is:",
 
-    "ERROR_TWO_LOCK_MODEL": "Please make sure only 1 lock period is specified, don't fill both lock period columns. The following line contains 2 lock periods:"
+    "ERROR_TWO_LOCK_MODEL": "Please make sure only 1 lock period is specified, don't fill both lock period columns. The following line contains 2 lock periods:", 
+
+    "D2FA_SCAN": "Login via D2FA",
+    "D2FA_SCAN.INPUT_LABEL": "Login key",
+    "MESSAGE.D2FA_NO_AVATAR_TITLE": "No Avatar",
+    "MESSAGE.D2FA_NO_AVATAR_TITLE_BODY": "You need an Avatar in order to use the d2fa feature. Please create an Avatar first.",
+    "MESSAGE.D2FA_TYPE_NOT_SUPPORTED": "This type of request is not supported. Only d2fa is supported.",
+    "MESSAGE.D2FA_UNKNOWN_AVATAR": "You do not possess this Avatar, please make sure you are the owner of it:",
+    "MESSAGE.D2FA_TIMEOUT": "This request has already timeout. Please get a new request.",
+    "MESSAGE.D2FA_SIGN": "Error while signing the message"
 
 }
