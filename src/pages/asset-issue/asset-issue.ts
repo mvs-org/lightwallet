@@ -159,7 +159,7 @@ export class AssetIssuePage {
     }
 
     create() {
-        return this.showLoading()
+        return this.alert.showLoading()
             .then(() => this.mvs.createIssueAssetTx(
                 this.toUpperCase(this.symbol),
                 Math.floor(parseFloat(this.max_supply == 'custom' ? this.custom_max_supply : this.max_supply) * Math.pow(10, this.asset_decimals)),
@@ -247,19 +247,6 @@ export class AssetIssuePage {
     format = (quantity, decimals) => quantity / Math.pow(10, decimals)
 
     round = (val: number) => Math.round(val * 100000000) / 100000000
-
-    showLoading() {
-        return new Promise((resolve, reject) => {
-            this.translate.get('MESSAGE.LOADING').subscribe((loading: string) => {
-                this.loading = this.loadingCtrl.create({
-                    content: loading,
-                    dismissOnPageChange: true
-                })
-                this.loading.present()
-                resolve()
-            })
-        })
-    }
 
     showSent(text, hash) {
         this.translate.get('MESSAGE.SUCCESS').subscribe((title: string) => {
