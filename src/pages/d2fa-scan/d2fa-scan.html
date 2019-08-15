@@ -6,7 +6,7 @@
 
 <ion-content padding>
 
-    <form #connectForm="ngForm" no-lines>
+    <form #connectForm="ngForm" *ngIf="!verifiedMessage" no-lines>
 
         <ion-item *ngIf="!isApp" [ngClass]="{'error-border':!validD2faMessage(message), 'valid-border': message.length > 0 && validD2faMessage(message)}">
             <ion-label floating>{{"D2FA_SCAN.INPUT_LABEL" | translate}}</ion-label>
@@ -45,15 +45,9 @@
             </div>
         </div>
 
-        <ion-item [ngClass]="{'error-border': !validPassword(passphrase)}">
-            <ion-label color="primary" floating>{{"PASSWORD" | translate}}</ion-label>
-            <ion-input name="passphrase" type="password" [(ngModel)]="passphrase" required></ion-input>
-        </ion-item>
-        <br>
-
         <ion-row class="padding-bottom">
             <ion-col>
-                <button ion-button full [disabled]="!connectForm.form.valid||!validD2faMessage(message)" (click)="check(message, passphrase)" icon-left color="secondary">
+                <button ion-button full [disabled]="!connectForm.form.valid||!validD2faMessage(message)" (click)="check(message)" icon-left color="secondary">
                     <ion-icon disabled="!validD2faMessage(message)" name="cog"></ion-icon>
                     {{'CHECK'|translate}}
                 </button>
@@ -68,8 +62,50 @@
 
     </form>
 
-    <form #connectMobileForm="ngForm" *ngIf="isApp" no-lines>
+    <form #signForm="ngForm" *ngIf="verifiedMessage" no-lines>
 
+        <ion-card>
+            <ion-grid>
+                <ion-row>
+                    <ion-item>
+                        Please verify the requester information:
+                    </ion-item>
+                    <ion-item>
+                        <!--First: source, avatar, short callback url and remaining sec before expiration-->
+                        <div>Source: {{verifiedMessage.source}}</div>
+                        <div>Avatar: {{verifiedMessage.target}}</div>
+                        <div>Host: {{verifiedMessage.hostname}}</div>
+                        <div>Remaining time: {{remainingTime}}</div>
+                        <br>
+                        <br>
+                        <div>Callback: {{verifiedMessage.callback}}</div>
+                        <div>Time of request: {{verifiedMessage.time*1000|date : 'medium'}}</div>
+                        <div>Request duration: {{verifiedMessage.timeout}} sec</div>
+                    </ion-item>
+                </ion-row>
+            </ion-grid>
+        </ion-card>
+
+        <ion-item [ngClass]="{'error-border': !validPassword(passphrase)}">
+            <ion-label color="primary" floating>{{"PASSWORD" | translate}}</ion-label>
+            <ion-input name="passphrase" type="password" [(ngModel)]="passphrase" required></ion-input>
+        </ion-item>
+        <br>
+
+        <ion-row class="padding-bottom">
+            <ion-col>
+                <button ion-button full [disabled]="!signForm.form.valid||!validPassword(passphrase)" (click)="signAndSend(passphrase)" icon-left color="secondary">
+                    <ion-icon disabled="!validD2faMessage(message)" name="cog"></ion-icon>
+                    {{'CHECK'|translate}}
+                </button>
+            </ion-col>
+            <ion-col>
+                <button ion-button color="danger" full item-right icon-left (click)="cancel($event)">
+                    <ion-icon name="close"></ion-icon>
+                    {{'CANCEL'|translate}}
+                </button>
+            </ion-col>
+        </ion-row>
 
     </form>
 

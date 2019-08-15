@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, LoadingController, Loading } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { AppGlobals } from '../../app/app.global';
@@ -13,7 +13,7 @@ import { AlertProvider } from '../../providers/alert/alert';
     selector: 'page-d2fa-scan',
     templateUrl: 'd2fa-scan.html',
 })
-export class D2faScanPage {
+export class D2faScanPage implements OnInit, OnDestroy{
 
     loading: Loading;
     qrCodeLoaded: boolean
@@ -23,6 +23,11 @@ export class D2faScanPage {
     avatars_address: any = {}
     no_avatar: boolean = false
     passphrase: string = ''
+    verifiedMessage: any
+    currentTime: number
+
+    remainingTime: number
+    checkInterval: any;
 
     constructor(
         public navCtrl: NavController,
@@ -35,6 +40,7 @@ export class D2faScanPage {
         private barcodeScanner: BarcodeScanner,
         private loadingCtrl: LoadingController,
         //private d2fa: D2faServiceProvider,
+        private zone: NgZone,
         private alert: AlertProvider,
     ) {
 
@@ -42,7 +48,26 @@ export class D2faScanPage {
         this.isApp = (!document.URL.startsWith('http') || document.URL.startsWith('http://localhost:8080'));
         this.loadAvatars();
 
+        this.currentTime = Math.floor(Date.now());
+        
+        
+
+
         this.message = '{"type":"d2fa","source":"bitident","time":1566794344,"timeout":300,"callback":"https://us-central1-bitident-demo.cloudfunctions.net/confirm/YsTWcQ5upLGCw1BOZN7S","target":"Metaverse"}'
+    }
+
+    ngOnInit(){
+        
+    }
+    
+    clearInterval(){
+        if(this.checkInterval){
+            clearInterval(this.checkInterval)
+        }
+    }
+
+    ngOnDestroy(){
+        this.clearInterval()
     }
 
     cancel() {
@@ -116,11 +141,14 @@ export class D2faScanPage {
             });
     }
 
-    check(message, passphrase) {
-        console.log("Checking...")
-        console.log(message)
+    check(message) {
+
+        this.alert.showLoading()
         let obj = JSON.parse(message)
+
         console.log(obj)
+        console.log(new URL(obj.callback))
+        this.clearInterval()
 
         if(obj.type != 'd2fa') {
             this.alert.showError('MESSAGE.D2FA_TYPE_NOT_SUPPORTED', obj.type);
@@ -129,37 +157,42 @@ export class D2faScanPage {
         } else if((obj.time + obj.timeout) * 1000 < Date.now()) {
             this.alert.showError('MESSAGE.D2FA_TIMEOUT', '');
         } else {
-
-            
-            this.alert.showLoading()
-            this.wallet.getWallet(passphrase)
-                .then(wallet => wallet.signMessage(this.avatars_address[obj.target], message))
-                .then(signature => {
-                    this.alert.stopLoading()
-                    console.log(signature)
-                })
-                .catch((error) => {
-                    console.error(error.message)
-                    this.alert.stopLoading()
-                    switch(error.message){
-                        case "ERR_DECRYPT_WALLET":
-                            this.alert.showError('MESSAGE.PASSWORD_WRONG', '')
-                            break
-                        default:
-                            this.alert.showError('MESSAGE.D2FA_SIGN', error.message)
-                            throw Error('ERR_D2FA')
-                    }
-                })
-        }
-
-        /*
-                this.wallet.getWallet('12345678')
-            .then(wallet => this.sign("aaa", "TestAccount5", wallet))
-            .then(signature => {
-                console.log(signature)
-                console.log(this.wallet.verifyMessage("aaa", this.address, signature))
+            obj.hostname = new URL(obj.callback).hostname
+            this.verifiedMessage = obj;
+            const timeoutTime = obj.time + obj.timeout
+            this.zone.run(()=>{
+                this.checkInterval = setInterval(function(){
+                    const currentTime = Math.floor(Date.now())
+                    this.remainingTime = (timeoutTime)*1000 - currentTime
+                    console.log(currentTime, this.remainingTime)
+                }, 1000);
             })
-            */
+        }
+        this.alert.stopLoading()
+
+    }
+
+    signAndSend(passphrase) {
+
+        this.alert.showLoading()
+        this.wallet.getWallet(passphrase)
+            .then(wallet => wallet.signMessage(this.avatars_address[this.verifiedMessage.target], this.message))
+            .then(signature => {
+                this.alert.stopLoading()
+                console.log(signature)
+            })
+            .catch((error) => {
+                console.error(error.message)
+                this.alert.stopLoading()
+                switch(error.message){
+                    case "ERR_DECRYPT_WALLET":
+                        this.alert.showError('MESSAGE.PASSWORD_WRONG', '')
+                        break
+                    default:
+                        this.alert.showError('MESSAGE.D2FA_SIGN', error.message)
+                        throw Error('ERR_D2FA')
+                }
+            })
     }
 
     howToMobile = () => this.navCtrl.push("HowToMobilePage")
