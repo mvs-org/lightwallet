@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, AlertController, LoadingController, Loading } from 'ionic-angular';
+import { IonicPage, NavController, Loading } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
 import { TranslateService } from '@ngx-translate/core';
@@ -20,8 +20,6 @@ export class ImportWalletPage {
         public nav: NavController,
         public mvs: MvsServiceProvider,
         private wallet: WalletServiceProvider,
-        private alertCtrl: AlertController,
-        private loadingCtrl: LoadingController,
         private translate: TranslateService,
         private alert: AlertProvider,
     ) {

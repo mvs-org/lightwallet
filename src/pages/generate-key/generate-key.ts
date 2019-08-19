@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, Loading, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, Loading } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
 import { AlertProvider } from '../../providers/alert/alert';
@@ -24,7 +24,6 @@ export class GenerateKeyPage {
         public navParams: NavParams,
         private alertCtrl: AlertController,
         private translate: TranslateService,
-        private loadingCtrl: LoadingController,
         private alert: AlertProvider,
     ) {
         this.CreateWallet()

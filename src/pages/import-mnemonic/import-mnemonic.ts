@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, AlertController, LoadingController, Loading, Platform } from 'ionic-angular';
-import { TranslateService } from '@ngx-translate/core';
+import { IonicPage, NavController, Loading, Platform } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { AppGlobals } from '../../app/app.global';
 import { AlertProvider } from '../../providers/alert/alert';
@@ -25,9 +24,6 @@ export class ImportMnemonicPage {
     constructor(
         public nav: NavController,
         public mvs: MvsServiceProvider,
-        private alertCtrl: AlertController,
-        private loadingCtrl: LoadingController,
-        private translate: TranslateService,
         public platform: Platform,
         private global: AppGlobals,
         private alert: AlertProvider,

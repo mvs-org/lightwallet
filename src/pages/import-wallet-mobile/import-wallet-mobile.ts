@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, LoadingController, Loading } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Loading } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { AppGlobals } from '../../app/app.global';
 import { TranslateService } from '@ngx-translate/core';
@@ -24,10 +24,8 @@ export class ImportWalletMobilePage {
         public navParams: NavParams,
         private mvs: MvsServiceProvider,
         private wallet: WalletServiceProvider,
-        private alertCtrl: AlertController,
         private translate: TranslateService,
         private barcodeScanner: BarcodeScanner,
-        private loadingCtrl: LoadingController,
         private alert: AlertProvider,
     ) {
         this.qrCodeLoaded = false;

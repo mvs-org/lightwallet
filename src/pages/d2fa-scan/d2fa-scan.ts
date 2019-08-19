@@ -1,12 +1,13 @@
-import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
+import { Component, OnInit, OnDestroy, NgZone, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, LoadingController, Loading } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { AppGlobals } from '../../app/app.global';
 import { TranslateService } from '@ngx-translate/core';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
-//import { D2faServiceProvider } from '../../providers/d2fa-service/d2fa-service';
+import { D2faServiceProvider } from '../../providers/d2fa-service/d2fa-service';
 import { AlertProvider } from '../../providers/alert/alert';
+//import { CountdownComponent } from 'ngx-countdown';
 
 @IonicPage()
 @Component({
@@ -28,6 +29,7 @@ export class D2faScanPage implements OnInit, OnDestroy{
 
     remainingTime: number
     checkInterval: any;
+    //@ViewChild(CountdownComponent) counter: CountdownComponent;
 
     constructor(
         public navCtrl: NavController,
@@ -39,7 +41,7 @@ export class D2faScanPage implements OnInit, OnDestroy{
         private translate: TranslateService,
         private barcodeScanner: BarcodeScanner,
         private loadingCtrl: LoadingController,
-        //private d2fa: D2faServiceProvider,
+        private d2fa: D2faServiceProvider,
         private zone: NgZone,
         private alert: AlertProvider,
     ) {
@@ -50,10 +52,6 @@ export class D2faScanPage implements OnInit, OnDestroy{
 
         this.currentTime = Math.floor(Date.now());
         
-        
-
-
-        this.message = '{"type":"d2fa","source":"bitident","time":1566794344,"timeout":300,"callback":"https://us-central1-bitident-demo.cloudfunctions.net/confirm/YsTWcQ5upLGCw1BOZN7S","target":"Metaverse"}'
     }
 
     ngOnInit(){
@@ -141,35 +139,53 @@ export class D2faScanPage implements OnInit, OnDestroy{
             });
     }
 
-    check(message) {
+    async check(message) {
 
         this.alert.showLoading()
         let obj = JSON.parse(message)
 
         console.log(obj)
-        console.log(new URL(obj.callback))
+
         this.clearInterval()
 
         if(obj.type != 'd2fa') {
             this.alert.showError('MESSAGE.D2FA_TYPE_NOT_SUPPORTED', obj.type);
         } else if (this.avatars.indexOf(obj.target) === -1) {
             this.alert.showError('MESSAGE.D2FA_UNKNOWN_AVATAR', obj.target);
-        } else if((obj.time + obj.timeout) * 1000 < Date.now()) {
-            this.alert.showError('MESSAGE.D2FA_TIMEOUT', '');
+        //} else if((obj.time + obj.timeout) * 1000 < Date.now()) {
+         //   this.alert.showError('MESSAGE.D2FA_TIMEOUT', '');
         } else {
-            obj.hostname = new URL(obj.callback).hostname
-            this.verifiedMessage = obj;
-            const timeoutTime = obj.time + obj.timeout
-            this.zone.run(()=>{
-                this.checkInterval = setInterval(function(){
-                    const currentTime = Math.floor(Date.now())
-                    this.remainingTime = (timeoutTime)*1000 - currentTime
-                    console.log(currentTime, this.remainingTime)
-                }, 1000);
-            })
+            try {
+                let sig = obj.signature
+                delete obj.signature
+
+                let sourceAvatar = await this.mvs.getGlobalAvatar(obj.source)
+
+                if(!this.wallet.verifyMessage(JSON.stringify(this.sortObject(obj)), sourceAvatar.address, sig)) {
+                    this.alert.showError('MESSAGE.D2FA_WRONG_SIGNATURE', obj.source);
+                } else {
+                    obj.hostname = new URL(obj.callback).hostname
+                    this.verifiedMessage = obj;
+                    const timeoutTime = obj.time + obj.timeout
+                    /*this.zone.run(()=>{
+                        this.checkInterval = setInterval(function(){
+                            const currentTime = Math.floor(Date.now())
+                            this.remainingTime = (timeoutTime)*1000 - currentTime
+                            console.log(currentTime, this.remainingTime)
+                        }, 1000);
+                    })*/
+                }
+            } catch (e) {
+                console.error(e);
+                this.alert.showError('MESSAGE.D2FA_WRONG_INCOMING_DATA', e);
+            }
         }
         this.alert.stopLoading()
 
+    }
+
+    sortObject(o: any) {
+        return Object.keys(o).sort().reduce((r: any, k) => {r[k] = o[k]; return r}, {});
     }
 
     signAndSend(passphrase) {
@@ -177,9 +193,18 @@ export class D2faScanPage implements OnInit, OnDestroy{
         this.alert.showLoading()
         this.wallet.getWallet(passphrase)
             .then(wallet => wallet.signMessage(this.avatars_address[this.verifiedMessage.target], this.message))
-            .then(signature => {
-                this.alert.stopLoading()
-                console.log(signature)
+            .then(signature => this.d2fa.confirm(this.verifiedMessage.callback, signature).toPromise())
+            .then(response => {
+                switch(response.status){
+                    case 200:
+                        this.alert.stopLoading()
+                        this.navCtrl.pop()
+                        this.alert.showMessage('MESSAGE.D2FA_SIGNIN_SUCCESSFUL_TITLE', 'MESSAGE.D2FA_SIGNIN_SUCCESSFUL_BODY', '')
+                        return;
+                    default:
+                        this.alert.showError('MESSAGE.D2FA_SEND_SIG_ERROR', '')
+                        return;
+                }
             })
             .catch((error) => {
                 console.error(error.message)

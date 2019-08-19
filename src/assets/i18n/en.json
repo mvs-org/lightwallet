@@ -807,6 +807,11 @@
     "MESSAGE.D2FA_TYPE_NOT_SUPPORTED": "This type of request is not supported. Only d2fa is supported.",
     "MESSAGE.D2FA_UNKNOWN_AVATAR": "You do not possess this Avatar, please make sure you are the owner of it:",
     "MESSAGE.D2FA_TIMEOUT": "This request has already timeout. Please get a new request.",
-    "MESSAGE.D2FA_SIGN": "Error while signing the message"
+    "MESSAGE.D2FA_SIGN": "Error while signing the message",
+    "MESSAGE.D2FA_WRONG_INCOMING_DATA": "Error in the incoming data",
+    "MESSAGE.D2FA_WRONG_SIGNATURE": "The signature provided by the source's avatar is incorrect",
+    "MESSAGE.D2FA_SIGNIN_SUCCESSFUL_TITLE": "Login successfull!",
+    "MESSAGE.D2FA_SIGNIN_SUCCESSFUL_BODY": "You have been logged in successfully. You can now go back to the webiste.",
+    "MESSAGE.D2FA_SEND_SIG_ERROR": "Error while sending your signature. Please check your connection and try again."
 
 }

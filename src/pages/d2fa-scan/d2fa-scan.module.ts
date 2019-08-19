@@ -5,6 +5,7 @@ import { AppGlobals } from '../../app/app.global';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { TranslateModule} from '@ngx-translate/core';
 import { AlertProvider } from '../../providers/alert/alert';
+import { D2faServiceProvider } from '../../providers/d2fa-service/d2fa-service';
 
 @NgModule({
     declarations: [
@@ -12,12 +13,13 @@ import { AlertProvider } from '../../providers/alert/alert';
     ],
     imports: [
         IonicPageModule.forChild(D2faScanPage),
-        TranslateModule
+        TranslateModule,
     ],
     providers:[
         BarcodeScanner,
         AppGlobals,
         AlertProvider,
+        D2faServiceProvider,
     ],
     exports: [
         D2faScanPage

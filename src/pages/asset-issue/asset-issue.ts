@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, AlertController, LoadingController, Loading, NavParams, Platform } from 'ionic-angular';
+import { IonicPage, NavController, AlertController, Loading, NavParams, Platform } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { TranslateService } from '@ngx-translate/core';
 import { AlertProvider } from '../../providers/alert/alert';
@@ -55,7 +55,6 @@ export class AssetIssuePage {
     constructor(
         public navCtrl: NavController,
         private alertCtrl: AlertController,
-        private loadingCtrl: LoadingController,
         public navParams: NavParams,
         private mvs: MvsServiceProvider,
         public platform: Platform,

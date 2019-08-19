@@ -8,6 +8,8 @@
 
     <form #connectForm="ngForm" *ngIf="!verifiedMessage" no-lines>
 
+        <!--countdown [config]="config" (start)="onStart()" (finished)="onFinished()" (notify)="onNotify($event)"></countdown-->
+
         <ion-item *ngIf="!isApp" [ngClass]="{'error-border':!validD2faMessage(message), 'valid-border': message.length > 0 && validD2faMessage(message)}">
             <ion-label floating>{{"D2FA_SCAN.INPUT_LABEL" | translate}}</ion-label>
             <ion-input name="message" [(ngModel)]="message"></ion-input>
@@ -19,7 +21,8 @@
                     <h3>{{"IMPORT.SCAN_QRCODE_TEXT"|translate}}</h3>
                 </ion-item>
                 <ion-row>
-                    <button ion-button full icon-left class="large-btn" id="open-wallet-button" color="secondary" (click)="scan()">
+                    <button ion-button full icon-left class="large-btn" id="open-wallet-button" color="secondary"
+                        (click)="scan()">
                         <ion-icon name="qr-scanner"></ion-icon>
                         {{"IMPORT.SCAN_QRCODE_BUTTON"|translate}}
                     </button>
@@ -38,7 +41,8 @@
                 </ion-row>
                 <br>
                 <ion-row>
-                    <button ion-button full [disabled]="!passwordValid(password)" (click)="decrypt(password,seed)" color="primary">
+                    <button ion-button full [disabled]="!passwordValid(password)" (click)="decrypt(password,seed)"
+                        color="primary">
                         {{"IMPORT_WALLET" | translate}}
                     </button>
                 </ion-row>
@@ -47,7 +51,8 @@
 
         <ion-row class="padding-bottom">
             <ion-col>
-                <button ion-button full [disabled]="!connectForm.form.valid||!validD2faMessage(message)" (click)="check(message)" icon-left color="secondary">
+                <button ion-button full [disabled]="!connectForm.form.valid||!validD2faMessage(message)" (click)="check(message)"
+                    icon-left color="secondary">
                     <ion-icon disabled="!validD2faMessage(message)" name="cog"></ion-icon>
                     {{'CHECK'|translate}}
                 </button>
@@ -94,7 +99,8 @@
 
         <ion-row class="padding-bottom">
             <ion-col>
-                <button ion-button full [disabled]="!signForm.form.valid||!validPassword(passphrase)" (click)="signAndSend(passphrase)" icon-left color="secondary">
+                <button ion-button full [disabled]="!signForm.form.valid||!validPassword(passphrase)" (click)="signAndSend(passphrase)"
+                    icon-left color="secondary">
                     <ion-icon disabled="!validD2faMessage(message)" name="cog"></ion-icon>
                     {{'CHECK'|translate}}
                 </button>
