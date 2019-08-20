@@ -6,6 +6,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { TranslateModule} from '@ngx-translate/core';
 import { AlertProvider } from '../../providers/alert/alert';
 import { D2faServiceProvider } from '../../providers/d2fa-service/d2fa-service';
+import { CountdownModule } from 'ngx-countdown';
 
 @NgModule({
     declarations: [
@@ -14,6 +15,7 @@ import { D2faServiceProvider } from '../../providers/d2fa-service/d2fa-service';
     imports: [
         IonicPageModule.forChild(D2faScanPage),
         TranslateModule,
+        CountdownModule,
     ],
     providers:[
         BarcodeScanner,

@@ -8,8 +8,6 @@
 
     <form #connectForm="ngForm" *ngIf="!verifiedMessage" no-lines>
 
-        <!--countdown [config]="config" (start)="onStart()" (finished)="onFinished()" (notify)="onNotify($event)"></countdown-->
-
         <ion-item *ngIf="!isApp" [ngClass]="{'error-border':!validD2faMessage(message), 'valid-border': message.length > 0 && validD2faMessage(message)}">
             <ion-label floating>{{"D2FA_SCAN.INPUT_LABEL" | translate}}</ion-label>
             <ion-input name="message" [(ngModel)]="message"></ion-input>
@@ -25,25 +23,6 @@
                         (click)="scan()">
                         <ion-icon name="qr-scanner"></ion-icon>
                         {{"IMPORT.SCAN_QRCODE_BUTTON"|translate}}
-                    </button>
-                </ion-row>
-            </div>
-
-            <div *ngIf="qrCodeLoaded">
-                <ion-row>
-                    <ion-icon name="md-checkmark-circle" class="verifiedQRCode"></ion-icon>
-                </ion-row>
-                <ion-row>
-                    <ion-item class="center-psw">
-                        <ion-label color="primary" floating>{{"PASSWORD" | translate}}</ion-label>
-                        <ion-input name="password" type="password" [(ngModel)]="password" required></ion-input>
-                    </ion-item>
-                </ion-row>
-                <br>
-                <ion-row>
-                    <button ion-button full [disabled]="!passwordValid(password)" (click)="decrypt(password,seed)"
-                        color="primary">
-                        {{"IMPORT_WALLET" | translate}}
                     </button>
                 </ion-row>
             </div>
@@ -69,25 +48,59 @@
 
     <form #signForm="ngForm" *ngIf="verifiedMessage" no-lines>
 
+        <h2>{{"D2FA_SCAN.VERIFY_TITLE" | translate}}</h2>
+
         <ion-card>
             <ion-grid>
                 <ion-row>
-                    <ion-item>
-                        Please verify the requester information:
-                    </ion-item>
-                    <ion-item>
-                        <!--First: source, avatar, short callback url and remaining sec before expiration-->
-                        <div>Source: {{verifiedMessage.source}}</div>
-                        <div>Avatar: {{verifiedMessage.target}}</div>
-                        <div>Host: {{verifiedMessage.hostname}}</div>
-                        <div>Remaining time: {{remainingTime}}</div>
-                        <br>
-                        <br>
-                        <div>Callback: {{verifiedMessage.callback}}</div>
-                        <div>Time of request: {{verifiedMessage.time*1000|date : 'medium'}}</div>
-                        <div>Request duration: {{verifiedMessage.timeout}} sec</div>
-                    </ion-item>
+                    <ion-col col-12 col-sm-12 col-md-6>
+                        <ion-item>
+                            <ion-row>
+                                <ion-col>{{"D2FA_SCAN.VERIFY_SOURCE" | translate}}</ion-col>
+                                <ion-col class="right">{{verifiedMessage.source}}</ion-col>
+                            </ion-row>
+                            <ion-row>
+                                <ion-col>{{"D2FA_SCAN.VERIFY_AVATAR" | translate}}</ion-col>
+                                <ion-col class="right">{{verifiedMessage.target}}</ion-col>
+                            </ion-row>
+                            <ion-row>
+                                <ion-col>{{"D2FA_SCAN.VERIFY_HOST" | translate}}</ion-col>
+                                <ion-col class="right">{{verifiedMessage.hostname}}</ion-col>
+                            </ion-row>
+                            <ion-row>
+                                <ion-col>{{"D2FA_SCAN.VERIFY_REMAINING_TIME" | translate}}</ion-col>
+                                <ion-col class="right"><countdown [config]="{leftTime: leftTime}">$!m!:$!s!</countdown></ion-col>
+                            </ion-row>
+                            <div *ngIf="showDetails">
+                                <ion-row>
+                                    <ion-col>{{"D2FA_SCAN.VERIFY_CALLBACK" | translate}}</ion-col>
+                                    <ion-col class="right">{{verifiedMessage.callback}}</ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col>{{"D2FA_SCAN.VERIFY_TIME_OF_REQUEST" | translate}}</ion-col>
+                                    <ion-col class="right">{{verifiedMessage.time*1000|date : 'medium'}}</ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col>{{"D2FA_SCAN.VERIFY_REQUEST_DURATION" | translate}}</ion-col>
+                                    <ion-col class="right">{{verifiedMessage.timeout}}{{"SECONDS" | translate}}</ion-col>
+                                </ion-row>
+                            </div>
+                            <ion-row>
+                                <ion-col>
+                                    <button ion-button item-right icon-left class="right-buttons" (click)="showDetails = !showDetails">
+                                        <ion-icon *ngIf="!showDetails" name="arrow-down"></ion-icon>
+                                        <ion-icon *ngIf="showDetails" name="arrow-up"></ion-icon>
+                                        <span *ngIf="!showDetails">{{'SHOW_DETAILS'|translate}}</span>
+                                        <span *ngIf="showDetails">{{'HIDE_DETAILS'|translate}}</span>
+                                    </button>
+                                </ion-col>
+                            </ion-row>
+                        </ion-item>
+                    </ion-col>
+
+                    <ion-col col-12 col-sm-12 col-md-6></ion-col>
                 </ion-row>
+
             </ion-grid>
         </ion-card>
 
