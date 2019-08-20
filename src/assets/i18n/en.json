@@ -816,11 +816,13 @@
     "MESSAGE.AUTH_UNKNOWN_AVATAR": "You do not possess this Avatar, please make sure you are the owner of it:",
     "MESSAGE.AUTH_TIMEOUT": "This request has already timeout. Please get a new request.",
     "MESSAGE.AUTH_SIGN": "Error while signing the message",
-    "MESSAGE.AUTH_WRONG_INCOMING_DATA": "Error in the incoming data. Please make sure you have input the correct data from the website where you want to login.",
+    "MESSAGE.AUTH_WRONG_INCOMING_DATA": "Error in the incoming data. Please make sure the data is correct and try again.",
     "MESSAGE.AUTH_WRONG_SIGNATURE": "The signature provided by the source's avatar is incorrect",
     "MESSAGE.AUTH_SIGNIN_SUCCESSFUL_TITLE": "Login successfull!",
     "MESSAGE.AUTH_SIGNIN_SUCCESSFUL_BODY": "You have been logged in successfully. You can now go back to the webiste.",
     "MESSAGE.AUTH_SEND_SIG_ERROR": "Error while sending your signature. Please check your connection and try again.",
+    "MESSAGE.AUTH_EXPIRED": "Authentication token expired. Please get a new token.",
+    "MESSAGE.AUTH_DIFFERENT_NETWORK": "You are not using the network matching this request. Please switch the the following network:",
 
     "SHOW_DETAILS": "Show details",
     "HIDE_DETAILS": "Hide details",
@@ -830,6 +832,9 @@
     "MULTISIGNATURE.TEXT": "Share a multisignature address with co-signers",
     "SIGN_TX.TEXT": "Decode and sign a raw transaction",
     "ETH_BRIDGE.TEXT": "Transfer tokens between Metaverse and Ethereum blockchains",
-    "AUTHENTICATION.TITLE": "Authentication"
+    "AUTHENTICATION.TITLE": "Authentication",
+
+    "SCANNING.AUTH_MESSAGE": "Scan the QR Code where you want to login",
+    "AUTHENTICATION.SCAN_QRCODE_TEXT": "Use my Avatar to authenticate"
 
 }

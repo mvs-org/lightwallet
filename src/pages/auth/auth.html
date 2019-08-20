@@ -16,7 +16,7 @@
         <div *ngIf="isApp">
             <div *ngIf="!qrCodeLoaded">
                 <ion-item class="center-text" no-lines>
-                    <h3>{{"IMPORT.SCAN_QRCODE_TEXT"|translate}}</h3>
+                    <h3>{{"AUTHENTICATION.SCAN_QRCODE_TEXT"|translate}}</h3>
                 </ion-item>
                 <ion-row>
                     <button ion-button full icon-left class="large-btn" id="open-wallet-button" color="secondary"
@@ -28,7 +28,7 @@
             </div>
         </div>
 
-        <ion-row class="padding-bottom">
+        <ion-row *ngIf="!isApp || message" class="padding-bottom">
             <ion-col>
                 <button ion-button full [disabled]="!connectForm.form.valid||!validD2faMessage(message)" (click)="check(message)"
                     icon-left color="secondary">
@@ -112,7 +112,7 @@
 
         <ion-row class="padding-bottom">
             <ion-col>
-                <button ion-button full [disabled]="!signForm.form.valid||!validPassword(passphrase)" (click)="signAndSend(passphrase)"
+                <button type="submit" ion-button full [disabled]="!signForm.form.valid||!validPassword(passphrase)" (click)="signAndSend(passphrase)"
                     icon-left color="secondary">
                     <ion-icon disabled="!validD2faMessage(message)" name="cog"></ion-icon>
                     {{'CHECK'|translate}}
