@@ -53,7 +53,7 @@ export class AuthPage {
         return this.mvs.listAvatars()
             .then((avatars) => {
                 if(avatars.length === 0) {
-                    this.alert.showMessage('MESSAGE.D2FA_NO_AVATAR_TITLE', '', 'MESSAGE.D2FA_NO_AVATAR_TITLE_BODY')
+                    this.alert.showMessage('MESSAGE.AUTH_NO_AVATAR_TITLE', '', 'MESSAGE.AUTH_NO_AVATAR_TITLE_BODY')
                 } else {
                     avatars.forEach(avatar => {
                         this.avatars_address[avatar.symbol] = avatar.address
@@ -109,11 +109,11 @@ export class AuthPage {
             let obj = JSON.parse(message)
 
             if(obj.type != 'd2fa') {
-                this.alert.showError('MESSAGE.D2FA_TYPE_NOT_SUPPORTED', obj.type);
+                this.alert.showError('MESSAGE.AUTH_TYPE_NOT_SUPPORTED', obj.type);
             } else if (this.avatars.indexOf(obj.target) === -1) {
-                this.alert.showError('MESSAGE.D2FA_UNKNOWN_AVATAR', obj.target);
+                this.alert.showError('MESSAGE.AUTH_UNKNOWN_AVATAR', obj.target);
             } else if((obj.time + obj.timeout) * 1000 < Date.now()) {
-                this.alert.showError('MESSAGE.D2FA_TIMEOUT', '');
+                this.alert.showError('MESSAGE.AUTH_TIMEOUT', '');
             } else {
 
                 let sig = obj.signature
@@ -122,7 +122,7 @@ export class AuthPage {
                 let sourceAvatar = await this.mvs.getGlobalAvatar(obj.source)
 
                 if(!this.wallet.verifyMessage(JSON.stringify(this.sortObject(obj)), sourceAvatar.address, sig)) {
-                    this.alert.showError('MESSAGE.D2FA_WRONG_SIGNATURE', obj.source);
+                    this.alert.showError('MESSAGE.AUTH_WRONG_SIGNATURE', obj.source);
                 } else {
                     obj.hostname = new URL(obj.callback).hostname
                     this.verifiedMessage = obj;
@@ -131,7 +131,7 @@ export class AuthPage {
             }
         } catch (e) {
             console.error(e);
-            this.alert.showError('MESSAGE.D2FA_WRONG_INCOMING_DATA', e);
+            this.alert.showError('MESSAGE.AUTH_WRONG_INCOMING_DATA', e);
         }
         
         this.alert.stopLoading()
@@ -153,10 +153,10 @@ export class AuthPage {
                     case 200:
                         this.alert.stopLoading()
                         this.navCtrl.pop()
-                        this.alert.showMessage('MESSAGE.D2FA_SIGNIN_SUCCESSFUL_TITLE', 'MESSAGE.D2FA_SIGNIN_SUCCESSFUL_BODY', '')
+                        this.alert.showMessage('MESSAGE.AUTH_SIGNIN_SUCCESSFUL_TITLE', 'MESSAGE.AUTH_SIGNIN_SUCCESSFUL_BODY', '')
                         return;
                     default:
-                        this.alert.showError('MESSAGE.D2FA_SEND_SIG_ERROR', '')
+                        this.alert.showError('MESSAGE.AUTH_SEND_SIG_ERROR', '')
                         return;
                 }
             })
@@ -168,7 +168,7 @@ export class AuthPage {
                         this.alert.showError('MESSAGE.PASSWORD_WRONG', '')
                         break
                     default:
-                        this.alert.showError('MESSAGE.D2FA_SIGN', error.message)
+                        this.alert.showError('MESSAGE.AUTH_SIGN', error.message)
                         throw Error('ERR_D2FA')
                 }
             })

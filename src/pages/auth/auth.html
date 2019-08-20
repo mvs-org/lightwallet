@@ -9,7 +9,7 @@
     <form #connectForm="ngForm" *ngIf="!verifiedMessage" no-lines>
 
         <ion-item *ngIf="!isApp" [ngClass]="{'error-border':!validD2faMessage(message), 'valid-border': message.length > 0 && validD2faMessage(message)}">
-            <ion-label floating>{{"D2FA_SCAN.INPUT_LABEL" | translate}}</ion-label>
+            <ion-label floating>{{"AUTH.INPUT_LABEL" | translate}}</ion-label>
             <ion-input name="message" [(ngModel)]="message"></ion-input>
         </ion-item>
 
@@ -48,7 +48,7 @@
 
     <form #signForm="ngForm" *ngIf="verifiedMessage" no-lines>
 
-        <h2>{{"D2FA_SCAN.VERIFY_TITLE" | translate}}</h2>
+        <h2>{{"AUTH.VERIFY_TITLE" | translate}}</h2>
 
         <ion-card>
             <ion-grid>
@@ -56,32 +56,32 @@
                     <ion-col col-12 col-sm-12 col-md-6>
                         <ion-item>
                             <ion-row>
-                                <ion-col>{{"D2FA_SCAN.VERIFY_SOURCE" | translate}}</ion-col>
+                                <ion-col>{{"AUTH.VERIFY_SOURCE" | translate}}</ion-col>
                                 <ion-col class="right">{{verifiedMessage.source}}</ion-col>
                             </ion-row>
                             <ion-row>
-                                <ion-col>{{"D2FA_SCAN.VERIFY_AVATAR" | translate}}</ion-col>
+                                <ion-col>{{"AUTH.VERIFY_AVATAR" | translate}}</ion-col>
                                 <ion-col class="right">{{verifiedMessage.target}}</ion-col>
                             </ion-row>
                             <ion-row>
-                                <ion-col>{{"D2FA_SCAN.VERIFY_HOST" | translate}}</ion-col>
+                                <ion-col>{{"AUTH.VERIFY_HOST" | translate}}</ion-col>
                                 <ion-col class="right">{{verifiedMessage.hostname}}</ion-col>
                             </ion-row>
                             <ion-row>
-                                <ion-col>{{"D2FA_SCAN.VERIFY_REMAINING_TIME" | translate}}</ion-col>
+                                <ion-col>{{"AUTH.VERIFY_REMAINING_TIME" | translate}}</ion-col>
                                 <ion-col class="right"><countdown [config]="{leftTime: leftTime}">$!m!:$!s!</countdown></ion-col>
                             </ion-row>
                             <div *ngIf="showDetails">
                                 <ion-row>
-                                    <ion-col>{{"D2FA_SCAN.VERIFY_CALLBACK" | translate}}</ion-col>
+                                    <ion-col>{{"AUTH.VERIFY_CALLBACK" | translate}}</ion-col>
                                     <ion-col class="right">{{verifiedMessage.callback}}</ion-col>
                                 </ion-row>
                                 <ion-row>
-                                    <ion-col>{{"D2FA_SCAN.VERIFY_TIME_OF_REQUEST" | translate}}</ion-col>
+                                    <ion-col>{{"AUTH.VERIFY_TIME_OF_REQUEST" | translate}}</ion-col>
                                     <ion-col class="right">{{verifiedMessage.time*1000|date : 'medium'}}</ion-col>
                                 </ion-row>
                                 <ion-row>
-                                    <ion-col>{{"D2FA_SCAN.VERIFY_REQUEST_DURATION" | translate}}</ion-col>
+                                    <ion-col>{{"AUTH.VERIFY_REQUEST_DURATION" | translate}}</ion-col>
                                     <ion-col class="right">{{verifiedMessage.timeout}}{{"SECONDS" | translate}}</ion-col>
                                 </ion-row>
                             </div>
