@@ -124,18 +124,15 @@ export class MyETPWallet {
             })
             .then(plugins => {
                 return Promise.all([
-                    { title: 'D2FA', component: "D2faScanPage", icon: 'cube', beta: true },
                     { title: 'ACCOUNT.TITLE', component: "AccountPage", icon: 'home', root: true },
                     { title: 'AVATARS', component: "AvatarsPage", icon: 'person' },
+                    { title: 'AUTHENTICATION.TITLE', component: "D2faScanPage", icon: 'qr-scanner', beta: true },
                     { title: 'REGISTER_MST', component: "AssetIssuePage", icon: 'globe' },
                     { title: 'REGISTER_MIT', component: "MITRegisterPage", icon: 'create' },
-                    { title: 'ETH_BRIDGE', component: "EthBridgePage", icon: 'swap' },
                     ... (this.globals.network==='mainnet' ? [{ title: 'ETP_BRIDGE', component: "EtpBridgePage", icon: 'cash' }] : []),
-                    { title: 'MULTISIGNATURE', component: "MultisignaturePage", icon: 'people', beta: true },
-                    { title: 'SETTINGS.PLUGINS', component: "PluginSettingsPage", icon: 'cube', beta: true },
-                    { title: 'SIGN_TX', component: "DecodeTxPage", icon: 'key' },
                     { title: 'NEWS', component: "NewsPage", icon: 'paper' },
-                    { title: 'SETTINGS', component: "SettingsPage", icon: 'settings' },
+                    { title: 'ADVANCED', component: "AdvancedPage", icon: 'settings' },
+                    { title: 'SETTINGS', component: "SettingsPage", icon: 'options' },
                     { title: 'REPORT_BUG', component: "ReportPage", icon: 'bug' }
                 ].concat(plugins).map((entry) => this.addToMenu(entry)))
             });

@@ -1,0 +1,51 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>{{'ADVANCED'|translate}}</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-list>
+        <ion-row>
+            <button ion-item (click)="MultisignaturePage()" style="white-space: normal;">
+                <ion-icon name="people" item-start></ion-icon>
+                <h1>
+                    {{'MULTISIGNATURE'|translate}}
+                    <span class="beta-tag">Beta</span>
+                </h1>
+                <p [translate]="'MULTISIGNATURE.TEXT'" style="white-space: normal;"></p>
+            </button>
+        </ion-row>
+        <ion-row>
+            <button ion-item (click)="PluginSettingsPage()" style="white-space: normal;">
+                <ion-icon name="cube" item-start></ion-icon>
+                <h1>
+                    {{'SETTINGS.PLUGINS'|translate}}
+                    <span class="beta-tag">Beta</span>
+                </h1>
+                <p [translate]="'SETTINGS.PLUGINS_TEXT'" style="white-space: normal;"></p>
+            </button>
+        </ion-row>
+        <ion-row>
+            <button ion-item (click)="DecodeTxPage()" style="white-space: normal;">
+                <ion-icon name="key" item-start></ion-icon>
+                <h1>
+                    {{'SIGN_TX'|translate}}
+                </h1>
+                <p [translate]="'SIGN_TX.TEXT'" style="white-space: normal;"></p>
+            </button>
+        </ion-row>
+        <ion-row>
+            <button ion-item (click)="EthBridgePage()" style="white-space: normal;">
+                <ion-icon name="swap" item-start></ion-icon>
+                <h1>
+                    {{'ETH_BRIDGE'|translate}}
+                </h1>
+                <p [translate]="'ETH_BRIDGE.TEXT'" style="white-space: normal;"></p>
+            </button>
+        </ion-row>
+    </ion-list>
+</ion-content>

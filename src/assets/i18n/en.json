@@ -825,6 +825,12 @@
 
     "SHOW_DETAILS": "Show details",
     "HIDE_DETAILS": "Hide details",
-    "SECONDS": " seconds"
+    "SECONDS": " seconds",
+
+    "ADVANCED": "Advanced",
+    "MULTISIGNATURE.TEXT": "Share a multisignature address with co-signers",
+    "SIGN_TX.TEXT": "Decode and sign a raw transaction",
+    "ETH_BRIDGE.TEXT": "Transfer tokens between Metaverse and Ethereum blockchains",
+    "AUTHENTICATION.TITLE": "Authentification"
 
 }
