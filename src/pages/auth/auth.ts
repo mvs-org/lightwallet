@@ -5,15 +5,15 @@ import { AppGlobals } from '../../app/app.global';
 import { TranslateService } from '@ngx-translate/core';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
-import { D2faServiceProvider } from '../../providers/d2fa-service/d2fa-service';
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { AlertProvider } from '../../providers/alert/alert';
 
 @IonicPage()
 @Component({
-    selector: 'page-d2fa-scan',
-    templateUrl: 'd2fa-scan.html',
+    selector: 'page-auth',
+    templateUrl: 'auth.html',
 })
-export class D2faScanPage {
+export class AuthPage {
 
     loading: Loading;
     qrCodeLoaded: boolean
@@ -35,15 +35,13 @@ export class D2faScanPage {
         private wallet: WalletServiceProvider,
         private translate: TranslateService,
         private barcodeScanner: BarcodeScanner,
-        private d2fa: D2faServiceProvider,
+        private auth: AuthServiceProvider,
         private alert: AlertProvider,
     ) {
 
         this.qrCodeLoaded = false;
         this.isApp = (!document.URL.startsWith('http') || document.URL.startsWith('http://localhost:8080'));
         this.loadAvatars();
-
-        this.message = '{"callback":"https://bitident.com/api/confirm/XQ47ZfIXaMHKOSRXl7iV","signature":"1f788b009f44693f6cbc6b99a48ec70f4204e32fa8bd66ea9d8cd58f9ae9fa79a26741183ae1258afbf94eae4f5c6e6ba2358a9597118e1bd263cd43ca6b912c11","source":"bitident","target":"metaverse","time":1566291204,"timeout":300,"type":"d2fa"}'
 
     }
 
@@ -149,7 +147,7 @@ export class D2faScanPage {
         this.alert.showLoading()
         this.wallet.getWallet(passphrase)
             .then(wallet => wallet.signMessage(this.avatars_address[this.verifiedMessage.target], this.message))
-            .then(signature => this.d2fa.confirm(this.verifiedMessage.callback, signature).toPromise())
+            .then(signature => this.auth.confirm(this.verifiedMessage.callback, signature).toPromise())
             .then(response => {
                 switch(response.status){
                     case 200:

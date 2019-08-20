@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 
 @Injectable()
-export class D2faServiceProvider {
+export class AuthServiceProvider {
 
     constructor(
         public http: Http

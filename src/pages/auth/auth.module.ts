@@ -1,19 +1,19 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { D2faScanPage } from './d2fa-scan';
+import { AuthPage } from './auth';
 import { AppGlobals } from '../../app/app.global';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { TranslateModule} from '@ngx-translate/core';
 import { AlertProvider } from '../../providers/alert/alert';
-import { D2faServiceProvider } from '../../providers/d2fa-service/d2fa-service';
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { CountdownModule } from 'ngx-countdown';
 
 @NgModule({
     declarations: [
-        D2faScanPage,
+        AuthPage,
     ],
     imports: [
-        IonicPageModule.forChild(D2faScanPage),
+        IonicPageModule.forChild(AuthPage),
         TranslateModule,
         CountdownModule,
     ],
@@ -21,10 +21,10 @@ import { CountdownModule } from 'ngx-countdown';
         BarcodeScanner,
         AppGlobals,
         AlertProvider,
-        D2faServiceProvider,
+        AuthServiceProvider,
     ],
     exports: [
-        D2faScanPage
+        AuthPage
     ]
 })
 export class ImportWalletMobilePageModule { }
