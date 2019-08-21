@@ -30,7 +30,7 @@
 
         <ion-row *ngIf="!isApp || token" class="padding-bottom">
             <ion-col>
-                <button ion-button full [disabled]="!connectForm.form.valid||!validAuthToken(token)" (click)="check(token)"
+                <button type="submit" ion-button full [disabled]="!connectForm.form.valid||!validAuthToken(token)" (click)="check(token)"
                     icon-left color="secondary">
                     <ion-icon disabled="!validAuthToken(token)" name="cog"></ion-icon>
                     {{'CHECK'|translate}}
@@ -87,7 +87,7 @@
                             </div>
                             <ion-row>
                                 <ion-col>
-                                    <button ion-button item-right icon-left class="right-buttons" (click)="showDetails = !showDetails">
+                                    <button type="button" ion-button item-right icon-left class="right-buttons" (click)="showDetails = !showDetails">
                                         <ion-icon *ngIf="!showDetails" name="arrow-down"></ion-icon>
                                         <ion-icon *ngIf="showDetails" name="arrow-up"></ion-icon>
                                         <span *ngIf="!showDetails">{{'SHOW_DETAILS'|translate}}</span>

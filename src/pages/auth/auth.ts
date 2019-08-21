@@ -92,8 +92,7 @@ export class AuthPage {
 
             const signedToken = Request.decode(token)
 
-            //this.sourceSignature = signedToken.sourceSignature
-            this.sourceSignature = ''
+            this.sourceSignature = signedToken.sourceSignature
 
             if (signedToken.network !== this.globals.network) {
                 this.alert.showError('MESSAGE.AUTH_DIFFERENT_NETWORK', signedToken.network);
