@@ -109,10 +109,15 @@
             <ion-input name="passphrase" type="password" [(ngModel)]="passphrase" required></ion-input>
         </ion-item>
         <br>
+        
+        <ion-item *ngIf="sourceSignature == ''">
+            <ion-label id="disclaimer-agree-label" text-wrap>{{"AUTH.NO_SIG_AGREE"|translate}}</ion-label>
+            <ion-checkbox name="no_sig_agreed" [(ngModel)]="no_sig_agreed" id="no-sig-agree"></ion-checkbox>
+        </ion-item>
 
         <ion-row class="padding-bottom">
             <ion-col>
-                <button type="submit" ion-button full [disabled]="!signForm.form.valid||!validPassword(passphrase)" (click)="signAndSend(token, passphrase)"
+                <button type="submit" ion-button full [disabled]="!signForm.form.valid||!validPassword(passphrase)||(sourceSignature == '' && !no_sig_agreed)" (click)="signAndSend(token, passphrase)"
                     icon-left color="secondary">
                     <ion-icon disabled="!validAuthToken(token)" name="cog"></ion-icon>
                     {{'CHECK'|translate}}

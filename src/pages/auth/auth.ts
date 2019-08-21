@@ -22,6 +22,7 @@ export class AuthPage {
     avatars: Array<string> = []
     avatars_address: any = {}
     verifiedToken: any
+    sourceSignature: string
 
     leftTime: number = 0;
 
@@ -77,7 +78,8 @@ export class AuthPage {
                     formats: "QR_CODE", // default: all but PDF_417 and RSS_EXPANDED
                 }).then((result) => {
                     if (!result.cancelled) {
-                        this.check(result.text.toString())
+                        this.token = result.text.toString()
+                        this.check(this.token)
                     }
                 })
         })
@@ -90,7 +92,8 @@ export class AuthPage {
 
             const signedToken = Request.decode(token)
 
-            const sourceSignature = signedToken.sourceSignature
+            //this.sourceSignature = signedToken.sourceSignature
+            this.sourceSignature = ''
 
             if (signedToken.network !== this.globals.network) {
                 this.alert.showError('MESSAGE.AUTH_DIFFERENT_NETWORK', signedToken.network);
@@ -109,9 +112,7 @@ export class AuthPage {
 
                 const sourceAddress = sourceAvatar.address
 
-                const valid = Message.verify(encodedUnsignedToken, sourceAddress, sourceSignature, signedToken.source)
-
-                if(!valid) {
+                if(this.sourceSignature && !Message.verify(encodedUnsignedToken, sourceAddress, Buffer.from(this.sourceSignature, 'hex'), signedToken.source)) {
                     this.alert.showError('MESSAGE.AUTH_WRONG_SIGNATURE', signedToken.source);
                 } else {
                     signedToken.hostname = new URL(signedToken.callback).hostname
@@ -133,7 +134,7 @@ export class AuthPage {
         this.wallet.getWallet(passphrase)
             .then(wallet => wallet.findDeriveNodeByAddess(this.avatars_address[this.verifiedToken.target], 200))
             .then(node => Message.signPK(token, node.keyPair.d.toBuffer(32), node.keyPair.compressed, this.verifiedToken.target))
-            .then(signature => this.auth.confirm(this.verifiedToken.callback, signature).toPromise())
+            .then(signature => this.auth.confirm(this.verifiedToken.callback, signature.toString('hex')).toPromise())
             .then(response => {
                 this.alert.stopLoading()
                 this.navCtrl.pop()
@@ -151,7 +152,7 @@ export class AuthPage {
                             this.alert.showError('MESSAGE.AUTH_EXPIRED', '')
                             break
                         case "ERR_AUTH":
-                            this.alert.showError('MESSAGE.AUTH_SEND_SIG_ERROR', error.message)
+                            this.alert.showError('MESSAGE.AUTH_SEND_SIG_ERROR','')
                             break
                         default:
                             this.alert.showError('MESSAGE.AUTH_SIGN', error.message)

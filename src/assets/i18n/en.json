@@ -809,6 +809,7 @@
     "AUTH.VERIFY_CALLBACK": "Callback",
     "AUTH.VERIFY_TIME_OF_REQUEST": "Time of request",
     "AUTH.VERIFY_REQUEST_DURATION": "Timeout",
+    "AUTH.NO_SIG_AGREE": "This request was not signed. Please make sure this request is legit before signing it.",
 
     "MESSAGE.AUTH_NO_AVATAR_TITLE": "No Avatar",
     "MESSAGE.AUTH_NO_AVATAR_TITLE_BODY": "You need an Avatar in order to use the d2fa feature. Please create an Avatar first.",
