@@ -7,7 +7,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { AlertProvider } from '../../providers/alert/alert';
-import { Request } from 'bitident';
+import { Request, Message } from 'bitident';
 
 @IonicPage()
 @Component({
@@ -17,15 +17,11 @@ import { Request } from 'bitident';
 export class AuthPage {
 
     loading: Loading;
-    qrCodeLoaded: boolean
-    message: string = ''
+    token: string = ''
     isApp: boolean
     avatars: Array<string> = []
     avatars_address: any = {}
-    no_avatar: boolean = false
-    passphrase: string = ''
-    verifiedMessage: any
-    network: string
+    verifiedToken: any
 
     leftTime: number = 0;
 
@@ -41,10 +37,8 @@ export class AuthPage {
         private alert: AlertProvider,
     ) {
 
-        this.qrCodeLoaded = false;
         this.isApp = (!document.URL.startsWith('http') || document.URL.startsWith('http://localhost:8080'));
         this.loadAvatars();
-        this.network = this.globals.network
 
     }
 
@@ -66,9 +60,9 @@ export class AuthPage {
             })
     }
 
-    validD2faMessage = (message) => (message) ? message.length > 0 : false;
+    validAuthToken = (token) => (token) ? token.length > 0 : false;
 
-    validPassword = (passphrase) => (passphrase.length > 0)
+    validPassword = (passphrase) => passphrase && passphrase.length > 0
 
     scan() {
         this.translate.get(['SCANNING.AUTH_MESSAGE']).subscribe((translations: any) => {
@@ -89,90 +83,79 @@ export class AuthPage {
         })
     }
 
-    async check(message) {
+    async check(token) {
 
         this.alert.showLoading()
         try {
 
-            let json = JSON.stringify(Request.decode(message))
-            let obj = JSON.parse(json)
+            const signedToken = Request.decode(token)
 
-            if (obj.network !== this.network) {
-            this.alert.showError('MESSAGE.AUTH_DIFFERENT_NETWORK', obj.network);
-            } else if(obj.type != 'auth') {
-                this.alert.showError('MESSAGE.AUTH_TYPE_NOT_SUPPORTED', obj.type);
-            } else if (this.avatars.indexOf(obj.target) === -1) {
-                this.alert.showError('MESSAGE.AUTH_UNKNOWN_AVATAR', obj.target);
-            } else if((obj.time + obj.timeout) * 1000 < Date.now()) {
+            const sourceSignature = signedToken.sourceSignature
+
+            if (signedToken.network !== this.globals.network) {
+                this.alert.showError('MESSAGE.AUTH_DIFFERENT_NETWORK', signedToken.network);
+            } else if(signedToken.type != 'auth') {
+                this.alert.showError('MESSAGE.AUTH_TYPE_NOT_SUPPORTED', signedToken.type);
+            } else if (this.avatars.indexOf(signedToken.target) === -1) {
+                this.alert.showError('MESSAGE.AUTH_UNKNOWN_AVATAR', signedToken.target);
+            } else if((signedToken.time + signedToken.timeout) * 1000 < Date.now()) {
                 this.alert.showError('MESSAGE.AUTH_TIMEOUT', '');
             } else {
 
-                let sourceAvatar = await this.mvs.getGlobalAvatar(obj.source)
+                signedToken.sourceSignature = ''
+                const encodedUnsignedToken = signedToken.encode('hex')
 
-                let {sourceSignature, ...pureRequest} = obj
+                const sourceAvatar = await this.mvs.getGlobalAvatar(signedToken.source)
 
-                this.wallet.verifyMessage(new Request(pureRequest).encode('hex'), sourceAvatar.address, sourceSignature)
+                const sourceAddress = sourceAvatar.address
 
-                if(!this.wallet.verifyMessage(JSON.stringify(this.sortObject(pureRequest)), sourceAvatar.address, sourceSignature)) {
-                    this.alert.showError('MESSAGE.AUTH_WRONG_SIGNATURE', pureRequest.source);
+                const valid = Message.verify(encodedUnsignedToken, sourceAddress, sourceSignature, signedToken.source)
+
+                if(!valid) {
+                    this.alert.showError('MESSAGE.AUTH_WRONG_SIGNATURE', signedToken.source);
                 } else {
-                    pureRequest.hostname = new URL(pureRequest.callback).hostname
-                    this.verifiedMessage = pureRequest;
-                    this.leftTime = (pureRequest.time + pureRequest.timeout) - (Math.floor(Date.now())/1000)
+                    signedToken.hostname = new URL(signedToken.callback).hostname
+                    this.verifiedToken = signedToken;
+                    this.leftTime = (signedToken.time + signedToken.timeout) - (Math.floor(Date.now())/1000)
                 }
             }
         } catch (e) {
             console.error(e);
             this.alert.showError('MESSAGE.AUTH_WRONG_INCOMING_DATA', e);
         }
-        
         this.alert.stopLoading()
 
     }
 
-    sortObject(o: any) {
-        return Object.keys(o).sort().reduce((r: any, k) => {r[k] = o[k]; return r}, {});
-    }
-
-    signAndSend(passphrase) {
+    signAndSend(token, passphrase) {
 
         this.alert.showLoading()
         this.wallet.getWallet(passphrase)
-            .then(wallet => wallet.signMessage(this.avatars_address[this.verifiedMessage.target], this.message))
-            .then(signature => this.auth.confirm(this.verifiedMessage.callback, signature).toPromise())
+            .then(wallet => wallet.findDeriveNodeByAddess(this.avatars_address[this.verifiedToken.target], 200))
+            .then(node => Message.signPK(token, node.keyPair.d.toBuffer(32), node.keyPair.compressed, this.verifiedToken.target))
+            .then(signature => this.auth.confirm(this.verifiedToken.callback, signature).toPromise())
             .then(response => {
-                switch(response.status){
-                    case 200:
-                        this.alert.stopLoading()
-                        this.navCtrl.pop()
-                        this.alert.showMessage('MESSAGE.AUTH_SIGNIN_SUCCESSFUL_TITLE', 'MESSAGE.AUTH_SIGNIN_SUCCESSFUL_BODY', '')
-                        return;
-                    default:
-                        this.alert.showError('MESSAGE.AUTH_SEND_SIG_ERROR', '')
-                        return;
-                }
+                this.alert.stopLoading()
+                this.navCtrl.pop()
+                this.alert.showMessage('MESSAGE.AUTH_SIGNIN_SUCCESSFUL_TITLE', 'MESSAGE.AUTH_SIGNIN_SUCCESSFUL_BODY', '')
             })
             .catch((error) => {
                 this.alert.stopLoading()
-                if(error.message) {
+                if(error.message) { //internal error
                     console.error(error.message)
                     switch(error.message){
                         case "ERR_DECRYPT_WALLET":
                             this.alert.showError('MESSAGE.PASSWORD_WRONG', '')
                             break
-                        default:
-                            this.alert.showError('MESSAGE.AUTH_SIGN', error.message)
-                            throw Error('ERR_D2FA')
-                    }
-                } else {
-                    console.error(error._body)
-                    switch(error._body){
-                        case "ERR_EXPIRED":
+                        case "AUTH_EXPIRED":
                             this.alert.showError('MESSAGE.AUTH_EXPIRED', '')
                             break
-                        default:
+                        case "ERR_AUTH":
                             this.alert.showError('MESSAGE.AUTH_SEND_SIG_ERROR', error.message)
-                            throw Error('ERR_D2FA')
+                            break
+                        default:
+                            this.alert.showError('MESSAGE.AUTH_SIGN', error.message)
+                            throw Error('ERR_AUTH')
                     }
                 }
             })

@@ -6,15 +6,15 @@
 
 <ion-content padding>
 
-    <form #connectForm="ngForm" *ngIf="!verifiedMessage" no-lines>
+    <form #connectForm="ngForm" *ngIf="!verifiedToken" no-lines>
 
-        <ion-item *ngIf="!isApp" [ngClass]="{'error-border':!validD2faMessage(message), 'valid-border': message.length > 0 && validD2faMessage(message)}">
+        <ion-item *ngIf="!isApp" [ngClass]="{'error-border':!validAuthToken(token), 'valid-border': token.length > 0 && validAuthToken(token)}">
             <ion-label floating>{{"AUTH.INPUT_LABEL" | translate}}</ion-label>
-            <ion-input name="message" [(ngModel)]="message"></ion-input>
+            <ion-input name="token" [(ngModel)]="token"></ion-input>
         </ion-item>
 
         <div *ngIf="isApp">
-            <div *ngIf="!qrCodeLoaded">
+            <div *ngIf="!token">
                 <ion-item class="center-text" no-lines>
                     <h3>{{"AUTHENTICATION.SCAN_QRCODE_TEXT"|translate}}</h3>
                 </ion-item>
@@ -28,11 +28,11 @@
             </div>
         </div>
 
-        <ion-row *ngIf="!isApp || message" class="padding-bottom">
+        <ion-row *ngIf="!isApp || token" class="padding-bottom">
             <ion-col>
-                <button ion-button full [disabled]="!connectForm.form.valid||!validD2faMessage(message)" (click)="check(message)"
+                <button ion-button full [disabled]="!connectForm.form.valid||!validAuthToken(token)" (click)="check(token)"
                     icon-left color="secondary">
-                    <ion-icon disabled="!validD2faMessage(message)" name="cog"></ion-icon>
+                    <ion-icon disabled="!validAuthToken(token)" name="cog"></ion-icon>
                     {{'CHECK'|translate}}
                 </button>
             </ion-col>
@@ -46,7 +46,7 @@
 
     </form>
 
-    <form #signForm="ngForm" *ngIf="verifiedMessage" no-lines>
+    <form #signForm="ngForm" *ngIf="verifiedToken" no-lines>
 
         <h2>{{"AUTH.VERIFY_TITLE" | translate}}</h2>
 
@@ -57,15 +57,15 @@
                         <ion-item>
                             <ion-row>
                                 <ion-col>{{"AUTH.VERIFY_SOURCE" | translate}}</ion-col>
-                                <ion-col class="right">{{verifiedMessage.source}}</ion-col>
+                                <ion-col class="right">{{verifiedToken.source}}</ion-col>
                             </ion-row>
                             <ion-row>
                                 <ion-col>{{"AUTH.VERIFY_AVATAR" | translate}}</ion-col>
-                                <ion-col class="right">{{verifiedMessage.target}}</ion-col>
+                                <ion-col class="right">{{verifiedToken.target}}</ion-col>
                             </ion-row>
                             <ion-row>
                                 <ion-col>{{"AUTH.VERIFY_HOST" | translate}}</ion-col>
-                                <ion-col class="right">{{verifiedMessage.hostname}}</ion-col>
+                                <ion-col class="right">{{verifiedToken.hostname}}</ion-col>
                             </ion-row>
                             <ion-row>
                                 <ion-col>{{"AUTH.VERIFY_REMAINING_TIME" | translate}}</ion-col>
@@ -74,15 +74,15 @@
                             <div *ngIf="showDetails">
                                 <ion-row>
                                     <ion-col>{{"AUTH.VERIFY_CALLBACK" | translate}}</ion-col>
-                                    <ion-col class="right">{{verifiedMessage.callback}}</ion-col>
+                                    <ion-col class="right">{{verifiedToken.callback}}</ion-col>
                                 </ion-row>
                                 <ion-row>
                                     <ion-col>{{"AUTH.VERIFY_TIME_OF_REQUEST" | translate}}</ion-col>
-                                    <ion-col class="right">{{verifiedMessage.time*1000|date : 'medium'}}</ion-col>
+                                    <ion-col class="right">{{verifiedToken.time*1000|date : 'medium'}}</ion-col>
                                 </ion-row>
                                 <ion-row>
                                     <ion-col>{{"AUTH.VERIFY_REQUEST_DURATION" | translate}}</ion-col>
-                                    <ion-col class="right">{{verifiedMessage.timeout}}{{"SECONDS" | translate}}</ion-col>
+                                    <ion-col class="right">{{verifiedToken.timeout}}{{"SECONDS" | translate}}</ion-col>
                                 </ion-row>
                             </div>
                             <ion-row>
@@ -112,9 +112,9 @@
 
         <ion-row class="padding-bottom">
             <ion-col>
-                <button type="submit" ion-button full [disabled]="!signForm.form.valid||!validPassword(passphrase)" (click)="signAndSend(passphrase)"
+                <button type="submit" ion-button full [disabled]="!signForm.form.valid||!validPassword(passphrase)" (click)="signAndSend(token, passphrase)"
                     icon-left color="secondary">
-                    <ion-icon disabled="!validD2faMessage(message)" name="cog"></ion-icon>
+                    <ion-icon disabled="!validAuthToken(token)" name="cog"></ion-icon>
                     {{'CHECK'|translate}}
                 </button>
             </ion-col>
