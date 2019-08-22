@@ -800,6 +800,7 @@
 
     "ERROR_TWO_LOCK_MODEL": "Please make sure only 1 lock period is specified, don't fill both lock period columns. The following line contains 2 lock periods:", 
 
+    "AUTH.INFORMATION": "You can use your Metaverse Avatar to login to various websites or applications. After verifying the provider of the request, it will sign a message using your private key and send the signed message to the requester in order to prove ownership of this Avatar. Those steps will not create any transaction on the blockchain neather reveal your private key to the requester.",
     "AUTH.INPUT_LABEL": "Login key",
     "AUTH.VERIFY_TITLE": "Please verify the requester information:",
     "AUTH.VERIFY_SOURCE": "Source",
