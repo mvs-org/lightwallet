@@ -296,7 +296,7 @@
     "ISSUE.SYMBOL_DOMAIN_OWNER": "Your Avatar own the Domain certificate to create this MST",
     "ISSUE.SYMBOL_NAMING_OWNER": "Your Avatar own the Naming certificate to create this MST",
     "ISSUE.SYMBOL_ALREADY_EXIST": "This MST symbol has already been registered",
-    "ISSUE.SYMBOL_NOT_CERT_OWNER": "Your Avatar does not own the Domain certificate to create this MST",
+    "ISSUE.SYMBOL_NOT_CERT_OWNER": "You do not own the Domain certificate to create this MST",
     "ISSUE.SYMBOL_ERROR_LOADING_MSTS": "Error while loading MSTs. Please make sure this MST Symbol is not already used",
     "ISSUE.SYMBOL_ERROR_LOADING_CERTS": "Error while loading the Domain certificates. Please make sure you have the right to create this Symbol",
 
@@ -837,6 +837,8 @@
     "AUTHENTICATION.TITLE": "Authentication",
 
     "SCANNING.AUTH_MESSAGE": "Scan the QR Code where you want to login",
-    "AUTHENTICATION.SCAN_QRCODE_TEXT": "Use my Avatar to authenticate"
+    "AUTHENTICATION.SCAN_QRCODE_TEXT": "Use my Avatar to authenticate",
+
+    "ISSUE.DOMAIN_OWNER_OTHER_MY_AVATARS": "The domain certificate to create this MST is owned by another of your Avatars. Please issue this MST using the Avatar owning the matching domain certificate."
 
 }

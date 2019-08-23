@@ -16,7 +16,7 @@
                 <ion-row>
                     <ion-col col-md-12 col-sm-12 col-12>
                         <h1 (click)="show(order.id)">{{order.id}}</h1>
-                        <div class="status" [ngClass]="{'valid-input': order.status == 'wait_receive_confirm' || order.status == 'receive_complete', 'warning': order.status == 'wait_deposit_send' || order.status == 'wait_exchange_push' || order.status == 'wait_exchange_return' || order.status == 'wait_refund_send' || order.status == 'wait_refund_confirm' || order.status == 'wait_receive_send', 'wrong-input': order.status == 'timeout' || order.status == 'fail'}">
+                        <div class="status" [ngClass]="{'valid-input': order.status == 'wait_receive_confirm' || order.status == 'receive_complete', 'warning-input': order.status == 'wait_deposit_send' || order.status == 'wait_exchange_push' || order.status == 'wait_exchange_return' || order.status == 'wait_refund_send' || order.status == 'wait_refund_confirm' || order.status == 'wait_receive_send', 'wrong-input': order.status == 'timeout' || order.status == 'fail'}">
                             {{"ETP_BRIDGE.STATUS." + order.status|translate}}
                         </div>
                         <h3>

@@ -32,8 +32,8 @@ export class AssetIssuePage {
     description: string
     issue_address: string
     certs: Array<any>;
-    list_domain_certs: Array<any> = [];
-    list_my_domain_certs: Array<any> = [];
+    list_domain_certs: Array<any> = [];     //all my domain certificates
+    list_my_domain_certs: Array<any> = [];  //domain certificates own by the avatar currently selected
     list_my_naming_certs: Array<any> = [];
     msts: Array<any>;
     list_msts: Array<any> = [];
@@ -134,8 +134,6 @@ export class AssetIssuePage {
 
     }
 
-    //validSecondaryissueThreshold = (threshold) => (threshold>=-1&&threshold<=100)
-
     validMaxSupply = (max_supply, asset_decimals) => max_supply == 'custom' || (max_supply > 0 && ((asset_decimals == undefined) || (Math.floor(parseFloat(max_supply) * Math.pow(10, asset_decimals))) <= 10000000000000000))
 
     validMaxSupplyCustom = (custom_max_supply, asset_decimals) => custom_max_supply > 0 && ((asset_decimals == undefined) || (Math.floor(parseFloat(custom_max_supply) * Math.pow(10, asset_decimals))) <= 10000000000000000)
@@ -218,10 +216,8 @@ export class AssetIssuePage {
         this.create()
             .then((result) => {
                 this.navCtrl.push("confirm-tx-page", { tx: result.encode().toString('hex') })
-                this.loading.dismiss()
             })
             .catch((error) => {
-                this.loading.dismiss()
                 switch (error.message) {
                     case 'ERR_CONNECTION':
                         this.alert.showError('ERROR_SEND_TEXT', '')
@@ -353,10 +349,24 @@ export class AssetIssuePage {
                 this.symbol_check = "naming_owner"
             } else if (this.list_my_domain_certs && this.list_my_domain_certs.indexOf(domain) !== -1) {
                 this.symbol_check = "domain_owner"
-            } else if (this.list_my_domain_certs && this.list_domain_certs.indexOf(domain) !== -1) {
-                this.symbol_check = "not_domain_owner"
+            } else if (this.list_domain_certs && this.list_domain_certs.indexOf(domain) !== -1) {
+                this.symbol_check = "other_avatar_domain_owner"
             } else {
-                this.symbol_check = "available"
+                this.mvs.getCert(domain, 'domain')
+                    .then(response => {
+                        if (domain != this.symbol.split('.')[0].toUpperCase())
+                            return
+                        if (!response || !response.result) {
+                            this.symbol_check = "cant_check_domain"
+                        } else if (response.result.length > 0) {
+                            this.symbol_check = "not_domain_owner"
+                        } else {
+                            this.symbol_check = "available"
+                        }
+                    })
+                    .catch((e) => {
+                        this.symbol_check = "cant_check_domain"
+                    })
             }
         } else {
             this.symbol_check = "too_short"

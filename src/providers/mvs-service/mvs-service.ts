@@ -682,6 +682,10 @@ export class MvsServiceProvider {
         return this.blockchain.multisig.get(address)
     }
 
+    getCert(symbol, type) {
+        return this.blockchain.cert.get(symbol, type)
+    }
+
     async decodeTx(rawtx) {
         const network = await this.globals.getNetwork()
         let tx = Metaverse.transaction.decode(rawtx, network);

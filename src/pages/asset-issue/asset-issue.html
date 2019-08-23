@@ -16,12 +16,13 @@
     <ion-row>
         <ion-col>
             <p>
-                {{"TOTAL_AVAILABLE_BALANCE" | translate}}: 
+                {{"TOTAL_AVAILABLE_BALANCE" | translate}}:
                 <br *ngIf="platform.is('mobile')">{{showBalance | format : decimals}} {{selectedAsset}}
             </p>
             <p *ngIf="addressbalances && addressbalances[issue_address] && addressbalances[issue_address][selectedAsset]">
                 {{issuer_name}} {{"AVATAR_AVAILABLE_BALANCE" | translate}}:
-                <br *ngIf="platform.is('mobile')">{{addressbalances[issue_address][selectedAsset].available | format : decimals}} {{selectedAsset}}
+                <br *ngIf="platform.is('mobile')">{{addressbalances[issue_address][selectedAsset].available | format :
+                decimals}} {{selectedAsset}}
             </p>
         </ion-col>
         <ion-col>
@@ -32,7 +33,7 @@
     <form #sendForm="ngForm" style="padding-bottom: 0;">
         <ion-list style="padding-bottom: 0;">
 
-            <ion-item [ngClass]="{'error-border':!validSymbol(symbol) || symbol_check == 'exist' || symbol_check == 'not_domain_owner'}">
+            <ion-item [ngClass]="{'error-border': !validSymbol(symbol) || symbol_check == 'exist' || symbol_check == 'not_domain_owner' || symbol_check == 'other_avatar_domain_owner', 'warning-border': error_loading_msts || error_loading_certs || symbol_check == 'cant_check_domain'}">
                 <ion-label color="primary" floating>{{"ISSUE.SYMBOL"|translate}}</ion-label>
                 <ion-input class="uppercase" name="symbol" [(ngModel)]="symbol" (ngModelChange)="symbolChanged($event)"
                     maxlength="63" required></ion-input>
@@ -47,10 +48,12 @@
                 translate}}</ion-item>
             <ion-item *ngIf="symbol_check == 'not_domain_owner'" no-lines class="wrong-input">{{"ISSUE.SYMBOL_NOT_CERT_OWNER"
                 | translate}}</ion-item>
-            <ion-item *ngIf="error_loading_msts" no-lines class="wrong-input">{{"ISSUE.SYMBOL_ERROR_LOADING_MSTS" |
+            <ion-item *ngIf="symbol_check == 'other_avatar_domain_owner'" no-lines class="wrong-input">{{"ISSUE.DOMAIN_OWNER_OTHER_MY_AVATARS"
+                | translate}}</ion-item>
+            <ion-item *ngIf="error_loading_msts" no-lines class="warning-input">{{"ISSUE.SYMBOL_ERROR_LOADING_MSTS" |
                 translate}}</ion-item>
-            <ion-item *ngIf="error_loading_certs" no-lines class="wrong-input">{{"ISSUE.SYMBOL_ERROR_LOADING_CERTS" |
-                translate}}</ion-item>
+            <ion-item *ngIf="error_loading_certs || symbol_check == 'cant_check_domain'" no-lines class="warning-input">{{"ISSUE.SYMBOL_ERROR_LOADING_CERTS"
+                | translate}}</ion-item>
 
             <ion-item [ngClass]="{'error-border':!validMaxSupply(max_supply, asset_decimals)}">
                 <ion-label color="primary" floating>{{"ISSUE.MAX_SUPPLY" | translate}}</ion-label>
@@ -109,7 +112,8 @@
                 <ion-label>{{"MST_MINING.OPTION"|translate}}</ion-label>
                 <ion-toggle [(ngModel)]="mining" name="mining"></ion-toggle>
             </ion-item>
-            <mining-model-selector *ngIf="mining" (modelChanged)="setMiningModel($event)" [decimals]="asset_decimals" [asset]="symbol">
+            <mining-model-selector *ngIf="mining" (modelChanged)="setMiningModel($event)" [decimals]="asset_decimals"
+                [asset]="symbol">
             </mining-model-selector>
 
             <ion-item [ngClass]="{'error-border':!validName(issuer_name) || !addressbalances || !addressbalances[issue_address] || !addressbalances[issue_address][selectedAsset] || addressbalances[issue_address][selectedAsset].available<1000000000}">
@@ -167,7 +171,7 @@
 
         <ion-row>
             <ion-col>
-                <button ion-button full [disabled]="!sendForm.form.valid||!validSymbol(symbol)||symbol_check=='exist'||symbol_check=='not_cert_owner'||!validMaxSupply(max_supply, asset_decimals)||(max_supply=='custom' && !validMaxSupplyCustom(custom_max_supply, asset_decimals))||!validDecimals(asset_decimals)||!validName(issuer_name)||!validAddress(issue_address)||!validDescription(description)||(issue_address=='custom' && !validIssueAddress(custom_issue_address))||((!addressbalances || !addressbalances[issue_address] || !addressbalances[issue_address][selectedAsset] || addressbalances[issue_address][selectedAsset].available<1000000000))||(lock && !attenuation_model)||(mining && !mst_mining_model)"
+                <button ion-button full [disabled]="!sendForm.form.valid||!validSymbol(symbol)||symbol_check=='exist'||symbol_check=='not_domain_owner'||symbol_check=='other_avatar_domain_owner'||!validMaxSupply(max_supply, asset_decimals)||(max_supply=='custom' && !validMaxSupplyCustom(custom_max_supply, asset_decimals))||!validDecimals(asset_decimals)||!validName(issuer_name)||!validAddress(issue_address)||!validDescription(description)||(issue_address=='custom' && !validIssueAddress(custom_issue_address))||((!addressbalances || !addressbalances[issue_address] || !addressbalances[issue_address][selectedAsset] || addressbalances[issue_address][selectedAsset].available<1000000000))||(lock && !attenuation_model)||(mining && !mst_mining_model)"
                     (click)="confirm()" icon-left color="secondary">
                     <ion-icon disabled="checked" name="cog"></ion-icon>
                     {{'NEXT' | translate}}

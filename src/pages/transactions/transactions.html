@@ -30,7 +30,7 @@
                                 <img class="coinlogo" [src]="'assets/icon/'+icon+'.png'" onerror="this.src='assets/icon/default_mst.png'">
                             </ion-avatar>
                             <h1>{{asset}}</h1>
-                            <h3>{{'DATE'|translate}}: <span class="warning">{{'PENDING_CONFIRMATION'|translate}}</span></h3>
+                            <h3>{{'DATE'|translate}}: <span class="warning-input">{{'PENDING_CONFIRMATION'|translate}}</span></h3>
                             <p>
                                 {{'HASH'|translate}}: <a href="{{explorerURL(tx.hash)}}" target="_blank">{{tx.hash}}</a>
                             </p>
