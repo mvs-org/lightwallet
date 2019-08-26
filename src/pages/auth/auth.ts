@@ -161,4 +161,6 @@ export class AuthPage {
             })
     }
 
+    howToAuth = () => this.navCtrl.push("HowToAuthPage")
+
 }

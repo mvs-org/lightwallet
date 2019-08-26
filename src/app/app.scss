@@ -316,6 +316,10 @@ ion-alert:not(.alert-ios) .alert-button-group-vertical {
             background-color: #383838;
         }
     }
+
+    .pic-description1, .pic-description2, .pic-description3 {
+        filter: invert(70%);
+    }
 }
 
 
@@ -478,6 +482,10 @@ ion-alert:not(.alert-ios) .alert-button-group-vertical {
         .item-md,h1,h2, h3, h4, p {
             background-color: #002b36;
         }
+    }
+
+    .pic-description1, .pic-description2, .pic-description3 {
+        filter: invert(70%);
     }
 }
 

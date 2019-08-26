@@ -220,7 +220,7 @@
 
     "LOGIN": "Login",
     "HOW_TO_IMPORT_WALLET_MOBILE": "How to Import",
-    "HOW_TO_IMPORT_WALLET_MOBILE_TITLE": "How to import your private key?",
+    "HOW_TO_IMPORT_WALLET_MOBILE_TITLE": "How to import your wallet?",
     "HOW_TO_IMPORT_WALLET_MOBILE_STEP1": "Open the web lightwallet, go to Settings, and then Connect phone",
     "HOW_TO_IMPORT_WALLET_MOBILE_STEP2": "Scan the QR Code",
     "HOW_TO_IMPORT_WALLET_MOBILE_STEP3": "Enjoy your wallet on your phone!",
@@ -839,6 +839,14 @@
     "SCANNING.AUTH_MESSAGE": "Scan the QR Code where you want to login",
     "AUTHENTICATION.SCAN_QRCODE_TEXT": "Use my Avatar to authenticate",
 
-    "ISSUE.DOMAIN_OWNER_OTHER_MY_AVATARS": "The domain certificate to create this MST is owned by another of your Avatars. Please issue this MST using the Avatar owning the matching domain certificate."
+    "ISSUE.DOMAIN_OWNER_OTHER_MY_AVATARS": "The domain certificate to create this MST is owned by another of your Avatars. Please issue this MST using the Avatar owning the matching domain certificate.",
+
+    "AUTH.HOW_TO_AUTH_BTN": "How to authenticate",
+
+    "HOW_TO_AUTH.PAGE_TITLE": "How to authenticate",
+    "HOW_TO_AUTH.TITLE": "How to authenticate with your Avatar?",
+    "HOW_TO_AUTH.STEP1": "Open the website where you want to authenticate using your Metaverse Avatar",
+    "HOW_TO_AUTH.STEP2": "Scan the provided QR Code from the Authenticate page of MyETPWallet",
+    "HOW_TO_AUTH.STEP3": "Access the website with your Avatar!"
 
 }
