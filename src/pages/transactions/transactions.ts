@@ -36,7 +36,7 @@ export class TransactionsPage {
         public navCtrl: NavController,
         private globals: AppGlobals,
         public navParams: NavParams,
-        private mvs: MvsServiceProvider
+        private mvs: MvsServiceProvider,
     ) {
         this.asset = navParams.get('asset');
         this.icon = navParams.get('icon');
