@@ -220,7 +220,6 @@
 
     "LOGIN": "Connexion",
     "HOW_TO_IMPORT_WALLET_MOBILE": "Comment importer",
-    "HOW_TO_IMPORT_WALLET_MOBILE_TITLE": "Comment importer votre clé privée ?",
     "HOW_TO_IMPORT_WALLET_MOBILE_STEP1": "Ouvrez MyETPWallet.com sur votre ordinateur et allez dans Paramètres, puis Connecter téléphone",
     "HOW_TO_IMPORT_WALLET_MOBILE_STEP2": "Scannez le QR Code",
     "HOW_TO_IMPORT_WALLET_MOBILE_STEP3": "Utilisez votre portefeuille depuis sur votre téléphone!",
@@ -633,7 +632,7 @@
 
     "LOADING.TITLE": "TELECHARGEMENT DE LA NOUVELLE REALITEE",
     "LOADING.RETRY": "Réessayer",
-    "LOADING.CURRENT_HEIGHT": "Actuellement téléchargé jusqu'au block: {{height}}",
+    "LOADING.CURRENT_HEIGHT": "Actuellement synchronisé jusqu'au block: {{height}}",
     "LOADING.STOPPED": "Impossible de synchroniser vos transactions. Veuillez vérifier votre connexion internet ou réessayer plus tard.",
     "RETURN_LOGIN": "Retourner à la page de connexion",
     "LOADING.FULLY_LOADED": "Téléchargement terminé! Prêt à rejoindre Metaverse...",
@@ -713,6 +712,139 @@
     "ETP_BRIDGE.INFORMATION_LINK": "Telegram",
 
     "ETP_BRIDGE.IMPORT_ORDER_DESCRIPTION": "Si vous avez créé un ordre depuis un autre terminal ou directement via le site internet de SWFT, vous pouvez importer vos ordres via leur identifiant pour suivre leur status.",
-    "ETP_BRIDGE.UNABLE_CONNECT_SWFT": "Impossible de se connecter à SWFT. Veuillez vérifier votre connexion internet ou réessayer plus tard."
+    "ETP_BRIDGE.UNABLE_CONNECT_SWFT": "Impossible de se connecter à SWFT. Veuillez vérifier votre connexion internet ou réessayer plus tard.",
+
+    "DECODE_TX": "Décoder une transaction",
+    "DECODE_TX.TX_TO_SIGN": "Transaction à signer ou publier",
+    "DECODE_TX.DECODE": "Décoder",
+
+    "SIGN_TX": "Signer une transaction",
+    "CONFIRM_TX": {
+        "SIGN_ONLY": "Uniquement signer",
+        "SIGN_AND_SEND": "Signer et publier",
+        "BROADCAST": "Publier"
+    },
+    "MESSAGE.ERROR_DECODE_TX_SUBTITLE": "Impossible de décoder cette transaction",
+    "MESSAGE.ERROR_DECODE_TX_BODY": "Cette transaction ne peut être décodée. Veuillez vous assurer que cette transaction est correcte.",
+    "TX": {
+        "INPUTS": "Entrées",
+        "OUTPUTS": "Sorties",
+        "TX_SUMMARY": "Résumé de la transaction",
+        "TOTAL_INPUTS": "Total des entrées",
+        "TOTAL_OUTPUTS": "Total des sorties",
+        "INPUT_COINBASE": "Nouvellement généré",
+        "TYPE": {
+            "did-register": "Création d'Avatar",
+            "did-transfer": "Transfert d'Avatar",
+            "message": "Message ou donnée publique",
+            "MIT": {
+                "registered": "Création de MIT",
+                "transfered": "Transfert de MIT"
+            },
+            "CERT": {
+                "issue": "Certificat d'augmentation de capital",
+                "domain": "Certificat de domaine",
+                "naming": "Certificat d'appellation",
+                "mining": "Certificate de minage",
+                "witness": "Certificate de témoin"
+            }
+        },
+        "TX_FEE": "Frais",
+        "LOCKED_SINCE_BLOCK": "Bloqué depuis le bloc {{block}} ({{time}})",
+        "LOCKED_UNTIL_BLOCK": "Bloqué jusqu'au bloc {{block}} (~{{time}})",
+        "INTRAWALLET": "Intra-portefeuille",
+        "TX_TYPE": {
+            "ETP": "Transfert d'ETP",
+            "ASSET": "Transfert de MST",
+            "ISSUE": "Création de MST",
+            "CERT": "Transfert de certificat",
+            "CERT_TYPE": {
+                "issue": "Certificat d'augmentation de capital",
+                "domain": "Certificat de domaine",
+                "naming": "Certificat d'appellation",
+                "mining": "Certificate de minage",
+                "witness": "Certificate de témoin"
+            },
+            "DID_REGISTER": "Création d'Avatar",
+            "DID_TRANSFER": "Transfert d'Avatar",
+            "MIT_REGISTERED": "Création de MIT",
+            "MIT_TRANSFERED": "Transfert de MIT",
+            "COINSTAKE": "Transaction preuve d'enjeu (coinstake)",
+            "MST_MINING": "Récompense de minage",
+            "ETP_LOCK": "Blocage d'ETP",
+            "ETP_LOCK_REWARD": "Récompense de blocage d'ETP",
+            "MST_LOCK": "Blocage de MST",
+            "UNKNOWN": "Type de transaction inconnu"
+        },
+        "SELECT_MODE": "Mode de visualisation",
+        "MODE": {
+            "DEFAULT": "Mode par défault",
+            "SATOSHI": "Mode Satoshi",
+            "HEX": "Mode hexadécimal"
+        },
+        "SIGN_STATUS": {
+            "SIGNED": "Transaction entièrement signée",
+            "UNSIGNED": "Transaction non signée",
+            "PARTIALLY": "Transaction partiellement signée"
+        },
+        "OUTPUT": {
+            "LOCKED_UNTIL_BLOCK": "Bloqué jusqu'au bloc {{block}} (~{{time}})"
+        }
+    },
+    "SIGN_TX.PAGE_TITLE": "Vérifier, signer et publier la transaction",
+    "SIGN_TX.DESCRIPTION": "Veuillez entrer la transaction au format hexadécimal. Cette transaction peut être déjà signée ou non.",
+    "CREATE_TX": "Créer",
+    "MESSAGE.BROADCAST_TRANSACTION": "Impossible de publier cette transaction.",
+    "TRANSACTION_PREVIEW.TEXT_SIGNED": "Votre transaction signée est:",
+
+    "ERROR_TWO_LOCK_MODEL": "Veuillez vous assurer de ne préciser qu'une seule période de blocage, ne remplissez pas les 2 colonnes. La ligne suivante comporte 2 périodes de blocage:", 
+
+    "AUTH.INFORMATION": "Vous pouvez utliser votre Avatar Metaverse afin de vous authentifier sur différents sites internet ou applications. Après avoir vérifié le demandeur de la requête, un message sera signé avec votre clé privé et ce message signé sera renvoyé au demandeur afin de prouver que vous êtes le propriétaire de cette Avatar. Ces étapes ne créées pas de transaction sur la blockchain et ne révèle pas votre clé privée au demander.",
+    "AUTH.INPUT_LABEL": "Clé d'authentification",
+    "AUTH.VERIFY_TITLE": "Veuillez vérifier les information du demandeur:",
+    "AUTH.VERIFY_SOURCE": "Source",
+    "AUTH.VERIFY_AVATAR": "Avatar",
+    "AUTH.VERIFY_HOST": "Hôte",
+    "AUTH.VERIFY_REMAINING_TIME": "Temps restant",
+    "AUTH.VERIFY_CALLBACK": "Réponse vers",
+    "AUTH.VERIFY_TIME_OF_REQUEST": "Heure de la demande",
+    "AUTH.VERIFY_REQUEST_DURATION": "Expiration",
+    "AUTH.NO_SIG_AGREE": "Cette requête n'est pas signée. Veuillez vous assurer que cette requête est légitime avant de la signer.",
+
+    "MESSAGE.AUTH_NO_AVATAR_TITLE": "Pas d'Avatar",
+    "MESSAGE.AUTH_NO_AVATAR_TITLE_BODY": "Vous avez besoin d'un Avatar afin d'utiliser le service d'authentification. Veuillez d'abord créer un Avatar.",
+    "MESSAGE.AUTH_TYPE_NOT_SUPPORTED": "Ce type de requête n'est pas pris en charge. Uniquement le type 'auth' est pris en charge.",
+    "MESSAGE.AUTH_UNKNOWN_AVATAR": "Vous ne possédez pas cet Avatar, veuillez vous assurer que vous êtes le propriétaire de:",
+    "MESSAGE.AUTH_TIMEOUT": "Cette requête a expiré. Veuillez demander une nouvelle requête.",
+    "MESSAGE.AUTH_SIGN": "Erreur lors de la signature du message",
+    "MESSAGE.AUTH_WRONG_INCOMING_DATA": "Erreur dans les informations reçues. Veuillez vérifier que les informations sont correctes et réessayer.",
+    "MESSAGE.AUTH_WRONG_SIGNATURE": "La signature fournie par le demandeur est incorrecte",
+    "MESSAGE.AUTH_SIGNIN_SUCCESSFUL_TITLE": "Authentification réussie!",
+    "MESSAGE.AUTH_SIGNIN_SUCCESSFUL_BODY": "Vous avez été authentifié avec succès. Vous pouvez désormais retourner sur le site internet.",
+    "MESSAGE.AUTH_SEND_SIG_ERROR": "Erreur lors de l'envoit de votre signature. Veuillez vérifier votre connexion internet et réessayer.",
+    "MESSAGE.AUTH_EXPIRED": "Jeton d'authentification expiré. Veuillez demander un nouveau jeton.",
+    "MESSAGE.AUTH_DIFFERENT_NETWORK": "Vous n'utilisez pas le même réseaux que le demandeur. Veuillez changer votre réseau vers:",
+
+    "SHOW_DETAILS": "Montrer les détails",
+    "HIDE_DETAILS": "Cacher les détails",
+    "SECONDS": " secondes",
+
+    "ADVANCED": "Avancé",
+    "MULTISIGNATURE.TEXT": "Partager une addresse multisignature avec des co-signataires",
+    "SIGN_TX.TEXT": "Décoder and signer une transaction",
+    "ETH_BRIDGE.TEXT": "Transférer des jetons entre les blockchains Metaverse et Ethereum",
+    "AUTHENTICATION.TITLE": "Authentification",
+
+    "SCANNING.AUTH_MESSAGE": "Scannez le QR Code où vous souhaitez vous authentifier",
+    "AUTHENTICATION.SCAN_QRCODE_TEXT": "Utilisez votre Avatar pour vous authentifier",
+
+    "ISSUE.DOMAIN_OWNER_OTHER_MY_AVATARS": "C'est un autre de vos Avatar qui possède le certificat de domaine pour créer cet MST. Veuillez créer cet MST en utilisant l'Avatar qui possède le certificat.",
+
+    "AUTH.HOW_TO_AUTH_BTN": "Comment s'authentifier",
+
+    "HOW_TO_AUTH.PAGE_TITLE": "Comment s'authentifier",
+    "HOW_TO_AUTH.STEP1": "Ouvrez le site internet où vous souhaitez vous identifier en utilisant votre Avatar Metaverse",
+    "HOW_TO_AUTH.STEP2": "Scannez le QR Code fournis par le demandeur",
+    "HOW_TO_AUTH.STEP3": "Accédez au site internet avec votre Avatar!"
 
 }
