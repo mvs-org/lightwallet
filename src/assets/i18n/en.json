@@ -801,7 +801,7 @@
     "ERROR_TWO_LOCK_MODEL": "Please make sure only 1 lock period is specified, don't fill both lock period columns. The following line contains 2 lock periods:", 
 
     "AUTH.INFORMATION": "You can use your Metaverse Avatar to authenticate to various websites or applications. After verifying the provider of the request, it will sign a message using your private key and send the signed message to the requester in order to prove ownership of this Avatar. Those steps will not create any transaction on the blockchain neather reveal your private key to the requester.",
-    "AUTH.INPUT_LABEL": "Authentication key",
+    "AUTH.INPUT_LABEL": "Request code",
     "AUTH.VERIFY_TITLE": "Please verify the requester information:",
     "AUTH.VERIFY_SOURCE": "Source",
     "AUTH.VERIFY_AVATAR": "Avatar",
@@ -847,6 +847,9 @@
     "HOW_TO_AUTH.TITLE": "How to authenticate with your Avatar?",
     "HOW_TO_AUTH.STEP1": "Open the website where you want to authenticate using your Metaverse Avatar",
     "HOW_TO_AUTH.STEP2": "Using MyETPWallet, scan the provided QR Code",
-    "HOW_TO_AUTH.STEP3": "Access the website with your Avatar!"
+    "HOW_TO_AUTH.STEP3": "Access the website with your Avatar!",
+
+    "AUTH.DESCRIPTION_PICTURE": "Using the MyETPWallet mobile app, you can directly scan the QR Code from the requester. Alternatively, you can also manually enter the request code into the field below",
+    "AUTH.SCAN_QRCODE_BUTTON": "Enter request code manually"
 
 }

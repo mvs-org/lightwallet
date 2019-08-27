@@ -16,43 +16,54 @@
 
     <form #connectForm="ngForm" *ngIf="!verifiedToken" no-lines>
 
-        <ion-item *ngIf="!isApp" [ngClass]="{'error-border':!validAuthToken(token), 'valid-border': token.length > 0 && validAuthToken(token)}">
-            <ion-label floating>{{"AUTH.INPUT_LABEL" | translate}}</ion-label>
-            <ion-input name="token" [(ngModel)]="token"></ion-input>
-        </ion-item>
-
-        <div *ngIf="isApp">
-            <div *ngIf="!token">
-                <ion-item class="center-text" no-lines>
-                    <h3>{{"AUTHENTICATION.SCAN_QRCODE_TEXT"|translate}}</h3>
-                </ion-item>
-                <ion-row>
-                    <button ion-button full icon-left class="large-btn" id="open-wallet-button" color="secondary"
+        <div *ngIf="isApp && !token">
+            <ion-row>
+                <ion-col>
+                    <button ion-button full icon-left id="open-wallet-button" color="secondary"
                         (click)="scan()">
                         <ion-icon name="qr-scanner"></ion-icon>
                         {{"IMPORT.SCAN_QRCODE_BUTTON"|translate}}
                     </button>
-                </ion-row>
-            </div>
+                </ion-col>
+            </ion-row>
         </div>
 
-        <ion-row *ngIf="!isApp || token">
-            <ion-col>
+        <ion-row *ngIf="!token">
+            <ion-col class="right">
+                <button ion-button full icon-left class="right" id="manual-enter-mobile-button" color="medium" (click)="manualEnterMobile = !manualEnterMobile">
+                    <ion-icon name="copy"></ion-icon>
+                    {{"AUTH.SCAN_QRCODE_BUTTON"|translate}}
+                </button>
+            </ion-col>
+        </ion-row>
+
+        <div *ngIf="!isApp">
+            <p class="pic-description2 mobile-import-image"></p>
+            <p align="center">{{"AUTH.DESCRIPTION_PICTURE"| translate}}</p>
+        </div>
+
+        <ion-item *ngIf="!isApp || manualEnterMobile" [ngClass]="{'error-border':!validAuthToken(token), 'valid-border': token.length > 0 && validAuthToken(token)}">
+            <ion-label floating>{{"AUTH.INPUT_LABEL" | translate}}</ion-label>
+            <ion-input name="token" [(ngModel)]="token"></ion-input>
+        </ion-item>
+
+        <ion-row *ngIf="!isApp || manualEnterMobile">
+            <ion-col col-12 col-md-6>
                 <button type="submit" ion-button full [disabled]="!connectForm.form.valid||!validAuthToken(token)"
                     (click)="check(token)" icon-left color="secondary">
                     <ion-icon disabled="!validAuthToken(token)" name="cog"></ion-icon>
                     {{'CHECK'|translate}}
                 </button>
             </ion-col>
-            <ion-col>
-                <button ion-button color="danger" full item-right icon-left (click)="cancel($event)">
-                    <ion-icon name="close"></ion-icon>
-                    {{'CANCEL'|translate}}
+            <ion-col col-12 col-md-6>
+                <button ion-button full icon-left class="large-btn" id="open-how-to-auth" color="primary" (click)="howToAuth()">
+                    <ion-icon name="information-circle"></ion-icon>
+                    {{"AUTH.HOW_TO_AUTH_BTN"|translate}}
                 </button>
             </ion-col>
         </ion-row>
 
-        <ion-row>
+        <ion-row *ngIf="isApp && !manualEnterMobile">
             <ion-col>
                 <button ion-button full icon-left class="large-btn" id="open-how-to-auth" color="primary" (click)="howToAuth()">
                     <ion-icon name="information-circle"></ion-icon>
