@@ -1,8 +1,8 @@
 <ion-header>
     <ion-navbar>
         <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
+            <ion-icon name="menu"></ion-icon>
+        </button>
         <ion-title>Metaverse Lightwallet</ion-title>
     </ion-navbar>
 </ion-header>
@@ -16,8 +16,10 @@
     <div class="login-box">
         <div class="info-text">
             <div style="text-align: center;">{{version()}}
-                <span style="text-align: center;" id="label-network" value="mainnet" *ngIf="globals.network=='mainnet'" [translate]="'MAINNET'"></span>
-                <span style="text-align: center;" id="label-network" value="testnet" *ngIf="globals.network=='testnet'" [translate]="'TESTNET'"></span>
+                <span style="text-align: center;" id="label-network" value="mainnet" *ngIf="globals.network=='mainnet'"
+                    [translate]="'MAINNET'"></span>
+                <span style="text-align: center;" id="label-network" value="testnet" *ngIf="globals.network=='testnet'"
+                    [translate]="'TESTNET'"></span>
             </div>
         </div>
         <ion-row class="browser-button">
@@ -29,11 +31,11 @@
             </ion-segment>
         </ion-row>
         <ion-row class="browser-button" *ngFor="let account of saved_accounts">
-             <button ion-button class="large-btn account-btn" block full icon-left (click)="LoginAccountPage(account);">
-                 <ion-icon name="contact"></ion-icon>
-                 {{account.name}}
-             </button>
-         </ion-row>
+            <button ion-button class="large-btn account-btn" block full icon-left (click)="LoginAccountPage(account);">
+                <ion-icon name="contact"></ion-icon>
+                {{account.name}}
+            </button>
+        </ion-row>
         <ion-row class="browser-button">
             <button ion-button class="large-btn" block full icon-left (click)="GenerateKeyPage();" id="create-wallet-button">
                 <ion-icon name="add"></ion-icon>
@@ -82,15 +84,15 @@
     <ion-row>
         <ion-col>
             <button ion-button block clear icon-left (click)="switchTheme()">
-            <ion-icon name="color-palette"></ion-icon>
-            {{"THEME_SETTINGS"|translate}}
-        </button>
+                <ion-icon name="color-palette"></ion-icon>
+                {{"THEME_SETTINGS"|translate}}
+            </button>
         </ion-col>
         <ion-col>
             <button ion-button block clear icon-left (click)="switchLanguage()">
-            <ion-icon name="flag"></ion-icon>
-            {{"SWITCH_LANGUAGE"|translate}}
-          </button>
+                <ion-icon name="flag"></ion-icon>
+                {{"SWITCH_LANGUAGE"|translate}}
+            </button>
         </ion-col>
     </ion-row>
 </ion-footer>

@@ -13,6 +13,12 @@
                 <div *ngIf="output.unlock_block" [translate]="'TX.OUTPUT.LOCKED_UNTIL_BLOCK'" [translateParams]="{block: output.unlock_block}"></div>
             </ion-col>
         </ion-row>
+        <ion-row *ngIf="output.attenuation">
+            <ion-col class="script">
+                {{'LOCKED_UNTIL'|translate}}: {{output.locked_until}} (~{{((output.locked_until - height) *
+                blocktime * 1000) + current_time |date : 'medium'}})
+            </ion-col>
+        </ion-row>
         <ion-row *ngIf="mode == 'satoshi'">
             <ion-col class="script">
                 {{output.script}}
@@ -37,7 +43,14 @@
                 <div *ngIf="output.attachment.cert">
                     <div class="txType">{{'TX.TYPE.CERT.' + output.attachment.cert | translate}}:</div>{{output.attachment.symbol}}
                 </div>
-                <div *ngIf="output.attachment.type != 'did-register' && output.attachment.type != 'did-transfer' && output.attachment.type != 'mit' && !output.attachment.cert">{{output.attachment.quantity | format : decimalsMst[output.attachment.symbol]}} {{output.attachment.symbol}}</div>
+                <div *ngIf="output.attachment.type != 'did-register' && output.attachment.type != 'did-transfer' && output.attachment.type != 'mit' && !output.attachment.cert">{{output.attachment.quantity
+                    | format : decimalsMst[output.attachment.symbol]}} {{output.attachment.symbol}}</div>
+            </ion-col>
+        </ion-row>
+        <ion-row *ngIf="output.attenuation">
+            <ion-col class="script">
+                {{'LOCKED_UNTIL'|translate}}: {{output.locked_until}} (~{{((output.locked_until - height) *
+                blocktime * 1000) + current_time |date : 'medium'}})
             </ion-col>
         </ion-row>
         <ion-row *ngIf="mode == 'satoshi'">

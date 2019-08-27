@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, AlertController, LoadingController, Loading, Platform } from 'ionic-angular';
-import { TranslateService } from '@ngx-translate/core';
+import { IonicPage, NavController, Loading, Platform } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { AppGlobals } from '../../app/app.global';
+import { AlertProvider } from '../../providers/alert/alert';
 
 @IonicPage()
 @Component({
@@ -21,13 +21,13 @@ export class ImportMnemonicPage {
     first_wrong: number = 0;
     validmnemonic: boolean = false;
 
-    constructor(public nav: NavController,
+    constructor(
+        public nav: NavController,
         public mvs: MvsServiceProvider,
-        private alertCtrl: AlertController,
-        private loadingCtrl: LoadingController,
-        private translate: TranslateService,
         public platform: Platform,
-        private global: AppGlobals) {
+        private global: AppGlobals,
+        private alert: AlertProvider,
+    ) {
         for (var i = 0; i < 24; i++) {
             this.words[i] = '';
             this.validword[i] = false;
@@ -47,7 +47,7 @@ export class ImportMnemonicPage {
     }
 
     import() {
-        this.showLoading()
+        this.alert.showLoading()
         let mnemonic = '';
         Object.keys(this.words).forEach((index) => {
             this.words[index] = this.words[index].trim();
@@ -140,28 +140,6 @@ export class ImportMnemonicPage {
                 resolve(this.validmnemonic);
             }
         });
-    }
-
-    showLoading() {
-        this.translate.get('MESSAGE.LOADING').subscribe((loading: string) => {
-            this.loading = this.loadingCtrl.create({
-                content: loading,
-                dismissOnPageChange: true
-            });
-            this.loading.present();
-        })
-    }
-
-    showError(text) {
-        this.loading.dismiss();
-        this.translate.get('MESSAGE.ERROR_TITLE').subscribe((title: string) => {
-            let alert = this.alertCtrl.create({
-                title: title,
-                subTitle: text,
-                buttons: ['OK']
-            });
-            alert.present();
-        })
     }
 
 }

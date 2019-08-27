@@ -220,7 +220,7 @@
 
     "LOGIN": "Login",
     "HOW_TO_IMPORT_WALLET_MOBILE": "How to Import",
-    "HOW_TO_IMPORT_WALLET_MOBILE_TITLE": "How to import your private key?",
+    "HOW_TO_IMPORT_WALLET_MOBILE_TITLE": "How to import your wallet?",
     "HOW_TO_IMPORT_WALLET_MOBILE_STEP1": "Open the web lightwallet, go to Settings, and then Connect phone",
     "HOW_TO_IMPORT_WALLET_MOBILE_STEP2": "Scan the QR Code",
     "HOW_TO_IMPORT_WALLET_MOBILE_STEP3": "Enjoy your wallet on your phone!",
@@ -296,7 +296,7 @@
     "ISSUE.SYMBOL_DOMAIN_OWNER": "Your Avatar own the Domain certificate to create this MST",
     "ISSUE.SYMBOL_NAMING_OWNER": "Your Avatar own the Naming certificate to create this MST",
     "ISSUE.SYMBOL_ALREADY_EXIST": "This MST symbol has already been registered",
-    "ISSUE.SYMBOL_NOT_CERT_OWNER": "Your Avatar does not own the Domain certificate to create this MST",
+    "ISSUE.SYMBOL_NOT_CERT_OWNER": "You do not own the Domain certificate to create this MST",
     "ISSUE.SYMBOL_ERROR_LOADING_MSTS": "Error while loading MSTs. Please make sure this MST Symbol is not already used",
     "ISSUE.SYMBOL_ERROR_LOADING_CERTS": "Error while loading the Domain certificates. Please make sure you have the right to create this Symbol",
 
@@ -798,6 +798,55 @@
     "MESSAGE.BROADCAST_TRANSACTION": "Unable to broadcast the transaction.",
     "TRANSACTION_PREVIEW.TEXT_SIGNED": "Your signed encoded transaction is:",
 
-    "ERROR_TWO_LOCK_MODEL": "Please make sure only 1 lock period is specified, don't fill both lock period columns. The following line contains 2 lock periods:"
+    "ERROR_TWO_LOCK_MODEL": "Please make sure only 1 lock period is specified, don't fill both lock period columns. The following line contains 2 lock periods:", 
+
+    "AUTH.INFORMATION": "You can use your Metaverse Avatar to login to various websites or applications. After verifying the provider of the request, it will sign a message using your private key and send the signed message to the requester in order to prove ownership of this Avatar. Those steps will not create any transaction on the blockchain neather reveal your private key to the requester.",
+    "AUTH.INPUT_LABEL": "Login key",
+    "AUTH.VERIFY_TITLE": "Please verify the requester information:",
+    "AUTH.VERIFY_SOURCE": "Source",
+    "AUTH.VERIFY_AVATAR": "Avatar",
+    "AUTH.VERIFY_HOST": "Host",
+    "AUTH.VERIFY_REMAINING_TIME": "Remaining time",
+    "AUTH.VERIFY_CALLBACK": "Callback",
+    "AUTH.VERIFY_TIME_OF_REQUEST": "Time of request",
+    "AUTH.VERIFY_REQUEST_DURATION": "Timeout",
+    "AUTH.NO_SIG_AGREE": "This request was not signed. Please make sure this request is legit before signing it.",
+
+    "MESSAGE.AUTH_NO_AVATAR_TITLE": "No Avatar",
+    "MESSAGE.AUTH_NO_AVATAR_TITLE_BODY": "You need an Avatar in order to use the d2fa feature. Please create an Avatar first.",
+    "MESSAGE.AUTH_TYPE_NOT_SUPPORTED": "This type of request is not supported. Only d2fa is supported.",
+    "MESSAGE.AUTH_UNKNOWN_AVATAR": "You do not possess this Avatar, please make sure you are the owner of it:",
+    "MESSAGE.AUTH_TIMEOUT": "This request has already timeout. Please get a new request.",
+    "MESSAGE.AUTH_SIGN": "Error while signing the message",
+    "MESSAGE.AUTH_WRONG_INCOMING_DATA": "Error in the incoming data. Please make sure the data is correct and try again.",
+    "MESSAGE.AUTH_WRONG_SIGNATURE": "The signature provided by the source's avatar is incorrect",
+    "MESSAGE.AUTH_SIGNIN_SUCCESSFUL_TITLE": "Login successfull!",
+    "MESSAGE.AUTH_SIGNIN_SUCCESSFUL_BODY": "You have been logged in successfully. You can now go back to the webiste.",
+    "MESSAGE.AUTH_SEND_SIG_ERROR": "Error while sending your signature. Please check your connection and try again.",
+    "MESSAGE.AUTH_EXPIRED": "Authentication token expired. Please get a new token.",
+    "MESSAGE.AUTH_DIFFERENT_NETWORK": "You are not using the network matching this request. Please switch the the following network:",
+
+    "SHOW_DETAILS": "Show details",
+    "HIDE_DETAILS": "Hide details",
+    "SECONDS": " seconds",
+
+    "ADVANCED": "Advanced",
+    "MULTISIGNATURE.TEXT": "Share a multisignature address with co-signers",
+    "SIGN_TX.TEXT": "Decode and sign a raw transaction",
+    "ETH_BRIDGE.TEXT": "Transfer tokens between Metaverse and Ethereum blockchains",
+    "AUTHENTICATION.TITLE": "Authentication",
+
+    "SCANNING.AUTH_MESSAGE": "Scan the QR Code where you want to login",
+    "AUTHENTICATION.SCAN_QRCODE_TEXT": "Use my Avatar to authenticate",
+
+    "ISSUE.DOMAIN_OWNER_OTHER_MY_AVATARS": "The domain certificate to create this MST is owned by another of your Avatars. Please issue this MST using the Avatar owning the matching domain certificate.",
+
+    "AUTH.HOW_TO_AUTH_BTN": "How to authenticate",
+
+    "HOW_TO_AUTH.PAGE_TITLE": "How to authenticate",
+    "HOW_TO_AUTH.TITLE": "How to authenticate with your Avatar?",
+    "HOW_TO_AUTH.STEP1": "Open the website where you want to authenticate using your Metaverse Avatar",
+    "HOW_TO_AUTH.STEP2": "Scan the provided QR Code from the Authenticate page of MyETPWallet",
+    "HOW_TO_AUTH.STEP3": "Access the website with your Avatar!"
 
 }

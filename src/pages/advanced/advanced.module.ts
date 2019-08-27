@@ -1,22 +1,22 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { GenerateKeyPage } from './generate-key';
+import { AdvancedPage } from './advanced';
 import { TranslateModule} from '@ngx-translate/core';
 import { AlertProvider } from '../../providers/alert/alert';
 
 @NgModule({
     declarations: [
-        GenerateKeyPage,
+        AdvancedPage,
     ],
     imports: [
-        IonicPageModule.forChild(GenerateKeyPage),
+        IonicPageModule.forChild(AdvancedPage),
         TranslateModule
     ],
-    providers:[
-        AlertProvider,
+    providers: [
+        AlertProvider
     ],
     exports: [
-        GenerateKeyPage
+        AdvancedPage
     ]
 })
-export class GenerateKeyPageModule { }
+export class AdvancedPageModule { }

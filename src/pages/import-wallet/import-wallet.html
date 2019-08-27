@@ -19,29 +19,33 @@
         <ion-label id="disclaimer-agree-label" text-wrap>{{"DISCLAIMER.READ_AND_AGREE"|translate}}</ion-label>
         <ion-checkbox [(ngModel)]="disclaimer_agreed" id="disclaimer-agree"></ion-checkbox>
     </ion-item>
-    <form  *ngIf="disclaimer_agreed" offset-md-3 col-md-6 (ngSubmit)="decrypt(password)" #importForm="ngForm" no-lines class="buttons-container">
+    <form *ngIf="disclaimer_agreed" offset-md-3 col-md-6 (ngSubmit)="decrypt(password)" #importForm="ngForm" no-lines
+        class="buttons-container">
         <ion-item class="center-text" no-lines>
             <h1>{{"IMPORT_FILE"|translate}}</h1>
         </ion-item>
         <ion-row *ngIf="!fileLoaded">
             <input type="file" name="file" id="file" class="inputfile" accept=".json" (change)="open($event)" />
-            <label for="file"> <ion-icon name="download"></ion-icon> {{"CHOOSE_A_FILE"|translate}}</label>
+            <label for="file">
+                <ion-icon name="download"></ion-icon> {{"CHOOSE_A_FILE"|translate}}
+            </label>
         </ion-row>
         <div *ngIf="fileLoaded">
             <ion-row>
                 <ion-icon name="md-checkmark-circle" class="verifiedFile"></ion-icon>
             </ion-row>
             <ion-row class="top-padding">
-              <ion-item class="center-psw">
-                <ion-label color="primary" floating>{{"PASSWORD" | translate}}</ion-label>
-                <ion-input name="password" id="password-input" type="password" [(ngModel)]="password" required></ion-input>
-              </ion-item>
+                <ion-item class="center-psw">
+                    <ion-label color="primary" floating>{{"PASSWORD" | translate}}</ion-label>
+                    <ion-input name="password" id="password-input" type="password" [(ngModel)]="password" required></ion-input>
+                </ion-item>
             </ion-row>
             <br>
             <ion-row>
-              <button type="submit" ion-button id="submit-button" full [disabled]="!importForm.form.valid||!fileLoaded" color="primary">
-                  {{"IMPORT_WALLET" | translate}}
-              </button>
+                <button type="submit" ion-button id="submit-button" full [disabled]="!importForm.form.valid||!fileLoaded"
+                    color="primary">
+                    {{"IMPORT_WALLET" | translate}}
+                </button>
             </ion-row>
         </div>
     </form>

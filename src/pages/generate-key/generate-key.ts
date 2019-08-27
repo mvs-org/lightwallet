@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, Loading, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, Loading } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
+import { AlertProvider } from '../../providers/alert/alert';
 
 @IonicPage()
 @Component({
@@ -17,29 +18,26 @@ export class GenerateKeyPage {
     builtFor: string;
     encrypted_json: object;
 
-    constructor(private nav: NavController, public walletService: WalletServiceProvider, public navParams: NavParams, private alertCtrl: AlertController, private translate: TranslateService, private loadingCtrl: LoadingController) {
+    constructor(
+        private nav: NavController,
+        public walletService: WalletServiceProvider,
+        public navParams: NavParams,
+        private alertCtrl: AlertController,
+        private translate: TranslateService,
+        private alert: AlertProvider,
+    ) {
         this.CreateWallet()
         this.builtFor = 'browser';
     }
 
     // need to get hex
     CreateWallet() {
-        this.showLoading()
+        this.alert.showLoading()
         return this.walletService.createWallet()
             .then((wallet) => {
                 this.wallet = wallet;
                 return this.ConfirmCreateWallet(this.wallet.mnemonic);
             });
-    }
-
-    showLoading() {
-        this.translate.get('MESSAGE.LOADING').subscribe((loading: string) => {
-            this.loading = this.loadingCtrl.create({
-                content: loading,
-                dismissOnPageChange: true
-            });
-            this.loading.present()
-        })
     }
 
     showPopup(title, text) {

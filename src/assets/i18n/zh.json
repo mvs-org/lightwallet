@@ -609,7 +609,7 @@
 
   "ASSET_LOCK": "我想锁仓该资产",
   "ASSET_LOCK_PERIOD": "锁仓时长 (区块数)",
-   
+
   "ASSET_LOCK.SIMPLE": "简单解锁",
   "ASSET_LOCK.RECURRENT": "周期解锁",
   "ASSET_LOCK.CUSTOM": "自定义解锁",
@@ -713,6 +713,140 @@
   "ETP_BRIDGE.INFORMATION_LINK": "电报",
 
   "ETP_BRIDGE.IMPORT_ORDER_DESCRIPTION": "如果您从其他设备或直接从SWFT网站创建订单，您可以使用订单ID导入订单，以跟踪其状态",             
-  "ETP_BRIDGE.UNABLE_CONNECT_SWFT": "无法连接到SWFT。请检查您的互联网连接或稍后重试"
+  "ETP_BRIDGE.UNABLE_CONNECT_SWFT": "无法连接到SWFT。请检查您的互联网连接或稍后重试",
+
+  "DECODE_TX": "Decode transaction",
+  "DECODE_TX.TX_TO_SIGN": "Transaction to sign or broadcast",
+  "DECODE_TX.DECODE": "Decode",
+
+  "SIGN_TX": "Sign transaction",
+  "CONFIRM_TX": {
+      "SIGN_ONLY": "Sign only",
+      "SIGN_AND_SEND": "Sign and send",
+      "BROADCAST": "Broadcast"
+  },
+  "MESSAGE.ERROR_DECODE_TX_SUBTITLE": "Cannot decode this raw transaction",
+  "MESSAGE.ERROR_DECODE_TX_BODY": "This raw transaction cannot be decoded. Please make sure this raw transaction is correct.",
+  "TX": {
+      "INPUTS": "Inputs",
+      "OUTPUTS": "Outputs",
+      "TX_SUMMARY": "Transaction summary",
+      "TOTAL_INPUTS": "Total inputs",
+      "TOTAL_OUTPUTS": "Total outputs",
+      "INPUT_COINBASE": "From coinbase",
+      "TYPE": {
+          "did-register": "Avatar creation",
+          "did-transfer": "Avatar transfer",
+          "message": "Public message or data",
+          "MIT": {
+              "registered": "MIT Creation",
+              "transfered": "MIT Transfer"
+          },
+          "CERT": {
+              "issue": "Secondary Issue certificate",
+              "domain": "Domain certificate",
+              "naming": "Naming certificate",
+              "mining": "Mining certificate",
+              "witness": "Witness certificate"
+          }
+      },
+      "TX_FEE": "Fee",
+      "LOCKED_SINCE_BLOCK": "Locked since block {{block}} ({{time}})",
+      "LOCKED_UNTIL_BLOCK": "Locked until block {{block}} (~{{time}})",
+      "INTRAWALLET": "Intrawallet",
+      "TX_TYPE": {
+          "ETP": "ETP transfer",
+          "ASSET": "MST transfer",
+          "ISSUE": "MST issue",
+          "CERT": "Certificate transfer",
+          "CERT_TYPE": {
+              "issue": "Secondary Issue certificate",
+              "domain": "Domain certificate",
+              "naming": "Naming certificate",
+              "mining": "Mining certificate",
+              "witness": "Witness certificate"
+          },
+          "DID_REGISTER": "Avatar creation",
+          "DID_TRANSFER": "Avatar transfer",
+          "MIT_REGISTERED": "MIT Creation",
+          "MIT_TRANSFERED": "MIT Transfer",
+          "COINSTAKE": "Coinstake transaction",
+          "MST_MINING": "Mining reward",
+          "ETP_LOCK": "ETP lock",
+          "ETP_LOCK_REWARD": "ETP lock reward",
+          "MST_LOCK": "MST lock",
+          "UNKNOWN": "Unknown transaction type"
+      },
+      "SELECT_MODE": "Visualisation mode",
+      "MODE": {
+          "DEFAULT": "Default mode",
+          "SATOSHI": "Satoshi mode",
+          "HEX": "Hexadecimal mode"
+      },
+      "SIGN_STATUS": {
+          "SIGNED": "Fully signed transaction",
+          "UNSIGNED": "Unsigned transaction",
+          "PARTIALLY": "Partially signed transaction"
+      },
+      "OUTPUT": {
+          "LOCKED_UNTIL_BLOCK": "Locked until block {{block}} (~{{time}})"
+      }
+  },
+  "SIGN_TX.PAGE_TITLE": "Review, sign and send the transaction",
+  "SIGN_TX.DESCRIPTION": "Please enter the raw transaction, in hexadecimal format. The transaction can be signed or unsigned.",
+  "CREATE_TX": "Create",
+  "MESSAGE.BROADCAST_TRANSACTION": "Unable to broadcast the transaction.",
+  "TRANSACTION_PREVIEW.TEXT_SIGNED": "Your signed encoded transaction is:",
+
+  "ERROR_TWO_LOCK_MODEL": "Please make sure only 1 lock period is specified, don't fill both lock period columns. The following line contains 2 lock periods:", 
+
+  "AUTH.INFORMATION": "You can use your Metaverse Avatar to login to various websites or applications. After verifying the provider of the request, it will sign a message using your private key and send the signed message to the requester in order to prove ownership of this Avatar. Those steps will not create any transaction on the blockchain neather reveal your private key to the requester.",
+  "AUTH.INPUT_LABEL": "Login key",
+  "AUTH.VERIFY_TITLE": "Please verify the requester information:",
+  "AUTH.VERIFY_SOURCE": "Source",
+  "AUTH.VERIFY_AVATAR": "Avatar",
+  "AUTH.VERIFY_HOST": "Host",
+  "AUTH.VERIFY_REMAINING_TIME": "Remaining time",
+  "AUTH.VERIFY_CALLBACK": "Callback",
+  "AUTH.VERIFY_TIME_OF_REQUEST": "Time of request",
+  "AUTH.VERIFY_REQUEST_DURATION": "Timeout",
+  "AUTH.NO_SIG_AGREE": "This request was not signed. Please make sure this request is legit before signing it.",
+
+  "MESSAGE.AUTH_NO_AVATAR_TITLE": "No Avatar",
+  "MESSAGE.AUTH_NO_AVATAR_TITLE_BODY": "You need an Avatar in order to use the d2fa feature. Please create an Avatar first.",
+  "MESSAGE.AUTH_TYPE_NOT_SUPPORTED": "This type of request is not supported. Only d2fa is supported.",
+  "MESSAGE.AUTH_UNKNOWN_AVATAR": "You do not possess this Avatar, please make sure you are the owner of it:",
+  "MESSAGE.AUTH_TIMEOUT": "This request has already timeout. Please get a new request.",
+  "MESSAGE.AUTH_SIGN": "Error while signing the message",
+  "MESSAGE.AUTH_WRONG_INCOMING_DATA": "Error in the incoming data. Please make sure the data is correct and try again.",
+  "MESSAGE.AUTH_WRONG_SIGNATURE": "The signature provided by the source's avatar is incorrect",
+  "MESSAGE.AUTH_SIGNIN_SUCCESSFUL_TITLE": "Login successfull!",
+  "MESSAGE.AUTH_SIGNIN_SUCCESSFUL_BODY": "You have been logged in successfully. You can now go back to the webiste.",
+  "MESSAGE.AUTH_SEND_SIG_ERROR": "Error while sending your signature. Please check your connection and try again.",
+  "MESSAGE.AUTH_EXPIRED": "Authentication token expired. Please get a new token.",
+  "MESSAGE.AUTH_DIFFERENT_NETWORK": "You are not using the network matching this request. Please switch the the following network:",
+
+  "SHOW_DETAILS": "Show details",
+  "HIDE_DETAILS": "Hide details",
+  "SECONDS": " seconds",
+
+  "ADVANCED": "Advanced",
+  "MULTISIGNATURE.TEXT": "Share a multisignature address with co-signers",
+  "SIGN_TX.TEXT": "Decode and sign a raw transaction",
+  "ETH_BRIDGE.TEXT": "Transfer tokens between Metaverse and Ethereum blockchains",
+  "AUTHENTICATION.TITLE": "Authentication",
+
+  "SCANNING.AUTH_MESSAGE": "Scan the QR Code where you want to login",
+  "AUTHENTICATION.SCAN_QRCODE_TEXT": "Use my Avatar to authenticate",
+
+  "ISSUE.DOMAIN_OWNER_OTHER_MY_AVATARS": "The domain certificate to create this MST is owned by another of your Avatars. Please issue this MST using the Avatar owning the matching domain certificate.",
+
+  "AUTH.HOW_TO_AUTH_BTN": "How to authenticate",
+
+  "HOW_TO_AUTH.PAGE_TITLE": "How to authenticate",
+  "HOW_TO_AUTH.TITLE": "How to authenticate with your Avatar?",
+  "HOW_TO_AUTH.STEP1": "Open the website where you want to authenticate using your Metaverse Avatar",
+  "HOW_TO_AUTH.STEP2": "Scan the provided QR Code from the Authenticate page of MyETPWallet",
+  "HOW_TO_AUTH.STEP3": "Access the website with your Avatar!"
 
 }
