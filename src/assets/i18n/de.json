@@ -220,7 +220,6 @@
 
     "LOGIN": "Login",
     "HOW_TO_IMPORT_WALLET_MOBILE": "Hilfe zum Import",
-    "HOW_TO_IMPORT_WALLET_MOBILE_TITLE": "Hilfe zum Import?",
     "HOW_TO_IMPORT_WALLET_MOBILE_STEP1": "Öffne das lightwallet auf einem Desktop PC und wähle die Einstellungen und dann \"Mobilgerät verbinden\"",
     "HOW_TO_IMPORT_WALLET_MOBILE_STEP2": "QR Code scannen",
     "HOW_TO_IMPORT_WALLET_MOBILE_STEP3": "Viel spaẞ mit deinem mobilen Wallet!",
@@ -844,7 +843,6 @@
     "AUTH.HOW_TO_AUTH_BTN": "Wie funktioniert die Authentifizierung",
 
     "HOW_TO_AUTH.PAGE_TITLE": "Hilfe zu Authentifizierung",
-    "HOW_TO_AUTH.TITLE": "How to authenticate with your Avatar?",
     "HOW_TO_AUTH.STEP1": "Öffnen Sie die Webseite oder bei der Sie sich mit Ihrem Avatar authenifizieren möchten.",
     "HOW_TO_AUTH.STEP2": "Scannen die den Angezeigten QR-Code mit Ihrem Wallet",
     "HOW_TO_AUTH.STEP3": "Die Webseite wird Sie als Ihr Avatar erkennen"
