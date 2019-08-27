@@ -800,7 +800,7 @@
 
     "ERROR_TWO_LOCK_MODEL": "Please make sure only 1 lock period is specified, don't fill both lock period columns. The following line contains 2 lock periods:", 
 
-    "AUTH.INFORMATION": "You can use your Metaverse Avatar to authenticate to various websites or applications. After verifying the provider of the request, it will sign a message using your private key and send the signed message to the requester in order to prove ownership of this Avatar. Those steps will not create any transaction on the blockchain neather reveal your private key to the requester.",
+    "AUTH.INFORMATION": "You can use your Metaverse Avatar to authenticate to various websites or applications. After verifying the provider of the request, it will sign a message using your private key and send the signed message to the requester in order to prove ownership of this Avatar. These steps will neither create any transaction on the blockchain nor reveal your private key to the requester.",
     "AUTH.INPUT_LABEL": "Request code",
     "AUTH.VERIFY_TITLE": "Please verify the requester information:",
     "AUTH.VERIFY_SOURCE": "Source",
@@ -824,7 +824,7 @@
     "MESSAGE.AUTH_SIGNIN_SUCCESSFUL_BODY": "You have been logged in successfully. You can now go back to the webiste.",
     "MESSAGE.AUTH_SEND_SIG_ERROR": "Error while sending your signature. Please check your connection and try again.",
     "MESSAGE.AUTH_EXPIRED": "Authentication token expired. Please get a new token.",
-    "MESSAGE.AUTH_DIFFERENT_NETWORK": "You are not using the network matching this request. Please switch the the following network:",
+    "MESSAGE.AUTH_DIFFERENT_NETWORK": "You are not using the network matching this request. Please switch to the following network:",
 
     "SHOW_DETAILS": "Show details",
     "HIDE_DETAILS": "Hide details",
@@ -839,7 +839,7 @@
     "SCANNING.AUTH_MESSAGE": "Scan the QR Code where you want to authenticate",
     "AUTHENTICATION.SCAN_QRCODE_TEXT": "Use my Avatar to authenticate",
 
-    "ISSUE.DOMAIN_OWNER_OTHER_MY_AVATARS": "The domain certificate to create this MST is owned by another of your Avatars. Please issue this MST using the Avatar owning the matching domain certificate.",
+    "ISSUE.DOMAIN_OWNER_OTHER_MY_AVATARS": "The domain certificate to create this MST is owned by another one of your Avatars. Please issue this MST using the Avatar owning the matching domain certificate.",
 
     "AUTH.HOW_TO_AUTH_BTN": "How to authenticate",
 
