@@ -10,7 +10,6 @@
             <ion-col class="right">
                 <div *ngIf="output.attachment.type == 'message'" class="txType">{{'TX.TYPE.message'|translate}}</div>
                 <div *ngIf="output.attachment.type != 'message' || output.value != 0">{{output.value | format : 8}} ETP</div>
-                <div *ngIf="output.unlock_block" [translate]="'TX.OUTPUT.LOCKED_UNTIL_BLOCK'" [translateParams]="{block: output.unlock_block}"></div>
             </ion-col>
         </ion-row>
         <ion-row *ngIf="output.attenuation">
@@ -48,7 +47,7 @@
             </ion-col>
         </ion-row>
         <ion-row *ngIf="output.attenuation">
-            <ion-col class="script">
+            <ion-col class="script right">
                 {{'LOCKED_UNTIL'|translate}}: {{output.locked_until}} (~{{((output.locked_until - height) *
                 blocktime * 1000) + current_time |date : 'medium'}})
             </ion-col>

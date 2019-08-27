@@ -800,8 +800,8 @@
 
     "ERROR_TWO_LOCK_MODEL": "Please make sure only 1 lock period is specified, don't fill both lock period columns. The following line contains 2 lock periods:", 
 
-    "AUTH.INFORMATION": "You can use your Metaverse Avatar to login to various websites or applications. After verifying the provider of the request, it will sign a message using your private key and send the signed message to the requester in order to prove ownership of this Avatar. Those steps will not create any transaction on the blockchain neather reveal your private key to the requester.",
-    "AUTH.INPUT_LABEL": "Login key",
+    "AUTH.INFORMATION": "You can use your Metaverse Avatar to authenticate to various websites or applications. After verifying the provider of the request, it will sign a message using your private key and send the signed message to the requester in order to prove ownership of this Avatar. Those steps will not create any transaction on the blockchain neather reveal your private key to the requester.",
+    "AUTH.INPUT_LABEL": "Authentication key",
     "AUTH.VERIFY_TITLE": "Please verify the requester information:",
     "AUTH.VERIFY_SOURCE": "Source",
     "AUTH.VERIFY_AVATAR": "Avatar",
@@ -813,14 +813,14 @@
     "AUTH.NO_SIG_AGREE": "This request was not signed. Please make sure this request is legit before signing it.",
 
     "MESSAGE.AUTH_NO_AVATAR_TITLE": "No Avatar",
-    "MESSAGE.AUTH_NO_AVATAR_TITLE_BODY": "You need an Avatar in order to use the d2fa feature. Please create an Avatar first.",
-    "MESSAGE.AUTH_TYPE_NOT_SUPPORTED": "This type of request is not supported. Only d2fa is supported.",
+    "MESSAGE.AUTH_NO_AVATAR_TITLE_BODY": "You need an Avatar in order to use the authentication feature. Please create an Avatar first.",
+    "MESSAGE.AUTH_TYPE_NOT_SUPPORTED": "This type of request is not supported. Only 'auth' is supported.",
     "MESSAGE.AUTH_UNKNOWN_AVATAR": "You do not possess this Avatar, please make sure you are the owner of it:",
     "MESSAGE.AUTH_TIMEOUT": "This request has already timeout. Please get a new request.",
     "MESSAGE.AUTH_SIGN": "Error while signing the message",
     "MESSAGE.AUTH_WRONG_INCOMING_DATA": "Error in the incoming data. Please make sure the data is correct and try again.",
     "MESSAGE.AUTH_WRONG_SIGNATURE": "The signature provided by the source's avatar is incorrect",
-    "MESSAGE.AUTH_SIGNIN_SUCCESSFUL_TITLE": "Login successfull!",
+    "MESSAGE.AUTH_SIGNIN_SUCCESSFUL_TITLE": "Authentication successfull!",
     "MESSAGE.AUTH_SIGNIN_SUCCESSFUL_BODY": "You have been logged in successfully. You can now go back to the webiste.",
     "MESSAGE.AUTH_SEND_SIG_ERROR": "Error while sending your signature. Please check your connection and try again.",
     "MESSAGE.AUTH_EXPIRED": "Authentication token expired. Please get a new token.",
@@ -836,7 +836,7 @@
     "ETH_BRIDGE.TEXT": "Transfer tokens between Metaverse and Ethereum blockchains",
     "AUTHENTICATION.TITLE": "Authentication",
 
-    "SCANNING.AUTH_MESSAGE": "Scan the QR Code where you want to login",
+    "SCANNING.AUTH_MESSAGE": "Scan the QR Code where you want to authenticate",
     "AUTHENTICATION.SCAN_QRCODE_TEXT": "Use my Avatar to authenticate",
 
     "ISSUE.DOMAIN_OWNER_OTHER_MY_AVATARS": "The domain certificate to create this MST is owned by another of your Avatars. Please issue this MST using the Avatar owning the matching domain certificate.",
@@ -846,7 +846,7 @@
     "HOW_TO_AUTH.PAGE_TITLE": "How to authenticate",
     "HOW_TO_AUTH.TITLE": "How to authenticate with your Avatar?",
     "HOW_TO_AUTH.STEP1": "Open the website where you want to authenticate using your Metaverse Avatar",
-    "HOW_TO_AUTH.STEP2": "Scan the provided QR Code from the Authenticate page of MyETPWallet",
+    "HOW_TO_AUTH.STEP2": "Using MyETPWallet, scan the provided QR Code",
     "HOW_TO_AUTH.STEP3": "Access the website with your Avatar!"
 
 }
