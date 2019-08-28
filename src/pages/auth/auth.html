@@ -28,7 +28,7 @@
             </ion-row>
         </div>
 
-        <ion-row *ngIf="!verifiedToken">
+        <ion-row *ngIf="isApp && !verifiedToken">
             <ion-col>
                 <button ion-button full icon-left class="right" id="manual-enter-mobile-button" color="medium" (click)="manualEnterMobile = !manualEnterMobile">
                     <ion-icon name="copy"></ion-icon>

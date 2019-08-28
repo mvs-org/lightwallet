@@ -845,6 +845,9 @@
     "HOW_TO_AUTH.PAGE_TITLE": "Comment s'authentifier",
     "HOW_TO_AUTH.STEP1": "Ouvrez le site internet où vous souhaitez vous identifier en utilisant votre Avatar Metaverse",
     "HOW_TO_AUTH.STEP2": "Scannez le QR Code fournis par le demandeur",
-    "HOW_TO_AUTH.STEP3": "Accédez au site internet avec votre Avatar!"
+    "HOW_TO_AUTH.STEP3": "Accédez au site internet avec votre Avatar!",
+
+    "AUTH.DESCRIPTION_PICTURE": "En utlisant l'application mobile MyETPWallet, vous vouvez directement scanner le QR Code du demandeur. Vous pouvez aussi entrer manuellement la requête dans le champs ci-dessous.",
+    "AUTH.ENTER_MANUALLY_BUTTON": "Entrer la requête manuellement"
 
 }
