@@ -126,7 +126,7 @@ export class MyETPWallet {
                 return Promise.all([
                     { title: 'ACCOUNT.TITLE', component: "AccountPage", icon: 'home', root: true },
                     { title: 'AVATARS', component: "AvatarsPage", icon: 'person' },
-                    { title: 'AUTHENTICATION.TITLE', component: "AuthPage", icon: 'qr-scanner', beta: true },
+                    { title: 'AUTHENTICATION.TITLE', component: "AuthPage", icon: 'bitident', beta: true },
                     { title: 'REGISTER_MST', component: "AssetIssuePage", icon: 'globe' },
                     { title: 'REGISTER_MIT', component: "MITRegisterPage", icon: 'create' },
                     ... (this.globals.network==='mainnet' ? [{ title: 'ETP_BRIDGE', component: "EtpBridgePage", icon: 'cash' }] : []),
