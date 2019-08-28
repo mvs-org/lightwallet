@@ -853,6 +853,8 @@
     "AUTH.ENTER_MANUALLY_BUTTON": "Enter request code manually",
     "AUTH.GET_ON_MOBILE": "Get the mobile app",
 
-    "ERR_INVALID_SIGNATURE": "Your signature has been recognized as invalid. Please try again."
+    "ERR_INVALID_SIGNATURE": "Your signature has been recognized as invalid. Please try again.",
+    
+    "ETP_BRIDGE.INFORMATION_WARNING": "The SWFT telegram support will never ask a user to send any funds to addresses other than the deposit address of the order details. Details about the order should not be necessary. The order id should be enough information for the support to find the order."
 
 }
