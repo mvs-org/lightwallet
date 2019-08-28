@@ -622,7 +622,7 @@ export class MvsServiceProvider {
         return this.storage.get('eth_swap')
             .then((eth_swap) => {
                 let current_time = new Date();
-                if (!eth_swap || !eth_swap.whitelist || eth_swap.last_update == undefined || current_time.getTime() - eth_swap.last_update.getTime() > 3600000) {
+                if (!eth_swap || !eth_swap.whitelist || eth_swap.last_update == undefined || (eth_swap.last_update !== undefined && current_time.getTime() - new Date(eth_swap.last_update).getTime() > 3600000)) {
                     return this.blockchain.bridge.whitelist()
                         .then((whitelist) => {
                             this.setWhitelist(whitelist, current_time)
