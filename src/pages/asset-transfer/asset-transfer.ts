@@ -54,7 +54,6 @@ export class AssetTransferPage {
     fee: number = 10000
     sendMoreValidEachAvatar: Array<boolean> = []
     attenuation_model: string
-    blocktime: number
     lock: boolean = false
     isApp: boolean
     showAdvanced: boolean = false
@@ -104,13 +103,6 @@ export class AssetTransferPage {
                     }
                 })
                 this.addressbalances = addrblncs
-            })
-
-        mvs.getHeight()
-            .then(height => mvs.getBlocktime(height))
-            .then(blocktime => this.blocktime = blocktime)
-            .catch((error) => {
-                console.error(error.message)
             })
     }
 

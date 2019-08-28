@@ -757,7 +757,7 @@
         "TX_TYPE": {
             "ETP": "ETP转移",
             "ASSET": "MST转移",
-            "ISSUE": "MST转移",
+            "ISSUE": "MST创建",
             "CERT": "证书转移",
             "CERT_TYPE": {
                 "issue": "二级证书",
