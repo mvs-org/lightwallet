@@ -344,8 +344,9 @@ export class MvsServiceProvider {
     }
 
     async getData(): Promise<any> {
-        const addresses = await this.getAddresses()
-        addresses.concat(await this.wallet.getMultisigAddresses())
+        let addresses = await this.getAddresses()
+        const multisigAddresses = await this.wallet.getMultisigAddresses()
+        addresses = addresses.concat(multisigAddresses)
         let newTxs = await this.getNewTxs(addresses, await this.getLastTxHeight())
         while (newTxs && newTxs.length) {
             this.event.publish('last_tx_height_update', await this.getLastTxHeight());
