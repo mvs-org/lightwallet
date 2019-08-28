@@ -16,7 +16,7 @@
 
     <form #connectForm="ngForm" *ngIf="!verifiedToken" no-lines>
 
-        <div *ngIf="isApp && !token">
+        <div *ngIf="isApp && !verifiedToken">
             <ion-row>
                 <ion-col>
                     <button ion-button full icon-left id="open-wallet-button" color="secondary"
@@ -28,8 +28,8 @@
             </ion-row>
         </div>
 
-        <ion-row *ngIf="!token">
-            <ion-col class="right">
+        <ion-row *ngIf="!verifiedToken">
+            <ion-col>
                 <button ion-button full icon-left class="right" id="manual-enter-mobile-button" color="medium" (click)="manualEnterMobile = !manualEnterMobile">
                     <ion-icon name="copy"></ion-icon>
                     {{"AUTH.SCAN_QRCODE_BUTTON"|translate}}
