@@ -42,9 +42,11 @@ export class AttenuationModelSelectorComponent {
         private mvs: MvsServiceProvider,
     ) {
         this.periods.push(new Period(undefined, undefined))
+    }
 
-        mvs.getHeight()
-            .then(height => mvs.getBlocktime(height))
+    ionViewDidEnter() {
+        this.mvs.getHeight()
+            .then(height => this.mvs.getBlocktime(height))
             .then(blocktime => this.blocktime = blocktime)
             .catch((error) => {
                 console.error(error.message)
