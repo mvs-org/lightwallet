@@ -850,6 +850,7 @@
     "HOW_TO_AUTH.STEP3": "Access the website with your Avatar!",
 
     "AUTH.DESCRIPTION_PICTURE": "Using the MyETPWallet mobile app, you can directly scan the QR Code from the requester. Alternatively, you can also manually enter the request code into the field below.",
-    "AUTH.ENTER_MANUALLY_BUTTON": "Enter request code manually"
+    "AUTH.ENTER_MANUALLY_BUTTON": "Enter request code manually",
+    "AUTH.GET_ON_MOBILE": "Get the mobile app"
 
 }

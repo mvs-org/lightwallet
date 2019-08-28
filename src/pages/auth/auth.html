@@ -37,9 +37,10 @@
             </ion-col>
         </ion-row>
 
-        <div *ngIf="!isApp">
+        <div *ngIf="!isApp" align="center">
             <p class="pic-description2 mobile-import-image"></p>
-            <p align="center">{{"AUTH.DESCRIPTION_PICTURE"| translate}}</p>
+            <p>{{"AUTH.DESCRIPTION_PICTURE"| translate}}</p>
+            <a href="https://myetpwallet.com/#download">{{"AUTH.GET_ON_MOBILE"| translate}}</a>
         </div>
 
         <ion-item *ngIf="!isApp || manualEnterMobile" [ngClass]="{'error-border':!validAuthToken(token), 'valid-border': token.length > 0 && validAuthToken(token)}">
