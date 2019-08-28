@@ -1,28 +1,28 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { AuthPage } from './auth';
+import { AuthConfirmPage } from './auth-confirm';
 import { AppGlobals } from '../../app/app.global';
-import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { TranslateModule} from '@ngx-translate/core';
 import { AlertProvider } from '../../providers/alert/alert';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+import { CountdownModule } from 'ngx-countdown';
 
 @NgModule({
     declarations: [
-        AuthPage,
+        AuthConfirmPage,
     ],
     imports: [
-        IonicPageModule.forChild(AuthPage),
+        IonicPageModule.forChild(AuthConfirmPage),
         TranslateModule,
+        CountdownModule,
     ],
     providers:[
-        BarcodeScanner,
         AppGlobals,
         AlertProvider,
         AuthServiceProvider,
     ],
     exports: [
-        AuthPage
+        AuthConfirmPage
     ]
 })
-export class AuthPageModule { }
+export class AuthConfirmPageModule { }

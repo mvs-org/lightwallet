@@ -14,7 +14,7 @@
         </ion-col>
     </ion-row>
 
-    <form #connectForm="ngForm" *ngIf="!verifiedToken" no-lines>
+    <form #connectForm="ngForm" no-lines>
 
         <div *ngIf="isApp && !verifiedToken">
             <ion-row>
@@ -28,11 +28,11 @@
             </ion-row>
         </div>
 
-        <ion-row *ngIf="isApp && !verifiedToken">
+        <ion-row *ngIf="isApp">
             <ion-col>
                 <button ion-button full icon-left class="right" id="manual-enter-mobile-button" color="medium" (click)="manualEnterMobile = !manualEnterMobile">
                     <ion-icon name="copy"></ion-icon>
-                    {{"AUTH.SCAN_QRCODE_BUTTON"|translate}}
+                    {{"AUTH.ENTER_MANUALLY_BUTTON"|translate}}
                 </button>
             </ion-col>
         </ion-row>
@@ -43,7 +43,7 @@
             <a href="https://myetpwallet.com/#download">{{"AUTH.GET_ON_MOBILE"| translate}}</a>
         </div>
 
-        <ion-item *ngIf="!isApp || manualEnterMobile" [ngClass]="{'error-border':!validAuthToken(token), 'valid-border': token.length > 0 && validAuthToken(token)}">
+        <ion-item *ngIf="!isApp || manualEnterMobile" [ngClass]="{'error-border':!validAuthToken(token), 'valid-border': validAuthToken(token)}">
             <ion-label floating>{{"AUTH.INPUT_LABEL" | translate}}</ion-label>
             <ion-input name="token" [(ngModel)]="token"></ion-input>
         </ion-item>
@@ -51,7 +51,7 @@
         <ion-row *ngIf="!isApp || manualEnterMobile">
             <ion-col col-12 col-md-6>
                 <button type="submit" ion-button full [disabled]="!connectForm.form.valid||!validAuthToken(token)"
-                    (click)="check(token)" icon-left color="secondary">
+                    (click)="getLastElement(token)" icon-left color="secondary">
                     <ion-icon disabled="!validAuthToken(token)" name="cog"></ion-icon>
                     {{'CHECK'|translate}}
                 </button>
@@ -65,104 +65,6 @@
         </ion-row>
 
         <ion-row *ngIf="isApp && !manualEnterMobile">
-            <ion-col>
-                <button ion-button full icon-left class="large-btn" id="open-how-to-auth" color="primary" (click)="howToAuth()">
-                    <ion-icon name="information-circle"></ion-icon>
-                    {{"AUTH.HOW_TO_AUTH_BTN"|translate}}
-                </button>
-            </ion-col>
-        </ion-row>
-
-    </form>
-
-    <form #signForm="ngForm" *ngIf="verifiedToken" no-lines>
-
-        <h2>{{"AUTH.VERIFY_TITLE" | translate}}</h2>
-
-        <ion-card>
-            <ion-grid>
-                <ion-row>
-                    <ion-col col-12 col-sm-12 col-md-6>
-                        <ion-item>
-                            <ion-row>
-                                <ion-col>{{"AUTH.VERIFY_SOURCE" | translate}}</ion-col>
-                                <ion-col class="right">{{verifiedToken.source}}</ion-col>
-                            </ion-row>
-                            <ion-row>
-                                <ion-col>{{"AUTH.VERIFY_AVATAR" | translate}}</ion-col>
-                                <ion-col class="right">{{verifiedToken.target}}</ion-col>
-                            </ion-row>
-                            <ion-row>
-                                <ion-col>{{"AUTH.VERIFY_HOST" | translate}}</ion-col>
-                                <ion-col class="right">{{verifiedToken.hostname}}</ion-col>
-                            </ion-row>
-                            <ion-row>
-                                <ion-col>{{"AUTH.VERIFY_REMAINING_TIME" | translate}}</ion-col>
-                                <ion-col class="right">
-                                    <countdown [config]="{leftTime: leftTime}">$!m!:$!s!</countdown>
-                                </ion-col>
-                            </ion-row>
-                            <div *ngIf="showDetails">
-                                <ion-row>
-                                    <ion-col>{{"AUTH.VERIFY_CALLBACK" | translate}}</ion-col>
-                                    <ion-col class="right">{{verifiedToken.callback}}</ion-col>
-                                </ion-row>
-                                <ion-row>
-                                    <ion-col>{{"AUTH.VERIFY_TIME_OF_REQUEST" | translate}}</ion-col>
-                                    <ion-col class="right">{{verifiedToken.time*1000|date : 'medium'}}</ion-col>
-                                </ion-row>
-                                <ion-row>
-                                    <ion-col>{{"AUTH.VERIFY_REQUEST_DURATION" | translate}}</ion-col>
-                                    <ion-col class="right">{{verifiedToken.timeout}}{{"SECONDS" | translate}}</ion-col>
-                                </ion-row>
-                            </div>
-                            <ion-row>
-                                <ion-col>
-                                    <button type="button" ion-button item-right icon-left class="right-buttons" (click)="showDetails = !showDetails">
-                                        <ion-icon *ngIf="!showDetails" name="arrow-down"></ion-icon>
-                                        <ion-icon *ngIf="showDetails" name="arrow-up"></ion-icon>
-                                        <span *ngIf="!showDetails">{{'SHOW_DETAILS'|translate}}</span>
-                                        <span *ngIf="showDetails">{{'HIDE_DETAILS'|translate}}</span>
-                                    </button>
-                                </ion-col>
-                            </ion-row>
-                        </ion-item>
-                    </ion-col>
-
-                    <ion-col col-12 col-sm-12 col-md-6></ion-col>
-                </ion-row>
-
-            </ion-grid>
-        </ion-card>
-
-        <ion-item [ngClass]="{'error-border': !validPassword(passphrase)}">
-            <ion-label color="primary" floating>{{"PASSWORD" | translate}}</ion-label>
-            <ion-input name="passphrase" type="password" [(ngModel)]="passphrase" required></ion-input>
-        </ion-item>
-        <br>
-
-        <ion-item *ngIf="sourceSignature == ''">
-            <ion-label id="disclaimer-agree-label" text-wrap>{{"AUTH.NO_SIG_AGREE"|translate}}</ion-label>
-            <ion-checkbox name="no_sig_agreed" [(ngModel)]="no_sig_agreed" id="no-sig-agree"></ion-checkbox>
-        </ion-item>
-
-        <ion-row>
-            <ion-col>
-                <button type="submit" ion-button full [disabled]="!signForm.form.valid||!validPassword(passphrase)||(sourceSignature == '' && !no_sig_agreed)"
-                    (click)="signAndSend(token, passphrase)" icon-left color="secondary">
-                    <ion-icon disabled="!validAuthToken(token)" name="cog"></ion-icon>
-                    {{'CHECK'|translate}}
-                </button>
-            </ion-col>
-            <ion-col>
-                <button ion-button color="danger" full item-right icon-left (click)="cancel($event)">
-                    <ion-icon name="close"></ion-icon>
-                    {{'CANCEL'|translate}}
-                </button>
-            </ion-col>
-        </ion-row>
-
-        <ion-row>
             <ion-col>
                 <button ion-button full icon-left class="large-btn" id="open-how-to-auth" color="primary" (click)="howToAuth()">
                     <ion-icon name="information-circle"></ion-icon>
