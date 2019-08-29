@@ -62,6 +62,7 @@ export class ImportWalletPage {
             .catch((e) => {
                 console.error(e);
                 this.alert.showError('MESSAGE.PASSWORD_WRONG', '');
+                this.alert.stopLoading()
             });
     }
 
