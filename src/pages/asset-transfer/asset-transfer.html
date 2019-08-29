@@ -1,7 +1,7 @@
 <ion-header>
     <ion-navbar>
         <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
+    <ion-icon name="menu"></ion-icon>
     </button>
         <ion-title>{{selectedAsset}} {{ "TRANSFER" | translate}}</ion-title>
     </ion-navbar>
@@ -56,10 +56,6 @@
                     {{"SEND_ALL_BUTTON"|translate}}
                 </button>
             </ion-item>
-            <ion-item [ngClass]="{'error-border': !validPassword(passphrase)}">
-                <ion-label color="primary" floating>{{"PASSWORD" | translate}}</ion-label>
-                <ion-input name="passphrase" type="password" [(ngModel)]="passphrase" required></ion-input>
-            </ion-item>
             <br>
             <ion-item>
                 <ion-label>{{"SELECT_FROM_ADDRESS"|translate}}</ion-label>
@@ -105,24 +101,14 @@
                     <ion-label>{{"ASSET_LOCK"|translate}}</ion-label>
                     <ion-toggle [(ngModel)]="lock" name="lock"></ion-toggle>
                 </ion-item>
-                <attenuation-model-selector *ngIf="lock" (modelChanged)="setAttenuationModel($event)" [quantity]="validQuantity(quantity) ? quantity : undefined" [decimals]="decimals" [asset]="selectedAsset" [blocktime]="blocktime"></attenuation-model-selector>
-                <br>
-                <button ion-button full [disabled]="!sendForm.form.valid||!validaddress(recipient_address)||!validQuantity(quantity)||!validPassword(passphrase)||!validMessageLength(message)||(lock && !attenuation_model)" (click)="preview()" color="primary">
-                    {{"PREVIEW" | translate}}
-                </button>
-                <div *ngIf="rawtx">
-                    <br><br>
-                    <h2>{{"TRANSACTION_PREVIEW_TEXT"|translate}}</h2>
-                    <p class="rawtx">{{rawtx}}</p>
-                    <br><br>
-                </div>
+                <attenuation-model-selector *ngIf="lock" (modelChanged)="setAttenuationModel($event)" [quantity]="validQuantity(quantity) ? quantity : undefined" [decimals]="decimals" [asset]="selectedAsset"></attenuation-model-selector>
             </div>
         </ion-list>
         <ion-row class="padding-bottom">
             <ion-col>
-                <button type="submit" ion-button full icon-left [disabled]="!sendForm.form.valid||!validaddress(recipient_address)||!validQuantity(quantity)||!validPassword(passphrase)||!validMessageLength(message)||(lock && !attenuation_model)" (click)="send()" color="secondary">
-                    <ion-icon disabled="checked" name="send"></ion-icon>
-                    {{"SEND" | translate}}
+                <button type="submit" ion-button full icon-left [disabled]="!sendForm.form.valid||!validaddress(recipient_address)||!validQuantity(quantity)||!validMessageLength(message)||(lock && !attenuation_model)" (click)="send()" color="secondary">
+                    <ion-icon disabled="checked" name="cog"></ion-icon>
+                    {{'NEXT'|translate}}
                 </button>
             </ion-col>
             <ion-col>
@@ -206,11 +192,6 @@
                     <ion-option *ngFor="let addressbalance of addressbalances" value="{{addressbalance.address}}">{{addressbalance.identifier}} - {{addressbalance.balance | format : decimals}} {{selectedAsset}}</ion-option>
                 </ion-select>
             </ion-item>
-            <ion-item [ngClass]="{'error-border': !validPassword(passphrase)}">
-                <ion-label color="primary" floating>{{"PASSWORD" | translate}}</ion-label>
-                <ion-input name="passphrase" type="password" [(ngModel)]="passphrase" required></ion-input>
-            </ion-item>
-            <br>
 
             <ion-item>
                 <ion-label>{{"SHOW_ADVANCED"|translate}}</ion-label>
@@ -231,22 +212,19 @@
                         <ion-option *ngFor="let address of addresses" value="{{address}}">{{address}}</ion-option>
                     </ion-select>
                 </ion-item>
-                <button ion-button full [disabled]="!sendForm.form.valid||!sendMoreValidQuantity||!sendMoreValidAddress||!validPassword(passphrase)||total > showBalance||!validMessageLength(message)" (click)="preview()" color="primary">
-                    {{"PREVIEW" | translate}}
-                </button>
-                <div *ngIf="rawtx">
-                    <br><br>
-                    <h2>{{"TRANSACTION_PREVIEW_TEXT"|translate}}</h2>
-                    <p class="rawtx">{{rawtx}}</p>
-                    <br><br>
-                </div>
+                <br>
+                <ion-item *ngIf="selectedAsset != 'ETP'">
+                    <ion-label>{{"ASSET_LOCK"|translate}}</ion-label>
+                    <ion-toggle [(ngModel)]="lock" name="lock"></ion-toggle>
+                </ion-item>
+                <attenuation-model-selector *ngIf="lock" (modelChanged)="setAttenuationModel($event)" [quantity]="undefined" [decimals]="decimals" [asset]="selectedAsset" [toMany]="true"></attenuation-model-selector>
             </div>
         </ion-list>
         <ion-row class="padding-bottom">
             <ion-col>
-                <button type="submit" ion-button full icon-left [disabled]="!sendForm.form.valid||!sendMoreValidQuantity||!sendMoreValidAddress||!validPassword(passphrase)||total > showBalance||!validMessageLength(message)" (click)="send()" color="secondary">
-                    <ion-icon disabled="checked" name="send"></ion-icon>
-                    {{"SEND" | translate}}
+                <button type="submit" ion-button full icon-left [disabled]="!sendForm.form.valid||!sendMoreValidQuantity||!sendMoreValidAddress||total > showBalance||!validMessageLength(message)" (click)="send()" color="secondary">
+                    <ion-icon disabled="checked" name="cog"></ion-icon>
+                    {{'NEXT' | translate}}
                 </button>
             </ion-col>
             <ion-col>

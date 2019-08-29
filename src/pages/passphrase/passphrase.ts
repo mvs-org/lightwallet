@@ -6,6 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { CryptoServiceProvider } from '../../providers/crypto-service/crypto-service';
+import { AlertProvider } from '../../providers/alert/alert';
 
 @IonicPage()
 @Component({
@@ -25,9 +26,11 @@ export class PassphrasePage {
         public platform: Platform,
         public mvs: MvsServiceProvider,
         public loadingCtrl: LoadingController,
-        public wallet: WalletServiceProvider) {
+        public wallet: WalletServiceProvider,
+        private alert: AlertProvider,
+    ) {
 
-            this.mnemonic = this.navParams.get('mnemonic');
+        this.mnemonic = this.navParams.get('mnemonic');
 
     }
 
@@ -46,7 +49,7 @@ export class PassphrasePage {
     }
 
     encryptMobile(password) {
-        this.showLoading();
+        this.alert.showLoading();
         let wallet = {};
         wallet = { "index": 10 }
         this.wallet.setWallet(wallet)
@@ -86,16 +89,6 @@ export class PassphrasePage {
     dataToKeystoreJson(mnemonic) {
         let tmp = { version: this.globals.version, algo: this.globals.algo, index: this.globals.index, mnemonic: mnemonic };
         return tmp;
-    }
-
-    showLoading() {
-        this.translate.get('MESSAGE.LOADING').subscribe((loading: string) => {
-            this.loading = this.loadingCtrl.create({
-                content: loading,
-                dismissOnPageChange: true
-            });
-            this.loading.present();
-        })
     }
 
 }

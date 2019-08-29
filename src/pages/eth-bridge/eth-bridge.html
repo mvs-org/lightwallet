@@ -1,8 +1,8 @@
 <ion-header>
     <ion-navbar>
         <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
+            <ion-icon name="menu"></ion-icon>
+        </button>
         <ion-title>{{ "ETH_BRIDGE" | translate}}</ion-title>
     </ion-navbar>
 </ion-header>
@@ -34,8 +34,10 @@
         <ion-list>
             <ion-item [ngClass]="{'error-border': !validIdentifier(identifier)}">
                 <ion-label>{{"ETH_TO_MVS.SELECT_AVATAR_OR_ADDRESS"|translate}}</ion-label>
-                <ion-select [(ngModel)]="identifier" name="identifier" multiple="false" okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}" (ngModelChange)="registerEthBridge(identifier)">
-                    <ion-option *ngFor="let addressbalance of addressbalances" value="{{addressbalance.identifier}}">{{addressbalance.identifier}} - {{addressbalance.balance | format : 8}} ETP</ion-option>
+                <ion-select [(ngModel)]="identifier" name="identifier" multiple="false" okText="{{'OK'|translate}}"
+                    cancelText="{{'CANCEL'|translate}}" (ngModelChange)="registerEthBridge(identifier)">
+                    <ion-option *ngFor="let addressbalance of addressbalances" value="{{addressbalance.identifier}}">{{addressbalance.identifier}}
+                        - {{addressbalance.balance | format : 8}} ETP</ion-option>
                 </ion-select>
             </ion-item>
             <ion-card-content *ngIf="data">

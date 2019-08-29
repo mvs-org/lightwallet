@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, Platform, Events } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, Events } from 'ionic-angular';
 import { AppGlobals } from '../../app/app.global';
 import { Storage } from '@ionic/storage';
 import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
@@ -22,7 +22,8 @@ export class LoginPage {
         private storage: Storage,
         public globals: AppGlobals,
         private event: Events,
-        private wallet: WalletServiceProvider
+        private wallet: WalletServiceProvider,
+        private navParams: NavParams,
     ) {
         this.isApp = (!document.URL.startsWith('http') || document.URL.startsWith('http://localhost:8080'));
 
@@ -48,11 +49,11 @@ export class LoginPage {
 
     loadNetwork = () => this.storage.get('network')
         .then(network => {
-            this.globals.network = (network) ? network : this.globals.DEFAULT_NETWORK
+            this.globals.network = this.navParams.get('network') ? this.navParams.get('network') : network ? network : this.globals.DEFAULT_NETWORK
             this.network = this.globals.network;
             this.event.publish('network_update', { network: this.network })
             return network;
-        })
+    });
 
     switchTheme = e => this.nav.push("ThemeSwitcherPage")
 
