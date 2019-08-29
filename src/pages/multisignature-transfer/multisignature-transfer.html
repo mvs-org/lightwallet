@@ -1,8 +1,8 @@
 <ion-header>
     <ion-navbar>
         <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
+            <ion-icon name="menu"></ion-icon>
+        </button>
         <ion-title>{{ "MULTISIGNATURE_TRANSFER" | translate}}</ion-title>
     </ion-navbar>
 </ion-header>
@@ -23,7 +23,8 @@
     <p align="center" *ngIf="etpBalance<fee/100000000 && type == 'create'">{{"NOTICE_TRANSACTION_FEE_UNCOVERED"|translate}}</p>
     <ion-row *ngIf="type == 'create'">
         <ion-col>
-            <p>{{"AVAILABLE_BALANCE" | translate}}: <br *ngIf="platform.is('mobile')">{{showBalance | format : decimals}} {{selectedAsset}}</p>
+            <p>{{"AVAILABLE_BALANCE" | translate}}: <br *ngIf="platform.is('mobile')">{{showBalance | format :
+                decimals}} {{selectedAsset}}</p>
         </ion-col>
         <ion-col>
             <p class="right">{{"FEE"|translate}}:<br *ngIf="platform.is('mobile')"> {{fee | format : 8}} ETP</p>
@@ -39,11 +40,13 @@
             </ion-item>
             <ion-item *ngIf="sendToAvatar" [ngClass]="{'error-border':!validAvatar(recipient_avatar)}">
                 <ion-label color="primary" floating>{{"RECIPIENT_AVATAR"|translate}}</ion-label>
-                <ion-input #recipientAvatarInput name="recipient_avatar" [(ngModel)]="recipient_avatar" (ngModelChange)="recipientAvatarChanged($event)" required></ion-input>
+                <ion-input #recipientAvatarInput name="recipient_avatar" [(ngModel)]="recipient_avatar" (ngModelChange)="recipientAvatarChanged($event)"
+                    required></ion-input>
             </ion-item>
             <ion-item [ngClass]="{'error-border':!validrecipient(recipient_address), 'valid-border':validrecipient(recipient_address)}">
                 <ion-label color="primary" floating>{{"RECIPIENT_ADDRESS"|translate}}</ion-label>
-                <ion-input #recipientAddressInput name="recipient_address" [(ngModel)]="recipient_address" (ngModelChange)="recipientChanged($event)" [disabled]="sendToAvatar" required></ion-input>
+                <ion-input #recipientAddressInput name="recipient_address" [(ngModel)]="recipient_address"
+                    (ngModelChange)="recipientChanged($event)" [disabled]="sendToAvatar" required></ion-input>
                 <button id="scanButton" *ngIf="isApp" ion-button item-right (click)="scan()">
                     <ion-icon name="qr-scanner"></ion-icon>
                 </button>
@@ -63,7 +66,8 @@
             <ion-item>
                 <ion-label>{{"MULTISIG_TRANSFER.FROM_ADDRESS"|translate}}</ion-label>
                 <ion-select [(ngModel)]="sendFrom" name="sendfrom" disabled>
-                    <ion-option *ngFor="let addressbalance of addressbalances" value="{{addressbalance.address}}">{{addressbalance.identifier}} - {{addressbalance.balance | format : decimals}} {{selectedAsset}}</ion-option>
+                    <ion-option *ngFor="let addressbalance of addressbalances" value="{{addressbalance.address}}">{{addressbalance.identifier}}
+                        - {{addressbalance.balance | format : decimals}} {{selectedAsset}}</ion-option>
                 </ion-select>
             </ion-item>
             <br>
@@ -87,7 +91,8 @@
                     <ion-input name="message" [(ngModel)]="message"></ion-input>
                 </ion-item>
                 <div no-lines class="advice">{{"HELP.MESSAGE" | translate}}</div>
-                <ion-item *ngIf="!validMessageLength(message)" no-lines class="wrong-input">{{"MESSAGE_TOO_LONG" | translate}}</ion-item>
+                <ion-item *ngIf="!validMessageLength(message)" no-lines class="wrong-input">{{"MESSAGE_TOO_LONG" |
+                    translate}}</ion-item>
                 <br>
                 <ion-item>
                     <ion-label>{{"SELECT_CHANGE_ADDRESS"|translate}}</ion-label>
@@ -100,7 +105,8 @@
         </ion-list>
         <ion-row class="padding-bottom">
             <ion-col col-12 col-sm-6>
-                <button type="submit" ion-button full icon-left [disabled]="!sendForm.form.valid||!validrecipient(recipient_address)||!validQuantity(quantity)||!validPassword(passphrase)||!validMessageLength(message)" (click)="preview()" color="secondary">
+                <button type="submit" ion-button full icon-left [disabled]="!sendForm.form.valid||!validrecipient(recipient_address)||!validQuantity(quantity)||!validPassword(passphrase)||!validMessageLength(message)"
+                    (click)="preview()" color="secondary">
                     <ion-icon disabled="checked" name="settings"></ion-icon>
                     {{"MULTISIGNATURE.GENERATE" | translate}}
                 </button>
@@ -137,7 +143,7 @@
         <ion-row>
             <ion-col>
                 <button type="submit" ion-button full icon-left (click)="decode(input)" [disabled]="!input" color="secondary">
-                    <ion-icon disabled="checked" name="send"></ion-icon>
+                    <ion-icon disabled="checked" name="cog"></ion-icon>
                     {{"MULTISIGNATURE_TRANSFER.DECODE" | translate}}
                 </button>
             </ion-col>
@@ -175,7 +181,8 @@
                         <ion-row>
                             <ion-col *ngIf="output.attachment.to_did">{{output.attachment.to_did}}</ion-col>
                             <ion-col *ngIf="!output.attachment.to_did">{{output.address}}</ion-col>
-                            <ion-col>{{output.attachment.quantity | format : decimals_mst[output.attachment.asset]}} {{output.attachment.asset}}</ion-col>
+                            <ion-col>{{output.attachment.quantity | format : decimals_mst[output.attachment.asset]}}
+                                {{output.attachment.asset}}</ion-col>
                         </ion-row>
                     </ion-item>
                 </div>
@@ -205,7 +212,7 @@
                 <ion-label color="primary" floating>{{"PASSWORD" | translate}}</ion-label>
                 <ion-input name="passphrase_sign" type="password" [(ngModel)]="passphrase_sign" required></ion-input>
             </ion-item>
-            <br/>
+            <br />
         </ion-list>
         <ion-row class="padding-bottom" *ngIf="!raw_signed_tx">
             <ion-col *ngIf="nbr_sign_before_sign<address_info.m">

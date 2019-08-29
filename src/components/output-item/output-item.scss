@@ -1,0 +1,21 @@
+output-item {
+
+    .personal ion-item {
+        font-weight: bold;
+    }
+
+    .script {
+        color: #b6bcc3;
+        overflow-wrap: break-word;
+        font-weight: 400;
+    }
+    
+    ion-col {
+        text-overflow: initial;
+        white-space: initial;
+    }
+
+    .txType {
+        font-style: oblique;
+    }
+}

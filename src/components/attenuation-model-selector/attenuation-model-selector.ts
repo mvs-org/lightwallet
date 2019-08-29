@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { AlertProvider } from '../../providers/alert/alert';
+import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 
 class Period {
     constructor(
@@ -18,7 +19,7 @@ export class AttenuationModelSelectorComponent {
     @Input() quantity: string;              //Displayed quantity
     @Input() decimals: number;
     @Input() asset: string;
-    @Input() blocktime: number;
+    @Input() toMany: boolean = false;
 
     type: string = 'simple'
     periods: Array<Period> = []
@@ -31,18 +32,32 @@ export class AttenuationModelSelectorComponent {
     total_locktime: number = 0
     duration_days: number = 0
     duration_hours: number = 0
+    blocktime: number
 
-    @Output() modelChanged : EventEmitter<string> = new EventEmitter<string>();
+    @Output() modelChanged: EventEmitter<any> = new EventEmitter<any>();
 
     constructor(
         public platform: Platform,
-        private alert: AlertProvider
+        private alert: AlertProvider,
+        private mvs: MvsServiceProvider,
     ) {
         this.periods.push(new Period(undefined, undefined))
     }
 
+    ionViewDidEnter() {
+        this.mvs.getHeight()
+            .then(height => this.mvs.getBlocktime(height))
+            .then(blocktime => this.blocktime = blocktime)
+            .catch((error) => {
+                console.error(error.message)
+            })
+    }
+
     ngOnChanges(changes: SimpleChanges) {
         this.inputChange(event)
+        if (this.toMany) {
+            this.type = 'simple'
+        }
     }
 
     addPeriod() {
@@ -61,14 +76,20 @@ export class AttenuationModelSelectorComponent {
         this.duration_days = Math.floor(this.blocktime * this.locktime / (24 * 60 * 60))
         this.duration_hours = Math.floor((this.blocktime * this.locktime / (60 * 60)) - (24 * this.duration_days))
 
-        switch(this.type){
+        switch (this.type) {
             case "simple":
-                if(this.validLocktime(this.locktime))
-                    attenuation_model = "PN=0;LH=" + this.locktime + ";TYPE=1;LQ=" + quantity + ";LP=" + this.locktime + ";UN=1"                     
+                if (this.validLocktime(this.locktime)) {
+                    if (!this.toMany) {
+                        attenuation_model = "PN=0;LH=" + this.locktime + ";TYPE=1;LQ=" + quantity + ";LP=" + this.locktime + ";UN=1"
+                    } else {
+                        //Do not set the quantity if send to many, the quantity LQ is set per recipient
+                        attenuation_model = "PN=0;LH=" + this.locktime + ";TYPE=1;LP=" + this.locktime + ";UN=1"
+                    }
+                }
                 break;
             case "recurrent":
-                if(this.validLocktime(this.locktime) && this.validNbrPeriod(this.nbrPeriod))
-                    attenuation_model = "PN=0;LH=" + Math.floor(this.locktime/this.nbrPeriod) + ";TYPE=1;LQ=" + quantity + ";LP=" + this.locktime + ";UN=" + this.nbrPeriod                     
+                if (this.validLocktime(this.locktime) && this.validNbrPeriod(this.nbrPeriod))
+                    attenuation_model = "PN=0;LH=" + Math.floor(this.locktime / this.nbrPeriod) + ";TYPE=1;LQ=" + quantity + ";LP=" + this.locktime + ";UN=" + this.nbrPeriod
                 break;
             case "custom":
                 let valid: boolean = true
@@ -76,29 +97,33 @@ export class AttenuationModelSelectorComponent {
                 let total_locktime: number = 0
                 let UQ: string
                 let UC: string
-                for(let i = 0; i < this.periods.length; i ++) {
+                for (let i = 0; i < this.periods.length; i++) {
                     let period = this.periods[i]
-                    if(period.quantity)
+                    if (period.quantity)
                         total_quantity += parseFloat(period.quantity)
-                    if(period.locktime)
+                    if (period.locktime)
                         total_locktime += parseFloat(period.locktime)
-                    UQ = i == 0 ? Math.round(parseFloat(period.quantity) * Math.pow(10, this.decimals)) +'' : UQ + ',' + Math.round(parseFloat(period.quantity) * Math.pow(10, this.decimals))
+                    UQ = i == 0 ? Math.round(parseFloat(period.quantity) * Math.pow(10, this.decimals)) + '' : UQ + ',' + Math.round(parseFloat(period.quantity) * Math.pow(10, this.decimals))
                     UC = i == 0 ? period.locktime : UC + ',' + period.locktime
-                    if(!this.validQuantity(period.quantity) || !this.validLocktime(period.locktime))
+                    if (!this.validQuantity(period.quantity) || !this.validLocktime(period.locktime))
                         valid = false
                 }
                 this.total_quantity = total_quantity
                 this.total_locktime = total_locktime
-                if(valid && this.validLocktime(total_locktime) && this.total_quantity <= parseFloat(this.quantity))
+                if (valid && this.validLocktime(total_locktime) && this.total_quantity <= parseFloat(this.quantity))
                     attenuation_model = "PN=0;LH=" + this.periods[0].locktime + ";TYPE=2;LQ=" + Math.round(total_quantity * Math.pow(10, this.decimals)) + ";LP=" + total_locktime + ";UN=" + this.periods.length + ";UC=" + UC + ";UQ=" + UQ
                 break;
         }
 
-        if(this.attenuation_model != attenuation_model && this.quantity) {
-            this.modelChanged.emit(attenuation_model)
+        if (this.attenuation_model != attenuation_model && (this.quantity || this.toMany)) {
+            let output = {
+                'attenuation_model': attenuation_model,
+                'locktime': this.locktime
+            }
+            this.modelChanged.emit(output)
             this.attenuation_model = attenuation_model
         }
-        
+
     }
 
     validLocktime = (locktime) => locktime && locktime > 0 && this.countDecimals(locktime) == 0 && locktime < 100000000
@@ -131,12 +156,12 @@ export class AttenuationModelSelectorComponent {
             let content = e.target.result;
             try {
                 let data = content.split('\n');
-                if(data.length > this.periods_nbr_limit) {
+                if (data.length > this.periods_nbr_limit) {
                     this.alert.showLimitReached('MESSAGE.LOCK_IMPORT_CSV_TOO_MANY_PERIODS_TITLE', 'MESSAGE.LOCK_IMPORT_CSV_TOO_MANY_PERIOD_BODY', this.periods_nbr_limit)
                 } else {
                     this.periods = []
-                    for(let i=0;i<data.length;i++){
-                        if(data[i]) {
+                    for (let i = 0; i < data.length; i++) {
+                        if (data[i]) {
                             let period = data[i].split(',');
                             period[0] = period[0] ? period[0].trim() : period[0]
                             this.periods.push(new Period(period[0], period[1]))
@@ -151,7 +176,7 @@ export class AttenuationModelSelectorComponent {
                 this.alert.showMessage('WRONG_FILE', '', 'SEND_MORE.WRONG_FILE')
             }
         };
-        if(file[0])
+        if (file[0])
             reader.readAsText(file[0]);
     }
 

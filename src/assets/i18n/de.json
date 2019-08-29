@@ -220,7 +220,6 @@
 
     "LOGIN": "Login",
     "HOW_TO_IMPORT_WALLET_MOBILE": "Hilfe zum Import",
-    "HOW_TO_IMPORT_WALLET_MOBILE_TITLE": "Hilfe zum Import?",
     "HOW_TO_IMPORT_WALLET_MOBILE_STEP1": "Öffne das lightwallet auf einem Desktop PC und wähle die Einstellungen und dann \"Mobilgerät verbinden\"",
     "HOW_TO_IMPORT_WALLET_MOBILE_STEP2": "QR Code scannen",
     "HOW_TO_IMPORT_WALLET_MOBILE_STEP3": "Viel spaẞ mit deinem mobilen Wallet!",
@@ -713,5 +712,139 @@
     "ETP_BRIDGE.INFORMATION_LINK": "Telegram",
 
     "ETP_BRIDGE.IMPORT_ORDER_DESCRIPTION": "Wenn eine Bestellung von einem anderen Gerät importiert werden soll, kann dies unter Angabe der Bestellungs ID erfolgen.",
-    "ETP_BRIDGE.UNABLE_CONNECT_SWFT": "Fehler bei Verbindung zu SWFT. Bitte Internetverbindung prüfen und ggf zu einem späteren Zeitpunkt erneut versuchen."
+    "ETP_BRIDGE.UNABLE_CONNECT_SWFT": "Fehler bei Verbindung zu SWFT. Bitte Internetverbindung prüfen und ggf zu einem späteren Zeitpunkt erneut versuchen.",
+
+    "DECODE_TX": "Transaktion dekodieren",
+    "DECODE_TX.TX_TO_SIGN": "Transaktion to sign or broadcast",
+    "DECODE_TX.DECODE": "Decode",
+
+    "SIGN_TX": "Transaktion signieren",
+    "CONFIRM_TX": {
+        "SIGN_ONLY": "Nur signieren",
+        "SIGN_AND_SEND": "Signieren und versenden",
+        "BROADCAST": "Versenden"
+    },
+    "MESSAGE.ERROR_DECODE_TX_SUBTITLE": "Transaktion kann nicht dekodiert werden",
+    "MESSAGE.ERROR_DECODE_TX_BODY": "Transaktion kann nicht dekodiert werden. Bitte überprüfen Sie die eingegebene Transaktion.",
+    "TX": {
+        "INPUTS": "Eingänge",
+        "OUTPUTS": "Ausgänge",
+        "TX_SUMMARY": "Transaktionsübersicht",
+        "TOTAL_INPUTS": "Summe Eingänge",
+        "TOTAL_OUTPUTS": "Summe Ausgänge",
+        "INPUT_COINBASE": "Aus Coinbase",
+        "TYPE": {
+            "did-register": "Avatar Erstellung",
+            "did-transfer": "Avatar Transfer",
+            "message": "Öffentliche Nachricht oder Daten",
+            "MIT": {
+                "registered": "MIT Erstellung",
+                "transfered": "MIT Transfer"
+            },
+            "CERT": {
+                "issue": "Zweitausgabe Zertifikat",
+                "domain": "Domänen Zertifikat",
+                "naming": "Namens Zertifikat",
+                "mining": "Mining Zertifikat",
+                "witness": "Witness Zertifikat"
+            }
+        },
+        "TX_FEE": "Gebühr",
+        "LOCKED_SINCE_BLOCK": "Gesperrt seit Block {{block}} ({{time}})",
+        "LOCKED_UNTIL_BLOCK": "Gesperrt bis Block {{block}} (~{{time}})",
+        "INTRAWALLET": "Intrawallet",
+        "TX_TYPE": {
+            "ETP": "ETP Transfer",
+            "ASSET": "MST Transfer",
+            "ISSUE": "MST Erstellung",
+            "CERT": "Zertifikat Transfer",
+            "CERT_TYPE": {
+                "issue": "Zweitausgabe Zertifikat",
+                "domain": "Domänen Zertifikat",
+                "naming": "Namens Zertifikat",
+                "mining": "Mining Zertifikat",
+                "witness": "Witness Zertifikat"
+            },
+            "DID_REGISTER": "Avatar Erstellung",
+            "DID_TRANSFER": "Avatar Transfer",
+            "MIT_REGISTERED": "MIT Erstellung",
+            "MIT_TRANSFERED": "MIT Transfer",
+            "COINSTAKE": "Coinstake Transaktion",
+            "MST_MINING": "Mining Belohnung",
+            "ETP_LOCK": "ETP Deposit",
+            "ETP_LOCK_REWARD": "ETP Deposit Belohnung",
+            "MST_LOCK": "MST Deposit",
+            "UNKNOWN": "Unbekannter Transaktionstyp"
+        },
+        "SELECT_MODE": "Anzeigemodus",
+        "MODE": {
+            "DEFAULT": "Standard",
+            "SATOSHI": "Satoshi",
+            "HEX": "Hex"
+        },
+        "SIGN_STATUS": {
+            "SIGNED": "Vollständig signierte Transaktion",
+            "UNSIGNED": "Unsignierte Transaktion",
+            "PARTIALLY": "Partiell signierte Transaktion"
+        },
+        "OUTPUT": {
+            "LOCKED_UNTIL_BLOCK": "Gesperrt bis Block {{block}} (~{{time}})"
+        }
+    },
+    "SIGN_TX.PAGE_TITLE": "Transaktion bestätigen, signieren und senden",
+    "SIGN_TX.DESCRIPTION": "Kodierte Transaktion im Hex Format eingeben. Die Transaktion kann signiert oder unsigniert sein.",
+    "CREATE_TX": "Erstellen",
+    "MESSAGE.BROADCAST_TRANSACTION": "Transaktion kann nicht gesendet werden.",
+    "TRANSACTION_PREVIEW.TEXT_SIGNED": "Signierte Transaktion:",
+
+    "ERROR_TWO_LOCK_MODEL": "Nur eine Sperrperiode darf angegeben werden. Es dürfen nicht beide Sperr-Felder Werte enthalten. Der folgende Datensatz enthält das Problem:", 
+
+    "AUTH.INFORMATION": "Ein Metaverse Avatar kann zum Login in Websites und Applikationen verwendet werden. Nach der Verifizierung der Betreiberanfrage kann diese durch den privaten Schlüssel signiert werden. Die Kommunikation findet außerhalb der Blockchain statt, sodass keine privaten Informationen veröffentlicht werden.",
+    "AUTH.INPUT_LABEL": "Login code",
+    "AUTH.VERIFY_TITLE": "Verifizierung der Anfrageinformationen:",
+    "AUTH.VERIFY_SOURCE": "Quelle",
+    "AUTH.VERIFY_AVATAR": "Avatar",
+    "AUTH.VERIFY_HOST": "Server",
+    "AUTH.VERIFY_REMAINING_TIME": "Verbleibende Zeit",
+    "AUTH.VERIFY_CALLBACK": "Server URL",
+    "AUTH.VERIFY_TIME_OF_REQUEST": "Erstellungszeit",
+    "AUTH.VERIFY_REQUEST_DURATION": "Gültigkeit",
+    "AUTH.NO_SIG_AGREE": "Diese Anfrage ist nicht signiert. Die Quelle konnte nicht verifiziert werden. Bitte Anfragedetails und Herkunft genau prüfen.",
+
+    "MESSAGE.AUTH_NO_AVATAR_TITLE": "Kein Avatar gefunden",
+    "MESSAGE.AUTH_NO_AVATAR_TITLE_BODY": "Für die dezentrale Authentifizierung wird ein Avatar vorausgesetzt. Registrieren Sie zuerst einen Avatar.",
+    "MESSAGE.AUTH_TYPE_NOT_SUPPORTED": "Dieser Anfragetyp wird aktuell nicht unterstützt. Nut d2fa Anfragen werden unterstützt.",
+    "MESSAGE.AUTH_UNKNOWN_AVATAR": "Der Avatar der Anfrage konnte nicht im Wallet gefunden werden. Anfrage kann nur signiert werden von Avatar:",
+    "MESSAGE.AUTH_TIMEOUT": "Die Anfrage ist abgelaufen. Bitte neue Anfrage erstellen.",
+    "MESSAGE.AUTH_SIGN": "Fehler beim signieren der Daten",
+    "MESSAGE.AUTH_WRONG_INCOMING_DATA": "Datenfehler. Bitte eingegebene Daten überprüfen und erneut versuchen.",
+    "MESSAGE.AUTH_WRONG_SIGNATURE": "Die Quellsignatur ist ungültig",
+    "MESSAGE.AUTH_SIGNIN_SUCCESSFUL_TITLE": "Authentifizierung erfolgreich!",
+    "MESSAGE.AUTH_SIGNIN_SUCCESSFUL_BODY": "Sie wurden erfolgreich authentifiziert. Folgen Sie den Anweisungen der Anfragequelle.",
+    "MESSAGE.AUTH_SEND_SIG_ERROR": "Error while sending your signature. Please check your connection and try again.",
+    "MESSAGE.AUTH_EXPIRED": "Authentifizierungsanfrage abgelaufen. Bitte neue Anfrage erstellen.",
+    "MESSAGE.AUTH_DIFFERENT_NETWORK": "Anfrage stimmt nicht mit dem Netzwerk des Wallets überein. Anfragenetzwerk ist:",
+
+    "SHOW_DETAILS": "Details anzeigen",
+    "HIDE_DETAILS": "Details ausblenden",
+    "SECONDS": " Sekunden",
+
+    "ADVANCED": "Erweitert",
+    "MULTISIGNATURE.TEXT": "Multisignaturadresse mit Co-Signern teilen",
+    "SIGN_TX.TEXT": "Kodierte Transaktion dekodieren und signieren",
+    "ETH_BRIDGE.TEXT": "Transfer von Token zwischen Metaverse und Ethereum",
+    "AUTHENTICATION.TITLE": "Authentifizierung",
+
+    "SCANNING.AUTH_MESSAGE": "Scan the QR Code where you want to login",
+    "AUTHENTICATION.SCAN_QRCODE_TEXT": "Use my Avatar to authenticate",
+
+    "ISSUE.DOMAIN_OWNER_OTHER_MY_AVATARS": "Das Domänen Zertifikat für die Erstellung dieses MST existiert bereits und gehört keinem Ihrer Avatars.",
+
+    "AUTH.HOW_TO_AUTH_BTN": "Wie funktioniert die Authentifizierung",
+
+    "HOW_TO_AUTH.PAGE_TITLE": "Hilfe zu Authentifizierung",
+    "HOW_TO_AUTH.STEP1": "Öffnen Sie die Webseite oder bei der Sie sich mit Ihrem Avatar authenifizieren möchten.",
+    "HOW_TO_AUTH.STEP2": "Scannen die den Angezeigten QR-Code mit Ihrem Wallet",
+    "HOW_TO_AUTH.STEP3": "Die Webseite wird Sie als Ihr Avatar erkennen"
+
 }

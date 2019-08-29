@@ -35,9 +35,7 @@ export class EthBridgePage {
 
         //Load addresses and balances
         Promise.all([this.mvs.getAddresses(), this.mvs.getAddressBalances()])
-            .then((balances) => {
-                let addresses = balances[0]
-                let addressbalances = balances[1]
+            .then(([addresses, addressbalances]) => {
                 let addrblncs = []
                 Object.keys(addresses).forEach((index) => {
                     let address = addresses[index]

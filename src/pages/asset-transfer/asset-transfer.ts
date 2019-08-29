@@ -10,7 +10,8 @@ class RecipientSendMore {
     constructor(
         public address: string,
         public avatar: string,
-        public target: any
+        public target: any,
+        public attenuation_model: string
     ) { }
 }
 
@@ -34,13 +35,11 @@ export class AssetTransferPage {
     recipient_avatar_valid: boolean
     quantity: string = ""
     builtFor: string
-    rawtx: string
     passcodeSet: any
     addressbalances: Array<any>
     sendFrom: string = "auto"
     changeAddress: string
     feeAddress: string = "auto"
-    passphrase: string = ""
     etpBalance: number
     @ViewChild('recipientAddressInput') recipientAddressInput;
     @ViewChild('quantityInput') quantityInput;
@@ -55,10 +54,10 @@ export class AssetTransferPage {
     fee: number = 10000
     sendMoreValidEachAvatar: Array<boolean> = []
     attenuation_model: string
- 	blocktime: number
     lock: boolean = false
     isApp: boolean
     showAdvanced: boolean = false
+    locktime: number
 
     constructor(
         public navCtrl: NavController,
@@ -76,9 +75,9 @@ export class AssetTransferPage {
         this.recipient_address = navParams.get('recipient') || ""
 
         if(this.selectedAsset == 'ETP') {
-            this.recipients.push(new RecipientSendMore('', '', {"ETP": undefined}))
+            this.recipients.push(new RecipientSendMore('', '', {"ETP": undefined}, undefined))
         } else {
-            this.recipients.push(new RecipientSendMore('', '', {"MST": { [this.selectedAsset]: undefined}}))
+            this.recipients.push(new RecipientSendMore('', '', {"MST": { [this.selectedAsset]: undefined}}, undefined))
         }
         this.total_to_send[this.selectedAsset] = 0
         this.total = 0
@@ -104,13 +103,6 @@ export class AssetTransferPage {
                     }
                 })
                 this.addressbalances = addrblncs
-            })
-
-        mvs.getHeight()
-            .then(height => mvs.getBlocktime(height))
-            .then(blocktime => this.blocktime = blocktime)
-            .catch((error) => {
-                console.error(error.message)
             })
     }
 
@@ -150,17 +142,6 @@ export class AssetTransferPage {
         this.navCtrl.pop()
     }
 
-    preview() {
-        this.create()
-            .then((tx) => {
-                this.rawtx = tx.encode().toString('hex')
-                this.alert.stopLoading()
-            })
-            .catch((error) => {
-                this.alert.stopLoading()
-            })
-    }
-
     create() {
         return this.alert.showLoading()
             .then(() => {
@@ -172,12 +153,11 @@ export class AssetTransferPage {
                     case "one":
                         if(this.lock) {
                             return this.mvs.createAssetDepositTx(
-                                this.passphrase,
                                 this.recipient_address,
                                 (this.recipient_avatar && this.recipient_avatar_valid) ? this.recipient_avatar : undefined,
                                 this.selectedAsset,
                                 Math.round(parseFloat(this.quantity) * Math.pow(10, this.decimals)),
-                                this.attenuation_model,
+                                (this.showAdvanced && this.lock) ? this.attenuation_model : undefined,
                                 (this.sendFrom != 'auto') ? this.sendFrom : null,
                                 (this.showAdvanced && this.changeAddress != 'auto') ? this.changeAddress : undefined,
                                 (this.showAdvanced) ? this.fee : 10000,
@@ -185,7 +165,6 @@ export class AssetTransferPage {
                             )
                         } else {
                             return this.mvs.createSendTx(
-                                this.passphrase,
                                 this.selectedAsset,
                                 this.recipient_address,
                                 (this.recipient_avatar && this.recipient_avatar_valid) ? this.recipient_avatar : undefined,
@@ -200,13 +179,18 @@ export class AssetTransferPage {
                         let target = {}
                         let recipients = JSON.parse(JSON.stringify(this.recipients))
                         target[this.selectedAsset] = Math.round(parseFloat(this.total_to_send[this.selectedAsset]) * Math.pow(10, this.decimals))
-                        if(this.selectedAsset == 'ETP') {
-                            recipients.forEach((recipient) => recipient.target['ETP'] = Math.round(parseFloat(recipient.target['ETP']) * Math.pow(10, this.decimals)))
-                        } else {
-                            recipients.forEach((recipient) => recipient.target['MST'][this.selectedAsset] = Math.round(parseFloat(recipient.target['MST'][this.selectedAsset]) * Math.pow(10, this.decimals)))
-                        }
+                        recipients.forEach((recipient) => {
+                            if(this.selectedAsset == 'ETP') {
+                                recipient.target['ETP'] = Math.round(parseFloat(recipient.target['ETP']) * Math.pow(10, this.decimals))
+                            } else {
+                                let convertedQuantity = Math.round(parseFloat(recipient.target['MST'][this.selectedAsset]) * Math.pow(10, this.decimals))
+                                recipient.target['MST'][this.selectedAsset] = convertedQuantity
+                                if(this.showAdvanced && this.lock && this.attenuation_model) {
+                                    recipient.attenuation_model = this.attenuation_model + ';LQ=' + convertedQuantity
+                                }
+                            }
+                        })
                         return this.mvs.createSendMoreTx(
-                            this.passphrase,
                             target,
                             recipients,
                             (this.sendFrom != 'auto') ? this.sendFrom : null,
@@ -239,11 +223,9 @@ export class AssetTransferPage {
 
     send() {
         this.create()
-            .then(tx => this.mvs.send(tx))
             .then((result) => {
-                this.navCtrl.pop()
+                this.navCtrl.push("confirm-tx-page", { tx: result.encode().toString('hex') })
                 this.alert.stopLoading()
-                this.alert.showSent('SUCCESS_SEND_TEXT', result.hash)
             })
             .catch((error) => {
                 console.error(error)
@@ -365,8 +347,6 @@ export class AssetTransferPage {
         this.sendMoreValidAddress = valid
     }
 
-    validPassword = (passphrase) => (passphrase.length > 0)
-
     validMessageLength = (message) => this.mvs.verifyMessageSize(message) < 253
 
     scan() {
@@ -399,9 +379,9 @@ export class AssetTransferPage {
         this.sendMoreValidQuantity = false
         this.sendMoreValidAddress = false
         if(this.selectedAsset == 'ETP') {
-            this.recipients.push(new RecipientSendMore('', '', {"ETP": undefined}))
+            this.recipients.push(new RecipientSendMore('', '', {"ETP": undefined}, undefined))
         } else {
-            this.recipients.push(new RecipientSendMore('', '', {"MST": { [this.selectedAsset]: undefined}}))
+            this.recipients.push(new RecipientSendMore('', '', {"MST": { [this.selectedAsset]: undefined}}, undefined))
         }
     }
 
@@ -436,28 +416,50 @@ export class AssetTransferPage {
     open(e) {
         let file = e.target.files
         let reader = new FileReader();
+        const COLUMN_RECIPIENT_HEADER = 'recipient';
+        const COLUMN_AMOUNT_HEADER = 'amount';
+        const COLUMN_LOCK_BLOCK_HEADER = 'lock_blocks';
+        const COLUMN_LOCK_MODEL_HEADER = 'lock_model';
+
+        let errorLine = 0
+        
         reader.onload = (e: any) => {
             let content = e.target.result;
             try {
                 let data = content.split('\n');
                 this.recipients = []
-                for(let i=0;i<this.sendMore_limit;i++){
+                let columnIndex = {}
+                data[0].split(',').forEach((columnName, index) => columnIndex[columnName] = index)
+                for(let i=1;i<this.sendMore_limit;i++){
                     if(data[i]) {
-                        let recipient = data[i].split(',');
-                        recipient[0] = recipient[0] ? recipient[0].trim() : recipient[0]
+                        let line = data[i].split(',');
+                        let recipient = line[columnIndex[COLUMN_RECIPIENT_HEADER]] ? line[columnIndex[COLUMN_RECIPIENT_HEADER]].trim() : line[columnIndex[COLUMN_RECIPIENT_HEADER]]
+                        let amount = line[columnIndex[COLUMN_AMOUNT_HEADER]] ? line[columnIndex[COLUMN_AMOUNT_HEADER]].trim() : line[columnIndex[COLUMN_AMOUNT_HEADER]]
                         if(this.selectedAsset == 'ETP') {
-                            if(this.validaddress(recipient[0])) {
-                                this.recipients.push(new RecipientSendMore(recipient[0], '', {"ETP": recipient[1] ? recipient[1].trim() : recipient[1]}))
+                            if(this.validaddress(recipient)) {
+                                this.recipients.push(new RecipientSendMore(recipient, '', {"ETP": amount}, undefined))
                             } else {
-                                this.recipients.push(new RecipientSendMore('', recipient[0], {"ETP": recipient[1] ? recipient[1].trim() : recipient[1]}))
-                                this.sendMoreRecipientAvatarChanged(i)
+                                this.recipients.push(new RecipientSendMore('', recipient, {"ETP": amount}, undefined))
+                                this.sendMoreRecipientAvatarChanged(i-1)
                             }
                         } else {
-                            if(this.validaddress(recipient[0])) {
-                                this.recipients.push(new RecipientSendMore(recipient[0], '', {"MST": { [this.selectedAsset]: recipient[1] ? recipient[1].trim() : recipient[1]}}))
+                            let attenuation_model = undefined
+                            if(columnIndex[COLUMN_LOCK_BLOCK_HEADER] && line[columnIndex[COLUMN_LOCK_BLOCK_HEADER]]) {
+                                if(columnIndex[COLUMN_LOCK_MODEL_HEADER] && line[columnIndex[COLUMN_LOCK_MODEL_HEADER]]) {
+                                    errorLine = i+1
+                                    throw Error('ERR_TWO_LOCK_MODEL')
+                                }
+                                let convertedQuantity = Math.round(parseFloat(amount) * Math.pow(10, this.decimals))
+                                let nbrBlocks = line[columnIndex[COLUMN_LOCK_BLOCK_HEADER]]
+                                attenuation_model = 'PN=0;LH=' + nbrBlocks + ';TYPE=1;LP=' + nbrBlocks + ';UN=1;LQ=' + convertedQuantity
+                            } else if (columnIndex[COLUMN_LOCK_MODEL_HEADER] && line[columnIndex[COLUMN_LOCK_MODEL_HEADER]]) {
+                                attenuation_model = line[columnIndex[COLUMN_LOCK_MODEL_HEADER]]
+                            }
+                            if(this.validaddress(recipient)) {
+                                this.recipients.push(new RecipientSendMore(recipient, '', {"MST": { [this.selectedAsset]: amount}}, attenuation_model))
                             } else {
-                                this.recipients.push(new RecipientSendMore('', recipient[0], {"MST": { [this.selectedAsset]: recipient[1] ? recipient[1].trim() : recipient[1]}}))
-                                this.sendMoreRecipientAvatarChanged(i)
+                                this.recipients.push(new RecipientSendMore('', recipient, {"MST": { [this.selectedAsset]: amount}}, attenuation_model))
+                                this.sendMoreRecipientAvatarChanged(i-1)
                             }
                         }
                     }
@@ -471,10 +473,17 @@ export class AssetTransferPage {
                 }
                 this.checkSendMoreAddress()
                 this.alert.stopLoading()
-            } catch (e) {
+            } catch (error) {
                 this.alert.stopLoading()
-                console.error(e);
-                this.alert.showMessage('WRONG_FILE', '', 'SEND_MORE.WRONG_FILE')
+                console.error(error.message)
+                switch(error.message){
+                    case "ERR_TWO_LOCK_MODEL":
+                        this.alert.showError('ERROR_TWO_LOCK_MODEL', errorLine)
+                        throw Error('ERR_IMPORT_CSV')
+                    default:
+                        this.alert.showMessage('WRONG_FILE', '', 'SEND_MORE.WRONG_FILE')
+                        throw Error('ERR_IMPORT_CSV')
+                }
             }
         };
         if(file[0])
@@ -484,12 +493,21 @@ export class AssetTransferPage {
     download() {
         var text = ''
         var filename = 'recipients.csv'
+        let header = 'recipient' + ',' + 'amount'
+        if(this.showAdvanced && this.lock && this.attenuation_model) {
+            header += ',' + 'lock_blocks'
+        }
+        header += '\n'
+        text += header
         this.recipients.forEach((recipient) => {
             let line = recipient.address + ','
             if(recipient.target['ETP']) {
                 line += recipient.target['ETP']
             } else if (recipient.target['MST'] && recipient.target['MST'][this.selectedAsset]) {
                 line += recipient.target['MST'][this.selectedAsset]
+            }
+            if(this.showAdvanced && this.lock && this.attenuation_model) {
+                line += ',' + this.locktime
             }
             line += '\n'
             text += line
@@ -498,7 +516,10 @@ export class AssetTransferPage {
     }
 
     csvExample() {
-        var text = 'MAwLwVGwJyFsTBfNj2j5nCUrQXGVRvHzPh,2\nMEWdqvhETJex22kBbYDSD999Vs4xFwQ4fo,2\navatar-name,4';
+        var text = 'recipient' + ',' + 'amount' + ',' + 'lock_blocks' + ',' + 'lock_model' + '\n'
+        text += 'MAwLwVGwJyFsTBfNj2j5nCUrQXGVRvHzPh,2,10,\n'
+        text += 'MEWdqvhETJex22kBbYDSD999Vs4xFwQ4fo,2,,PN=0;LH=20;TYPE=1;LP=20;UN=1;LQ=2\n'
+        text += 'avatar-name,4';
         var filename = 'mvs_example.csv'
         this.downloadFile(filename, text)
     }
@@ -518,8 +539,9 @@ export class AssetTransferPage {
         }
     }
 
-    setAttenuationModel = (model: string) => {
-        this.attenuation_model = model
+    setAttenuationModel = (output: any) => {
+        this.attenuation_model = output.attenuation_model
+        this.locktime = output.locktime
     }
 
 }

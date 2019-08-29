@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { PassphrasePage } from './passphrase'
 import { TranslateModule} from '@ngx-translate/core';
+import { AlertProvider } from '../../providers/alert/alert';
 
 @NgModule({
     declarations: [
@@ -11,7 +12,8 @@ import { TranslateModule} from '@ngx-translate/core';
         IonicPageModule.forChild(PassphrasePage),
         TranslateModule
     ],
-    entryComponents: [
+    providers:[
+        AlertProvider,
     ],
     exports: [
         PassphrasePage
