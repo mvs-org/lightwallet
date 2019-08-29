@@ -850,6 +850,12 @@
     "HOW_TO_AUTH.STEP3": "使用您的数字身份访问此网站！",
 
     "AUTH.DESCRIPTION_PICTURE": "您可以用MyETPWallet直接扫描请求者的二维码。或者，您也可以在下面的字段中输入请求代码。",
-    "AUTH.ENTER_MANUALLY_BUTTON": "输入请求代码"
+    "AUTH.ENTER_MANUALLY_BUTTON": "输入请求代码",
+    "AUTH.GET_ON_MOBILE": "获取移动应用",
+
+    "ERR_INVALID_SIGNATURE": "您的签名已被视为无效。 请再试一次。",
+    
+    "ETP_BRIDGE.INFORMATION_WARNING": "SWFT速币电报客服绝不会要求用户将任何资金转到订单详细信息的充值地址以外的地址，不需要有关订单的详细信息。订单ID就让客服查找订单的足够信息。"
+
 
 }
