@@ -6,6 +6,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { TranslateModule} from '@ngx-translate/core';
 import { AlertProvider } from '../../providers/alert/alert';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+import { ElasticModule } from 'angular2-elastic';
 
 @NgModule({
     declarations: [
@@ -14,6 +15,7 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
     imports: [
         IonicPageModule.forChild(AuthPage),
         TranslateModule,
+        ElasticModule,
     ],
     providers:[
         BarcodeScanner,

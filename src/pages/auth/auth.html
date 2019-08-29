@@ -45,7 +45,7 @@
 
         <ion-item *ngIf="!isApp || manualEnterMobile" [ngClass]="{'error-border':!validAuthToken(token), 'valid-border': validAuthToken(token)}">
             <ion-label floating>{{"AUTH.INPUT_LABEL" | translate}}</ion-label>
-            <ion-input name="token" [(ngModel)]="token"></ion-input>
+            <ion-textarea fz-elastic ion-input rows="1" full type="text" class="textbox" [(ngModel)]="token" name="token"></ion-textarea>
         </ion-item>
 
         <ion-row *ngIf="!isApp || manualEnterMobile">
