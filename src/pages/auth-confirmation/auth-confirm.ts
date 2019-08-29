@@ -22,6 +22,7 @@ export class AuthConfirmPage {
     loading: Loading;
     avatars: Array<string> = []
     avatars_address: any = {}
+    originalToken: string
     verifiedToken: any
     sourceSignature: string
 
@@ -37,9 +38,11 @@ export class AuthConfirmPage {
         private alert: AlertProvider,
     ) {
 
+        this.originalToken = this.navParams.get('token')
+
         this.loadAvatars()
             .then(() => {
-                this.check(this.navParams.get('token'))
+                this.check(this.originalToken)
             })
 
     }
@@ -112,16 +115,16 @@ export class AuthConfirmPage {
 
     }
 
-    signAndSend(token, passphrase) {
+    signAndSend(passphrase) {
 
         this.alert.showLoading()
         this.wallet.getWallet(passphrase)
             .then(wallet => wallet.findDeriveNodeByAddess(this.avatars_address[this.verifiedToken.target], 200))
-            .then(node => Message.signPK(token, node.keyPair.d.toBuffer(32), node.keyPair.compressed, this.verifiedToken.target))
+            .then(node => Message.signPK(this.originalToken, node.keyPair.d.toBuffer(32), node.keyPair.compressed, this.verifiedToken.target))
             .then(signature => this.auth.confirm(this.verifiedToken.callback, signature.toString('hex')).toPromise())
             .then(response => {
                 this.alert.stopLoading()
-                this.navCtrl.pop()
+                this.navCtrl.setRoot("AccountPage")
                 this.alert.showMessage('MESSAGE.AUTH_SIGNIN_SUCCESSFUL_TITLE', 'MESSAGE.AUTH_SIGNIN_SUCCESSFUL_BODY', '')
             })
             .catch((error) => {

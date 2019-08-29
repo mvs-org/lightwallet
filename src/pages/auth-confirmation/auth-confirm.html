@@ -86,8 +86,8 @@
         <ion-row>
             <ion-col>
                 <button type="submit" ion-button full [disabled]="!signForm.form.valid||!validPassword(passphrase)||(sourceSignature == '' && !no_sig_agreed)"
-                    (click)="signAndSend(token, passphrase)" icon-left color="secondary">
-                    <ion-icon disabled="!validAuthToken(token)" name="cog"></ion-icon>
+                    (click)="signAndSend(passphrase)" icon-left color="secondary">
+                    <ion-icon name="cog"></ion-icon>
                     {{'CHECK'|translate}}
                 </button>
             </ion-col>
