@@ -24,6 +24,8 @@
 
         <tx-item *ngIf="displayedTx" [tx]="displayedTx" [hexTx]="hexTx" [mode]="mode" [signStatus]="signStatus"></tx-item>
 
+        <ion-item *ngIf="!allMyInputs" no-lines class="wrong-input">{{"TX.INPUTS_NOT_ALL_MINE" | translate}}</ion-item>
+
         <ion-item *ngIf="signStatus != 'SIGNED'" [ngClass]="{'error-border': !validPassword(passphrase)}">
             <ion-label color="primary" floating>{{"PASSWORD" | translate}}</ion-label>
             <ion-input name="passphrase" type="password" [(ngModel)]="passphrase" required></ion-input>
