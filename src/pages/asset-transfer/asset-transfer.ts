@@ -198,12 +198,14 @@ export class AssetTransferPage {
                             (this.showAdvanced && messages !== []) ? messages : undefined
                         )
                     default:
+                        this.alert.stopLoading()
                         this.alert.showError('MESSAGE.UNKNOWN_TX_TYPE', '')
                         return 0
                 }
             })
             .catch((error) => {
                 console.error(error.message)
+                this.alert.stopLoading()
                 switch(error.message){
                     case "ERR_DECRYPT_WALLET":
                         this.alert.showError('MESSAGE.PASSWORD_WRONG', '')

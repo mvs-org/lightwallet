@@ -146,6 +146,7 @@ export class EthSwapPage {
             })
             .catch((error) => {
                 console.error(error.message)
+                this.alert.stopLoading()
                 switch(error.message){
                     case "ERR_DECRYPT_WALLET":
                         this.alert.showError('MESSAGE.PASSWORD_WRONG', '')

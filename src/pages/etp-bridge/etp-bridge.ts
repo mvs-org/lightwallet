@@ -91,9 +91,9 @@ export class EtpBridgePage {
         });
     }
 
-    async loadOrders(){
-      this.orders = await this.etpBridgeService.getOrders()
-      return this.orders
+    async loadOrders() {
+        this.orders = await this.etpBridgeService.getOrders()
+        return this.orders
     }
 
     createOrder() {
@@ -145,24 +145,10 @@ export class EtpBridgePage {
         }
     }
 
-    create() {
-        return this.alert.showLoading()
-            .then(() => {
-            })
-            .catch((error) => {
-                console.error(error.message)
-                switch (error.message) {
-                    default:
-                        this.alert.showError('MESSAGE.CREATE_TRANSACTION', error.message)
-                        throw Error('ERR_CREATE_TX')
-                }
-            })
-    }
-
     changeDepositSymbol(newSymbol: string) {
         if (!this.etpBridgeService.isMetaverseSymbol(newSymbol) && !this.etpBridgeService.isMetaverseSymbol(this.createOrderParameters.receiveSymbol)) {
             this.createOrderParameters.receiveSymbol = "ETP"
-        } else if (newSymbol === this.createOrderParameters.receiveSymbol){
+        } else if (newSymbol === this.createOrderParameters.receiveSymbol) {
             this.createOrderParameters.receiveSymbol = this.createOrderParameters.depositSymbol
         }
         this.createOrderParameters.depositSymbol = newSymbol
@@ -172,7 +158,7 @@ export class EtpBridgePage {
     changeReceiveSymbol(newSymbol: string) {
         if (!this.etpBridgeService.isMetaverseSymbol(newSymbol) && !this.etpBridgeService.isMetaverseSymbol(this.createOrderParameters.depositSymbol)) {
             this.createOrderParameters.depositSymbol = "ETP"
-        } else if (newSymbol === this.createOrderParameters.depositSymbol){
+        } else if (newSymbol === this.createOrderParameters.depositSymbol) {
             this.createOrderParameters.depositSymbol = this.createOrderParameters.receiveSymbol
         }
         this.createOrderParameters.receiveSymbol = newSymbol
@@ -231,8 +217,8 @@ export class EtpBridgePage {
     validDepositAmount = () => this.bridgeRate && this.createOrderParameters.depositAmount >= this.bridgeRate.depositMin && this.createOrderParameters.depositAmount <= this.bridgeRate.depositMax
 
     validAddress = (address, symbol) => {
-        if(address === undefined || address == "") return false
-        if(this.etpBridgeService.isMetaverseSymbol(symbol)){
+        if (address === undefined || address == "") return false
+        if (this.etpBridgeService.isMetaverseSymbol(symbol)) {
             return this.mvs.validAddress(address)
         }
         return true
