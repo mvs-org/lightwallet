@@ -568,9 +568,9 @@ export class MvsServiceProvider {
         return await this.setAssetOrder(order)
     }
 
-    async sign(transaction: string, passphrase: string) {
+    async sign(transaction: string, passphrase: string, throwWhenUnknown: boolean = true) {
         const wallet = await this.wallet.getWallet(passphrase)
-        const signed = await wallet.sign(transaction)
+        const signed = await wallet.sign(transaction, throwWhenUnknown)
         return signed
     }
 
@@ -686,24 +686,34 @@ export class MvsServiceProvider {
         return this.blockchain.cert.get(symbol, type)
     }
 
+    getOutput(hash, index) {
+        return this.blockchain.output.get(hash, index)
+    }
+
     async decodeTx(rawtx) {
         const network = await this.globals.getNetwork()
         let tx = Metaverse.transaction.decode(rawtx, network);
         let transactions = await this.getTxs()
-        tx.inputs.forEach(input => {
+        for (let i = 0; i < tx.inputs.length; i++) {
+            let input = tx.inputs[i]
             let found = false
+            let previous_output
             transactions.forEach(t => {
                 if (input.previous_output.hash == t.hash) {
                     found = true
-                    input.previous_output.script = t.outputs[input.previous_output.index].script
-                    input.previous_output.address = t.outputs[input.previous_output.index].address
-                    input.previous_output.value = t.outputs[input.previous_output.index].value
-                    input.previous_output.attachment = t.outputs[input.previous_output.index].attachment
-                    input.address = input.previous_output.address
+                    previous_output = t.outputs[input.previous_output.index]
                 }
             })
-            if (!found) throw `Error finding previous output script for ${input.previous_output.hash}-${input.previous_output.index}`
-        })
+            if (!found) {
+                previous_output = await this.getOutput(input.previous_output.hash, input.previous_output.index)
+            }
+            input.previous_output.script = previous_output.script
+            input.previous_output.address = previous_output.address
+            input.previous_output.value = previous_output.value
+            input.previous_output.attachment = previous_output.attachment
+            input.address = input.previous_output.address
+            tx.inputs[i] = input
+        }
         return tx
     }
 

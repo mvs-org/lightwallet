@@ -175,6 +175,7 @@ export class AssetIssuePage {
             ))
             .catch((error) => {
                 console.error(error)
+                this.alert.stopLoading()
                 if (error.message == "ERR_INSUFFICIENT_BALANCE")
                     this.alert.showError('MESSAGE.ISSUE_INSUFFICIENT_BALANCE', '')
                 else
