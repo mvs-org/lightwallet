@@ -22,6 +22,7 @@ export class ConfirmTxPage {
     signedTx: string
     mode: string = 'default'
     signStatus: string
+    allMyInputs: boolean = true
 
     constructor(
         public navCtrl: NavController,
@@ -98,7 +99,7 @@ export class ConfirmTxPage {
     }
 
     sign() {
-        return this.mvs.sign(this.decodedTx, this.passphrase)
+        return this.mvs.sign(this.decodedTx, this.passphrase, this.allMyInputs)
             .catch((error) => {
                 console.error(error.message)
                 switch (error.message) {
@@ -121,14 +122,20 @@ export class ConfirmTxPage {
             })
     }
 
-    checkTxSignStatus(tx) {
+    async checkTxSignStatus(tx) {
         let foundSignedInput = false
         let foundUnisgnedInput = false
+        const myAddresses = await this.mvs.getAddresses()
         tx.inputs.forEach(input => {
             if(input.script) {
                 foundSignedInput = true
             } else {
                 foundUnisgnedInput = true
+            }
+
+            if(myAddresses.indexOf(input.previous_output.address) == -1) {
+                this.allMyInputs = false
+                console.log("Some inputs are not mine!!!")
             }
         });
         if (foundSignedInput && !foundUnisgnedInput) {
