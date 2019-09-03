@@ -52,6 +52,7 @@
     "cordova-plugin-statusbar": "^2.4.2",
     "cordova-plugin-whitelist": "^1.3.3",
     "crypto-js": "^3.1.9-1",
+    "hammerjs": "^2.0.8",
     "ionic-angular": "3.6.1",
     "ionic-plugin-keyboard": "^2.2.1",
     "ionicons": "3.0.0",
