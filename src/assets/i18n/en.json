@@ -740,5 +740,7 @@
     "ERR_INVALID_SIGNATURE": "Your signature has been recognized as invalid. Please try again.",
     "ETP_BRIDGE.INFORMATION_WARNING": "The SWFT telegram support will never ask a user to send any funds to addresses other than the deposit address of the order details. Details about the order should not be necessary. The order id should be enough information for the support to find the order.",
     "RETURN": "Return",
-    "REORDER.TITLE": "Reorder your MSTs"
+    "REORDER.TITLE": "Reorder your MSTs",
+    "MULTISIGNATURE_ADD.OWN_PUBLICKEY_ALREADY_ADDED": "Your own public key will be automatically added, please don't add it a second time",
+    "MULTISIGNATURE_ADD.PUBLIC_KEY_TWICE": "Duplicate public key. Please enter each public key only once."
 }
