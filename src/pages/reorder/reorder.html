@@ -3,15 +3,14 @@
         <button ion-button menuToggle>
             <ion-icon name="menu"></ion-icon>
         </button>
-        <ion-title>{{'REORDER'|translate}}</ion-title>
+        <ion-title>{{'REORDER.TITLE'|translate}}</ion-title>
     </ion-navbar>
 </ion-header>
 
 <ion-content padding>
     <ion-list>
-        <ion-list-header>MST</ion-list-header>
         <ion-item-group reorder="true" (ionItemReorder)="$event.applyTo(assetOrder)">
-            <ion-item *ngFor="let symbol of assetOrder">
+            <ion-item *ngFor="let symbol of assetOrder" [ngClass]="{'hidden-asset':!isVisible(symbol)}">
                 <ion-avatar item-start>
                     <img class="coinlogo" [src]="'assets/icon/'+icons[symbol]+'.png'" (error)="errorImg($event)" [ngClass]="{'default-logo': icon == 'default_mst'}">
                 </ion-avatar>
