@@ -47,6 +47,10 @@
                     </ion-col>
                 </ng-container>
             </ion-row>
+            <button ion-button icon-left (click)="reorder()">
+                <ion-icon name="reorder"></ion-icon>
+                <span [translate]="'REORDER'"></span>
+            </button>
             <br>
             <h2 [translate]="'HEADLINE_MIT'"></h2>
             <div *ngIf="balances!=undefined&&balances.MIT.length==0" [translate]="'NO_MIT_TEXT'"></div>

@@ -1,0 +1,38 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>{{'REORDER'|translate}}</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-list>
+        <ion-list-header>MST</ion-list-header>
+        <ion-item-group reorder="true" (ionItemReorder)="$event.applyTo(assetOrder)">
+            <ion-item *ngFor="let asset of assetOrder">
+                <ion-avatar item-start>
+                    <img class="coinlogo" [src]="'assets/icon/'+icons[asset]+'.png'" (error)="errorImg($event)" [ngClass]="{'default-logo': icon == 'default_mst'}">
+                </ion-avatar>
+                {{asset}}
+            </ion-item>
+        </ion-item-group>
+    </ion-list>
+
+    <ion-row>
+        <ion-col>
+            <button type="submit" ion-button full icon-left [disabled]="compareArray(assetOrder, originalAssetOrder)" (click)="save(assetOrder)" color="secondary">
+                <ion-icon name="save"></ion-icon>
+                {{'SAVE'|translate}}
+            </button>
+        </ion-col>
+        <ion-col>
+            <button ion-button color="danger" full item-right icon-left (click)="cancel($event)">
+                <ion-icon name="close"></ion-icon>
+                {{'CANCEL'|translate}}
+            </button>
+        </ion-col>
+    </ion-row>
+    
+</ion-content>

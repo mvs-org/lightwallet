@@ -263,4 +263,6 @@ export class AccountPage {
             })
     }
 
+    reorder = () => this.nav.push("ReorderPage")
+
 }

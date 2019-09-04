@@ -559,6 +559,15 @@ export class MvsServiceProvider {
             .then(() => this.assetOrder())
     }
 
+    setHiddenMst(hiddenMstList) {
+        return this.storage.set('hidden_mst', hiddenMstList)
+    }
+
+    getHiddenMst() {
+        return this.storage.get('hidden_mst')
+            .then((hiddenMstList) => (hiddenMstList) ? hiddenMstList : [])
+    }
+
     async addAssetsToAssetOrder(names: string[]) {
         let order = await this.assetOrder()
         names.forEach(symbol => {
