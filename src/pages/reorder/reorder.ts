@@ -13,8 +13,8 @@ export class ReorderPage {
 
     assetOrder: Array<string>
     originalAssetOrder: Array<string>
-    hiddenAsset: Array<string>
-    originalHiddenAsset: Array<string>
+    hiddenAsset: Array<string> = []
+    originalHiddenAsset: Array<string> = []
     icons: any = {}
     reordered: boolean = false
 
@@ -43,15 +43,16 @@ export class ReorderPage {
             })
     }
 
-    save(assetOrder) {
-        this.mvs.setAssetOrder(assetOrder)
-            .then(() => this.originalAssetOrder = this.assetOrder)
+    async save(assetOrder) {
+        await this.mvs.setAssetOrder(assetOrder)
+        await this.mvs.setHiddenMst(this.hiddenAsset)
+        this.navCtrl.pop()
     }
 
     compareArray(array1, array2) {
-        if(array1 && array2 && array1.length === array2.length) {
-            for(let i=0; i<array1.length; i++) {
-                if(array1[i] !== array2[i]) {
+        if (array1 && array2 && array1.length === array2.length) {
+            for (let i = 0; i < array1.length; i++) {
+                if (array1[i] !== array2[i]) {
                     return false
                 }
             }
@@ -65,6 +66,21 @@ export class ReorderPage {
         e.preventDefault()
         this.navCtrl.pop()
     }
+
+    show(symbol) {
+        for (let i = 0; i < this.hiddenAsset.length; i++) {
+            if (this.hiddenAsset[i] === symbol) {
+                this.hiddenAsset.splice(i, 1);
+                i--;
+            }
+        }
+    }
+
+    hide(symbol) {
+        this.hiddenAsset.push(symbol)
+    }
+
+    isVisible = symbol => !this.hiddenAsset || this.hiddenAsset.indexOf(symbol) == -1
 
     errorImg = e => e.target.remove()
 

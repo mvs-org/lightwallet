@@ -18,8 +18,10 @@
                 <span [translate]="'LOGOUT'"></span>
             </button>
             <button ion-button icon-left>
-                <span *ngIf="platform.is('mobile')&&platform.is('ios')&&!isSyncing()" class="block-iPhone">{{height}} <ion-icon name="cube"></ion-icon></span>
-                <span *ngIf="!(platform.is('mobile')&&platform.is('ios'))"><span [translate]="'HEIGHT'"></span>: {{height}}</span>
+                <span *ngIf="platform.is('mobile')&&platform.is('ios')&&!isSyncing()" class="block-iPhone">{{height}}
+                    <ion-icon name="cube"></ion-icon></span>
+                <span *ngIf="!(platform.is('mobile')&&platform.is('ios'))"><span [translate]="'HEIGHT'"></span>:
+                    {{height}}</span>
             </button>
         </ion-buttons>
     </ion-navbar>
@@ -43,14 +45,20 @@
             <ion-row *ngIf="balances!=undefined">
                 <ng-container *ngFor="let asset of balancesKeys" class="asset-container">
                     <ion-col *ngIf="balances.MST[asset]!==undefined" class="asset-container">
-                        <mst-card [balance]="balances.MST[asset]" [symbol]="asset" [theme]="theme" [icon]="icons[asset]" [swap]="whitelist.indexOf(asset) > -1"></mst-card>
+                        <mst-card [balance]="balances.MST[asset]" [symbol]="asset" [theme]="theme" [icon]="icons[asset]"
+                            [swap]="whitelist.indexOf(asset) > -1"></mst-card>
                     </ion-col>
                 </ng-container>
             </ion-row>
-            <button ion-button icon-left (click)="reorder()">
-                <ion-icon name="reorder"></ion-icon>
-                <span [translate]="'REORDER'"></span>
-            </button>
+            <ion-row>
+                <br>
+                <ion-col>
+                    <button col-12 offset-sm-6 col-sm-6 offset-md-8 col-md-4 offset-lg-10 col-lg-2 ion-button icon-left item-end (click)="reorder()">
+                        <ion-icon name="reorder"></ion-icon>
+                        <span [translate]="'REORDER'"></span>
+                    </button>
+                </ion-col>
+            </ion-row>
             <br>
             <h2 [translate]="'HEADLINE_MIT'"></h2>
             <div *ngIf="balances!=undefined&&balances.MIT.length==0" [translate]="'NO_MIT_TEXT'"></div>
