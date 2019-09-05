@@ -21,7 +21,7 @@
         <ion-list style="padding-bottom: 0;">
             <ion-item [ngClass]="{'error-border':!validSymbol(symbol)}">
                 <ion-label color="primary" floating>{{"CREATE_AVATAR.SYMBOL" | translate}}</ion-label>
-                <ion-input name="symbol" [(ngModel)]="symbol" maxlength="63" (ngModelChange)="symbolChanged($event)" required></ion-input>
+                <ion-input name="symbol" [(ngModel)]="symbol" maxlength="63" (ngModelChange)="symbolChanged(symbol)" required></ion-input>
             </ion-item>
             <div no-lines class="advice">{{"HELP.CREATE_AVATAR_NAME" | translate}}</div>
             <ion-item *ngIf="symbol.length > 0 && symbol.length < 3" no-lines class="wrong-input">{{"CREATE_AVATAR.AVATAR_NAME_TOO_SHORT" | translate}}</ion-item>

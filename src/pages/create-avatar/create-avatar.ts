@@ -139,17 +139,16 @@ export class CreateAvatarPage {
 
     validMessageLength = (message) => this.mvs.verifyMessageSize(message) < 253
 
-    symbolChanged = () => {
-        if (this.symbol && this.symbol.length >= 3) {
-            this.symbol = this.symbol.trim()
-            this.mvs.getGlobalAvatar(this.symbol)
-                .then(result => {
-                    if (!result) {
-                        this.available_symbol = true
-                    } else if (this.symbol != result[1]) {
-                        throw ''
+    symbolChanged = (symbol) => {
+        symbol = symbol.trim()
+        this.symbol = symbol
+        if (symbol && symbol.length >= 3) {
+            this.mvs.getAvatarAvailable(symbol)
+                .then(available => {
+                    if (this.symbol != symbol) {
+                        return
                     } else {
-                        this.available_symbol = false
+                        this.available_symbol = available
                     }
                 })
                 .catch((e) => {
