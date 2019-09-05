@@ -47,10 +47,27 @@ export class MvsServiceProvider {
                 if (result.utxo.length > 676) {
                     throw Error('ERR_TOO_MANY_INPUTS');
                 }
-                //Set change address to first utxo's address
-                if (change_address == undefined)
-                    change_address = result.utxo[0].address;
-                return Metaverse.transaction_builder.send(result.utxo, recipient_address, recipient_avatar, target, change_address, result.change, result.lockedAssetChange, fee, messages);
+                //Set etp change address to the first utxo's address with etp
+                let etp_change_address = change_address
+                if (etp_change_address == undefined) {
+                    result.utxo.forEach(utxo => {
+                        if (utxo.value !== 0) {
+                            etp_change_address = utxo.address
+                            return
+                        }
+                    });
+                }
+                //Set mst change address to first utxo's address with this mst
+                let mst_change_address = change_address
+                if (mst_change_address == undefined && asset != 'ETP') {
+                    result.utxo.forEach(utxo => {
+                        if (utxo.attachment.symbol == asset) {
+                            mst_change_address = utxo.address
+                            return
+                        }
+                    });
+                }
+                return Metaverse.transaction_builder.send(result.utxo, recipient_address, recipient_avatar, target, etp_change_address, result.change, result.lockedAssetChange, fee, messages, mst_change_address);
             })
             .catch((error) => {
                 console.error(error)
@@ -585,7 +602,7 @@ export class MvsServiceProvider {
 
     send = async (tx) => {
         tx.inputs.forEach((input) => {
-            if(typeof input.script == 'string') {
+            if (typeof input.script == 'string') {
                 input.script = Metaverse.script.fromASM(input.script).chunks
             }
         })
