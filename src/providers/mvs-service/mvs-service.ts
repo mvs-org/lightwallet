@@ -482,7 +482,7 @@ export class MvsServiceProvider {
 
     dataReset() {
         console.info('reset data')
-        return Promise.all(['mvs_last_tx_height', 'mvs_height', 'utxo', 'last_update', 'addressbalances', 'balances', 'mvs_txs', 'asset_order'].map((key) => this.storage.remove(key)))
+        return Promise.all(['mvs_last_tx_height', 'mvs_height', 'utxo', 'last_update', 'addressbalances', 'balances', 'mvs_txs'].map((key) => this.storage.remove(key)))
     }
 
     async getNewTxs(addresses: Array<string>, lastKnownHeight: number): Promise<any> {
