@@ -58,6 +58,7 @@ export class AssetTransferPage {
     isApp: boolean
     showAdvanced: boolean = false
     locktime: number
+    addressbalancesObject: any = {}
 
     constructor(
         public navCtrl: NavController,
@@ -85,19 +86,20 @@ export class AssetTransferPage {
 
         //Load addresses and balances
         Promise.all([this.mvs.getBalances(), this.mvs.getAddresses(), this.mvs.getAddressBalances()])
-            .then(([balances, addresses, addressbalances]) => {
+            .then(([balances, addresses, addressbalancesObject]) => {
                 let balance = (this.selectedAsset == 'ETP') ? balances.ETP : balances.MST[this.selectedAsset]
                 this.balance = (balance && balance.available) ? balance.available : 0
                 this.decimals = balance.decimals
                 this.etpBalance = balances.ETP.available
                 this.showBalance = this.balance
                 this.addresses = addresses
+                this.addressbalancesObject = addressbalancesObject
 
                 let addrblncs = []
                 Object.keys(addresses).forEach((index) => {
                     let address = addresses[index]
-                    if (addressbalances[address]) {
-                        addrblncs.push({ "address": address, "avatar": addressbalances[address].AVATAR ? addressbalances[address].AVATAR : "", "identifier": addressbalances[address].AVATAR ? addressbalances[address].AVATAR : address, "balance": this.selectedAsset == 'ETP' ? addressbalances[address].ETP.available : addressbalances[address].MST[this.selectedAsset] ? addressbalances[address].MST[this.selectedAsset].available : 0})
+                    if (addressbalancesObject[address]) {
+                        addrblncs.push({ "address": address, "avatar": addressbalancesObject[address].AVATAR ? addressbalancesObject[address].AVATAR : "", "identifier": addressbalancesObject[address].AVATAR ? addressbalancesObject[address].AVATAR : address, "balance": this.selectedAsset == 'ETP' ? addressbalancesObject[address].ETP.available : addressbalancesObject[address].MST[this.selectedAsset] ? addressbalancesObject[address].MST[this.selectedAsset].available : 0})
                     } else {
                         addrblncs.push({ "address": address, "avatar": "", "identifier": address, "balance": 0 })
                     }
@@ -257,6 +259,8 @@ export class AssetTransferPage {
     validaddress = this.mvs.validAddress
 
     validAvatar = (input: string) => /[A-Za-z0-9.-]/.test(input) && this.recipient_avatar_valid
+
+    validFromAddress = (address: string) => address == 'auto' || (this.addressbalancesObject[address] && this.addressbalancesObject[address].ETP.available !== 0)
 
     validSendMoreAvatar = (input: string, index: number) => /[A-Za-z0-9.-]/.test(input) && this.sendMoreValidEachAvatar[index]
 

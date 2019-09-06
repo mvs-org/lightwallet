@@ -57,7 +57,7 @@
                 </button>
             </ion-item>
             <br>
-            <ion-item>
+            <ion-item [ngClass]="{'error-border':!validFromAddress(sendFrom)}">
                 <ion-label>{{"SELECT_FROM_ADDRESS"|translate}}</ion-label>
                 <ion-select [(ngModel)]="sendFrom" name="sendfrom" multiple="false" (ngModelChange)="onFromAddressChange($event)" okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}">
                     <ion-option selected="true" value="auto">{{"AUTO"| translate}}</ion-option>
@@ -66,6 +66,7 @@
                     </ng-container>
                 </ion-select>
             </ion-item>
+            <ion-item *ngIf="!validFromAddress(sendFrom)" no-lines class="wrong-input">{{"TRANSFER.FROM_ADDRESS_NO_ETP" | translate}}</ion-item>
             <br>
             <ion-item>
                 <ion-label>{{"SHOW_ADVANCED"|translate}}</ion-label>
@@ -106,7 +107,7 @@
         </ion-list>
         <ion-row class="padding-bottom">
             <ion-col>
-                <button type="submit" ion-button full icon-left [disabled]="!sendForm.form.valid||!validaddress(recipient_address)||!validQuantity(quantity)||!validMessageLength(message)||(lock && !attenuation_model)" (click)="send()" color="secondary">
+                <button type="submit" ion-button full icon-left [disabled]="!sendForm.form.valid||!validaddress(recipient_address)||!validQuantity(quantity)||!validMessageLength(message)||(lock && !attenuation_model)||!validFromAddress(sendFrom)" (click)="send()" color="secondary">
                     <ion-icon disabled="checked" name="cog"></ion-icon>
                     {{'NEXT'|translate}}
                 </button>
@@ -185,13 +186,16 @@
             </ion-item>
             <ion-item *ngIf="total > showBalance" no-lines class="wrong-input">{{"SEND_MORE.TOTAL_MORE_AVAILABLE" | translate}}</ion-item>
             <br>
-            <ion-item>
+            <ion-item [ngClass]="{'error-border':!validFromAddress(sendFrom)}">
                 <ion-label>{{"SELECT_FROM_ADDRESS"|translate}}</ion-label>
                 <ion-select [(ngModel)]="sendFrom" name="sendfrom" multiple="false" (ngModelChange)="onFromAddressChange($event)" okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}">
                     <ion-option selected="true" value="auto">{{"AUTO"| translate}}</ion-option>
-                    <ion-option *ngFor="let addressbalance of addressbalances" value="{{addressbalance.address}}">{{addressbalance.identifier}} - {{addressbalance.balance | format : decimals}} {{selectedAsset}}</ion-option>
+                    <ng-container *ngFor="let addressbalance of addressbalances">
+                        <ion-option *ngIf="addressbalance.balance>0" value="{{addressbalance.address}}">{{addressbalance.identifier}} - {{addressbalance.balance | format : decimals}} {{selectedAsset}}</ion-option>
+                    </ng-container>
                 </ion-select>
             </ion-item>
+            <ion-item *ngIf="!validFromAddress(sendFrom)" no-lines class="wrong-input">{{"TRANSFER.FROM_ADDRESS_NO_ETP" | translate}}</ion-item>
 
             <ion-item>
                 <ion-label>{{"SHOW_ADVANCED"|translate}}</ion-label>
@@ -222,7 +226,7 @@
         </ion-list>
         <ion-row class="padding-bottom">
             <ion-col>
-                <button type="submit" ion-button full icon-left [disabled]="!sendForm.form.valid||!sendMoreValidQuantity||!sendMoreValidAddress||total > showBalance||!validMessageLength(message)" (click)="send()" color="secondary">
+                <button type="submit" ion-button full icon-left [disabled]="!sendForm.form.valid||!sendMoreValidQuantity||!sendMoreValidAddress||total > showBalance||!validMessageLength(message)||!validFromAddress(sendFrom)" (click)="send()" color="secondary">
                     <ion-icon disabled="checked" name="cog"></ion-icon>
                     {{'NEXT' | translate}}
                 </button>

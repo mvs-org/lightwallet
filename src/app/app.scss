@@ -29,13 +29,13 @@
     padding-top: 21px !important;
 }
 
-.item.error-border .item-inner {
+.item.error-border .item-inner, .item.item-select .error-border .item-cover {
     border-bottom-color: red !important;
     -webkit-box-shadow: inset 0 -1px 0 0 red !important;
     box-shadow: red !important;
 }
 
-.item.warning-border .item-inner {
+.item.warning-border .item-inner, .item.item-select .warning-border .item-cover {
     border-bottom-color: orange !important;
     -webkit-box-shadow: inset 0 -1px 0 0 orange !important;
     box-shadow: orange !important;

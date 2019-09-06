@@ -742,5 +742,6 @@
     "RETURN": "Return",
     "REORDER.TITLE": "Reorder your MSTs",
     "MULTISIGNATURE_ADD.OWN_PUBLICKEY_ALREADY_ADDED": "Your own public key will be automatically added, please don't add it a second time",
-    "MULTISIGNATURE_ADD.PUBLIC_KEY_TWICE": "Duplicate public key. Please enter each public key only once."
+    "MULTISIGNATURE_ADD.PUBLIC_KEY_TWICE": "Duplicate public key. Please enter each public key only once.",
+    "TRANSFER.FROM_ADDRESS_NO_ETP": "This address doesn't have any ETP. Please add ETP to this address or use the Automatic option."
 }
