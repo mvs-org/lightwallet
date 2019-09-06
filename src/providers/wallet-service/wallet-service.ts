@@ -340,11 +340,12 @@ export class WalletServiceProvider {
     }
 
     getAccountParams() {
-        return Promise.all([this.storage.get('asset_order'), this.storage.get('hidden_mst')])
-            .then(([asset_order, hidden_mst]) => {
+        return Promise.all([this.storage.get('asset_order'), this.storage.get('hidden_mst'), this.storage.get('plugins')])
+            .then(([asset_order, hidden_mst, plugins]) => {
                 let params = {}
                 params['asset_order'] = asset_order ? asset_order : []
                 params['hidden_mst'] = hidden_mst ? hidden_mst : []
+                params['plugins'] = plugins ? plugins : []
                 return params
             })
     }
@@ -356,6 +357,9 @@ export class WalletServiceProvider {
             }
             if (params.hidden_mst) {
                 await this.storage.set('hidden_mst', params.hidden_mst)
+            }
+            if (params.plugins) {
+                await this.storage.set('plugins', params.plugins)
             }
         }
     }
