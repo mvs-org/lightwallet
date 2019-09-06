@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, SimpleChanges } from '@angular/core';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { AppGlobals } from '../../app/app.global';
 
@@ -36,6 +36,24 @@ export class TxItemComponent {
 
     async ngAfterViewInit() {
 
+        this.myAddresses = await this.mvs.getAddresses()
+
+        this.inputChange()
+
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        this.inputChange()
+    }
+
+    inputChange() {
+
+        this.totalInputs = { ETP: 0, MST: {} }
+        this.totalOutputs = { ETP: 0, MST: {} }
+        this.totalPersonalInputs = { ETP: 0, MST: {} }
+        this.totalPersonalOutputs = { ETP: 0, MST: {} }
+        this.txFee = 0
+
         const TX_TYPE_ETP = 'ETP';
         const TX_TYPE_ETP_LOCK = 'ETP_LOCK';
         const TX_TYPE_ETP_LOCK_REWARD = 'ETP_LOCK_REWARD';
@@ -51,7 +69,6 @@ export class TxItemComponent {
         const TX_TYPE_MST_MINING = 'MST_MINING';
         const TX_TYPE_UNKNOWN = 'UNKNOWN'
 
-        this.myAddresses = await this.mvs.getAddresses()
         this.tx.inputs.forEach((input) => {
             if (input.previous_output.attachment && (input.previous_output.attachment.type == 'asset-issue' || input.previous_output.attachment.type == 'asset-transfer')) {
                 this.totalInputs.MST[input.previous_output.attachment.symbol] = this.totalInputs.MST[input.previous_output.attachment.symbol] ? this.totalInputs.MST[input.previous_output.attachment.symbol] + input.previous_output.attachment.quantity : input.previous_output.attachment.quantity
@@ -160,7 +177,6 @@ export class TxItemComponent {
         this.txFee += this.totalInputs.ETP - this.totalOutputs.ETP
         if(this.txFee < 0)
             this.txFee = 0
-
     }
 
 }
