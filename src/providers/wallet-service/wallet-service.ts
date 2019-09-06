@@ -309,6 +309,7 @@ export class WalletServiceProvider {
                     "name": account_name,
                     "content": content,
                     "params": params,
+                    "network": this.globals.network,
                     "type": "AES"
                 }
                 old_account_index > -1 ? saved_accounts[old_account_index] = new_account : saved_accounts.push(new_account);

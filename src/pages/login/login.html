@@ -30,12 +30,14 @@
                 </ion-segment-button>
             </ion-segment>
         </ion-row>
-        <ion-row class="browser-button" *ngFor="let account of saved_accounts">
-            <button ion-button class="large-btn account-btn" block full icon-left (click)="LoginAccountPage(account);">
-                <ion-icon name="contact"></ion-icon>
-                {{account.name}}
-            </button>
-        </ion-row>
+        <ng-container *ngFor="let account of saved_accounts">
+            <ion-row class="browser-button" *ngIf="account.network == globals.network || (!account.network && globals.network=='mainnet')">
+                <button ion-button class="large-btn account-btn" block full icon-left (click)="LoginAccountPage(account);">
+                    <ion-icon name="contact"></ion-icon>
+                    {{account.name}}
+                </button>
+            </ion-row>
+        </ng-container>
         <ion-row class="browser-button">
             <button ion-button class="large-btn" block full icon-left (click)="GenerateKeyPage();" id="create-wallet-button">
                 <ion-icon name="add"></ion-icon>
