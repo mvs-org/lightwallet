@@ -1,5 +1,5 @@
 <div>
-    <ion-item no-lines>
+    <ion-item no-lines *ngIf="!toMany">
         <ion-segment [(ngModel)]="type" color="primary" (ngModelChange)="inputChange($event)">
             <ion-segment-button value="simple">
                 {{ "ASSET_LOCK.SIMPLE" | translate}}

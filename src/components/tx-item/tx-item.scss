@@ -1,0 +1,53 @@
+tx-item {
+    .right {
+        text-align: right;
+        width: 100%;
+    }
+    
+    .summaryTxType {
+        color: black;
+        font-size: 20px;
+    }
+
+    .summaryAmount {
+        color: color($colors, primary);
+        font-size: 20px;
+        float: right;
+        width: 100%;
+    }
+    
+    .sendAmount {
+        color: color($colors, danger);
+    }
+    
+    .receiveAmount {
+        color: color($colors, secondary);
+    }
+    
+    .hash {
+        color: black;
+        font-size: 20px;
+    }
+    
+    .txType {
+        font-style: oblique;
+    }
+
+    .fee {
+        color: black;
+        font-size: 16px;
+    }
+
+    .unsigned {
+        color: color($colors, primary);
+    }
+
+    textarea{
+        width:100%;
+        border: 0px !important;
+        resize: none;
+        font-size: 1.8rem;
+        margin: 20px;
+    }
+
+}

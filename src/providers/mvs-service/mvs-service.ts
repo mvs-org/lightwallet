@@ -14,8 +14,7 @@ export class MvsServiceProvider {
     DEFAULT_BALANCES = {
         ETP: { frozen: 0, available: 0, decimals: 8 },
         MST: {
-            "PARCELX.GPX": { frozen: 0, available: 0, decimals: 8 },
-            "RIGHTBTC.RT": { frozen: 0, available: 0, decimals: 4 },
+            "DNA": { frozen: 0, available: 0, decimals: 4 },
             "MVS.ZGC": { frozen: 0, available: 0, decimals: 8 },
             "MVS.ZDC": { frozen: 0, available: 0, decimals: 6 },
             "SDG": { frozen: 0, available: 0, decimals: 8 }
@@ -39,23 +38,20 @@ export class MvsServiceProvider {
             })
     }
 
-    createSendTx(passphrase: string, asset: string, recipient_address: string, recipient_avatar: string, quantity: number, from_address: string, change_address: string, fee: number, messages: Array<string>) {
-        console.log(passphrase, asset, recipient_address, recipient_avatar, quantity, from_address, change_address, fee, messages)
+    createSendTx(asset: string, recipient_address: string, recipient_avatar: string, quantity: number, from_address: string, change_address: string, fee: number, messages: Array<string>) {
         let target = {};
         target[asset] = quantity;
-        return this.wallet.getWallet(passphrase)
-            .then(wallet => this.getUtxoFrom(from_address)
-                .then((utxo) => this.getHeight().then(height => Metaverse.output.findUtxo(utxo, target, height, fee)))
-                .then((result) => {
-                    if (result.utxo.length > 676) {
-                        throw Error('ERR_TOO_MANY_INPUTS');
-                    }
-                    //Set change address to first utxo's address
-                    if (change_address == undefined)
-                        change_address = result.utxo[0].address;
-                    return Metaverse.transaction_builder.send(result.utxo, recipient_address, recipient_avatar, target, change_address, result.change, result.lockedAssetChange, fee, messages);
-                })
-                .then((tx) => wallet.sign(tx)))
+        return this.getUtxoFrom(from_address)
+            .then((utxo) => this.getHeight().then(height => Metaverse.output.findUtxo(utxo, target, height, fee)))
+            .then((result) => {
+                if (result.utxo.length > 676) {
+                    throw Error('ERR_TOO_MANY_INPUTS');
+                }
+                //Set change address to first utxo's address
+                if (change_address == undefined)
+                    change_address = result.utxo[0].address;
+                return Metaverse.transaction_builder.send(result.utxo, recipient_address, recipient_avatar, target, change_address, result.change, result.lockedAssetChange, fee, messages);
+            })
             .catch((error) => {
                 console.error(error)
                 throw Error(error.message);
@@ -84,160 +80,139 @@ export class MvsServiceProvider {
             })
     }
 
-    createSendMoreTx(passphrase: string, target: any, recipients: Array<any>, from_address: string, change_address: string, messages: Array<string>) {
-        return this.wallet.getWallet(passphrase)
-            .then(wallet => this.getUtxoFrom(from_address)
-                .then((utxo) => this.getHeight().then(height => Metaverse.output.findUtxo(utxo, target, height, Metaverse.constants.FEE.DEFAULT * recipients.length)))
-                .then((result) => {
-                    //Set change address to first utxo's address
-                    if (change_address == undefined)
-                        change_address = result.utxo[0].address;
-                    return Metaverse.transaction_builder.sendMore(result.utxo, recipients, change_address, result.change, undefined, Metaverse.constants.FEE.DEFAULT * recipients.length, messages);
-                })
-                .then((tx) => wallet.sign(tx)))
+    createSendMoreTx(target: any, recipients: Array<any>, from_address: string, change_address: string, messages: Array<string>) {
+        return this.getUtxoFrom(from_address)
+            .then((utxo) => this.getHeight().then(height => Metaverse.output.findUtxo(utxo, target, height, Metaverse.constants.FEE.DEFAULT * recipients.length)))
+            .then((result) => {
+                //Set change address to first utxo's address
+                if (change_address == undefined)
+                    change_address = result.utxo[0].address;
+                return Metaverse.transaction_builder.sendMore(result.utxo, recipients, change_address, result.change, undefined, Metaverse.constants.FEE.DEFAULT * recipients.length, messages);
+            })
             .catch((error) => {
                 console.error(error)
                 throw Error(error.message);
             })
     }
 
-    createSendSwapTx(passphrase: string, asset: string, recipient_address: string, recipient_avatar: string, quantity: number, from_address: string, change_address: string, fee: number, messages: Array<string>, swap_fee: number) {
+    createSendSwapTx(asset: string, recipient_address: string, recipient_avatar: string, quantity: number, from_address: string, change_address: string, fee: number, messages: Array<string>, swap_fee: number) {
         let target = {};
         target[asset] = quantity;
-        return this.wallet.getWallet(passphrase)
-            .then(wallet => this.getUtxoFrom(from_address)
-                .then((utxo) => this.getHeight().then(height => Metaverse.output.findUtxo(utxo, target, height, fee + swap_fee)))
-                .then((result) => {
-                    if (result.utxo.length > 676) {
-                        throw Error('ERR_TOO_MANY_INPUTS');
-                    }
-                    //Set change address to first utxo's address
-                    if (change_address == undefined)
-                        change_address = result.utxo[0].address;
-                    return Metaverse.transaction_builder.sendSwap(result.utxo, recipient_address, recipient_avatar, target, change_address, result.change, undefined, fee, this.globals.network, messages, swap_fee);
-                })
-                .then((tx) => wallet.sign(tx)))
+        return this.getUtxoFrom(from_address)
+            .then((utxo) => this.getHeight().then(height => Metaverse.output.findUtxo(utxo, target, height, fee + swap_fee)))
+            .then((result) => {
+                if (result.utxo.length > 676) {
+                    throw Error('ERR_TOO_MANY_INPUTS');
+                }
+                //Set change address to first utxo's address
+                if (change_address == undefined)
+                    change_address = result.utxo[0].address;
+                return Metaverse.transaction_builder.sendSwap(result.utxo, recipient_address, recipient_avatar, target, change_address, result.change, undefined, fee, this.globals.network, messages, swap_fee);
+            })
             .catch((error) => {
                 console.error(error)
                 throw Error(error.message);
             })
     }
 
-    createAssetDepositTx(passphrase: string, recipient_address: string, recipient_avatar: string, symbol: string, quantity: number, attenuation_model: string, from_address: string, change_address: string, fee: number, messages: Array<string>) {
+    createAssetDepositTx(recipient_address: string, recipient_avatar: string, symbol: string, quantity: number, attenuation_model: string, from_address: string, change_address: string, fee: number, messages: Array<string>) {
         let target = { [symbol]: quantity };
-        return this.wallet.getWallet(passphrase)
-            .then(wallet => this.getUtxoFrom(from_address)
-                .then((utxo) => this.getHeight().then(height => Metaverse.output.findUtxo(utxo, target, height, fee)))
-                .then((result) => {
-                    if (result.utxo.length > 676) {
-                        throw Error('ERR_TOO_MANY_INPUTS');
-                    }
-                    //Set change address to first utxo's address
-                    if (change_address == undefined)
-                        change_address = result.utxo[0].address;
-                    if (recipient_address == undefined)
-                        recipient_address = result.utxo[0].address;
-                    return Metaverse.transaction_builder.sendLockedAsset(result.utxo, recipient_address, recipient_avatar, symbol, quantity, attenuation_model, change_address, result.change, undefined, fee, messages);
-                })
-                .then((tx) => wallet.sign(tx)))
+        return this.getUtxoFrom(from_address)
+            .then((utxo) => this.getHeight().then(height => Metaverse.output.findUtxo(utxo, target, height, fee)))
+            .then((result) => {
+                if (result.utxo.length > 676) {
+                    throw Error('ERR_TOO_MANY_INPUTS');
+                }
+                //Set change address to first utxo's address
+                if (change_address == undefined)
+                    change_address = result.utxo[0].address;
+                if (recipient_address == undefined)
+                    recipient_address = result.utxo[0].address;
+                return Metaverse.transaction_builder.sendLockedAsset(result.utxo, recipient_address, recipient_avatar, symbol, quantity, attenuation_model, change_address, result.change, undefined, fee, messages);
+            })
             .catch((error) => {
                 console.error(error)
                 throw Error(error.message);
             })
     }
 
-    createAvatarTx(passphrase: string, avatar_address: string, symbol: string, change_address: string, bounty_fee: number, messages: Array<string>) {
-        return this.wallet.getWallet(passphrase)
-            .then(wallet => this.getUtxoFrom(avatar_address)
-                .then((utxo) => this.getHeight().then(height => Metaverse.output.findUtxo(utxo, {}, height, Metaverse.constants.FEE.AVATAR_REGISTER)))
-                .then((result) => {
-                    //Set change address to first utxo's address
-                    if (change_address == undefined)
-                        change_address = result.utxo[0].address;
-                    return Metaverse.transaction_builder.issueDid(result.utxo, avatar_address, symbol, change_address, result.change, bounty_fee, this.globals.network, messages);
-                })
-                .then((tx) => wallet.sign(tx)))
+    createAvatarTx(avatar_address: string, symbol: string, change_address: string, bounty_fee: number, messages: Array<string>) {
+        return this.getUtxoFrom(avatar_address)
+            .then((utxo) => this.getHeight().then(height => Metaverse.output.findUtxo(utxo, {}, height, Metaverse.constants.FEE.AVATAR_REGISTER)))
+            .then((result) => {
+                //Set change address to first utxo's address
+                if (change_address == undefined)
+                    change_address = result.utxo[0].address;
+                return Metaverse.transaction_builder.issueDid(result.utxo, avatar_address, symbol, change_address, result.change, bounty_fee, this.globals.network, messages);
+            })
             .catch((error) => {
                 console.error(error)
                 throw Error(error.message);
             })
     }
 
-    createRegisterMITTx(passphrase: string, recipient_address: string, recipient_avatar, symbol: string, content: string, change_address: string, fee: number) {
-        return this.wallet.getWallet(passphrase)
-            .then(wallet => this.getUtxoFrom(recipient_address)
-                .then((utxo) => this.getHeight().then(height => Metaverse.output.findUtxo(utxo, {}, height, fee)))
-                .then((result) => {
-                    //Set change address to first utxo's address
-                    if (change_address == undefined)
-                        change_address = result.utxo[0].address;
-                    return Metaverse.transaction_builder.registerMIT(result.utxo, recipient_address, recipient_avatar, symbol, content, change_address, result.change, fee)
-                })
-                .then((tx) => wallet.sign(tx)))
+    createRegisterMITTx(recipient_address: string, recipient_avatar, symbol: string, content: string, change_address: string, fee: number) {
+        return this.getUtxoFrom(recipient_address)
+            .then((utxo) => this.getHeight().then(height => Metaverse.output.findUtxo(utxo, {}, height, fee)))
+            .then((result) => {
+                //Set change address to first utxo's address
+                if (change_address == undefined)
+                    change_address = result.utxo[0].address;
+                return Metaverse.transaction_builder.registerMIT(result.utxo, recipient_address, recipient_avatar, symbol, content, change_address, result.change, fee)
+            })
             .catch((error) => {
                 console.error(error)
                 throw Error(error.message);
             })
     }
 
-    createTransferMITTx(passphrase: string, sender_avatar: string, recipient_address: string, recipient_avatar, symbol: string, fee_address: string, change_address: string, fee: number) {
-        return this.wallet.getWallet(passphrase)
-            .then(wallet => this.getUtxoFrom(fee_address)
-                .then((utxo) => Promise.all([this.getHeight().then(height => Metaverse.output.findUtxo(utxo, {}, height, fee)), this.getUtxo().then(utxo => Metaverse.output.filter(utxo, { type: 'mit', symbol: symbol }))]))
-                .then((result) => {
-                    var fee_utxo = result[0]
-                    var mit_utxo = result[1]
-                    if (mit_utxo.length !== 1)
-                        throw Error('ERR_FIND_MIT')
-                    //Set change address to first utxo's address
-                    if (change_address == undefined)
-                        change_address = fee_utxo.utxo[0].address;
-                    return Metaverse.transaction_builder.transferMIT(fee_utxo.utxo.concat(mit_utxo), sender_avatar, recipient_address, recipient_avatar, symbol, change_address, fee_utxo.change, fee)
-                })
-                .then((tx) => wallet.sign(tx)))
+    createTransferMITTx(sender_avatar: string, recipient_address: string, recipient_avatar, symbol: string, fee_address: string, change_address: string, fee: number) {
+        return this.getUtxoFrom(fee_address)
+            .then((utxo) => Promise.all([this.getHeight().then(height => Metaverse.output.findUtxo(utxo, {}, height, fee)), this.getUtxo().then(utxo => Metaverse.output.filter(utxo, { type: 'mit', symbol: symbol }))]))
+            .then((result) => {
+                var fee_utxo = result[0]
+                var mit_utxo = result[1]
+                if (mit_utxo.length !== 1)
+                    throw Error('ERR_FIND_MIT')
+                //Set change address to first utxo's address
+                if (change_address == undefined)
+                    change_address = fee_utxo.utxo[0].address;
+                return Metaverse.transaction_builder.transferMIT(fee_utxo.utxo.concat(mit_utxo), sender_avatar, recipient_address, recipient_avatar, symbol, change_address, fee_utxo.change, fee)
+            })
             .catch((error) => {
                 console.error(error)
                 throw Error(error.message);
             })
     }
 
-    createIssueAssetTx(passphrase: string, symbol: string, quantity: number, precision: number, issuer: string, description: string, secondaryissue_threshold: number, is_secondaryissue: boolean, issue_address: string, change_address: string, create_new_domain_cert: boolean, use_naming_cert: boolean, bounty_fee: number, attenuation_model: string, mst_mining_model: any) {
+    createIssueAssetTx(symbol: string, quantity: number, precision: number, issuer: string, description: string, secondaryissue_threshold: number, is_secondaryissue: boolean, issue_address: string, change_address: string, create_new_domain_cert: boolean, use_naming_cert: boolean, bounty_fee: number, attenuation_model: string, mst_mining_model: any) {
         return this.getUtxoFrom(issue_address)
-            .then(utxo => {
-                return this.wallet.getWallet(passphrase)
-                    .then((wallet) => {
-                        return this.getHeight().then(height => Metaverse.output.findUtxo(utxo, {}, height, Metaverse.constants.FEE.MST_REGISTER))
-                            .then((result) => {
-                                //Set change address to first utxo's address
-                                if (change_address == undefined)
-                                    change_address = result.utxo[0].address;
-                                let certs = utxo.filter(output => {
-                                    if (use_naming_cert) {
-                                        if (output.attachment.type == "asset-cert" && output.attachment.symbol == symbol && ['naming'].indexOf(output.attachment.cert) !== -1) {
-                                            return true;
-                                        }
-                                        return false;
-                                    } else {
-                                        if (!use_naming_cert && output.attachment.type == "asset-cert" && output.attachment.symbol == symbol.split('.')[0] && output.attachment.cert == 'domain')
-                                            return true;
-                                        else if (output.attachment.type == "asset-cert" && output.attachment.symbol == symbol && ['naming', 'issue'].indexOf(output.attachment.cert) !== -1)
-                                            return true;
-                                        return false;
-                                    }
-                                })
-                                return Metaverse.transaction_builder.issueAsset(result.utxo.concat(certs), issue_address, symbol, quantity, precision, issuer, description, secondaryissue_threshold, is_secondaryissue, change_address, result.change, create_new_domain_cert, bounty_fee, this.globals.network, attenuation_model, mst_mining_model)
-                            })
-                            .then((tx) => wallet.sign(tx))
+            .then(utxo => this.getHeight().then(height => Metaverse.output.findUtxo(utxo, {}, height, Metaverse.constants.FEE.MST_REGISTER))
+                .then((result) => {
+                    //Set change address to first utxo's address
+                    if (change_address == undefined)
+                        change_address = result.utxo[0].address;
+                    let certs = utxo.filter(output => {
+                        if (use_naming_cert) {
+                            if (output.attachment.type == "asset-cert" && output.attachment.symbol == symbol && ['naming'].indexOf(output.attachment.cert) !== -1) {
+                                return true;
+                            }
+                            return false;
+                        } else {
+                            if (!use_naming_cert && output.attachment.type == "asset-cert" && output.attachment.symbol == symbol.split('.')[0] && output.attachment.cert == 'domain')
+                                return true;
+                            else if (output.attachment.type == "asset-cert" && output.attachment.symbol == symbol && ['naming', 'issue'].indexOf(output.attachment.cert) !== -1)
+                                return true;
+                            return false;
+                        }
                     })
-            })
+                    return Metaverse.transaction_builder.issueAsset(result.utxo.concat(certs), issue_address, symbol, quantity, precision, issuer, description, secondaryissue_threshold, is_secondaryissue, change_address, result.change, create_new_domain_cert, bounty_fee, this.globals.network, attenuation_model, mst_mining_model)
+                })
+            )
             .catch((error) => {
                 console.error(error)
                 throw Error(error.message);
             })
-    }
-
-    getNamingCert(symbol) {
-
     }
 
     validAddress = (address: string) => {
@@ -369,8 +344,9 @@ export class MvsServiceProvider {
     }
 
     async getData(): Promise<any> {
-        const addresses = await this.getAddresses()
-        addresses.concat(await this.wallet.getMultisigAddresses())
+        let addresses = await this.getAddresses()
+        const multisigAddresses = await this.wallet.getMultisigAddresses()
+        addresses = addresses.concat(multisigAddresses)
         let newTxs = await this.getNewTxs(addresses, await this.getLastTxHeight())
         while (newTxs && newTxs.length) {
             this.event.publish('last_tx_height_update', await this.getLastTxHeight());
@@ -552,11 +528,11 @@ export class MvsServiceProvider {
     }
 
     private findTxIndexByHash(txs, hash) {
-        txs.forEach((tx, index) => {
-            if (tx.hash === hash) {
-                return index
+        for (let i = 0; i < txs.length; i++) {
+            if (txs[i].hash === hash) {
+                return i
             }
-        })
+        }
         return -1
     }
 
@@ -592,38 +568,22 @@ export class MvsServiceProvider {
         return await this.setAssetOrder(order)
     }
 
+    async sign(transaction: string, passphrase: string, throwWhenUnknown: boolean = true) {
+        const wallet = await this.wallet.getWallet(passphrase)
+        const signed = await wallet.sign(transaction, throwWhenUnknown)
+        return signed
+    }
+
     send = async (tx) => {
+        tx.inputs.forEach((input) => {
+            if(typeof input.script == 'string') {
+                input.script = Metaverse.script.fromASM(input.script).chunks
+            }
+        })
         tx.hash = (await this.broadcast(tx.encode().toString('hex'))).hash
         tx.height = await this.getHeight()
         tx.unconfirmed = true
-        let balances = await this.getBalances()
-        tx.outputs.forEach((output, index) => {
-            output.index = index
-            output.locked_height_range = (output.locktime) ? output.locktime : 0
-            output.locked_until = (output.locktime) ? tx.height + output.locked_height_range : 0
-            switch (output.attachment.type) {
-                case Metaverse.constants.ATTACHMENT.TYPE.MST:
-                    switch (output.attachment.status) {
-                        case Metaverse.constants.MST.STATUS.REGISTER:
-                            output.attachment.type = 'asset-issue';
-                            break;
-                        case Metaverse.constants.MST.STATUS.TRANSFER:
-                            output.attachment.type = 'asset-transfer';
-                            if (balances && balances.MST && balances.MST[output.attachment.symbol])
-                                output.attachment.decimals = balances.MST[output.attachment.symbol].decimals
-                            break;
-                    }
-                    break;
-                case Metaverse.constants.ATTACHMENT.TYPE.MIT:
-                    output.attachment.type = 'mit';
-                    break;
-                case Metaverse.constants.ATTACHMENT.TYPE.ETP_TRANSFER:
-                    output.attachment.type = 'etp';
-                    output.attachment.symbol = 'ETP';
-                    output.attachment.decimals = 8;
-                    break;
-            }
-        })
+        tx = await this.organizeTx(tx)
         return this.addTxs([tx])
             .then(() => this.getData())
             .then(() => tx)
@@ -642,6 +602,10 @@ export class MvsServiceProvider {
         return this.blockchain.suggest.address(prefix)
     }
 
+    suggestMIT(prefix) {
+        return this.blockchain.suggest.mit(prefix)
+    }
+
     getdictionary(lang) {
         return Metaverse.wallet.wordlists[lang]
     }
@@ -658,7 +622,7 @@ export class MvsServiceProvider {
         return this.storage.get('eth_swap')
             .then((eth_swap) => {
                 let current_time = new Date();
-                if (!eth_swap || !eth_swap.whitelist || eth_swap.last_update == undefined || current_time.getTime() - eth_swap.last_update.getTime() > 3600000) {
+                if (!eth_swap || !eth_swap.whitelist || eth_swap.last_update == undefined || (eth_swap.last_update !== undefined && current_time.getTime() - new Date(eth_swap.last_update).getTime() > 3600000)) {
                     return this.blockchain.bridge.whitelist()
                         .then((whitelist) => {
                             this.setWhitelist(whitelist, current_time)
@@ -718,21 +682,119 @@ export class MvsServiceProvider {
         return this.blockchain.multisig.get(address)
     }
 
+    getCert(symbol, type) {
+        return this.blockchain.cert.get(symbol, type)
+    }
+
+    getOutput(hash, index) {
+        return this.blockchain.output.get(hash, index)
+    }
+
     async decodeTx(rawtx) {
+        const network = await this.globals.getNetwork()
+        let tx = Metaverse.transaction.decode(rawtx, network);
         let transactions = await this.getTxs()
-        let tx = Metaverse.transaction.decode(rawtx);
-        tx.inputs.forEach(input => {
+        for (let i = 0; i < tx.inputs.length; i++) {
+            let input = tx.inputs[i]
             let found = false
+            let previous_output
             transactions.forEach(t => {
                 if (input.previous_output.hash == t.hash) {
                     found = true
-                    input.previous_output.script = t.outputs[input.previous_output.index].script
-                    input.previous_output.address = t.outputs[input.previous_output.index].address
-                    input.previous_output.value = t.outputs[input.previous_output.index].value
-                    input.previous_output.attachment = t.outputs[input.previous_output.index].attachment
+                    previous_output = t.outputs[input.previous_output.index]
                 }
             })
-            if (!found) throw `Error finding previous output script for ${input.previous_output.hash}-${input.previous_output.index}`
+            if (!found) {
+                previous_output = await this.getOutput(input.previous_output.hash, input.previous_output.index)
+            }
+            input.previous_output.script = previous_output.script
+            input.previous_output.address = previous_output.address
+            input.previous_output.value = previous_output.value
+            input.previous_output.attachment = previous_output.attachment
+            input.address = input.previous_output.address
+            tx.inputs[i] = input
+        }
+        return tx
+    }
+
+    async organizeTx(tx) {
+        let balances = await this.getBalances()
+        tx.outputs.forEach((output, index) => {
+            output.index = index
+            output.locked_height_range = (output.locktime) ? output.locktime : 0
+            output.locked_until = (output.locktime) ? tx.height + output.locked_height_range : 0
+
+            switch (output.attachment.type) {
+                case Metaverse.constants.ATTACHMENT.TYPE.ETP_TRANSFER:
+                    output.attachment.type = 'etp';
+                    output.attachment.symbol = 'ETP';
+                    output.attachment.decimals = 8;
+                    break;
+                case Metaverse.constants.ATTACHMENT.TYPE.MST:
+                    switch (output.attachment.status) {
+                        case Metaverse.constants.MST.STATUS.REGISTER:
+                            output.attachment.type = 'asset-issue';
+                            break;
+                        case Metaverse.constants.MST.STATUS.TRANSFER:
+                            output.attachment.type = 'asset-transfer';
+                            if (balances && balances.MST && balances.MST[output.attachment.symbol])
+                                output.attachment.decimals = balances.MST[output.attachment.symbol].decimals
+                            break;
+                    }
+                    break;
+                case Metaverse.constants.ATTACHMENT.TYPE.MESSAGE:
+                    output.attachment.type = 'message'
+                    break;
+                case Metaverse.constants.ATTACHMENT.TYPE.AVATAR:
+                    switch (output.attachment.status) {
+                        case Metaverse.constants.AVATAR.STATUS.REGISTER:
+                            output.attachment.type = 'did-register'
+                            break;
+                        case Metaverse.constants.AVATAR.STATUS.TRANSFER:
+                            output.attachment.type = 'did-transfer'
+                            break;
+                        default:
+                            throw Error("Avatar status unknown");
+                    }
+                    break;
+                case Metaverse.constants.ATTACHMENT.TYPE.CERT:
+                    output.attachment.type = 'asset-cert'
+                    switch (output.attachment.cert) {
+                        case Metaverse.constants.CERT.TYPE.ISSUE:
+                            output.attachment.cert = 'issue'
+                            break;
+                        case Metaverse.constants.CERT.TYPE.DOMAIN:
+                            output.attachment.cert = 'domain'
+                            break;
+                        case Metaverse.constants.CERT.TYPE.NAMING:
+                            output.attachment.cert = 'naming'
+                            break;
+                        case Metaverse.constants.CERT.TYPE.MINING:
+                            output.attachment.cert = 'mining'
+                            break;
+                        default:
+                            throw Error("Cert type unknown");
+                    }
+                    break;
+                case Metaverse.constants.ATTACHMENT.TYPE.MIT:
+                    output.attachment.type = 'mit'
+                    switch (output.attachment.status) {
+                        case Metaverse.constants.MIT.STATUS.REGISTER:
+                            output.attachment.status = 'registered'
+                            break;
+                        case Metaverse.constants.MIT.STATUS.TRANSFER:
+                            output.attachment.status = 'transfered'
+                            break;
+                        default:
+                            throw Error("MIT status unknown");
+                    }
+                    break;
+                case Metaverse.constants.ATTACHMENT.TYPE.COINSTAKE:
+                    output.attachment.type = 'coinstake'
+                    break;
+                default:
+                    throw Error("What kind of output is that?!");
+            }
         })
         return tx
     }

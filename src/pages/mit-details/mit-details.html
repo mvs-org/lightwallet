@@ -25,7 +25,7 @@
                                                 <h1>{{symbol}}</h1>
                                                 <p>{{"OWNER"|translate}}: {{owner}}</p>
                                                 <p>{{"CREATOR"|translate}}: {{creator}}</p>
-                                                <p><a class="check-explorer" href="{{explorerURL('mit', symbol)}}">{{"CHECK_IN_EXPLORER"|translate}}</a></p>
+                                                <p><a class="check-explorer" href="{{explorerURL('mit', symbol)}}" target="_blank">{{"CHECK_IN_EXPLORER"|translate}}</a></p>
                                             </div>
                                         </ion-item>
                                     </ion-col>
@@ -69,7 +69,7 @@
                 <!--p>{{'BLOCK'|translate}}: {{step.height}}</p-->
                 <p>{{'DATE'|translate}}: {{step.confirmed_at*1000|date : 'medium'}}</p>
                 <p>{{'MIT.TX_HASH'|translate}}:
-                    <a href="{{explorerURL('tx', step.tx)}}">{{step.tx}}</a>
+                    <a href="{{explorerURL('tx', step.tx)}}" target="_blank">{{step.tx}}</a>
                 </p>
             </ion-item>
         </ion-item>

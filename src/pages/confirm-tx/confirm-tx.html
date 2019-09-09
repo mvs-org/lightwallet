@@ -9,74 +9,57 @@
 
 <ion-content padding style="padding-bottom: 0;">
 
+    <form #signTxForm="ngForm" class="padding-bottom">
 
-    <form *ngIf="!decodedTx" #decodeTxForm="ngForm" class="padding-bottom">
+        <h3>{{"SIGN_TX.PAGE_TITLE" | translate}}</h3>
 
-        <ion-list>
-            <ion-card-content>
-                <h4>{{"CONFIRM_TX.TX_TO_SIGN"|translate}}:</h4>
-                <ion-textarea fz-elastic [(ngModel)]="input" name="input" ngTrim="true" (change)="onInputChange()"></ion-textarea>
-            </ion-card-content>
-        </ion-list>
-        <ion-row>
-            <ion-col>
-                <button type="submit" ion-button full icon-left (click)="decode(input)" [disabled]="!input" color="secondary">
-                    <ion-icon disabled="checked" name="cog"></ion-icon>
-                    {{"CONFIRM_TX.DECODE" | translate}}
-                </button>
-            </ion-col>
-            <ion-col>
-                <button ion-button color="danger" full item-right icon-left (click)="cancel($event)">
-                    <ion-icon name="close"></ion-icon>
-                    {{'CANCEL'|translate}}
-                </button>
-            </ion-col>
-        </ion-row>
+        <ion-item>
+            <ion-label>{{"TX.SELECT_MODE"|translate}}</ion-label>
+            <ion-select [(ngModel)]="mode" name="mode" multiple="false" okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}">
+                <ion-option selected="true" value="default">{{"TX.MODE.DEFAULT"| translate}}</ion-option>
+                <ion-option value="satoshi">{{"TX.MODE.SATOSHI"| translate}}</ion-option>
+                <ion-option value="hex">{{"TX.MODE.HEX"| translate}}</ion-option>
+            </ion-select>
+        </ion-item>
 
-    </form>
+        <tx-item *ngIf="displayedTx" [tx]="displayedTx" [hexTx]="hexTx" [mode]="mode" [signStatus]="signStatus"></tx-item>
 
-    <form *ngIf="decodedTx" #signTxForm="ngForm" class="padding-bottom">
+        <ion-item *ngIf="!allMyInputs" no-lines class="wrong-input">{{"TX.INPUTS_NOT_ALL_MINE" | translate}}</ion-item>
 
-        <ion-card>
-            <ion-grid>
-                <ion-row>
-                    <ion-item>
-                        <h1>{{'CONFIRM_TX.TX_SUMMARY'|translate}}</h1>
-                    </ion-item>
-                </ion-row>
-                <ion-row>
-                    <ion-col>
-                        <ion-item>
-                            <h2>{{'CONFIRM_TX.TX_SUMMARY_INPUTS'|translate}}:</h2>
-                        </ion-item>
-                    </ion-col>
-                    <ion-col>
-                        <ion-item>
-                            <h2>{{'CONFIRM_TX.TX_SUMMARY_OUTPUTS'|translate}}:</h2>
-                        </ion-item>
-                    </ion-col>
-                </ion-row>
-                <ion-row>
-                    <ion-col>
-                        <input-item *ngFor="let input of decodedTx.inputs" [input]="input"></input-item>
-                    </ion-col>
-                    <ion-col>
-                        <output-item *ngFor="let output of decodedTx.outputs" [output]="output" [decimalsMst]="decimalsMst"></output-item>
-                    </ion-col>
-                </ion-row>
-            </ion-grid>
-        </ion-card>
-
-        <ion-item [ngClass]="{'error-border': !validPassword(passphrase)}">
+        <ion-item *ngIf="signStatus != 'SIGNED'" [ngClass]="{'error-border': !validPassword(passphrase)}">
             <ion-label color="primary" floating>{{"PASSWORD" | translate}}</ion-label>
             <ion-input name="passphrase" type="password" [(ngModel)]="passphrase" required></ion-input>
         </ion-item>
         <br>
+        <ion-item>
+            <ion-label>{{"SHOW_ADVANCED"|translate}}</ion-label>
+            <ion-toggle [(ngModel)]="showAdvanced" name="showAdvanced" checked="false"></ion-toggle>
+        </ion-item>
+        <div *ngIf="showAdvanced">
+            <button *ngIf="signStatus != 'SIGNED'" ion-button full icon-left [disabled]="!signTxForm.form.valid||!validPassword(passphrase)" (click)="preview()"
+                color="primary">
+                <ion-icon name="create"></ion-icon>
+                {{"CONFIRM_TX.SIGN_ONLY" | translate}}
+            </button>
+            <div *ngIf="signedTx">
+                <br>
+                <h4>{{"TRANSACTION_PREVIEW.TEXT_SIGNED"|translate}}</h4>
+                <textarea fz-elastic ion-input full class="rawtx" type="text" #copySignedTx value="{{signedTx}}" readonly>{{signedTx}}</textarea>
+                <button ion-button full item-right icon-left [ngxClipboard]="copySignedTx">
+                    <ion-icon name="copy"></ion-icon>
+                    {{'COPY'|translate}}
+                </button>
+            </div>
+        </div>
         <ion-row>
             <ion-col>
-                <button type="submit" ion-button full icon-left (click)="sign(input)" [disabled]="!input" color="secondary">
+                <button *ngIf="signStatus != 'SIGNED'" type="submit" ion-button full icon-left (click)="send()" [disabled]="!signTxForm.form.valid||!validPassword(passphrase)" color="secondary">
                     <ion-icon disabled="checked" name="send"></ion-icon>
-                    {{"CONFIRM_TX.SIGN" | translate}}
+                    {{"CONFIRM_TX.SIGN_AND_SEND" | translate}}
+                </button>
+                <button *ngIf="signStatus == 'SIGNED'" type="submit" ion-button full icon-left (click)="broadcast(decodedTx)" color="secondary">
+                    <ion-icon disabled="checked" name="send"></ion-icon>
+                    {{"CONFIRM_TX.BROADCAST" | translate}}
                 </button>
             </ion-col>
             <ion-col>
@@ -88,6 +71,5 @@
         </ion-row>
 
     </form>
-
 
 </ion-content>

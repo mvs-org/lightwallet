@@ -81,8 +81,7 @@ export class MultisignatureTransferPage {
 
         this.mvs.getAddressBalances()
             .then((addressbalances) => {
-                console.log(addressbalances)
-                if(!addressbalances[this.sendFrom]) {
+                if (!addressbalances[this.sendFrom]) {
                     addressbalances[this.sendFrom] = {}
                     addressbalances[this.sendFrom].AVATAR = ""
                     addressbalances[this.sendFrom].ETP = {}
@@ -157,7 +156,7 @@ export class MultisignatureTransferPage {
             .then(() => this.mvs.getAddresses())
             .then((addresses) => {
                 let messages = [];
-                if(this.message) {
+                if (this.message) {
                     messages.push(this.message)
                 }
                 return this.mvs.createSendMultisigTx(
@@ -175,7 +174,8 @@ export class MultisignatureTransferPage {
             })
             .catch((error) => {
                 console.error(error.message)
-                switch(error.message){
+                this.alert.stopLoading()
+                switch (error.message) {
                     case "ERR_DECRYPT_WALLET":
                         this.alert.showError('MESSAGE.PASSWORD_WRONG', '')
                         throw Error('ERR_CREATE_TX')
@@ -203,7 +203,7 @@ export class MultisignatureTransferPage {
             .catch((error) => {
                 console.error(error)
                 this.alert.stopLoading()
-                switch(error.message){
+                switch (error.message) {
                     case "ERR_CONNECTION":
                         this.alert.showError('ERROR_SEND_TEXT', '')
                         break;
@@ -297,7 +297,7 @@ export class MultisignatureTransferPage {
             .catch((error) => {
                 this.alert.stopLoading()
                 console.error(error.message)
-                switch(error.message){
+                switch (error.message) {
                     case "ERR_DECRYPT_WALLET":
                         this.alert.showError('MESSAGE.PASSWORD_WRONG', '')
                         break;
@@ -316,7 +316,7 @@ export class MultisignatureTransferPage {
                 this.decoded_tx = result
                 this.nbr_sign_before_sign = this.decoded_tx.inputs[0].script.split("[").length - 2
                 this.decoded_tx.inputs.forEach((input) => {
-                    if(input.previous_output.attachment && input.previous_output.attachment.symbol)
+                    if (input.previous_output.attachment && input.previous_output.attachment.symbol)
                         this.decimals_mst[input.previous_output.attachment.symbol] = input.previous_output.attachment.decimals
                 })
             })
@@ -350,7 +350,7 @@ export class MultisignatureTransferPage {
             .catch((error) => {
                 console.error(error)
                 this.alert.stopLoading()
-                switch(error.message){
+                switch (error.message) {
                     case "ERR_CONNECTION":
                         this.alert.showError('ERROR_SEND_TEXT', '')
                         break;

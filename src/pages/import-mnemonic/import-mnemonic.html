@@ -10,8 +10,8 @@
             <h2 class="center-text info">{{'IMPORT_WORDS_TITLE'|translate}}</h2>
             <h2 class="center-text info">{{'PASTE_WORDS'|translate}}</h2>
         </ion-item>
-        <ion-item class="card card-md inputWords" [ngClass]="{'error-border': !validmnemonic}">
-            <ion-textarea fz-elastic ion-input rows="3" full type="text" value="" class="textbox" style="" [(ngModel)]="all_words" (ngModelChange)="onChange()" [ngModelOptions]="{standalone: true}"></ion-textarea>
+        <ion-item class="textareaCard" [ngClass]="{'error-border': !validmnemonic}">
+            <ion-textarea fz-elastic ion-input rows="3" full type="text" class="textbox" [(ngModel)]="all_words" (ngModelChange)="onChange()" name="all_words"></ion-textarea>
         </ion-item>
     </ion-row>
 

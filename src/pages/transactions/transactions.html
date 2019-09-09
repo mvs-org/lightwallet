@@ -1,8 +1,8 @@
 <ion-header>
     <ion-navbar>
         <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
+            <ion-icon name="menu"></ion-icon>
+        </button>
         <ion-title>{{'HISTORY'|translate}}</ion-title>
     </ion-navbar>
 </ion-header>
@@ -22,7 +22,7 @@
         </ion-item>
 
         <div *ngIf="display_segment=='transactions'">
-            <ion-list [hidden]="!txs.length" >
+            <ion-list [hidden]="!txs.length">
                 <div *ngFor="let tx of txs | orderBy: ['confirmed_at', '1']">
                     <ion-item *ngIf="!tx.confirmed_at">
                         <ion-item no-lines>
@@ -30,7 +30,7 @@
                                 <img class="coinlogo" [src]="'assets/icon/'+icon+'.png'" onerror="this.src='assets/icon/default_mst.png'">
                             </ion-avatar>
                             <h1>{{asset}}</h1>
-                            <h3>{{'DATE'|translate}}: <span class="warning">{{'PENDING_CONFIRMATION'|translate}}</span></h3>
+                            <h3>{{'DATE'|translate}}: <span class="warning-input">{{'PENDING_CONFIRMATION'|translate}}</span></h3>
                             <p>
                                 {{'HASH'|translate}}: <a href="{{explorerURL(tx.hash)}}" target="_blank">{{tx.hash}}</a>
                             </p>
@@ -93,23 +93,29 @@
             </ion-row>
 
             <ion-list [hidden]="!frozen_outputs_locked.length">
-                <h2 class="center" >{{"HISTORY.FROZEN_TX"|translate}}</h2>
+                <h2 class="center">{{"HISTORY.FROZEN_TX"|translate}}</h2>
                 <ion-item *ngFor="let output of frozen_outputs_locked | orderBy: [order_by, direction]">
                     <ion-item no-lines>
                         <ion-avatar item-start>
                             <img class="coinlogo" [src]="'assets/icon/'+icon+'.png'" onerror="this.src='assets/icon/default_mst.png'">
                         </ion-avatar>
                         <h1>{{asset}}</h1>
-                        <p *ngFor="let transaction of output.transactions">{{'TRANSACTION'|translate}}: <a href="{{explorerURL(transaction)}}" target="_blank">{{transaction}}</a></p>
+                        <p *ngFor="let transaction of output.transactions">{{'TRANSACTION'|translate}}: <a href="{{explorerURL(transaction)}}"
+                                target="_blank">{{transaction}}</a></p>
                         <p>{{'AMOUNT'|translate}}:
                             <span *ngIf="asset == 'ETP'">{{output.value | format : output.attachment.decimals}}</span>
-                            <span *ngIf="asset != 'ETP'">{{output.attenuation_model_param.lock_quantity | format : output.attachment.decimals}}</span>
+                            <span *ngIf="asset != 'ETP'">{{output.attenuation_model_param.lock_quantity | format :
+                                output.attachment.decimals}}</span>
                         </p>
-                        <p>{{'LOCKED_SINCE'|translate}}: {{output.height}} ({{output.confirmed_at*1000 | date : 'medium'}})</p>
-                        <p>{{'LOCKED_UNTIL'|translate}}: {{output.locked_until}} (~{{((output.locked_until - height) * blocktime * 1000) + current_time  |date : 'medium'}})*</p>
-                        <p>{{'LOCKED_FOR_BLOCKS'|translate}}: {{asset == 'ETP' ? output.locked_until-output.height : output.attenuation_model_param.lock_period}} {{'BLOCKS'|translate}}</p>
+                        <p>{{'LOCKED_SINCE'|translate}}: {{output.height}} ({{output.confirmed_at*1000 | date :
+                            'medium'}})</p>
+                        <p>{{'LOCKED_UNTIL'|translate}}: {{output.locked_until}} (~{{((output.locked_until - height) *
+                            blocktime * 1000) + current_time |date : 'medium'}})*</p>
+                        <p>{{'LOCKED_FOR_BLOCKS'|translate}}: {{asset == 'ETP' ? output.locked_until-output.height :
+                            output.attenuation_model_param.lock_period}} {{'BLOCKS'|translate}}</p>
                         <div *ngIf="output.height<= height">
-                            <progress-bar *ngIf="height<=output.locked_until && depositProgress(output.height, output.locked_until)>0" [progress]="depositProgress(output.height, output.locked_until)"></progress-bar>
+                            <progress-bar *ngIf="height<=output.locked_until && depositProgress(output.height, output.locked_until)>0"
+                                [progress]="depositProgress(output.height, output.locked_until)"></progress-bar>
                         </div>
                     </ion-item>
                 </ion-item>
@@ -122,21 +128,25 @@
             </ion-row>
 
             <ion-list [hidden]="!frozen_outputs_unlocked.length">
-                <h2 class="center" >{{"HISTORY.UNFROZEN_TX"|translate}}</h2>
+                <h2 class="center">{{"HISTORY.UNFROZEN_TX"|translate}}</h2>
                 <ion-item *ngFor="let output of frozen_outputs_unlocked | orderBy: [order_by, direction] | paginate: { itemsPerPage: items_per_page, currentPage: page_deposit_unlocked }">
                     <ion-item no-lines>
                         <ion-avatar item-start>
                             <img class="coinlogo" [src]="'assets/icon/'+icon+'.png'" onerror="this.src='assets/icon/default_mst.png'">
                         </ion-avatar>
                         <h1>{{asset}}</h1>
-                        <p *ngFor="let transaction of output.transactions">{{'TRANSACTION'|translate}}: <a href="{{explorerURL(transaction)}}" target="_blank">{{transaction}}</a></p>
+                        <p *ngFor="let transaction of output.transactions">{{'TRANSACTION'|translate}}: <a href="{{explorerURL(transaction)}}"
+                                target="_blank">{{transaction}}</a></p>
                         <p>{{'AMOUNT'|translate}}:
                             <span *ngIf="asset == 'ETP'">{{output.value | format : output.attachment.decimals}}</span>
-                            <span *ngIf="asset != 'ETP'">{{output.attenuation_model_param.lock_quantity | format : output.attachment.decimals}}</span>
+                            <span *ngIf="asset != 'ETP'">{{output.attenuation_model_param.lock_quantity | format :
+                                output.attachment.decimals}}</span>
                         </p>
-                        <p>{{'LOCKED_SINCE'|translate}}: {{output.height}} ({{output.confirmed_at*1000|date : 'medium'}})</p>
+                        <p>{{'LOCKED_SINCE'|translate}}: {{output.height}} ({{output.confirmed_at*1000|date :
+                            'medium'}})</p>
                         <p>{{'LOCKED_UNTIL'|translate}}: {{output.locked_until}}</p>
-                        <p>{{'LOCKED_FOR_BLOCKS'|translate}}: {{asset == 'ETP' ? output.locked_until-output.height : output.attenuation_model_param.lock_period}} {{'BLOCKS'|translate}}</p>
+                        <p>{{'LOCKED_FOR_BLOCKS'|translate}}: {{asset == 'ETP' ? output.locked_until-output.height :
+                            output.attenuation_model_param.lock_period}} {{'BLOCKS'|translate}}</p>
                         <div *ngIf="output.height<= height">
                             <progress-bar *ngIf="height>output.locked_until" [progress]="100" [color]="'#32db64'"></progress-bar>
                         </div>

@@ -22,11 +22,9 @@ export class EthSwapPage {
     recipient_address: string = ""
     recipient_avatar: string
     quantity: string = ""
-    rawtx: string
     addressbalances: Array<any>
     sendFrom: string = "auto"
     changeAddress: string
-    passphrase: string = ""
     etpBalance: number
     @ViewChild('quantityInput') quantityInput;
     message: string = ''
@@ -123,17 +121,6 @@ export class EthSwapPage {
         this.navCtrl.pop()
     }
 
-    preview() {
-        this.create()
-            .then((tx) => {
-                this.rawtx = tx.encode().toString('hex')
-                this.alert.stopLoading()
-            })
-            .catch((error) => {
-                this.alert.stopLoading()
-            })
-    }
-
     create() {
         return this.alert.showLoading()
             .then(() => this.mvs.getAddresses())
@@ -146,7 +133,6 @@ export class EthSwapPage {
                 let eth_message = '{\"type\":\"ETH\",\"address\":\"' + this.eth_address + '\"}';
                 messages.push(eth_message)
                 return this.mvs.createSendSwapTx(
-                    this.passphrase,
                     this.selectedAsset,
                     this.recipient_address,
                     this.recipient_avatar,
@@ -160,6 +146,7 @@ export class EthSwapPage {
             })
             .catch((error) => {
                 console.error(error.message)
+                this.alert.stopLoading()
                 switch(error.message){
                     case "ERR_DECRYPT_WALLET":
                         this.alert.showError('MESSAGE.PASSWORD_WRONG', '')
@@ -179,11 +166,9 @@ export class EthSwapPage {
 
     send() {
         this.create()
-            .then(tx => this.mvs.send(tx))
             .then((result) => {
-                this.navCtrl.pop()
+                this.navCtrl.push("confirm-tx-page", { tx: result.encode().toString('hex') })
                 this.alert.stopLoading()
-                this.alert.showSent('SUCCESS_SEND_TEXT', result.hash)
             })
             .catch((error) => {
                 console.error(error)
@@ -209,8 +194,6 @@ export class EthSwapPage {
         }
         this.quantityInput.setFocus()
     })
-
-    validPassword = (passphrase) => (passphrase.length > 0)
 
     validMessageLength = (message) => this.mvs.verifyMessageSize(message) < 253
 

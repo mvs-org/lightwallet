@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, AlertController, LoadingController, Loading } from 'ionic-angular';
+import { IonicPage, NavController, Loading } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
 import { TranslateService } from '@ngx-translate/core';
+import { AlertProvider } from '../../providers/alert/alert';
 
 @IonicPage()
 @Component({
@@ -15,7 +16,14 @@ export class ImportWalletPage {
     data: Array<any>
     fileLoaded: boolean
 
-    constructor(public nav: NavController, public mvs: MvsServiceProvider, private wallet: WalletServiceProvider, private alertCtrl: AlertController, private loadingCtrl: LoadingController, private translate: TranslateService) {
+    constructor(
+        public nav: NavController,
+        public mvs: MvsServiceProvider,
+        private wallet: WalletServiceProvider,
+        private translate: TranslateService,
+        private alert: AlertProvider,
+    ) {
+
         this.fileLoaded = false;
 
     }
@@ -33,7 +41,7 @@ export class ImportWalletPage {
             } catch (e) {
                 console.error(e);
                 this.translate.get('WRONG_FILE').subscribe((message: string) => {
-                    this.showError(message);
+                    this.alert.showError(message, '');
                 });
             }
         };
@@ -43,7 +51,7 @@ export class ImportWalletPage {
 
 
     decrypt(password) {
-        this.showLoading()
+        this.alert.showLoading()
         this.mvs.dataReset()
             .then(() => this.wallet.setSeed(password))
             .then(() => Promise.all([this.wallet.getWallet(password), this.wallet.getAddressIndex()]))
@@ -53,37 +61,9 @@ export class ImportWalletPage {
             .then(() => this.nav.setRoot("LoadingPage", { reset: true }))
             .catch((e) => {
                 console.error(e);
-                this.showError('MESSAGE.PASSWORD_WRONG');
+                this.alert.showError('MESSAGE.PASSWORD_WRONG', '');
+                this.alert.stopLoading()
             });
     }
 
-    showLoading() {
-        this.translate.get('MESSAGE.LOADING').subscribe((loading: string) => {
-            this.loading = this.loadingCtrl.create({
-                content: loading,
-                dismissOnPageChange: true
-            });
-            this.loading.present();
-        })
-    }
-
-    showError(message_key, pop = false) {
-        if (this.loading) {
-            this.loading.dismiss();
-        }
-        this.translate.get(['MESSAGE.ERROR_TITLE', message_key]).subscribe((translations: any) => {
-            let alert = this.alertCtrl.create({
-                title: translations['MESSAGE.ERROR_TITLE'],
-                message: translations[message_key],
-                buttons: [{
-                    text: 'OK',
-                    handler: (() => {
-                        if (pop)
-                            this.nav.pop();
-                    })
-                }]
-            });
-            alert.present(alert);
-        })
-    }
 }

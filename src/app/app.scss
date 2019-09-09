@@ -29,17 +29,23 @@
     padding-top: 21px !important;
 }
 
-.item.error-border .item-inner{
+.item.error-border .item-inner {
     border-bottom-color: red !important;
     -webkit-box-shadow: inset 0 -1px 0 0 red !important;
     box-shadow: red !important;
 }
 
-.wrong-input{
+.item.warning-border .item-inner {
+    border-bottom-color: orange !important;
+    -webkit-box-shadow: inset 0 -1px 0 0 orange !important;
+    box-shadow: orange !important;
+}
+
+.wrong-input {
     color: red;
 }
 
-.warning{
+.warning-input {
     color: orange;
 }
 
@@ -51,7 +57,7 @@
     padding-left: 5px;
 }
 
-.item.item-select:not(.error-border):not(.no-color-border) .item-inner .ng-valid .item-cover{
+.item.item-select:not(.error-border):not(.warning-border):not(.no-color-border) .item-inner .ng-valid .item-cover{
     border-bottom-color: #32db64 !important;
     -webkit-box-shadow: inset 0 -1px 0 0 #32db64 !important;
     box-shadow: inset 0 -1px 0 0 #32db64 !important;
@@ -97,7 +103,7 @@
     user-select: text;
 }
 
-.valid-input, .wrong-input, .info-input, .valid-input ion-label, .wrong-input ion-label, .info-input ion-label{
+.valid-input, .wrong-input, .info-input, .warning-input, .valid-input ion-label, .wrong-input ion-label, .info-input ion-label, .warning-input ion-label {
     text-overflow: initial;
     white-space: initial;
 }
@@ -129,6 +135,14 @@
 
 .alert-input {
     color: inherit !important;
+}
+
+.textareaCard {
+    padding: 0 10px;
+    border-radius: 2px;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 
@@ -216,6 +230,14 @@ ion-alert:not(.alert-ios) .alert-button-group-vertical {
     justify-content: center;
 }
 
+.menu-icon {
+    height: 20px;
+    width: 20px;
+    margin-right: 4px;
+    -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+    filter: grayscale(100%);
+}
+
 
 // ███▄    █  ▒█████   ▄████▄  ▄▄▄█████▓ ██▓ ██▓     █    ██ ▒██   ██▒
 // ██ ▀█   █ ▒██▒  ██▒▒██▀ ▀█  ▓  ██▒ ▓▒▓██▒▓██▒     ██  ▓██▒▒▒ █ █ ▒░
@@ -268,7 +290,7 @@ ion-alert:not(.alert-ios) .alert-button-group-vertical {
         filter: blur(5px);
     }
 
-    p,div {
+    p,div,.count-down,.count-down .digital {
         color: #949494;
     }
 
@@ -301,6 +323,10 @@ ion-alert:not(.alert-ios) .alert-button-group-vertical {
         .item-md,h1,h2, h3, h4, p {
             background-color: #383838;
         }
+    }
+
+    .pic-description1, .pic-description2, .pic-description3 {
+        filter: invert(70%);
     }
 }
 
@@ -424,7 +450,7 @@ ion-alert:not(.alert-ios) .alert-button-group-vertical {
         filter: blur(5px);
     }
 
-    p,div {
+    p,div,.count-down,.count-down .digital {
         color: #0f8082;
     }
 
@@ -464,6 +490,10 @@ ion-alert:not(.alert-ios) .alert-button-group-vertical {
         .item-md,h1,h2, h3, h4, p {
             background-color: #002b36;
         }
+    }
+
+    .pic-description1, .pic-description2, .pic-description3 {
+        filter: invert(70%);
     }
 }
 

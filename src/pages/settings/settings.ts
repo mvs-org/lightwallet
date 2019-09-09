@@ -58,66 +58,66 @@ export class SettingsPage {
     /**
      * Logout dialog
      */
-     logout() {
-         this.wallet.getSessionAccountInfo()
-             .then((account_info) => {
-                 if(account_info) {
-                     this.alert.showLogout(this.saveAccountHandler, this.forgetAccountHandler)
-                 } else {
-                     this.alert.showLogoutNoAccount(() => this.mvs.hardReset()
-                           .then(() => this.nav.setRoot("LoginPage")))
-                 }
-             })
-     }
+    logout() {
+        this.wallet.getSessionAccountInfo()
+            .then((account_info) => {
+                if (account_info) {
+                    this.alert.showLogout(this.saveAccountHandler, this.forgetAccountHandler)
+                } else {
+                    this.alert.showLogoutNoAccount(() => this.mvs.hardReset()
+                        .then(() => this.nav.setRoot("LoginPage")))
+                }
+            })
+    }
 
-     newUsername(title, message, placeholder) {
-         this.askUsername(title, message, placeholder)
-             .then((username) => {
-                 if (!username) {
-                     this.newUsername('SAVE_ACCOUNT_TITLE_NO_NAME', 'SAVE_ACCOUNT_MESSAGE', placeholder)
-                 } else if (this.saved_accounts_name.indexOf(username) != -1) {
-                     this.newUsername('SAVE_ACCOUNT_TITLE_ALREADY_EXIST', 'SAVE_ACCOUNT_MESSAGE_ALREADY_EXIST', placeholder)
-                 } else {
-                     this.saveAccount(username);
-                 }
-             })
-     }
+    newUsername(title, message, placeholder) {
+        this.askUsername(title, message, placeholder)
+            .then((username) => {
+                if (!username) {
+                    this.newUsername('SAVE_ACCOUNT_TITLE_NO_NAME', 'SAVE_ACCOUNT_MESSAGE', placeholder)
+                } else if (this.saved_accounts_name.indexOf(username) != -1) {
+                    this.newUsername('SAVE_ACCOUNT_TITLE_ALREADY_EXIST', 'SAVE_ACCOUNT_MESSAGE_ALREADY_EXIST', placeholder)
+                } else {
+                    this.saveAccount(username);
+                }
+            })
+    }
 
-     private forgetAccountHandler = () => {
-         return this.wallet.getAccountName()
-             .then((account_name) => this.wallet.deleteAccount(account_name))
-             .then(() => this.mvs.hardReset())
-             .then(() => this.nav.setRoot("LoginPage"))
-     }
+    private forgetAccountHandler = () => {
+        return this.wallet.getAccountName()
+            .then((account_name) => this.wallet.deleteAccount(account_name))
+            .then(() => this.mvs.hardReset())
+            .then(() => this.nav.setRoot("LoginPage"))
+    }
 
-     private saveAccountHandler = () => {
-         return this.wallet.getAccountName()
-             .then((current_username) => {
-                 if (current_username) {
-                     this.saveAccount(current_username);
-                 } else {
-                     this.newUsername('SAVE_ACCOUNT_TITLE', 'SAVE_ACCOUNT_MESSAGE', 'SAVE_ACCOUNT_PLACEHOLDER')
-                 }
-             })
-     }
+    private saveAccountHandler = () => {
+        return this.wallet.getAccountName()
+            .then((current_username) => {
+                if (current_username) {
+                    this.saveAccount(current_username);
+                } else {
+                    this.newUsername('SAVE_ACCOUNT_TITLE', 'SAVE_ACCOUNT_MESSAGE', 'SAVE_ACCOUNT_PLACEHOLDER')
+                }
+            })
+    }
 
-     askUsername(title, message, placeholder) {
-         return new Promise((resolve, reject) => {
-             this.translate.get([title, message, placeholder]).subscribe((translations: any) => {
-                 this.alert.askInfo(translations[title], translations[message], translations[placeholder], 'text', (info) => {
-                     resolve(info)
-                 })
-             })
-         })
-     }
+    askUsername(title, message, placeholder) {
+        return new Promise((resolve, reject) => {
+            this.translate.get([title, message, placeholder]).subscribe((translations: any) => {
+                this.alert.askInfo(translations[title], translations[message], translations[placeholder], 'text', (info) => {
+                    resolve(info)
+                })
+            })
+        })
+    }
 
-     saveAccount(username) {
-         this.wallet.saveAccount(username)
-             .then(() => this.mvs.hardReset())
-             .then(() => this.nav.setRoot("LoginPage"))
-             .catch((error) => {
-                 this.alert.showError('MESSAGE.ERR_SAVE_ACCOUNT', error.message)
-             })
-     }
+    saveAccount(username) {
+        this.wallet.saveAccount(username)
+            .then(() => this.mvs.hardReset())
+            .then(() => this.nav.setRoot("LoginPage"))
+            .catch((error) => {
+                this.alert.showError('MESSAGE.ERR_SAVE_ACCOUNT', error.message)
+            })
+    }
 
 }

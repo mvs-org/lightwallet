@@ -3,42 +3,32 @@
     "ACCOUNT.FROZEN": "Bloqué",
     "ACCOUNT.AVAILABLE": "Disponible",
     "ACCOUNT.TOTAL": "Total",
-
-
     "WALLET_SETUP.TITLE": "Configuration",
     "REGISTER.TITLE": "Créer compte",
     "CREATE_WALLET_DISCLAIMER.TITLE": "Information",
     "CREATE_WALLET_DISCLAIMER.TEXT": "Veuillez faire très attention à votre phrase mnémotechnique. Ce conseil est général et en aucun cas un avis financier ou juridique.",
     "REGISTER.YOUR_MNEMONIC_KEY": "Votre Clé",
-
     "MNEMONIC_SHOW.TITLE": "Récupération de votre compte",
     "YOUR_MNEMONIC_WORDS": "Phrase mnémotechnique",
     "IMPORT_WALLET": "Importer compte",
     "CREATE_NEW_WALLET": "Créer nouveau compte",
     "CREATE_WALLET": "Ok, c'est parti!",
     "BUTTON.OK": "Ok",
-
     "PLACEHOLDER.MNEMONIC_PASSPHRASE": "Phrase mnémotechnique",
-
     "TRANSACTIONS": "Transactions",
     "DATE": "Date",
     "AMOUNT": "Montant",
     "RECIPIENT_ADDRESS": "Destinataire",
-
     "AVAILABLE_BALANCE": "Balance disponible",
     "AVAILABLE": "Disponible",
-
     "SCAN": "Scanner",
-
     "ETP_DEPOSIT": "Dépôt ETP",
-
     "SWITCH_LANGUAGE": "Langue",
     "LANGUAGE_SETTINGS": "Langues",
     "SETTINGS": "Paramètres",
     "INFORMATION": "Avertissement légal",
     "MESSAGE.ERROR_TITLE": "Oups...",
     "MESSAGE.LOADING": "Veuillez patienter...",
-
     "HISTORY.NO_TXS_YET": "Aucune transaction",
     "HISTORY.NO_TXS_YET_TEXT": "Commencez à utiliser votre compte aujourd'hui !",
     "SETTINGS.RESET_TEXT": "Réinitialiser toutes les données du compte. Veuillez vérifier que vous avez la phrase mnémotechnique de votre compte.",
@@ -51,46 +41,36 @@
     "HISTORY": "Historique",
     "IMPORT_WALLET_ERROR_MESSAGE": "Échec de l'importation du compte. Veuillez vérifier les paramètres et réessayer.",
     "IMPORT_WALLET_CONNECTION_MESSAGE": "Erreur lors de la vérification du compte. Veuillez réessayer.",
-
     "MENU": "Menu",
-
     "REORDER": "Réordonner",
     "FINISH": "Terminer",
-    "ERROR_SEND_TEXT" : "Échec de la transaction. Veuillez vérifier les paramètres et réessayer.",
+    "ERROR_SEND_TEXT": "Échec de la transaction. Veuillez vérifier les paramètres et réessayer.",
     "MNEMONIC_CONFIRM_HEAD": "Confirmer phrase mnémotechnique",
     "MNEMONIC_CONFIRM_TEXT": "Afin de confirmer votre phrase mnémotechnique, veuillez réorganiser les mots dans le bon ordre.",
-
     "CONFIRM": "Confirmer",
     "SKIP": "Ignorer",
     "COPY": "Copier",
-
     "WARNING": "Attention",
     "BACKUP_WORDS_BACKED_UP_TEXT": "Veuillez confirmer que vous avez bien noté votre phrase mnémotechnique",
     "BACKUP_WORDS_BACKED_UP_YES": "Oui, je l'ai notée",
     "NO": "Non",
     "BACKUP_WORDS_CONFIRM_SKIP_TEXT": "Êtes vous sûr de vouloir continuer sans vérifier la phrase mnémotechnique de votre compte?",
     "I_AM_SURE": "Je suis sûr",
-
     "MESSAGE.ERROR_CONNECT_BLOCKCHAIN": "Echec de la connection à la blockchain",
-
-
     "BACK": "Retour",
     "SETTINGS.WORDS_BUTTON": "Clé",
     "SETTINGS.WORDS_TEXT": "Votre phrase mnémoniques qui correspondent à votre clé privée",
     "RESET_TITLE": "Etes vous sur?",
     "COPIED_MNEMONIC": "Clé copiée dans le presse-papiers",
-
     "SETTINGS.PINCODE": "Paramètres du code PIN",
     "SETTINGS.PINCODE_BUTTON": "Configurer",
     "SECURITY_WARNING": "Avertissement de sécurité",
     "SET_PIN_FIRST": "S'il vous plait, veuillez d'abord configurer un code PIN",
-
     "PLEASE_AUTHORIZE": "S'il vous plaît, autoriser",
     "CONFIRM_PINCODE": "Confirmer code PIN",
     "CREATE_NEW_PINCODE": "Créer nouveau code PIN",
     "GENERATE_KEY_BUTTON": "Générer la clé",
     "BUTTON.DOWNLOAD": "Télécharger la clé",
-
     "BUTTON.NEXT": "Suivant",
     "IMPORT_WORDS": "Entrer manuellement",
     "IMPORT_WORDS_TITLE": "Deux façons d'entrer votre clé",
@@ -130,67 +110,58 @@
     "RESET": "Réinitialiser",
     "OR": "OU",
     "DISCLAIMER": {
-      "HEADLINE": "Avertissement",
-      "INTRODUCTION": "Ce portefeuille est développé et basé sur la technologie Blockchain. Toutes les informations de compte et ainsi que les transactions sont stockées sur des blockchains publiques. Le fournisseur de services de portefeuille ne stockera pas les clés privées, les phrases mnémotechniques ou les mots de sauvegarde des utilisateurs (collectivement, les «informations sur les clés privées») dans une base de données centralisée. Les informations de clés privées des utilisateurs et les fichiers générés par l'importation de clés privées appartiennent uniquement à la personne qui a créé le compte. L'utilisateur a la responsabilité de sauvegarder ses fichiers de clés privées et son mot de passe et est seul responsable de l'utilisation de son compte, de son mot de passe et de ses informations de clé privée.",
-      "LIST_INTRODUCTION": "Vous acceptez que le fournisseur de services de portefeuille ne porte aucune responsabilité dans les situations suivantes:",
-      "LIST_ITEM_1": "le fournisseur de services de portefeuille ne sera pas responsable pour toutes fuites d'informations personnelles dues à l'utilisateur ayant fait connaître son mot de passe / informations de clé privée à d'autres, l'utilisateur n'ayant pas sauvegardé son mot de passe / information de clé privée, l'utilisateur ayant partagé son portefeuille ou toute autre erreur.",
-      "LIST_ITEM_2": "L'utilisation de ce service implique des services Internet et peut être affectée par des connexions instables. L'utilisation de ce service entraîne des risques de perturbation du service ou de non-satisfaction des besoins des utilisateurs en raison des événements suivants: cas de force majeure, logiciels malveillants, virus et autres logiciels malveillants, attaques par des pirates informatiques, systèmes d'exploitation instables, emplacement, les utilisateurs arrêtant leurs appareils et d'autres raisons liées à Internet, la technologie et les lignes de télécommunication. Les utilisateurs doivent comprendre et assumer les risques ci-dessus. Le fournisseur de services de portefeuille ne sera pas responsable des conséquences résultant de l'utilisation de ce service.",
-      "LIST_ITEM_3": "L'utilisation des services de transfert d'actifs est basée sur des utilisateurs ayant des connaissances suffisantes sur la contrepartie (y compris mais non limité à l'identité réelle de la contrepartie). Il n'y a aucun moyen de rappeler, révoquer ou annuler des transferts d'actifs une fois qu'ils ont été exécutés. Les utilisateurs assumeront tous les risques résultant de l'utilisation des services de transfert d'actifs après avoir effectué un transfert. Le fournisseur de services de portefeuille n'aura aucune responsabilité légale pour tout litige résultant de transferts d'actifs. Ces litiges seront résolus par les parties émettrices et réceptrices.",
-      "LIST_ITEM_4": "Le fournisseur de services fournit uniquement un support technique pour le portefeuille et ne fournira aucun support technique pour tout autre service.",
-      "READ_AND_AGREE": "J'ai lu et j'accepte l'intégralité de la clause de non-responsabilité et j'assume volontairement les risques et les responsabilités communiqués."
+        "HEADLINE": "Avertissement",
+        "INTRODUCTION": "Ce portefeuille est développé et basé sur la technologie Blockchain. Toutes les informations de compte et ainsi que les transactions sont stockées sur des blockchains publiques. Le fournisseur de services de portefeuille ne stockera pas les clés privées, les phrases mnémotechniques ou les mots de sauvegarde des utilisateurs (collectivement, les «informations sur les clés privées») dans une base de données centralisée. Les informations de clés privées des utilisateurs et les fichiers générés par l'importation de clés privées appartiennent uniquement à la personne qui a créé le compte. L'utilisateur a la responsabilité de sauvegarder ses fichiers de clés privées et son mot de passe et est seul responsable de l'utilisation de son compte, de son mot de passe et de ses informations de clé privée.",
+        "LIST_INTRODUCTION": "Vous acceptez que le fournisseur de services de portefeuille ne porte aucune responsabilité dans les situations suivantes:",
+        "LIST_ITEM_1": "le fournisseur de services de portefeuille ne sera pas responsable pour toutes fuites d'informations personnelles dues à l'utilisateur ayant fait connaître son mot de passe / informations de clé privée à d'autres, l'utilisateur n'ayant pas sauvegardé son mot de passe / information de clé privée, l'utilisateur ayant partagé son portefeuille ou toute autre erreur.",
+        "LIST_ITEM_2": "L'utilisation de ce service implique des services Internet et peut être affectée par des connexions instables. L'utilisation de ce service entraîne des risques de perturbation du service ou de non-satisfaction des besoins des utilisateurs en raison des événements suivants: cas de force majeure, logiciels malveillants, virus et autres logiciels malveillants, attaques par des pirates informatiques, systèmes d'exploitation instables, emplacement, les utilisateurs arrêtant leurs appareils et d'autres raisons liées à Internet, la technologie et les lignes de télécommunication. Les utilisateurs doivent comprendre et assumer les risques ci-dessus. Le fournisseur de services de portefeuille ne sera pas responsable des conséquences résultant de l'utilisation de ce service.",
+        "LIST_ITEM_3": "L'utilisation des services de transfert d'actifs est basée sur des utilisateurs ayant des connaissances suffisantes sur la contrepartie (y compris mais non limité à l'identité réelle de la contrepartie). Il n'y a aucun moyen de rappeler, révoquer ou annuler des transferts d'actifs une fois qu'ils ont été exécutés. Les utilisateurs assumeront tous les risques résultant de l'utilisation des services de transfert d'actifs après avoir effectué un transfert. Le fournisseur de services de portefeuille n'aura aucune responsabilité légale pour tout litige résultant de transferts d'actifs. Ces litiges seront résolus par les parties émettrices et réceptrices.",
+        "LIST_ITEM_4": "Le fournisseur de services fournit uniquement un support technique pour le portefeuille et ne fournira aucun support technique pour tout autre service.",
+        "READ_AND_AGREE": "J'ai lu et j'accepte l'intégralité de la clause de non-responsabilité et j'assume volontairement les risques et les responsabilités communiqués."
     },
     "LOGOUT": "Déconnexion",
     "RESYNC": "Re-synchroniser",
     "SYNCING": "Synchronisation en cours",
     "TRANSFER": "Transfert",
     "OK": "OK",
-
     "PREVIEW": "Aperçu",
     "LEGAL_DISCLAIMER": {
-      "TITLE": "Avertissement légal",
-      "BRIEF_EXPLAIN": "MyETPWallet.com vous permet de créer, d'enregistrer et d'accéder facilement à vos informations et actifs et d'interagir avec la blockchain Metaverse. Vous êtes seul responsable de la gestion de vos fonds et de la sécurité de votre clé privée et phrase mnémotechnique associées à votre compte.",
-      "WARNING": "Avant d'utiliser ce portefeuille, sachez qu'il existe d'importants risques associés à la crypto-monnaie et aux logiciels libres basés sur la technologie blockchain tels que les fluctuations importantes des taux de change et les bugs informatiques. En créant un compte sur MyETPWallet.com ou MVSD, vous confirmez avoir lu, compris et accepté tous les termes et conditions indiqués dans cet Avertissement légal.",
-      "I_TITLE": "I. Accès et contrôle des informations du compte",
-      "I_INFO": "1.1 Lors de la création de votre compte, une phrase mnémotechnique ('backup words') contitué de 24 mots Anglais ainsi qu'une paire de clé privée et publique sont créées afin de recevoir et envoyer des monnaies virtuelles. Vous devez sauvegarder cette phrase mnémotechnique et clé privée and les conserver de manière sécurisée; leur perte peut entraîner la perte de contrôle des actif de votre portefeuille.",
-      "I_INFO_2": "1.2 Le Portefeuille ne collecte ou enregistre aucune des informations privées de l'utilisateur, telles que votre mot de passe et les clés privées. Cette information est sauvegardée localement sur l'appareil de l'utilisateur. Par conséquent, l'équipe de développement est uniquement responsable de garantir l'accès au portefeuille et de corriger les bugs informatiques, et est dans l'impossibilitée de restaurer la clé privée. Si vous utilisez MyETPWallet.com, vous reconnaîssez que Metaverse n'est pas responsable de la sécurité et du stockage des clés privées associées à votre compte. Nous vous recommandons fortement de faire une sauvegarde de votre fichier de compte afin de protéger vos droits de propriété.",
-      "II_TITLE": "II. Sécurité du compte",
-      "II_INFO_1": "2.1 L'équipe Metaverse mettra en œuvre les mesures de sécurité appropriés afin de protéger les utilisateurs contre la perte de données, l'utilisation inappropriée, l'accès non autorisé et / ou la divulgation. Par exemple, nous mettons en œuvre des techniques de cryptage de haute qualité telles que SSL afin de protéger vos informations personnelles. Veuillez noter que nous ne pouvons garantir la sécurité absolue de toute donnée divulguée en ligne, en raison des limitations de la technologie et des actions hostiles imprévisibles contre la plate-forme. En utilisant notre service, l'utilisateur reconnaît la possibilité que le système et le réseau de télécommunication qu'ils utilisent pour accéder à notre service puissent être compromis, ce qui est hors de notre contrôle. Par exemple, le logiciel téléchargé par l'utilisateur ou les sites Web visités peuvent contenir des virus ou des logiciels malveillants qui menacent la sécurité des informations contenues dans le portefeuille. Par conséquent, il est impératif que les utilisateurs assurent la sécurité de leurs informations et données personnelles. Vous acceptez le risque intrinsèque de sécurité en fournissant et échangeant en ligne via internet et ne nous tiendrez pas responsable en cas de faille de sécurité, excepté si elle est dû à notre négligeance. L'équipe de développement recommande aux utilisateurs d'accorder une attention particulière à la sauvegarde du mot de passe et des clés privées hors ligne (par exemple, en les écrivant sur une feuille de papier).",
-      "II_INFO_2": "2.2 Les utilisateurs ne doivent en aucun cas faire confiance à des informations provenant de sources non officielles. Toute opération sur le portefeuille ne doit avoir lieu qu'après que l'utilisateur ait effectué les vérifications nécessaires et évalué l'identité de la contrepartie.",
-      "II_INFO_3": "2.3 Il est de la seule responsabilité de l'utilisateur de protéger la sécurité de son portefeuille. Les développeurs de l'équipe Metaverse prendront les mesures techniques appropriées en accord avec les normes de l'industrie pour protéger la sécurité des données sur l'appareil des utilisateurs, mais ne sont pas légalement responsables de toute perte de données ou de fonds. Dans ces circonstances, l'utilisateur reconnaît et accepte que l'équipe Metaverse ne garantit pas la sécurité complète des fonds du portefeuille.",
-      "III_TITLE": "III. Contactez nous",
-      "III_INFO": "Si vous avez des questions concernant les politiques de confidentialité ci-dessus, s'il vous plaît contactez-nous en utilisant l'adresse email suivante: info@mvs.org",
-      "FOOTER": "L'équipe Metaverse se réserve le droit d'interpréter et de modifier les clauses mentionnées ci-dessus à n'importe quel moment, à notre propre discrétion. MyETPWallet est distribué sous la protection du protocole open source du MIT."
+        "TITLE": "Avertissement légal",
+        "BRIEF_EXPLAIN": "MyETPWallet.com vous permet de créer, d'enregistrer et d'accéder facilement à vos informations et actifs et d'interagir avec la blockchain Metaverse. Vous êtes seul responsable de la gestion de vos fonds et de la sécurité de votre clé privée et phrase mnémotechnique associées à votre compte.",
+        "WARNING": "Avant d'utiliser ce portefeuille, sachez qu'il existe d'importants risques associés à la crypto-monnaie et aux logiciels libres basés sur la technologie blockchain tels que les fluctuations importantes des taux de change et les bugs informatiques. En créant un compte sur MyETPWallet.com ou MVSD, vous confirmez avoir lu, compris et accepté tous les termes et conditions indiqués dans cet Avertissement légal.",
+        "I_TITLE": "I. Accès et contrôle des informations du compte",
+        "I_INFO": "1.1 Lors de la création de votre compte, une phrase mnémotechnique ('backup words') contitué de 24 mots Anglais ainsi qu'une paire de clé privée et publique sont créées afin de recevoir et envoyer des monnaies virtuelles. Vous devez sauvegarder cette phrase mnémotechnique et clé privée and les conserver de manière sécurisée; leur perte peut entraîner la perte de contrôle des actif de votre portefeuille.",
+        "I_INFO_2": "1.2 Le Portefeuille ne collecte ou enregistre aucune des informations privées de l'utilisateur, telles que votre mot de passe et les clés privées. Cette information est sauvegardée localement sur l'appareil de l'utilisateur. Par conséquent, l'équipe de développement est uniquement responsable de garantir l'accès au portefeuille et de corriger les bugs informatiques, et est dans l'impossibilitée de restaurer la clé privée. Si vous utilisez MyETPWallet.com, vous reconnaîssez que Metaverse n'est pas responsable de la sécurité et du stockage des clés privées associées à votre compte. Nous vous recommandons fortement de faire une sauvegarde de votre fichier de compte afin de protéger vos droits de propriété.",
+        "II_TITLE": "II. Sécurité du compte",
+        "II_INFO_1": "2.1 L'équipe Metaverse mettra en œuvre les mesures de sécurité appropriés afin de protéger les utilisateurs contre la perte de données, l'utilisation inappropriée, l'accès non autorisé et / ou la divulgation. Par exemple, nous mettons en œuvre des techniques de cryptage de haute qualité telles que SSL afin de protéger vos informations personnelles. Veuillez noter que nous ne pouvons garantir la sécurité absolue de toute donnée divulguée en ligne, en raison des limitations de la technologie et des actions hostiles imprévisibles contre la plate-forme. En utilisant notre service, l'utilisateur reconnaît la possibilité que le système et le réseau de télécommunication qu'ils utilisent pour accéder à notre service puissent être compromis, ce qui est hors de notre contrôle. Par exemple, le logiciel téléchargé par l'utilisateur ou les sites Web visités peuvent contenir des virus ou des logiciels malveillants qui menacent la sécurité des informations contenues dans le portefeuille. Par conséquent, il est impératif que les utilisateurs assurent la sécurité de leurs informations et données personnelles. Vous acceptez le risque intrinsèque de sécurité en fournissant et échangeant en ligne via internet et ne nous tiendrez pas responsable en cas de faille de sécurité, excepté si elle est dû à notre négligeance. L'équipe de développement recommande aux utilisateurs d'accorder une attention particulière à la sauvegarde du mot de passe et des clés privées hors ligne (par exemple, en les écrivant sur une feuille de papier).",
+        "II_INFO_2": "2.2 Les utilisateurs ne doivent en aucun cas faire confiance à des informations provenant de sources non officielles. Toute opération sur le portefeuille ne doit avoir lieu qu'après que l'utilisateur ait effectué les vérifications nécessaires et évalué l'identité de la contrepartie.",
+        "II_INFO_3": "2.3 Il est de la seule responsabilité de l'utilisateur de protéger la sécurité de son portefeuille. Les développeurs de l'équipe Metaverse prendront les mesures techniques appropriées en accord avec les normes de l'industrie pour protéger la sécurité des données sur l'appareil des utilisateurs, mais ne sont pas légalement responsables de toute perte de données ou de fonds. Dans ces circonstances, l'utilisateur reconnaît et accepte que l'équipe Metaverse ne garantit pas la sécurité complète des fonds du portefeuille.",
+        "III_TITLE": "III. Contactez nous",
+        "III_INFO": "Si vous avez des questions concernant les politiques de confidentialité ci-dessus, s'il vous plaît contactez-nous en utilisant l'adresse email suivante: info@mvs.org",
+        "FOOTER": "L'équipe Metaverse se réserve le droit d'interpréter et de modifier les clauses mentionnées ci-dessus à n'importe quel moment, à notre propre discrétion. MyETPWallet est distribué sous la protection du protocole open source du MIT."
     },
     "PASSWORD_WARNING": "Nous vous conseillons d'utiliser un mot de passe complexe pour votre propre sécurité.",
     "FEE": "Frais de transaction",
     "NOTICE_TRANSACTION_FEE_UNCOVERED": "Veuillez vous assurer que vous avez assez d'ETP pour couvrir les frais de transaction.",
-
     "SELECT_RECIPIENT_ADDRESS": "Sélectionnez l'adresse du destinataire (facultatif)",
     "CUSTOM": "Personnalisée",
     "CUSTOM_RECIPIENT_ADDRESS": "Adresse personnalisée du destinataire",
     "BLOCKS": "Blocs",
     "INTEREST_RATE": "Taux d'intérêts",
-
     "OPEN_FROM_QRCODE": "Ouvrir avec QR Code",
     "OPEN_FROM_BACKUP_WORDS": "Ouvrir avec phrase mnémotechnique",
     "ENTER_PASSWORD_HEADLINE_MOBILE": "Veuillez entrer votre mot de passe pour décrypter votre clé privée",
     "SETTINGS.SHOW_QRCODE_BUTTON": "Connecter téléphone",
     "SETTINGS.SHOW_QRCODE_TEXT": "Exporter votre clé privée vers l'application mobile MyETPWallet.",
-
     "LOGOUT_TEXT": "Déconnecter mon compte",
     "EXPORT_ACCOUNT": "Exporter compte",
-
     "IMPORT.SHOW_QRCODE_BUTTON": "Afficher QR Code",
-
     "IMPORT_MNEMONIC_TEXT_MOBILE": "Votre clé privée sera cryptée avec votre mot de passe et enregistrée sur votre appareil.",
-
     "RESET_MESSAGE_MOBILE": "Toutes les données seront supprimées. Afin de vous reconnecter, vous aurez besoin de votre phrase mnémotechnique ou de scanner le QR Code optenu via MyETPWallet sur ordinateur de bureau.",
     "IMPORT.SCAN_QRCODE_TEXT": "Importer mon compte sur mon téléphone",
-    "IMPORT.SCAN_QRCODE_BUTTON":"Scanner QR Code",
-
+    "IMPORT.SCAN_QRCODE_BUTTON": "Scanner QR Code",
     "ASSET_ISSUE": "Créer actif",
     "NOTICE_ASSET_ISSUE_FEE": "Veuillez noter que la création d'un actif coûte 10 ETP.",
-
     "ISSUE.NOTICE_TRANSACTION_FEE_UNCOVERED": "Vous devez avoir au moins 10 ETP pour pouvoir créer un actif",
     "ISSUE.SYMBOL": "Symbole",
     "ISSUE.ISSUER_NAME": "Nom de l'issuer",
@@ -200,68 +171,50 @@
     "ISSUE.ISSUE_ADDRESS": "Adresse de distribution (adresse qui recevra l'actif créé)",
     "ISSUE.FEE_ADDRESS": "Adresse de payement (adresse payant 10 ETP)",
     "ISSUE.CUSTOM_ISSUE_ADDRESS": "Entrer manuellement l'adresse de distribution",
-
     "ISSUE.CONFIRMATION_TITLE": "Créer un actif coûte 10 ETP.",
     "ISSUE.CONFIRMATION_SUBTITLE": "Etes-vous sûr de vouloir créer cet actif ?",
     "ISSUE.CREATE": "Créer actif",
-
     "EXPORT.HEADLINE": "Connecter votre téléphone",
     "EXPORT.INTRODUCTION": "Pour télécharger l'application MyETPWallet sur votre téléphone, rendez vous sur MyETPWallet.com et cliquez sur 'Download Wallet'.",
     "EXPORT.TEXT": "Cette action va exporter votre Clé privée sur votre téléphone. Votre clé privée sera encryptée via le mot de passe utilisé pour ce compte, et sauvegardée sur votre mobile. Veuillez scanner ce QR Code via l'application mobile MyETPWallet.",
     "EXPORT.REMINDER_LOGOUT": "Veuillez vous déconnecter de l'application si vous changez votre téléphon.",
-
     "LOGIN_MENU_INFO_TEXT_MOBILE": "Information: Pour créer un compte, veuillez utiliser votre ordinateur et aller sur MyETPWallet.com. Vous pourrez ensuite lier votre compte avec votre téléphone.",
     "REPORT_BUG": "Signaler un bug",
-
     "MESSAGE.NETWORK_MISMATCH": "Le réseau utilisé ne correspond pas",
     "MESSAGE.PASSWORD_WRONG": "Impossible de décrypter votre portefeuille à partir du mot de passe fournit",
-    "MESSAGE.CREATE_TRANSACTION" : "Impossible de créer la transaction.",
+    "MESSAGE.CREATE_TRANSACTION": "Impossible de créer la transaction.",
     "MESSAGE.BROADCAST_ERROR": "Impossible de diffuser la transaction.",
-
     "LOGIN": "Connexion",
     "HOW_TO_IMPORT_WALLET_MOBILE": "Comment importer",
-    "HOW_TO_IMPORT_WALLET_MOBILE_TITLE": "Comment importer votre clé privée ?",
     "HOW_TO_IMPORT_WALLET_MOBILE_STEP1": "Ouvrez MyETPWallet.com sur votre ordinateur et allez dans Paramètres, puis Connecter téléphone",
     "HOW_TO_IMPORT_WALLET_MOBILE_STEP2": "Scannez le QR Code",
     "HOW_TO_IMPORT_WALLET_MOBILE_STEP3": "Utilisez votre portefeuille depuis sur votre téléphone!",
-
-    "MESSAGE.ISSUE_INSUFFICIENT_BALANCE" : "Vous avez besoin d'au moins 10 ETP pour créer un actif.",
-
+    "MESSAGE.ISSUE_INSUFFICIENT_BALANCE": "Vous avez besoin d'au moins 10 ETP pour créer un actif.",
     "SCANNING.MESSAGE_ACCOUNT": "Scannez votre QRCode sur votre ordinateur",
     "SCANNING.MESSAGE_ADDRESS": "Scannez l'adresse ETP",
-
     "MESSAGE.NOT_ETP_ADDRESS_TITLE": "Adresse incorrecte",
     "MESSAGE.NOT_ETP_ADDRESS_TEXT": "Ceci n'est pas une adresse ETP correcte. Veuillez scanner une adresse ETP.",
-
     "SEND_ALL_BUTTON": "Max.",
-
     "IMPORT_QRCODE": "Veuillez utiliser le QRCode disponible sur app.myetpwallet.com, dans Paramètres, puis Connecter téléphone",
-
     "MESSAGE.ONE_TX_PER_BLOCK": "Veuillez noter qu'actuellement chaque compte ne peut soumettre qu'une transaction par bloc",
     "MESSAGE.INSUFFICIENT_BALANCE": "Balance insuffisante. Veuillez vérifier votre balance disponible",
-
     "LOGIN.MOBILEWEB_ANDROID1": "Télécharger MyETPWallet via Google Play Store (recommandé):",
     "LOGIN.MOBILEWEB_ANDROID2": "Ou télécharger directement l'application:",
     "LOGIN.MOBILEWEB_IOS": "",
     "LOGIN.MOBILEWEB_OTHER": "MyETPWallet est actuellement uniquement disponible sur Android, iOS et ordinateur",
-
     "ISSUE.MAX_SUPPLY_CUSTOM": "Quantité totale personnalisée",
-
     "ISSUE.ONE_MILLION": "Un million",
     "ISSUE.TEN_MILLION": "Dix million",
     "ISSUE.ONE_HUNDRED_MILLION": "Cent million",
     "ISSUE.ONE_BILLION": "Un milliard",
     "ISSUE.TEN_BILLION": "Dix milliard",
-
     "AVATARS": "Avatars",
     "AVATARS.CREATE_AVATAR_BTN": "Créer",
     "AVATARS.NO_AVATARS": "Vous n'avez pas encore d'Avatar. Cliquez sur Créer Avatar pour créer votre premier Avatar!",
-
     "CREATE_AVATAR": "Créer Avatar",
     "CREATE_AVATAR.CREATE_BTN": "Créer Avatar",
     "CREATE_AVATAR.SYMBOL": "Symbole",
     "CREATE_AVATAR.ADDRESS": "Adresse",
-
     "RECIPIENT_AVATAR": "Avatar destinataire",
     "SEND_TO_AVATAR": "Envoyer vers Avatar",
     "HEADLINE_MST": "Metaverse Smart Token",
@@ -269,29 +222,24 @@
     "NO_MIT_TEXT": "Vous n'avez pas encore de MIT. Pour créer un MIT, vous devez d'abord créer un Avatar.",
     "MIT_REGISTER.SYMBOL": "Symbole",
     "MIT_REGISTER.CONTENT": "Contenu",
-
     "IMPORT.WORDS_REMAINING": " mots restants",
     "IMPORT.WORDS_ALL_OK": "Prêt à importer",
     "IMPORT.WORDS_TOO_MANY": "Vous avez entré plus de 24 mots",
     "IMPORT.INCORRECT_WORD": "Incorrect mot numéro ",
     "IMPORT.INCORRECT_MNEMONIC": "Cette clé est incorrecte. Veuillez vérifier l'order des mots.",
-
     "AVATARS.MY_CERTS": "Mes certificat",
     "AVATARS.SECONDARY_ISSUE": "Augmentation de capital",
     "AVATARS.DOMAIN": "Domaine",
     "AVATARS.NAMING": "Nom",
     "HASH": "Hash",
     "RECEIVE.ADDRESS_NO_MST": "Cette adresse ne possède aucun MST",
-
     "ISSUE.SECONDARYISSUE_THRESHOLD": "Seuil augmentation de capital",
     "ISSUE.SECONDARYISSUE_TYPE": "Autoriser une augmentation de capital dans le future",
     "ISSUE.SECONDARYISSUE_DISABLED": "Augmentation de capital impossible",
     "ISSUE.SECONDARYISSUE_UNLIMITED": "Augmentation de capital possible uniquement avec certificat",
     "ISSUE.SECONDARYISSUE_RATE": "Augmentation de capital possible avec certificat et seuil",
-
     "TOTAL_AVAILABLE_BALANCE": "Balance totale disponible",
     "AVATAR_AVAILABLE_BALANCE": "Avatar balance disponible",
-
     "ISSUE.SYMBOL_AVAILABLE": "Ce domaine est disponible. Après création de ce MST, vous recevrez un certificat de Domaine",
     "ISSUE.SYMBOL_DOMAIN_OWNER": "Votre Avatar possède le certificat de Domaine afin de créer ce MST",
     "ISSUE.SYMBOL_NAMING_OWNER": "Votre Avatar possède le certificat de Nom afin de créer ce MST",
@@ -299,11 +247,9 @@
     "ISSUE.SYMBOL_NOT_CERT_OWNER": "Votre Avatar ne possède pas the certificat de Domaine afin de créer ce MST",
     "ISSUE.SYMBOL_ERROR_LOADING_MSTS": "Erreur lors du chargement des MSTs. Veuillez vérifier que ce MST symbole est disponible",
     "ISSUE.SYMBOL_ERROR_LOADING_CERTS": "Erreur lors du chargement des certificats de Domaine. Veuillez vérifier que vous avez le droit de créer ce symbole",
-
     "REGISTER_MST": "Enregistrer MST",
     "REGISTER_MIT": "Enregistrer MIT",
     "TRANSFER_MIT": "Transférer MIT",
-
     "AVATAR_RECIPIENT_ADDRESS": "L'adresse de cet Avatar est {{address}}, elle a été modifiée pour la dernière fois le {{last_update}}",
     "MIT.STATUS": "Statut",
     "CREATOR": "Créateur",
@@ -312,12 +258,10 @@
     "MIT.TX_HASH": "Créé dans ",
     "MIT.HISTORY": "Historique de transaction",
     "CHECK_IN_EXPLORER": "Voir dans l'Exploreur",
-
     "ISSUE.MAX_SUPPLY_TOO_HIGH": "Quantité totale*Nombre de décimales trop élevé. Veuillez diminuer l'un des deux",
     "CREATE_AVATAR.NO_ADDRESS_1ETP": "Vous n'avez aucun adresse avec 1 ETP disponible. Veuillez envoyer au moins 1 ETP sur l'une de vos adresses disponibles (pas encore liée à un Avatar) afin de créer un Avatar",
     "MAINNET": "Mainnet",
     "TESTNET": "Testnet",
-
     "CREATE_AVATAR.CONFIRMATION_TITLE": "Créer un Avatar coûte 1 ETP.",
     "CREATE_AVATAR.CONFIRMATION_SUBTITLE": "Etes vous sûr de vouloir créer un Avatar?",
     "ISSUE.NO_AVATAR": "Vous devez avoir un Avatar afin de créer un MST. Veuillez d'abord créer un Avatar",
@@ -329,48 +273,38 @@
     "MIT_REGISTER.SELECT_AVATAR": "Veuillez d'abord sélectionner un Avatar destinataire",
     "CREATE_AVATAR.AVATAR_ALREADY_EXIST": "Ce nom d'Avatar a déjà été enregistré",
     "MIT_REGISTER.MIT_ALREADY_EXIST": "Ce MIT symbole a déjà été enregistré",
-
     "SEND_TO_ONE": "Destinataire unique",
     "SEND_MORE": "Multi-destinataires",
     "RECIPIENT": "Destinataire",
     "ADD_RECIPIENT": "Ajouter destinataire",
     "REMOVE_RECIPIENT": "Supprimer destinataire",
     "TOTAL_TO_SEND": "Total à envoyer",
-
     "SEND_MORE.TOTAL_MORE_AVAILABLE": "Le total est supérieur à votre balance disponible",
     "SEND_MORE.WRONG_FILE": "Impossible de lire le fichier. Veuillez vérifier le format. Dans les options avancées, vous pouvez exporter vers un fichier CSV et l'utiliser comme modèle",
-
     "IMPORT_FROM_CSV": "Importer depuis fichier CSV",
     "DOWNLOAD_CSV": "Télécharger fichier CSV",
     "MESSAGE.SEND_MORE_IMPORT_CSV_TOO_MANY_RECIPIENT_TITLE": "Limite de destinataires dépassée",
     "MESSAGE.SEND_MORE_IMPORT_CSV_TOO_MANY_RECIPIENT_BODY": "Ce fichier contient trop de destinataire. Le nombre maximum de destinataires est limité à ",
-
     "TRANSACTION": "Transaction",
     "LOCKED_UNTIL": "Déposés jusqu'à",
     "LOCKED_FOR_BLOCKS": "Déposés pour",
     "DEPOSITS": "Dépôts",
-
     "MINERS": "Mineurs",
     "DEVELOPERS": "Communauté des développeurs",
     "TRANSFER_FEE_DISTRIBUTION": "Distribution des frais de transaction",
-
     "HELP.CREATE_AVATAR_NAME": "Votre Nom d'Avatar est unique. Il peut contenir des nombres, lettres minuscules, majuscules, points, tirets, tiret bas et arobases. Votre Avatar peut être utilisé à la place de votre adresse pour recevoir et envoyer des ETP ou autres assets.",
     "HELP.CREATE_AVATAR_LINKED_ADDRESS": "Votre Avatar sera lié à cette adresse.",
-    "ACCOUNT.TOTAL_VALUE" : "Valeur total",
-    "SETTINGS.BASE_CURRENCY" : "Devise utilisée",
-    "SETTINGS.BASE_CURRENCY_TEXT" : "Choisissez la devise qui sera utilisée dans votre portefeuille.",
-
+    "ACCOUNT.TOTAL_VALUE": "Valeur total",
+    "SETTINGS.BASE_CURRENCY": "Devise utilisée",
+    "SETTINGS.BASE_CURRENCY_TEXT": "Choisissez la devise qui sera utilisée dans votre portefeuille.",
     "CREATE_AVATAR.AVATAR_NAME_TOO_SHORT": "Le nom de votre Avatar doit contenir au moins 3 characters",
     "SUBTITLE.CREATE_AVATAR_ADDRESS": "Vous pouvez lier votre Avatar uniquement avec une adresse contenant au moins 1 ETP disponible",
-
     "HELP.BOUNTY_FEE": "Vous pouvez choisir comment vos frais de transaction seront distribués entre les Mineurs et la Communauté des développeurs. Ce choix n'impacte pas le montant des frais que vous allez payer pour la transaction. La part maximale pour la Communauté des développeurs est 80%.",
-
     "SETTINGS.PLUGINS": "Plugins",
     "SETTINGS.PLUGINS_TEXT": "Ajouter une extension tierce.",
-
     "PLUGIN_SETTINGS": "Paramètres des plugins",
     "PLUGIN_DETAILS": "Détails du plugin",
-    "PLUGIN_DETAILS.NAME" : "Nom du plugin",
+    "PLUGIN_DETAILS.NAME": "Nom du plugin",
     "PLUGIN_DETAILS.DESCRIPTION": "Description",
     "PLUGIN_DETAILS.AUTHOR": "Autheur",
     "PLUGIN_DETAILS.PERMISSIONS": "Permissions",
@@ -394,7 +328,6 @@
     "MESSAGE.IMPORT_PLUGIN_MISSING_DEFAULT_TRANSLATION": "La traduction par défaut est manquante.",
     "ERROR_TOO_MANY_INPUTS": "Transaction trop large",
     "ERROR_TOO_MANY_INPUTS_TEXT": "Cette transaction contient un nombre trop important d'entrées. Veuillez essayer un montant inférieur.",
-
     "HISTORY.NO_DEPOSIT_YET": "Aucun dépôt pour l'instant",
     "HISTORY.NO_DEPOSIT_YET_TEXT": "Dépôsez vos ETP pour recevoir des intérêts!",
     "HISTORY.ORDER_BY": "Ordonner par",
@@ -406,7 +339,6 @@
     "HISTORY.FROZEN_TX": "Dépôts en cours",
     "HISTORY.UNFROZEN_TX": "Dépôts terminés",
     "LOCKED_SINCE": "Dépôsé depuis",
-
     "GENERATE_ADDRESSES.CHANGE_ADDRESS_NUMBER": "Changer le nombre d'adresses",
     "GENERATE_ADDRESSES.HEADLINE": "Changer le nombre d'adresses",
     "GENERATE_ADDRESSES.EXPLANATION": "MyETPWallet utilise un HD Wallet (Hierarchical Deterministic) pour générer multiples adresses. Les adresses sont générées de manière déterministe, cela signifit que si vous supprimez certaines de vos adresses, vous pourrez les rajouter ultérieurement et les mêmes adresses seront regénérées.",
@@ -415,32 +347,24 @@
     "GENERATE_ADDRESSES.ERROR": "Erreur lors de la génération de vos adresses",
     "MIT_REGISTER.MIT_SYMBOL_TOO_SHORT": "Le symbole MIT doit contenir au moins 3 charactères",
     "HELP.GENERATE_ADDRESSES_NUMBER": "Afin de garder votre portefeuille fluide, il est recommandé de garder un faible nombre d'adresses. La valeur par défaut est de 10 adresses, le maximum est de 50 adresses",
-
     "MESSAGE": "Message publique (facultatif)",
     "HELP.MESSAGE": "Ce message sera publiquement visible dans votre transaction. Veuillez ne pas entrer des données personnelles",
     "MESSAGE_TOO_LONG": "Message trop long. Veuillez entrer un message plus court",
-
     "AVATARS.INFORMATION": "Les Avatars représentent votre identité numérique sur la blockchain Metaverse. Vous pouvez utiliser votre Avatar pour recevoir et envoyer des ETP ou MST à la place de votre adresse. Les Avatars peuvent créer des MST et MIT",
     "MSTS.INFORMATION": "MST (Metaverse Smart Token) est le standard utilisé par les tokens sur Metaverse. Chaque Avatar peut créer un MST via le formulaire ci-dessous.",
     "MITS.INFORMATION": "MIT (Metaverse Identifiable Token) est le standard utilisé par les uniques tokens sur Metaverse. Un MIT possède un symbole unique et son contenu ne peut être modifié. Sa quantité est toujours 1 et ne peut être divisé. Il peut uniquement être créé et transféré par et vers un Avatar. Les MITs peuvent être utilisés afin de représenter un object digital ou physique unique, et facilement retracer ses transferts entre Avatars. L'hitorique complet est enregistré sur la blockchain et publiquement visible",
-
     "SEND_ALL_TITLE": "Tout envoyer?",
     "SEND_ALL_MESSAGE": "Êtes vous sûr de vouloir envoyer la totalité de votre balance disponible?",
-
     "DEPOSIT.DURATION_ESTIMATION": "Vos MST seront bloqués pendant environ {{duration_days}} jours et {{duration_hours}} heures. Veuillez noter que cette estimation est basée sur la vitesse de génération des 10000 derniers blocs ({{blocktime}} sec.), et peut varier suivant l'évolution de la vitesse de générationon des blocs.",
     "HISTORY.UNLOCK_APPROXIMATION_INFORMATION": "*Veuillez noter que la date 'Déposés jusqu'à' est une estimation basée sur le nombre de blocs restant the la vitesse moyenne de génération des 10000 derniers blocs. Cette date varie en fonction de la vitesse de génération des blocs.",
-
     "RECIPIENT_ADDRESS_OR_AVATAR": "Destinataire Avatar ou adresse",
     "HELP.RECIPIENT_ADDRESS_OR_AVATAR": "Vous pouvez entrer l'Avatar ou l'adresse du destinataire.",
     "AVATAR": "Avatar",
     "ADDRESS": "Adresse",
-
     "INFORMATION.TITLE": "Information",
-
     "REPORT_BUG.TEXT": "La manière la plus simple de soumettre un problème est de remplir notre formulaire.",
     "GITHUB.FOLLOW": "Suivre les problème connus sur GitHub",
     "GITHUB.TEXT": "Notre code et développements sont totalement open source et publiquement visible sur GitHub. Vous pouvez consulter l'avancée des problèmes connus et bien sur aussi aider à les implémenter.",
-
     "ETH_BRIDGE": "Pont Ethereum",
     "ETH_TO_MVS": "Ethereum -> Metaverse",
     "MVS_TO_ETH": "Metaverse -> Ethereum",
@@ -471,19 +395,15 @@
     "HELP.ETH_ADDRESS": "Cette adresse Ethereum est celle qui recevra l'équivalent ERC20 sur Ethereum",
     "SWAP.NOTICE_SWAP_FEE": "Veuillez noter qu'un swap depuis Metaverse vers Ethereum coûte 1 ETP supplémentaire afin de payer les frais de transaction sur Ethereum",
     "SWAP": "Swap",
-
     "EXPORT_CSV": "Exporter vers CSV",
     "DOWNLOAD_CSV_EXAMPLE": "Télécharger le CSV exemple",
-
     "PENDING_CONFIRMATION": "En attente de confirmation",
     "COMPATIBLE_MST_LIST": "MST compatibles",
     "SWAP_MST.LIST_TITLE": "Liste des MST qui peuvent être échangés vers leur équivelent ERC20",
     "SWAP_MST.LIST_EXPLAIN": "Veuillez trouver ci-dessous la liste complète des MST qui peut être échangés vers leur équivelent ERC20 sur Ethereum:",
     "ETH_TO_MVS.DO_ONLY_ONCE": "Veuillez noter que ce processus nécessite d'être réalisé qu'une seule fois.",
     "ETH_TO_MVS.SWAP_CENTER_ADDRESS": "Centre d'échange de Metaverse sur Ethereum:",
-
     "SWAP_MST.INCORRECT_ETH_ADDRESS": "Incorrect adresse Ethereum. Veuillez vérifier l'adresse.",
-
     "MULTISIGNATURE": "Multisignature",
     "MULTISIGNATURE.INFORMATION": "Vous pouvez utiliser des adresses multisignature afin de partager afin de partager ces adresses avec d'autres utilisateurs. Ces adresses requièrent un nombre définit de signatures afin de réaliser une transaction.",
     "MULTISIGNATURE.NO_ADDRESS": "Vous n'avez pas encore d'adresse multisignature. Créez-en une en cliquant sur le boutton ci-dessous!",
@@ -528,15 +448,12 @@
     "MULTISIG_TRANSFER.FROM_ADDRESS": "Adresse source",
     "MULTISIG_MISSING_MY_PUBLIC_KEY.ERROR": "Veuillez d'abord générer votre clé publique dans l'étape 1.",
     "MULTISIG_WRONG_PUBLIC_KEYS.ERROR": "Veuillez vous assurer que toutes les clés publique entrées dans l'étape 2 sont correctes.",
-
     "SIGN": "Signer",
     "MULTISIGNATURE_TRANSFER.TX_TO_SIGN": "Transaction à signer",
     "MULTISIGNATURE_TRANSFER.SIGNED_TX": "Transaction après signature",
     "MULTISIGNATURE_TRANSFER.CREATE": "Créer transaction",
     "MULTISIGNATURE_TRANSFER.SIGN": "Signer transaction",
-
     "MULTISIGNATURE_TRANSFER.DECODE": "Vérifier transaction",
-
     "MESSAGE.ERROR_DECODE_MULTISIG_SUBTITLE": "Impossible de décoder cette transaction",
     "MESSAGE.ERROR_DECODE_MULTISIG_BODY": "Cette transaction ne peut être décodée. Veuillez vous assurer que cette transaction est correcte et a bien été crée en utilisant l'adresse multisignature sélectionnée",
     "MULTISIGNATURE.CURRENT_NBR_SIGN": "Nombre de signature déjà présentes",
@@ -549,7 +466,6 @@
     "MULTISIGNATURE.TX_SUMMARY": "Résumé de la transaction",
     "MULTISIGNATURE.TX_SUMMARY_OUPUTS": "Destinataire(s)",
     "MULTISIGNATURE.TX_SUMMARY_SIGN_INFO": "Information concernant les signatures",
-
     "ACCOUNT_NAME": "Nom du compte",
     "RESET_MESSAGE_MOBILE_SAVE_ACCOUNT": "Vous pouvez choisir the Sauvegarder localement de manière encryptée les information de votre compte afin de facilement pouvoir pour reconnecter avec votre mot de passe, ou Oublier toutes les information. Si vous choisissez de tout Supprimer, vous aurez besoin des 24 mots de votre phrase mnémotechnique afin de vous reconnecter.",
     "SAVE": "Sauvegarder",
@@ -559,7 +475,6 @@
     "DELETE_ACCOUNT_BODY": "Si vous oubliez ce compte, toutes les information seront supprimées. Pour vous connecter, vous aurez besoin de votre phrase mnémotechnique ou de votre fichier JSON keystore",
     "ACCOUNT_NAME_ALREADY_USED": "Ce nom de compte est déjà utilisé",
     "SUCCESS_ADD_MULTISIG": "L'adresse multisiginature a été ajoutée à votre portefeuille avec succès!",
-
     "SAVE_ACCOUNT_TITLE": "Choisissez le nom du compte",
     "SAVE_ACCOUNT_MESSAGE": "Veuillez donner un nom à ce compte. Ce nom sera utilisé uniquement localement afin que vous puissiez différencier vos différents comptes.",
     "SAVE_ACCOUNT_PLACEHOLDER": "Nom du compte",
@@ -568,13 +483,11 @@
     "SAVE_ACCOUNT_MESSAGE_ALREADY_EXIST": "Ce nom de compte est déjà utilisé par un autre compte. Veuillez utiliser un nom différent.",
     "RESET_MESSAGE_CHOICE": "Vous pouvez choisir de sauvegarder localement, de manière encryptée, les information de votre compte afin de facilement vous reconnecter à l'aide de votre mot de passe.",
     "SUCCESS_IMPORT_MULTISIG": "Votre adresse multisignature a été importé avec succès! Votre adresse est: ",
-
     "MESSAGE.ALREADY_SIGN_TRANSACTION": "Vous avez déjà signé cette transaction",
     "MESSAGE.WARNING_PLUGIN_TITLE": "Soyez prudent avec les plugins!",
     "MESSAGE.WARNING_PLUGIN_MESSAGE": "Depuis la version 0.6.0, vous pouvez ajouter des plugins dans MyETPWallet. Cette fonctionnalitée permet de facilement connecter des applications tierces à votre portefeuille Metaverse. Cependant, soyez prudent, toutes les information affichées dans un plugin sont gérées par l'entitée qui développe ce plugin. Nous recommandons d'utiliser les plugins avec précaution, et déconseillons de les utiliser avec votre protefeuille principale mais plutôt avec un portefeuille contenant un nombre limité d'actifs.",
     "MESSAGE.WARNING_MULTISIG_TITLE": "Les adresses multisignature via MyETPWallet sont en Beta test!",
     "MESSAGE.WARNING_MULTISIG_MESSAGE": "Depuis la version 0.6.0, vous pouvez désromais utiliser des adresses multisignatures dans MyETPWallet. Cependant, veuillez utiliser cette fonctionnalitée avec précaution et évitez de les utliser pour d'important montants. En cas de problème ou bug, n'hésitez pas a nous le notifier via la section 'Signaler un bug' dans le menu principal.",
-
     "SWAP_FEE": "Frais de swap",
     "HELP.SWAP_TX_FEE": "Représente les frais de la transaction sur la blockchain Metaverse",
     "HELP.SWAP_TX_SWAP_FEE": "Représente les frais de la transaction sur la blockchain Ethereum. Ce montant d'ETP sera convertit en ETH afin de payer les frais de la transaction sur Ethereum",
@@ -587,14 +500,10 @@
     "MESSAGE.WRONG_PASSWORD_TRY_AGAIN": "Mauvais mot de passe, rééssayer?",
     "MESSAGE.UNLOCK_WALLET_PASSWORD_NOT_ENTERED": "Mot de passe non spécifié, votre expérience dans le plugin pourra-t-être limitée",
     "MESSAGE.UNLOCK_WALLET_PASSWORD_MESSAGE": "Entrez votre mot de passe pour débloquer votre portefeuille",
-
     "MULTISIGNATURE.INFORMATION2": "Une adresse multisignature peut envoyer et recevoir des ETP et MST. Cette page affiche automatiquement tous les actifs détenus par chaque adresse.",
-
     "TOKEN_DROPLET.POWERED_BY": "Powered by RightBTC",
-
     "MESSAGE.ERR_SAVE_ACCOUNT": "Erreur lors de la sauvegarde du compte",
     "MESSAGE.ERR_IMPORT_ACCOUNT": "Erreur lors de l'importation du compte",
-
     "MULTISIGNATURE_ADD.UPDATE_MY_ADDRESS": "Changer mon adresse",
     "IMPORT_PLUGIN.ERROR": "Erreur lors de l'importation du plugin",
     "MESSAGE.PLUGIN_ADDED_TITLE": "Plugin ajouté avec succès!",
@@ -602,42 +511,33 @@
     "REMOVE_PLUGIN.ERROR": "Erreur lors de la suppression du plugin",
     "MESSAGE.PLUGIN_REMOVED_TITLE": "Plugin supprimé avec succès",
     "MESSAGE.PLUGIN_REMOVED_MESSAGE": "Le plugin a été supprimé.",
-
     "LANGUAGE_SETTINGS_TEXT": "Changer la langue.",
     "THEME_SETTINGS_TEXT": "Changer le thême et les couleurs du protefeuille.",
     "INFORMATION.TEXT": "Obtenir plus d'information à propos de MyETPWallet.",
-
     "ASSET_LOCK": "Je veux blocker cet MST",
     "ASSET_LOCK_PERIOD": "Période de blockage (en nombre de blocs)",
-     
     "ASSET_LOCK.SIMPLE": "Déblocage simple",
     "ASSET_LOCK.RECURRENT": "Déblocage récurrent",
     "ASSET_LOCK.CUSTOM": "Déblocage personnalisé",
     "ASSET_LOCK.NBR_PERIOD": "Nombre de périodes",
     "ASSET_LOCK.TOTAL_QUANTITY": "Quantitée totale bloquée",
     "ASSET_LOCK.TOTAL_DURATION": "Durée totale du blocage (en nombre de blocs)",
-
     "HELP.ASSET_LOCK_NBR_PERIOD": "Ceci est le nombre de total de périodes qui seront utilisées.",
     "HELP.ASSET_LOCK_TOTAL_QUANTITY": "Ceci est la quantité totale qui sera bloquée.",
     "HELP.ASSET_LOCK_TOTAL_DURATION": "Ceci est the nombre total de blocs jusqu'à la fin de la dernière période.",
-    
     "ASSET_LOCK.PERIOD_NBR": "Période {{period_nbr}}",
     "ASSET_LOCK.DURATION_CUSTOM_PERIOD": "Durée de la période {{period_nbr}} (en nombre de blocs)",
     "ASSET_LOCK.AMOUNT_CUSTOM_PERIOD": "Quantité débloquée à la fin de la période {{period_nbr}}",
     "ASSET_LOCK.TOTAL_MORE_SEND": "La somme de la quantité de chaque période est supérieure au montant à envoyer spécifié ci-dessus",
-
     "MESSAGE.LOCK_IMPORT_CSV_TOO_MANY_PERIODS_TITLE": "Trop de périodes",
     "MESSAGE.LOCK_IMPORT_CSV_TOO_MANY_PERIOD_BODY": "Ce fichier contient trop de périodes. Le nombre de périodes est limité à ",
-    
     "AVATARS.MINING": "Minage",
-
     "LOADING.TITLE": "TELECHARGEMENT DE LA NOUVELLE REALITEE",
     "LOADING.RETRY": "Réessayer",
-    "LOADING.CURRENT_HEIGHT": "Actuellement téléchargé jusqu'au block: {{height}}",
+    "LOADING.CURRENT_HEIGHT": "Actuellement synchronisé jusqu'au block: {{height}}",
     "LOADING.STOPPED": "Impossible de synchroniser vos transactions. Veuillez vérifier votre connexion internet ou réessayer plus tard.",
     "RETURN_LOGIN": "Retourner à la page de connexion",
     "LOADING.FULLY_LOADED": "Téléchargement terminé! Prêt à rejoindre Metaverse...",
-
     "MST_MINING.OPTION": "Autoriser cet MST à être miné",
     "HELP.MST_MINING_OPTION": "Le minage de MST autorise les mineurs à miner cet MST. De nouveau jetons seront créés dans chaque bloc miné par mineur choisissant de miner cet MST, la quantité étant définie par les paramètres spécifiés ci-dessous",
     "MST_MINING.INITIAL_REWARD": "Récompense initiale par bloc",
@@ -646,10 +546,8 @@
     "HELP.MST_MINING_INITIAL": "Ceci est la récompense initiale de cet MST, reçue par le mineur, par bloc. Par exemple, cette valeur était 3 pour ETP et 50 pour BTC",
     "HELP.MST_MINING_INTERVAL": "Ceci est le nombre de blocs entre chaque réduction de la récompense. Par exemple, cette valeur est de 500 000 blocks pour ETP et 210 000 blocks (4 années) pour BTC",
     "HELP.MST_MINING_BASE": "Ceci est la base pour définir la nouvelle récompense à la fin de chaque période. Par exemple, cette valeure est de 5% de décroissance par période pour ETP et 50% de décroissance, ou 'halving', pour BTC",
-
     "NEWS": "News",
     "NEWS.TITLE": "Metaverse News",
-
     "ETP_BRIDGE": "Pont ETP",
     "ETP_BRIDGE.RECIPIENT_ADDRESS": "Adresse du destinataire",
     "ETP_BRIDGE.FROM_ASSET": "Envoyer",
@@ -664,14 +562,13 @@
     "ETP_BRIDGE.RECEIVE_ADDRESS": "Adresses {{symbol}} de réception",
     "ETP_BRIDGE.REFUND_TX": "Transaction {{symbol}} de remboursement",
     "ETP_BRIDGE.RECEIVE_TX": "Transaction {{symbol}} de réception",
-
     "SUCCESS_CREATE_SWFT_TITLE": "Ordre créé!",
     "SUCCESS_CREATE_SWFT_BODY": "Votre ordre à été créé. L'étape suivante est de réalisé le dépôt.",
     "MESSAGE.CREATE_SWFT_ORDER_ERROR": "Erreure lors de la création de l'ordre. Veuillez vérifier les paramètres et réessayer.",
     "ETP_BRIDGE.HISTORY_TITLE": "Historique",
     "ETP_BRIDGE.HISTORY_DESCRIPTION": "Cet historique est uniquement sauvegarder localement. Un ordre apparaîtra seulement sur l'appareil utilisé pour créer l'ordre et jusqu'à la déconnexion. Si vous souhaitez garder votre historique, veuillez sauvegarder l'identifiant de vos ordres.",
     "ETP_BRIDGE_DETAILS": "Détails de l'ordre",
-    "ETP_BRIDGE.STATUS" : {
+    "ETP_BRIDGE.STATUS": {
         "wait_deposit_send": "En attente du dépôt",
         "wait_exchange_push": "Echange en cours...",
         "wait_exchange_return": "Echange en cours...",
@@ -708,11 +605,135 @@
     "SUCCESS_IMPORT_SWFT_TITLE": "Ordre importé!",
     "SUCCESS_IMPORT_SWFT_BODY": "Order importé avec succès",
     "ETP_BRIDGE.SEE_DETAILS_BUTTON": "Voir détails",
-
     "ETP_BRIDGE.INFORMATION": "Ce service est fournit par SWFT. En cas de problème ou question, veuillez les contacter via ",
     "ETP_BRIDGE.INFORMATION_LINK": "Telegram",
-
     "ETP_BRIDGE.IMPORT_ORDER_DESCRIPTION": "Si vous avez créé un ordre depuis un autre terminal ou directement via le site internet de SWFT, vous pouvez importer vos ordres via leur identifiant pour suivre leur status.",
-    "ETP_BRIDGE.UNABLE_CONNECT_SWFT": "Impossible de se connecter à SWFT. Veuillez vérifier votre connexion internet ou réessayer plus tard."
-
+    "ETP_BRIDGE.UNABLE_CONNECT_SWFT": "Impossible de se connecter à SWFT. Veuillez vérifier votre connexion internet ou réessayer plus tard.",
+    "DECODE_TX": "Décoder une transaction",
+    "DECODE_TX.TX_TO_SIGN": "Transaction à signer ou publier",
+    "DECODE_TX.DECODE": "Décoder",
+    "SIGN_TX": "Signer une transaction",
+    "CONFIRM_TX": {
+        "SIGN_ONLY": "Uniquement signer",
+        "SIGN_AND_SEND": "Signer et publier",
+        "BROADCAST": "Publier"
+    },
+    "MESSAGE.ERROR_DECODE_TX_SUBTITLE": "Impossible de décoder cette transaction",
+    "MESSAGE.ERROR_DECODE_TX_BODY": "Cette transaction ne peut être décodée. Veuillez vous assurer que cette transaction est correcte.",
+    "TX": {
+        "INPUTS": "Entrées",
+        "OUTPUTS": "Sorties",
+        "TX_SUMMARY": "Résumé de la transaction",
+        "TOTAL_INPUTS": "Total des entrées",
+        "TOTAL_OUTPUTS": "Total des sorties",
+        "INPUT_COINBASE": "Nouvellement généré",
+        "TYPE": {
+            "did-register": "Création d'Avatar",
+            "did-transfer": "Transfert d'Avatar",
+            "message": "Message ou donnée publique",
+            "MIT": {
+                "registered": "Création de MIT",
+                "transfered": "Transfert de MIT"
+            },
+            "CERT": {
+                "issue": "Certificat d'augmentation de capital",
+                "domain": "Certificat de domaine",
+                "naming": "Certificat d'appellation",
+                "mining": "Certificate de minage",
+                "witness": "Certificate de témoin"
+            }
+        },
+        "TX_FEE": "Frais",
+        "LOCKED_SINCE_BLOCK": "Bloqué depuis le bloc {{block}} ({{time}})",
+        "LOCKED_UNTIL_BLOCK": "Bloqué jusqu'au bloc {{block}} (~{{time}})",
+        "INTRAWALLET": "Intra-portefeuille",
+        "TX_TYPE": {
+            "ETP": "Transfert d'ETP",
+            "ASSET": "Transfert de MST",
+            "ISSUE": "Création de MST",
+            "CERT": "Transfert de certificat",
+            "CERT_TYPE": {
+                "issue": "Certificat d'augmentation de capital",
+                "domain": "Certificat de domaine",
+                "naming": "Certificat d'appellation",
+                "mining": "Certificate de minage",
+                "witness": "Certificate de témoin"
+            },
+            "DID_REGISTER": "Création d'Avatar",
+            "DID_TRANSFER": "Transfert d'Avatar",
+            "MIT_REGISTERED": "Création de MIT",
+            "MIT_TRANSFERED": "Transfert de MIT",
+            "COINSTAKE": "Transaction preuve d'enjeu (coinstake)",
+            "MST_MINING": "Récompense de minage",
+            "ETP_LOCK": "Blocage d'ETP",
+            "ETP_LOCK_REWARD": "Récompense de blocage d'ETP",
+            "MST_LOCK": "Blocage de MST",
+            "UNKNOWN": "Type de transaction inconnu"
+        },
+        "SELECT_MODE": "Mode de visualisation",
+        "MODE": {
+            "DEFAULT": "Mode par défault",
+            "SATOSHI": "Mode Satoshi",
+            "HEX": "Mode hexadécimal"
+        },
+        "SIGN_STATUS": {
+            "SIGNED": "Transaction entièrement signée",
+            "UNSIGNED": "Transaction non signée",
+            "PARTIALLY": "Transaction partiellement signée"
+        },
+        "OUTPUT": {
+            "LOCKED_UNTIL_BLOCK": "Bloqué jusqu'au bloc {{block}} (~{{time}})"
+        }
+    },
+    "SIGN_TX.PAGE_TITLE": "Vérifier, signer et publier la transaction",
+    "SIGN_TX.DESCRIPTION": "Veuillez entrer la transaction au format hexadécimal. Cette transaction peut être déjà signée ou non.",
+    "CREATE_TX": "Créer",
+    "MESSAGE.BROADCAST_TRANSACTION": "Impossible de publier cette transaction.",
+    "TRANSACTION_PREVIEW.TEXT_SIGNED": "Votre transaction signée est:",
+    "ERROR_TWO_LOCK_MODEL": "Veuillez vous assurer de ne préciser qu'une seule période de blocage, ne remplissez pas les 2 colonnes. La ligne suivante comporte 2 périodes de blocage:",
+    "AUTH.INFORMATION": "Vous pouvez utliser votre Avatar Metaverse afin de vous authentifier sur différents sites internet ou applications. Après avoir vérifié le demandeur de la requête, un message sera signé avec votre clé privé et ce message signé sera renvoyé au demandeur afin de prouver que vous êtes le propriétaire de cette Avatar. Ces étapes ne créées pas de transaction sur la blockchain et ne révèle pas votre clé privée au demander.",
+    "AUTH.INPUT_LABEL": "Clé d'authentification",
+    "AUTH.VERIFY_TITLE": "Veuillez vérifier les information du demandeur:",
+    "AUTH.VERIFY_SOURCE": "Source",
+    "AUTH.VERIFY_AVATAR": "Avatar",
+    "AUTH.VERIFY_HOST": "Hôte",
+    "AUTH.VERIFY_REMAINING_TIME": "Temps restant",
+    "AUTH.VERIFY_CALLBACK": "Réponse vers",
+    "AUTH.VERIFY_TIME_OF_REQUEST": "Heure de la demande",
+    "AUTH.VERIFY_REQUEST_DURATION": "Expiration",
+    "AUTH.NO_SIG_AGREE": "Cette requête n'est pas signée. Veuillez vous assurer que cette requête est légitime avant de la signer.",
+    "MESSAGE.AUTH_NO_AVATAR_TITLE": "Pas d'Avatar",
+    "MESSAGE.AUTH_NO_AVATAR_TITLE_BODY": "Vous avez besoin d'un Avatar afin d'utiliser le service d'authentification. Veuillez d'abord créer un Avatar.",
+    "MESSAGE.AUTH_TYPE_NOT_SUPPORTED": "Ce type de requête n'est pas pris en charge. Uniquement le type 'auth' est pris en charge.",
+    "MESSAGE.AUTH_UNKNOWN_AVATAR": "Vous ne possédez pas cet Avatar, veuillez vous assurer que vous êtes le propriétaire de:",
+    "MESSAGE.AUTH_TIMEOUT": "Cette requête a expiré. Veuillez demander une nouvelle requête.",
+    "MESSAGE.AUTH_SIGN": "Erreur lors de la signature du message",
+    "MESSAGE.AUTH_WRONG_INCOMING_DATA": "Erreur dans les informations reçues. Veuillez vérifier que les informations sont correctes et réessayer.",
+    "MESSAGE.AUTH_WRONG_SIGNATURE": "La signature fournie par le demandeur est incorrecte",
+    "MESSAGE.AUTH_SIGNIN_SUCCESSFUL_TITLE": "Authentification réussie!",
+    "MESSAGE.AUTH_SIGNIN_SUCCESSFUL_BODY": "Vous avez été authentifié avec succès. Vous pouvez désormais retourner sur le site internet.",
+    "MESSAGE.AUTH_SEND_SIG_ERROR": "Erreur lors de l'envoit de votre signature. Veuillez vérifier votre connexion internet et réessayer.",
+    "MESSAGE.AUTH_EXPIRED": "Jeton d'authentification expiré. Veuillez demander un nouveau jeton.",
+    "MESSAGE.AUTH_DIFFERENT_NETWORK": "Vous n'utilisez pas le même réseaux que le demandeur. Veuillez changer votre réseau vers:",
+    "SHOW_DETAILS": "Montrer les détails",
+    "HIDE_DETAILS": "Cacher les détails",
+    "SECONDS": " secondes",
+    "ADVANCED": "Avancé",
+    "MULTISIGNATURE.TEXT": "Partager une addresse multisignature avec des co-signataires",
+    "SIGN_TX.TEXT": "Décoder and signer une transaction",
+    "ETH_BRIDGE.TEXT": "Transférer des jetons entre les blockchains Metaverse et Ethereum",
+    "AUTHENTICATION.TITLE": "Authentification",
+    "SCANNING.AUTH_MESSAGE": "Scannez le QR Code où vous souhaitez vous authentifier",
+    "AUTHENTICATION.SCAN_QRCODE_TEXT": "Utilisez votre Avatar pour vous authentifier",
+    "ISSUE.DOMAIN_OWNER_OTHER_MY_AVATARS": "C'est un autre de vos Avatar qui possède le certificat de domaine pour créer cet MST. Veuillez créer cet MST en utilisant l'Avatar qui possède le certificat.",
+    "AUTH.HOW_TO_AUTH_BTN": "Comment s'authentifier",
+    "HOW_TO_AUTH.PAGE_TITLE": "Comment s'authentifier",
+    "HOW_TO_AUTH.STEP1": "Ouvrez le site internet où vous souhaitez vous identifier en utilisant votre Avatar Metaverse",
+    "HOW_TO_AUTH.STEP2": "Scannez le QR Code fournis par le demandeur",
+    "HOW_TO_AUTH.STEP3": "Accédez au site internet avec votre Avatar!",
+    "AUTH.DESCRIPTION_PICTURE": "En utlisant l'application mobile MyETPWallet, vous vouvez directement scanner le QR Code du demandeur. Vous pouvez aussi entrer manuellement la requête dans le champs ci-dessous.",
+    "AUTH.ENTER_MANUALLY_BUTTON": "Entrer la requête manuellement",
+    "AUTH.GET_ON_MOBILE": "Obtenir l'application mobile",
+    "ERR_INVALID_SIGNATURE": "Votre signature n'a pu être identifiée. Veuillez réessayer.",
+    "ETP_BRIDGE.INFORMATION_WARNING": "L'équipe de support SWFT sur telegram ne vous demandera jamais d'envoyer des fonds vers des addresses autre que l'address de dépôt visible dans les détails de l'ordre. Aucun détails concernant votre ordre ne devrait être nécessaire. L'identifiant de l'ordre est suffisant pour le support afin d'obtenir les information concernant votre ordre."
 }

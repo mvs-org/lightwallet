@@ -1,0 +1,41 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>{{ "DECODE_TX" | translate}}</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding style="padding-bottom: 0;">
+
+    <form #decodeTxForm="ngForm" class="padding-bottom">
+        <ion-row>
+            <h3>{{"DECODE_TX.TX_TO_SIGN" | translate}}</h3>
+        </ion-row>
+        <ion-row>
+            <p>{{"SIGN_TX.DESCRIPTION" | translate}}</p>
+        </ion-row>
+        <ion-row>
+            <ion-item class="textareaCard" [ngClass]="{'error-border': !input}">
+                <ion-textarea fz-elastic ion-input rows="3" full type="text" name="input" class="textbox" [(ngModel)]="input" (ngModelChange)="onInputChange()"></ion-textarea>
+            </ion-item>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <button type="submit" ion-button full icon-left (click)="decode(input)" [disabled]="!input" color="secondary">
+                    <ion-icon disabled="checked" name="cog"></ion-icon>
+                    {{"DECODE_TX.DECODE" | translate}}
+                </button>
+            </ion-col>
+            <ion-col>
+                <button ion-button color="danger" full item-right icon-left (click)="cancel($event)">
+                    <ion-icon name="close"></ion-icon>
+                    {{'CANCEL'|translate}}
+                </button>
+            </ion-col>
+        </ion-row>
+
+    </form>
+
+</ion-content>
