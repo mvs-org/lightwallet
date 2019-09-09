@@ -42,9 +42,7 @@ export class AttenuationModelSelectorComponent {
         private mvs: MvsServiceProvider,
     ) {
         this.periods.push(new Period(undefined, undefined))
-    }
 
-    ionViewDidEnter() {
         this.mvs.getHeight()
             .then(height => this.mvs.getBlocktime(height))
             .then(blocktime => this.blocktime = blocktime)
