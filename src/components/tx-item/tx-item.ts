@@ -12,6 +12,7 @@ export class TxItemComponent {
     @Input() hexTx: any;
     @Input() mode: string;
     @Input() signStatus: string
+    @Input() title: boolean = true
 
     decimalsMst: any = {}
     myAddresses: Array<string> = []

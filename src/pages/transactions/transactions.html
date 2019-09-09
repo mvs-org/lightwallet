@@ -22,6 +22,17 @@
         </ion-item>
 
         <div *ngIf="display_segment=='transactions'">
+
+            <ion-item>
+                <ion-label>{{"TX.SELECT_MODE"|translate}}</ion-label>
+                <ion-select [(ngModel)]="mode" name="mode" multiple="false" okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}">
+                    <ion-option selected="true" value="summary">{{"TX.MODE.SUMMARY"| translate}}</ion-option>
+                    <ion-option value="default">{{"TX.MODE.DEFAULT"| translate}}</ion-option>
+                    <ion-option value="satoshi">{{"TX.MODE.SATOSHI"| translate}}</ion-option>
+                    <ion-option value="hex">{{"TX.MODE.HEX"| translate}}</ion-option>
+                </ion-select>
+            </ion-item>
+
             <ion-list [hidden]="!txs.length">
                 <div *ngFor="let tx of txs | orderBy: ['confirmed_at', '1']">
                     <ion-item *ngIf="!tx.confirmed_at">
@@ -37,8 +48,10 @@
                         </ion-item>
                     </ion-item>
                 </div>
+
                 <div *ngFor="let tx of txs | paginate: { itemsPerPage: items_per_page, currentPage: page_tx }">
-                    <ion-item *ngIf="tx.confirmed_at">
+                    <tx-item *ngIf="tx" [tx]="tx" [hexTx]="'aaa'" [title]="false" [mode]="mode" [signStatus]="SIGNED"></tx-item>
+                    <!--ion-item *ngIf="tx.confirmed_at">
                         <ion-item no-lines>
                             <ion-avatar item-start>
                                 <img class="coinlogo" [src]="'assets/icon/'+icon+'.png'" onerror="this.src='assets/icon/default_mst.png'">
@@ -49,7 +62,7 @@
                                 {{'HASH'|translate}}: <a href="{{explorerURL(tx.hash)}}" target="_blank">{{tx.hash}}</a>
                             </p>
                         </ion-item>
-                    </ion-item>
+                    </ion-item-->
                 </div>
             </ion-list>
             <pagination-controls (pageChange)="page_tx = $event" *ngIf="txs && txs.length > items_per_page"></pagination-controls>

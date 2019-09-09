@@ -1,6 +1,6 @@
 <ion-card class="manual-copy display-overflow">
     <ion-grid>
-        <ion-row>
+        <ion-row *ngIf="title">
             <ion-item>
                 <h1>{{'TX.TX_SUMMARY'|translate}}</h1>
             </ion-item>
@@ -49,7 +49,7 @@
                         {{txTypeValue}}
                     </div>
                     <div *ngIf="txType == 'MST_LOCK' || txType == 'ETP_LOCK' || txType == 'ETP_LOCK_REWARD'">
-                        {{transaction.locked_quantity | format : decimalsMst[txTypeValue]}} {{txTypeValue}}
+                        {{tx.locked_quantity | format : decimalsMst[txTypeValue]}} {{txTypeValue}}
                     </div>
                     <div class="fee">{{'TX.TX_FEE' | translate}}: {{txFee | format : 8}} ETP</div>
                 </ion-item>

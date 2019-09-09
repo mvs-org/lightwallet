@@ -68,7 +68,8 @@ export class TransactionsPage {
     }
 
 
-    private filterTx(tx: any, asset: string, addresses: Array<string>) {
+    async filterTx(tx: any, asset: string, addresses: Array<string>) {
+        tx = await this.mvs.organizeInputs(JSON.parse(JSON.stringify(tx)))
         let result = false;
         tx.inputs.forEach((input) => {
             if (this.isMineTXIO(input, addresses)) {
