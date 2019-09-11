@@ -62,6 +62,7 @@ export class PassphrasePage {
             .then(() => this.nav.setRoot("LoadingPage", { reset: true }))
             .catch((e) => {
                 console.error(e);
+                this.alert.stopLoading()
             });
     }
 

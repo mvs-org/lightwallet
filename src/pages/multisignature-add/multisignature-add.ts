@@ -154,6 +154,7 @@ export class MultisignatureAddPage {
                                                     myPublicKey = publicKey;
                                                 })
                                                 .catch(error=>{
+                                                    this.alert.stopLoading()
                                                     switch(error.message){
                                                         case "ERR_NO_HDNODE_FOR_PUBLICKEY":
                                                             //not user's public key

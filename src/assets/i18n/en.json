@@ -3,42 +3,32 @@
     "ACCOUNT.FROZEN": "Frozen",
     "ACCOUNT.AVAILABLE": "Available",
     "ACCOUNT.TOTAL": "Total",
-
-
     "WALLET_SETUP.TITLE": "Setup wallet",
     "REGISTER.TITLE": "Create wallet",
     "CREATE_WALLET_DISCLAIMER.TITLE": "Information",
     "CREATE_WALLET_DISCLAIMER.TEXT": "PLEASE BE VERY CAREFUL WITH YOUR MNEMONIC KEY. THIS ADVICE IS GENERAL IN NATURE AND IS NOT LEGAL OR FINANCIAL ADVICE.",
     "REGISTER.YOUR_MNEMONIC_KEY": "Your backup words",
-
     "MNEMONIC_SHOW.TITLE": "Your wallet backup",
     "YOUR_MNEMONIC_WORDS": "Your backup words",
     "IMPORT_WALLET": "Enter wallet",
     "CREATE_NEW_WALLET": "Create new wallet",
     "CREATE_WALLET": "Got it. Let's rock",
     "BUTTON.OK": "Ok",
-
     "PLACEHOLDER.MNEMONIC_PASSPHRASE": "Mnemonic Passphrase",
-
     "TRANSACTIONS": "Transactions",
     "DATE": "Date",
     "AMOUNT": "Amount",
     "RECIPIENT_ADDRESS": "Recipient address",
-
     "AVAILABLE_BALANCE": "Available balance",
     "AVAILABLE": "Available",
-
     "SCAN": "Scan",
-
     "ETP_DEPOSIT": "ETP Deposit",
-
     "SWITCH_LANGUAGE": "Language",
     "LANGUAGE_SETTINGS": "Language",
     "SETTINGS": "Settings",
     "INFORMATION": "Legal Disclaimer",
     "MESSAGE.ERROR_TITLE": "Oops",
     "MESSAGE.LOADING": "Please wait...",
-
     "HISTORY.NO_TXS_YET": "No transactions yet",
     "HISTORY.NO_TXS_YET_TEXT": "Start using your wallet today!",
     "SETTINGS.RESET_TEXT": "Reset all wallet data. Please make sure you have the wallet's backup words.",
@@ -51,46 +41,36 @@
     "HISTORY": "History",
     "IMPORT_WALLET_ERROR_MESSAGE": "Error importing wallet. Please check input and try again.",
     "IMPORT_WALLET_CONNECTION_MESSAGE": "Error verifying wallet. Please try later.",
-
     "MENU": "Menu",
-
     "REORDER": "Reorder",
     "FINISH": "Finish",
     "ERROR_SEND_TEXT": "Could not create the transaction. Please check your input and try again.",
     "MNEMONIC_CONFIRM_HEAD": "Confirm backup words",
     "MNEMONIC_CONFIRM_TEXT": "In order to make sure you recorded the backup words correctly you can now arrange the words in the right order.",
-
     "CONFIRM": "Confirm",
     "SKIP": "Skip",
     "COPY": "Copy",
-
     "WARNING": "Warning",
     "BACKUP_WORDS_BACKED_UP_TEXT": "Confirm that you have written down your backup words",
     "BACKUP_WORDS_BACKED_UP_YES": "Yes, I have made a backup",
     "NO": "No",
     "BACKUP_WORDS_CONFIRM_SKIP_TEXT": "Are you sure you want to continue without confirming the backup words of your wallet?",
     "I_AM_SURE": "I am sure",
-
     "MESSAGE.ERROR_CONNECT_BLOCKCHAIN": "Problem connecting to blockchain nodes.",
-
-
     "BACK": "Back",
     "SETTINGS.WORDS_BUTTON": "Backup Words",
     "SETTINGS.WORDS_TEXT": "Your mnemonic words that correlate to your private key",
     "RESET_TITLE": "Are you sure?",
     "COPIED_MNEMONIC": "Copied backup words to clipboard",
-
     "SETTINGS.PINCODE": "PIN code Settings",
     "SETTINGS.PINCODE_BUTTON": "Configure",
     "SECURITY_WARNING": "Security Warning",
     "SET_PIN_FIRST": "Please set up a PIN code first",
-
     "PLEASE_AUTHORIZE": "Please Authorize",
     "CONFIRM_PINCODE": "Confirm PIN code",
     "CREATE_NEW_PINCODE": "Create New PIN code",
     "GENERATE_KEY_BUTTON": "Generate Key",
     "BUTTON.DOWNLOAD": "Download Key",
-
     "BUTTON.NEXT": "Next",
     "IMPORT_WORDS": "Enter manually",
     "IMPORT_WORDS_TITLE": "Two ways to enter your backup words:",
@@ -144,7 +124,6 @@
     "SYNCING": "Syncing",
     "TRANSFER": "Transfer",
     "OK": "OK",
-
     "PREVIEW": "Preview",
     "LEGAL_DISCLAIMER": {
         "TITLE": "Legal Disclaimer",
@@ -164,33 +143,25 @@
     "PASSWORD_WARNING": "We advise you to use a strong password for your own security.",
     "FEE": "Transaction Fee",
     "NOTICE_TRANSACTION_FEE_UNCOVERED": "Please make sure that you have enough ETP to cover the transaction fee.",
-
     "SELECT_RECIPIENT_ADDRESS": "Select recipient address (optional)",
     "CUSTOM": "Custom",
     "CUSTOM_RECIPIENT_ADDRESS": "Custom recipient address",
     "BLOCKS": "Blocks",
     "INTEREST_RATE": "Interest rates",
-
     "OPEN_FROM_QRCODE": "Open wallet from QR Code",
     "OPEN_FROM_BACKUP_WORDS": "Open wallet from backup words",
     "ENTER_PASSWORD_HEADLINE_MOBILE": "Enter your password to decode your private key",
     "SETTINGS.SHOW_QRCODE_BUTTON": "Connect phone",
     "SETTINGS.SHOW_QRCODE_TEXT": "Export your private key to the mobile application MyETPWallet.",
-
     "LOGOUT_TEXT": "Log out of the wallet.",
     "EXPORT_ACCOUNT": "Connect phone",
-
     "IMPORT.SHOW_QRCODE_BUTTON": "Show QR Code",
-
     "IMPORT_MNEMONIC_TEXT_MOBILE": "Your private key will be stored and encrypted via your password on your device.",
-
     "RESET_MESSAGE_MOBILE": "All data will be erased. To log in, you will need your backup words or scan the QR Code from your web lightwallet.",
     "IMPORT.SCAN_QRCODE_TEXT": "Import my account to my phone",
     "IMPORT.SCAN_QRCODE_BUTTON": "Scan QR Code",
-
     "ASSET_ISSUE": "Create Asset",
     "NOTICE_ASSET_ISSUE_FEE": "Please be aware that the creation of a new MST costs 10 ETP.",
-
     "ISSUE.NOTICE_TRANSACTION_FEE_UNCOVERED": "This Avatar needs at least 10 ETP to create a MST",
     "ISSUE.SYMBOL": "Symbol",
     "ISSUE.ISSUER_NAME": "Issuer name",
@@ -200,68 +171,51 @@
     "ISSUE.ISSUE_ADDRESS": "Issue address (address receiving the new token)",
     "ISSUE.FEE_ADDRESS": "Fee address (address paying 10 ETP)",
     "ISSUE.CUSTOM_ISSUE_ADDRESS": "Custom issue address",
-
     "ISSUE.CONFIRMATION_TITLE": "Issuing a MST will cost 10 ETP.",
     "ISSUE.CONFIRMATION_SUBTITLE": "Are you sure you want to create a MST?",
     "ISSUE.CREATE": "Create MST",
-
     "EXPORT.HEADLINE": "Connect your phone",
     "EXPORT.INTRODUCTION": "To download MyETPWallet on your phone, please visit MyETPWallet.com and click on 'Download wallet'.",
     "EXPORT.TEXT": "This action will export your private key to your phone. Your private key will be encrypted with the password used for this account and saved on your mobile device. Please scan this QR code from the mobile application MyETPWallet.",
     "EXPORT.REMINDER_LOGOUT": "Please logout from the app if you switch your phone.",
-
     "LOGIN_MENU_INFO_TEXT_MOBILE": "Notice: To create an account, please use your computer and go to MyETPWallet.com. You will then be able to link your account with your phone.",
     "REPORT_BUG": "Report Bug",
-
     "MESSAGE.NETWORK_MISMATCH": "Network does not match",
     "MESSAGE.PASSWORD_WRONG": "Incorrect password",
     "MESSAGE.CREATE_TRANSACTION": "Unable to create transaction.",
     "MESSAGE.BROADCAST_ERROR": "Unable to broadcast transaction, please try again later.",
-
     "LOGIN": "Login",
     "HOW_TO_IMPORT_WALLET_MOBILE": "How to Import",
     "HOW_TO_IMPORT_WALLET_MOBILE_TITLE": "How to import your wallet?",
     "HOW_TO_IMPORT_WALLET_MOBILE_STEP1": "Open the web lightwallet, go to Settings, and then Connect phone",
     "HOW_TO_IMPORT_WALLET_MOBILE_STEP2": "Scan the QR Code",
     "HOW_TO_IMPORT_WALLET_MOBILE_STEP3": "Enjoy your wallet on your phone!",
-
     "MESSAGE.ISSUE_INSUFFICIENT_BALANCE": "You need at least 10 ETP to create a MST.",
-
     "SCANNING.MESSAGE_ACCOUNT": "Scan the QR code from your web lightwallet",
     "SCANNING.MESSAGE_ADDRESS": "Scan the ETP Address",
-
     "MESSAGE.NOT_ETP_ADDRESS_TITLE": "Wrong address",
     "MESSAGE.NOT_ETP_ADDRESS_TEXT": "This is not a correct ETP address. Please scan an ETP address.",
-
     "SEND_ALL_BUTTON": "Send All",
-
     "IMPORT_QRCODE": "Please use the QR code in app.myetpwallet.com, in Settings, then Connect phone",
-
     "MESSAGE.ONE_TX_PER_BLOCK": "Please note currently each account can only broadcast 1 transaction per block",
     "MESSAGE.INSUFFICIENT_BALANCE": "Insufficient balance. Please double check your available balance",
-
     "LOGIN.MOBILEWEB_ANDROID1": "Download MyETPWallet App on Google Play Store (recommended):",
     "LOGIN.MOBILEWEB_ANDROID2": "Or directly download the application:",
     "LOGIN.MOBILEWEB_IOS": "The IOS App is currently in development. Please use the Web version of MyETPWallet on your computer.",
     "LOGIN.MOBILEWEB_OTHER": "MyETPWallet is currently only available on Computer and Android phones.",
-
     "ISSUE.MAX_SUPPLY_CUSTOM": "Custom Maximum supply",
-
     "ISSUE.ONE_MILLION": "One million",
     "ISSUE.TEN_MILLION": "Ten million",
     "ISSUE.ONE_HUNDRED_MILLION": "One hundred million",
     "ISSUE.ONE_BILLION": "One billion",
     "ISSUE.TEN_BILLION": "Ten billion",
-
     "AVATARS": "Avatars",
     "AVATARS.CREATE_AVATAR_BTN": "Create",
     "AVATARS.NO_AVATARS": "You do not have any avatar yet. Click on Create to create your first Avatar!",
-
     "CREATE_AVATAR": "Create Avatar",
     "CREATE_AVATAR.CREATE_BTN": "Create Avatar",
     "CREATE_AVATAR.SYMBOL": "Avatar name",
     "CREATE_AVATAR.ADDRESS": "Linked address",
-
     "RECIPIENT_AVATAR": "Recipient avatar",
     "SEND_TO_AVATAR": "Send to avatar",
     "HEADLINE_MST": "Metaverse Smart Token",
@@ -269,29 +223,24 @@
     "NO_MIT_TEXT": "You don't have any MIT yet. In order to create MIT you first have to create an avatar.",
     "MIT_REGISTER.SYMBOL": "MIT symbol",
     "MIT_REGISTER.CONTENT": "Content",
-
     "IMPORT.WORDS_REMAINING": " words remaining",
     "IMPORT.WORDS_ALL_OK": "Ready to import",
     "IMPORT.WORDS_TOO_MANY": "More than 24 words have been entered",
     "IMPORT.INCORRECT_WORD": "Incorrect word No. ",
     "IMPORT.INCORRECT_MNEMONIC": "This mnemonic is not correct. Please double check the order of the words",
-
     "AVATARS.MY_CERTS": "My certificates",
     "AVATARS.SECONDARY_ISSUE": "Secondary Issue",
     "AVATARS.DOMAIN": "Domain",
     "AVATARS.NAMING": "Naming",
     "HASH": "Hash",
     "RECEIVE.ADDRESS_NO_MST": "This address doesn't have any MST",
-
     "ISSUE.SECONDARYISSUE_THRESHOLD": "Secondary Issue threshold",
     "ISSUE.SECONDARYISSUE_TYPE": "Allow future Secondary Issue",
     "ISSUE.SECONDARYISSUE_DISABLED": "No Secondary Issue possible",
     "ISSUE.SECONDARYISSUE_UNLIMITED": "Secondary Issue possible with certificate only",
     "ISSUE.SECONDARYISSUE_RATE": "Secondary Issue possible with certificate and Stacking condition",
-
     "TOTAL_AVAILABLE_BALANCE": "Total available balance",
     "AVATAR_AVAILABLE_BALANCE": "Avatar available balance",
-
     "ISSUE.SYMBOL_AVAILABLE": "This Domain name is available. After issuing this MST, you will receive a Domain certificate",
     "ISSUE.SYMBOL_DOMAIN_OWNER": "Your Avatar own the Domain certificate to create this MST",
     "ISSUE.SYMBOL_NAMING_OWNER": "Your Avatar own the Naming certificate to create this MST",
@@ -299,11 +248,9 @@
     "ISSUE.SYMBOL_NOT_CERT_OWNER": "You do not own the Domain certificate to create this MST",
     "ISSUE.SYMBOL_ERROR_LOADING_MSTS": "Error while loading MSTs. Please make sure this MST Symbol is not already used",
     "ISSUE.SYMBOL_ERROR_LOADING_CERTS": "Error while loading the Domain certificates. Please make sure you have the right to create this Symbol",
-
     "REGISTER_MST": "Register MST",
     "REGISTER_MIT": "Register MIT",
     "TRANSFER_MIT": "Transfer MIT",
-
     "AVATAR_RECIPIENT_ADDRESS": "The address of this Avatar is {{address}}, it was updated for the last time on {{last_update}}",
     "MIT.STATUS": "Status",
     "CREATOR": "Creator",
@@ -312,12 +259,10 @@
     "MIT.TX_HASH": "Created in",
     "MIT.HISTORY": "Transaction history",
     "CHECK_IN_EXPLORER": "Check in Explorer",
-
     "ISSUE.MAX_SUPPLY_TOO_HIGH": "Invalid maximum supply. Please decrease the maximum supply or the number of decimals",
     "CREATE_AVATAR.NO_ADDRESS_1ETP": "You do not have any available address with at least 1 ETP available. Please send at least 1 ETP to an available address (not already linked to an Avatar) to create a new Avatar",
     "MAINNET": "Mainnet",
     "TESTNET": "Testnet",
-
     "CREATE_AVATAR.CONFIRMATION_TITLE": "Creating an Avatar cost 1 ETP.",
     "CREATE_AVATAR.CONFIRMATION_SUBTITLE": "Are you sure you want to create an Avatar?",
     "ISSUE.NO_AVATAR": "You need an Avatar to register a MST. Please create an Avatar first",
@@ -329,48 +274,38 @@
     "MIT_REGISTER.SELECT_AVATAR": "Please select a Recipient Avatar first",
     "CREATE_AVATAR.AVATAR_ALREADY_EXIST": "This Avatar name has already been registered",
     "MIT_REGISTER.MIT_ALREADY_EXIST": "This MIT symbol has already been registered",
-
     "SEND_TO_ONE": "Send to one",
     "SEND_MORE": "Send to many",
     "RECIPIENT": "Recipient",
     "ADD_RECIPIENT": "Add recipient",
     "REMOVE_RECIPIENT": "Remove recipient",
     "TOTAL_TO_SEND": "Total to send",
-
     "SEND_MORE.TOTAL_MORE_AVAILABLE": "The total is higher than your available balance",
     "SEND_MORE.WRONG_FILE": "Impossible to read this file, please check the format. You can download the CSV example file and follow this template",
-
     "IMPORT_FROM_CSV": "Import from CSV",
     "DOWNLOAD_CSV": "Download CSV",
     "MESSAGE.SEND_MORE_IMPORT_CSV_TOO_MANY_RECIPIENT_TITLE": "Too many recipient",
     "MESSAGE.SEND_MORE_IMPORT_CSV_TOO_MANY_RECIPIENT_BODY": "This file contains too many recipients. The maximum number of recipients is limited to ",
-
     "TRANSACTION": "Transaction",
     "LOCKED_UNTIL": "Locked until",
     "LOCKED_FOR_BLOCKS": "Locked for",
     "DEPOSITS": "Deposits",
-
     "MINERS": "Miners",
     "DEVELOPERS": "Developer Community",
     "TRANSFER_FEE_DISTRIBUTION": "Transaction fee distribution",
-
     "HELP.CREATE_AVATAR_NAME": "Your Avatar name is a unique symbol. It can contain numbers, uppercase letters, lowercase letters, dots, dashes, underscores and @. It can be used instead of your ETP address to receive ETP and other assets.",
     "HELP.CREATE_AVATAR_LINKED_ADDRESS": "Your Avatar will be linked to this address. Each address can only be linked to 1 Avatar.",
-    "ACCOUNT.TOTAL_VALUE" : "Total value",
-    "SETTINGS.BASE_CURRENCY" : "Base Currency",
-    "SETTINGS.BASE_CURRENCY_TEXT" : "Choose your base currency that is used for value estimation.",
-
+    "ACCOUNT.TOTAL_VALUE": "Total value",
+    "SETTINGS.BASE_CURRENCY": "Base Currency",
+    "SETTINGS.BASE_CURRENCY_TEXT": "Choose your base currency that is used for value estimation.",
     "CREATE_AVATAR.AVATAR_NAME_TOO_SHORT": "The Avatar name must be at least 3 characters long",
     "SUBTITLE.CREATE_AVATAR_ADDRESS": "You can link your Avatar only to an address with at least 1 ETP available",
-
     "HELP.BOUNTY_FEE": "You can choose how your fee will be distributed, between the Miners and the Developer Community. This does not impact the total fee that you pay for the transaction. The maximum share for the Developer Community is 80%.",
-
     "SETTINGS.PLUGINS": "Plugins",
     "SETTINGS.PLUGINS_TEXT": "Add third party extensions to the wallet.",
-
     "PLUGIN_SETTINGS": "Plugin Settings",
     "PLUGIN_DETAILS": "Plugin details",
-    "PLUGIN_DETAILS.NAME" : "Plugin name",
+    "PLUGIN_DETAILS.NAME": "Plugin name",
     "PLUGIN_DETAILS.DESCRIPTION": "Description",
     "PLUGIN_DETAILS.AUTHOR": "Author",
     "PLUGIN_DETAILS.PERMISSIONS": "Permissions",
@@ -394,7 +329,6 @@
     "MESSAGE.IMPORT_PLUGIN_MISSING_DEFAULT_TRANSLATION": "The default translation of this plugin is missing.",
     "ERROR_TOO_MANY_INPUTS": "Too many inputs",
     "ERROR_TOO_MANY_INPUTS_TEXT": "This transaction contains too many inputs. Please try a smaller amount",
-
     "HISTORY.NO_DEPOSIT_YET": "No deposit yet",
     "HISTORY.NO_DEPOSIT_YET_TEXT": "Freeze your ETP to earn interests!",
     "HISTORY.ORDER_BY": "Order by",
@@ -406,7 +340,6 @@
     "HISTORY.FROZEN_TX": "Currently locked transactions",
     "HISTORY.UNFROZEN_TX": "Unlocked transactions",
     "LOCKED_SINCE": "Locked since",
-
     "GENERATE_ADDRESSES.CHANGE_ADDRESS_NUMBER": "Update number of addresses",
     "GENERATE_ADDRESSES.HEADLINE": "Update number of addresses",
     "GENERATE_ADDRESSES.EXPLANATION": "MyETPWallet uses a HD Wallet (Hierarchical Deterministic) to generate multiple addresses from your seed. Because your addresses are generated in a deterministic way it means that if you reduce the number of your addresses, you can add them back later by increasing your number of addresses. It will always regenerate the same addresses.",
@@ -415,32 +348,24 @@
     "GENERATE_ADDRESSES.ERROR": "Error while regenerating your addresses",
     "MIT_REGISTER.MIT_SYMBOL_TOO_SHORT": "The MIT symbol must be at least 3 characters long",
     "HELP.GENERATE_ADDRESSES_NUMBER": "In order to keep your wallet smooth, it is recommended to keep the number low. The default value is 10 addresses, maximum 50 addresses",
-
     "MESSAGE": "Public message (optional)",
     "HELP.MESSAGE": "This message will be clearly and publicly displayed in your transaction. Do not enter any personal data!",
     "MESSAGE_TOO_LONG": "Too long message. Please use a shorter message",
-
     "AVATARS.INFORMATION": "Avatars represent your Digital Identity on Metaverse Blockchain. You can use your Avatar name to send and receive ETP in place of your address. Avatars can create MST and MIT",
     "MSTS.INFORMATION": "MST (Metaverse Smart Token) is the token standard use on Metaverse. Any Avatar can create a MST using the form below.",
     "MITS.INFORMATION": "MIT (Metaverse Identifiable Token) is the non-fungible token standard on Metaverse. A MIT has a unique symbol and a content that cannot be changed. Its quantity is always 1 and cannot be split. It can only be created by and transferred to an Avatar. MITs can be used to represent any unique digital or physical object, and easily trace its transfer from Avatars to Avatars. The complete ownership history is recorded on the blockchain and publicly visible",
-
     "SEND_ALL_TITLE": "Send all?",
     "SEND_ALL_MESSAGE": "Do you really want to send all your available balance?",
-
     "DEPOSIT.DURATION_ESTIMATION": "Your MST will be locked for approximately {{duration_days}} days and {{duration_hours}} hours. Be aware that this estimation is based on the blocktime of the last 10000 blocks ({{blocktime}} sec.), and might vary based on block generation speed.",
     "HISTORY.UNLOCK_APPROXIMATION_INFORMATION": "*Please be aware that the 'Locked until' date is an approximation based on the number of block remaining and the average blocktime of the last 10000 blocks. It might vary based on block generation speed.",
-
     "RECIPIENT_ADDRESS_OR_AVATAR": "Recipient avatar or address",
     "HELP.RECIPIENT_ADDRESS_OR_AVATAR": "You can enter the recipient avatar name or address.",
     "AVATAR": "Avatar",
     "ADDRESS": "Address",
-
     "INFORMATION.TITLE": "Information",
-
     "REPORT_BUG.TEXT": "The easiest way to report issues is to fillout our bug report form.",
     "GITHUB.FOLLOW": "Follow issues on GitHub",
     "GITHUB.TEXT": "All our source code and development process is open and publicly available on GitHub. You can always see the process of open issues and of course also help with the implementation.",
-
     "ETH_BRIDGE": "Ethereum bridge",
     "ETH_TO_MVS": "Ethereum -> Metaverse",
     "MVS_TO_ETH": "Metaverse -> Ethereum",
@@ -471,19 +396,15 @@
     "HELP.ETH_ADDRESS": "This is the Ethereum address that will receive the equivalent ERC20 token on Ethereum",
     "SWAP.NOTICE_SWAP_FEE": "Please be aware that doing a swap from Metaverse to Ethereum cost an additional 1 ETP in order to pay for the Ethereum transaction fee",
     "SWAP": "Swap",
-
     "EXPORT_CSV": "Export to CSV",
     "DOWNLOAD_CSV_EXAMPLE": "Download CSV Example",
-
     "PENDING_CONFIRMATION": "Pending confirmation",
     "COMPATIBLE_MST_LIST": "Compatible MST",
     "SWAP_MST.LIST_TITLE": "List of MST compatible with Ethereum swap",
     "SWAP_MST.LIST_EXPLAIN": "Please find below the full list of MST that can be swapped to their equivalent Ethereum token:",
     "ETH_TO_MVS.DO_ONLY_ONCE": "Please note this process only has to be done once.",
     "ETH_TO_MVS.SWAP_CENTER_ADDRESS": "Metaverse swap center on Ethereum:",
-
     "SWAP_MST.INCORRECT_ETH_ADDRESS": "Incorrect Ethereum address. Please double check the address",
-
     "MULTISIGNATURE": "Multisignature",
     "MULTISIGNATURE.INFORMATION": "You can use multisignature addresses in order to share a multisignature address with other users. This address will require the signature of a defined number of members in order to do a transaction.",
     "MULTISIGNATURE.NO_ADDRESS": "You do not have any multisignature address yet. Create one by clicking on the button below!",
@@ -528,15 +449,12 @@
     "MULTISIG_TRANSFER.FROM_ADDRESS": "Source address",
     "MULTISIG_MISSING_MY_PUBLIC_KEY.ERROR": "Please generate your public key in Step 1 first.",
     "MULTISIG_WRONG_PUBLIC_KEYS.ERROR": "Please make sure all the public keys in Step 2 are correct",
-
     "SIGN": "Sign",
     "MULTISIGNATURE_TRANSFER.TX_TO_SIGN": "Transaction to sign",
     "MULTISIGNATURE_TRANSFER.SIGNED_TX": "Signed transaction",
     "MULTISIGNATURE_TRANSFER.CREATE": "Create transaction",
     "MULTISIGNATURE_TRANSFER.SIGN": "Broadcast transaction",
-
     "MULTISIGNATURE_TRANSFER.DECODE": "Verify transaction",
-
     "MESSAGE.ERROR_DECODE_MULTISIG_SUBTITLE": "Cannot decode this raw transaction",
     "MESSAGE.ERROR_DECODE_MULTISIG_BODY": "This raw transaction cannot be decoded. Please make sure this raw transaction is correct and has been created from the selected multisignature address",
     "MULTISIGNATURE.CURRENT_NBR_SIGN": "Current number of signatures",
@@ -549,7 +467,6 @@
     "MULTISIGNATURE.TX_SUMMARY": "Transaction summary",
     "MULTISIGNATURE.TX_SUMMARY_OUPUTS": "Recipient(s)",
     "MULTISIGNATURE.TX_SUMMARY_SIGN_INFO": "Signatures information",
-
     "ACCOUNT_NAME": "Account name",
     "RESET_MESSAGE_MOBILE_SAVE_ACCOUNT": "You can choose to Save locally the information about your account in order to easily login with your password, or Forget all the information. If you choose to Forget, you will need your 24 backup words to login.",
     "SAVE": "Save",
@@ -559,7 +476,6 @@
     "DELETE_ACCOUNT_BODY": "If you choose to forget your account, all its information saved on your device will be deleted. To login, you will need your 24 backup words or your keystore file.",
     "ACCOUNT_NAME_ALREADY_USED": "This account name is already used",
     "SUCCESS_ADD_MULTISIG": "The multisiginature address has been successfully added to your wallet!",
-
     "SAVE_ACCOUNT_TITLE": "Choose an account name",
     "SAVE_ACCOUNT_MESSAGE": "Please give a name to the account. This account name will only be used locally to identify your accounts.",
     "SAVE_ACCOUNT_PLACEHOLDER": "Account name",
@@ -568,13 +484,11 @@
     "SAVE_ACCOUNT_MESSAGE_ALREADY_EXIST": "This Account name has already been saved. Please use a different Account name",
     "RESET_MESSAGE_CHOICE": "You can choose to locally save the information of your account, including your encrypted private key, in order to easily login with your password.",
     "SUCCESS_IMPORT_MULTISIG": "Your multisignature address has been successfully imported! The address is: ",
-
     "MESSAGE.ALREADY_SIGN_TRANSACTION": "You have already signed this transaction, no need to sign it again!",
     "MESSAGE.WARNING_PLUGIN_TITLE": "Be careful with plugins!",
     "MESSAGE.WARNING_PLUGIN_MESSAGE": "Since v0.6.0, you can now add plugins to myetpwallet! This feature allow you to easily connect third party plugins with your Metaverse wallet. However, be aware that anything displayed in a plugin is managed by a third party. We recommend user to use the plugins carefully, an to not use it with their main account but with an account with a small number of ETP instead.",
     "MESSAGE.WARNING_MULTISIG_TITLE": "Multisignature addresses and transactions via MyETPWallet are in Beta!",
     "MESSAGE.WARNING_MULTISIG_MESSAGE": "Since v0.6.0, you can now use multisignatures addresses in MyETPWallet. However, please use this new feature carefully and avoid sending important quantity of ETP or MST to your multisignature addresses. If you notice any bug, do not hesitate to report it via Report Bug in the main menu!",
-
     "SWAP_FEE": "Swap fee",
     "HELP.SWAP_TX_FEE": "This is the transaction fee for the transaction on the Metaverse blockchain",
     "HELP.SWAP_TX_SWAP_FEE": "This is the transaction fee for the transaction on the Ethereum blockchain. This ETP fee will be converted to ETH to pay for the Ethereum transaction fee",
@@ -587,14 +501,10 @@
     "MESSAGE.WRONG_PASSWORD_TRY_AGAIN": "Wrong password, try again?",
     "MESSAGE.UNLOCK_WALLET_PASSWORD_NOT_ENTERED": "Password not entered, your experience in the plugin might be limited",
     "MESSAGE.UNLOCK_WALLET_PASSWORD_MESSAGE": "Enter your password to unlock your wallet",
-
     "MULTISIGNATURE.INFORMATION2": "A multisignature addresses can send and receive ETP and MST. This page will automatically display all the MST hold by each address.",
-
     "TOKEN_DROPLET.POWERED_BY": "Powered by RightBTC",
-
     "MESSAGE.ERR_SAVE_ACCOUNT": "Error while saving your account",
     "MESSAGE.ERR_IMPORT_ACCOUNT": "Error while importing your account",
-
     "MULTISIGNATURE_ADD.UPDATE_MY_ADDRESS": "Change my address",
     "IMPORT_PLUGIN.ERROR": "Error while importing the plugin",
     "MESSAGE.PLUGIN_ADDED_TITLE": "Plugin added successfully!",
@@ -602,42 +512,33 @@
     "REMOVE_PLUGIN.ERROR": "Error while removing the plugin",
     "MESSAGE.PLUGIN_REMOVED_TITLE": "Plugin removed successfully",
     "MESSAGE.PLUGIN_REMOVED_MESSAGE": "The plugin has been removed.",
-
     "LANGUAGE_SETTINGS_TEXT": "Change the language.",
     "THEME_SETTINGS_TEXT": "Change the theme to change the colors of the wallet.",
     "INFORMATION.TEXT": "Get more information about MyETPWallet.",
-
     "ASSET_LOCK": "I want to lock this asset",
     "ASSET_LOCK_PERIOD": "Lock period (in blocks)",
-
     "ASSET_LOCK.SIMPLE": "Simple unlock",
     "ASSET_LOCK.RECURRENT": "Recurrent unlock",
     "ASSET_LOCK.CUSTOM": "Custom unlock",
     "ASSET_LOCK.NBR_PERIOD": "Number of periods",
     "ASSET_LOCK.TOTAL_QUANTITY": "Total locked quantity",
     "ASSET_LOCK.TOTAL_DURATION": "Total locked duration (in blocks)",
-
     "HELP.ASSET_LOCK_NBR_PERIOD": "This is the total number of periods that will be used.",
     "HELP.ASSET_LOCK_TOTAL_QUANTITY": "This is the total number of assets that will be locked.",
     "HELP.ASSET_LOCK_TOTAL_DURATION": "This is the total number of blocks until the last period terminates.",
-    
     "ASSET_LOCK.PERIOD_NBR": "Period {{period_nbr}}",
     "ASSET_LOCK.DURATION_CUSTOM_PERIOD": "Duration of period {{period_nbr}} (in blocks)",
     "ASSET_LOCK.AMOUNT_CUSTOM_PERIOD": "Amount unlocked at the end of period {{period_nbr}}",
     "ASSET_LOCK.TOTAL_MORE_SEND": "The sum of the amounts of each period is higher than the send amount specified above",
-
     "MESSAGE.LOCK_IMPORT_CSV_TOO_MANY_PERIODS_TITLE": "Too many periods",
     "MESSAGE.LOCK_IMPORT_CSV_TOO_MANY_PERIOD_BODY": "This file contains too many periods. The maximum number of periods is limited to ",
-    
     "AVATARS.MINING": "Mining",
-
     "LOADING.TITLE": "LOADING THE NEW REALITY",
     "LOADING.RETRY": "Retry",
     "LOADING.CURRENT_HEIGHT": "Currently loaded till height: {{height}}",
     "LOADING.STOPPED": "Unable to synchonize your transactions. Please check you internet connection or try again later.",
     "RETURN_LOGIN": "Return to login",
     "LOADING.FULLY_LOADED": "Fully loaded! Entering the Metaverse...",
-
     "MST_MINING.OPTION": "Allow this MST to be mined",
     "HELP.MST_MINING_OPTION": "MST mining will allow miners to mine this MST. New tokens will be created in each block mined by a miner who choosed to mine it, according the the model selected below",
     "MST_MINING.INITIAL_REWARD": "Initial reward per block",
@@ -646,10 +547,8 @@
     "HELP.MST_MINING_INITIAL": "This is the initial reward of this MST, received by the miner, per block. For instance, this value was 3 for ETP and 50 for BTC",
     "HELP.MST_MINING_INTERVAL": "This is the number of blocks between each decrease of reward per block. For instance this value is 500 000 blocks for ETP and 210 000 blocks (4 years) for BTC",
     "HELP.MST_MINING_BASE": "This is the base to define the new block reward amount at the end of an interval. For instance this value is 5% decrease per period for ETP and 50% decrease, or halving, for BTC",
-
     "NEWS": "News",
     "NEWS.TITLE": "Metaverse News",
-
     "ETP_BRIDGE": "ETP bridge",
     "ETP_BRIDGE.RECIPIENT_ADDRESS": "Recipient address",
     "ETP_BRIDGE.FROM_ASSET": "Send",
@@ -664,14 +563,13 @@
     "ETP_BRIDGE.RECEIVE_ADDRESS": "{{symbol}} receive address",
     "ETP_BRIDGE.REFUND_TX": "{{symbol}} refund transaction",
     "ETP_BRIDGE.RECEIVE_TX": "{{symbol}} receive transaction",
-
     "SUCCESS_CREATE_SWFT_TITLE": "Order created!",
     "SUCCESS_CREATE_SWFT_BODY": "Your order has been created. The next step is to do the deposit.",
     "MESSAGE.CREATE_SWFT_ORDER_ERROR": "Error while creating the order. Please check your inputs and try again.",
     "ETP_BRIDGE.HISTORY_TITLE": "History",
     "ETP_BRIDGE.HISTORY_DESCRIPTION": "This history is only saved locally. An order will only appear on the device used to generate it and till you logout. If you need a record, please save the order ID.",
     "ETP_BRIDGE_DETAILS": "Order details",
-    "ETP_BRIDGE.STATUS" : {
+    "ETP_BRIDGE.STATUS": {
         "wait_deposit_send": "Waiting for deposit",
         "wait_exchange_push": "Exchanging...",
         "wait_exchange_return": "Exchanging...",
@@ -708,17 +606,13 @@
     "SUCCESS_IMPORT_SWFT_TITLE": "Order imported!",
     "SUCCESS_IMPORT_SWFT_BODY": "Order imported successfully",
     "ETP_BRIDGE.SEE_DETAILS_BUTTON": "See details",
-
     "ETP_BRIDGE.INFORMATION": "This service is provided by SWFT. In case of issue, please contact SWFT support on ",
     "ETP_BRIDGE.INFORMATION_LINK": "Telegram",
-
     "ETP_BRIDGE.IMPORT_ORDER_DESCRIPTION": "If you created an order from another device or directly from SWFT website, you can import it with the order ID to follow its status.",
     "ETP_BRIDGE.UNABLE_CONNECT_SWFT": "Unable to connect to SWFT. Please check your internet connection or try again later.",
-
     "DECODE_TX": "Decode transaction",
     "DECODE_TX.TX_TO_SIGN": "Transaction to sign or broadcast",
     "DECODE_TX.DECODE": "Decode",
-
     "SIGN_TX": "Sign transaction",
     "CONFIRM_TX": {
         "SIGN_ONLY": "Sign only",
@@ -790,16 +684,15 @@
         },
         "OUTPUT": {
             "LOCKED_UNTIL_BLOCK": "Locked until block {{block}} (~{{time}})"
-        }
+        },
+        "INPUTS_NOT_ALL_MINE": "Some inputs are not yours! Only your inputs will be signed."
     },
     "SIGN_TX.PAGE_TITLE": "Review, sign and send the transaction",
     "SIGN_TX.DESCRIPTION": "Please enter the raw transaction, in hexadecimal format. The transaction can be signed or unsigned.",
     "CREATE_TX": "Create",
     "MESSAGE.BROADCAST_TRANSACTION": "Unable to broadcast the transaction.",
     "TRANSACTION_PREVIEW.TEXT_SIGNED": "Your signed encoded transaction is:",
-
-    "ERROR_TWO_LOCK_MODEL": "Please make sure only 1 lock period is specified, don't fill both lock period columns. The following line contains 2 lock periods:", 
-
+    "ERROR_TWO_LOCK_MODEL": "Please make sure only 1 lock period is specified, don't fill both lock period columns. The following line contains 2 lock periods:",
     "AUTH.INFORMATION": "You can use your Metaverse Avatar to authenticate to various websites or applications. After verifying the provider of the request, it will sign a message using your private key and send the signed message to the requester in order to prove ownership of this Avatar. These steps will neither create any transaction on the blockchain nor reveal your private key to the requester.",
     "AUTH.INPUT_LABEL": "Request code",
     "AUTH.VERIFY_TITLE": "Please verify the requester information:",
@@ -811,7 +704,6 @@
     "AUTH.VERIFY_TIME_OF_REQUEST": "Time of request",
     "AUTH.VERIFY_REQUEST_DURATION": "Timeout",
     "AUTH.NO_SIG_AGREE": "This request was not signed. Please make sure this request is legit before signing it.",
-
     "MESSAGE.AUTH_NO_AVATAR_TITLE": "No Avatar",
     "MESSAGE.AUTH_NO_AVATAR_TITLE_BODY": "You need an Avatar in order to use the authentication feature. Please create an Avatar first.",
     "MESSAGE.AUTH_TYPE_NOT_SUPPORTED": "This type of request is not supported. Only 'auth' is supported.",
@@ -825,36 +717,26 @@
     "MESSAGE.AUTH_SEND_SIG_ERROR": "Error while sending your signature. Please check your connection and try again.",
     "MESSAGE.AUTH_EXPIRED": "Authentication token expired. Please get a new token.",
     "MESSAGE.AUTH_DIFFERENT_NETWORK": "You are not using the network matching this request. Please switch to the following network:",
-
     "SHOW_DETAILS": "Show details",
     "HIDE_DETAILS": "Hide details",
     "SECONDS": " seconds",
-
     "ADVANCED": "Advanced",
     "MULTISIGNATURE.TEXT": "Share a multisignature address with co-signers",
     "SIGN_TX.TEXT": "Decode and sign a raw transaction",
     "ETH_BRIDGE.TEXT": "Transfer tokens between Metaverse and Ethereum blockchains",
     "AUTHENTICATION.TITLE": "Authentication",
-
     "SCANNING.AUTH_MESSAGE": "Scan the QR Code where you want to authenticate",
     "AUTHENTICATION.SCAN_QRCODE_TEXT": "Use my Avatar to authenticate",
-
     "ISSUE.DOMAIN_OWNER_OTHER_MY_AVATARS": "The domain certificate to create this MST is owned by another one of your Avatars. Please issue this MST using the Avatar owning the matching domain certificate.",
-
     "AUTH.HOW_TO_AUTH_BTN": "How to authenticate",
-
     "HOW_TO_AUTH.PAGE_TITLE": "How to authenticate",
     "HOW_TO_AUTH.TITLE": "How to authenticate with your Avatar?",
     "HOW_TO_AUTH.STEP1": "Open the website where you want to authenticate using your Metaverse Avatar",
     "HOW_TO_AUTH.STEP2": "Using MyETPWallet, scan the provided QR Code",
     "HOW_TO_AUTH.STEP3": "Access the website with your Avatar!",
-
     "AUTH.DESCRIPTION_PICTURE": "Using the MyETPWallet mobile app, you can directly scan the QR Code from the requester. Alternatively, you can also manually enter the request code into the field below.",
     "AUTH.ENTER_MANUALLY_BUTTON": "Enter request code manually",
     "AUTH.GET_ON_MOBILE": "Get the mobile app",
-
     "ERR_INVALID_SIGNATURE": "Your signature has been recognized as invalid. Please try again.",
-    
     "ETP_BRIDGE.INFORMATION_WARNING": "The SWFT telegram support will never ask a user to send any funds to addresses other than the deposit address of the order details. Details about the order should not be necessary. The order id should be enough information for the support to find the order."
-
 }
