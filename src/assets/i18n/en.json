@@ -673,6 +673,7 @@
         },
         "SELECT_MODE": "Visualisation mode",
         "MODE": {
+            "SUMMARY": "Summary",
             "DEFAULT": "Default mode",
             "SATOSHI": "Satoshi mode",
             "HEX": "Hexadecimal mode"
@@ -743,5 +744,7 @@
     "REORDER.TITLE": "Reorder your MSTs",
     "MULTISIGNATURE_ADD.OWN_PUBLICKEY_ALREADY_ADDED": "Your own public key will be automatically added, please don't add it a second time",
     "MULTISIGNATURE_ADD.PUBLIC_KEY_TWICE": "Duplicate public key. Please enter each public key only once.",
-    "TRANSFER.FROM_ADDRESS_NO_ETP": "This address doesn't have any ETP. Please add ETP to this address or use the Automatic option."
+    "TRANSFER.FROM_ADDRESS_NO_ETP": "This address doesn't have any ETP. Please add ETP to this address or use the Automatic option.",
+    "PASSPHRASE.DOWNLOAD_FILE": "Download file",
+    "RECOVER_FROM_BACKUP_WORDS": "Recover wallet from backup words"
 }
