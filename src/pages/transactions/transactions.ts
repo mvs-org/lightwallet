@@ -63,34 +63,52 @@ export class TransactionsPage {
 
     explorerURL = (tx) => (this.globals.network == 'mainnet') ? 'https://explorer.mvs.org/tx/' + tx : 'https://explorer-testnet.mvs.org/tx/' + tx
 
-    private filterTxs(txs: any[], symbol, addresses) {
-        return Promise.all(txs.filter((tx) => this.filterTx(tx, symbol, addresses)))
+    async filterTxs(txs: any[], symbol, addresses) {
+        let filteredTx = []
+        for(let i=0; i<txs.length; i++) {
+            let tx = await this.filterTx(txs[i], symbol, addresses)
+            if (tx) {
+                filteredTx.push(tx)
+            }
+        }
+        return filteredTx
+        //return Promise.all(txs.filter((tx) => this.filterTx(tx, symbol, addresses)))
     }
 
 
     async filterTx(tx: any, asset: string, addresses: Array<string>) {
-        tx = await this.mvs.organizeInputs(JSON.parse(JSON.stringify(tx)))
-        let result = false;
+        let result = false
+        let include_mst = false
         tx.inputs.forEach((input) => {
             if (this.isMineTXIO(input, addresses)) {
                 if (!tx.unconfirmed) {
-                    if (['asset-transfer', 'asset-issue'].indexOf(input.attachment.type) !== -1 && input.attachment.symbol == asset)
+                    if (['asset-transfer', 'asset-issue'].indexOf(input.attachment.type) !== -1) {
+                        include_mst = true
+                        result = false
+                        if(input.attachment.symbol == asset) {
+                            result = true
+                        }
+                    } else if (asset == 'ETP' && input.value && !include_mst) {
                         result = true
-                    else if (asset == 'ETP' && input.value)
-                        result = true
+                    }
                 }
             }
         });
-        if (result) return tx;
+        if (result) return await this.mvs.organizeInputs(JSON.parse(JSON.stringify(tx)), false);
         tx.outputs.forEach((output) => {
             if (this.isMineTXIO(output, addresses)) {
-                if (['asset-transfer', 'asset-issue'].indexOf(output.attachment.type) !== -1 && output.attachment.symbol == asset)
+                if (['asset-transfer', 'asset-issue'].indexOf(output.attachment.type) !== -1) {
+                    include_mst = true
+                    result = false
+                    if(output.attachment.symbol == asset) {
+                        result = true
+                    }
+                } else if (asset == 'ETP' && output.value && !include_mst) {
                     result = true;
-                else if (asset == 'ETP' && output.value)
-                    result = true;
+                }
             }
         });
-        if (result) return tx
+        if (result) return await this.mvs.organizeInputs(JSON.parse(JSON.stringify(tx)), false)
     }
 
     private isMineTXIO = (txio, addresses) => (addresses.indexOf(txio.address) !== -1)

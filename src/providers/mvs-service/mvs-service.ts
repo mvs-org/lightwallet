@@ -721,10 +721,10 @@ export class MvsServiceProvider {
     async decodeTx(rawtx) {
         const network = await this.globals.getNetwork()
         let tx = Metaverse.transaction.decode(rawtx, network);
-        return this.organizeInputs(tx);
+        return this.organizeInputs(tx, true);
     }
 
-    async organizeInputs(tx) {
+    async organizeInputs(tx, getForeignInputs) {
         let transactions = await this.getTxs()
         for (let i = 0; i < tx.inputs.length; i++) {
             let input = tx.inputs[i]
@@ -737,14 +737,16 @@ export class MvsServiceProvider {
                 }
             })
             if(input.previous_output.hash != '0000000000000000000000000000000000000000000000000000000000000000') {
-                if (!found) {
+                if (!found && getForeignInputs) {
                     previous_output = await this.getOutput(input.previous_output.hash, input.previous_output.index)
                 }
-                input.previous_output.script = previous_output.script
-                input.previous_output.address = previous_output.address
-                input.previous_output.value = previous_output.value
-                input.previous_output.attachment = previous_output.attachment
-                input.address = input.previous_output.address
+                if(previous_output) {
+                    input.previous_output.script = previous_output.script
+                    input.previous_output.address = previous_output.address
+                    input.previous_output.value = previous_output.value
+                    input.previous_output.attachment = previous_output.attachment
+                    input.address = input.previous_output.address
+                }
             }
             tx.inputs[i] = input
         }

@@ -14,7 +14,7 @@ export class TxItemComponent {
     @Input() signStatus: string
     @Input() title: boolean = true
 
-    decimalsMst: any = {}
+    decimalsMst: any = { ETP: 8 }
     myAddresses: Array<string> = []
     totalInputs: any = { ETP: 0, MST: {} }
     totalOutputs: any = { ETP: 0, MST: {} }
@@ -72,10 +72,14 @@ export class TxItemComponent {
 
         this.tx.inputs.forEach((input) => {
             if (input.previous_output.attachment && (input.previous_output.attachment.type == 'asset-issue' || input.previous_output.attachment.type == 'asset-transfer')) {
-                this.totalInputs.MST[input.previous_output.attachment.symbol] = this.totalInputs.MST[input.previous_output.attachment.symbol] ? this.totalInputs.MST[input.previous_output.attachment.symbol] + input.previous_output.attachment.quantity : input.previous_output.attachment.quantity
+                if(this.totalInputs.MST[input.previous_output.attachment.symbol] && input.previous_output.attachment.quantity){
+                    this.totalInputs.MST[input.previous_output.attachment.symbol] =  this.totalInputs.MST[input.previous_output.attachment.symbol] + input.previous_output.attachment.quantity
+                }
                 this.decimalsMst[input.previous_output.attachment.symbol] = input.previous_output.attachment.decimals
             }
-            this.totalInputs.ETP += input.previous_output.value
+            if(input.previous_output.value) {
+                this.totalInputs.ETP += input.previous_output.value
+            }
             if (this.myAddresses.indexOf(input.previous_output.address) > -1) {
                 this.totalPersonalInputs.ETP += input.previous_output.value
                 if (input.previous_output.attachment && (input.previous_output.attachment.type == 'asset-issue' || input.previous_output.attachment.type == 'asset-transfer')) {
@@ -103,6 +107,7 @@ export class TxItemComponent {
                     break;
                 case 'asset-transfer':
                     if (this.txType != TX_TYPE_ISSUE) {
+                        this.decimalsMst[output.attachment.symbol] = output.attachment.decimals
                         this.txTypeValue = output.attachment.symbol
                         if (this.tx.inputs != undefined && Array.isArray(this.tx.inputs) && this.tx.inputs[0] && this.tx.inputs[0].previous_output.address == '') {
                             this.txType = TX_TYPE_MST_MINING
@@ -162,7 +167,9 @@ export class TxItemComponent {
             }
 
             if (this.myAddresses.indexOf(output.address) > -1) {
-                this.totalPersonalOutputs.ETP += output.value
+                if(output.value) {
+                    this.totalPersonalOutputs.ETP += output.value
+                }
                 if (output.attachment && (output.attachment.type == 'asset-issue' || output.attachment.type == 'asset-transfer')) {
                     this.totalPersonalOutputs.MST[output.attachment.symbol] = this.totalPersonalOutputs.MST[output.attachment.symbol] ? this.totalPersonalOutputs.MST[output.attachment.symbol] + output.attachment.quantity : output.attachment.quantity
                 }
