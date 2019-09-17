@@ -22,7 +22,7 @@
             </ion-select>
         </ion-item>
 
-        <tx-item *ngIf="displayedTx" [tx]="displayedTx" [hexTx]="hexTx" [mode]="mode" [signStatus]="signStatus"></tx-item>
+        <tx-item *ngIf="displayedTx" [tx]="displayedTx" [hexTx]="hexTx" [mode]="mode" [signStatus]="signStatus" [mined]="false"></tx-item>
 
         <ion-item *ngIf="!allMyInputs" no-lines class="wrong-input">{{"TX.INPUTS_NOT_ALL_MINE" | translate}}</ion-item>
 

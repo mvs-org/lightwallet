@@ -686,7 +686,10 @@
         "OUTPUT": {
             "LOCKED_UNTIL_BLOCK": "Locked until block {{block}} (~{{time}})"
         },
-        "INPUTS_NOT_ALL_MINE": "Some inputs are not yours! Only your inputs will be signed."
+        "INPUTS_NOT_ALL_MINE": "Some inputs are not yours! Only your inputs will be signed.",
+        "FOREIGN_INPUT": "Foreign input",
+        "INDEX": "Index",
+        "HASH": "Hash"
     },
     "SIGN_TX.PAGE_TITLE": "Review, sign and send the transaction",
     "SIGN_TX.DESCRIPTION": "Please enter the raw transaction, in hexadecimal format. The transaction can be signed or unsigned.",

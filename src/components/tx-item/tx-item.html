@@ -1,6 +1,6 @@
 <ion-card class="manual-copy display-overflow">
     <ion-grid>
-        <ion-row *ngIf="title">
+        <ion-row *ngIf="!mined">
             <ion-item>
                 <h1>{{'TX.TX_SUMMARY'|translate}}</h1>
             </ion-item>
@@ -9,6 +9,9 @@
             <ion-col>
                 <ion-item>
                     <h1>{{tx.hash}}</h1>
+                    <button *ngIf="mined" id="explorerTxButton" ion-button item-right (click)="checkTx()">
+                        <ion-icon name="open"></ion-icon>
+                    </button>
                 </ion-item>
             </ion-col>
         </ion-row>
@@ -18,6 +21,12 @@
                     {{'TX.TX_TYPE.' + txType | translate}}
                     <div *ngIf="signStatus" class="unsigned">
                         {{'TX.SIGN_STATUS.' + signStatus | translate}}
+                    </div>
+                    <div>
+                        <button *ngIf="mode == 'summary'" class="ion-item" ion-button icon-left (click)="showDetails()">
+                            <ion-icon name="arrow-dropdown"></ion-icon>
+                            {{'SHOW_DETAILS'|translate}}
+                        </button>
                     </div>
                 </ion-item>
             </ion-col>
@@ -55,10 +64,13 @@
                     <div *ngIf="txType == 'MIT' || txType == 'DID_REGISTER' || txType == 'DID_TRANSFER'">
                         {{txTypeValue}}
                     </div>
-                    <div *ngIf="txType == 'MST_LOCK' || txType == 'ETP_LOCK' || txType == 'ETP_LOCK_REWARD'">
+                    <div *ngIf="txType == 'MST_LOCK'">
                         {{tx.locked_quantity | format : decimalsMst[txTypeValue]}} {{txTypeValue}}
                     </div>
-                    <div *ngIf="txFee && (mode == 'default' || mode == 'satoshi')" class="fee">{{'TX.TX_FEE' | translate}}: {{txFee | format : 8}} ETP</div>
+                    <div *ngIf="txType == 'ETP_LOCK' || txType == 'ETP_LOCK_REWARD'">
+                        {{tx.locked_quantity | format : 8}} ETP
+                    </div>
+                    <div *ngIf="txFee" class="fee">{{'TX.TX_FEE' | translate}}: {{txFee | format : 8}} ETP</div>
                 </ion-item>
             </ion-col>
             <!--div *ngIf="transaction.locked_until" [translate]="'TX.LOCKED_SINCE_BLOCK'" [translateParams]="{block: transaction.locked_until, time: transaction.confirmed_at*1000 | date : 'medium'}"></div>

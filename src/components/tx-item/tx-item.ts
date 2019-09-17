@@ -12,9 +12,9 @@ export class TxItemComponent {
     @Input() hexTx: any;
     @Input() mode: string;
     @Input() signStatus: string
-    @Input() title: boolean = true
+    @Input() mined: boolean = false
 
-    decimalsMst: any = { ETP: 8 }
+    decimalsMst: any = { }
     myAddresses: Array<string> = []
     totalInputs: any = { ETP: 0, MST: {} }
     totalOutputs: any = { ETP: 0, MST: {} }
@@ -186,5 +186,13 @@ export class TxItemComponent {
         if(this.txFee < 0)
             this.txFee = 0
     }
+
+    async showDetails() {
+        this.mode = 'satoshi'
+    }
+
+    checkTx = () => window.open(this.explorerURL(this.tx.hash), "_blank");
+
+    explorerURL = (tx) => (this.globals.network == 'mainnet') ? 'https://explorer.mvs.org/tx/' + tx : 'https://explorer-testnet.mvs.org/tx/' + tx
 
 }

@@ -5,10 +5,28 @@
             <ion-col>
                 <div *ngIf="input.previous_output.address !== ''">{{input.previous_output.address}}</div>
                 <div *ngIf="input.previous_output.address == ''">{{'TX.INPUT_COINBASE'|translate}}</div>
+                <div *ngIf="input.previous_output.address == undefined">
+                    {{'TX.FOREIGN_INPUT'|translate}}
+                    <button class="item-button" ion-button (click)="loadForeignInput()">
+                        <ion-icon name="eye"></ion-icon>
+                    </button>
+                </div>
             </ion-col>
             <!--Right column-->
             <ion-col class="right">
-                {{input.previous_output.value | format : 8}} ETP
+                <div *ngIf="input.previous_output.value">{{input.previous_output.value | format : 8}} ETP</div>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <!--Left column-->
+            <ion-col>
+                <div class="script">{{'TX.HASH'|translate}}: {{input.previous_output.hash}}</div>
+                <div class="script">
+                    {{'TX.INDEX'|translate}}: {{input.previous_output.index}}
+                    <button class="item-button" ion-button (click)="checkInput()">
+                        <ion-icon name="open"></ion-icon>
+                    </button>
+                </div>
             </ion-col>
         </ion-row>
         <ion-row *ngIf="mode == 'satoshi' && input.script">
