@@ -29,10 +29,10 @@ export class Page {
     hasElement = (selector) => browser.isElementPresent(this.getElement(selector))
     sleep = browser.sleep
 
-    waitForElement = (locatorOrElement: Locator | WebElement | ElementFinder, timeout = 15000) => browser.driver.wait(() => {
+    waitForElement = (locatorOrElement: Locator | WebElement | ElementFinder, timeout = 15000, message?: string) => browser.driver.wait(() => {
         browser.ignoreSynchronization = true;
         return browser.isElementPresent(locatorOrElement)
-    }, timeout)
+    }, timeout, message)
 
     waitForUrlChange = (timeout=5000) => {
         return browser.getCurrentUrl()
@@ -52,8 +52,9 @@ export class Page {
     });
 
     async openImportPage() {
-        await this.waitForElement({ id: 'open-wallet-button' })
-        await this.sleep(500)
+        await this.sleep(300)
+        await this.waitForElement({ id: 'open-wallet-button' }, 5000, 'Timeout waiting for open wallet button to appear')
+        await this.sleep(800)
         await this.clickId("open-wallet-button")
     }
 
@@ -83,7 +84,22 @@ export class Page {
         await this.waitForElement({ css: '.footer .row .col:nth-child(2)' }, 5000)
         await this.getElement('.footer .row .col:nth-child(2) button').click()
         await this.waitForElement({ css: `ion-list ion-item:nth-child(${index})`})
+        await this.sleep(500)
         await this.getElement(`ion-list ion-item:nth-child(${index})`).click()
         await this.waitForUrlChange()
+    }
+    
+    async openMenu(){
+        await this.sleep(300)
+        await this.waitForElement({ css: 'button.bar-button-menutoggle' }, 5000, 'Timeout waiting for menu button to appear')
+        await this.getElement('button.bar-button-menutoggle').click()
+        await this.sleep(300)
+    }
+
+    async selectMenuItem(index: number){
+        await this.sleep(300)
+        await this.waitForElement({ css: `ion-menu ion-content ion-list button:nth-child(${index})` }, 5000, 'Timeout waiting for menu item to appear')
+        await this.getElement(`ion-menu ion-content ion-list button:nth-child(${index})`).click()
+        await this.sleep(200)
     }
 }
