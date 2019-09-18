@@ -1,6 +1,7 @@
 sudo: required
 addons:
   addons: 
+  chrome: beta
   apt:
     packages:
     - chromium-chromedriver
