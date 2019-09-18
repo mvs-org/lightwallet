@@ -91,7 +91,7 @@
     "karma-spec-reporter": "0.0.32",
     "karma-webpack": "^2.0.13",
     "null-loader": "^0.1.1",
-    "protractor": "^5.4.0",
+    "protractor": "^5.4.2",
     "ts-loader": "^3.5.0",
     "ts-node": "^3.3.0",
     "typescript": "2.3.4"
