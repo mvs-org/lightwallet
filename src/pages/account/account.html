@@ -46,7 +46,7 @@
                 <ng-container *ngFor="let asset of balancesKeys" class="asset-container">
                     <ion-col *ngIf="balances.MST[asset]!==undefined" class="asset-container">
                         <mst-card [balance]="balances.MST[asset]" [symbol]="asset" [theme]="theme" [icon]="icons[asset]"
-                            [swap]="whitelist.indexOf(asset) > -1"></mst-card>
+                            [swap]="whitelist.indexOf(asset) > -1" [tickers]="tickers[asset]" [base]="base"></mst-card>
                     </ion-col>
                 </ng-container>
             </ion-row>
