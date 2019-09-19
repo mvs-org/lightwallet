@@ -187,8 +187,8 @@ export class TxItemComponent {
             this.txFee = 0
     }
 
-    async showDetails() {
-        this.mode = 'satoshi'
+    async showHideDetails() {
+        this.mode = this.mode == 'summary' ? 'satoshi' : 'summary'
     }
 
     checkTx = () => window.open(this.explorerURL(this.tx.hash), "_blank");
