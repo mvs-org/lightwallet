@@ -72,10 +72,7 @@ export class TxItemComponent {
 
         this.tx.inputs.forEach((input) => {
             if (input.previous_output.attachment && (input.previous_output.attachment.type == 'asset-issue' || input.previous_output.attachment.type == 'asset-transfer')) {
-                if(this.totalInputs.MST[input.previous_output.attachment.symbol] && input.previous_output.attachment.quantity){
-                    this.totalInputs.MST[input.previous_output.attachment.symbol] =  this.totalInputs.MST[input.previous_output.attachment.symbol] + input.previous_output.attachment.quantity
-                }
-                this.decimalsMst[input.previous_output.attachment.symbol] = input.previous_output.attachment.decimals
+                this.totalInputs.MST[input.previous_output.attachment.symbol] = this.totalInputs.MST[input.previous_output.attachment.symbol] && input.previous_output.attachment.quantity ? this.totalInputs.MST[input.previous_output.attachment.symbol] + input.previous_output.attachment.quantity : input.previous_output.attachment.quantity
             }
             if(input.previous_output.value) {
                 this.totalInputs.ETP += input.previous_output.value
@@ -98,8 +95,8 @@ export class TxItemComponent {
         this.tx.outputs.forEach(output => {
             switch (output.attachment.type) {
                 case 'asset-issue':
-                    this.decimalsMst[output.attachment.symbol] = output.attachment.precision
-                    output.attachment.quantity = output.attachment.max_supply
+                    this.decimalsMst[output.attachment.symbol] = output.attachment.precision ? output.attachment.precision : output.attachment.decimals
+                    output.attachment.quantity = output.attachment.max_supply ? output.attachment.max_supply : output.attachment.original_quantity
                     this.totalInputs.MST[output.attachment.symbol] = this.totalInputs.MST[output.attachment.symbol] || 0
                     this.totalPersonalInputs.MST[output.attachment.symbol] = this.totalPersonalInputs.MST[output.attachment.symbol] || 0
                     this.txType = TX_TYPE_ISSUE
