@@ -750,25 +750,28 @@ export class MvsServiceProvider {
 
         const tx = transactionMap[input.previous_output.hash]
         if(tx!==undefined){
-            input.previous_output = tx.outputs[input.previous_output.index]
+            input = this.addInputData(input, tx.outputs[input.previous_output.index])
             return input
         }
         
 
         if (getForeignInput) {
-            input.previous_output = await this.getOutput(input.previous_output.hash, input.previous_output.index)
+            input = this.addInputData(input, await this.getOutput(input.previous_output.hash, input.previous_output.index))
             return input
         }
 
         return input
-        // if(previous_output) {
-        //     input.previous_output.script = previous_output.script
-        //     input.previous_output.address = previous_output.address
-        //     input.previous_output.value = previous_output.value
-        //     input.previous_output.attachment = previous_output.attachment
-        //     input.address = input.previous_output.address
-        // }
+    }
 
+    addInputData(existingInputData, previousOutputData) {
+        if(previousOutputData) {
+            existingInputData.previous_output.script = previousOutputData.script
+            existingInputData.previous_output.address = previousOutputData.address
+            existingInputData.previous_output.value = previousOutputData.value
+            existingInputData.previous_output.attachment = previousOutputData.attachment
+            existingInputData.address = previousOutputData.address
+        }
+        return existingInputData
     }
 
     async organizeTx(tx) {
