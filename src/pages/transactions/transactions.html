@@ -44,7 +44,7 @@
                     <tx-item *ngIf="tx" [tx]="tx" [hexTx]="''" [mined]="true" [mode]="'summary'" [signStatus]="SIGNED"></tx-item>
                 </div>
             </ion-list>
-            <pagination-controls (pageChange)="page_tx = $event" *ngIf="txs && txs.length > items_per_page"></pagination-controls>
+            <pagination-controls (pageChange)="pageChange($event)" *ngIf="txs && txs.length > items_per_page"></pagination-controls>
             <div [hidden]="txs && txs.length">
                 <ion-row>
                     <ion-col></ion-col>

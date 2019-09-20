@@ -5,6 +5,7 @@ import { Storage } from '@ionic/storage';
 import { WalletServiceProvider } from '../wallet-service/wallet-service';
 import Metaverse from 'metaversejs/index.js';
 import Blockchain from 'mvs-blockchain';
+import { keyBy } from 'lodash';
 
 @Injectable()
 export class MvsServiceProvider {
@@ -724,33 +725,50 @@ export class MvsServiceProvider {
         return this.organizeInputs(tx, true);
     }
 
-    async organizeInputs(tx, getForeignInputs) {
-        let transactions = await this.getTxs()
-        for (let i = 0; i < tx.inputs.length; i++) {
-            let input = tx.inputs[i]
-            let found = false
-            let previous_output
-            transactions.forEach(t => {
-                if (input.previous_output.hash == t.hash) {
-                    found = true
-                    previous_output = t.outputs[input.previous_output.index]
-                }
-            })
-            if(input.previous_output.hash != '0000000000000000000000000000000000000000000000000000000000000000') {
-                if (!found && getForeignInputs) {
-                    previous_output = await this.getOutput(input.previous_output.hash, input.previous_output.index)
-                }
-                if(previous_output) {
-                    input.previous_output.script = previous_output.script
-                    input.previous_output.address = previous_output.address
-                    input.previous_output.value = previous_output.value
-                    input.previous_output.attachment = previous_output.attachment
-                    input.address = input.previous_output.address
-                }
-            }
-            tx.inputs[i] = input
+    async getTransactionMap(){
+        return keyBy(await this.getTxs(), 'hash')
+    }
+
+    async organizeInputs(tx, getForeignInputs, transactionMap?) {
+        if(transactionMap===undefined){
+            transactionMap=await this.getTransactionMap()
         }
+        tx.inputs = await Promise.all(tx.inputs.map(input => this.organizeInput(input, getForeignInputs, transactionMap)))
         return tx
+    }
+
+    async organizeInput(input, getForeignInput: boolean, transactionMap?) {
+        if (input.previous_output == undefined) {
+            throw Error('Previous output must be present')
+        }
+        if (input.previous_output.hash === '0000000000000000000000000000000000000000000000000000000000000000') {
+            return input
+        }
+        if (transactionMap === undefined) {
+            transactionMap = await this.getTransactionMap()
+        }
+
+        const tx = transactionMap[input.previous_output.hash]
+        if(tx!==undefined){
+            input.previous_output = tx.outputs[input.previous_output.index]
+            return input
+        }
+        
+
+        if (getForeignInput) {
+            input.previous_output = await this.getOutput(input.previous_output.hash, input.previous_output.index)
+            return input
+        }
+
+        return input
+        // if(previous_output) {
+        //     input.previous_output.script = previous_output.script
+        //     input.previous_output.address = previous_output.address
+        //     input.previous_output.value = previous_output.value
+        //     input.previous_output.attachment = previous_output.attachment
+        //     input.address = input.previous_output.address
+        // }
+
     }
 
     async organizeTx(tx) {
