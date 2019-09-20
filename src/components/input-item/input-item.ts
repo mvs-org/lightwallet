@@ -17,12 +17,7 @@ export class InputItemComponent {
     ) { }
 
     async loadForeignInput() {
-        let previous_output = await this.mvs.getOutput(this.input.previous_output.hash, this.input.previous_output.index)
-        this.input.previous_output.script = previous_output.script
-        this.input.previous_output.address = previous_output.address
-        this.input.previous_output.value = previous_output.value
-        this.input.previous_output.attachment = previous_output.attachment
-        this.input.address = this.input.previous_output.address
+        this.input = this.mvs.addInputData(this.input, await this.mvs.getOutput(this.input.previous_output.hash, this.input.previous_output.index))
     }
 
     checkInput = () => window.open(this.explorerURLWithIndex(this.input.previous_output.hash, this.input.previous_output.index), "_blank");

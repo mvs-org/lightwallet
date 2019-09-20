@@ -13,14 +13,18 @@
         </ion-row>
         <ion-row *ngIf="mined" class="hash">
             <ion-col>
-                <ion-item>
-                    <h1 class="font-mono">
-                        {{tx.hash}}
-                        <button id="explorerTxButton" ion-button (click)="checkTx()">
-                            <ion-icon name="open"></ion-icon>
-                        </button>
-                    </h1>
-                </ion-item>
+                <ion-row>
+                    <ion-col>
+                        <ion-item>
+                            <h1 class="font-mono">
+                                {{tx.hash}}
+                                <button id="explorerTxButton" ion-button (click)="checkTx()">
+                                    <ion-icon name="open"></ion-icon>
+                                </button>
+                            </h1>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
             </ion-col>
         </ion-row>
         <ion-row>

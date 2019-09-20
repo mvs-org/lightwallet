@@ -145,9 +145,9 @@ export class TxItemComponent {
                 case 'etp':
                     if(this.txType === TX_TYPE_UNKNOWN) {
                         if (output.locked_height_range) {
-                        this.tx.locked_until = this.tx.height + output.locked_height_range
-                        this.tx.locked_quantity = output.value
-                        this.txType = this.tx.inputs[0].previous_output.hash == "0000000000000000000000000000000000000000000000000000000000000000" ? TX_TYPE_ETP_LOCK_REWARD : TX_TYPE_ETP_LOCK
+                            this.tx.locked_until = this.tx.height + output.locked_height_range
+                            this.tx.locked_quantity = output.value
+                            this.txType = this.tx.inputs[0].previous_output.hash == "0000000000000000000000000000000000000000000000000000000000000000" ? TX_TYPE_ETP_LOCK_REWARD : TX_TYPE_ETP_LOCK
                         } else {
                             this.txType = TX_TYPE_ETP
                         }
