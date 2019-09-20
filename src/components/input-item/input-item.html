@@ -4,8 +4,8 @@
             <!--Left column-->
             <ion-col>
                 <div *ngIf="input.previous_output.address !== ''">{{input.previous_output.address}}</div>
-                <div *ngIf="input.previous_output.address == ''">{{'TX.INPUT_COINBASE'|translate}}</div>
-                <div *ngIf="input.previous_output.address == undefined">
+                <div *ngIf="input.previous_output.hash === '0000000000000000000000000000000000000000000000000000000000000000'">{{'TX.INPUT_COINBASE'|translate}}</div>
+                <div *ngIf="input.previous_output.address === undefined && input.previous_output.hash !== '0000000000000000000000000000000000000000000000000000000000000000'">
                     {{'TX.FOREIGN_INPUT'|translate}}
                     <button class="item-button" ion-button (click)="loadForeignInput()">
                         <ion-icon name="eye"></ion-icon>
@@ -21,7 +21,7 @@
             <!--Left column-->
             <ion-col>
                 <div class="script">{{'TX.HASH'|translate}}: {{input.previous_output.hash}}</div>
-                <div class="script">
+                <div class="script" *ngIf="input.previous_output.hash !== '0000000000000000000000000000000000000000000000000000000000000000'">
                     {{'TX.INDEX'|translate}}: {{input.previous_output.index}}
                     <button class="item-button" ion-button (click)="checkInput()">
                         <ion-icon name="open"></ion-icon>
