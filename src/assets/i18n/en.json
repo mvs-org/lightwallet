@@ -325,6 +325,7 @@
     "PLUGIN.ALREADY_ADDED": "This plugin is already added to your wallet",
     "MESSAGE.IMPORT_PLUGIN_ERROR": "Error while importing the plugin",
     "MESSAGE.IMPORT_PLUGIN_INVALID_URL": "Incorrect URL. Please double check the plugin URL.",
+    "MESSAGE.IMPORT_PLUGIN_INVALID_FORMAT": "Cannot get plugin's information. Please make sure the plugin is correctly configured.",
     "MESSAGE.IMPORT_PLUGIN_INVALID_NAME": "Incorrect plugin name. The name of this plugin contains invalid characters.",
     "MESSAGE.IMPORT_PLUGIN_MISSING_DEFAULT_TRANSLATION": "The default translation of this plugin is missing.",
     "ERROR_TOO_MANY_INPUTS": "Too many inputs",
