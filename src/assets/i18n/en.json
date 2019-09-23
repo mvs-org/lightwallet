@@ -325,6 +325,7 @@
     "PLUGIN.ALREADY_ADDED": "This plugin is already added to your wallet",
     "MESSAGE.IMPORT_PLUGIN_ERROR": "Error while importing the plugin",
     "MESSAGE.IMPORT_PLUGIN_INVALID_URL": "Incorrect URL. Please double check the plugin URL.",
+    "MESSAGE.IMPORT_PLUGIN_INVALID_FORMAT": "Cannot get plugin's information. Please make sure the plugin is correctly configured.",
     "MESSAGE.IMPORT_PLUGIN_INVALID_NAME": "Incorrect plugin name. The name of this plugin contains invalid characters.",
     "MESSAGE.IMPORT_PLUGIN_MISSING_DEFAULT_TRANSLATION": "The default translation of this plugin is missing.",
     "ERROR_TOO_MANY_INPUTS": "Too many inputs",
@@ -673,6 +674,7 @@
         },
         "SELECT_MODE": "Visualisation mode",
         "MODE": {
+            "SUMMARY": "Summary",
             "DEFAULT": "Default mode",
             "SATOSHI": "Satoshi mode",
             "HEX": "Hexadecimal mode"
@@ -685,7 +687,10 @@
         "OUTPUT": {
             "LOCKED_UNTIL_BLOCK": "Locked until block {{block}} (~{{time}})"
         },
-        "INPUTS_NOT_ALL_MINE": "Some inputs are not yours! Only your inputs will be signed."
+        "INPUTS_NOT_ALL_MINE": "Some inputs are not yours! Only your inputs will be signed.",
+        "FOREIGN_INPUT": "Foreign input",
+        "INDEX": "Index",
+        "HASH": "Hash"
     },
     "SIGN_TX.PAGE_TITLE": "Review, sign and send the transaction",
     "SIGN_TX.DESCRIPTION": "Please enter the raw transaction, in hexadecimal format. The transaction can be signed or unsigned.",
@@ -738,5 +743,12 @@
     "AUTH.ENTER_MANUALLY_BUTTON": "Enter request code manually",
     "AUTH.GET_ON_MOBILE": "Get the mobile app",
     "ERR_INVALID_SIGNATURE": "Your signature has been recognized as invalid. Please try again.",
-    "ETP_BRIDGE.INFORMATION_WARNING": "The SWFT telegram support will never ask a user to send any funds to addresses other than the deposit address of the order details. Details about the order should not be necessary. The order id should be enough information for the support to find the order."
+    "ETP_BRIDGE.INFORMATION_WARNING": "The SWFT telegram support will never ask a user to send any funds to addresses other than the deposit address of the order details. Details about the order should not be necessary. The order id should be enough information for the support to find the order.",
+    "RETURN": "Return",
+    "REORDER.TITLE": "Reorder your MSTs",
+    "MULTISIGNATURE_ADD.OWN_PUBLICKEY_ALREADY_ADDED": "Your own public key will be automatically added, please don't add it a second time",
+    "MULTISIGNATURE_ADD.PUBLIC_KEY_TWICE": "Duplicate public key. Please enter each public key only once.",
+    "TRANSFER.FROM_ADDRESS_NO_ETP": "This address doesn't have any ETP. Please add ETP to this address or use the Automatic option.",
+    "PASSPHRASE.DOWNLOAD_FILE": "Download file",
+    "RECOVER_FROM_BACKUP_WORDS": "Recover wallet from backup words"
 }

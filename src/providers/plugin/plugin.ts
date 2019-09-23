@@ -51,12 +51,15 @@ export class PluginProvider {
                 );
         })
         .then((plugin: Plugin) => {
-            if (plugin == null)
+            if (plugin == null) {
                 throw Error("ERR_INVALID_URL")
-            if (!/^[a-z-]*$/.test(plugin.name))
+            } else if (!plugin.name || !plugin.config || !plugin.url) {
+                throw Error("ERR_INVALID_PLUGIN_FORMAT")
+            } else if (!/^[a-z-]*$/.test(plugin.name)) {
                 throw Error("ERR_INVALID_PLUGIN_NAME")
-            if (plugin.translation == undefined || plugin.translation.default == undefined || plugin.translation.default.name == undefined)
+            } else if (plugin.translation == undefined || plugin.translation.default == undefined || plugin.translation.default.name == undefined) {
                 throw Error("ERR_MISSING_DEFAULT_TRANSLATION")
+            }
             return plugin
         })
     }

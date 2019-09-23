@@ -12,6 +12,8 @@ export class MSTCardComponent {
     @Input() theme: string;
     @Input() icon: string;
     @Input() swap: boolean;
+    @Input() tickers: any;
+    @Input() base: string;
 
     constructor(
         private nav: NavController

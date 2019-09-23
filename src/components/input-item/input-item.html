@@ -2,17 +2,35 @@
     <ion-item *ngIf="input.previous_output.value != 0 || input.previous_output.address == ''">
         <ion-row>
             <!--Left column-->
-            <ion-col>
+            <ion-col [ngClass]="{'align-small-button-container': input.previous_output.address === undefined && input.previous_output.hash !== '0000000000000000000000000000000000000000000000000000000000000000'}">
                 <div *ngIf="input.previous_output.address !== ''">{{input.previous_output.address}}</div>
-                <div *ngIf="input.previous_output.address == ''">{{'TX.INPUT_COINBASE'|translate}}</div>
+                <div *ngIf="input.previous_output.hash === '0000000000000000000000000000000000000000000000000000000000000000'">{{'TX.INPUT_COINBASE'|translate}}</div>
+                <div *ngIf="input.previous_output.address === undefined && input.previous_output.hash !== '0000000000000000000000000000000000000000000000000000000000000000'" class="align-small-button">
+                    {{'TX.FOREIGN_INPUT'|translate}}
+                    <button class="item-button" ion-button clear color="dark" (click)="loadForeignInput()">
+                        <ion-icon name="eye"></ion-icon>
+                    </button>
+                </div>
             </ion-col>
             <!--Right column-->
             <ion-col class="right">
-                {{input.previous_output.value | format : 8}} ETP
+                <div *ngIf="input.previous_output.value">{{input.previous_output.value | format : 8}} ETP</div>
+            </ion-col>
+        </ion-row>
+        <ion-row *ngIf="mode == 'satoshi'" [ngClass]="{'align-small-button-container': input.previous_output.hash !== '0000000000000000000000000000000000000000000000000000000000000000'}">
+            <!--Left column-->
+            <ion-col>
+                <div class="script">{{'TX.HASH'|translate}}: {{input.previous_output.hash}}</div>
+                <div class="script align-small-button" *ngIf="input.previous_output.hash !== '0000000000000000000000000000000000000000000000000000000000000000'">
+                    {{'TX.INDEX'|translate}}: {{input.previous_output.index}}
+                    <button class="item-button" ion-button clear color="dark" (click)="checkInput()">
+                        <ion-icon name="open"></ion-icon>
+                    </button>
+                </div>
             </ion-col>
         </ion-row>
         <ion-row *ngIf="mode == 'satoshi' && input.script">
-            <ion-col *ngIf="input.script" class="script">
+            <ion-col class="script">
                 {{input.script}}
             </ion-col>
         </ion-row>

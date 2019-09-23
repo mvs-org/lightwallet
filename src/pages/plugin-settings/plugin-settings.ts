@@ -50,6 +50,11 @@ export class PluginSettingsPage {
                             this.alert.showError('MESSAGE.IMPORT_PLUGIN_ERROR', message)
                         })
                         break;
+                    case 'ERR_INVALID_PLUGIN_FORMAT':
+                        this.translate.get('MESSAGE.IMPORT_PLUGIN_INVALID_FORMAT').subscribe((message: string) => {
+                            this.alert.showError('MESSAGE.IMPORT_PLUGIN_ERROR', message)
+                        })
+                        break;
                     case 'ERR_INVALID_PLUGIN_NAME':
                         this.translate.get('MESSAGE.IMPORT_PLUGIN_INVALID_NAME').subscribe((message: string) => {
                             this.alert.showError('MESSAGE.IMPORT_PLUGIN_ERROR', message)

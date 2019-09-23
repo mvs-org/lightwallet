@@ -15,8 +15,9 @@ import { AlertProvider } from '../../providers/alert/alert';
 })
 export class PassphrasePage {
 
-    mnemonic: string;
-    loading: Loading;
+    mnemonic: string = this.navParams.get('mnemonic')
+    loading: Loading
+    newWallet: boolean = this.navParams.get('newWallet') || false
 
     constructor(public nav: NavController,
         public navParams: NavParams,
@@ -28,18 +29,17 @@ export class PassphrasePage {
         public loadingCtrl: LoadingController,
         public wallet: WalletServiceProvider,
         private alert: AlertProvider,
-    ) {
+    ) { }
 
-        this.mnemonic = this.navParams.get('mnemonic');
-
+    downloadAndReturnLogin(password) {
+        this.nav.setRoot("LoginPage")
+        this.download(password)
     }
 
-    /* moves nagigation
-     * encypts mnemonic with authentication provider encypt function
+    /* encypts mnemonic with authentication provider encypt function
      * then writes the data to the json file and downloads the file
      */
-    encrypt(password) {
-        this.nav.setRoot("LoginPage");
+    download(password) {
         this.crypto.encrypt(this.mnemonic, password)
             .then((res) => this.dataToKeystoreJson(res))
             .then((encrypted) => this.downloadFile('mvs_keystore.json', JSON.stringify(encrypted)))
@@ -48,7 +48,7 @@ export class PassphrasePage {
             });
     }
 
-    encryptMobile(password) {
+    encrypt(password) {
         this.alert.showLoading();
         let wallet = {};
         wallet = { "index": 10 }
@@ -57,7 +57,7 @@ export class PassphrasePage {
             .then((seed) => this.wallet.setMobileWallet(seed))
             .then(() => Promise.all([this.wallet.getWallet(password), this.wallet.getAddressIndex()]))
             .then((results) => this.wallet.generateAddresses(results[0], 0, results[1]))
-            .then((addresses) => this.mvs.addAddresses(addresses))
+            .then((addresses) => this.mvs.setAddresses(addresses))
             .then(() => this.wallet.saveSessionAccount(password))
             .then(() => this.nav.setRoot("LoadingPage", { reset: true }))
             .catch((e) => {

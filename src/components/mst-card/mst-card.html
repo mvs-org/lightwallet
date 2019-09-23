@@ -20,12 +20,20 @@
                             {{"ACCOUNT.FROZEN"|translate}}
                         </div>
                     </h2>
-                    <h2 class="balances frozen-balances">
+                    <h2 class="balances">
                         <div class="balance-field">
                             <div>{{balance.available + balance.frozen | format : balance.decimals}}</div>
+                            <div *ngIf="tickers && tickers[base]" class="fiat">
+                                ≈{{base}} {{(balance.available + balance.frozen)*tickers[base].price | decimals : balance.decimals | number : '1.0-2'}}
+                            </div>
                         </div>
                         <div class="balance-field">
-                            <div>{{balance.frozen | format : balance.decimals}}</div>
+                            <div class="frozen-balance">
+                                {{balance.frozen | format : balance.decimals}}
+                            </div>
+                            <div *ngIf="tickers && tickers[base]" class="fiat">
+                                ≈{{base}} {{(balance.frozen)*tickers[base].price | decimals : balance.decimals | number : '1.0-2'}}
+                            </div>
                         </div>
                     </h2>
                 </ion-item>
