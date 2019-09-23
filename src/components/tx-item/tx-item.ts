@@ -203,4 +203,8 @@ export class TxItemComponent {
 
     explorerURL = (tx) => (this.globals.network == 'mainnet') ? 'https://explorer.mvs.org/tx/' + tx : 'https://explorer-testnet.mvs.org/tx/' + tx
 
+    inputLoad(input, index) {
+        this.tx.inputs[index] = input
+        this.inputChange()
+    }
 }
