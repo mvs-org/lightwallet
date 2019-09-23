@@ -22,11 +22,11 @@
             </ion-select>
         </ion-item>
 
-        <tx-item *ngIf="displayedTx" [tx]="displayedTx" [hexTx]="hexTx" [mode]="mode" [signStatus]="signStatus" [mined]="false"></tx-item>
+        <tx-item *ngIf="displayedTx" [tx]="displayedTx" [hexTx]="hexTx" [mode]="mode" [status]="status"></tx-item>
 
         <ion-item *ngIf="!allMyInputs" no-lines class="wrong-input">{{"TX.INPUTS_NOT_ALL_MINE" | translate}}</ion-item>
 
-        <ion-item *ngIf="signStatus != 'SIGNED'" [ngClass]="{'error-border': !validPassword(passphrase)}">
+        <ion-item *ngIf="status != 'SIGNED'" [ngClass]="{'error-border': !validPassword(passphrase)}">
             <ion-label color="primary" floating>{{"PASSWORD" | translate}}</ion-label>
             <ion-input name="passphrase" type="password" [(ngModel)]="passphrase" required></ion-input>
         </ion-item>
@@ -36,7 +36,7 @@
             <ion-toggle [(ngModel)]="showAdvanced" name="showAdvanced" checked="false"></ion-toggle>
         </ion-item>
         <div *ngIf="showAdvanced">
-            <button *ngIf="signStatus != 'SIGNED'" ion-button full icon-left [disabled]="!signTxForm.form.valid||!validPassword(passphrase)" (click)="preview()"
+            <button *ngIf="status != 'SIGNED'" ion-button full icon-left [disabled]="!signTxForm.form.valid||!validPassword(passphrase)" (click)="preview()"
                 color="primary">
                 <ion-icon name="create"></ion-icon>
                 {{"CONFIRM_TX.SIGN_ONLY" | translate}}
@@ -53,11 +53,11 @@
         </div>
         <ion-row>
             <ion-col>
-                <button *ngIf="signStatus != 'SIGNED'" type="submit" ion-button full icon-left (click)="send()" [disabled]="!signTxForm.form.valid||!validPassword(passphrase)" color="secondary">
+                <button *ngIf="status != 'SIGNED'" type="submit" ion-button full icon-left (click)="send()" [disabled]="!signTxForm.form.valid||!validPassword(passphrase)" color="secondary">
                     <ion-icon disabled="checked" name="send"></ion-icon>
                     {{"CONFIRM_TX.SIGN_AND_SEND" | translate}}
                 </button>
-                <button *ngIf="signStatus == 'SIGNED'" type="submit" ion-button full icon-left (click)="broadcast(decodedTx)" color="secondary">
+                <button *ngIf="status == 'SIGNED'" type="submit" ion-button full icon-left (click)="broadcast(decodedTx)" color="secondary">
                     <ion-icon disabled="checked" name="send"></ion-icon>
                     {{"CONFIRM_TX.BROADCAST" | translate}}
                 </button>

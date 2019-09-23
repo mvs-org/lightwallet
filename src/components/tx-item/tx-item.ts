@@ -19,8 +19,7 @@ export class TxItemComponent {
     @Input() tx: any;
     @Input() hexTx: any;
     @Input() mode: string;
-    @Input() signStatus: string
-    @Input() mined: boolean = false
+    @Input() status: string     //to_confirm, pending or mined
 
     decimalsMst: any = {}
     myAddresses: Array<string> = []
@@ -35,14 +34,12 @@ export class TxItemComponent {
     txTypeCert: string = ''
     devAvatar: string
     current_time: number
-    openCloseAnim: boolean = false;
 
     constructor(
         private mvs: MvsServiceProvider,
         private globals: AppGlobals,
     ) {
         this.devAvatar = this.globals.dev_avatar
-        this.openCloseAnim = this.mode !== 'summary'
     }
 
     async ngAfterViewInit() {
@@ -200,8 +197,7 @@ export class TxItemComponent {
 
     async showHideDetails() {
         this.mode = this.mode == 'summary' ? 'satoshi' : 'summary'
-        this.openCloseAnim = !this.openCloseAnim;
-        console.log(this.openCloseAnim)
+        console.log(this.tx.inputs[1])
     }
 
     checkTx = () => window.open(this.explorerURL(this.tx.hash), "_blank");

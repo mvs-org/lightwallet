@@ -21,7 +21,7 @@ export class ConfirmTxPage {
     input: string
     signedTx: string
     mode: string = 'default'
-    signStatus: string
+    status: string
     allMyInputs: boolean = true
 
     constructor(
@@ -139,11 +139,11 @@ export class ConfirmTxPage {
             }
         });
         if (foundSignedInput && !foundUnisgnedInput) {
-            this.signStatus = 'SIGNED'
+            this.status = 'SIGNED'
         } else if (!foundSignedInput && foundUnisgnedInput) {
-            this.signStatus = 'UNSIGNED'
+            this.status = 'UNSIGNED'
         } else {
-            this.signStatus = 'PARTIALLY'
+            this.status = 'PARTIALLY'
         }
     }
 

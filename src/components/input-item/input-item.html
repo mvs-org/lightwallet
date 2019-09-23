@@ -18,7 +18,6 @@
             </ion-col>
         </ion-row>
         <ion-row *ngIf="mode == 'satoshi'" [ngClass]="{'align-small-button-container': input.previous_output.hash !== '0000000000000000000000000000000000000000000000000000000000000000'}">
-            <!--Left column-->
             <ion-col>
                 <div class="script">{{'TX.HASH'|translate}}: {{input.previous_output.hash}}</div>
                 <div class="script align-small-button" *ngIf="input.previous_output.hash !== '0000000000000000000000000000000000000000000000000000000000000000'">
@@ -53,8 +52,19 @@
                     <div class="txType">{{'TX.TYPE.CERT.' + input.previous_output.attachment.cert | translate}}:</div>{{input.previous_output.attachment.symbol}}
                 </div>
                 <div *ngIf="input.previous_output.attachment.type != 'did-register' && input.previous_output.attachment.type != 'did-transfer' && input.previous_output.attachment.type != 'mit' && !input.previous_output.attachment.cert">
-                    {{input.previous_output.attachment.quantity | format : input.previous_output.attachment.decimals}}
-                    {{input.previous_output.attachment.symbol}}
+                    {{input.attachment.quantity | format : input.attachment.decimals}}
+                    {{input.attachment.symbol}}
+                </div>
+            </ion-col>
+        </ion-row>
+        <ion-row *ngIf="mode == 'satoshi'" [ngClass]="{'align-small-button-container': input.previous_output.hash !== '0000000000000000000000000000000000000000000000000000000000000000'}">
+            <ion-col>
+                <div class="script">{{'TX.HASH'|translate}}: {{input.previous_output.hash}}</div>
+                <div class="script align-small-button" *ngIf="input.previous_output.hash !== '0000000000000000000000000000000000000000000000000000000000000000'">
+                    {{'TX.INDEX'|translate}}: {{input.previous_output.index}}
+                    <button class="item-button" ion-button clear color="dark" (click)="checkInput()">
+                        <ion-icon name="open"></ion-icon>
+                    </button>
                 </div>
             </ion-col>
         </ion-row>

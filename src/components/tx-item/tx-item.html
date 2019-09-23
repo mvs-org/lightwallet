@@ -1,6 +1,6 @@
 <ion-card class="manual-copy display-overflow">
     <ion-grid>
-        <ion-row *ngIf="!mined">
+        <ion-row *ngIf="status == 'SIGNED' || status == 'UNSIGNED' || status == 'PARTIALLY'">
             <ion-col>
                 <ion-row>
                     <ion-col>
@@ -11,7 +11,7 @@
                 </ion-row>
             </ion-col>
         </ion-row>
-        <ion-row *ngIf="mined" class="hash">
+        <ion-row *ngIf="status == 'PENDING' || status == 'MINED'" class="hash">
             <ion-col>
                 <ion-row>
                     <ion-col>
@@ -33,10 +33,13 @@
                     <ion-col>
                         <ion-item class="summaryTxType">
                             {{'TX.TX_TYPE.' + txType | translate}}
-                            <div *ngIf="signStatus" class="unsigned">
-                                {{'TX.SIGN_STATUS.' + signStatus | translate}}
+                            <div *ngIf="status == 'SIGNED' || status == 'UNSIGNED' || status == 'PARTIALLY'" class="unsigned">
+                                {{'TX.SIGN_STATUS.' + status | translate}}
                             </div>
-                            <div *ngIf="mined">
+                            <div *ngIf="status == 'PENDING'" class="warning-input">
+                                {{'PENDING_CONFIRMATION' | translate}}
+                            </div>
+                            <div *ngIf="status == 'PENDING' || status == 'MINED'">
                                 <button class="ion-item" ion-button icon-left (click)="showHideDetails()">
                                     <ion-icon *ngIf="mode == 'summary'" name="arrow-dropdown"></ion-icon>
                                     <span *ngIf="mode == 'summary'">{{'SHOW_DETAILS'|translate}}</span>
@@ -93,7 +96,7 @@
                 </ion-row>
             </ion-col>
         </ion-row>
-        <div [@expandCollapse]='openCloseAnim' *ngIf="openCloseAnim"> 
+        <div [@expandCollapse]="this.mode !== 'summary'" *ngIf="this.mode !== 'summary'"> 
             <ion-row *ngIf="mode == 'default' || mode == 'satoshi'">
                 <ion-col col-12 col-md-6>
                     <ion-row>
