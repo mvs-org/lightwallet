@@ -1,10 +1,18 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { AppGlobals } from '../../app/app.global';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 
 @Component({
     selector: 'tx-item',
-    templateUrl: 'tx-item.html'
+    templateUrl: 'tx-item.html',
+    animations: [
+        trigger('expandCollapse', [
+            state('expandCollapseState', style({ height: '*' })),
+            transition('* => void', [style({ height: '*' }), animate(500, style({ height: "0" }))]),
+            transition('void => *', [style({ height: '0' }), animate(500, style({ height: "*" }))])
+        ])
+    ],
 })
 export class TxItemComponent {
 
@@ -14,7 +22,7 @@ export class TxItemComponent {
     @Input() signStatus: string
     @Input() mined: boolean = false
 
-    decimalsMst: any = { }
+    decimalsMst: any = {}
     myAddresses: Array<string> = []
     totalInputs: any = { ETP: 0, MST: {} }
     totalOutputs: any = { ETP: 0, MST: {} }
@@ -27,12 +35,15 @@ export class TxItemComponent {
     txTypeCert: string = ''
     devAvatar: string
     current_time: number
+    openCloseAnim: boolean = false;
 
     constructor(
         private mvs: MvsServiceProvider,
         private globals: AppGlobals,
     ) {
         this.devAvatar = this.globals.dev_avatar
+        this.openCloseAnim = this.mode !== 'summary'
+        console.log(this.openCloseAnim)
     }
 
     async ngAfterViewInit() {
@@ -74,7 +85,7 @@ export class TxItemComponent {
             if (input.previous_output.attachment && (input.previous_output.attachment.type == 'asset-issue' || input.previous_output.attachment.type == 'asset-transfer')) {
                 this.totalInputs.MST[input.previous_output.attachment.symbol] = this.totalInputs.MST[input.previous_output.attachment.symbol] && input.previous_output.attachment.quantity ? this.totalInputs.MST[input.previous_output.attachment.symbol] + input.previous_output.attachment.quantity : input.previous_output.attachment.quantity
             }
-            if(input.previous_output.value) {
+            if (input.previous_output.value) {
                 this.totalInputs.ETP += input.previous_output.value
             }
             if (this.myAddresses.indexOf(input.previous_output.address) > -1) {
@@ -83,7 +94,7 @@ export class TxItemComponent {
                     this.totalPersonalInputs.MST[input.previous_output.attachment.symbol] = this.totalPersonalInputs.MST[input.previous_output.attachment.symbol] ? this.totalPersonalInputs.MST[input.previous_output.attachment.symbol] + input.previous_output.attachment.quantity : input.previous_output.attachment.quantity
 
                     //If there is no change output for the MST, we put the personal output to 0
-                    if(!this.totalPersonalOutputs.MST[input.previous_output.attachment.symbol]) {
+                    if (!this.totalPersonalOutputs.MST[input.previous_output.attachment.symbol]) {
                         this.totalPersonalOutputs.MST[input.previous_output.attachment.symbol] = 0
                     }
                 }
@@ -143,7 +154,7 @@ export class TxItemComponent {
                     this.txType = TX_TYPE_ETP
                     break;
                 case 'etp':
-                    if(this.txType === TX_TYPE_UNKNOWN) {
+                    if (this.txType === TX_TYPE_UNKNOWN) {
                         if (output.locked_height_range) {
                             this.tx.locked_until = this.tx.height + output.locked_height_range
                             this.tx.locked_quantity = output.value
@@ -164,7 +175,7 @@ export class TxItemComponent {
             }
 
             if (this.myAddresses.indexOf(output.address) > -1) {
-                if(output.value) {
+                if (output.value) {
                     this.totalPersonalOutputs.ETP += output.value
                 }
                 if (output.attachment && (output.attachment.type == 'asset-issue' || output.attachment.type == 'asset-transfer')) {
@@ -180,12 +191,14 @@ export class TxItemComponent {
         this.involvedMst = Object.keys(this.decimalsMst)
 
         this.txFee += this.totalInputs.ETP - this.totalOutputs.ETP
-        if(this.txFee < 0)
+        if (this.txFee < 0)
             this.txFee = 0
     }
 
     async showHideDetails() {
         this.mode = this.mode == 'summary' ? 'satoshi' : 'summary'
+        this.openCloseAnim = !this.openCloseAnim;
+        console.log(this.openCloseAnim)
     }
 
     checkTx = () => window.open(this.explorerURL(this.tx.hash), "_blank");

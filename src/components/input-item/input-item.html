@@ -17,7 +17,7 @@
                 <div *ngIf="input.previous_output.value">{{input.previous_output.value | format : 8}} ETP</div>
             </ion-col>
         </ion-row>
-        <ion-row [ngClass]="{'align-small-button-container': input.previous_output.hash !== '0000000000000000000000000000000000000000000000000000000000000000'}">
+        <ion-row *ngIf="mode == 'satoshi'" [ngClass]="{'align-small-button-container': input.previous_output.hash !== '0000000000000000000000000000000000000000000000000000000000000000'}">
             <!--Left column-->
             <ion-col>
                 <div class="script">{{'TX.HASH'|translate}}: {{input.previous_output.hash}}</div>
@@ -30,7 +30,7 @@
             </ion-col>
         </ion-row>
         <ion-row *ngIf="mode == 'satoshi' && input.script">
-            <ion-col *ngIf="input.script" class="script">
+            <ion-col class="script">
                 {{input.script}}
             </ion-col>
         </ion-row>

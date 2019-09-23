@@ -93,75 +93,77 @@
                 </ion-row>
             </ion-col>
         </ion-row>
-        <ion-row *ngIf="mode == 'default' || mode == 'satoshi'">
-            <ion-col col-12 col-md-6>
-                <ion-row>
-                    <ion-col>
-                        <ion-item>
-                            <ion-col>{{'TX.INPUTS'|translate}}:</ion-col>
-                        </ion-item>
-                    </ion-col>
-                </ion-row>
-                <ion-row>
-                    <ion-col>
-                        <input-item *ngFor="let input of tx.inputs" [input]="input" [mode]="mode"></input-item>
-                    </ion-col>
-                </ion-row>
-            </ion-col>
-            <ion-col col-12 col-md-6>
-                <ion-row>
-                    <ion-col>
-                        <ion-item>
-                            <ion-col>{{'TX.OUTPUTS'|translate}}:</ion-col>
-                        </ion-item>
-                    </ion-col>
-                </ion-row>
-                <ion-row>
-                    <ion-col>
-                        <output-item *ngFor="let output of tx.outputs" [output]="output" [decimalsMst]="decimalsMst"
-                            [mode]="mode"></output-item>
-                    </ion-col>
-                </ion-row>
-            </ion-col>
-        </ion-row>
-        <ion-row *ngIf="totalInputs.ETP && (mode == 'default' || mode == 'satoshi')">
-            <ion-col>
-                <ion-item>
+        <div [@expandCollapse]='openCloseAnim' *ngIf="openCloseAnim"> 
+            <ion-row>
+                <ion-col col-12 col-md-6>
                     <ion-row>
                         <ion-col>
-                            {{'TX.TOTAL_INPUTS'|translate}}
-                        </ion-col>
-                        <ion-col class="right">
-                            {{totalInputs.ETP | format : 8}} ETP
-                            <div *ngFor="let mst of involvedMst">
-                                {{totalInputs.MST[mst] | format : decimalsMst[mst]}} {{mst}}
-                            </div>
+                            <ion-item>
+                                <ion-col>{{'TX.INPUTS'|translate}}:</ion-col>
+                            </ion-item>
                         </ion-col>
                     </ion-row>
-                </ion-item>
-            </ion-col>
-            <ion-col>
-                <ion-item>
                     <ion-row>
                         <ion-col>
-                            {{'TX.TOTAL_OUTPUTS'|translate}}
-                        </ion-col>
-                        <ion-col class="right">
-                            {{totalOutputs.ETP | format : 8}} ETP
-                            <div *ngFor="let mst of involvedMst">
-                                {{totalOutputs.MST[mst] | format : decimalsMst[mst]}} {{mst}}
-                            </div>
+                            <input-item *ngFor="let input of tx.inputs" [input]="input" [mode]="mode"></input-item>
                         </ion-col>
                     </ion-row>
-                </ion-item>
-            </ion-col>
-        </ion-row>
-        <ion-row *ngIf="mode == 'hex'">
-            <textarea fz-elastic ion-input full class="hexTx" type="text" #copyHexTx value="{{hexTx}}" readonly>{{hexTx}}</textarea>
-            <button ion-button full item-right icon-left [ngxClipboard]="copyHexTx">
-                <ion-icon name="copy"></ion-icon>
-                {{'COPY'|translate}}
-            </button>
-        </ion-row>
+                </ion-col>
+                <ion-col col-12 col-md-6>
+                    <ion-row>
+                        <ion-col>
+                            <ion-item>
+                                <ion-col>{{'TX.OUTPUTS'|translate}}:</ion-col>
+                            </ion-item>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col>
+                            <output-item *ngFor="let output of tx.outputs" [output]="output" [decimalsMst]="decimalsMst"
+                                [mode]="mode"></output-item>
+                        </ion-col>
+                    </ion-row>
+                </ion-col>
+            </ion-row>
+            <ion-row *ngIf="totalInputs.ETP && (mode == 'default' || mode == 'satoshi')">
+                <ion-col>
+                    <ion-item>
+                        <ion-row>
+                            <ion-col>
+                                {{'TX.TOTAL_INPUTS'|translate}}
+                            </ion-col>
+                            <ion-col class="right">
+                                {{totalInputs.ETP | format : 8}} ETP
+                                <div *ngFor="let mst of involvedMst">
+                                    {{totalInputs.MST[mst] | format : decimalsMst[mst]}} {{mst}}
+                                </div>
+                            </ion-col>
+                        </ion-row>
+                    </ion-item>
+                </ion-col>
+                <ion-col>
+                    <ion-item>
+                        <ion-row>
+                            <ion-col>
+                                {{'TX.TOTAL_OUTPUTS'|translate}}
+                            </ion-col>
+                            <ion-col class="right">
+                                {{totalOutputs.ETP | format : 8}} ETP
+                                <div *ngFor="let mst of involvedMst">
+                                    {{totalOutputs.MST[mst] | format : decimalsMst[mst]}} {{mst}}
+                                </div>
+                            </ion-col>
+                        </ion-row>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+            <ion-row *ngIf="mode == 'hex'">
+                <textarea fz-elastic ion-input full class="hexTx" type="text" #copyHexTx value="{{hexTx}}" readonly>{{hexTx}}</textarea>
+                <button ion-button full item-right icon-left [ngxClipboard]="copyHexTx">
+                    <ion-icon name="copy"></ion-icon>
+                    {{'COPY'|translate}}
+                </button>
+            </ion-row>
+        </div>
     </ion-grid>
 </ion-card>
