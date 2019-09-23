@@ -28,9 +28,9 @@
                 </div>
             </ion-col>
         </ion-row>
-        <ion-row *ngIf="mode == 'satoshi' && input.script">
+        <ion-row *ngIf="mode == 'satoshi' && input.previous_output.script">
             <ion-col class="script">
-                {{input.script}}
+                {{input.previous_output.script}}
             </ion-col>
         </ion-row>
     </ion-item>
@@ -68,7 +68,7 @@
                 </div>
             </ion-col>
         </ion-row>
-        <ion-row *ngIf="mode == 'satoshi' && input.script">
+        <ion-row *ngIf="mode == 'satoshi' && input.previous_output.script">
             <ion-col class="script">
                 {{input.previous_output.script}}
             </ion-col>
