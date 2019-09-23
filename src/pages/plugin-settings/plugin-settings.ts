@@ -24,7 +24,19 @@ export class PluginSettingsPage {
         private translate: TranslateService,
         private pluginService: PluginProvider
     ) {
-        this.alert.showMessage('MESSAGE.WARNING_PLUGIN_TITLE', '', 'MESSAGE.WARNING_PLUGIN_MESSAGE')
+
+    }
+
+    async ionViewDidEnter() {
+        let pluginsConfig = await this.pluginService.getPluginsConfig()
+        if(!pluginsConfig.hideSettingsWarning) {
+            this.alert.showCheckbox('MESSAGE.WARNING_PLUGIN_TITLE', 'MESSAGE.WARNING_PLUGIN_MESSAGE', 'MESSAGE.WARNING_PLUGIN_CHECKBOX_MESSAGE', false, (checked) => {
+                if(checked) {
+                    pluginsConfig.hideSettingsWarning = true
+                    this.pluginService.setPluginsConfig(pluginsConfig)
+                }
+            })
+        }
     }
 
     addPlugin(url){

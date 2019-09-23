@@ -15,6 +15,10 @@ export class Plugin {
     repository: string
 }
 
+export class PluginsConfig {
+    hideSettingsWarning: boolean = false
+}
+
 @Injectable()
 export class PluginProvider {
 
@@ -73,6 +77,15 @@ export class PluginProvider {
                 plugins.push(plugin)
                 return this.storage.set('plugins', plugins)
             })
+    }
+
+    getPluginsConfig(): Promise<PluginsConfig> {
+        return this.storage.get('plugins_config')
+            .then(config => (config) ? config : {})
+    }
+
+    setPluginsConfig(config: PluginsConfig) {
+        return this.storage.set('plugins_config', config)
     }
 
 }

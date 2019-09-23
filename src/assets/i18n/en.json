@@ -488,6 +488,7 @@
     "MESSAGE.ALREADY_SIGN_TRANSACTION": "You have already signed this transaction, no need to sign it again!",
     "MESSAGE.WARNING_PLUGIN_TITLE": "Be careful with plugins!",
     "MESSAGE.WARNING_PLUGIN_MESSAGE": "Since v0.6.0, you can now add plugins to myetpwallet! This feature allow you to easily connect third party plugins with your Metaverse wallet. However, be aware that anything displayed in a plugin is managed by a third party. We recommend user to use the plugins carefully, an to not use it with their main account but with an account with a small number of ETP instead.",
+    "MESSAGE.WARNING_PLUGIN_CHECKBOX_MESSAGE": "Do not show again",
     "MESSAGE.WARNING_MULTISIG_TITLE": "Multisignature addresses and transactions via MyETPWallet are in Beta!",
     "MESSAGE.WARNING_MULTISIG_MESSAGE": "Since v0.6.0, you can now use multisignatures addresses in MyETPWallet. However, please use this new feature carefully and avoid sending important quantity of ETP or MST to your multisignature addresses. If you notice any bug, do not hesitate to report it via Report Bug in the main menu!",
     "SWAP_FEE": "Swap fee",
