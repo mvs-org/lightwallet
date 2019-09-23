@@ -9,6 +9,7 @@ import { AppGlobals } from '../../app/app.global';
 export class InputItemComponent {
 
     @Input() input: any;
+    @Input() decimalsMst: any;
     @Input() mode: string;
 
     constructor(

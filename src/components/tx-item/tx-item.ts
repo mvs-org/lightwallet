@@ -197,7 +197,6 @@ export class TxItemComponent {
 
     async showHideDetails() {
         this.mode = this.mode == 'summary' ? 'satoshi' : 'summary'
-        console.log(this.tx.inputs[1])
     }
 
     checkTx = () => window.open(this.explorerURL(this.tx.hash), "_blank");

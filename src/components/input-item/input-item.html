@@ -52,8 +52,8 @@
                     <div class="txType">{{'TX.TYPE.CERT.' + input.previous_output.attachment.cert | translate}}:</div>{{input.previous_output.attachment.symbol}}
                 </div>
                 <div *ngIf="input.previous_output.attachment.type != 'did-register' && input.previous_output.attachment.type != 'did-transfer' && input.previous_output.attachment.type != 'mit' && !input.previous_output.attachment.cert">
-                    {{input.attachment.quantity | format : input.attachment.decimals}}
-                    {{input.attachment.symbol}}
+                    {{input.previous_output.attachment.quantity | format : decimalsMst[input.previous_output.attachment.symbol]}}
+                    {{input.previous_output.attachment.symbol}}
                 </div>
             </ion-col>
         </ion-row>
