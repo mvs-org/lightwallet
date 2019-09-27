@@ -237,10 +237,10 @@ export class MvsServiceProvider {
         return Metaverse.address.validate(address, this.globals.network)
     }
 
-    updateHeight() {
-        return this.blockchain.height()
-            .then((height: number) => this.setHeight(height))
-            .then(() => this.getHeight())
+    async updateHeight() {
+        const height = await this.blockchain.height()
+        await this.setHeight(height)
+        return this.getHeight()
     }
 
     getUtxo() {
@@ -252,21 +252,9 @@ export class MvsServiceProvider {
                 .then((addresses: Array<string>) => Metaverse.output.calculateUtxo(txs, addresses)));
     }
 
-    getUtxoFrom(address: any) {
-        return this.getUtxo()
-            .then((utxo: Array<any>) => {
-                if (address) {
-                    let result = [];
-                    if (utxo.length) {
-                        utxo.forEach((output) => {
-                            if (output.address == address) result.push(output)
-                        })
-                    }
-                    return result;
-                } else {
-                    return utxo;
-                }
-            })
+    async getUtxoFrom(address: any) {
+        const utxo = await this.getUtxo()
+        return address ? utxo.filter(output=>output.address == address) : utxo
     }
 
     getUtxoFromMultisig(address: any) {

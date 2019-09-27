@@ -113,14 +113,10 @@ export class WalletServiceProvider {
             .then((encseed) => this.storage.set('seed', encseed))
     }
 
-    getSeed(passphrase): Promise<string> {
+    async getSeed(passphrase): Promise<string> {
         console.info('loading seed')
-        return this.storage.get('seed')
-            .then((seed) => this.crypto.decrypt(seed, passphrase))
-            .catch((error) => {
-                console.error(error)
-                throw Error('ERR_DECRYPT_WALLET_FROM_SEED')
-            })
+        const seed = await this.storage.get('seed')
+        return await this.crypto.decrypt(seed, passphrase)
     }
 
 
