@@ -8,8 +8,9 @@ const LANGUAGE = 1
 const DEBUG = true
 
 describe('Bitident', () => {
+describe('Bitident', () => {
 
-    let page: Page;
+    let page = new Page()
 
     if (DEBUG) {
         setInterval(() => page.takeScreenshot('debug.png'), 500)
@@ -19,7 +20,6 @@ describe('Bitident', () => {
         if (!existsSync('./screenshots')) {
             mkdirSync('./screenshots')
         }
-        page = new Page()
         await page.navigateTo('/')
         await page.selectLanguage(LANGUAGE)
         page.takeScreenshot('./screenshots/login.png')
@@ -55,4 +55,5 @@ describe('Bitident', () => {
         await page.sleep(500)
     });
 
+});
 });

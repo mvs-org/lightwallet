@@ -51,21 +51,21 @@ export class Page {
         writeScreenShot(png, filename);
     });
 
-    async openImportPage() {
+    openImportPage = async () => {
         await this.sleep(300)
         await this.waitForElement({ id: 'open-wallet-button' }, 5000, 'Timeout waiting for open wallet button to appear')
         await this.sleep(800)
         await this.clickId("open-wallet-button")
     }
 
-    async enterPassphrase(passphrase: string) {
+    enterPassphrase = async (passphrase: string) => {
         await this.waitForElement({ css: 'input[name=password]' })
         await this.moveTo(this.getElementById('password-input'))
         await this.getElement('input[name=password]').sendKeys(passphrase)
         await this.clickId('submit-button')
     }
 
-    async openWalletFile(path: string) {
+    openWalletFile = async (path: string) => {
         await this.waitForElement({ css: '#disclaimer-agree button' })
         await this.moveTo(this.getElement('#disclaimer-agree button'))
         await this.sleep(500)
@@ -75,11 +75,11 @@ export class Page {
         await this.getElementById('file').sendKeys(path)
     }
 
-    async waitForSync(timeout=120000){
+    waitForSync = async (timeout=120000) => {
         await this.waitForElement({ css: 'etp-card' }, timeout)
     }
 
-    async selectLanguage(index: number){
+    selectLanguage = async (index: number) => {
         await this.sleep(500)
         await this.waitForElement({ css: '.footer .row .col:nth-child(2)' }, 5000)
         await this.getElement('.footer .row .col:nth-child(2) button').click()
@@ -89,14 +89,14 @@ export class Page {
         await this.waitForUrlChange()
     }
     
-    async openMenu(){
+    openMenu = async () => {
         await this.sleep(300)
         await this.waitForElement({ css: 'button.bar-button-menutoggle' }, 5000, 'Timeout waiting for menu button to appear')
         await this.getElement('button.bar-button-menutoggle').click()
         await this.sleep(300)
     }
 
-    async selectMenuItem(index: number){
+    selectMenuItem = async(index: number) => {
         await this.sleep(300)
         await this.waitForElement({ css: `ion-menu ion-content ion-list button:nth-child(${index})` }, 5000, 'Timeout waiting for menu item to appear')
         await this.getElement(`ion-menu ion-content ion-list button:nth-child(${index})`).click()

@@ -16,13 +16,12 @@ exports.config = {
         }
     },
     directConnect: true,
-    lib: 'ES2015',
     baseUrl: 'http://localhost:8100/',
     framework: 'jasmine',
     jasmineNodeOpts: {
         showColors: true,
         defaultTimeoutInterval: 30000,
-        print: function() {}
+        // print: function() {}
     },
     useAllAngular2AppRoots: true,
     beforeLaunch: function() {
