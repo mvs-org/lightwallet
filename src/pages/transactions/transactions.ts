@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { AppGlobals } from '../../app/app.global';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Select } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
 
@@ -39,6 +39,10 @@ export class TransactionsPage {
     addresses: Array<string> = this.navParams.get('addresses')
     allAddresses: Array<string> = []
     iconsList: Array<string> = []
+    selected: boolean = true
+    allSelected: boolean = true
+
+    @ViewChild('selectAddresses') selectAddresses: Select;
 
     constructor(
         public navCtrl: NavController,
@@ -91,9 +95,6 @@ export class TransactionsPage {
     async updateFilters(symbol, addresses) {
         this.icon = this.iconsList.indexOf(this.asset) !== -1 ? this.asset : 'default_mst'
         this.txs = await this.filterTxs(this.txs_history, symbol, addresses)
-        if(this.addresses[0] == 'all') {
-            this.addresses = this.allAddresses
-        }
     }
 
     async filterTx(tx: any, asset: string, addresses: Array<string>, loadInputs: boolean = true) {
@@ -181,6 +182,18 @@ export class TransactionsPage {
             }
         }
         this.loading = false
+    }
+
+    selectAll() {
+        this.allSelected = true
+        this.addresses = this.allAddresses
+        this.selectAddresses.close().then(() => this.selectAddresses.open())
+    }
+
+    selectNone() {
+        this.allSelected = false
+        this.addresses = []
+        this.selectAddresses.close().then(() => this.selectAddresses.open())
     }
 
 }

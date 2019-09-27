@@ -35,9 +35,10 @@
                 <ion-col col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6>
                     <ion-item class="no-padding no-color-border">
                         <ion-label>{{"HISTORY.ADDRESSES_LIST"|translate}}</ion-label>
-                        <ion-select [(ngModel)]="addresses" multiple="true" (ionChange)="updateFilters(asset, addresses)">
-                            <ion-option [value]="'all'">{{"HISTORY.SELECT_ALL"|translate}}</ion-option>
-                            <ion-option *ngFor="let address of allAddresses" [value]="address">{{address}}</ion-option>
+                        <ion-select [(ngModel)]="addresses" multiple="true" (ionChange)="updateFilters(asset, addresses)" #selectAddresses>
+                            <ion-option *ngIf="!allSelected" [value]="'all'" (ionSelect)="selectAll()">{{"HISTORY.SELECT_ALL"|translate}}</ion-option>
+                            <ion-option *ngIf="allSelected" [value]="'none'" (ionSelect)="selectNone()">{{"HISTORY.SELECT_NONE"|translate}}</ion-option>
+                            <ion-option *ngFor="let address of allAddresses" [value]="address" [selected]="selected">{{address}}</ion-option>
                         </ion-select>
                     </ion-item>
                 </ion-col>
