@@ -234,20 +234,7 @@ export class MvsServiceProvider {
     }
 
     validAddress = (address: string) => {
-        if (address.length != 34)
-            return false
-        let valid = false
-        switch (address.charAt(0)) {
-            case this.globals.ADDRESS_PREFIX_MAINNET:
-                valid = this.globals.network == "mainnet"
-                break
-            case this.globals.ADDRESS_PREFIX_TESTNET:
-                valid = this.globals.network == "testnet"
-                break
-            case this.globals.ADDRESS_PREFIX_P2SH:
-                valid = true
-        }
-        return valid
+        return Metaverse.address.validate(address, this.globals.network)
     }
 
     updateHeight() {
