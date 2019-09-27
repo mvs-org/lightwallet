@@ -30,8 +30,15 @@
             </button>
         </ion-row>
         <ion-row>
-            <button ion-item (click)="DecodeTxPage()">
+            <button ion-item (click)="ExportMasterPublicKeyPage()">
                 <ion-icon name="key" item-start></ion-icon>
+                <h1 [translate]="'SETTINGS.EXPORT_MASTER_PUBLIC_KEY'"></h1>
+                <p [translate]="'SETTINGS.EXPORT_MASTER_PUBLIC_KEY_TEXT'"></p>
+            </button>
+        </ion-row>
+        <ion-row>
+            <button ion-item (click)="DecodeTxPage()">
+                <ion-icon name="create" item-start></ion-icon>
                 <h1>
                     {{'SIGN_TX'|translate}}
                 </h1>

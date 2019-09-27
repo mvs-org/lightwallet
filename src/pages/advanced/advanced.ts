@@ -29,6 +29,8 @@ export class AdvancedPage {
 
     PluginSettingsPage = e => this.nav.push("PluginSettingsPage")
 
+    ExportMasterPublicKeyPage = e => this.nav.push("ExportXpubPage")
+
     DecodeTxPage = e => this.nav.push("DecodeTxPage")
 
     EthBridgePage = e => this.nav.push("EthBridgePage")

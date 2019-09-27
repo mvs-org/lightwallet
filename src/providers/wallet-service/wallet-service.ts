@@ -113,7 +113,7 @@ export class WalletServiceProvider {
             .then((encseed) => this.storage.set('seed', encseed))
     }
 
-    getSeed(passphrase) {
+    getSeed(passphrase): Promise<string> {
         console.info('loading seed')
         return this.storage.get('seed')
             .then((seed) => this.crypto.decrypt(seed, passphrase))
@@ -206,6 +206,12 @@ export class WalletServiceProvider {
                 })
                 this.storage.set('multisigs', multisigs.concat(newMultisig))
             })
+    }
+
+    async getMasterPublicKey(passphrase){
+        const seed = await this.getSeed(passphrase)
+        const wallet = await Metaverse.wallet.fromSeed(Buffer.from(seed, 'hex'))
+        return wallet.getMasterPublicKey()
     }
 
     getMultisigAddresses() {
