@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AppGlobals } from '../../app/app.global';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
+import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
 
 @IonicPage({
     name: 'transactions-page',
@@ -33,25 +34,34 @@ export class TransactionsPage {
     items_per_page: number = 25
     txs_history: any[]
     transactionMap: Promise<any>
+    assets: Array<string> = []
+
+    addresses: Array<string> = this.navParams.get('addresses')
+    allAddresses: Array<string> = []
+    iconsList: Array<string> = []
 
     constructor(
         public navCtrl: NavController,
         private globals: AppGlobals,
         public navParams: NavParams,
         private mvs: MvsServiceProvider,
+        private wallet: WalletServiceProvider,
     ) {
         this.asset = navParams.get('asset');
         this.icon = navParams.get('icon');
-        this.showTxs({ symbol: this.asset });
         this.loading = true;
         this.current_time = Date.now()
         this.transactionMap = this.mvs.getTransactionMap()
+        this.mvs.assetOrder().then(result => this.assets = ['ETP'].concat(result))
     }
 
     async ionViewDidEnter() {
         this.height = await this.mvs.getHeight()
         this.calculateFrozenOutputs()
         this.blocktime = await this.mvs.getBlocktime(this.height)
+        this.allAddresses = await this.mvs.getAddresses()
+        this.showTxs({ symbol: this.asset });
+        this.iconsList = await this.wallet.getMstIcons()
     }
 
     depositProgress(start, end) {
@@ -59,7 +69,7 @@ export class TransactionsPage {
     }
 
     private async showTxs(filter) {
-        let addresses = await this.mvs.getAddresses()
+        let addresses = this.addresses ? this.addresses : this.allAddresses
         this.txs_history = await this.mvs.getTxs()
         this.txs = await this.filterTxs(this.txs_history, filter.symbol, addresses)
         this.loading = false
@@ -69,8 +79,8 @@ export class TransactionsPage {
 
     async filterTxs(txs: any[], symbol, addresses) {
         let filteredTxs = []
-        for(let i=0; i<txs.length; i++) {
-            let tx = await this.filterTx(txs[i], symbol, addresses, filteredTxs.length < this.items_per_page )
+        for (let i = 0; i < txs.length; i++) {
+            let tx = await this.filterTx(txs[i], symbol, addresses, filteredTxs.length < this.items_per_page)
             if (tx) {
                 filteredTxs.push(tx)
             }
@@ -78,47 +88,50 @@ export class TransactionsPage {
         return filteredTxs
     }
 
+    async updateFilters(symbol, addresses) {
+        this.icon = this.iconsList.indexOf(this.asset) !== -1 ? this.asset : 'default_mst'
+        this.txs = await this.filterTxs(this.txs_history, symbol, addresses)
+        if(this.addresses[0] == 'all') {
+            this.addresses = this.allAddresses
+        }
+    }
 
     async filterTx(tx: any, asset: string, addresses: Array<string>, loadInputs: boolean = true) {
         let result = false
         let include_mst = false
         tx.inputs.forEach((input) => {
-            if (this.isMineTXIO(input, addresses)) {
-                if (!tx.unconfirmed) {
-                    if (['asset-transfer', 'asset-issue'].indexOf(input.attachment.type) !== -1) {
-                        include_mst = true
-                        result = false
-                        if(input.attachment.symbol == asset) {
-                            result = true
-                        }
-                    } else if (asset == 'ETP' && input.value && !include_mst) {
+            if (!tx.unconfirmed) {
+                if (['asset-transfer', 'asset-issue'].indexOf(input.attachment.type) !== -1) {
+                    include_mst = true
+                    result = false
+                    if (input.attachment.symbol == asset && this.isMineTXIO(input, addresses)) {
                         result = true
                     }
+                } else if (asset == 'ETP' && input.value && !include_mst && this.isMineTXIO(input, addresses)) {
+                    result = true
                 }
             }
         });
         if (result) {
-            if(loadInputs) {
+            if (loadInputs) {
                 tx = await this.mvs.organizeInputs(JSON.parse(JSON.stringify(tx)), false, await this.transactionMap)
                 tx.inputsLoaded = true
             }
             return tx
         }
         tx.outputs.forEach((output) => {
-            if (this.isMineTXIO(output, addresses)) {
-                if (['asset-transfer', 'asset-issue'].indexOf(output.attachment.type) !== -1) {
-                    include_mst = true
-                    result = false
-                    if(output.attachment.symbol == asset) {
-                        result = true
-                    }
-                } else if (asset == 'ETP' && output.value && !include_mst) {
-                    result = true;
+            if (['asset-transfer', 'asset-issue'].indexOf(output.attachment.type) !== -1) {
+                include_mst = true
+                result = false
+                if (output.attachment.symbol == asset && this.isMineTXIO(output, addresses)) {
+                    result = true
                 }
+            } else if (asset == 'ETP' && output.value && !include_mst && this.isMineTXIO(output, addresses)) {
+                result = true;
             }
         });
         if (result) {
-            if(loadInputs) {
+            if (loadInputs) {
                 tx = await this.mvs.organizeInputs(JSON.parse(JSON.stringify(tx)), false, await this.transactionMap)
                 tx.inputsLoaded = true
             }
@@ -136,7 +149,7 @@ export class TransactionsPage {
         outputs.forEach((output) => {
             grouped_frozen_ouputs[output.height] = grouped_frozen_ouputs[output.height] ? grouped_frozen_ouputs[output.height] : {}
             if (grouped_frozen_ouputs[output.height][output.locked_until]) {
-                if(this.asset == 'ETP') {
+                if (this.asset == 'ETP') {
                     grouped_frozen_ouputs[output.height][output.locked_until].value += output.value
                 } else {
                     grouped_frozen_ouputs[output.height][output.locked_until].attachment.quantity += output.attachment.quantity
@@ -161,8 +174,8 @@ export class TransactionsPage {
     async pageChange(page_number) {
         this.loading = true
         this.page_tx = page_number
-        for(let i=this.items_per_page*(page_number-1); i<this.items_per_page*page_number; i++) {
-            if(!this.txs[i].inputsLoaded) {
+        for (let i = this.items_per_page * (page_number - 1); i < this.items_per_page * page_number; i++) {
+            if (!this.txs[i].inputsLoaded) {
                 this.txs[i] = await this.mvs.organizeInputs(JSON.parse(JSON.stringify(this.txs[i])), false, await this.transactionMap)
                 this.txs[i].inputsLoaded = true
             }

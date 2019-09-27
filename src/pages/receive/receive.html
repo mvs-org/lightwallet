@@ -38,18 +38,25 @@
                             </button>
                         </h3>
 
-                        <p *ngIf="displayType == 'asset'"><b>{{selectedAsset}}: </b>{{(addressBalancesObject[address] && addressBalancesObject[address]['MST'] && addressBalancesObject[address]['MST'][selectedAsset])?format(addressBalancesObject[address]['MST'][selectedAsset].available,addressBalancesObject[address]['MST'][selectedAsset].decimals):0}}</p>
-                        <p *ngIf="displayType == 'ETP'">
+                        <div *ngIf="displayType == 'asset'">
+                            <b>{{selectedAsset}}: </b>{{(addressBalancesObject[address] && addressBalancesObject[address]['MST'] && addressBalancesObject[address]['MST'][selectedAsset])?format(addressBalancesObject[address]['MST'][selectedAsset].available,addressBalancesObject[address]['MST'][selectedAsset].decimals):0}}
+                        </div>
+                        <div *ngIf="displayType == 'ETP'">
                             <b>{{'AVAILABLE'|translate}}: </b>{{(addressBalancesObject[address] && addressBalancesObject[address].ETP )?format(addressBalancesObject[address].ETP.available,addressBalancesObject[address].ETP.decimals):0}}
                             <span class="right">
                                 <b>{{'ACCOUNT.FROZEN'|translate}}: </b>{{(addressBalancesObject[address] && addressBalancesObject[address].ETP )?format(addressBalancesObject[address].ETP.frozen,addressBalancesObject[address].ETP.decimals):0}}
                             </span>
-                        </p>
+                        </div>
                         <div *ngIf="displayType == 'MST'">
                             <p *ngFor="let balance of addressbalances[address]">
                                 <b>{{balance.name}}: </b> {{format(balance.available, balance.decimals)}}
                             </p>
                             <p *ngIf="!addressbalances[address] || (addressbalances[address] && addressbalances[address].length == 0)">{{'RECEIVE.ADDRESS_NO_MST'|translate}}</p>
+                        </div>
+                        <div class="right">
+                            <button type="button" id="history-btn" ion-button clear (click)="history((displayType == 'asset' ? selectedAsset : 'ETP'), address)">
+                                {{'RECEIVE.HISTORY_BTN'|translate}}
+                            </button>
                         </div>
                     </ion-card-content>
                 </ion-card>

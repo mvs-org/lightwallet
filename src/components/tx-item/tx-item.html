@@ -52,11 +52,11 @@
                     <ion-col>
                         <ion-item class="right summaryAmount">
                             <div *ngIf="txType == 'ETP' || txType == 'COINSTAKE'">
-                                <div *ngIf="totalPersonalInputs.ETP && totalPersonalInputs.ETP - totalPersonalOutputs.ETP - txFee != 0"
+                                <div *ngIf="totalPersonalInputs.ETP && totalPersonalInputs.ETP - totalPersonalOutputs.ETP - txFee > 0"
                                     class="sendAmount">
-                                    -{{totalPersonalInputs.ETP - totalPersonalOutputs.ETP - txFee | format : 8}} ETP
+                                    -{{totalPersonalInputs.ETP - totalPersonalOutputs.ETP | format : 8}} ETP
                                 </div>
-                                <div *ngIf="!totalPersonalInputs.ETP" class="receiveAmount">
+                                <div *ngIf="!totalPersonalInputs.ETP || totalPersonalInputs.ETP - totalPersonalOutputs.ETP - txFee < 0" class="receiveAmount">
                                     +{{totalPersonalOutputs.ETP | format : 8}} ETP
                                 </div>
                                 <div *ngIf="totalPersonalInputs.ETP - totalPersonalOutputs.ETP - txFee == 0">
@@ -64,13 +64,12 @@
                                 </div>
                             </div>
                             <div *ngIf="txType == 'ASSET' || txType == 'ISSUE' || txType == 'MST_MINING'">
-                                <div *ngIf="totalPersonalInputs.MST[txTypeValue] && totalPersonalInputs.MST[txTypeValue] - totalPersonalOutputs.MST[txTypeValue] != 0"
+                                <div *ngIf="totalPersonalInputs.MST[txTypeValue] && totalPersonalInputs.MST[txTypeValue] - totalPersonalOutputs.MST[txTypeValue] > 0"
                                     class="sendAmount">
                                     -{{totalPersonalInputs.MST[txTypeValue] - totalPersonalOutputs.MST[txTypeValue] |
-                                    format :
-                                    decimalsMst[txTypeValue]}} {{txTypeValue}}
+                                    format : decimalsMst[txTypeValue]}} {{txTypeValue}}
                                 </div>
-                                <div *ngIf="!totalPersonalInputs.MST[txTypeValue]" class="receiveAmount">
+                                <div *ngIf="!totalPersonalInputs.MST[txTypeValue] || totalPersonalInputs.MST[txTypeValue] - totalPersonalOutputs.MST[txTypeValue] < 0" class="receiveAmount">
                                     +{{totalPersonalOutputs.MST[txTypeValue] | format : decimalsMst[txTypeValue]}}
                                     {{txTypeValue}}
                                 </div>

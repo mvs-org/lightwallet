@@ -756,5 +756,9 @@
     "EXPORT_MASTER_PUBLIC_KEY.BUTTON": "Show Key",
     "EXPORT_MASTER_PUBLIC_KEY.WARNING": "The Master Public Key allows the generation of all your wallets addresses. Even though it cannot be used to access the funds you should be very careful when you share it with somebody.",
     "SETTINGS.EXPORT_MASTER_PUBLIC_KEY": "Export Master Public Key",
-    "SETTINGS.EXPORT_MASTER_PUBLIC_KEY_TEXT": "The Master Public Key allows to generate all addresses of the wallet but cannot send funds."
+    "SETTINGS.EXPORT_MASTER_PUBLIC_KEY_TEXT": "The Master Public Key allows to generate all addresses of the wallet but cannot send funds.",
+    "RECEIVE.HISTORY_BTN": "List transactions",
+    "HISTORY.ASSETS_LIST": "Asset",
+    "HISTORY.ADDRESSES_LIST": "Addresses",
+    "HISTORY.SELECT_ALL": "Select all"
 }

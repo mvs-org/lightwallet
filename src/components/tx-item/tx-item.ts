@@ -20,9 +20,9 @@ export class TxItemComponent {
     @Input() hexTx: any;
     @Input() mode: string;
     @Input() status: string     //to_confirm, pending or mined
+    @Input() addresses?: Array<string>
 
     decimalsMst: any = {}
-    myAddresses: Array<string> = []
     totalInputs: any = { ETP: 0, MST: {} }
     totalOutputs: any = { ETP: 0, MST: {} }
     totalPersonalInputs: any = { ETP: 0, MST: {} }
@@ -42,23 +42,19 @@ export class TxItemComponent {
         this.devAvatar = this.globals.dev_avatar
     }
 
-    async ngAfterViewInit() {
-
-        this.myAddresses = await this.mvs.getAddresses() 
-
-        this.inputChange()
-
-    }
-
     ngOnChanges(changes: SimpleChanges) {
         this.inputChange()
     }
 
     countable(input){
-        return this.myAddresses.indexOf(input.previous_output.address) > -1
+        return this.addresses.indexOf(input.previous_output.address) > -1
     }
 
-    inputChange() {
+    async inputChange() {
+
+        if(!this.addresses || this.addresses == []) {
+            this.addresses = await this.mvs.getAddresses()
+        }
 
         this.totalInputs = { ETP: 0, MST: {} }
         this.totalOutputs = { ETP: 0, MST: {} }
@@ -174,7 +170,7 @@ export class TxItemComponent {
                 this.totalOutputs.MST[output.attachment.symbol] = this.totalOutputs.MST[output.attachment.symbol] ? this.totalOutputs.MST[output.attachment.symbol] + output.attachment.quantity : output.attachment.quantity
             }
 
-            if (this.myAddresses.indexOf(output.address) > -1) {
+            if (this.addresses.indexOf(output.address) > -1) {
                 if (output.value) {
                     this.totalPersonalOutputs.ETP += output.value
                 }

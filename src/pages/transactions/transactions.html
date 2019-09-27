@@ -23,14 +23,36 @@
 
         <div *ngIf="display_segment=='transactions'">
 
+            <ion-row class="order-selectors">
+                <ion-col col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6>
+                    <ion-item class="no-padding no-color-border">
+                        <ion-label>{{"HISTORY.ASSETS_LIST"|translate}}</ion-label>
+                        <ion-select [(ngModel)]="asset" (ionChange)="updateFilters(asset, addresses)">
+                            <ion-option *ngFor="let asset of assets" value="{{asset}}">{{asset}}</ion-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-col>
+                <ion-col col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6>
+                    <ion-item class="no-padding no-color-border">
+                        <ion-label>{{"HISTORY.ADDRESSES_LIST"|translate}}</ion-label>
+                        <ion-select [(ngModel)]="addresses" multiple="true" (ionChange)="updateFilters(asset, addresses)">
+                            <ion-option [value]="'all'">{{"HISTORY.SELECT_ALL"|translate}}</ion-option>
+                            <ion-option *ngFor="let address of allAddresses" [value]="address">{{address}}</ion-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+
             <ion-list [hidden]="!txs.length">
 
                 <div *ngFor="let tx of txs | orderBy: ['confirmed_at', '1']">
-                    <tx-item *ngIf="tx && !tx.confirmed_at" [tx]="tx" [hexTx]="''" [status]="'PENDING'" [mode]="'summary'"></tx-item>
+                    <tx-item *ngIf="tx && !tx.confirmed_at" [tx]="tx" [hexTx]="''" [status]="'PENDING'" [mode]="'summary'"
+                        [addresses]="addresses"></tx-item>
                 </div>
 
                 <div *ngFor="let tx of txs | paginate: { itemsPerPage: items_per_page, currentPage: page_tx }">
-                    <tx-item *ngIf="tx && tx.confirmed_at" [tx]="tx" [hexTx]="''" [status]="'MINED'" [mode]="'summary'"></tx-item>
+                    <tx-item *ngIf="tx && tx.confirmed_at" [tx]="tx" [hexTx]="''" [status]="'MINED'" [mode]="'summary'"
+                        [addresses]="addresses"></tx-item>
                 </div>
             </ion-list>
             <pagination-controls (pageChange)="pageChange($event)" *ngIf="txs && txs.length > items_per_page"></pagination-controls>
