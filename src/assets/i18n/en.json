@@ -760,5 +760,6 @@
     "RECEIVE.HISTORY_BTN": "List transactions",
     "HISTORY.ASSETS_LIST": "Asset",
     "HISTORY.ADDRESSES_LIST": "Addresses",
-    "HISTORY.SELECT_ALL": "Select all"
+    "HISTORY.SELECT_ALL": "Select all",
+    "HISTORY.SELECT_NONE": "Unselect all"
 }
