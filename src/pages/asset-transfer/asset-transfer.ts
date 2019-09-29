@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild,NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { TranslateService } from '@ngx-translate/core';
@@ -69,6 +69,7 @@ export class AssetTransferPage {
         private barcodeScanner: BarcodeScanner,
         private keyboard: Keyboard,
         private translate: TranslateService,
+        private zone: NgZone,
     ) {
 
         this.selectedAsset = navParams.get('asset')
@@ -137,6 +138,10 @@ export class AssetTransferPage {
         if (Math.floor(value) !== value && value.toString().split(".").length > 1)
             return value.toString().split(".")[1].length || 0;
         return 0;
+    }
+
+    updateRange(){
+        this.zone.run(()=>{});
     }
 
     cancel(e) {
