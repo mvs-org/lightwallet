@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { TranslateService } from '@ngx-translate/core';
@@ -64,7 +64,8 @@ export class MultisignatureTransferPage {
         private barcodeScanner: BarcodeScanner,
         private keyboard: Keyboard,
         private wallet: WalletServiceProvider,
-        private translate: TranslateService
+        private translate: TranslateService,
+        private zone: NgZone,
     ) {
 
         this.selectedAsset = navParams.get('asset')
@@ -358,6 +359,10 @@ export class MultisignatureTransferPage {
                         this.alert.showError('MESSAGE.BROADCAST_ERROR', error.message)
                 }
             })
+    }
+
+    updateRange() {
+        this.zone.run(() => { });
     }
 
 }

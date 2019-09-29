@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, SimpleChanges, NgZone } from '@angular/core';
 import { Platform } from 'ionic-angular';
 
 @Component({
@@ -19,6 +19,7 @@ export class MiningModelSelectorComponent {
 
     constructor(
         public platform: Platform,
+        private zone: NgZone,
     ) {
 
     }
@@ -49,6 +50,10 @@ export class MiningModelSelectorComponent {
         if (Math.floor(value) !== value && value.toString().split(".").length > 1)
             return value.toString().split(".")[1].length || 0;
         return 0;
+    }
+
+    updateRange() {
+        this.zone.run(() => { });
     }
 
 }
