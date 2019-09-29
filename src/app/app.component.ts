@@ -31,30 +31,20 @@ export class MyETPWallet {
         public keyboard: Keyboard
     ) {
 
+
         this.initializeApp()
-            .then(() => {
-                switch (this.getQueryParameter('network')) {
-                    case 'testnet':
-                        console.info('set network to testnet')
-                        return this.storage.set('network', 'testnet')
-                    case 'mainnet':
-                        console.info('set network to mainnet')
-                        return this.storage.set('network', 'mainnet')
-                }
-            })
-            .then(() => this.storage.get('network'))
+            .then(() => this.getNetwork())
             .then((network) => this.initNetwork(network))
             .then(() => this.storage.get('language'))
             .then((language) => this.initLanguage(language))
             .then(() => this.isLoggedIn())
-            .then((loggedin) => {
-
+            .then(async (loggedin) => {
                 if (loggedin) {
-                    return this.mvs.getUpdateNeeded(this.globals.show_loading_screen_after_unused_time).then(needUpdate => needUpdate ? this.rootPage = "LoadingPage" : this.rootPage = "AccountPage")
+                    return this.mvs.getUpdateNeeded(this.globals.show_loading_screen_after_unused_time)
+                        .then(needUpdate => this.rootPage = needUpdate ? "LoadingPage" : "AccountPage")
                 } else {
                     this.rootPage = "LoginPage"
                 }
-                return;
             })
             .then(() => this.keyboard.hideKeyboardAccessoryBar(false))
             .then(() => this.splashScreen.hide())
@@ -80,6 +70,19 @@ export class MyETPWallet {
         return this.storage.get('mvs_addresses')
             .then((addresses) => (addresses != undefined && addresses != null && Array.isArray(addresses) && addresses.length))
 
+    }
+
+    async getNetwork() {
+        const loginStatus = await this.isLoggedIn()
+        if (loginStatus) return this.storage.get('network')
+        const networkQueryParam = this.getQueryParameter('network')
+        switch (networkQueryParam) {
+            case 'testnet':
+            case 'mainnet':
+                console.info('set network to ' + networkQueryParam)
+                await this.storage.set('network', networkQueryParam)
+        }
+        return this.storage.get('network')
     }
 
     setMenu = () => {
