@@ -31,10 +31,11 @@ export class MyETPWallet {
         public keyboard: Keyboard
     ) {
 
+        const networkQueryParam = this.getQueryParameter('network')
 
-        this.initializeApp()
-            .then(() => this.getNetwork())
+        this.getNetwork(networkQueryParam)
             .then((network) => this.initNetwork(network))
+            .then(() => this.initializeApp())
             .then(() => this.storage.get('language'))
             .then((language) => this.initLanguage(language))
             .then(() => this.isLoggedIn())
@@ -72,15 +73,15 @@ export class MyETPWallet {
 
     }
 
-    async getNetwork() {
+    async getNetwork(networkQueryParam) {
         const loginStatus = await this.isLoggedIn()
         if (loginStatus) return this.storage.get('network')
-        const networkQueryParam = this.getQueryParameter('network')
         switch (networkQueryParam) {
             case 'testnet':
             case 'mainnet':
                 console.info('set network to ' + networkQueryParam)
                 await this.storage.set('network', networkQueryParam)
+                return networkQueryParam
         }
         return this.storage.get('network')
     }
