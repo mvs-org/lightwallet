@@ -137,4 +137,19 @@ page-account {
         margin-left: 20px;
     }
 
+    @media (max-width: 350px) {
+        .coinlogo {
+            margin-left: 0px;
+        }
+
+        .row-buttons {
+            position: absolute;
+            bottom: -10px;
+            left: 1px !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
+
+    }
+
 }

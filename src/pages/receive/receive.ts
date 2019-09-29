@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, ModalController } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
-import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
 
 @IonicPage({
     name: 'receive-page',
@@ -25,7 +24,6 @@ export class ReceivePage {
         private platform: Platform,
         private mvs: MvsServiceProvider,
         public modalCtrl: ModalController,
-        private wallet: WalletServiceProvider,
     ) {
         this.addressbalances = {};
         this.selectedAsset = this.navParams.get('asset')
