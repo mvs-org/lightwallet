@@ -282,6 +282,11 @@ ion-alert:not(.alert-ios) .alert-button-group-vertical {
         background-size: 100% !important;
     }
 
+    page-login .banner.china {
+        background:url(../assets/logo1-zh.png) no-repeat !important;
+        background-size: 100% !important;
+    }
+
     ion-alert ion-backdrop{
         -webkit-filter: blur(5px);
         -moz-filter: blur(5px);
@@ -477,6 +482,11 @@ ion-alert:not(.alert-ios) .alert-button-group-vertical {
 
     page-login .banner {
         background:url(../assets/logo1.png) no-repeat !important;
+        background-size: 100% !important;
+    }
+
+    page-login .banner.china {
+        background:url(../assets/logo1-zh.png) no-repeat !important;
         background-size: 100% !important;
     }
 

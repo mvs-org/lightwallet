@@ -10,7 +10,7 @@
 <ion-content class="login-content">
     <ion-row class="logo-row">
         <ion-col class="logo">
-            <div class="banner"></div>
+            <div [ngClass]="getLogoClasses()"></div>
         </ion-col>
     </ion-row>
     <div class="login-box">
