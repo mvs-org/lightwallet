@@ -81,7 +81,7 @@
                     <ion-badge item-end color="primary">{{fee | format : 8}} ETP</ion-badge>
                 </ion-item>
                 <ion-item>
-                    <ion-range min="10000" max="10000000" step="10000" color="primary" [(ngModel)]="fee" name="fee">
+                    <ion-range min="10000" max="10000000" step="10000" color="primary" [(ngModel)]="fee" name="fee" (ionChange)="updateRange()">
                         <ion-label range-left>{{10000 | format : 8}}</ion-label>
                         <ion-label range-right>{{10000000 | format : 8}}</ion-label>
                     </ion-range>
@@ -122,7 +122,7 @@
         <ion-card-content *ngIf="rawtx">
             <h4>{{"MULTISIGNATURE_TRANSFER.CREATED_TX"|translate}}:</h4>
             <div no-lines class="advice">{{"MULTISIGNATURE_TRANSFER.CREATED_TX_DESCRIPTION"|translate}}</div>
-            <textarea fz-elastic ion-input full type="text" #copyCreatedTx value="{{rawtx}}" style="" readonly>{{rawtx}}</textarea>
+            <textarea fz-elastic ion-input full type="text" #copyCreatedTx value="{{rawtx}}" readonly>{{rawtx}}</textarea>
             <button col-sm-12 col-md-6 col-lg-3 ion-button full item-right icon-left [ngxClipboard]="copyCreatedTx">
                 <ion-icon name="copy"></ion-icon>
                 {{'COPY'|translate}}
@@ -249,7 +249,7 @@
 
         <ion-card-content *ngIf="raw_signed_tx">
             <h4>{{"MULTISIGNATURE_TRANSFER.SIGNED_TX"|translate}}:</h4>
-            <textarea fz-elastic ion-input full type="text" #copySignedTx value="{{raw_signed_tx}}" style="" readonly>{{raw_signed_tx}}</textarea>
+            <textarea fz-elastic ion-input full type="text" #copySignedTx value="{{raw_signed_tx}}" readonly>{{raw_signed_tx}}</textarea>
             <button col-sm-12 col-md-6 col-lg-3 ion-button full item-right icon-left [ngxClipboard]="copySignedTx">
                 <ion-icon name="copy"></ion-icon>
                 {{'COPY'|translate}}

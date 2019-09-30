@@ -18,7 +18,7 @@
         <ion-badge item-end color="primary">{{basePercent}}%</ion-badge>
     </ion-item>
     <ion-item>
-        <ion-range min="0" max="100" step="1" pin="true" snaps="true" color="primary" [(ngModel)]="basePercent" name="basePercent" (ngModelChange)="inputChange($event)">
+        <ion-range min="0" max="100" step="1" pin="true" snaps="true" color="primary" [(ngModel)]="basePercent" name="basePercent" (ngModelChange)="inputChange($event)" (ionChange)="updateRange()">
             <ion-label range-left>0%</ion-label>
             <ion-label range-right>100%</ion-label>
         </ion-range>

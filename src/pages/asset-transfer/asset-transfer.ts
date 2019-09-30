@@ -1,4 +1,4 @@
-import { Component, ViewChild,NgZone } from '@angular/core';
+import { Component, ViewChild, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { TranslateService } from '@ngx-translate/core';
@@ -76,10 +76,10 @@ export class AssetTransferPage {
         this.quantity = navParams.get('amount') || ""
         this.recipient_address = navParams.get('recipient') || ""
 
-        if(this.selectedAsset == 'ETP') {
-            this.recipients.push(new RecipientSendMore('', '', {"ETP": undefined}, undefined))
+        if (this.selectedAsset == 'ETP') {
+            this.recipients.push(new RecipientSendMore('', '', { "ETP": undefined }, undefined))
         } else {
-            this.recipients.push(new RecipientSendMore('', '', {"MST": { [this.selectedAsset]: undefined}}, undefined))
+            this.recipients.push(new RecipientSendMore('', '', { "MST": { [this.selectedAsset]: undefined } }, undefined))
         }
         this.total_to_send[this.selectedAsset] = 0
         this.total = 0
@@ -100,7 +100,7 @@ export class AssetTransferPage {
                 Object.keys(addresses).forEach((index) => {
                     let address = addresses[index]
                     if (addressbalancesObject[address]) {
-                        addrblncs.push({ "address": address, "avatar": addressbalancesObject[address].AVATAR ? addressbalancesObject[address].AVATAR : "", "identifier": addressbalancesObject[address].AVATAR ? addressbalancesObject[address].AVATAR : address, "balance": this.selectedAsset == 'ETP' ? addressbalancesObject[address].ETP.available : addressbalancesObject[address].MST[this.selectedAsset] ? addressbalancesObject[address].MST[this.selectedAsset].available : 0})
+                        addrblncs.push({ "address": address, "avatar": addressbalancesObject[address].AVATAR ? addressbalancesObject[address].AVATAR : "", "identifier": addressbalancesObject[address].AVATAR ? addressbalancesObject[address].AVATAR : address, "balance": this.selectedAsset == 'ETP' ? addressbalancesObject[address].ETP.available : addressbalancesObject[address].MST[this.selectedAsset] ? addressbalancesObject[address].MST[this.selectedAsset].available : 0 })
                     } else {
                         addrblncs.push({ "address": address, "avatar": "", "identifier": address, "balance": 0 })
                     }
@@ -140,8 +140,8 @@ export class AssetTransferPage {
         return 0;
     }
 
-    updateRange(){
-        this.zone.run(()=>{});
+    updateRange() {
+        this.zone.run(() => { });
     }
 
     cancel(e) {
@@ -153,12 +153,12 @@ export class AssetTransferPage {
         return this.alert.showLoading()
             .then(() => {
                 let messages = [];
-                if(this.message) {
+                if (this.message) {
                     messages.push(this.message)
                 }
-                switch(this.transfer_type){
+                switch (this.transfer_type) {
                     case "one":
-                        if(this.lock) {
+                        if (this.lock) {
                             return this.mvs.createAssetDepositTx(
                                 this.recipient_address,
                                 (this.recipient_avatar && this.recipient_avatar_valid) ? this.recipient_avatar : undefined,
@@ -187,12 +187,12 @@ export class AssetTransferPage {
                         let recipients = JSON.parse(JSON.stringify(this.recipients))
                         target[this.selectedAsset] = Math.round(parseFloat(this.total_to_send[this.selectedAsset]) * Math.pow(10, this.decimals))
                         recipients.forEach((recipient) => {
-                            if(this.selectedAsset == 'ETP') {
+                            if (this.selectedAsset == 'ETP') {
                                 recipient.target['ETP'] = Math.round(parseFloat(recipient.target['ETP']) * Math.pow(10, this.decimals))
                             } else {
                                 let convertedQuantity = Math.round(parseFloat(recipient.target['MST'][this.selectedAsset]) * Math.pow(10, this.decimals))
                                 recipient.target['MST'][this.selectedAsset] = convertedQuantity
-                                if(this.showAdvanced && this.lock && this.attenuation_model) {
+                                if (this.showAdvanced && this.lock && this.attenuation_model) {
                                     recipient.attenuation_model = this.attenuation_model + ';LQ=' + convertedQuantity
                                 }
                             }
@@ -213,7 +213,7 @@ export class AssetTransferPage {
             .catch((error) => {
                 console.error(error.message)
                 this.alert.stopLoading()
-                switch(error.message){
+                switch (error.message) {
                     case "ERR_DECRYPT_WALLET":
                         this.alert.showError('MESSAGE.PASSWORD_WRONG', '')
                         throw Error('ERR_CREATE_TX')
@@ -239,7 +239,7 @@ export class AssetTransferPage {
             .catch((error) => {
                 console.error(error)
                 this.alert.stopLoading()
-                switch(error.message){
+                switch (error.message) {
                     case "ERR_CONNECTION":
                         this.alert.showError('ERROR_SEND_TEXT', '')
                         break;
@@ -313,7 +313,7 @@ export class AssetTransferPage {
 
     quantityETPChanged = () => {
         let total = 0
-        if(this.recipients) {
+        if (this.recipients) {
             this.recipients.forEach((recipient) => total = recipient.target['ETP'] ? total + parseFloat(recipient.target['ETP']) : total)
         }
         this.total_to_send[this.selectedAsset] = +total.toFixed(this.decimals);
@@ -323,7 +323,7 @@ export class AssetTransferPage {
 
     quantityMSTChanged = () => {
         let total = 0
-        if(this.recipients) {
+        if (this.recipients) {
             this.recipients.forEach((recipient) => total = recipient.target['MST'][this.selectedAsset] ? total + parseFloat(recipient.target['MST'][this.selectedAsset]) : total)
         }
         this.total_to_send[this.selectedAsset] = +total.toFixed(this.decimals);
@@ -334,7 +334,7 @@ export class AssetTransferPage {
     checkEtpSendMoreQuantity = () => {
         let valid = true
         this.recipients.forEach((recipient) => {
-            if(!recipient.target || !recipient.target['ETP'] || recipient.target['ETP'] <= 0 || this.countDecimals(recipient.target['ETP']) > this.decimals)
+            if (!recipient.target || !recipient.target['ETP'] || recipient.target['ETP'] <= 0 || this.countDecimals(recipient.target['ETP']) > this.decimals)
                 valid = false
         })
         this.sendMoreValidQuantity = valid
@@ -343,7 +343,7 @@ export class AssetTransferPage {
     checkMstSendMoreQuantity = () => {
         let valid = true
         this.recipients.forEach((recipient) => {
-            if(!recipient.target || !recipient.target['MST'] || !recipient.target['MST'][this.selectedAsset] || recipient.target['MST'][this.selectedAsset] <= 0 || this.countDecimals(recipient.target['MST'][this.selectedAsset]) > this.decimals)
+            if (!recipient.target || !recipient.target['MST'] || !recipient.target['MST'][this.selectedAsset] || recipient.target['MST'][this.selectedAsset] <= 0 || this.countDecimals(recipient.target['MST'][this.selectedAsset]) > this.decimals)
                 valid = false
         })
         this.sendMoreValidQuantity = valid
@@ -352,7 +352,7 @@ export class AssetTransferPage {
     checkSendMoreAddress = () => {
         let valid = true
         this.recipients.forEach((recipient) => {
-            if(!recipient.address || !this.mvs.validAddress(recipient.address))
+            if (!recipient.address || !this.mvs.validAddress(recipient.address))
                 valid = false
         })
         this.sendMoreValidAddress = valid
@@ -389,17 +389,17 @@ export class AssetTransferPage {
     addRecipient() {
         this.sendMoreValidQuantity = false
         this.sendMoreValidAddress = false
-        if(this.selectedAsset == 'ETP') {
-            this.recipients.push(new RecipientSendMore('', '', {"ETP": undefined}, undefined))
+        if (this.selectedAsset == 'ETP') {
+            this.recipients.push(new RecipientSendMore('', '', { "ETP": undefined }, undefined))
         } else {
-            this.recipients.push(new RecipientSendMore('', '', {"MST": { [this.selectedAsset]: undefined}}, undefined))
+            this.recipients.push(new RecipientSendMore('', '', { "MST": { [this.selectedAsset]: undefined } }, undefined))
         }
     }
 
     removeRecipient(index) {
         this.recipients.splice(index, 1)
         this.sendMoreValidEachAvatar.splice(index, 1)
-        if(this.selectedAsset == 'ETP'){
+        if (this.selectedAsset == 'ETP') {
             this.quantityETPChanged()
         } else {
             this.quantityMSTChanged()
@@ -433,7 +433,7 @@ export class AssetTransferPage {
         const COLUMN_LOCK_MODEL_HEADER = 'lock_model';
 
         let errorLine = 0
-        
+
         reader.onload = (e: any) => {
             let content = e.target.result;
             try {
@@ -441,23 +441,23 @@ export class AssetTransferPage {
                 this.recipients = []
                 let columnIndex = {}
                 data[0].split(',').forEach((columnName, index) => columnIndex[columnName] = index)
-                for(let i=1;i<this.sendMore_limit;i++){
-                    if(data[i]) {
+                for (let i = 1; i < this.sendMore_limit; i++) {
+                    if (data[i]) {
                         let line = data[i].split(',');
                         let recipient = line[columnIndex[COLUMN_RECIPIENT_HEADER]] ? line[columnIndex[COLUMN_RECIPIENT_HEADER]].trim() : line[columnIndex[COLUMN_RECIPIENT_HEADER]]
                         let amount = line[columnIndex[COLUMN_AMOUNT_HEADER]] ? line[columnIndex[COLUMN_AMOUNT_HEADER]].trim() : line[columnIndex[COLUMN_AMOUNT_HEADER]]
-                        if(this.selectedAsset == 'ETP') {
-                            if(this.validaddress(recipient)) {
-                                this.recipients.push(new RecipientSendMore(recipient, '', {"ETP": amount}, undefined))
+                        if (this.selectedAsset == 'ETP') {
+                            if (this.validaddress(recipient)) {
+                                this.recipients.push(new RecipientSendMore(recipient, '', { "ETP": amount }, undefined))
                             } else {
-                                this.recipients.push(new RecipientSendMore('', recipient, {"ETP": amount}, undefined))
-                                this.sendMoreRecipientAvatarChanged(i-1)
+                                this.recipients.push(new RecipientSendMore('', recipient, { "ETP": amount }, undefined))
+                                this.sendMoreRecipientAvatarChanged(i - 1)
                             }
                         } else {
                             let attenuation_model = undefined
-                            if(columnIndex[COLUMN_LOCK_BLOCK_HEADER] && line[columnIndex[COLUMN_LOCK_BLOCK_HEADER]]) {
-                                if(columnIndex[COLUMN_LOCK_MODEL_HEADER] && line[columnIndex[COLUMN_LOCK_MODEL_HEADER]]) {
-                                    errorLine = i+1
+                            if (columnIndex[COLUMN_LOCK_BLOCK_HEADER] && line[columnIndex[COLUMN_LOCK_BLOCK_HEADER]]) {
+                                if (columnIndex[COLUMN_LOCK_MODEL_HEADER] && line[columnIndex[COLUMN_LOCK_MODEL_HEADER]]) {
+                                    errorLine = i + 1
                                     throw Error('ERR_TWO_LOCK_MODEL')
                                 }
                                 let convertedQuantity = Math.round(parseFloat(amount) * Math.pow(10, this.decimals))
@@ -466,18 +466,18 @@ export class AssetTransferPage {
                             } else if (columnIndex[COLUMN_LOCK_MODEL_HEADER] && line[columnIndex[COLUMN_LOCK_MODEL_HEADER]]) {
                                 attenuation_model = line[columnIndex[COLUMN_LOCK_MODEL_HEADER]]
                             }
-                            if(this.validaddress(recipient)) {
-                                this.recipients.push(new RecipientSendMore(recipient, '', {"MST": { [this.selectedAsset]: amount}}, attenuation_model))
+                            if (this.validaddress(recipient)) {
+                                this.recipients.push(new RecipientSendMore(recipient, '', { "MST": { [this.selectedAsset]: amount } }, attenuation_model))
                             } else {
-                                this.recipients.push(new RecipientSendMore('', recipient, {"MST": { [this.selectedAsset]: amount}}, attenuation_model))
-                                this.sendMoreRecipientAvatarChanged(i-1)
+                                this.recipients.push(new RecipientSendMore('', recipient, { "MST": { [this.selectedAsset]: amount } }, attenuation_model))
+                                this.sendMoreRecipientAvatarChanged(i - 1)
                             }
                         }
                     }
                 }
-                if(data.length > this.sendMore_limit)
+                if (data.length > this.sendMore_limit)
                     this.alert.showLimitReached('MESSAGE.SEND_MORE_IMPORT_CSV_TOO_MANY_RECIPIENT_TITLE', 'MESSAGE.SEND_MORE_IMPORT_CSV_TOO_MANY_RECIPIENT_BODY', this.sendMore_limit)
-                if(this.selectedAsset == 'ETP'){
+                if (this.selectedAsset == 'ETP') {
                     this.quantityETPChanged()
                 } else {
                     this.quantityMSTChanged()
@@ -487,7 +487,7 @@ export class AssetTransferPage {
             } catch (error) {
                 this.alert.stopLoading()
                 console.error(error.message)
-                switch(error.message){
+                switch (error.message) {
                     case "ERR_TWO_LOCK_MODEL":
                         this.alert.showError('ERROR_TWO_LOCK_MODEL', errorLine)
                         throw Error('ERR_IMPORT_CSV')
@@ -497,7 +497,7 @@ export class AssetTransferPage {
                 }
             }
         };
-        if(file[0])
+        if (file[0])
             reader.readAsText(file[0]);
     }
 
@@ -505,19 +505,19 @@ export class AssetTransferPage {
         var text = ''
         var filename = 'recipients.csv'
         let header = 'recipient' + ',' + 'amount'
-        if(this.showAdvanced && this.lock && this.attenuation_model) {
+        if (this.showAdvanced && this.lock && this.attenuation_model) {
             header += ',' + 'lock_blocks'
         }
         header += '\n'
         text += header
         this.recipients.forEach((recipient) => {
             let line = recipient.address + ','
-            if(recipient.target['ETP']) {
+            if (recipient.target['ETP']) {
                 line += recipient.target['ETP']
             } else if (recipient.target['MST'] && recipient.target['MST'][this.selectedAsset]) {
                 line += recipient.target['MST'][this.selectedAsset]
             }
-            if(this.showAdvanced && this.lock && this.attenuation_model) {
+            if (this.showAdvanced && this.lock && this.attenuation_model) {
                 line += ',' + this.locktime
             }
             line += '\n'

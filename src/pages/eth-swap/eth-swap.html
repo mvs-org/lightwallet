@@ -70,7 +70,7 @@
                 </ion-item>
                 <div no-lines class="advice">{{"HELP.SWAP_TX_FEE" | translate}}</div>
                 <ion-item>
-                    <ion-range min="10000" max="10000000" step="10000" color="primary" [(ngModel)]="fee" name="fee">
+                    <ion-range min="10000" max="10000000" step="10000" color="primary" [(ngModel)]="fee" name="fee" (ionChange)="updateRange()">
                         <ion-label range-left>{{10000 | format : 8}}</ion-label>
                         <ion-label range-right>{{10000000 | format : 8}}</ion-label>
                     </ion-range>
@@ -83,7 +83,7 @@
                 <div no-lines class="advice">{{"HELP.SWAP_TX_SWAP_FEE" | translate}}</div>
                 <ion-item>
                     <ion-range min="100000000" max="1000000000" step="10000" color="primary" [(ngModel)]="swap_fee"
-                        name="swap_fee">
+                        name="swap_fee" (ionChange)="updateRange()">
                         <ion-label range-left>{{100000000 | format : 8}}</ion-label>
                         <ion-label range-right>{{1000000000 | format : 8}}</ion-label>
                     </ion-range>

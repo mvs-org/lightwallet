@@ -31,7 +31,7 @@
                     <ion-badge item-end color="primary">{{fee | format : 8}} ETP</ion-badge>
                 </ion-item>
                 <ion-item>
-                    <ion-range min="10000" max="10000000" step="10000" color="primary" [(ngModel)]="fee" name="fee">
+                    <ion-range min="10000" max="10000000" step="10000" color="primary" [(ngModel)]="fee" name="fee" (ionChange)="updateRange()">
                         <ion-label range-left>{{10000 | format : 8}}</ion-label>
                         <ion-label range-right>{{10000000 | format : 8}}</ion-label>
                     </ion-range>

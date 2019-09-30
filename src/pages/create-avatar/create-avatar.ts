@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { IonicPage, NavController, Platform, AlertController } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { AlertProvider } from '../../providers/alert/alert';
@@ -32,7 +32,9 @@ export class CreateAvatarPage {
         private translate: TranslateService,
         public platform: Platform,
         private alertCtrl: AlertController,
-        private mvs: MvsServiceProvider) {
+        private mvs: MvsServiceProvider,
+        private zone: NgZone,
+    ) {
 
         Promise.all([this.mvs.getAddresses(), this.mvs.getAddressBalances()])
             .then(([addresses, addressbalances]) => {
@@ -155,6 +157,10 @@ export class CreateAvatarPage {
                     this.available_symbol = false
                 })
         }
+    }
+
+    updateRange() {
+        this.zone.run(() => { });
     }
 
 }
