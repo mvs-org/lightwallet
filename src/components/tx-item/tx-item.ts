@@ -2,6 +2,7 @@ import { Component, Input, SimpleChanges } from '@angular/core';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { AppGlobals } from '../../app/app.global';
 import { trigger, state, style, animate, transition } from '@angular/animations';
+import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
 
 @Component({
     selector: 'tx-item',
@@ -21,6 +22,7 @@ export class TxItemComponent {
     @Input() mode: string;
     @Input() status: string     //to_confirm, pending or mined
     @Input() addresses?: Array<string>
+    @Input() multisig?: Object = {}
 
     decimalsMst: any = {}
     totalInputs: any = { ETP: 0, MST: {} }
@@ -38,6 +40,7 @@ export class TxItemComponent {
     constructor(
         private mvs: MvsServiceProvider,
         private globals: AppGlobals,
+        private wallet: WalletServiceProvider,
     ) {
         this.devAvatar = this.globals.dev_avatar
     }
@@ -53,7 +56,9 @@ export class TxItemComponent {
     async inputChange() {
 
         if(!this.addresses || this.addresses == []) {
-            this.addresses = await this.mvs.getAddresses()
+            const addresses = await this.mvs.getAddresses()
+            const multisigAddresses = await this.wallet.getMultisigAddresses()
+            this.addresses = addresses.concat(multisigAddresses)
         }
 
         this.totalInputs = { ETP: 0, MST: {} }

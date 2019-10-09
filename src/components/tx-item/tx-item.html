@@ -33,8 +33,15 @@
                     <ion-col>
                         <ion-item class="summaryTxType">
                             {{'TX.TX_TYPE.' + txType | translate}}
-                            <div *ngIf="status == 'SIGNED' || status == 'UNSIGNED' || status == 'PARTIALLY'" class="unsigned">
+                            <div *ngIf="multisig.status == 'NOT_MULTISIG' && (status == 'SIGNED' || status == 'UNSIGNED' || status == 'PARTIALLY')"
+                                class="unsigned">
                                 {{'TX.SIGN_STATUS.' + status | translate}}
+                            </div>
+                            <div *ngIf="multisig.status == 'MULTISIG'">
+                                <div class="unsigned">{{'TX.MULTISIG_STATUS.MULTISIG' | translate}}</div>
+                            </div>
+                            <div *ngIf="multisig.status == 'PARTIALLY_MULTISIG'" class="error-input">
+                                {{'TX.MULTISIG_STATUS.PARTIALLY_MULTISIG' | translate}}
                             </div>
                             <div *ngIf="status == 'PENDING'" class="warning-input">
                                 {{'PENDING_CONFIRMATION' | translate}}
@@ -56,7 +63,8 @@
                                     class="sendAmount">
                                     -{{totalPersonalInputs.ETP - totalPersonalOutputs.ETP | format : 8}} ETP
                                 </div>
-                                <div *ngIf="!totalPersonalInputs.ETP || totalPersonalInputs.ETP - totalPersonalOutputs.ETP - txFee < 0" class="receiveAmount">
+                                <div *ngIf="!totalPersonalInputs.ETP || totalPersonalInputs.ETP - totalPersonalOutputs.ETP - txFee < 0"
+                                    class="receiveAmount">
                                     +{{totalPersonalOutputs.ETP | format : 8}} ETP
                                 </div>
                                 <div *ngIf="totalPersonalInputs.ETP - totalPersonalOutputs.ETP - txFee == 0">
@@ -69,7 +77,8 @@
                                     -{{totalPersonalInputs.MST[txTypeValue] - totalPersonalOutputs.MST[txTypeValue] |
                                     format : decimalsMst[txTypeValue]}} {{txTypeValue}}
                                 </div>
-                                <div *ngIf="!totalPersonalInputs.MST[txTypeValue] || totalPersonalInputs.MST[txTypeValue] - totalPersonalOutputs.MST[txTypeValue] < 0" class="receiveAmount">
+                                <div *ngIf="!totalPersonalInputs.MST[txTypeValue] || totalPersonalInputs.MST[txTypeValue] - totalPersonalOutputs.MST[txTypeValue] < 0"
+                                    class="receiveAmount">
                                     +{{totalPersonalOutputs.MST[txTypeValue] | format : decimalsMst[txTypeValue]}}
                                     {{txTypeValue}}
                                 </div>
@@ -95,7 +104,39 @@
                 </ion-row>
             </ion-col>
         </ion-row>
-        <div [@expandCollapse]="this.mode !== 'summary'" *ngIf="this.mode !== 'summary'"> 
+        <div [@expandCollapse]="this.mode !== 'summary'" *ngIf="this.mode !== 'summary'">
+
+            <ion-row *ngIf="multisig && multisig.status == 'MULTISIG' && (mode == 'default' || mode == 'satoshi')">
+                <ion-col col-12 col-md-6>
+                    <ion-item>
+                        <ion-row *ngIf="multisig.info">
+                            <ion-col>
+                                {{"MULTISIGNATURE.NBR_PERSON" | translate}}
+                            </ion-col>
+                            <ion-col class="right">
+                                {{multisig.info.n}}
+                            </ion-col>
+                        </ion-row>
+                        <ion-row *ngIf="multisig.info">
+                            <ion-col>
+                                {{"MULTISIGNATURE.SIGN_REQ" | translate}}
+                            </ion-col>
+                            <ion-col class="right">
+                                {{multisig.info.m}}
+                            </ion-col>
+                        </ion-row>
+                        <ion-row *ngIf="multisig.current_nbr_sign">
+                            <ion-col>
+                                {{"MULTISIGNATURE.CURRENT_NBR_SIGN" | translate}}
+                            </ion-col>
+                            <ion-col class="right">
+                                {{multisig.current_nbr_sign}}
+                            </ion-col>
+                        </ion-row>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+
             <ion-row *ngIf="mode == 'default' || mode == 'satoshi'">
                 <ion-col col-12 col-md-6>
                     <ion-row>
@@ -107,7 +148,8 @@
                     </ion-row>
                     <ion-row>
                         <ion-col>
-                            <input-item *ngFor="let input of tx.inputs; let i = index" (modelChanged)="inputLoad($event, i)" [input]="input" [decimalsMst]="decimalsMst" [mode]="mode"></input-item>
+                            <input-item *ngFor="let input of tx.inputs; let i = index" (modelChanged)="inputLoad($event, i)"
+                                [input]="input" [decimalsMst]="decimalsMst" [mode]="mode"></input-item>
                         </ion-col>
                     </ion-row>
                 </ion-col>

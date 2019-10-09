@@ -130,7 +130,6 @@ export class ImportMnemonicPage {
     }
 
     validMnemonic(checkword) {
-        console.log(checkword)
         return new Promise((resolve, reject) => {
             let amount_words = checkword[0];
             let first_wrong = checkword[1];

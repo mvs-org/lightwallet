@@ -63,7 +63,11 @@ export class TransactionsPage {
         this.height = await this.mvs.getHeight()
         this.calculateFrozenOutputs()
         this.blocktime = await this.mvs.getBlocktime(this.height)
-        this.allAddresses = await this.mvs.getAddresses()
+
+        const addresses = await this.mvs.getAddresses()
+        const multisigAddresses = await this.wallet.getMultisigAddresses()
+        this.allAddresses = addresses.concat(multisigAddresses)
+
         this.showTxs({ symbol: this.asset });
         this.iconsList = await this.wallet.getMstIcons()
     }
