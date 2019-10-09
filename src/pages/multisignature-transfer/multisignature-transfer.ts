@@ -23,9 +23,7 @@ export class MultisignatureTransferPage {
     recipient_avatar: string
     recipient_avatar_valid: boolean
     quantity: string = ""
-    builtFor: string
     rawtx: string
-    passcodeSet: any
     addressbalances: Array<any>
     sendFrom: string = "auto"
     changeAddress: string
@@ -44,14 +42,7 @@ export class MultisignatureTransferPage {
     type: string = "create"
     input: string
     signedTx: string
-    passphrase_sign: string = ""
-    decoded_tx: any
     address_info: any
-    signed_tx: any
-    raw_signed_tx: any
-    nbr_sign_before_sign: number
-    nbr_sign_after_sign: number
-    decimals_mst: any = {}
     isApp: boolean
     showAdvanced: boolean = false
 
@@ -285,79 +276,12 @@ export class MultisignatureTransferPage {
         })
     }
 
-    sign(sendFrom, rawtx, passphrase) {
-        this.alert.showLoading()
-            .then(() => this.mvs.decodeTx(rawtx))
-            .then((tx) => this.wallet.signMultisigTx(sendFrom, tx, passphrase))
-            .then((signed_tx) => {
-                this.signed_tx = signed_tx
-                this.raw_signed_tx = this.signed_tx.encode().toString('hex')
-                this.nbr_sign_after_sign = this.signed_tx.inputs[0].script.length - 2
-                this.alert.stopLoading()
-            })
-            .catch((error) => {
-                this.alert.stopLoading()
-                console.error(error.message)
-                switch (error.message) {
-                    case "ERR_DECRYPT_WALLET":
-                        this.alert.showError('MESSAGE.PASSWORD_WRONG', '')
-                        break;
-                    case "SIGN_ALREADY_INCL":
-                        this.alert.showError('MESSAGE.ALREADY_SIGN_TRANSACTION', '')
-                        break;
-                    default:
-                        this.alert.showError('MESSAGE.SIGN_TRANSACTION', '')
-                }
-            })
-    }
-
     decode(tx) {
-        this.mvs.decodeTx(tx)
-            .then((result) => {
-                this.decoded_tx = result
-                this.nbr_sign_before_sign = this.decoded_tx.inputs[0].script.split("[").length - 2
-                this.decoded_tx.inputs.forEach((input) => {
-                    if (input.previous_output.attachment && input.previous_output.attachment.symbol)
-                        this.decimals_mst[input.previous_output.attachment.symbol] = input.previous_output.attachment.decimals
-                })
-            })
+        this.mvs.decodeTx(tx)       //Try if the transaction can be decoded, if not, shows an error
+            .then((result) => this.navCtrl.push("confirm-tx-page", { tx: tx }))
             .catch((error) => {
                 console.error(error);
                 this.alert.showErrorTranslated('MESSAGE.ERROR_DECODE_MULTISIG_SUBTITLE', 'MESSAGE.ERROR_DECODE_MULTISIG_BODY')
-            })
-    }
-
-    resetInput() {
-        this.decoded_tx = undefined
-        this.passphrase_sign = ""
-        this.decoded_tx = undefined
-        this.signed_tx = undefined
-        this.raw_signed_tx = undefined
-        this.nbr_sign_before_sign = undefined
-        this.nbr_sign_after_sign = undefined
-    }
-
-    broadcast(tx, raw: boolean) {
-        this.alert.showLoading()
-            .then(() => {
-                return raw ? this.mvs.broadcast(tx) : this.mvs.send(tx)
-            })
-            .then((result) => {
-                this.navCtrl.pop()
-                this.navCtrl.pop()
-                this.alert.stopLoading()
-                this.alert.showSent('SUCCESS_SEND_TEXT', result.hash)
-            })
-            .catch((error) => {
-                console.error(error)
-                this.alert.stopLoading()
-                switch (error.message) {
-                    case "ERR_CONNECTION":
-                        this.alert.showError('ERROR_SEND_TEXT', '')
-                        break;
-                    default:
-                        this.alert.showError('MESSAGE.BROADCAST_ERROR', error.message)
-                }
             })
     }
 

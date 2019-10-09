@@ -3,7 +3,7 @@ import { Events } from 'ionic-angular';
 import { AppGlobals } from '../../app/app.global';
 import { Storage } from '@ionic/storage';
 import { WalletServiceProvider } from '../wallet-service/wallet-service';
-import Metaverse from 'metaversejs/index.js';
+import Metaverse from 'metaversejs/dist/metaverse.min.js';
 import Blockchain from 'mvs-blockchain';
 import { keyBy } from 'lodash';
 
