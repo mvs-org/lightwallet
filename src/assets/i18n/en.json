@@ -619,7 +619,8 @@
     "CONFIRM_TX": {
         "SIGN_ONLY": "Sign only",
         "SIGN_AND_SEND": "Sign and send",
-        "BROADCAST": "Broadcast"
+        "BROADCAST": "Broadcast",
+        "MULTISIG_ALREADY_SIGNED": "You have already signed this transaction!"
     },
     "MESSAGE.ERROR_DECODE_TX_SUBTITLE": "Cannot decode this raw transaction",
     "MESSAGE.ERROR_DECODE_TX_BODY": "This raw transaction cannot be decoded. Please make sure this raw transaction is correct.",
@@ -765,5 +766,7 @@
     "HISTORY.ASSETS_LIST": "Asset",
     "HISTORY.ADDRESSES_LIST": "Addresses",
     "HISTORY.SELECT_ALL": "Select all",
-    "HISTORY.SELECT_NONE": "Unselect all"
+    "HISTORY.SELECT_NONE": "Unselect all",
+    "ASSET_LOCK.ADD_PERIOD": "Add period",
+    "APPLY_CHANGES": "Apply changes"
 }

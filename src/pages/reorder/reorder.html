@@ -25,13 +25,13 @@
         <ion-col>
             <button type="submit" ion-button full icon-left [disabled]="compareArray(assetOrder, originalAssetOrder) && compareArray(hiddenAsset, originalHiddenAsset)" (click)="save(assetOrder)" color="secondary">
                 <ion-icon name="checkmark"></ion-icon>
-                {{'SAVE'|translate}}
+                {{'APPLY_CHANGES'|translate}}
             </button>
         </ion-col>
         <ion-col>
             <button ion-button color="danger" full item-right icon-left (click)="cancel($event)">
                 <ion-icon name="return-left"></ion-icon>
-                {{'RETURN'|translate}}
+                {{'CANCEL'|translate}}
             </button>
         </ion-col>
     </ion-row>

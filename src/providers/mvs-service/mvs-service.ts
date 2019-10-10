@@ -865,4 +865,8 @@ export class MvsServiceProvider {
         return tx
     }
 
+    getSignatureStatus(transaction, inputIndex, redeem, targetPublicKey) {
+        return Metaverse.multisig.getSignatureStatus(transaction, inputIndex, redeem, Metaverse.networks[this.globals.network], targetPublicKey)
+    }
+
 }

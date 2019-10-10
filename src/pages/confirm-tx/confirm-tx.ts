@@ -174,8 +174,10 @@ export class ConfirmTxPage {
                 foundMultisigInput = true
                 this.multisig.current_nbr_sign = input.script.split("[").length - 2
                 this.multisig.info = await this.getMultisigInfo(input.address)
-                if (!input.script || (this.multisig.info && this.multisig.current_nbr_sign < this.multisig.info.m)) {
-                    foundUnisgnedInput
+                let signatureStatus = await this.mvs.getSignatureStatus(this.decodedTx, i, this.multisig.info.r, this.multisig.info.s)
+                this.multisig.selfSigned = signatureStatus.targetSigned
+                if (!signatureStatus.complete) {
+                    foundUnisgnedInput = true
                 } else {
                     foundSignedInput = true
                 }
