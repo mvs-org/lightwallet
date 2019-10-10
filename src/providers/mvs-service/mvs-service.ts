@@ -3,7 +3,7 @@ import { Events } from 'ionic-angular';
 import { AppGlobals } from '../../app/app.global';
 import { Storage } from '@ionic/storage';
 import { WalletServiceProvider } from '../wallet-service/wallet-service';
-import Metaverse from 'metaversejs/dist/metaverse.min.js';
+import Metaverse from 'metaversejs/index.js';
 import Blockchain from 'mvs-blockchain';
 import { keyBy } from 'lodash';
 
@@ -766,6 +766,8 @@ export class MvsServiceProvider {
                     switch (output.attachment.status) {
                         case Metaverse.constants.MST.STATUS.REGISTER:
                             output.attachment.type = 'asset-issue';
+                            output.attachment.decimals = output.attachment.precision ? output.attachment.precision : output.attachment.decimals
+                            output.attachment.quantity = output.attachment.max_supply ? output.attachment.max_supply : output.attachment.original_quantity
                             break;
                         case Metaverse.constants.MST.STATUS.TRANSFER:
                             output.attachment.type = 'asset-transfer';
