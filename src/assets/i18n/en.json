@@ -763,5 +763,6 @@
     "MULTISIG_STATUS.PARTIALLY_MULTISIG": "Partially multisignature transaction (not supported)",
     "FOREIGN_INPUT": "Foreign input",
     "INDEX": "Index",
-    "MULTISIG_ALREADY_SIGNED": "You have already signed this transaction!"
+    "MULTISIG_ALREADY_SIGNED": "You have already signed this transaction!",
+    "EXPORT_MASTER_PUBLIC_KEY.YOUR_KEY": "Your public key:"
 }
