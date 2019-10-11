@@ -87,8 +87,6 @@
 
     "PLEASE_AUTHORIZE": "권한요청",
     "CONFIRM_PINCODE": "핀 코드 확인",
-    "CREATE_NEW_PINCODE": "신규 핀 코드 생성",
-    "GENERATE_KEY_BUTTON": "키 생성",
     "BUTTON.DOWNLOAD": "키 다운로드",
 
     "BUTTON.NEXT": "다음",

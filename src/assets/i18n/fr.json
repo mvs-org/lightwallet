@@ -68,8 +68,6 @@
     "SET_PIN_FIRST": "S'il vous plait, veuillez d'abord configurer un code PIN",
     "PLEASE_AUTHORIZE": "S'il vous plaît, autoriser",
     "CONFIRM_PINCODE": "Confirmer code PIN",
-    "CREATE_NEW_PINCODE": "Créer nouveau code PIN",
-    "GENERATE_KEY_BUTTON": "Générer la clé",
     "BUTTON.DOWNLOAD": "Télécharger la clé",
     "BUTTON.NEXT": "Suivant",
     "IMPORT_WORDS": "Entrer manuellement",

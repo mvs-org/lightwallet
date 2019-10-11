@@ -68,8 +68,6 @@
     "SET_PIN_FIRST": "Bitte richte zuerst einen PIN-Code ein",
     "PLEASE_AUTHORIZE": "Bitte autorisieren",
     "CONFIRM_PINCODE": "PIN-Code bestätigen",
-    "CREATE_NEW_PINCODE": "Neuen PIN-Code erstellen",
-    "GENERATE_KEY_BUTTON": "Schlüssel generieren",
     "BUTTON.DOWNLOAD": "Schlüssel herunterladen",
     "BUTTON.NEXT": "Weiter",
     "IMPORT_WORDS": "Manuell eingeben",

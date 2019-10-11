@@ -68,8 +68,6 @@
     "SET_PIN_FIRST": "Пожалуйста, сначала установите пинкод",
     "PLEASE_AUTHORIZE": "Авторизуйтесь пожалуйста",
     "CONFIRM_PINCODE": "Подтверждение пинкода",
-    "CREATE_NEW_PINCODE": "Создать новый пинкод",
-    "GENERATE_KEY_BUTTON": "Сгенерировать ключ",
     "BUTTON.DOWNLOAD": "Скачать ключ",
     "BUTTON.NEXT": "Далее",
     "IMPORT_WORDS": "ввести вручную",

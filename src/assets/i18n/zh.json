@@ -671,6 +671,7 @@
         },
         "SELECT_MODE": "视觉模式",
         "MODE": {
+            "SUMMARY": "Summary",
             "DEFAULT": "默认模式",
             "SATOSHI": "Satoshi模式",
             "HEX": "十六进制模式"
@@ -682,7 +683,8 @@
         },
         "OUTPUT": {
             "LOCKED_UNTIL_BLOCK": "锁至第{{block}}区块 (~{{time}})"
-        }
+        },
+        "INPUTS_NOT_ALL_MINE": "Some inputs are not yours! Only your inputs will be signed."
     },
     "SIGN_TX.PAGE_TITLE": "审核，签署并发送交易",
     "SIGN_TX.DESCRIPTION": "请以十六进制格式输入签名或未签名的原始交易。",
@@ -735,5 +737,31 @@
     "AUTH.ENTER_MANUALLY_BUTTON": "输入请求代码",
     "AUTH.GET_ON_MOBILE": "获取移动应用",
     "ERR_INVALID_SIGNATURE": "您的签名已被视为无效。 请再试一次。",
-    "ETP_BRIDGE.INFORMATION_WARNING": "SWFT速币电报客服绝不会要求用户将任何资金转到订单详细信息的充值地址以外的地址，不需要有关订单的详细信息。订单ID就让客服查找订单的足够信息。"
+    "ETP_BRIDGE.INFORMATION_WARNING": "SWFT速币电报客服绝不会要求用户将任何资金转到订单详细信息的充值地址以外的地址，不需要有关订单的详细信息。订单ID就让客服查找订单的足够信息。",
+    "RETURN": "Return",
+    "REORDER.TITLE": "Reorder your MSTs",
+    "MULTISIGNATURE_ADD.OWN_PUBLICKEY_ALREADY_ADDED": "Your own public key will be automatically added, please don't add it a second time",
+    "MULTISIGNATURE_ADD.PUBLIC_KEY_TWICE": "Duplicate public key. Please enter each public key only once.",
+    "TRANSFER.FROM_ADDRESS_NO_ETP": "This address doesn't have any ETP. Please add ETP to this address or use the Automatic option.",
+    "PASSPHRASE.DOWNLOAD_FILE": "Download file",
+    "RECOVER_FROM_BACKUP_WORDS": "Recover wallet from backup words",
+    "EXPORT_MASTER_PUBLIC_KEY.HEADLINE": "Export Master Public Key",
+    "EXPORT_MASTER_PUBLIC_KEY.BUTTON": "Show Key",
+    "EXPORT_MASTER_PUBLIC_KEY.WARNING": "The Master Public Key allows the generation of all your wallets addresses. Even though it cannot be used to access the funds you should be very careful when you share it with somebody.",
+    "SETTINGS.EXPORT_MASTER_PUBLIC_KEY": "Export Master Public Key",
+    "SETTINGS.EXPORT_MASTER_PUBLIC_KEY_TEXT": "The Master Public Key allows to generate all addresses of the wallet but cannot send funds.",
+    "RECEIVE.HISTORY_BTN": "List transactions",
+    "HISTORY.ASSETS_LIST": "Asset",
+    "HISTORY.ADDRESSES_LIST": "Addresses",
+    "HISTORY.SELECT_ALL": "Select all",
+    "HISTORY.SELECT_NONE": "Unselect all",
+    "ASSET_LOCK.ADD_PERIOD": "Add period",
+    "APPLY_CHANGES": "Apply changes",
+    "MESSAGE.IMPORT_PLUGIN_INVALID_FORMAT": "Cannot get plugin's information. Please make sure the plugin is correctly configured.",
+    "MESSAGE.WARNING_PLUGIN_CHECKBOX_MESSAGE": "Do not show again",
+    "MULTISIG_STATUS.MULTISIG": "Multisignature transaction",
+    "MULTISIG_STATUS.PARTIALLY_MULTISIG": "Partially multisignature transaction (not supported)",
+    "FOREIGN_INPUT": "Foreign input",
+    "INDEX": "Index",
+    "MULTISIG_ALREADY_SIGNED": "You have already signed this transaction!"
 }

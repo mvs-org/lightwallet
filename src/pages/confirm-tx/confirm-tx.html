@@ -44,7 +44,7 @@
                     <ion-icon name="create"></ion-icon>
                     {{"CONFIRM_TX.SIGN_ONLY" | translate}}
                 </button>
-                <ion-item *ngIf="multisig.status == 'MULTISIG' && multisig.selfSigned" no-lines class="wrong-input">{{"CONFIRM_TX.MULTISIG_ALREADY_SIGNED" | translate}}</ion-item>
+                <ion-item *ngIf="multisig.status == 'MULTISIG' && multisig.selfSigned" no-lines class="wrong-input">{{"MULTISIG_ALREADY_SIGNED" | translate}}</ion-item>
             </ion-col>
 
             <div *ngIf="signedTx">
