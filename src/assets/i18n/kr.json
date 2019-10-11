@@ -218,7 +218,6 @@
 
     "LOGIN": "로그인",
     "HOW_TO_IMPORT_WALLET_MOBILE": "지갑을 불러오는 방법",
-    "HOW_TO_IMPORT_WALLET_MOBILE_TITLE": "개인 키 파일을 불러오는 방법",
     "HOW_TO_IMPORT_WALLET_MOBILE_STEP1": "Lightwallet 의 셋팅 메뉴에서 휴대폰을 연동 하실 수 있습니다",
     "HOW_TO_IMPORT_WALLET_MOBILE_STEP2": "QR코드를 스캔하십시요",
     "HOW_TO_IMPORT_WALLET_MOBILE_STEP3": "이제 휴대폰으로 지갑을 사용하실수 있습니다",
