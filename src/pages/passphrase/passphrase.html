@@ -1,6 +1,6 @@
 <ion-header>
     <ion-navbar>
-        <ion-title>Passphrase</ion-title>
+        <ion-title>{{'PASSWORD'| translate}}</ion-title>
     </ion-navbar>
 </ion-header>
 
@@ -21,15 +21,36 @@
                 <ion-input name="password_repeat" type="password" placeholder="" [(ngModel)]="password_repeat"></ion-input>
             </ion-item>
         </ion-row>
-        <ion-row class="button more-bottom-padding">
-            <button type="submit" *ngIf="!platform.is('mobile')" ion-button icon-left full [disabled]="!complete(password, password_repeat)" (click)="encrypt(password)">
-                <ion-icon name="arrow-forward"></ion-icon>
-                {{'BUTTON.NEXT'|translate}}
-            </button>
-            <button type="submit" *ngIf="platform.is('mobile')" ion-button icon-left full [disabled]="!passwordValid(password) || !passwordRepeatValid(password, password_repeat)" (click)="encryptMobile(password)">
-                <ion-icon name="arrow-forward"></ion-icon>
-                {{'BUTTON.NEXT'|translate}}
-            </button>
+
+        <ion-row class="button more-bottom-padding" *ngIf="newWallet">
+            <ion-col *ngIf="!platform.is('mobile')">
+                <button ion-button full icon-left color="secondary" [disabled]="!complete(password, password_repeat)" (click)="downloadAndReturnLogin(password)">
+                    <ion-icon name="download"></ion-icon>
+                    {{"PASSPHRASE.DOWNLOAD_FILE"|translate}}
+                </button>
+            </ion-col>
+            <ion-col *ngIf="platform.is('mobile')">
+                <button type="submit" ion-button full icon-left [disabled]="!passwordValid(password) || !passwordRepeatValid(password, password_repeat)" (click)="encrypt(password)">
+                    <ion-icon name="arrow-forward"></ion-icon>
+                    {{"IMPORT_WALLET"|translate}}
+                </button>
+            </ion-col>
+        </ion-row>
+
+
+        <ion-row class="more-bottom-padding" *ngIf="!newWallet">
+            <ion-col col-sm-6 offset-md-1 col-md-5 offset-lg-2 col-lg-4 offset-xl-3 col-xl-3>
+                <button *ngIf="!platform.is('mobile')" ion-button full icon-left color="secondary" [disabled]="!complete(password, password_repeat)" (click)="download(password)">
+                    <ion-icon name="download"></ion-icon>
+                    {{"PASSPHRASE.DOWNLOAD_FILE"|translate}}
+                </button>
+            </ion-col>
+            <ion-col col-sm-6 col-md-5 col-lg-4 col-xl-3>
+                <button type="submit" ion-button full icon-left [disabled]="!passwordValid(password) || !passwordRepeatValid(password, password_repeat)" (click)="encrypt(password)">
+                    <ion-icon name="arrow-forward"></ion-icon>
+                    {{"IMPORT_WALLET"|translate}}
+                </button>
+            </ion-col>
         </ion-row>
     </form>
 </ion-content>

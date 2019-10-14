@@ -3,14 +3,14 @@ etp-card {
     width: 100%;
 
     .asset-container {
-       max-width: 100%;
+        max-width: 100%;
     }
 
     @media (min-width: 825px) {
         .asset-container {
             max-width: 50%;
         }
-     }
+    }
 
     @media (min-width: 1310px) {
         .asset-container {
@@ -94,39 +94,39 @@ etp-card {
     }
 
     .deposit-button {
-      margin: 0;
-      padding: 0;
+        margin: 0;
+        padding: 0;
     }
 
     .row-buttons {
-      position: absolute;
-      bottom: 20px;
-      left: -1px;
-      padding-right: 10px;
-      padding-left: 10px;
+        position: absolute;
+        bottom: 20px;
+        left: -1px;
+        padding-right: 10px;
+        padding-left: 10px;
     }
 
     .card-block {
-      padding-top: 10px;
-      padding-left: 0px;
-      padding-right: 0px;
-      padding-bottom: 50px;
+        padding-top: 10px;
+        padding-left: 0px;
+        padding-right: 0px;
+        padding-bottom: 50px;
     }
 
     .offlineIcon {
-      color: red;
-      padding-right: 10px;
+        color: red;
+        padding-right: 10px;
     }
 
 
     .block-iPhone {
-      line-height: 8;
-      font-size: 14px;
+        line-height: 8;
+        font-size: 14px;
     }
 
     .csdLogoDefault {
       //filter: invert(100%);
-      filter: brightness(0.50);
+        filter: brightness(0.50);
     }
 
     .fiat {
@@ -155,8 +155,8 @@ etp-card {
     }
 
     .card-ios {
-      margin: 0;
-      width: 100%;
+        margin: 0;
+        width: 100%;
     }
 
 }

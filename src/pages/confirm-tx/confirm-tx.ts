@@ -2,6 +2,7 @@ import { Component } from '@angular/core'
 import { IonicPage, NavController, NavParams } from 'ionic-angular'
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { AlertProvider } from '../../providers/alert/alert';
+import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
 
 @IonicPage({
     name: 'confirm-tx-page',
@@ -21,14 +22,17 @@ export class ConfirmTxPage {
     input: string
     signedTx: string
     mode: string = 'default'
-    signStatus: string
+    status: string
     allMyInputs: boolean = true
+    addresses: Array<string> = []
+    multisig: any = {}
 
     constructor(
         public navCtrl: NavController,
         private mvs: MvsServiceProvider,
         private alert: AlertProvider,
         public navParams: NavParams,
+        private wallet: WalletServiceProvider,
     ) { }
 
     async ionViewDidEnter() {
@@ -37,6 +41,10 @@ export class ConfirmTxPage {
         } else {
             this.decodeAndOrganize(this.hexTx)
         }
+
+        const addresses = await this.mvs.getAddresses()
+        const multisigAddresses = await this.wallet.getMultisigAddresses()
+        this.addresses = addresses.concat(multisigAddresses)
     }
 
     cancel(e) {
@@ -71,6 +79,7 @@ export class ConfirmTxPage {
     send() {
         this.sign()
             .then(tx => this.broadcast(tx))
+            .catch((error) => {})
     }
 
     broadcast(tx) {
@@ -84,7 +93,7 @@ export class ConfirmTxPage {
             .catch((error) => {
                 this.alert.stopLoading()
                 console.error(error.message)
-                switch(error.message){
+                switch (error.message) {
                     case 'ERR_CONNECTION':
                         this.alert.showError('ERROR_SEND_TEXT', '')
                         break;
@@ -99,52 +108,132 @@ export class ConfirmTxPage {
     }
 
     sign() {
-        return this.mvs.sign(this.decodedTx, this.passphrase, this.allMyInputs)
-            .catch((error) => {
-                console.error(error.message)
-                switch (error.message) {
-                    case 'ERR_DECRYPT_WALLET':
-                        this.alert.showError('MESSAGE.PASSWORD_WRONG', '')
-                        throw Error('ERR_SIGN_TX')
-                    case 'ERR_DECRYPT_WALLET_FROM_SEED':
-                        this.alert.showError('MESSAGE.PASSWORD_WRONG', '')
-                        throw Error('ERR_SIGN_TX')
-                    case 'ERR_INSUFFICIENT_BALANCE':
-                        this.alert.showError('MESSAGE.INSUFFICIENT_BALANCE', '')
-                        throw Error('ERR_SIGN_TX')
-                    case 'ERR_TOO_MANY_INPUTS':
-                        this.alert.showErrorTranslated('ERROR_TOO_MANY_INPUTS', 'ERROR_TOO_MANY_INPUTS_TEXT')
-                        throw Error('ERR_SIGN_TX')
-                    default:
-                        this.alert.showError('MESSAGE.SIGN_TRANSACTION', error.message)
-                        throw Error('ERR_SIGN_TX')
-                }
-            })
+        if (this.multisig.status == 'MULTISIG') {
+            return this.wallet.signMultisigTx(this.decodedTx.inputs[0].address, this.decodedTx, this.passphrase)
+                .catch((error) => {
+                    console.error(error.message)
+                    switch (error.message) {
+                        case 'ERR_DECRYPT_WALLET':
+                            this.alert.showError('MESSAGE.PASSWORD_WRONG', '')
+                            throw Error('ERR_SIGN_TX')
+                        case 'ERR_DECRYPT_WALLET_FROM_SEED':
+                            this.alert.showError('MESSAGE.PASSWORD_WRONG', '')
+                            throw Error('ERR_SIGN_TX')
+                        case 'ERR_INSUFFICIENT_BALANCE':
+                            this.alert.showError('MESSAGE.INSUFFICIENT_BALANCE', '')
+                            throw Error('ERR_SIGN_TX')
+                        case 'ERR_TOO_MANY_INPUTS':
+                            this.alert.showErrorTranslated('ERROR_TOO_MANY_INPUTS', 'ERROR_TOO_MANY_INPUTS_TEXT')
+                            throw Error('ERR_SIGN_TX')
+                        case 'SIGN_ALREADY_INCL':
+                            this.alert.showError('MESSAGE.ALREADY_SIGN_TRANSACTION', '')
+                            throw Error('ERR_SIGN_TX')
+                        default:
+                            this.alert.showError('MESSAGE.SIGN_TRANSACTION', error.message)
+                            throw Error('ERR_SIGN_TX')
+                    }
+                })
+        } else {
+            return this.mvs.sign(this.decodedTx, this.passphrase, this.allMyInputs)
+                .catch((error) => {
+                    console.error(error.message)
+                    switch (error.message) {
+                        case 'ERR_DECRYPT_WALLET':
+                            this.alert.showError('MESSAGE.PASSWORD_WRONG', '')
+                            throw Error('ERR_SIGN_TX')
+                        case 'ERR_DECRYPT_WALLET_FROM_SEED':
+                            this.alert.showError('MESSAGE.PASSWORD_WRONG', '')
+                            throw Error('ERR_SIGN_TX')
+                        case 'ERR_INSUFFICIENT_BALANCE':
+                            this.alert.showError('MESSAGE.INSUFFICIENT_BALANCE', '')
+                            throw Error('ERR_SIGN_TX')
+                        case 'ERR_TOO_MANY_INPUTS':
+                            this.alert.showErrorTranslated('ERROR_TOO_MANY_INPUTS', 'ERROR_TOO_MANY_INPUTS_TEXT')
+                            throw Error('ERR_SIGN_TX')
+                        default:
+                            this.alert.showError('MESSAGE.SIGN_TRANSACTION', error.message)
+                            throw Error('ERR_SIGN_TX')
+                    }
+                })
+        }
     }
 
     async checkTxSignStatus(tx) {
         let foundSignedInput = false
         let foundUnisgnedInput = false
-        const myAddresses = await this.mvs.getAddresses()
-        tx.inputs.forEach(input => {
-            if(input.script) {
-                foundSignedInput = true
+
+        let foundNotMultisigInput = false
+        let foundMultisigInput = false
+        let multisigAddress = ''
+        let differentMultisigAddressesInput = false
+
+        for (let i = 0; i < tx.inputs.length; i++) {
+            let input = tx.inputs[i]
+
+            if (input.address[0] == '3') {
+                foundMultisigInput = true
+                this.multisig.current_nbr_sign = input.script.split("[").length - 2
+                this.multisig.info = await this.getMultisigInfo(input.address)
+                let signatureStatus = await this.mvs.getSignatureStatus(this.decodedTx, i, this.multisig.info.r, this.multisig.info.s)
+                this.multisig.selfSigned = signatureStatus.targetSigned
+                if (!signatureStatus.complete) {
+                    foundUnisgnedInput = true
+                } else {
+                    foundSignedInput = true
+                }
+
+                if (multisigAddress && multisigAddress !== input.address) {
+                    differentMultisigAddressesInput = true
+                } else {
+                    multisigAddress = input.address
+                }
+
             } else {
-                foundUnisgnedInput = true
+                foundNotMultisigInput = true
+                if (input.script) {
+                    foundSignedInput = true
+                } else {
+                    foundUnisgnedInput = true
+                }
             }
 
-            if(myAddresses.indexOf(input.previous_output.address) == -1) {
+            if (this.addresses.indexOf(input.previous_output.address) == -1) {
                 this.allMyInputs = false
-                console.log("Some inputs are not mine!!!")
             }
-        });
-        if (foundSignedInput && !foundUnisgnedInput) {
-            this.signStatus = 'SIGNED'
-        } else if (!foundSignedInput && foundUnisgnedInput) {
-            this.signStatus = 'UNSIGNED'
-        } else {
-            this.signStatus = 'PARTIALLY'
         }
+
+        if (foundSignedInput && !foundUnisgnedInput) {
+            this.status = 'SIGNED'
+        } else if (!foundSignedInput && foundUnisgnedInput) {
+            this.status = 'UNSIGNED'
+        } else {
+            this.status = 'PARTIALLY'
+        }
+
+        if (differentMultisigAddressesInput) {
+            //contains multiples multisig addresses as inputs (not supported)
+            this.multisig.status = 'MIX_MULTISIG'
+        } else if (foundMultisigInput && !foundNotMultisigInput) {
+            this.multisig.status = 'MULTISIG'
+
+        } else if (!foundMultisigInput && foundNotMultisigInput) {
+            this.multisig.status = 'NOT_MULTISIG'
+        } else {
+            //contains multisig and normal address as input (not supported)
+            this.multisig.status = 'PARTIALLY_MULTISIG'
+        }
+
+    }
+
+    async getMultisigInfo(address) {
+        let multisigs = await this.wallet.getMultisigsInfo()
+        let multisig_info = {}
+        multisigs.forEach(multisig => {
+            if (multisig.a == address) {
+                multisig_info = multisig
+            }
+        })
+        return multisig_info
     }
 
     validPassword = (passphrase) => (passphrase.length > 0)

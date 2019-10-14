@@ -40,7 +40,7 @@ export class LoginAccountPage {
     importAccount(account, password) {
         this.alert.showLoading()
             .then(() => this.wallet.decryptAccount(account.content, password))
-            .then((decryptedAccount) => this.wallet.setupAccount(account.name, decryptedAccount))
+            .then((decryptedAccount) => Promise.all([this.wallet.setupAccount(account.name, decryptedAccount), this.wallet.setAccountParams(account.params)]))
             .then(() => Promise.all([this.wallet.getWallet(password), this.wallet.getAddressIndex()]))
             .then(([wallet, index]) => this.wallet.generateAddresses(wallet, 0, index))
             .then((addresses) => this.mvs.addAddresses(addresses))

@@ -24,7 +24,19 @@ export class PluginSettingsPage {
         private translate: TranslateService,
         private pluginService: PluginProvider
     ) {
-        this.alert.showMessage('MESSAGE.WARNING_PLUGIN_TITLE', '', 'MESSAGE.WARNING_PLUGIN_MESSAGE')
+
+    }
+
+    async ionViewDidEnter() {
+        let pluginsConfig = await this.pluginService.getPluginsConfig()
+        if(!pluginsConfig.hideSettingsWarning) {
+            this.alert.showCheckbox('MESSAGE.WARNING_PLUGIN_TITLE', 'MESSAGE.WARNING_PLUGIN_MESSAGE', 'MESSAGE.WARNING_PLUGIN_CHECKBOX_MESSAGE', false, (checked) => {
+                if(checked) {
+                    pluginsConfig.hideSettingsWarning = true
+                    this.pluginService.setPluginsConfig(pluginsConfig)
+                }
+            })
+        }
     }
 
     addPlugin(url){
@@ -47,6 +59,11 @@ export class PluginSettingsPage {
                 switch (error.message) {
                     case 'ERR_INVALID_URL':
                         this.translate.get('MESSAGE.IMPORT_PLUGIN_INVALID_URL').subscribe((message: string) => {
+                            this.alert.showError('MESSAGE.IMPORT_PLUGIN_ERROR', message)
+                        })
+                        break;
+                    case 'ERR_INVALID_PLUGIN_FORMAT':
+                        this.translate.get('MESSAGE.IMPORT_PLUGIN_INVALID_FORMAT').subscribe((message: string) => {
                             this.alert.showError('MESSAGE.IMPORT_PLUGIN_ERROR', message)
                         })
                         break;

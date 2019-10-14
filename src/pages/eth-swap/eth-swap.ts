@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { AlertProvider } from '../../providers/alert/alert';
@@ -40,6 +40,7 @@ export class EthSwapPage {
         public platform: Platform,
         private alert: AlertProvider,
         private globals: AppGlobals,
+        private zone: NgZone,
     ) {
 
         this.selectedAsset = navParams.get('asset')
@@ -198,5 +199,9 @@ export class EthSwapPage {
     validMessageLength = (message) => this.mvs.verifyMessageSize(message) < 253
 
     validEthereumAddress = (address) => (address != undefined && address != '' && address.charAt(0) == '0' && address.charAt(1) == 'x' && address.trim().length == 42)
+
+    updateRange() {
+        this.zone.run(() => { });
+    }
 
 }

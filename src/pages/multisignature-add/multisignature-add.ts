@@ -268,14 +268,18 @@ export class MultisignatureAddPage {
 
     validAddress = this.mvs.validAddress
 
-    validPublicKey = (publicKey) => (publicKey) ? publicKey.length == 66 : false;
+    validPublicKey = (publicKey, i) => (publicKey) ? publicKey.length == 66 && this.validNotMyKey(publicKey) && this.validUsedOnceKey(publicKey, i) : false;
+
+    validNotMyKey = (publicKey) => publicKey !== this.myPublicKey
+
+    validUsedOnceKey = (publicKey, i) => this.cosigners.indexOf(publicKey) === i
 
     validnbrSigReq = (nbrSigReq) => nbrSigReq && nbrSigReq > 0
 
     checkPublicKeys = () => {
         let valid = true
-        this.cosigners.forEach((key) => {
-            if(!key || !this.validPublicKey(key))
+        this.cosigners.forEach((key, i) => {
+            if(!key || !this.validPublicKey(key, i))
                 valid = false
         })
         this.validPublicKeys = valid

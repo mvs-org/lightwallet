@@ -244,5 +244,31 @@ export class AlertProvider {
         })
     }
 
+    showCheckbox(title, message, checkbox, checked, onSubmit) {
+        this.translate.get(['OK', title, message, checkbox]).subscribe((translations: any) => {
+            let alert = this.alertCtrl.create({
+                title: translations[title],
+                message: translations[message],
+                enableBackdropDismiss: false,
+                inputs: [
+                    { 
+                        name: 'checkbox',
+                        type: 'checkbox',
+                        label: translations[checkbox],
+                        value: 'checked',
+                        checked: checked,
+                    }
+                ],
+                buttons: [
+                    {
+                        text: translations['OK'],
+                        handler: data => onSubmit(data && data.length > 0)
+                    },
+                ]
+            })
+            alert.present(alert)
+        })
+    }
+
 
 }

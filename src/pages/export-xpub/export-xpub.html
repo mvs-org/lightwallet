@@ -1,0 +1,38 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>{{ "EXPORT_MASTER_PUBLIC_KEY.HEADLINE" | translate}}</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <p align="center" class="wrong-input">
+        {{"EXPORT_MASTER_PUBLIC_KEY.WARNING" | translate}}
+    </p>
+
+    <form #exportXpubForm="ngForm">
+        <ion-list *ngIf="!xpub">
+            <ion-item>
+                <ion-label color="primary" floating>{{"PASSWORD"|translate}}</ion-label>
+                <ion-input ion-input type="password" [(ngModel)]="passphrase" name="passphrase"></ion-input>
+            </ion-item>
+            <br>
+            <button type="submit" ion-button full icon-left (click)="export(this.passphrase)" [disabled]="!validPassword(passphrase)">
+                <ion-icon name="key"></ion-icon>
+                {{"EXPORT_MASTER_PUBLIC_KEY.BUTTON" | translate}}
+            </button>
+        </ion-list>
+
+        <ion-list *ngIf="xpub">
+            <h4>{{"EXPORT_MASTER_PUBLIC_KEY.YOUR_KEY"|translate}}</h4>
+            <textarea fz-elastic ion-input full type="text" #xpubElement [value]="xpub" readonly>{{xpub}}</textarea>
+            <button ion-button icon-left full [ngxClipboard]="xpubElement">
+                <ion-icon name="copy"></ion-icon>
+                {{'COPY'|translate}}
+            </button>
+        </ion-list>
+    </form>
+
+</ion-content>

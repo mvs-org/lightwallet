@@ -29,13 +29,13 @@
     padding-top: 21px !important;
 }
 
-.item.error-border .item-inner {
+.item.error-border .item-inner, .item.item-select .error-border .item-cover {
     border-bottom-color: red !important;
     -webkit-box-shadow: inset 0 -1px 0 0 red !important;
     box-shadow: red !important;
 }
 
-.item.warning-border .item-inner {
+.item.warning-border .item-inner, .item.item-select .warning-border .item-cover {
     border-bottom-color: orange !important;
     -webkit-box-shadow: inset 0 -1px 0 0 orange !important;
     box-shadow: orange !important;
@@ -250,10 +250,10 @@ ion-alert:not(.alert-ios) .alert-button-group-vertical {
 // ░     ░ ░  ░ ░                ░      ░  ░   ░      ░    ░
 
 .theme-noctilux{
-  .wrong-input div{
-      color: red !important;
-  }
-  background-color: #383838;
+    .wrong-input div{
+        color: red !important;
+    }
+    background-color: #383838;
     .content{
         background-color: #202020;
     }
@@ -279,6 +279,11 @@ ion-alert:not(.alert-ios) .alert-button-group-vertical {
 
     page-login .banner {
         background:url(../assets/logo1.png) no-repeat !important;
+        background-size: 100% !important;
+    }
+
+    page-login .banner.china {
+        background:url(../assets/logo1-zh.png) no-repeat !important;
         background-size: 100% !important;
     }
 
@@ -308,9 +313,9 @@ ion-alert:not(.alert-ios) .alert-button-group-vertical {
         }
     }
 
-    .alert-md [aria-checked=false]{
-        .alert-radio-label{
-          color: #949494;
+    .alert-md {
+        .alert-radio-label, .alert-checkbox-label {
+            color: #949494;
         }
     }
 
@@ -469,14 +474,19 @@ ion-alert:not(.alert-ios) .alert-button-group-vertical {
     }
 
     .alert-md [aria-checked=false]{
-        .alert-radio-label{
-          color: #0f8082;
+        .alert-radio-label, .alert-radio-label {
+            color: #0f8082;
         }
     }
 
 
     page-login .banner {
         background:url(../assets/logo1.png) no-repeat !important;
+        background-size: 100% !important;
+    }
+
+    page-login .banner.china {
+        background:url(../assets/logo1-zh.png) no-repeat !important;
         background-size: 100% !important;
     }
 
@@ -610,12 +620,12 @@ ion-list-header{
 .ios ion-tabs > .ion-page.tab-subpage > ion-header > .toolbar.statusbar-padding:first-child,
 .ios ion-menu > .menu-inner > .toolbar.statusbar-padding:first-child,
 .ios ion-menu > .menu-inner > ion-header > .toolbar.statusbar-padding:first-child {
-  padding-top: calc(20px + 4px);
-  padding-top: calc(constant(safe-area-inset-top) + 4px);
-  padding-top: calc(env(safe-area-inset-top) + 4px);
-  min-height: calc(44px + 20px);
-  min-height: calc(44px + constant(safe-area-inset-top));
-  min-height: calc(44px + env(safe-area-inset-top));
+    padding-top: calc(20px + 4px);
+    padding-top: calc(constant(safe-area-inset-top) + 4px);
+    padding-top: calc(env(safe-area-inset-top) + 4px);
+    min-height: calc(44px + 20px);
+    min-height: calc(44px + constant(safe-area-inset-top));
+    min-height: calc(44px + env(safe-area-inset-top));
 }
 
 .ios ion-nav > .ion-page > ion-content.statusbar-padding:first-child .scroll-content,
@@ -625,9 +635,9 @@ ion-list-header{
 .ios ion-tabs > .ion-page.tab-subpage > ion-header > ion-content.statusbar-padding:first-child .scroll-content,
 .ios ion-menu > .menu-inner > ion-content.statusbar-padding:first-child .scroll-content,
 .ios ion-menu > .menu-inner > ion-header > ion-content.statusbar-padding:first-child .scroll-content {
-  padding-top: 20px;
-  padding-top: constant(safe-area-inset-top);
-  padding-top: env(safe-area-inset-top);
+    padding-top: 20px;
+    padding-top: constant(safe-area-inset-top);
+    padding-top: env(safe-area-inset-top);
 }
 
 .ios ion-nav > .ion-page > ion-content.statusbar-padding:first-child[padding] .scroll-content,
@@ -644,9 +654,9 @@ ion-list-header{
 .ios ion-menu > .menu-inner > ion-content.statusbar-padding:first-child[padding-top] .scroll-content,
 .ios ion-menu > .menu-inner > ion-header > ion-content.statusbar-padding:first-child[padding] .scroll-content,
 .ios ion-menu > .menu-inner > ion-header > ion-content.statusbar-padding:first-child[padding-top] .scroll-content {
-  padding-top: calc(16px + 20px);
-  padding-top: constant(safe-area-inset-top);
-  padding-top: env(safe-area-inset-top);
+    padding-top: calc(16px + 20px);
+    padding-top: constant(safe-area-inset-top);
+    padding-top: env(safe-area-inset-top);
 }
 
 .ios ion-nav > .ion-page > .toolbar.statusbar-padding:first-child ion-segment,
@@ -663,39 +673,6 @@ ion-list-header{
 .ios ion-menu > .menu-inner > .toolbar.statusbar-padding:first-child ion-title,
 .ios ion-menu > .menu-inner > ion-header > .toolbar.statusbar-padding:first-child ion-segment,
 .ios ion-menu > .menu-inner > ion-header > .toolbar.statusbar-padding:first-child ion-title {
-  padding-top: 20px;
-  padding-top: constant(safe-area-inset-top);
-  padding-top: env(safe-area-inset-top);
-  height: calc(44px + 20px);
-  height: calc(44px + constant(safe-area-inset-top));
-  height: calc(44px + env(safe-area-inset-top));
-  min-height: calc(44px + 20px);
-  min-height: calc(44px + constant(safe-area-inset-top));
-  min-height: calc(44px + env(safe-area-inset-top));
-}
-
-@media only screen and (max-width: 767px) {
-  .ios .modal-wrapper > .ion-page > ion-header > .toolbar.statusbar-padding:first-child {
-    padding-top: calc(20px + 4px);
-    padding-top: calc(constant(safe-area-inset-top) + 4px);
-    padding-top: calc(env(safe-area-inset-top) + 4px);
-    min-height: calc(44px + 20px);
-    min-height: calc(44px + constant(safe-area-inset-top));
-    min-height: calc(44px + env(safe-area-inset-top));
-  }
-  .ios .modal-wrapper > .ion-page > ion-header > ion-content.statusbar-padding:first-child .scroll-content {
-    padding-top: 20px;
-    padding-top: constant(safe-area-inset-top);
-    padding-top: env(safe-area-inset-top);
-  }
-  .ios .modal-wrapper > .ion-page > ion-header > ion-content.statusbar-padding:first-child[padding] .scroll-content,
-  .ios .modal-wrapper > .ion-page > ion-header > ion-content.statusbar-padding:first-child[padding-top] .scroll-content {
-    padding-top: calc(16px + 20px);
-    padding-top: constant(safe-area-inset-top);
-    padding-top: env(safe-area-inset-top);
-  }
-  .ios .modal-wrapper > .ion-page > ion-header > .toolbar.statusbar-padding:first-child ion-segment,
-  .ios .modal-wrapper > .ion-page > ion-header > .toolbar.statusbar-padding:first-child ion-title {
     padding-top: 20px;
     padding-top: constant(safe-area-inset-top);
     padding-top: env(safe-area-inset-top);
@@ -705,7 +682,40 @@ ion-list-header{
     min-height: calc(44px + 20px);
     min-height: calc(44px + constant(safe-area-inset-top));
     min-height: calc(44px + env(safe-area-inset-top));
-  }
+}
+
+@media only screen and (max-width: 767px) {
+    .ios .modal-wrapper > .ion-page > ion-header > .toolbar.statusbar-padding:first-child {
+        padding-top: calc(20px + 4px);
+        padding-top: calc(constant(safe-area-inset-top) + 4px);
+        padding-top: calc(env(safe-area-inset-top) + 4px);
+        min-height: calc(44px + 20px);
+        min-height: calc(44px + constant(safe-area-inset-top));
+        min-height: calc(44px + env(safe-area-inset-top));
+    }
+    .ios .modal-wrapper > .ion-page > ion-header > ion-content.statusbar-padding:first-child .scroll-content {
+        padding-top: 20px;
+        padding-top: constant(safe-area-inset-top);
+        padding-top: env(safe-area-inset-top);
+    }
+    .ios .modal-wrapper > .ion-page > ion-header > ion-content.statusbar-padding:first-child[padding] .scroll-content,
+    .ios .modal-wrapper > .ion-page > ion-header > ion-content.statusbar-padding:first-child[padding-top] .scroll-content {
+        padding-top: calc(16px + 20px);
+        padding-top: constant(safe-area-inset-top);
+        padding-top: env(safe-area-inset-top);
+    }
+    .ios .modal-wrapper > .ion-page > ion-header > .toolbar.statusbar-padding:first-child ion-segment,
+    .ios .modal-wrapper > .ion-page > ion-header > .toolbar.statusbar-padding:first-child ion-title {
+        padding-top: 20px;
+        padding-top: constant(safe-area-inset-top);
+        padding-top: env(safe-area-inset-top);
+        height: calc(44px + 20px);
+        height: calc(44px + constant(safe-area-inset-top));
+        height: calc(44px + env(safe-area-inset-top));
+        min-height: calc(44px + 20px);
+        min-height: calc(44px + constant(safe-area-inset-top));
+        min-height: calc(44px + env(safe-area-inset-top));
+    }
 }
 
 /*Footer iOS*/

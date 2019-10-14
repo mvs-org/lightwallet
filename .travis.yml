@@ -1,6 +1,7 @@
 sudo: required
 addons:
   addons: 
+  chrome: beta
   apt:
     packages:
     - chromium-chromedriver
@@ -20,7 +21,7 @@ install:
 - npm install -g cordova ionic
 - npm run e2e-update
 script:
-- npm run e2e
+# - npm run e2e
 - npm run test
 - ionic cordova build browser --release --prod
 notifications:

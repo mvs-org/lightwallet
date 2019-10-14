@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { IonicPage, NavController, AlertController, Loading, NavParams, Platform } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { TranslateService } from '@ngx-translate/core';
@@ -59,7 +59,9 @@ export class AssetIssuePage {
         private mvs: MvsServiceProvider,
         public platform: Platform,
         private alert: AlertProvider,
-        private translate: TranslateService) {
+        private translate: TranslateService,
+        private zone: NgZone,
+    ) {
 
         this.selectedAsset = "ETP"
         this.feeAddress = 'auto'
@@ -128,10 +130,6 @@ export class AssetIssuePage {
             .then(() => this.loadMsts())
             .then(() => this.symbolChanged())
             .catch(console.error);
-    }
-
-    onSendToAddressChange(event) {
-
     }
 
     validMaxSupply = (max_supply, asset_decimals) => max_supply == 'custom' || (max_supply > 0 && ((asset_decimals == undefined) || (Math.floor(parseFloat(max_supply) * Math.pow(10, asset_decimals))) <= 10000000000000000))
@@ -375,6 +373,7 @@ export class AssetIssuePage {
     }
 
     maxSupplyChanged = () => {
+        this.updateRange()
         let max_supply = this.max_supply != 'custom' ? this.max_supply : this.custom_max_supply
         if (this.asset_decimals != undefined && (Math.floor(parseFloat(max_supply) * Math.pow(10, this.asset_decimals))) > 10000000000000000) {
             this.error_too_high_max_supply = true
@@ -392,6 +391,10 @@ export class AssetIssuePage {
                 return
             }
         })
+    }
+
+    updateRange() {
+        this.zone.run(() => { });
     }
 
 }

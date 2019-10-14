@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, Platform, Events } from 'ionic-ang
 import { AppGlobals } from '../../app/app.global';
 import { Storage } from '@ionic/storage';
 import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
+import { TranslateService } from '@ngx-translate/core';
 
 @IonicPage()
 @Component({
@@ -24,6 +25,7 @@ export class LoginPage {
         private event: Events,
         private wallet: WalletServiceProvider,
         private navParams: NavParams,
+        private translate: TranslateService,
     ) {
         this.isApp = (!document.URL.startsWith('http') || document.URL.startsWith('http://localhost:8080'));
 
@@ -33,7 +35,13 @@ export class LoginPage {
 
     ionViewDidEnter() {
         this.loadNetwork()
+    }
 
+    getLogoClasses(){
+        return{
+            banner: true,
+            china: this.translate.currentLang=='zh'
+        }
     }
 
     GenerateKeyPage = e => this.nav.push("GenerateKeyPage")
