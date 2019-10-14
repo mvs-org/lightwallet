@@ -87,7 +87,7 @@
     "CONFIRM_PASSWORD": "Passwort bestätigen",
     "LIGHT_WALLET_INFO_TEXT": "Nehme bitte zur Kenntnis, dass myetpwallet.com keinen Zugriff auf deinen Wallet-Schlüssel hat. Wenn du die Backup-Wörter oder die Schlüsseldatei verlierst, sind wir nicht in der Lage, dir den Zugriff auf dein Guthaben zu ermöglichen.",
     "TRANSACTION.INNER_WALLET": "Transaktion innerhalb des Wallets",
-    "HEIGHT": "Höhe",
+    "HEIGHT": "Blöcke",
     "SELECT_CHANGE_ADDRESS": "Änderungsadresse spezifizieren (optional)",
     "SELECT_FROM_ADDRESS": "Adresse der Quelle auswählen (optional)",
     "SHOW_ADVANCED": "Erweiterte Optionen anzeigen",
@@ -325,6 +325,7 @@
     "PLUGIN.ALREADY_ADDED": "Das Plugin ist Ihrem Wallet bereits hinzugefügt.",
     "MESSAGE.IMPORT_PLUGIN_ERROR": "Fehler beim Laden des Plugins.",
     "MESSAGE.IMPORT_PLUGIN_INVALID_URL": "Ungültige URL. Bitte Plugin URL überprüfen.",
+    "MESSAGE.IMPORT_PLUGIN_INVALID_FORMAT": "Plugin informationen können nicht geladen werden. Bitte Plugin Konfiguration überprüfen.",
     "MESSAGE.IMPORT_PLUGIN_INVALID_NAME": "Ungültiger Plugin Name. Der Name des Plugins enthält ungültige Zeichen.",
     "MESSAGE.IMPORT_PLUGIN_MISSING_DEFAULT_TRANSLATION": "Die Standardübersetzung des Plugins ist nicht definiert.",
     "ERROR_TOO_MANY_INPUTS": "Zu viele Eingänge",
@@ -487,6 +488,7 @@
     "MESSAGE.ALREADY_SIGN_TRANSACTION": "Die Transaktion beinhaltet bereits die Signatur.",
     "MESSAGE.WARNING_PLUGIN_TITLE": "Warnhinweis zu Plugins!",
     "MESSAGE.WARNING_PLUGIN_MESSAGE": "Seit der MyETPWallet Version 0.6.0 lassen sich externe Plugins hinzufügen. Dieses Feature erlaubt die einfache Integration mit Drittsystemen. Durch die Verwendung von Plugins erhalten die jeweiligen Anbieter einblich in Wallet Informationen. Am besten sollten Plugins nicht mit dem Hauptaccount verwendet werden. Es empfiehlt sich daher die Erstellung einen Zweitwallets, welches nicht über eine große Anzahl von Assets vergügt.",
+    "MESSAGE.WARNING_PLUGIN_CHECKBOX_MESSAGE": "In Zukunft nicht anzeigen",
     "MESSAGE.WARNING_MULTISIG_TITLE": "Multisignatur Adressen und Transaktionen durch MyETPWallet sind in einer Beta Phase!",
     "MESSAGE.WARNING_MULTISIG_MESSAGE": "Seit Version 0.6.0 lassen sich Multisignatur Adresses generieren und importieren. Da es sich um ein neues Feature handelt sollen vorerst keine großen Mengen von Assets transferiert werden. Bei Fehlern bitte umgehend einen Fehlerreport unter dem Link im Hauptmenü erstellen. Vielen Dank.",
     "SWAP_FEE": "Swap Gebühr",
@@ -673,6 +675,7 @@
         },
         "SELECT_MODE": "Anzeigemodus",
         "MODE": {
+            "SUMMARY": "Übersicht",
             "DEFAULT": "Standard",
             "SATOSHI": "Satoshi",
             "HEX": "Hex"
@@ -682,10 +685,17 @@
             "UNSIGNED": "Unsignierte Transaktion",
             "PARTIALLY": "Partiell signierte Transaktion"
         },
+        "MULTISIG_STATUS": {
+            "MULTISIG": "Multisignatur Transaktion",
+            "PARTIALLY_MULTISIG": "Partielle Multisignatur Transaktion (nicht unterstützt)"
+        },
         "OUTPUT": {
             "LOCKED_UNTIL_BLOCK": "Gesperrt bis Block {{block}} (~{{time}})"
         },
-        "INPUTS_NOT_ALL_MINE": "Nicht alle Inputs dieser Transaktion gehören zu diesem Wallet. Die Transaktion kann ggf. nur partiell signiert werden."
+        "INPUTS_NOT_ALL_MINE": "Nicht alle Inputs dieser Transaktion gehören zu diesem Wallet. Die Transaktion kann ggf. nur partiell signiert werden.",
+        "FOREIGN_INPUT": "Fremder Eingang",
+        "INDEX": "Index",
+        "HASH": "Hash"
     },
     "SIGN_TX.PAGE_TITLE": "Transaktion bestätigen, signieren und senden",
     "SIGN_TX.DESCRIPTION": "Kodierte Transaktion im Hex Format eingeben. Die Transaktion kann signiert oder unsigniert sein.",
@@ -738,5 +748,20 @@
     "AUTH.ENTER_MANUALLY_BUTTON": "Anfragecode manuell eingeben",
     "AUTH.GET_ON_MOBILE": "Mobile App herunterladen",
     "ERR_INVALID_SIGNATURE": "Die Signatur ist ungültig. Bitte erneut versuchen.",
-    "ETP_BRIDGE.INFORMATION_WARNING": "Der SWFT Telegram Support wird Benutzer niemals danach fragen, Coins an andere Adressen außer der in der Order angebenen zu senden. Angaben zu Details der Bestellung werden im Regelfall nicht erfragt. Die ID der Bestellung sollte ausreichen um die Bestellung zu identifizieren."
+    "ETP_BRIDGE.INFORMATION_WARNING": "Der SWFT Telegram Support wird Benutzer niemals danach fragen, Coins an andere Adressen außer der in der Order angebenen zu senden. Angaben zu Details der Bestellung werden im Regelfall nicht erfragt. Die ID der Bestellung sollte ausreichen um die Bestellung zu identifizieren.",
+    "RETURN": "Zurück",
+    "REORDER.TITLE": "MSTs ordnen",
+    "MULTISIGNATURE_ADD.OWN_PUBLICKEY_ALREADY_ADDED": "Der eigene öffentliche Schlüssel wird automatisch hinzugefügt. Nicht erneut hinzufügen.",
+    "MULTISIGNATURE_ADD.PUBLIC_KEY_TWICE": "Öffentlicher Schlüssel existiert bereits. Jeder Schlüssel kann nur einmal hinzugefügt werden.",
+    "RECOVER_FROM_BACKUP_WORDS": "Wallet von Backup Wörtern wiederherstellen",
+    "EXPORT_MASTER_PUBLIC_KEY.HEADLINE": "Master Public Key exportieren",
+    "EXPORT_MASTER_PUBLIC_KEY.BUTTON": "Schlüssel anzeigen",
+    "EXPORT_MASTER_PUBLIC_KEY.WARNING": "Der Master Public Key ermöglicht die Erzeugung aller Adressen des Wallets. Auch wenn er kein Senden ermöglicht sollte er nicht mit unbefugten geteilt werden.",
+    "SETTINGS.EXPORT_MASTER_PUBLIC_KEY": "Master Public Key exportieren",
+    "SETTINGS.EXPORT_MASTER_PUBLIC_KEY_TEXT": "Der Master Public Key ermöglicht die Erzeugung aller Adressen des Wallets. Auch wenn er kein Senden ermöglicht sollte er nicht mit unbefugten geteilt werden.",
+    "RECEIVE.HISTORY_BTN": "Transactionen auflisten",
+    "HISTORY.ASSETS_LIST": "Asset",
+    "HISTORY.ADDRESSES_LIST": "Adressen",
+    "HISTORY.SELECT_ALL": "Alle auswählen",
+    "HISTORY.SELECT_NONE": "Keine auswählen"
 }
