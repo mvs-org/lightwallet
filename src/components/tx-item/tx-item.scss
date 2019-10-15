@@ -83,4 +83,9 @@ tx-item {
         height: 20px;
     }
 
+    .card {
+        margin-left: 10px;
+        width: calc(100% - 20px);
+    }
+
 }
