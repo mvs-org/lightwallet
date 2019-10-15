@@ -322,7 +322,6 @@
     "PLUGIN.ALREADY_ADDED": "Das Plugin ist Ihrem Wallet bereits hinzugefügt.",
     "MESSAGE.IMPORT_PLUGIN_ERROR": "Fehler beim Laden des Plugins.",
     "MESSAGE.IMPORT_PLUGIN_INVALID_URL": "Ungültige URL. Bitte Plugin URL überprüfen.",
-    "MESSAGE.IMPORT_PLUGIN_INVALID_FORMAT": "Plugin informationen können nicht geladen werden. Bitte Plugin Konfiguration überprüfen.",
     "MESSAGE.IMPORT_PLUGIN_INVALID_NAME": "Ungültiger Plugin Name. Der Name des Plugins enthält ungültige Zeichen.",
     "MESSAGE.IMPORT_PLUGIN_MISSING_DEFAULT_TRANSLATION": "Die Standardübersetzung des Plugins ist nicht definiert.",
     "ERROR_TOO_MANY_INPUTS": "Zu viele Eingänge",
@@ -485,7 +484,6 @@
     "MESSAGE.ALREADY_SIGN_TRANSACTION": "Die Transaktion beinhaltet bereits die Signatur.",
     "MESSAGE.WARNING_PLUGIN_TITLE": "Warnhinweis zu Plugins!",
     "MESSAGE.WARNING_PLUGIN_MESSAGE": "Seit der MyETPWallet Version 0.6.0 lassen sich externe Plugins hinzufügen. Dieses Feature erlaubt die einfache Integration mit Drittsystemen. Durch die Verwendung von Plugins erhalten die jeweiligen Anbieter einblich in Wallet Informationen. Am besten sollten Plugins nicht mit dem Hauptaccount verwendet werden. Es empfiehlt sich daher die Erstellung einen Zweitwallets, welches nicht über eine große Anzahl von Assets vergügt.",
-    "MESSAGE.WARNING_PLUGIN_CHECKBOX_MESSAGE": "In Zukunft nicht anzeigen",
     "MESSAGE.WARNING_MULTISIG_TITLE": "Multisignatur Adressen und Transaktionen durch MyETPWallet sind in einer Beta Phase!",
     "MESSAGE.WARNING_MULTISIG_MESSAGE": "Seit Version 0.6.0 lassen sich Multisignatur Adresses generieren und importieren. Da es sich um ein neues Feature handelt sollen vorerst keine großen Mengen von Assets transferiert werden. Bei Fehlern bitte umgehend einen Fehlerreport unter dem Link im Hauptmenü erstellen. Vielen Dank.",
     "SWAP_FEE": "Swap Gebühr",
@@ -682,17 +680,10 @@
             "UNSIGNED": "Unsignierte Transaktion",
             "PARTIALLY": "Partiell signierte Transaktion"
         },
-        "MULTISIG_STATUS": {
-            "MULTISIG": "Multisignatur Transaktion",
-            "PARTIALLY_MULTISIG": "Partielle Multisignatur Transaktion (nicht unterstützt)"
-        },
         "OUTPUT": {
             "LOCKED_UNTIL_BLOCK": "Gesperrt bis Block {{block}} (~{{time}})"
         },
-        "INPUTS_NOT_ALL_MINE": "Nicht alle Inputs dieser Transaktion gehören zu diesem Wallet. Die Transaktion kann ggf. nur partiell signiert werden.",
-        "FOREIGN_INPUT": "Fremder Eingang",
-        "INDEX": "Index",
-        "HASH": "Hash"
+        "INPUTS_NOT_ALL_MINE": "Nicht alle Inputs dieser Transaktion gehören zu diesem Wallet. Die Transaktion kann ggf. nur partiell signiert werden."
     },
     "SIGN_TX.PAGE_TITLE": "Transaktion bestätigen, signieren und senden",
     "SIGN_TX.DESCRIPTION": "Kodierte Transaktion im Hex Format eingeben. Die Transaktion kann signiert oder unsigniert sein.",
@@ -749,6 +740,8 @@
     "REORDER.TITLE": "MSTs ordnen",
     "MULTISIGNATURE_ADD.OWN_PUBLICKEY_ALREADY_ADDED": "Der eigene öffentliche Schlüssel wird automatisch hinzugefügt. Nicht erneut hinzufügen.",
     "MULTISIGNATURE_ADD.PUBLIC_KEY_TWICE": "Öffentlicher Schlüssel existiert bereits. Jeder Schlüssel kann nur einmal hinzugefügt werden.",
+    "TRANSFER.FROM_ADDRESS_NO_ETP": "Diese Adresse hat kein ETP. Entweder Sie fügen der Adresse ETP hinzu oder Sie wählen den automatischen Modus.",
+    "PASSPHRASE.DOWNLOAD_FILE": "Download file",
     "RECOVER_FROM_BACKUP_WORDS": "Wallet von Backup Wörtern wiederherstellen",
     "EXPORT_MASTER_PUBLIC_KEY.HEADLINE": "Master Public Key exportieren",
     "EXPORT_MASTER_PUBLIC_KEY.BUTTON": "Schlüssel anzeigen",
@@ -759,5 +752,15 @@
     "HISTORY.ASSETS_LIST": "Asset",
     "HISTORY.ADDRESSES_LIST": "Adressen",
     "HISTORY.SELECT_ALL": "Alle auswählen",
-    "HISTORY.SELECT_NONE": "Keine auswählen"
+    "HISTORY.SELECT_NONE": "Keine auswählen",
+    "ASSET_LOCK.ADD_PERIOD": "Periode hinzufügen",
+    "APPLY_CHANGES": "Änderungen übernehmen",
+    "MESSAGE.IMPORT_PLUGIN_INVALID_FORMAT": "Plugin Informationen können nicht geladen werden. Bitte Plugin Konfiguration überprüfen.",
+    "MESSAGE.WARNING_PLUGIN_CHECKBOX_MESSAGE": "Nicht wieder anzeigen",
+    "MULTISIG_STATUS.MULTISIG": "Multisignatur Transaktion",
+    "MULTISIG_STATUS.PARTIALLY_MULTISIG": "Partielle Multisignatur Transaktion (nicht unterstützt)",
+    "FOREIGN_INPUT": "Fremder Input",
+    "INDEX": "Index",
+    "MULTISIG_ALREADY_SIGNED": "Sie haben diese Transaktion bereits signiert.",
+    "EXPORT_MASTER_PUBLIC_KEY.YOUR_KEY": "Ihr Master Public Key:"
 }
