@@ -68,8 +68,6 @@
     "SET_PIN_FIRST": "Please set up a PIN code first",
     "PLEASE_AUTHORIZE": "Please Authorize",
     "CONFIRM_PINCODE": "Confirm PIN code",
-    "CREATE_NEW_PINCODE": "Create New PIN code",
-    "GENERATE_KEY_BUTTON": "Generate Key",
     "BUTTON.DOWNLOAD": "Download Key",
     "BUTTON.NEXT": "Next",
     "IMPORT_WORDS": "Enter manually",
@@ -186,7 +184,6 @@
     "MESSAGE.BROADCAST_ERROR": "Unable to broadcast transaction, please try again later.",
     "LOGIN": "Login",
     "HOW_TO_IMPORT_WALLET_MOBILE": "How to Import",
-    "HOW_TO_IMPORT_WALLET_MOBILE_TITLE": "How to import your wallet?",
     "HOW_TO_IMPORT_WALLET_MOBILE_STEP1": "Open the web lightwallet, go to Settings, and then Connect phone",
     "HOW_TO_IMPORT_WALLET_MOBILE_STEP2": "Scan the QR Code",
     "HOW_TO_IMPORT_WALLET_MOBILE_STEP3": "Enjoy your wallet on your phone!",
@@ -325,7 +322,6 @@
     "PLUGIN.ALREADY_ADDED": "This plugin is already added to your wallet",
     "MESSAGE.IMPORT_PLUGIN_ERROR": "Error while importing the plugin",
     "MESSAGE.IMPORT_PLUGIN_INVALID_URL": "Incorrect URL. Please double check the plugin URL.",
-    "MESSAGE.IMPORT_PLUGIN_INVALID_FORMAT": "Cannot get plugin's information. Please make sure the plugin is correctly configured.",
     "MESSAGE.IMPORT_PLUGIN_INVALID_NAME": "Incorrect plugin name. The name of this plugin contains invalid characters.",
     "MESSAGE.IMPORT_PLUGIN_MISSING_DEFAULT_TRANSLATION": "The default translation of this plugin is missing.",
     "ERROR_TOO_MANY_INPUTS": "Too many inputs",
@@ -488,7 +484,6 @@
     "MESSAGE.ALREADY_SIGN_TRANSACTION": "You have already signed this transaction, no need to sign it again!",
     "MESSAGE.WARNING_PLUGIN_TITLE": "Be careful with plugins!",
     "MESSAGE.WARNING_PLUGIN_MESSAGE": "Since v0.6.0, you can now add plugins to myetpwallet! This feature allow you to easily connect third party plugins with your Metaverse wallet. However, be aware that anything displayed in a plugin is managed by a third party. We recommend user to use the plugins carefully, an to not use it with their main account but with an account with a small number of ETP instead.",
-    "MESSAGE.WARNING_PLUGIN_CHECKBOX_MESSAGE": "Do not show again",
     "MESSAGE.WARNING_MULTISIG_TITLE": "Multisignature addresses and transactions via MyETPWallet are in Beta!",
     "MESSAGE.WARNING_MULTISIG_MESSAGE": "Since v0.6.0, you can now use multisignature addresses in MyETPWallet. However, please use this new feature carefully and avoid sending important quantity of ETP or MST to your multisignature addresses. If you notice any bug, do not hesitate to report it via Report Bug in the main menu!",
     "SWAP_FEE": "Swap fee",
@@ -685,17 +680,10 @@
             "UNSIGNED": "Unsigned transaction",
             "PARTIALLY": "Partially signed transaction"
         },
-        "MULTISIG_STATUS": {
-            "MULTISIG": "Multisignature transaction",
-            "PARTIALLY_MULTISIG": "Partially multisignature transaction (not supported)"
-        },
         "OUTPUT": {
             "LOCKED_UNTIL_BLOCK": "Locked until block {{block}} (~{{time}})"
         },
-        "INPUTS_NOT_ALL_MINE": "Some inputs are not yours! Only your inputs will be signed.",
-        "FOREIGN_INPUT": "Foreign input",
-        "INDEX": "Index",
-        "HASH": "Hash"
+        "INPUTS_NOT_ALL_MINE": "Some inputs are not yours! Only your inputs will be signed."
     },
     "SIGN_TX.PAGE_TITLE": "Review, sign and send the transaction",
     "SIGN_TX.DESCRIPTION": "Please enter the raw transaction, in hexadecimal format. The transaction can be signed or unsigned.",
@@ -740,7 +728,6 @@
     "ISSUE.DOMAIN_OWNER_OTHER_MY_AVATARS": "The domain certificate to create this MST is owned by another one of your Avatars. Please issue this MST using the Avatar owning the matching domain certificate.",
     "AUTH.HOW_TO_AUTH_BTN": "How to authenticate",
     "HOW_TO_AUTH.PAGE_TITLE": "How to authenticate",
-    "HOW_TO_AUTH.TITLE": "How to authenticate with your Avatar?",
     "HOW_TO_AUTH.STEP1": "Open the website where you want to authenticate using your Metaverse Avatar",
     "HOW_TO_AUTH.STEP2": "Using MyETPWallet, scan the provided QR Code",
     "HOW_TO_AUTH.STEP3": "Access the website with your Avatar!",
@@ -765,5 +752,15 @@
     "HISTORY.ASSETS_LIST": "Asset",
     "HISTORY.ADDRESSES_LIST": "Addresses",
     "HISTORY.SELECT_ALL": "Select all",
-    "HISTORY.SELECT_NONE": "Unselect all"
+    "HISTORY.SELECT_NONE": "Unselect all",
+    "ASSET_LOCK.ADD_PERIOD": "Add period",
+    "APPLY_CHANGES": "Apply changes",
+    "MESSAGE.IMPORT_PLUGIN_INVALID_FORMAT": "Cannot get plugin's information. Please make sure the plugin is correctly configured.",
+    "MESSAGE.WARNING_PLUGIN_CHECKBOX_MESSAGE": "Do not show again",
+    "MULTISIG_STATUS.MULTISIG": "Multisignature transaction",
+    "MULTISIG_STATUS.PARTIALLY_MULTISIG": "Partially multisignature transaction (not supported)",
+    "FOREIGN_INPUT": "Foreign input",
+    "INDEX": "Index",
+    "MULTISIG_ALREADY_SIGNED": "You have already signed this transaction!",
+    "EXPORT_MASTER_PUBLIC_KEY.YOUR_KEY": "Your master public key:"
 }

@@ -766,11 +766,45 @@ export class MvsServiceProvider {
                     switch (output.attachment.status) {
                         case Metaverse.constants.MST.STATUS.REGISTER:
                             output.attachment.type = 'asset-issue';
+                            output.attachment.decimals = output.attachment.precision ? output.attachment.precision : output.attachment.decimals
+                            output.attachment.quantity = output.attachment.max_supply ? output.attachment.max_supply : output.attachment.original_quantity
                             break;
                         case Metaverse.constants.MST.STATUS.TRANSFER:
                             output.attachment.type = 'asset-transfer';
                             if (balances && balances.MST && balances.MST[output.attachment.symbol])
                                 output.attachment.decimals = balances.MST[output.attachment.symbol].decimals
+                            if(output.attenuation) {
+                                let attenuationObject = {}
+                                const attenuationArray = output.attenuation.model.split(';')
+                                attenuationArray.forEach(param => {
+                                    const temp = param.split('=')
+                                    attenuationObject[temp[0]] = temp[1]
+                                })
+                                output.attenuation_model_param = {
+                                    current_period_nbr: parseInt(attenuationObject['PN']),
+                                    lock_period: parseInt(attenuationObject['LP']),
+                                    lock_quantity: parseInt(attenuationObject['LQ']),
+                                    next_interval: parseInt(attenuationObject['LH']),
+                                    total_period_nbr: parseInt(attenuationObject['UN']),
+                                    type: parseInt(attenuationObject['TYPE']),
+                                }
+                                if(attenuationObject['IR']) {
+                                    output.attenuation_model_param.inflation_rate = parseInt(attenuationObject['IR'])
+                                }
+                                if(attenuationObject['UC'] && attenuationObject['UQ']) {
+                                    const numbers = attenuationObject['UC'].split(',')
+                                    const quantities = attenuationObject['UQ'].split(',')
+                                    let locked = []
+                                    for(let i=0; i < numbers.length; i++) {
+                                        locked.push({
+                                            number: parseInt(numbers[i]),
+                                            quantity: parseInt(quantities[i])
+                                        })
+                                    }
+                                    output.attenuation_model_param.locked = locked
+                                }
+                                output.height = tx.height
+                            }
                             break;
                     }
                     break;
@@ -829,6 +863,10 @@ export class MvsServiceProvider {
             }
         })
         return tx
+    }
+
+    getSignatureStatus(transaction, inputIndex, redeem, targetPublicKey) {
+        return Metaverse.multisig.getSignatureStatus(transaction, inputIndex, redeem, Metaverse.networks[this.globals.network], targetPublicKey)
     }
 
 }

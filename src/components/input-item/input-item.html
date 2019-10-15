@@ -6,7 +6,7 @@
                 <div *ngIf="input.previous_output.address !== ''">{{input.previous_output.address}}</div>
                 <div *ngIf="input.previous_output.hash === '0000000000000000000000000000000000000000000000000000000000000000'">{{'TX.INPUT_COINBASE'|translate}}</div>
                 <div *ngIf="input.previous_output.address === undefined && input.previous_output.hash !== '0000000000000000000000000000000000000000000000000000000000000000'" class="align-small-button">
-                    {{'TX.FOREIGN_INPUT'|translate}}
+                    {{'FOREIGN_INPUT'|translate}}
                     <button class="item-button" ion-button clear color="dark" (click)="loadForeignInput()">
                         <ion-icon name="eye"></ion-icon>
                     </button>
@@ -19,9 +19,9 @@
         </ion-row>
         <ion-row *ngIf="mode == 'satoshi'" [ngClass]="{'align-small-button-container': input.previous_output.hash !== '0000000000000000000000000000000000000000000000000000000000000000'}">
             <ion-col>
-                <div class="script">{{'TX.HASH'|translate}}: {{input.previous_output.hash}}</div>
+                <div class="script">{{'HASH'|translate}}: {{input.previous_output.hash}}</div>
                 <div class="script align-small-button" *ngIf="input.previous_output.hash !== '0000000000000000000000000000000000000000000000000000000000000000'">
-                    {{'TX.INDEX'|translate}}: {{input.previous_output.index}}
+                    {{'INDEX'|translate}}: {{input.previous_output.index}}
                     <button class="item-button" ion-button clear color="dark" (click)="checkInput()">
                         <ion-icon name="open"></ion-icon>
                     </button>
@@ -59,9 +59,9 @@
         </ion-row>
         <ion-row *ngIf="mode == 'satoshi'" [ngClass]="{'align-small-button-container': input.previous_output.hash !== '0000000000000000000000000000000000000000000000000000000000000000'}">
             <ion-col>
-                <div class="script">{{'TX.HASH'|translate}}: {{input.previous_output.hash}}</div>
+                <div class="script">{{'HASH'|translate}}: {{input.previous_output.hash}}</div>
                 <div class="script align-small-button" *ngIf="input.previous_output.hash !== '0000000000000000000000000000000000000000000000000000000000000000'">
-                    {{'TX.INDEX'|translate}}: {{input.previous_output.index}}
+                    {{'INDEX'|translate}}: {{input.previous_output.index}}
                     <button class="item-button" ion-button clear color="dark" (click)="checkInput()">
                         <ion-icon name="open"></ion-icon>
                     </button>

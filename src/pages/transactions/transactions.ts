@@ -197,6 +197,7 @@ export class TransactionsPage {
     selectNone() {
         this.allSelected = false
         this.addresses = []
+        this.txs = []
         this.selectAddresses.close().then(() => this.selectAddresses.open())
     }
 

@@ -38,10 +38,10 @@
                                 {{'TX.SIGN_STATUS.' + status | translate}}
                             </div>
                             <div *ngIf="multisig.status == 'MULTISIG'">
-                                <div class="unsigned">{{'TX.MULTISIG_STATUS.MULTISIG' | translate}}</div>
+                                <div class="unsigned">{{'MULTISIG_STATUS.MULTISIG' | translate}}</div>
                             </div>
                             <div *ngIf="multisig.status == 'PARTIALLY_MULTISIG'" class="error-input">
-                                {{'TX.MULTISIG_STATUS.PARTIALLY_MULTISIG' | translate}}
+                                {{'MULTISIG_STATUS.PARTIALLY_MULTISIG' | translate}}
                             </div>
                             <div *ngIf="status == 'PENDING'" class="warning-input">
                                 {{'PENDING_CONFIRMATION' | translate}}
