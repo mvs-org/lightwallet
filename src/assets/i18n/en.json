@@ -666,6 +666,7 @@
             "ETP_LOCK": "ETP lock",
             "ETP_LOCK_REWARD": "ETP lock reward",
             "MST_LOCK": "MST lock",
+            "MINING_REWARD": "Mining reward",
             "UNKNOWN": "Unknown transaction type"
         },
         "SELECT_MODE": "Visualisation mode",

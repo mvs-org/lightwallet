@@ -79,7 +79,7 @@ export class TxItemComponent {
         const TX_TYPE_MIT_REGISTERED = 'MIT_REGISTERED';
         const TX_TYPE_MIT_TRANSFERED = 'MIT_TRANSFERED';
         const TX_TYPE_COINSTAKE = 'COINSTAKE';
-        const TX_TYPE_MST_MINING = 'MST_MINING';
+        const TX_TYPE_MINING_REWARD = 'MINING_REWARD';
         const TX_TYPE_UNKNOWN = 'UNKNOWN'
 
         this.tx.inputs.forEach((input) => {
@@ -118,8 +118,8 @@ export class TxItemComponent {
                     if (this.txType != TX_TYPE_ISSUE) {
                         this.decimalsMst[output.attachment.symbol] = output.attachment.decimals
                         this.txTypeValue = output.attachment.symbol
-                        if (this.tx.inputs != undefined && Array.isArray(this.tx.inputs) && this.tx.inputs[0] && this.tx.inputs[0].previous_output.address == '') {
-                            this.txType = TX_TYPE_MST_MINING
+                        if (this.tx.inputs != undefined && Array.isArray(this.tx.inputs) && this.tx.inputs[0] && this.tx.inputs[0].previous_output.hash == '0000000000000000000000000000000000000000000000000000000000000000') {
+                            this.txType = TX_TYPE_MINING_REWARD
                         } else if (output.attenuation_model_param) {
                             this.tx.locked_until = this.tx.height + output.attenuation_model_param.lock_period
                             this.tx.locked_quantity = output.attenuation_model_param.lock_quantity
@@ -159,7 +159,9 @@ export class TxItemComponent {
                         if (output.locked_height_range) {
                             this.tx.locked_until = this.tx.height + output.locked_height_range
                             this.tx.locked_quantity = output.value
-                            this.txType = this.tx.inputs[0].previous_output.hash == "0000000000000000000000000000000000000000000000000000000000000000" ? TX_TYPE_ETP_LOCK_REWARD : TX_TYPE_ETP_LOCK
+                            this.txType = this.tx.inputs[0].previous_output.hash == '0000000000000000000000000000000000000000000000000000000000000000' ? TX_TYPE_ETP_LOCK_REWARD : TX_TYPE_ETP_LOCK
+                        } else if (this.tx.inputs[0].previous_output.hash == '0000000000000000000000000000000000000000000000000000000000000000') {
+                            this.txType = TX_TYPE_MINING_REWARD
                         } else {
                             this.txType = TX_TYPE_ETP
                         }

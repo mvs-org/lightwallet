@@ -114,6 +114,8 @@ export class TransactionsPage {
                     }
                 } else if (asset == 'ETP' && input.value && !include_mst && this.isMineTXIO(input, addresses)) {
                     result = true
+                } else if (asset == 'ETP' && input.previous_output.hash == '0000000000000000000000000000000000000000000000000000000000000000') {
+                    result = true
                 }
             }
         });
