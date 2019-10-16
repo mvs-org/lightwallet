@@ -16,12 +16,19 @@
                 <ion-row>
                     <ion-col>
                         <ion-item>
-                            <h1 class="font-mono">
-                                {{tx.hash}}
-                                <button id="explorerTxButton" ion-button (click)="checkTx()">
-                                    <ion-icon name="open"></ion-icon>
-                                </button>
-                            </h1>
+                            <div class="tx-hash">
+                                <h2 class="font-mono overflow">
+                                    {{tx.hash}}
+                                </h2>
+                            </div>
+                            <button id="explorerTxButton" ion-button (click)="checkTx()">
+                                <ion-icon name="open"></ion-icon>
+                            </button>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col *ngIf="tx.confirmed_at">
+                        <ion-item class="right timestamp">
+                            <h2>{{tx.confirmed_at*1000 | date : 'medium'}}</h2>
                         </ion-item>
                     </ion-col>
                 </ion-row>
@@ -98,7 +105,13 @@
                             <div *ngIf="txType == 'ETP_LOCK' || txType == 'ETP_LOCK_REWARD'">
                                 {{tx.locked_quantity | format : 8}} ETP
                             </div>
-                            <div *ngIf="txFee" class="fee">{{'TX.TX_FEE' | translate}}: {{txFee | format : 8}} ETP</div>
+                            <div *ngIf="txType == 'MINING_REWARD'" class="receiveAmount">
+                                +{{totalPersonalOutputs.ETP | format : 8}} ETP
+                                <div *ngIf="txTypeValue !== 'ETP'" class="receiveAmount">
+                                    +{{totalPersonalOutputs.MST[txTypeValue] | format : decimalsMst[txTypeValue]}} {{txTypeValue}}
+                                </div>
+                            </div>
+                            <div *ngIf="txFee" class="default-color fee">{{'TX.TX_FEE' | translate}}: {{txFee | format : 8}} ETP</div>
                         </ion-item>
                     </ion-col>
                 </ion-row>

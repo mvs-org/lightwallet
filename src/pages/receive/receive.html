@@ -5,25 +5,24 @@
 </ion-header>
 
 <ion-content class="spread-out">
+
+    <ion-item no-lines>
+        <ion-segment [(ngModel)]="displayType" color="primary">
+            <ion-segment-button value="ETP">
+                ETP
+            </ion-segment-button>
+            <ion-segment-button *ngIf="selectedAsset != 'ETP'" value="asset">
+                {{selectedAsset}}
+            </ion-segment-button>
+            <ion-segment-button value="MST">
+                MST
+            </ion-segment-button>
+        </ion-segment>
+    </ion-item>
+
     <ion-grid>
         <ion-row>
-        </ion-row>
-        <ion-row>
-
-            <ion-col class="receive-col">
-                <ion-item>
-                    <ion-segment [(ngModel)]="displayType" color="primary">
-                        <ion-segment-button value="ETP">
-                            ETP
-                        </ion-segment-button>
-                        <ion-segment-button *ngIf="selectedAsset != 'ETP'" value="asset">
-                            {{selectedAsset}}
-                        </ion-segment-button>
-                        <ion-segment-button value="MST">
-                            MST
-                        </ion-segment-button>
-                    </ion-segment>
-                </ion-item>
+            <ion-col>
                 <ion-card *ngFor="let address of addresses" class="font-mono">
                     <ion-card-content>
 

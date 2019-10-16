@@ -54,7 +54,7 @@ page-asset-transfer {
     }
 
     .card-block .col {
-       padding: 0;
+        padding: 0;
     }
 
     .inputfile {
@@ -94,7 +94,10 @@ page-asset-transfer {
 
     .inputfile + label {
         cursor: pointer; /* "hand" cursor */
+    }
 
+    .available {
+        padding-left: 10px;
     }
 
 }

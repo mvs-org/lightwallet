@@ -5,4 +5,9 @@ page-advanced {
         position: absolute;
         padding-left: 5px;
     }
+
+    h1, p {
+        text-overflow: initial;
+        white-space: initial;
+    }
 }

@@ -238,6 +238,10 @@ ion-alert:not(.alert-ios) .alert-button-group-vertical {
     filter: grayscale(100%);
 }
 
+.default-color {
+    color: black;
+}
+
 
 // ███▄    █  ▒█████   ▄████▄  ▄▄▄█████▓ ██▓ ██▓     █    ██ ▒██   ██▒
 // ██ ▀█   █ ▒██▒  ██▒▒██▀ ▀█  ▓  ██▒ ▓▒▓██▒▓██▒     ██  ▓██▒▒▒ █ █ ▒░
@@ -333,6 +337,10 @@ ion-alert:not(.alert-ios) .alert-button-group-vertical {
     .pic-description1, .pic-description2, .pic-description3 {
         filter: invert(70%);
     }
+
+    .default-color {
+        color: #949494;
+    }
 }
 
 
@@ -407,6 +415,10 @@ ion-alert:not(.alert-ios) .alert-button-group-vertical {
         .item-md,h1,h2, h3, h4, p {
             background-color: #383838;
         }
+    }
+
+    .default-color {
+        color: #ff1493;
     }
 }
 
@@ -505,6 +517,10 @@ ion-alert:not(.alert-ios) .alert-button-group-vertical {
     .pic-description1, .pic-description2, .pic-description3 {
         filter: invert(70%);
     }
+
+    .default-color {
+        color: #0f8082;
+    }
 }
 
 
@@ -548,6 +564,10 @@ ion-alert:not(.alert-ios) .alert-button-group-vertical {
         .item-md,h1,h2, h3, h4, p,textarea {
             background-color: pink;
         }
+    }
+
+    .default-color {
+        color: white;
     }
 }
 
