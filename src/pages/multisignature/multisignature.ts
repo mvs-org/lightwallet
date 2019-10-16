@@ -6,7 +6,7 @@ import { WalletServiceProvider } from '../../providers/wallet-service/wallet-ser
 @IonicPage()
 @Component({
     selector: 'page-multisignature',
-  templateUrl: 'multisignature.html',
+    templateUrl: 'multisignature.html',
 })
 export class MultisignaturePage {
 
@@ -29,7 +29,7 @@ export class MultisignaturePage {
         this.wallet.getMultisigsInfo()
             .then((multisigs) => {
                 this.multisigs = multisigs;
-                if(multisigs && multisigs.length > 0)
+                if (multisigs && multisigs.length > 0)
                     this.no_address = false;
             })
 
@@ -73,7 +73,7 @@ export class MultisignaturePage {
         this.navCtrl.pop()
     }
 
-    addAddress(){
+    addAddress() {
         this.navCtrl.push("MultisignatureAddPage")
     }
 

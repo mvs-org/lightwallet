@@ -25,7 +25,6 @@ tx-item {
     }
     
     .hash {
-        color: black;
         font-size: 20px;
     }
     
@@ -34,7 +33,6 @@ tx-item {
     }
 
     .fee {
-        color: black;
         font-size: 16px;
     }
 
@@ -48,6 +46,46 @@ tx-item {
         resize: none;
         font-size: 1.8rem;
         margin: 20px;
+    }
+
+    .hash .col {
+        padding-bottom: 0px;
+    }
+
+
+    .hash ion-label {
+        margin: 0px;
+    }
+
+    .hash h1 {
+        padding-top: 10px;
+    }
+
+    .hash h1 .button {
+        top: -10px;
+    }
+
+    .summaryTxType .label {
+        margin: 0;
+    }
+
+    .tx-hash {
+        width: calc(100% - 35px);
+        display: inline-block;
+    }
+
+    #explorerTxButton {
+        display: inline-block;
+        top: -10px;
+    }
+
+    .timestamp .input-wrapper {
+        height: 20px;
+    }
+
+    .card {
+        margin-left: 10px;
+        width: calc(100% - 20px);
     }
 
 }

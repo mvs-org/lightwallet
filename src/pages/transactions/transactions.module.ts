@@ -5,6 +5,7 @@ import { TranslateModule} from '@ngx-translate/core';
 import { PipesModule } from '../../pipes/pipes.module';
 import { ProgressBarModule } from 'angular-progress-bar';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { TxItemModule } from '../../components/tx-item/tx-item.module';
 
 @NgModule({
     declarations: [
@@ -16,6 +17,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
         ProgressBarModule,
         TranslateModule,
         NgxPaginationModule,
+        TxItemModule,
     ],
     exports: [
         TransactionsPage

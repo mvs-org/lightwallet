@@ -2,11 +2,10 @@ import { Page } from './app.po';
 
 describe('Load Wallet', () => {
 
-    let page: Page;
+    let page = new Page()
 
     describe('Open wallet from file wallet', () => {
         beforeEach(() => {
-            page = new Page()
             page.navigateTo('/')
         })
 

@@ -68,8 +68,6 @@
     "SET_PIN_FIRST": "S'il vous plait, veuillez d'abord configurer un code PIN",
     "PLEASE_AUTHORIZE": "S'il vous plaît, autoriser",
     "CONFIRM_PINCODE": "Confirmer code PIN",
-    "CREATE_NEW_PINCODE": "Créer nouveau code PIN",
-    "GENERATE_KEY_BUTTON": "Générer la clé",
     "BUTTON.DOWNLOAD": "Télécharger la clé",
     "BUTTON.NEXT": "Suivant",
     "IMPORT_WORDS": "Entrer manuellement",
@@ -672,6 +670,7 @@
         },
         "SELECT_MODE": "Mode de visualisation",
         "MODE": {
+            "SUMMARY": "Mode résumé",
             "DEFAULT": "Mode par défault",
             "SATOSHI": "Mode Satoshi",
             "HEX": "Mode hexadécimal"
@@ -683,7 +682,8 @@
         },
         "OUTPUT": {
             "LOCKED_UNTIL_BLOCK": "Bloqué jusqu'au bloc {{block}} (~{{time}})"
-        }
+        },
+        "INPUTS_NOT_ALL_MINE": "Certaines inputs ne sont pas les votres! Seul vos inputs seront signées."
     },
     "SIGN_TX.PAGE_TITLE": "Vérifier, signer et publier la transaction",
     "SIGN_TX.DESCRIPTION": "Veuillez entrer la transaction au format hexadécimal. Cette transaction peut être déjà signée ou non.",
@@ -735,5 +735,32 @@
     "AUTH.ENTER_MANUALLY_BUTTON": "Entrer la requête manuellement",
     "AUTH.GET_ON_MOBILE": "Obtenir l'application mobile",
     "ERR_INVALID_SIGNATURE": "Votre signature n'a pu être identifiée. Veuillez réessayer.",
-    "ETP_BRIDGE.INFORMATION_WARNING": "L'équipe de support SWFT sur telegram ne vous demandera jamais d'envoyer des fonds vers des addresses autre que l'address de dépôt visible dans les détails de l'ordre. Aucun détails concernant votre ordre ne devrait être nécessaire. L'identifiant de l'ordre est suffisant pour le support afin d'obtenir les information concernant votre ordre."
+    "ETP_BRIDGE.INFORMATION_WARNING": "L'équipe de support SWFT sur telegram ne vous demandera jamais d'envoyer des fonds vers des addresses autre que l'address de dépôt visible dans les détails de l'ordre. Aucun détails concernant votre ordre ne devrait être nécessaire. L'identifiant de l'ordre est suffisant pour le support afin d'obtenir les information concernant votre ordre.",
+    "RETURN": "Retour",
+    "REORDER.TITLE": "Réorganiser vos tokens",
+    "MULTISIGNATURE_ADD.OWN_PUBLICKEY_ALREADY_ADDED": "Votre clé publique sera ajoutée automatiquement, veuillez ne pas l'ajouter une seconde fois",
+    "MULTISIGNATURE_ADD.PUBLIC_KEY_TWICE": "Clé publique dupliquée. Veuillez n'entrez qu'une seule fois chaque clé publique.",
+    "TRANSFER.FROM_ADDRESS_NO_ETP": "Cette address n'a aucun ETP. Veuillez envoyer des ETP vers cette adresse ou utiliser l'option Automatique.",
+    "PASSPHRASE.DOWNLOAD_FILE": "Télécharger le fichier",
+    "RECOVER_FROM_BACKUP_WORDS": "Récupérer votre portefeuille via votre phrase mnémoniques",
+    "EXPORT_MASTER_PUBLIC_KEY.HEADLINE": "Exporter Master Public Key",
+    "EXPORT_MASTER_PUBLIC_KEY.BUTTON": "Show Key",
+    "EXPORT_MASTER_PUBLIC_KEY.WARNING": "The Master Public Key allows the generation of all your wallets addresses. Even though it cannot be used to access the funds you should be very careful when you share it with somebody.",
+    "SETTINGS.EXPORT_MASTER_PUBLIC_KEY": "Exporter votre clé publique mère",
+    "SETTINGS.EXPORT_MASTER_PUBLIC_KEY_TEXT": "La clé publique mère permet de générer toutes les addresses de votre portefeuille mais ne permet pas d'envoyer des fonds.",
+    "RECEIVE.HISTORY_BTN": "Liste des transactions",
+    "HISTORY.ASSETS_LIST": "Token",
+    "HISTORY.ADDRESSES_LIST": "Adresses",
+    "HISTORY.SELECT_ALL": "Tout sélectionner",
+    "HISTORY.SELECT_NONE": "Tout désélectionner",
+    "ASSET_LOCK.ADD_PERIOD": "Ajouter une période",
+    "APPLY_CHANGES": "Appliquer mes changements",
+    "MESSAGE.IMPORT_PLUGIN_INVALID_FORMAT": "Impossible d'obtenir les informations du plugin. Veuillez vérifier que le plugin est correctement configuré.",
+    "MESSAGE.WARNING_PLUGIN_CHECKBOX_MESSAGE": "Ne plus montrer",
+    "MULTISIG_STATUS.MULTISIG": "Transaction multi-destinataires",
+    "MULTISIG_STATUS.PARTIALLY_MULTISIG": "Partiellement multi-destinataires (non supporté)",
+    "FOREIGN_INPUT": "Input étrangère",
+    "INDEX": "Indexe",
+    "MULTISIG_ALREADY_SIGNED": "Vous avez déjà signé cette transaction!",
+    "EXPORT_MASTER_PUBLIC_KEY.YOUR_KEY": "Votre clé publique mère:"
 }

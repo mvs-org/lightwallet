@@ -31,19 +31,21 @@ export class MyETPWallet {
         public keyboard: Keyboard
     ) {
 
-        this.initializeApp()
-            .then(() => this.storage.get('network'))
+        const networkQueryParam = this.getQueryParameter('network')
+
+        this.getNetwork(networkQueryParam)
             .then((network) => this.initNetwork(network))
+            .then(() => this.initializeApp())
             .then(() => this.storage.get('language'))
             .then((language) => this.initLanguage(language))
             .then(() => this.isLoggedIn())
-            .then((loggedin) => {
+            .then(async (loggedin) => {
                 if (loggedin) {
-                    return this.mvs.getUpdateNeeded(this.globals.show_loading_screen_after_unused_time).then(needUpdate => needUpdate ? this.rootPage = "LoadingPage" :this.rootPage = "AccountPage" )
+                    return this.mvs.getUpdateNeeded(this.globals.show_loading_screen_after_unused_time)
+                        .then(needUpdate => this.rootPage = needUpdate ? "LoadingPage" : "AccountPage")
                 } else {
                     this.rootPage = "LoginPage"
                 }
-                return;
             })
             .then(() => this.keyboard.hideKeyboardAccessoryBar(false))
             .then(() => this.splashScreen.hide())
@@ -69,6 +71,19 @@ export class MyETPWallet {
         return this.storage.get('mvs_addresses')
             .then((addresses) => (addresses != undefined && addresses != null && Array.isArray(addresses) && addresses.length))
 
+    }
+
+    async getNetwork(networkQueryParam) {
+        const loginStatus = await this.isLoggedIn()
+        if (loginStatus) return this.storage.get('network')
+        switch (networkQueryParam) {
+            case 'testnet':
+            case 'mainnet':
+                console.info('set network to ' + networkQueryParam)
+                await this.storage.set('network', networkQueryParam)
+                return networkQueryParam
+        }
+        return this.storage.get('network')
     }
 
     setMenu = () => {
@@ -117,7 +132,7 @@ export class MyETPWallet {
                 let p = []
                 plugins.forEach(plugin => {
                     p.push({
-                        title: (plugin.translation[this.translate.currentLang])?plugin.translation[this.translate.currentLang].name:plugin.translation.default.name, component: "PluginStartPage", params: { name: plugin.name }, icon: 'cube', beta: true
+                        title: (plugin.translation[this.translate.currentLang]) ? plugin.translation[this.translate.currentLang].name : plugin.translation.default.name, component: "PluginStartPage", params: { name: plugin.name }, icon: 'cube', beta: true
                     })
                 })
                 return p
@@ -129,7 +144,7 @@ export class MyETPWallet {
                     { title: 'AUTHENTICATION.TITLE', component: "AuthPage", icon: 'bitident', beta: true },
                     { title: 'REGISTER_MST', component: "AssetIssuePage", icon: 'globe' },
                     { title: 'REGISTER_MIT', component: "MITRegisterPage", icon: 'create' },
-                    ... (this.globals.network==='mainnet' ? [{ title: 'ETP_BRIDGE', component: "EtpBridgePage", icon: 'cash' }] : []),
+                    ... (this.globals.network === 'mainnet' ? [{ title: 'ETP_BRIDGE', component: "EtpBridgePage", icon: 'cash' }] : []),
                     { title: 'NEWS', component: "NewsPage", icon: 'paper' },
                     { title: 'ADVANCED', component: "AdvancedPage", icon: 'settings' },
                     { title: 'SETTINGS', component: "SettingsPage", icon: 'options' },
@@ -179,5 +194,14 @@ export class MyETPWallet {
                 window.open(page.newtab, '_blank');
 
 
+    }
+
+    getQueryParameter(name) {
+        name = name.replace(/[\[\]]/g, '\\$&');
+        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+            results = regex.exec(window.location.href);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, ' '));
     }
 }

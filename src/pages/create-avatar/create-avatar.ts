@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { IonicPage, NavController, Platform, AlertController } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { AlertProvider } from '../../providers/alert/alert';
@@ -32,7 +32,9 @@ export class CreateAvatarPage {
         private translate: TranslateService,
         public platform: Platform,
         private alertCtrl: AlertController,
-        private mvs: MvsServiceProvider) {
+        private mvs: MvsServiceProvider,
+        private zone: NgZone,
+    ) {
 
         Promise.all([this.mvs.getAddresses(), this.mvs.getAddressBalances()])
             .then(([addresses, addressbalances]) => {
@@ -139,23 +141,26 @@ export class CreateAvatarPage {
 
     validMessageLength = (message) => this.mvs.verifyMessageSize(message) < 253
 
-    symbolChanged = () => {
-        if (this.symbol && this.symbol.length >= 3) {
-            this.symbol = this.symbol.trim()
-            this.mvs.getGlobalAvatar(this.symbol)
-                .then(result => {
-                    if (!result) {
-                        this.available_symbol = true
-                    } else if (this.symbol != result[1]) {
-                        throw ''
+    symbolChanged = (symbol) => {
+        symbol = symbol.trim()
+        this.symbol = symbol
+        if (symbol && symbol.length >= 3) {
+            this.mvs.getAvatarAvailable(symbol)
+                .then(available => {
+                    if (this.symbol != symbol) {
+                        return
                     } else {
-                        this.available_symbol = false
+                        this.available_symbol = available
                     }
                 })
                 .catch((e) => {
                     this.available_symbol = false
                 })
         }
+    }
+
+    updateRange() {
+        this.zone.run(() => { });
     }
 
 }

@@ -69,7 +69,7 @@
         <button *ngIf="!platform.is('mobile')" type="button" class="right-buttons" ion-button icon-left color="light" (click)="csvExample()"><ion-icon name="download"></ion-icon> {{"DOWNLOAD_CSV_EXAMPLE" | translate}}</button>
         <button *ngIf="periods.length < periods_nbr_limit" type="button" class="right-buttons" ion-button icon-left color="primary" (click)="addPeriod()">
             <ion-icon name="add"></ion-icon>
-            {{"ADD_RECIPIENT" | translate}}
+            {{"ASSET_LOCK.ADD_PERIOD" | translate}}
         </button>
 
         <ion-item [ngClass]="{'error-border': !validLocktime(total_locktime)}">

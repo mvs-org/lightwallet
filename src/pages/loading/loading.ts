@@ -58,7 +58,6 @@ export class LoadingPage {
     }
 
     private updateBalances = () => {
-        console.log("In update balances")
         this.showRestartOption = false
         return this.getHeight()
             .then(() => this.mvs.getData())

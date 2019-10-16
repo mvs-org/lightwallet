@@ -3,13 +3,18 @@ import { Http, Response } from '@angular/http';
 import { AppGlobals } from '../../app/app.global';
 import 'rxjs/add/operator/map';
 import { Storage } from '@ionic/storage';
-import Metaverse from 'metaversejs/index.js';
+import Metaverse from 'metaversejs/dist/metaverse.min.js';
 import { CryptoServiceProvider } from '../crypto-service/crypto-service';
 
 @Injectable()
 export class WalletServiceProvider {
 
-    constructor(public http: Http, private storage: Storage, private globals: AppGlobals, private crypto: CryptoServiceProvider) { }
+    constructor(
+        public http: Http,
+        private storage: Storage,
+        private globals: AppGlobals,
+        private crypto: CryptoServiceProvider,
+    ) { }
 
     public export(passphrase) {
         return this.getMnemonic(passphrase)
@@ -28,7 +33,7 @@ export class WalletServiceProvider {
     }
 
     getMstIcons() {
-        return ['ETP', 'MVS.ZGC', 'MVS.ZDC', 'CSD.CSD', 'PARCELX.GPX', 'PARCELX.TEST', 'SDG', 'META', 'MVS.HUG', 'RIGHTBTC.RT', 'TIPLR.TPC', 'PANDO', 'VALOTY','KOALA.KT','DNA'];
+        return ['ETP', 'MVS.ZGC', 'MVS.ZDC', 'CSD.CSD', 'PARCELX.GPX', 'PARCELX.TEST', 'SDG', 'META', 'MVS.HUG', 'RIGHTBTC.RT', 'TIPLR.TPC', 'PANDO', 'VALOTY', 'KOALA.KT', 'DNA'];
     }
 
     exportMemonic() {
@@ -108,14 +113,10 @@ export class WalletServiceProvider {
             .then((encseed) => this.storage.set('seed', encseed))
     }
 
-    getSeed(passphrase) {
+    async getSeed(passphrase): Promise<string> {
         console.info('loading seed')
-        return this.storage.get('seed')
-            .then((seed) => this.crypto.decrypt(seed, passphrase))
-            .catch((error) => {
-                console.error(error)
-                throw Error('ERR_DECRYPT_WALLET_FROM_SEED')
-            })
+        const seed = await this.storage.get('seed')
+        return await this.crypto.decrypt(seed, passphrase)
     }
 
 
@@ -203,6 +204,12 @@ export class WalletServiceProvider {
             })
     }
 
+    async getMasterPublicKey(passphrase){
+        const seed = await this.getSeed(passphrase)
+        const wallet = await Metaverse.wallet.fromSeed(Buffer.from(seed, 'hex'))
+        return wallet.getMasterPublicKey()
+    }
+
     getMultisigAddresses() {
         return this.storage.get('multisig_addresses')
             .then((addresses) => (addresses) ? addresses : [])
@@ -231,7 +238,7 @@ export class WalletServiceProvider {
         return wallet.signMultisig(tx, parameters)
             .catch((error) => {
                 console.error(error)
-                switch(error){
+                switch (error) {
                     case "Signature already included":
                         throw Error('SIGN_ALREADY_INCL')
                     default:
@@ -252,7 +259,7 @@ export class WalletServiceProvider {
     deleteAccount(account_name) {
         return this.storage.get('saved_accounts')
             .then((accounts) => {
-                if(accounts && accounts.length >= 1) {
+                if (accounts && accounts.length >= 1) {
                     accounts.find((o, i) => {
                         if (o && o.name === account_name) {
                             accounts.splice(i, 1)
@@ -288,10 +295,10 @@ export class WalletServiceProvider {
     }
 
     saveAccount(account_name) {
-        return Promise.all([this.getSavedAccounts(), this.getSessionAccountInfo()])
-            .then(([saved_accounts, content]) => {
+        return Promise.all([this.getSavedAccounts(), this.getSessionAccountInfo(), this.getAccountParams()])
+            .then(([saved_accounts, content, params]) => {
                 let old_account_index = -1;
-                if(saved_accounts) {
+                if (saved_accounts) {
                     saved_accounts.find((o, i) => {
                         if (o && o.name === account_name) {
                             old_account_index = i;
@@ -303,6 +310,8 @@ export class WalletServiceProvider {
                 let new_account = {
                     "name": account_name,
                     "content": content,
+                    "params": params,
+                    "network": this.globals.network,
                     "type": "AES"
                 }
                 old_account_index > -1 ? saved_accounts[old_account_index] = new_account : saved_accounts.push(new_account);
@@ -331,6 +340,31 @@ export class WalletServiceProvider {
             .then((accounts) => {
                 return accounts ? accounts : []
             })
+    }
+
+    getAccountParams() {
+        return Promise.all([this.storage.get('asset_order'), this.storage.get('hidden_mst'), this.storage.get('plugins')])
+            .then(([asset_order, hidden_mst, plugins]) => {
+                let params = {}
+                params['asset_order'] = asset_order ? asset_order : []
+                params['hidden_mst'] = hidden_mst ? hidden_mst : []
+                params['plugins'] = plugins ? plugins : []
+                return params
+            })
+    }
+
+    async setAccountParams(params) {
+        if (params) {
+            if (params.asset_order) {
+                await this.storage.set('asset_order', params.asset_order)
+            }
+            if (params.hidden_mst) {
+                await this.storage.set('hidden_mst', params.hidden_mst)
+            }
+            if (params.plugins) {
+                await this.storage.set('plugins', params.plugins)
+            }
+        }
     }
 
     decryptAccount(content, password) {
@@ -365,16 +399,15 @@ export class WalletServiceProvider {
     getLanguage() {
         return this.storage.get('language').then((lang) => lang ? lang : "en")
     }
-    
+
     extractData(res: Response) {
         let body = res.json();
-        console.log(body)
         return body || {};
     }
 
-    handleErrorPromise (error: Response | any) {
+    handleErrorPromise(error: Response | any) {
         console.error(error.message || error);
         return Promise.reject(error.message || error);
-    } 
+    }
 
 }

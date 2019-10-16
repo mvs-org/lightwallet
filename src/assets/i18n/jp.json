@@ -220,7 +220,6 @@
 
   "LOGIN": "ログイン",
   "HOW_TO_IMPORT_WALLET_MOBILE": "インポートする方法",
-  "HOW_TO_IMPORT_WALLET_MOBILE_TITLE": "秘密鍵のインポート方法",
   "HOW_TO_IMPORT_WALLET_MOBILE_STEP1": "スクトップのライトウォレットを開いて、設定に入って、スマートフォンを接続してください",
   "HOW_TO_IMPORT_WALLET_MOBILE_STEP2": "QRコードをスキャンしてください",
   "HOW_TO_IMPORT_WALLET_MOBILE_STEP3": "スマートフォンでウォレットの旅を開きましょう!",
@@ -844,7 +843,6 @@
   "AUTH.HOW_TO_AUTH_BTN": "How to authenticate",
 
   "HOW_TO_AUTH.PAGE_TITLE": "How to authenticate",
-  "HOW_TO_AUTH.TITLE": "How to authenticate with your Avatar?",
   "HOW_TO_AUTH.STEP1": "Open the website where you want to authenticate using your Metaverse Avatar",
   "HOW_TO_AUTH.STEP2": "Scan the provided QR Code from the Authenticate page of MyETPWallet",
   "HOW_TO_AUTH.STEP3": "Access the website with your Avatar!"

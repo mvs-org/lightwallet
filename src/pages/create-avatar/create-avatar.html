@@ -21,7 +21,7 @@
         <ion-list style="padding-bottom: 0;">
             <ion-item [ngClass]="{'error-border':!validSymbol(symbol)}">
                 <ion-label color="primary" floating>{{"CREATE_AVATAR.SYMBOL" | translate}}</ion-label>
-                <ion-input name="symbol" [(ngModel)]="symbol" maxlength="63" (ngModelChange)="symbolChanged($event)" required></ion-input>
+                <ion-input name="symbol" [(ngModel)]="symbol" maxlength="63" (ngModelChange)="symbolChanged(symbol)" required></ion-input>
             </ion-item>
             <div no-lines class="advice">{{"HELP.CREATE_AVATAR_NAME" | translate}}</div>
             <ion-item *ngIf="symbol.length > 0 && symbol.length < 3" no-lines class="wrong-input">{{"CREATE_AVATAR.AVATAR_NAME_TOO_SHORT" | translate}}</ion-item>
@@ -61,7 +61,7 @@
                     <span class="right">{{"DEVELOPERS" | translate}}</span>
                 </ion-item>
                 <ion-item>
-                    <ion-range class="bountyFeeRange" min="0" max="80" step="10" snaps="true" color="primary" [(ngModel)]="bounty_fee" name="bounty_fee">
+                    <ion-range class="bountyFeeRange" min="0" max="80" step="10" snaps="true" color="primary" [(ngModel)]="bounty_fee" name="bounty_fee" (ionChange)="updateRange()">
                         <ion-label range-left>{{(100-bounty_fee)/100}} ETP</ion-label>
                         <ion-label range-right class="right">{{bounty_fee/100}} ETP</ion-label>
                     </ion-range>

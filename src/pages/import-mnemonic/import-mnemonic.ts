@@ -76,6 +76,8 @@ export class ImportMnemonicPage {
     fromStringToArray(all_words) {
         // testing
         let w = all_words.trim();
+        w = w.toLowerCase()
+        w = w.replace(/\s{2,}/g, ' ')
         let wordArray = w.split(" ");
         return new Promise((resolve, reject) => {
             if(all_words) {
@@ -98,8 +100,8 @@ export class ImportMnemonicPage {
             if(words) {
                 for(let i=0;i<24;i++){
                     if(words[i]) {
-                        all_words += (words[i] + ' ');
-                        wordArray.push(words[i])
+                        all_words += (words[i].toLowerCase() + ' ');
+                        wordArray.push(words[i].toLowerCase())
                     }
                 }
                 this.all_words = all_words.trim();
@@ -132,6 +134,8 @@ export class ImportMnemonicPage {
             let amount_words = checkword[0];
             let first_wrong = checkword[1];
             let mnemonic = this.all_words.trim();
+            mnemonic = mnemonic.toLowerCase()
+            mnemonic = mnemonic.replace(/\s{2,}/g, ' ')
             if(amount_words == 24 && (first_wrong == -1 || first_wrong >= 24)) {
                 this.validmnemonic = this.mvs.checkmnemonic(mnemonic, this.wordslist);
                 resolve(this.validmnemonic);

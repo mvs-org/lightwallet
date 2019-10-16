@@ -67,6 +67,8 @@ export class ReceivePage {
 
     addAddress = () =>  this.navCtrl.push('generate-address-page')
 
+    history = (asset, address) =>  this.navCtrl.push('transactions-page', { asset: asset, addresses : [address] })
+
     format = (quantity, decimals) => quantity / Math.pow(10, decimals)
 
     show(address) {
