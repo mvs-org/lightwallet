@@ -77,9 +77,9 @@ export class TransactionsPage {
     }
 
     private async showTxs(filter) {
-        let addresses = this.addresses ? this.addresses : this.allAddresses
+        this.addresses = this.addresses ? this.addresses : this.allAddresses
         this.txs_history = await this.mvs.getTxs()
-        this.txs = await this.filterTxs(this.txs_history, filter.symbol, addresses)
+        this.txs = await this.filterTxs(this.txs_history, filter.symbol, this.addresses)
         this.loading = false
     }
 
@@ -99,26 +99,33 @@ export class TransactionsPage {
     async updateFilters(symbol, addresses) {
         this.icon = this.iconsList.indexOf(this.asset) !== -1 ? this.asset : 'default_mst'
         this.txs = await this.filterTxs(this.txs_history, symbol, addresses)
+        console.log(this.txs)
     }
 
     async filterTx(tx: any, asset: string, addresses: Array<string>, loadInputs: boolean = true) {
         let result = false
         let include_mst = false
-        tx.inputs.forEach((input) => {
-            if (!tx.unconfirmed) {
-                if (['asset-transfer', 'asset-issue'].indexOf(input.attachment.type) !== -1) {
-                    include_mst = true
-                    result = false
-                    if (input.attachment.symbol == asset && this.isMineTXIO(input, addresses)) {
+        if (tx.inputs) {
+            for (let i = 0; i < tx.inputs.length; i++) {
+                let input = tx.inputs[i]
+                if (!tx.unconfirmed) {
+                    if (['asset-transfer', 'asset-issue'].indexOf(input.attachment.type) !== -1) {
+                        include_mst = true
+                        result = false
+                        if (input.attachment.symbol == asset && this.isMineTXIO(input, addresses)) {
+                            result = true
+                            break
+                        }
+                    } else if (asset == 'ETP' && input.value && !include_mst && this.isMineTXIO(input, addresses)) {
                         result = true
+                        break
+                    } else if (asset == 'ETP' && input.previous_output.hash == '0000000000000000000000000000000000000000000000000000000000000000' && this.isMineTXIO(input, addresses)) {
+                        result = true
+                        break
                     }
-                } else if (asset == 'ETP' && input.value && !include_mst && this.isMineTXIO(input, addresses)) {
-                    result = true
-                } else if (asset == 'ETP' && input.previous_output.hash == '0000000000000000000000000000000000000000000000000000000000000000') {
-                    result = true
                 }
-            }
-        });
+            };
+        }
         if (result) {
             if (loadInputs) {
                 tx = await this.mvs.organizeInputs(JSON.parse(JSON.stringify(tx)), false, await this.transactionMap)
@@ -126,17 +133,22 @@ export class TransactionsPage {
             }
             return tx
         }
-        tx.outputs.forEach((output) => {
-            if (['asset-transfer', 'asset-issue'].indexOf(output.attachment.type) !== -1) {
-                include_mst = true
-                result = false
-                if (output.attachment.symbol == asset && this.isMineTXIO(output, addresses)) {
+        if (tx.outputs) {
+            for (let i = 0; i < tx.outputs.length; i++) {
+                let output = tx.outputs[i]
+                if (['asset-transfer', 'asset-issue'].indexOf(output.attachment.type) !== -1) {
+                    include_mst = true
+                    result = false
+                    if (output.attachment.symbol == asset && this.isMineTXIO(output, addresses)) {
+                        result = true
+                        break
+                    }
+                } else if (asset == 'ETP' && output.value && !include_mst && this.isMineTXIO(output, addresses)) {
                     result = true
+                    break
                 }
-            } else if (asset == 'ETP' && output.value && !include_mst && this.isMineTXIO(output, addresses)) {
-                result = true;
-            }
-        });
+            };
+        }
         if (result) {
             if (loadInputs) {
                 tx = await this.mvs.organizeInputs(JSON.parse(JSON.stringify(tx)), false, await this.transactionMap)
@@ -146,7 +158,7 @@ export class TransactionsPage {
         }
     }
 
-    private isMineTXIO = (txio, addresses) => (addresses.indexOf(txio.address) !== -1)
+    private isMineTXIO = (txio, addresses) => (addresses && addresses.indexOf(txio.address) !== -1)
 
     async calculateFrozenOutputs() {
         let outputs = await this.mvs.getFrozenOutputs(this.asset)
@@ -181,8 +193,8 @@ export class TransactionsPage {
     async pageChange(page_number) {
         this.loading = true
         this.page_tx = page_number
-        for (let i = this.items_per_page * (page_number - 1); i < this.items_per_page * page_number; i++) {
-            if (!this.txs[i].inputsLoaded) {
+        for (let i = this.items_per_page * (page_number - 1); i < this.txs.length; i++) {
+            if (this.txs[i] && !this.txs[i].inputsLoaded) {
                 this.txs[i] = await this.mvs.organizeInputs(JSON.parse(JSON.stringify(this.txs[i])), false, await this.transactionMap)
                 this.txs[i].inputsLoaded = true
             }
