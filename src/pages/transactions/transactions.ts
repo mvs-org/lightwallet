@@ -99,7 +99,6 @@ export class TransactionsPage {
     async updateFilters(symbol, addresses) {
         this.icon = this.iconsList.indexOf(this.asset) !== -1 ? this.asset : 'default_mst'
         this.txs = await this.filterTxs(this.txs_history, symbol, addresses)
-        console.log(this.txs)
     }
 
     async filterTx(tx: any, asset: string, addresses: Array<string>, loadInputs: boolean = true) {
