@@ -181,8 +181,8 @@ export class TransactionsPage {
     async pageChange(page_number) {
         this.loading = true
         this.page_tx = page_number
-        for (let i = this.items_per_page * (page_number - 1); i < this.items_per_page * page_number; i++) {
-            if (!this.txs[i].inputsLoaded) {
+        for (let i = this.items_per_page * (page_number - 1); i < this.txs.length; i++) {
+            if (this.txs[i] && !this.txs[i].inputsLoaded) {
                 this.txs[i] = await this.mvs.organizeInputs(JSON.parse(JSON.stringify(this.txs[i])), false, await this.transactionMap)
                 this.txs[i].inputsLoaded = true
             }
