@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage } from 'ionic-angular';
+import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
 
 @IonicPage()
 @Component({
@@ -9,6 +10,7 @@ import { IonicPage } from 'ionic-angular';
 export class ReportPage {
 
     constructor(
+        private wallet: WalletServiceProvider,
     ) {
     }
 
@@ -16,8 +18,8 @@ export class ReportPage {
         console.log('ionViewDidLoad ReportPage');
     }
 
-    report = () => window.open("https://docs.google.com/forms/d/e/1FAIpQLSeMI5N7f6W86k-oT5m1PSQ9e1CLrpgDDPzg2mdezAO33IDQ9Q/viewform?usp=sf_link", "_blank");
+    report = () => this.wallet.openLink("https://docs.google.com/forms/d/e/1FAIpQLSeMI5N7f6W86k-oT5m1PSQ9e1CLrpgDDPzg2mdezAO33IDQ9Q/viewform?usp=sf_link");
 
-    github = () => window.open("https://github.com/mvs-org/lightwallet/issues", "_blank");
+    github = () => this.wallet.openLink("https://github.com/mvs-org/lightwallet/issues");
 
 }

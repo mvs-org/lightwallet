@@ -5,6 +5,7 @@ import 'rxjs/add/operator/map';
 import { Storage } from '@ionic/storage';
 import Metaverse from 'metaversejs/dist/metaverse.min.js';
 import { CryptoServiceProvider } from '../crypto-service/crypto-service';
+import { Platform } from 'ionic-angular'
 
 @Injectable()
 export class WalletServiceProvider {
@@ -14,6 +15,7 @@ export class WalletServiceProvider {
         private storage: Storage,
         private globals: AppGlobals,
         private crypto: CryptoServiceProvider,
+        public platform: Platform,
     ) { }
 
     public export(passphrase) {
@@ -408,6 +410,13 @@ export class WalletServiceProvider {
     handleErrorPromise(error: Response | any) {
         console.error(error.message || error);
         return Promise.reject(error.message || error);
+    }
+
+    openLink(url) {
+        if (this.platform.is('mobile') && this.platform.is('ios'))
+                window.open(url, '_self');
+            else
+                window.open(url, '_blank');
     }
 
 }
