@@ -105,6 +105,12 @@
                             <div *ngIf="txType == 'ETP_LOCK' || txType == 'ETP_LOCK_REWARD'">
                                 {{tx.locked_quantity | format : 8}} ETP
                             </div>
+                            <div *ngIf="txType == 'MINING_REWARD'" class="receiveAmount">
+                                +{{totalPersonalOutputs.ETP | format : 8}} ETP
+                                <div *ngIf="txTypeValue !== 'ETP'" class="receiveAmount">
+                                    +{{totalPersonalOutputs.MST[txTypeValue] | format : decimalsMst[txTypeValue]}} {{txTypeValue}}
+                                </div>
+                            </div>
                             <div *ngIf="txFee" class="default-color fee">{{'TX.TX_FEE' | translate}}: {{txFee | format : 8}} ETP</div>
                         </ion-item>
                     </ion-col>
