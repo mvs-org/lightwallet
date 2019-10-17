@@ -202,7 +202,7 @@ export class TxItemComponent {
         this.mode = this.mode == 'summary' ? 'satoshi' : 'summary'
     }
 
-    checkTx = () => window.open(this.explorerURL(this.tx.hash), "_blank");
+    checkTx = () => this.wallet.openLink(this.explorerURL(this.tx.hash));
 
     explorerURL = (tx) => (this.globals.network == 'mainnet') ? 'https://explorer.mvs.org/tx/' + tx : 'https://explorer-testnet.mvs.org/tx/' + tx
 
