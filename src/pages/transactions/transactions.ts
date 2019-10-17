@@ -77,9 +77,9 @@ export class TransactionsPage {
     }
 
     private async showTxs(filter) {
-        let addresses = this.addresses ? this.addresses : this.allAddresses
+        this.addresses = this.addresses ? this.addresses : this.allAddresses
         this.txs_history = await this.mvs.getTxs()
-        this.txs = await this.filterTxs(this.txs_history, filter.symbol, addresses)
+        this.txs = await this.filterTxs(this.txs_history, filter.symbol, this.addresses)
         this.loading = false
     }
 
@@ -146,7 +146,7 @@ export class TransactionsPage {
         }
     }
 
-    private isMineTXIO = (txio, addresses) => (addresses.indexOf(txio.address) !== -1)
+    private isMineTXIO = (txio, addresses) => (addresses && addresses.indexOf(txio.address) !== -1)
 
     async calculateFrozenOutputs() {
         let outputs = await this.mvs.getFrozenOutputs(this.asset)
