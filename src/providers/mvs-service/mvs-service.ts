@@ -5,6 +5,7 @@ import { Storage } from '@ionic/storage';
 import { WalletServiceProvider } from '../wallet-service/wallet-service';
 import Metaverse from 'metaversejs/index.js';
 import Blockchain from 'mvs-blockchain';
+import { keyBy } from 'lodash';
 
 @Injectable()
 export class MvsServiceProvider {
@@ -47,10 +48,27 @@ export class MvsServiceProvider {
                 if (result.utxo.length > 676) {
                     throw Error('ERR_TOO_MANY_INPUTS');
                 }
-                //Set change address to first utxo's address
-                if (change_address == undefined)
-                    change_address = result.utxo[0].address;
-                return Metaverse.transaction_builder.send(result.utxo, recipient_address, recipient_avatar, target, change_address, result.change, result.lockedAssetChange, fee, messages);
+                //Set etp change address to the first utxo's address with etp
+                let etp_change_address = change_address
+                if (etp_change_address == undefined) {
+                    result.utxo.forEach(utxo => {
+                        if (utxo.value !== 0) {
+                            etp_change_address = utxo.address
+                            return
+                        }
+                    });
+                }
+                //Set mst change address to first utxo's address with this mst
+                let mst_change_address = change_address
+                if (mst_change_address == undefined && asset != 'ETP') {
+                    result.utxo.forEach(utxo => {
+                        if (utxo.attachment.symbol == asset) {
+                            mst_change_address = utxo.address
+                            return
+                        }
+                    });
+                }
+                return Metaverse.transaction_builder.send(result.utxo, recipient_address, recipient_avatar, target, etp_change_address, result.change, result.lockedAssetChange, fee, messages, mst_change_address);
             })
             .catch((error) => {
                 console.error(error)
@@ -216,26 +234,13 @@ export class MvsServiceProvider {
     }
 
     validAddress = (address: string) => {
-        if (address.length != 34)
-            return false
-        let valid = false
-        switch (address.charAt(0)) {
-            case this.globals.ADDRESS_PREFIX_MAINNET:
-                valid = this.globals.network == "mainnet"
-                break
-            case this.globals.ADDRESS_PREFIX_TESTNET:
-                valid = this.globals.network == "testnet"
-                break
-            case this.globals.ADDRESS_PREFIX_P2SH:
-                valid = true
-        }
-        return valid
+        return Metaverse.address.validate(address, this.globals.network)
     }
 
-    updateHeight() {
-        return this.blockchain.height()
-            .then((height: number) => this.setHeight(height))
-            .then(() => this.getHeight())
+    async updateHeight() {
+        const height = await this.blockchain.height()
+        await this.setHeight(height)
+        return this.getHeight()
     }
 
     getUtxo() {
@@ -247,21 +252,9 @@ export class MvsServiceProvider {
                 .then((addresses: Array<string>) => Metaverse.output.calculateUtxo(txs, addresses)));
     }
 
-    getUtxoFrom(address: any) {
-        return this.getUtxo()
-            .then((utxo: Array<any>) => {
-                if (address) {
-                    let result = [];
-                    if (utxo.length) {
-                        utxo.forEach((output) => {
-                            if (output.address == address) result.push(output)
-                        })
-                    }
-                    return result;
-                } else {
-                    return utxo;
-                }
-            })
+    async getUtxoFrom(address: any) {
+        const utxo = await this.getUtxo()
+        return address ? utxo.filter(output=>output.address == address) : utxo
     }
 
     getUtxoFromMultisig(address: any) {
@@ -283,6 +276,8 @@ export class MvsServiceProvider {
     }
 
     getGlobalAvatar = (symbol) => this.blockchain.avatar.get(symbol)
+
+    getAvatarAvailable = (symbol) => this.blockchain.avatar.available(symbol)
 
     getGlobalMit = (symbol) => this.blockchain.MIT.get(symbol)
 
@@ -463,7 +458,7 @@ export class MvsServiceProvider {
 
     dataReset() {
         console.info('reset data')
-        return Promise.all(['mvs_last_tx_height', 'mvs_height', 'utxo', 'last_update', 'addressbalances', 'balances', 'mvs_txs', 'asset_order'].map((key) => this.storage.remove(key)))
+        return Promise.all(['mvs_last_tx_height', 'mvs_height', 'utxo', 'last_update', 'addressbalances', 'balances', 'mvs_txs'].map((key) => this.storage.remove(key)))
     }
 
     async getNewTxs(addresses: Array<string>, lastKnownHeight: number): Promise<any> {
@@ -559,6 +554,15 @@ export class MvsServiceProvider {
             .then(() => this.assetOrder())
     }
 
+    setHiddenMst(hiddenMstList) {
+        return this.storage.set('hidden_mst', hiddenMstList)
+    }
+
+    getHiddenMst() {
+        return this.storage.get('hidden_mst')
+            .then((hiddenMstList) => (hiddenMstList) ? hiddenMstList : [])
+    }
+
     async addAssetsToAssetOrder(names: string[]) {
         let order = await this.assetOrder()
         names.forEach(symbol => {
@@ -576,7 +580,7 @@ export class MvsServiceProvider {
 
     send = async (tx) => {
         tx.inputs.forEach((input) => {
-            if(typeof input.script == 'string') {
+            if (typeof input.script == 'string') {
                 input.script = Metaverse.script.fromASM(input.script).chunks
             }
         })
@@ -693,28 +697,56 @@ export class MvsServiceProvider {
     async decodeTx(rawtx) {
         const network = await this.globals.getNetwork()
         let tx = Metaverse.transaction.decode(rawtx, network);
-        let transactions = await this.getTxs()
-        for (let i = 0; i < tx.inputs.length; i++) {
-            let input = tx.inputs[i]
-            let found = false
-            let previous_output
-            transactions.forEach(t => {
-                if (input.previous_output.hash == t.hash) {
-                    found = true
-                    previous_output = t.outputs[input.previous_output.index]
-                }
-            })
-            if (!found) {
-                previous_output = await this.getOutput(input.previous_output.hash, input.previous_output.index)
-            }
-            input.previous_output.script = previous_output.script
-            input.previous_output.address = previous_output.address
-            input.previous_output.value = previous_output.value
-            input.previous_output.attachment = previous_output.attachment
-            input.address = input.previous_output.address
-            tx.inputs[i] = input
+        return this.organizeInputs(tx, true);
+    }
+
+    async getTransactionMap(){
+        return keyBy(await this.getTxs(), 'hash')
+    }
+
+    async organizeInputs(tx, getForeignInputs, transactionMap?) {
+        if(transactionMap===undefined){
+            transactionMap=await this.getTransactionMap()
         }
+        tx.inputs = await Promise.all(tx.inputs.map(input => this.organizeInput(input, getForeignInputs, transactionMap)))
         return tx
+    }
+
+    async organizeInput(input, getForeignInput: boolean, transactionMap?) {
+        if (input.previous_output == undefined) {
+            throw Error('Previous output must be present')
+        }
+        if (input.previous_output.hash === '0000000000000000000000000000000000000000000000000000000000000000') {
+            return input
+        }
+        if (transactionMap === undefined) {
+            transactionMap = await this.getTransactionMap()
+        }
+
+        const tx = transactionMap[input.previous_output.hash]
+        if(tx!==undefined){
+            input = this.addInputData(input, tx.outputs[input.previous_output.index])
+            return input
+        }
+        
+
+        if (getForeignInput) {
+            input = this.addInputData(input, await this.getOutput(input.previous_output.hash, input.previous_output.index))
+            return input
+        }
+
+        return input
+    }
+
+    addInputData(existingInputData, previousOutputData) {
+        if(previousOutputData) {
+            existingInputData.previous_output.script = previousOutputData.script
+            existingInputData.previous_output.address = previousOutputData.address
+            existingInputData.previous_output.value = previousOutputData.value
+            existingInputData.previous_output.attachment = previousOutputData.attachment
+            existingInputData.address = previousOutputData.address
+        }
+        return existingInputData
     }
 
     async organizeTx(tx) {
@@ -734,11 +766,45 @@ export class MvsServiceProvider {
                     switch (output.attachment.status) {
                         case Metaverse.constants.MST.STATUS.REGISTER:
                             output.attachment.type = 'asset-issue';
+                            output.attachment.decimals = output.attachment.precision ? output.attachment.precision : output.attachment.decimals
+                            output.attachment.quantity = output.attachment.max_supply ? output.attachment.max_supply : output.attachment.original_quantity
                             break;
                         case Metaverse.constants.MST.STATUS.TRANSFER:
                             output.attachment.type = 'asset-transfer';
                             if (balances && balances.MST && balances.MST[output.attachment.symbol])
                                 output.attachment.decimals = balances.MST[output.attachment.symbol].decimals
+                            if(output.attenuation) {
+                                let attenuationObject = {}
+                                const attenuationArray = output.attenuation.model.split(';')
+                                attenuationArray.forEach(param => {
+                                    const temp = param.split('=')
+                                    attenuationObject[temp[0]] = temp[1]
+                                })
+                                output.attenuation_model_param = {
+                                    current_period_nbr: parseInt(attenuationObject['PN']),
+                                    lock_period: parseInt(attenuationObject['LP']),
+                                    lock_quantity: parseInt(attenuationObject['LQ']),
+                                    next_interval: parseInt(attenuationObject['LH']),
+                                    total_period_nbr: parseInt(attenuationObject['UN']),
+                                    type: parseInt(attenuationObject['TYPE']),
+                                }
+                                if(attenuationObject['IR']) {
+                                    output.attenuation_model_param.inflation_rate = parseInt(attenuationObject['IR'])
+                                }
+                                if(attenuationObject['UC'] && attenuationObject['UQ']) {
+                                    const numbers = attenuationObject['UC'].split(',')
+                                    const quantities = attenuationObject['UQ'].split(',')
+                                    let locked = []
+                                    for(let i=0; i < numbers.length; i++) {
+                                        locked.push({
+                                            number: parseInt(numbers[i]),
+                                            quantity: parseInt(quantities[i])
+                                        })
+                                    }
+                                    output.attenuation_model_param.locked = locked
+                                }
+                                output.height = tx.height
+                            }
                             break;
                     }
                     break;
@@ -797,6 +863,10 @@ export class MvsServiceProvider {
             }
         })
         return tx
+    }
+
+    getSignatureStatus(transaction, inputIndex, redeem, targetPublicKey) {
+        return Metaverse.multisig.getSignatureStatus(transaction, inputIndex, redeem, Metaverse.networks[this.globals.network], targetPublicKey)
     }
 
 }

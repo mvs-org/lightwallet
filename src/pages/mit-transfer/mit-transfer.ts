@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, Loading } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { AlertProvider } from '../../providers/alert/alert';
@@ -26,7 +26,8 @@ export class MITTransferPage {
         private mvs: MvsServiceProvider,
         public platform: Platform,
         private alert: AlertProvider,
-        public navParams: NavParams
+        public navParams: NavParams,
+        private zone: NgZone,
     ) {
         this.symbol = this.navParams.get('symbol')
         mvs.getBalances()
@@ -116,4 +117,9 @@ export class MITTransferPage {
                 })
         }
     }
+
+    updateRange() {
+        this.zone.run(() => { });
+    }
+
 }

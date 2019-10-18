@@ -102,7 +102,7 @@
             </ion-item>
             <ion-item *ngIf="secondaryissue">
                 <ion-range min="0" max="100" step="1" pin="true" color="primary" [(ngModel)]="secondaryissue_threshold"
-                    name="secondaryissue_threshold">
+                    name="secondaryissue_threshold" (ionChange)="updateRange()">
                     <ion-label range-left>0%</ion-label>
                     <ion-label range-right>100%</ion-label>
                 </ion-range>
@@ -154,7 +154,7 @@
                 </ion-item>
                 <ion-item>
                     <ion-range class="bountyFeeRange" min="0" max="80" step="10" snaps="true" color="primary"
-                        [(ngModel)]="bounty_fee" name="bounty_fee">
+                        [(ngModel)]="bounty_fee" name="bounty_fee" (ionChange)="updateRange()">
                         <ion-label range-left>{{(100-bounty_fee)*10/100}} ETP</ion-label>
                         <ion-label range-right class="right">{{bounty_fee*10/100}} ETP</ion-label>
                     </ion-range>

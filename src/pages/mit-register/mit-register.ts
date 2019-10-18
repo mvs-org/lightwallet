@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, Loading } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { AlertProvider } from '../../providers/alert/alert';
@@ -30,7 +30,9 @@ export class MITRegisterPage {
         public platform: Platform,
         public navParams: NavParams,
         private translate: TranslateService,
-        private mvs: MvsServiceProvider) {
+        private mvs: MvsServiceProvider,
+        private zone: NgZone,
+    ) {
 
         this.recipient_avatar = this.navParams.get('avatar_name')
         this.recipient_address = this.navParams.get('avatar_address')
@@ -144,4 +146,9 @@ export class MITRegisterPage {
                 })
         }
     }
+
+    updateRange() {
+        this.zone.run(() => { });
+    }
+
 }

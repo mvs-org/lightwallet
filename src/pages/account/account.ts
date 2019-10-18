@@ -244,8 +244,14 @@ export class AccountPage {
                 this.balances = _
                 return this.mvs.addAssetsToAssetOrder(Object.keys(_.MST))
             })
-            .then(() => this.mvs.assetOrder())
-            .then((order) => {
+            .then(() => Promise.all([this.mvs.assetOrder(), this.mvs.getHiddenMst()]))
+            .then(([all, hidden]) => {
+                let order = []
+                all.forEach(symbol => {
+                    if(hidden.indexOf(symbol) === -1) {
+                        order.push(symbol)
+                    }
+                })
                 this.loading = false
                 this.balancesKeys = order
                 return order
@@ -262,5 +268,7 @@ export class AccountPage {
                 console.log("Can't load balances")
             })
     }
+
+    reorder = () => this.nav.push("ReorderPage")
 
 }

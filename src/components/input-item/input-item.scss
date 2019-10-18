@@ -15,4 +15,23 @@ input-item {
         white-space: initial;
     }
 
+    .align-small-button-container ion-label {
+        margin: 0px;
+    }
+
+    .align-small-button-container {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    .align-small-button {
+        padding-top: 5px;
+    }
+
+    .align-small-button .button {
+        top: -5px;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
 }

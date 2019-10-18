@@ -15,7 +15,6 @@ export class GenerateKeyPage {
     addresses: string[]
     data: any;
     wallet: any;
-    builtFor: string;
     encrypted_json: object;
 
     constructor(
@@ -27,7 +26,6 @@ export class GenerateKeyPage {
         private alert: AlertProvider,
     ) {
         this.CreateWallet()
-        this.builtFor = 'browser';
     }
 
     // need to get hex
@@ -35,40 +33,9 @@ export class GenerateKeyPage {
         this.alert.showLoading()
         return this.walletService.createWallet()
             .then((wallet) => {
-                this.wallet = wallet;
-                return this.ConfirmCreateWallet(this.wallet.mnemonic);
+                this.wallet = wallet
+                this.wallet.newWallet = true
             });
-    }
-
-    showPopup(title, text) {
-        let alert = this.alertCtrl.create({
-            title: title,
-            subTitle: text,
-        });
-        alert.present();
-    }
-
-    // this is the newer version with (GenerateKeyPage)
-    // is used in the new MetaverseJS call
-    ConfirmCreateWallet(mnemonic) {
-        this.translate.get('MESSAGE.ERROR_TITLE').subscribe((title: string) => {
-            this.translate.get('MESSAGE.ERROR_CONNECT_BLOCKCHAIN').subscribe((text: string) => {
-                this.loading.dismiss()
-            }, error => {
-                this.loading.dismiss()
-                this.showPopup(title, error);
-            });
-        })
-    }
-
-
-    // this is when the user clicks the download button
-    // if everything is okay calls the download function
-    confirmWallet() {
-        if (this.navParams.get('next') != undefined)
-            this.navParams.get('next')()
-        else
-            this.download()
     }
 
     download() {

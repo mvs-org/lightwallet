@@ -15,6 +15,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { Keyboard } from '@ionic-native/keyboard';
 import { PluginProvider } from '../providers/plugin/plugin';
 import { EtpBridgeServiceProvider } from '../providers/etp-bridge-service/etp-bridge-service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 var pckg = require('../../package.json');
 
@@ -40,7 +41,8 @@ export function HttpLoaderFactory(http: Http) {
         IonicStorageModule.forRoot({
             name: '__myetpwallet',
             driverOrder: ['indexeddb', 'localstorage']
-        })
+        }),
+        BrowserAnimationsModule,
     ],
     bootstrap: [IonicApp],
     entryComponents: [

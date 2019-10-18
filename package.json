@@ -1,6 +1,6 @@
 {
   "name": "mvs-lightwallet",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "author": "Sven Mutzl",
   "homepage": "https://www.myetpwallet.com/",
   "private": true,
@@ -21,6 +21,7 @@
     "ionic_webpack": "./config/ionic-webpack.config.js"
   },
   "dependencies": {
+    "@angular/animations": "^4.1.3",
     "@angular/common": "4.1.3",
     "@angular/compiler": "4.1.3",
     "@angular/compiler-cli": "4.1.3",
@@ -52,14 +53,15 @@
     "cordova-plugin-statusbar": "^2.4.2",
     "cordova-plugin-whitelist": "^1.3.3",
     "crypto-js": "^3.1.9-1",
+    "hammerjs": "^2.0.8",
     "ionic-angular": "3.6.1",
     "ionic-plugin-keyboard": "^2.2.1",
     "ionicons": "3.0.0",
-    "metaversejs": "^0.3.72",
-    "mvs-blockchain": "^0.1.49",
+    "metaversejs": "^0.3.82",
+    "mvs-blockchain": "^0.1.50",
     "ng2-file-upload": "^1.3.0",
     "ngx-clipboard": "^7.0.6",
-    "ngx-countdown": "^1.0.2",
+    "ngx-countdown": "^1.0.6",
     "ngx-pagination": "^3.2.1",
     "phonegap-plugin-barcodescanner": "^7.1.2",
     "rxjs": "^5.5.2",
@@ -91,7 +93,7 @@
     "karma-spec-reporter": "0.0.32",
     "karma-webpack": "^2.0.13",
     "null-loader": "^0.1.1",
-    "protractor": "^5.4.0",
+    "protractor": "^5.4.2",
     "ts-loader": "^3.5.0",
     "ts-node": "^3.3.0",
     "typescript": "2.3.4"
