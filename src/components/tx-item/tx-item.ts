@@ -152,7 +152,9 @@ export class TxItemComponent {
                     this.txType = TX_TYPE_COINSTAKE
                     break;
                 case 'message':
-                    this.txType = TX_TYPE_ETP
+                    if (this.txType === TX_TYPE_UNKNOWN) {
+                        this.txType = TX_TYPE_ETP
+                    }
                     break;
                 case 'etp':
                     if (this.txType === TX_TYPE_UNKNOWN) {
