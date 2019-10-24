@@ -8,8 +8,8 @@ export class AuthServiceProvider {
         public http: Http
     ) { }
 
-    confirm(url, sig) {
-        return this.http.post(url, {signature: sig})
+    confirm(url, token) {
+        return this.http.post(url, {token: token})
             .catch((error) => {
                 console.error(error._body)
                 throw Error(error._body)

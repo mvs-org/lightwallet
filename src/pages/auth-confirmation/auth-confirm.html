@@ -6,7 +6,7 @@
 
 <ion-content padding>
 
-    <ion-row class="swft-info">
+    <ion-row class="top-info">
         <ion-col>
             <p align="center">
                 {{"AUTH.INFORMATION" | translate}}
@@ -14,7 +14,15 @@
         </ion-col>
     </ion-row>
 
-    <form #signForm="ngForm" *ngIf="verifiedToken" no-lines>
+    <ion-item *ngIf="verifiedToken && !verifiedToken.target">
+        <ion-label color="primary" floating>{{"AVATAR" | translate}}</ion-label>
+        <ion-select #selectAvatar [(ngModel)]="avatar" name="avatar" multiple="false" okText="{{'OK'|translate}}"
+            cancelText="{{'CANCEL'|translate}}" (ionChange)="onAvatarSelectChange(avatar)">
+            <ion-option *ngFor="let avatar of avatars" value="{{avatar}}">{{avatar}}</ion-option>
+        </ion-select>
+    </ion-item>
+
+    <form #signForm="ngForm" *ngIf="verifiedToken && verifiedToken.target" no-lines>
 
         <h2>{{"AUTH.VERIFY_TITLE" | translate}}</h2>
 
@@ -33,7 +41,7 @@
                             </ion-row>
                             <ion-row>
                                 <ion-col>{{"AUTH.VERIFY_HOST" | translate}}</ion-col>
-                                <ion-col class="right">{{verifiedToken.hostname}}</ion-col>
+                                <ion-col class="right">{{hostname}}</ion-col>
                             </ion-row>
                             <ion-row>
                                 <ion-col>{{"AUTH.VERIFY_REMAINING_TIME" | translate}}</ion-col>
@@ -87,8 +95,8 @@
             <ion-col>
                 <button type="submit" ion-button full [disabled]="!signForm.form.valid||!validPassword(passphrase)||(sourceSignature == '' && !no_sig_agreed)"
                     (click)="signAndSend(passphrase)" icon-left color="secondary">
-                    <ion-icon name="cog"></ion-icon>
-                    {{'CHECK'|translate}}
+                    <ion-icon name="send"></ion-icon>
+                    {{'CONFIRM_TX.SIGN_AND_SEND'|translate}}
                 </button>
             </ion-col>
             <ion-col>

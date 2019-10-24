@@ -43,7 +43,7 @@
     "angular-progress-bar": "1.0.3",
     "angular2-elastic": "^0.13.0",
     "angular2-qrcode": "^2.0.1",
-    "bitident": "^0.1.10",
+    "bitident": "^0.1.11",
     "cordova-android": "7.1.0",
     "cordova-browser": "^5.0.4",
     "cordova-ios": "4.5.5",
