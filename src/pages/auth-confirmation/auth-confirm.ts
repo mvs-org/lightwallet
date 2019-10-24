@@ -76,7 +76,7 @@ export class AuthConfirmPage {
 
             this.sourceSignature = signedToken.sourceSignature
 
-            if (signedToken.version == 1) {
+            if (signedToken.version > 1) {
                 this.navCtrl.pop()
                 this.alert.showError('MESSAGE.AUTH_HIGHER_VERSION', 'version ' + signedToken.version);    
             } else if(signedToken.network !== this.globals.network) {
