@@ -20,12 +20,11 @@ export class AuthConfirmPage {
     @Input() token: string = '';
 
     loading: Loading;
-    avatar: string;
     avatars: Array<string> = []
     avatars_address: any = {}
-    originalToken: string
     verifiedToken: any
     sourceSignature: string
+    hostname: string
 
     leftTime: number = 0;
 
@@ -40,14 +39,12 @@ export class AuthConfirmPage {
         private auth: AuthServiceProvider,
         private alert: AlertProvider,
     ) {
-        this.originalToken = this.navParams.get('token')
+
     }
 
     ionViewDidEnter() {
         this.loadAvatars()
-            .then(() => {
-                this.check(this.originalToken)
-            })
+            .then(() => this.check(this.navParams.get('token')))
     }
 
     cancel() {
@@ -104,7 +101,7 @@ export class AuthConfirmPage {
                     this.navCtrl.pop()
                     this.alert.showError('MESSAGE.AUTH_WRONG_SIGNATURE', signedToken.source);
                 } else {
-                    signedToken.hostname = new URL(signedToken.callback).hostname
+                    this.hostname = new URL(signedToken.callback).hostname
                     this.verifiedToken = signedToken;
                     this.leftTime = (signedToken.time + signedToken.timeout) - (Math.floor(Date.now())/1000)
                     if (!this.verifiedToken.target)
@@ -125,8 +122,17 @@ export class AuthConfirmPage {
         this.alert.showLoading()
         this.wallet.getWallet(passphrase)
             .then(wallet => wallet.findDeriveNodeByAddess(this.avatars_address[this.verifiedToken.target], 200))
-            .then(node => Message.signPK(this.originalToken, node.keyPair.d.toBuffer(32), node.keyPair.compressed, this.verifiedToken.target))
-            .then(signature => this.auth.confirm(this.verifiedToken.callback, signature.toString('hex')).toPromise())
+            .then(node => {
+                let tokenToSign = this.verifiedToken.encode('hex')
+                return Message.signPK(tokenToSign, node.keyPair.d.toBuffer(32), node.keyPair.compressed, this.verifiedToken.target)
+            })
+            .then(signature => {
+                let result = this.verifiedToken
+                result.targetSignature = signature.toString('hex')
+                result.sourceSignature = this.sourceSignature
+                result = result.encode('hex')
+                return this.auth.confirm(this.verifiedToken.callback, result).toPromise()
+            })
             .then(response => {
                 this.alert.stopLoading()
                 this.navCtrl.setRoot("AccountPage")

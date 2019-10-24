@@ -41,7 +41,7 @@
                             </ion-row>
                             <ion-row>
                                 <ion-col>{{"AUTH.VERIFY_HOST" | translate}}</ion-col>
-                                <ion-col class="right">{{verifiedToken.hostname}}</ion-col>
+                                <ion-col class="right">{{hostname}}</ion-col>
                             </ion-row>
                             <ion-row>
                                 <ion-col>{{"AUTH.VERIFY_REMAINING_TIME" | translate}}</ion-col>
@@ -95,8 +95,8 @@
             <ion-col>
                 <button type="submit" ion-button full [disabled]="!signForm.form.valid||!validPassword(passphrase)||(sourceSignature == '' && !no_sig_agreed)"
                     (click)="signAndSend(passphrase)" icon-left color="secondary">
-                    <ion-icon name="cog"></ion-icon>
-                    {{'CHECK'|translate}}
+                    <ion-icon name="send"></ion-icon>
+                    {{'CONFIRM_TX.SIGN_AND_SEND'|translate}}
                 </button>
             </ion-col>
             <ion-col>
