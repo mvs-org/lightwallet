@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { IonicPage, NavController, NavParams, Loading } from 'ionic-angular';
+import { Component, Input, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, Loading, Select } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { AppGlobals } from '../../app/app.global';
 import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
@@ -22,11 +22,13 @@ export class AuthConfirmPage {
     loading: Loading;
     avatars: Array<string> = []
     avatars_address: any = {}
-    originalToken: string
     verifiedToken: any
     sourceSignature: string
+    hostname: string
 
     leftTime: number = 0;
+
+    @ViewChild('selectAvatar') selectAvatar: Select;
 
     constructor(
         public navCtrl: NavController,
@@ -38,13 +40,11 @@ export class AuthConfirmPage {
         private alert: AlertProvider,
     ) {
 
-        this.originalToken = this.navParams.get('token')
+    }
 
+    ionViewDidEnter() {
         this.loadAvatars()
-            .then(() => {
-                this.check(this.originalToken)
-            })
-
+            .then(() => this.check(this.navParams.get('token')))
     }
 
     cancel() {
@@ -57,7 +57,7 @@ export class AuthConfirmPage {
                 if(avatars.length === 0) {
                     this.alert.showMessage('MESSAGE.AUTH_NO_AVATAR_TITLE', '', 'MESSAGE.AUTH_NO_AVATAR_TITLE_BODY')
                 } else {
-                    avatars.forEach(avatar => {
+                    return avatars.forEach(avatar => {
                         this.avatars_address[avatar.symbol] = avatar.address
                         this.avatars.push(avatar.symbol)
                     });
@@ -76,18 +76,21 @@ export class AuthConfirmPage {
 
             this.sourceSignature = signedToken.sourceSignature
 
-            if (signedToken.network !== this.globals.network) {
+            if (signedToken.version > 1) {
+                this.navCtrl.pop()
+                this.alert.showError('MESSAGE.AUTH_HIGHER_VERSION', 'version ' + signedToken.version);    
+            } else if(signedToken.network !== this.globals.network) {
                 this.navCtrl.pop()
                 this.alert.showError('MESSAGE.AUTH_DIFFERENT_NETWORK', signedToken.network);
             } else if(signedToken.type != 'auth') {
                 this.navCtrl.pop()
                 this.alert.showError('MESSAGE.AUTH_TYPE_NOT_SUPPORTED', signedToken.type);
-            } else if (this.avatars.indexOf(signedToken.target) === -1) {
-                this.navCtrl.pop()
-                this.alert.showError('MESSAGE.AUTH_UNKNOWN_AVATAR', signedToken.target);
             } else if((signedToken.time + signedToken.timeout) * 1000 < Date.now()) {
                 this.navCtrl.pop()
                 this.alert.showError('MESSAGE.AUTH_TIMEOUT', '');
+            } else if (signedToken.target && this.avatars.indexOf(signedToken.target) === -1) {
+                this.navCtrl.pop()
+                this.alert.showError('MESSAGE.AUTH_UNKNOWN_AVATAR', signedToken.target);
             } else {
 
                 signedToken.sourceSignature = ''
@@ -101,9 +104,11 @@ export class AuthConfirmPage {
                     this.navCtrl.pop()
                     this.alert.showError('MESSAGE.AUTH_WRONG_SIGNATURE', signedToken.source);
                 } else {
-                    signedToken.hostname = new URL(signedToken.callback).hostname
+                    this.hostname = new URL(signedToken.callback).hostname
                     this.verifiedToken = signedToken;
                     this.leftTime = (signedToken.time + signedToken.timeout) - (Math.floor(Date.now())/1000)
+                    if (!this.verifiedToken.target)
+                        setTimeout(() => this.selectAvatar.open(), 100)
                 }
             }
         } catch (e) {
@@ -120,8 +125,17 @@ export class AuthConfirmPage {
         this.alert.showLoading()
         this.wallet.getWallet(passphrase)
             .then(wallet => wallet.findDeriveNodeByAddess(this.avatars_address[this.verifiedToken.target], 200))
-            .then(node => Message.signPK(this.originalToken, node.keyPair.d.toBuffer(32), node.keyPair.compressed, this.verifiedToken.target))
-            .then(signature => this.auth.confirm(this.verifiedToken.callback, signature.toString('hex')).toPromise())
+            .then(node => {
+                let tokenToSign = this.verifiedToken.encode('hex')
+                return Message.signPK(tokenToSign, node.keyPair.d.toBuffer(32), node.keyPair.compressed, this.verifiedToken.target)
+            })
+            .then(signature => {
+                let result = this.verifiedToken
+                result.targetSignature = signature.toString('hex')
+                result.sourceSignature = this.sourceSignature
+                result = result.encode('hex')
+                return this.auth.confirm(this.verifiedToken.callback, result).toPromise()
+            })
             .then(response => {
                 this.alert.stopLoading()
                 this.navCtrl.setRoot("AccountPage")
@@ -142,7 +156,7 @@ export class AuthConfirmPage {
                             this.alert.showError('MESSAGE.AUTH_SEND_SIG_ERROR','')
                             break
                         case "ERR_INVALID_SIGNATURE":
-                            this.alert.showError('MESSAGE.AUTH_SEND_SIG_ERROR','')
+                            this.alert.showError('MESSAGE.AUTH_SEND_INVALID_SIGNATURE','')
                             break
                         default:
                             this.alert.showError('MESSAGE.AUTH_SIGN', error.message)
@@ -150,6 +164,10 @@ export class AuthConfirmPage {
                     }
                 }
             })
+    }
+
+    onAvatarSelectChange = (avatar) => {
+        this.verifiedToken.target = avatar
     }
 
 }

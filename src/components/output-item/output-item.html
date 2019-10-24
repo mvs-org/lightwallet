@@ -1,4 +1,29 @@
 <div [ngClass]="{'personal': output.personal}">
+    <ion-item *ngIf="output.attachment.type == 'message'">
+        <ion-row>
+            <!--Left column-->
+            <ion-col>
+                <div *ngIf="output.attachment.to_did">{{output.attachment.to_did}}</div>
+                <div *ngIf="!output.attachment.to_did">{{output.address}}</div>
+            </ion-col>
+            <!--Right column-->
+            <ion-col class="right txType">
+                <div>
+                    {{'TX.TYPE.message'|translate}}:
+                </div>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col class="right">
+                {{output.attachment.message}}
+            </ion-col>
+        </ion-row>
+        <ion-row *ngIf="mode == 'satoshi'">
+            <ion-col class="script">
+                {{output.script}}
+            </ion-col>
+        </ion-row>
+    </ion-item>
     <ion-item *ngIf="output.value != 0 || output.attachment.symbol == 'ETP'">
         <ion-row>
             <!--Left column-->
@@ -8,8 +33,7 @@
             </ion-col>
             <!--Right column-->
             <ion-col class="right">
-                <div *ngIf="output.attachment.type == 'message'" class="txType">{{'TX.TYPE.message'|translate}}</div>
-                <div *ngIf="output.attachment.type != 'message' || output.value != 0">{{output.value | format : 8}} ETP</div>
+                <div>{{output.value | format : 8}} ETP</div>
             </ion-col>
         </ion-row>
         <ion-row *ngIf="output.attenuation">

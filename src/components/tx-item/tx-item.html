@@ -96,7 +96,7 @@
                             <div *ngIf="txType == 'CERT'">
                                 {{'TX.TX_TYPE.CERT_TYPE.' + txTypeCert | translate}} {{txTypeValue}}
                             </div>
-                            <div *ngIf="txType == 'MIT' || txType == 'DID_REGISTER' || txType == 'DID_TRANSFER'">
+                            <div *ngIf="txType == 'MIT_REGISTERED' || txType == 'MIT_TRANSFERED' || txType == 'DID_REGISTER' || txType == 'DID_TRANSFER'">
                                 {{txTypeValue}}
                             </div>
                             <div *ngIf="txType == 'MST_LOCK'">

@@ -763,5 +763,7 @@
     "FOREIGN_INPUT": "Foreign input",
     "INDEX": "Index",
     "MULTISIG_ALREADY_SIGNED": "You have already signed this transaction!",
-    "EXPORT_MASTER_PUBLIC_KEY.YOUR_KEY": "Your master public key:"
+    "EXPORT_MASTER_PUBLIC_KEY.YOUR_KEY": "Your master public key:",
+    "MESSAGE.AUTH_SEND_INVALID_SIGNATURE": "Your signature is incorrecte. Please make sure the information are correct and try again.",
+    "MESSAGE.AUTH_HIGHER_VERSION": "The request version is not compatible with your version of MyETPWallet. Please upgrade MyETPWallet to be able to authenticate."
 }
