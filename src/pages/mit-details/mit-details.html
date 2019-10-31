@@ -11,47 +11,33 @@
     <ion-list>
         <ion-grid>
             <ion-row>
-                <ng-container class="asset-container">
-                    <ion-col class="asset-container">
-                        <ion-card class="card-block">
-                            <ion-grid>
-                                <ion-row>
-                                    <ion-col>
-                                        <ion-item class="grid-info">
-                                            <ion-avatar item-start>
-                                                <img class="coinlogo" [src]="'assets/icon/default_mit.png'">
-                                            </ion-avatar>
-                                            <div>
-                                                <h1>{{symbol}}</h1>
-                                                <p>{{"OWNER"|translate}}: {{owner}}</p>
-                                                <p>{{"CREATOR"|translate}}: {{creator}}</p>
-                                                <p><a class="check-explorer" href="{{explorerURL('mit', symbol)}}" target="_blank">{{"CHECK_IN_EXPLORER"|translate}}</a></p>
-                                            </div>
-                                        </ion-item>
-                                    </ion-col>
-                                </ion-row>
-                            </ion-grid>
-                        </ion-card>
-                    </ion-col>
-                </ng-container>
-                <ng-container class="asset-container">
-                    <ion-col class="asset-container">
-                        <ion-card class="card-block">
-                            <ion-grid>
-                                <ion-row>
-                                    <ion-col>
-                                        <ion-item class="grid-info">
-                                            <div>
-                                                <h1>{{"CONTENT"|translate}}</h1>
-                                                <p text-wrap class="mit-content">{{content}}</p>
-                                            </div>
-                                        </ion-item>
-                                    </ion-col>
-                                </ion-row>
-                            </ion-grid>
-                        </ion-card>
-                    </ion-col>
-                </ng-container>
+                <ion-col class="asset-container">
+                    <ion-card class="card-block">
+                        <ion-item>
+                            <ion-avatar item-start>
+                                <img class="coinlogo" [src]="'assets/icon/default_mit.png'">
+                            </ion-avatar>
+                            <div>
+                                <h1>{{symbol}}</h1>
+                                <button id="explorerTxButton" ion-button (click)="checkTx('mit', symbol)">
+                                    <ion-icon name="open"></ion-icon>
+                                </button>
+                                <p>{{"OWNER"|translate}}: {{owner}}</p>
+                                <p>{{"CREATOR"|translate}}: {{creator}}</p>
+                            </div>
+                        </ion-item>
+                    </ion-card>
+                </ion-col>
+                <ion-col class="asset-container">
+                    <ion-card class="card-block">
+                        <ion-item>
+                            <div>
+                                <h1>{{"CONTENT"|translate}}</h1>
+                                <p text-wrap class="mit-content">{{content}}</p>
+                            </div>
+                        </ion-item>
+                    </ion-card>
+                </ion-col>
             </ion-row>
         </ion-grid>
     </ion-list>
@@ -61,16 +47,14 @@
     <ion-list>
         <ion-item *ngFor="let step of history">
             <ion-item no-lines>
-                <!--ion-avatar item-start>
-                    <img class="coinlogo" [src]="'assets/icon/default_mit.png'">
-                </ion-avatar-->
-                <h3>{{'RECIPIENT_AVATAR'|translate}}: {{step.to_did}}</h3>
-                <p>{{'MIT.STATUS'|translate}}: {{step.status}}</p>
-                <!--p>{{'BLOCK'|translate}}: {{step.height}}</p-->
-                <p>{{'DATE'|translate}}: {{step.confirmed_at*1000|date : 'medium'}}</p>
-                <p>{{'MIT.TX_HASH'|translate}}:
-                    <a href="{{explorerURL('tx', step.tx)}}" target="_blank">{{step.tx}}</a>
-                </p>
+                <h2>{{'RECIPIENT_AVATAR'|translate}}: {{step.to_did}}</h2>
+                <div class="history-info">{{'MIT.STATUS'|translate}}: {{step.status}}</div>
+                <div class="align-small-button history-info">
+                    {{'DATE'|translate}}: {{step.confirmed_at*1000|date : 'medium'}}
+                    <button class="item-button" ion-button clear color="primary" (click)="checkTx('tx', step.tx)">
+                        <ion-icon name="open"></ion-icon>
+                    </button>
+                </div>
             </ion-item>
         </ion-item>
     </ion-list>
