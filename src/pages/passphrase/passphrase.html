@@ -20,6 +20,7 @@
                 <ion-label color="primary" floating>{{'CONFIRM_PASSWORD'|translate}}</ion-label>
                 <ion-input name="password_repeat" type="password" placeholder="" [(ngModel)]="password_repeat"></ion-input>
             </ion-item>
+            <ion-item class="center-psw wrong-input" *ngIf="password_repeat && !passwordRepeatValid(password, password_repeat)" no-lines>{{"PASSPHRASE.NOT_MATCH" | translate}}</ion-item>
         </ion-row>
 
         <ion-row class="button more-bottom-padding" *ngIf="newWallet && !platform.is('mobile')">
