@@ -4,7 +4,7 @@
             <ion-col>
                 <ion-item class="grid-info">
                     <ion-avatar item-start>
-                        <img class="coinlogo" [src]="'assets/icon/'+icon+'.png'" (error)="errorImg($event)" [ngClass]="{'csdLogoDefault':symbol == 'CSD.CSD' && theme == 'theme-default', 'default-logo': icon == 'default_mst'}">
+                        <img *ngIf="icon" class="coinlogo img" [src]="icon" (error)="errorImg($event)" [ngClass]="{'default-logo': icon == 'default_mst'}">
                     </ion-avatar>
                     <h1 class="symbol overflow">
                         {{symbol}}

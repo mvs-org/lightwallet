@@ -37,7 +37,7 @@ export class AccountPage {
     loading: boolean
     balancesKeys: any
     theme: string
-    icons: any = []
+    icons: any = { MST: [], MIT: [] }
     tickers = {}
     base: string
     domains: any = []
@@ -127,7 +127,9 @@ export class AccountPage {
                 return this.loadFromCache()
             })
             .then(() => this.update())
-
+            .then(() => this.mvs.getDefaultIcon())
+            .then((icons) => this.icons = icons)
+            .then(() => console.log(this.icons))
     }
 
     private update = async () => {
@@ -255,13 +257,6 @@ export class AccountPage {
                 this.loading = false
                 this.balancesKeys = order
                 return order
-            })
-            .then((balances) => {
-                let iconsList = this.wallet.getMstIcons()
-                balances.map((symbol) => {
-                    this.icons[symbol] = iconsList.indexOf(symbol) !== -1 ? symbol : 'default_mst'
-                    this.domains[symbol] = symbol.split('.')[0]
-                })
             })
             .catch((e) => {
                 console.error(e)

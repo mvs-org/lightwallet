@@ -25,6 +25,9 @@ self.toolbox.precache(
 // dynamically cache any other local assets
 self.toolbox.router.any('/*', self.toolbox.cacheFirst);
 
+// cache icons hosted on explorer
+//self.toolbox.router.any('https://explorer.mvs.org/*', self.toolbox.cacheFirst);
+
 // for any other requests go to the network, cache,
 // and then only use that cached resource if your user goes offline
 self.toolbox.router.default = self.toolbox.networkFirst;

@@ -62,7 +62,7 @@
                 <ion-row>
                     <ion-col></ion-col>
                     <ion-col width-67>
-                        <img class="big-icon" [src]="'assets/icon/'+icon+'.png'" onerror="this.src='assets/icon/default_mst.png'">
+                        <img class="big-icon" [src]="icon" (error)="errorImg($event)">
                     </ion-col>
                     <ion-col></ion-col>
                 </ion-row>

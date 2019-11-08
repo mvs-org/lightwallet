@@ -133,8 +133,8 @@ page-account {
         height: 100%;
     }
 
-    .coinlogo {
-        margin-left: 20px;
+    ion-avatar {
+        margin-left: 20px !important;
     }
 
     @media (max-width: 350px) {
