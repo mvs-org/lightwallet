@@ -129,7 +129,6 @@ export class AccountPage {
             .then(() => this.update())
             .then(() => this.mvs.getDefaultIcon())
             .then((icons) => this.icons = icons)
-            .then(() => console.log(this.icons))
     }
 
     private update = async () => {

@@ -766,7 +766,7 @@ export class MvsServiceProvider {
                     switch (output.attachment.status) {
                         case Metaverse.constants.MST.STATUS.REGISTER:
                             output.attachment.type = 'asset-issue';
-                            output.attachment.decimals = output.attachment.precision ? output.attachment.precision : output.attachment.decimals
+                            output.attachment.decimals = output.attachment.precision != undefined ? output.attachment.precision : output.attachment.decimals
                             output.attachment.quantity = output.attachment.max_supply ? output.attachment.max_supply : output.attachment.original_quantity
                             break;
                         case Metaverse.constants.MST.STATUS.TRANSFER:
