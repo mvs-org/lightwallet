@@ -766,5 +766,12 @@
     "EXPORT_MASTER_PUBLIC_KEY.YOUR_KEY": "Your master public key:",
     "MESSAGE.AUTH_SEND_INVALID_SIGNATURE": "Your signature is incorrecte. Please make sure the information are correct and try again.",
     "MESSAGE.AUTH_HIGHER_VERSION": "The request version is not compatible with your version of MyETPWallet. Please upgrade MyETPWallet to be able to authenticate.",
-    "PASSPHRASE.NOT_MATCH": "Password and confirm password do not match"
+    "PASSPHRASE.NOT_MATCH": "Password and confirm password do not match",
+    "BURN": "Burn",
+    "BURN.TEXT": "Burn ETP or MST to permanently destroy them",
+    "BURN.SELECT_ASSET": "Asset to burn",
+    "BURN.CONFIRM_TITLE": "These tokens will be permanently deleted!",
+    "BURN.CONFIRM_MESSAGE": "You are about to burn these tokens. They will be permanently destroyed, and there will be no way to get them back. Are you sure you want to destroy them?",
+    "BURN.CONFIRM_OK": "Yes, burn them!",
+    "BURN.CONFIRM_BACK": "Maybe not..."
 }

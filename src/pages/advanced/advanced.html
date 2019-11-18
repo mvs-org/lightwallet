@@ -10,6 +10,15 @@
 <ion-content padding>
     <ion-list>
         <ion-row>
+            <button ion-item (click)="BurnPage()">
+                <ion-icon name="flame" item-start></ion-icon>
+                <h1>
+                    {{'BURN'|translate}}
+                </h1>
+                <p [translate]="'BURN.TEXT'"></p>
+            </button>
+        </ion-row>
+        <ion-row>
             <button ion-item (click)="MultisignaturePage()">
                 <ion-icon name="people" item-start></ion-icon>
                 <h1>

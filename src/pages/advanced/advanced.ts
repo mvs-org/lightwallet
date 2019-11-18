@@ -25,6 +25,8 @@ export class AdvancedPage {
 
     }
 
+    BurnPage = () => this.nav.push("BurnPage")
+
     MultisignaturePage = () => this.nav.push("MultisignaturePage")
 
     PluginSettingsPage = e => this.nav.push("PluginSettingsPage")

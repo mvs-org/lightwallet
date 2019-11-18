@@ -76,6 +76,43 @@ export class MvsServiceProvider {
             })
     }
 
+    burn(asset: string, quantity: number, from_address: string, change_address: string, fee: number, messages: Array<string>) {
+        let target = {};
+        target[asset] = quantity;
+        return this.getUtxoFrom(from_address)
+            .then((utxo) => this.getHeight().then(height => Metaverse.output.findUtxo(utxo, target, height, fee)))
+            .then((result) => {
+                if (result.utxo.length > 676) {
+                    throw Error('ERR_TOO_MANY_INPUTS');
+                }
+                //Set etp change address to the first utxo's address with etp
+                let etp_change_address = change_address
+                if (etp_change_address == undefined) {
+                    result.utxo.forEach(utxo => {
+                        if (utxo.value !== 0) {
+                            etp_change_address = utxo.address
+                            return
+                        }
+                    });
+                }
+                //Set mst change address to first utxo's address with this mst
+                let mst_change_address = change_address
+                if (mst_change_address == undefined && asset != 'ETP') {
+                    result.utxo.forEach(utxo => {
+                        if (utxo.attachment.symbol == asset) {
+                            mst_change_address = utxo.address
+                            return
+                        }
+                    });
+                }
+                return Metaverse.transaction_builder.burn(result.utxo, target, undefined, etp_change_address, result.change, result.lockedAssetChange, messages, mst_change_address, fee);
+            })
+            .catch((error) => {
+                console.error(error)
+                throw Error(error.message);
+            })
+    }
+
     createSendMultisigTx(passphrase: string, asset: string, recipient_address: string, recipient_avatar: string, quantity: number, from_address: string, change_address: string, fee: number, messages: Array<string>, multisig: any) {
         let target = {};
         target[asset] = quantity;

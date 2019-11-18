@@ -347,6 +347,13 @@ export class WalletServiceProvider {
             })
     }
 
+    getMstList() {
+        return this.storage.get('asset_order')
+            .then((msts) => {
+                return msts ? msts : []
+            })
+    }
+
     getAccountParams() {
         return Promise.all([this.storage.get('asset_order'), this.storage.get('hidden_mst'), this.storage.get('plugins')])
             .then(([asset_order, hidden_mst, plugins]) => {
