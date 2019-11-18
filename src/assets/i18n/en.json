@@ -639,7 +639,8 @@
                 "naming": "Naming certificate",
                 "mining": "Mining certificate",
                 "witness": "Witness certificate"
-            }
+            },
+            "BURN": "To be burned"
         },
         "TX_FEE": "Fee",
         "LOCKED_SINCE_BLOCK": "Locked since block {{block}} ({{time}})",
@@ -667,6 +668,8 @@
             "ETP_LOCK_REWARD": "ETP lock reward",
             "MST_LOCK": "MST lock",
             "MINING_REWARD": "Mining reward",
+            "BURN_ETP": "Burn ETP transaction",
+            "BURN_MST": "Burn MST transaction",
             "UNKNOWN": "Unknown transaction type"
         },
         "SELECT_MODE": "Visualisation mode",

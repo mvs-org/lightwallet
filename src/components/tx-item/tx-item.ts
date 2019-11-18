@@ -3,6 +3,7 @@ import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { AppGlobals } from '../../app/app.global';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'tx-item',
@@ -41,6 +42,7 @@ export class TxItemComponent {
         private mvs: MvsServiceProvider,
         private globals: AppGlobals,
         private wallet: WalletServiceProvider,
+        public translate: TranslateService,
     ) {
         this.devAvatar = this.globals.dev_avatar
     }
@@ -80,6 +82,8 @@ export class TxItemComponent {
         const TX_TYPE_MIT_TRANSFERED = 'MIT_TRANSFERED';
         const TX_TYPE_COINSTAKE = 'COINSTAKE';
         const TX_TYPE_MINING_REWARD = 'MINING_REWARD';
+        const TX_TYPE_BURN_ETP = 'BURN_ETP';
+        const TX_TYPE_BURN_MST = 'BURN_MST';
         const TX_TYPE_UNKNOWN = 'UNKNOWN'
 
         this.tx.inputs.forEach((input) => {
@@ -115,11 +119,16 @@ export class TxItemComponent {
                     this.txTypeValue = output.attachment.symbol
                     break;
                 case 'asset-transfer':
-                    if (this.txType != TX_TYPE_ISSUE) {
+                    if (this.txType != TX_TYPE_ISSUE && this.txType != TX_TYPE_BURN_MST) {
                         this.decimalsMst[output.attachment.symbol] = output.attachment.decimals
                         this.txTypeValue = output.attachment.symbol
                         if (this.tx.inputs != undefined && Array.isArray(this.tx.inputs) && this.tx.inputs[0] && this.tx.inputs[0].previous_output.hash == '0000000000000000000000000000000000000000000000000000000000000000') {
                             this.txType = TX_TYPE_MINING_REWARD
+                        } else if (output.script === 'OP_RETURN') {
+                            this.txType = TX_TYPE_BURN_MST
+                            this.translate.get(['TX.TYPE.BURN']).subscribe((translations: any) => {
+                                output.address = translations['TX.TYPE.BURN']
+                            })
                         } else if (output.attenuation_model_param) {
                             this.tx.locked_until = this.tx.height + output.attenuation_model_param.lock_period
                             this.tx.locked_quantity = output.attenuation_model_param.lock_quantity
@@ -158,7 +167,12 @@ export class TxItemComponent {
                     break;
                 case 'etp':
                     if (this.txType === TX_TYPE_UNKNOWN) {
-                        if (output.locked_height_range) {
+                        if (output.script === 'OP_RETURN') {
+                            this.txType = TX_TYPE_BURN_ETP
+                            this.translate.get(['TX.TYPE.BURN']).subscribe((translations: any) => {
+                                output.address = translations['TX.TYPE.BURN']
+                            })
+                        } else if (output.locked_height_range) {
                             this.tx.locked_until = this.tx.height + output.locked_height_range
                             this.tx.locked_quantity = output.value
                             this.txType = this.tx.inputs[0].previous_output.hash == '0000000000000000000000000000000000000000000000000000000000000000' ? TX_TYPE_ETP_LOCK_REWARD : TX_TYPE_ETP_LOCK
