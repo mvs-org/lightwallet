@@ -776,5 +776,6 @@
     "BURN.CONFIRM_TITLE": "These tokens will be permanently deleted!",
     "BURN.CONFIRM_MESSAGE": "You are about to burn these tokens. They will be permanently destroyed, and there will be no way to get them back. Are you sure you want to destroy them?",
     "BURN.CONFIRM_OK": "Yes, burn them!",
-    "BURN.CONFIRM_BACK": "Maybe not..."
+    "BURN.CONFIRM_BACK": "Maybe not...",
+    "SEND.TOO_MANY_DECIMALS": "You have specified too many decimals"
 }

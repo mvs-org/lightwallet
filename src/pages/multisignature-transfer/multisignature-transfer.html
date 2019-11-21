@@ -58,6 +58,7 @@
                     {{"SEND_ALL_BUTTON"|translate}}
                 </button>
             </ion-item>
+            <ion-item *ngIf="countDecimals(quantity) > decimals" no-lines class="wrong-input">{{"SEND.TOO_MANY_DECIMALS" | translate}}</ion-item>
             <ion-item [ngClass]="{'error-border': !validPassword(passphrase)}">
                 <ion-label color="primary" floating>{{"PASSWORD" | translate}}</ion-label>
                 <ion-input name="passphrase" type="password" [(ngModel)]="passphrase" required></ion-input>

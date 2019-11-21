@@ -36,6 +36,7 @@
                 <ion-label color="primary" floating>{{"AMOUNT" | translate}}</ion-label>
                 <ion-input #quantityInput name="quantity" type="number" min="0" [(ngModel)]="quantity" required></ion-input>
             </ion-item>
+            <ion-item *ngIf="countDecimals(quantity) > decimals" no-lines class="wrong-input">{{"SEND.TOO_MANY_DECIMALS" | translate}}</ion-item>
             <br>
             <ion-item [ngClass]="{'error-border':!validFromAddress(sendFrom)}">
                 <ion-label>{{"SELECT_FROM_ADDRESS"|translate}}</ion-label>
