@@ -11,6 +11,9 @@
                         <button *ngIf="swap" ion-button clear color="danger" icon-left (click)="gotoSwap()" class="swap-buton">
                             <ion-icon name="swap"></ion-icon>{{"SWAP"|translate}}
                         </button>
+                        <button *ngIf="symbol == 'DNA'" ion-button clear color="danger" icon-left (click)="gotoVote()" class="swap-buton">
+                            <ion-icon name="ribbon"></ion-icon>{{"VOTE"|translate}}
+                        </button>
                     </h1>
                     <h2 class="balances balance-text">
                         <div class="balance-field">

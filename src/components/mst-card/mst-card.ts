@@ -29,4 +29,6 @@ export class MSTCardComponent {
     gotoReceive = () => this.nav.push("receive-page", { asset: this.symbol })
 
     gotoSwap = () => this.nav.push("eth-swap-page", { asset: this.symbol })
+
+    gotoVote = () => this.nav.push("vote-page", { })
 }

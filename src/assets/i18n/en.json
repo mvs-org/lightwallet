@@ -777,5 +777,13 @@
     "BURN.CONFIRM_MESSAGE": "You are about to burn these tokens. They will be permanently destroyed, and there will be no way to get them back. Are you sure you want to destroy them?",
     "BURN.CONFIRM_OK": "Yes, burn them!",
     "BURN.CONFIRM_BACK": "Maybe not...",
-    "SEND.TOO_MANY_DECIMALS": "You have specified too many decimals"
+    "SEND.TOO_MANY_DECIMALS": "You have specified too many decimals",
+
+    "VOTE": "Vote",
+    "VOTE.TITLE": "DNA election",
+    "VOTE.SELECT_DELEGATE": "Vote for delegate",
+    "VOTE.SELECT_PERIOD": "Number of periods",
+    "LOCK_ALL_BUTTON": "Lock all",
+    "VOTE.DURATION_ESTIMATION": "Your DNA will be locked for approximately {{duration_days}} days and {{duration_hours}} hours, until {{unlock_time}}. Be aware that this estimation is based on the blocktime of the last 10000 blocks ({{blocktime}} sec.), and might vary based on block generation speed.",
+    "HELP.VOTE_LOCK_TOTAL_DURATION": "This is the number of periods your vote will count. Each period last around 2 weeks."
 }

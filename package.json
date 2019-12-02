@@ -63,6 +63,7 @@
     "ngx-clipboard": "^7.0.6",
     "ngx-countdown": "^1.0.6",
     "ngx-pagination": "^3.2.1",
+    "node-sass": "^4.13.0",
     "phonegap-plugin-barcodescanner": "^7.1.2",
     "rxjs": "^5.5.2",
     "sw-toolbox": "3.6.0",
