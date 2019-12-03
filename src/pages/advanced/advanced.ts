@@ -25,8 +25,6 @@ export class AdvancedPage {
 
     }
 
-    BurnPage = () => this.nav.push("BurnPage")
-
     MultisignaturePage = () => this.nav.push("MultisignaturePage")
 
     PluginSettingsPage = e => this.nav.push("PluginSettingsPage")
@@ -35,6 +33,6 @@ export class AdvancedPage {
 
     DecodeTxPage = e => this.nav.push("DecodeTxPage")
 
-    EthBridgePage = e => this.nav.push("EthBridgePage")
+    BurnPage = () => this.nav.push("BurnPage")
 
 }
