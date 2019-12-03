@@ -120,7 +120,7 @@ export class VotePage {
     }
 
     validQuantity = (quantity) => quantity != undefined
-        && this.countDecimals(quantity) <= this.decimals
+        && this.countDecimals(quantity) == 0
         && ((this.selectedAsset == 'ETP' && this.showBalance >= (Math.round(parseFloat(quantity) * Math.pow(10, this.decimals)) + this.fee)) || (this.selectedAsset != 'ETP' && this.showBalance >= parseFloat(quantity) * Math.pow(10, this.decimals)))
         && (quantity > 0)
 
@@ -201,7 +201,7 @@ export class VotePage {
     }
 
     sendAll = () => this.alert.showSendAll(() => {
-        this.quantity = parseFloat((this.showBalance / Math.pow(10, this.decimals)).toFixed(this.decimals) + "") + ""
+        this.quantity = Math.floor(this.showBalance / Math.pow(10, this.decimals)) + ''
         this.quantityInput.setFocus()
     })
 

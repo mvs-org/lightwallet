@@ -52,7 +52,7 @@
                     {{"LOCK_ALL_BUTTON"|translate}}
                 </button>
             </ion-item>
-            <ion-item *ngIf="countDecimals(quantity) > decimals" no-lines class="wrong-input">{{"SEND.TOO_MANY_DECIMALS" | translate}}</ion-item>
+            <ion-item *ngIf="countDecimals(quantity) > 0" no-lines class="wrong-input">{{"SEND.TOO_MANY_DECIMALS" | translate}}</ion-item>
             <br>
             <ion-item [ngClass]="{'error-border':!validFromAddress(sendFrom)}">
                 <ion-label>{{"SELECT_FROM_ADDRESS"|translate}}</ion-label>
