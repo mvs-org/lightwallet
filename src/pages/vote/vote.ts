@@ -18,8 +18,8 @@ export class VotePage {
     balance: number
     decimals: number
     showBalance: number
-    delegate: string
-    delegates: Array<string> = ['laurent', 'cangr', 'EricGu']
+    candidate: string
+    candidates: Array<string>
     quantity: string = ""
     addressbalances: Array<any>
     sendFrom: string = "auto"
@@ -41,6 +41,7 @@ export class VotePage {
     current_time: number
     locked_until: number
     currentVoteStart: number
+    currentVoteTimestamp: number
     electionProgress: number
     height: number
 
@@ -53,7 +54,7 @@ export class VotePage {
         private zone: NgZone,
     ) {
 
-        this.delegate = navParams.get('delegate') || ''
+        this.candidate = navParams.get('candidate') || ''
         this.quantity = navParams.get('amount') || ''
 
         this.isApp = (!document.URL.startsWith('http') || document.URL.startsWith('http://localhost:8080'));
@@ -72,6 +73,8 @@ export class VotePage {
                 this.blocktime = blocktime
                 this.durationChange()
             })
+            .then(() => this.mvs.getBlock(this.height))
+            .then((block) => this.currentVoteTimestamp = block.time_stamp)
             .catch((error) => {
                 console.error(error.message)
             })
@@ -106,6 +109,9 @@ export class VotePage {
                 if (!Array.isArray(addresses) || !addresses.length)
                     this.navCtrl.setRoot("LoginPage")
             })
+
+        this.mvs.getCandidates()
+            .then(candidates => this.candidates = candidates.candidates)
     }
 
     onFromAddressChange(event) {
@@ -143,7 +149,7 @@ export class VotePage {
                 let locktime = Math.floor(this.numberPeriods * this.periodLength)
                 let attenuation_model = 'PN=0;LH=' + locktime + ';TYPE=1;LQ=' + quantity + ';LP=' + locktime + ';UN=1'
                 let messages = [];
-                messages.push('vote_supernode:' + this.delegate)
+                messages.push('vote_supernode:' + this.candidate)
                 if (this.message) {
                     messages.push(this.message)
                 }

@@ -945,4 +945,15 @@ export class MvsServiceProvider {
             })*/
     }
 
+    getCandidates() {
+        return this.blockchain.election.candidates()
+            .catch((error) => {
+                return [];
+            })
+    }
+
+    getBlock(height) {
+        return this.blockchain.block.get(height)
+    }
+
 }

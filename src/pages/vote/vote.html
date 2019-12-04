@@ -25,22 +25,21 @@
             <ion-item>
                 <ion-row>
                     <ion-col>
-                        <p>{{"VOTE.START" | translate}}: <br *ngIf="platform.is('mobile')"> {{currentVoteStart}}</p>
+                        <p>{{"VOTE.START" | translate}}: <br *ngIf="platform.is('mobile')"> {{currentVoteTimestamp*1000 | date : 'medium'}}</p>
                     </ion-col>
                     <ion-col>
-                        <p class="right">{{"VOTE.END"|translate}}:<br *ngIf="platform.is('mobile')"> {{currentVoteStart + periodLength}}</p>
-                        <!--p>{{"VOTE.END"|translate}}:<br *ngIf="platform.is('mobile')"> {{output.confirmed_at*1000 | date : 'medium'}}</p-->
+                        <p class="right">{{"VOTE.END"|translate}}:<br *ngIf="platform.is('mobile')"> ~{{(currentVoteTimestamp + (blocktime*periodLength))*1000 | date : 'medium'}}</p>
                     </ion-col>
                 </ion-row>
                 <progress-bar [progress]="electionProgress"></progress-bar>
             </ion-item>
             <br>
-            <ion-item [ngClass]="{'error-border':!delegate}">
+            <ion-item [ngClass]="{'error-border':!candidate}">
                 <ion-label>{{"VOTE.SELECT_DELEGATE"|translate}}</ion-label>
-                <ion-select [(ngModel)]="delegate" name="delegate" multiple="false" okText="{{'OK'|translate}}"
+                <ion-select [(ngModel)]="candidate" name="candidate" multiple="false" okText="{{'OK'|translate}}"
                     cancelText="{{'CANCEL'|translate}}">
-                    <ng-container *ngFor="let delegate of delegates">
-                        <ion-option value="{{delegate}}">{{delegate}}</ion-option>
+                    <ng-container *ngFor="let candidate of candidates">
+                        <ion-option value="{{candidate}}">{{candidate}}</ion-option>
                     </ng-container>
                 </ion-select>
             </ion-item>
@@ -120,7 +119,7 @@
         </ion-list>
         <ion-row class="padding-bottom">
             <ion-col>
-                <button type="submit" ion-button full icon-left [disabled]="!sendForm.form.valid||!delegate||!validQuantity(quantity)||!validMessageLength(message)||!validFromAddress(sendFrom)"
+                <button type="submit" ion-button full icon-left [disabled]="!sendForm.form.valid||!candidate||!validQuantity(quantity)||!validMessageLength(message)||!validFromAddress(sendFrom)"
                     (click)="send()" color="secondary">
                     <ion-icon disabled="checked" name="cog"></ion-icon>
                     {{'NEXT'|translate}}
