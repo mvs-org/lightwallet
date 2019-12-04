@@ -789,6 +789,5 @@
     "HISTORY.LOCKS": "Locks",
     "HISTORY.NO_LOCK_YET": "No lock yet",
     "VOTE.START": "Vote start",
-    "VOTE.END": "Vote end",
-    "VOTE.CURRENT_ELECTION": "Current election"
+    "VOTE.END": "Vote end"
 }

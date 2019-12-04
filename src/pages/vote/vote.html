@@ -22,10 +22,7 @@
 
     <form #sendForm="ngForm" style="padding-bottom: 0;">
         <ion-list style="padding-bottom: 0;">
-            <ion-item no-lines>
-                <ion-label>{{"VOTE.CURRENT_ELECTION"|translate}}</ion-label>
-            </ion-item>
-            <ion-item no-lines>
+            <ion-item>
                 <ion-row>
                     <ion-col>
                         <p>{{"VOTE.START" | translate}}: <br *ngIf="platform.is('mobile')"> {{currentVoteStart}}</p>
@@ -37,6 +34,7 @@
                 </ion-row>
                 <progress-bar [progress]="electionProgress"></progress-bar>
             </ion-item>
+            <br>
             <ion-item [ngClass]="{'error-border':!delegate}">
                 <ion-label>{{"VOTE.SELECT_DELEGATE"|translate}}</ion-label>
                 <ion-select [(ngModel)]="delegate" name="delegate" multiple="false" okText="{{'OK'|translate}}"
