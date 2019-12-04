@@ -84,6 +84,7 @@ export class TxItemComponent {
         const TX_TYPE_MINING_REWARD = 'MINING_REWARD';
         const TX_TYPE_BURN_ETP = 'BURN_ETP';
         const TX_TYPE_BURN_MST = 'BURN_MST';
+        const TX_TYPE_DNA_VOTE = 'DNA_VOTE';
         const TX_TYPE_UNKNOWN = 'UNKNOWN'
 
         this.tx.inputs.forEach((input) => {
@@ -132,8 +133,10 @@ export class TxItemComponent {
                         } else if (output.attenuation_model_param) {
                             this.tx.locked_until = this.tx.height + output.attenuation_model_param.lock_period
                             this.tx.locked_quantity = output.attenuation_model_param.lock_quantity
-                            this.txType = TX_TYPE_MST_LOCK
-                        } else if (this.txType != TX_TYPE_MST_LOCK) {
+                            if(this.txType != TX_TYPE_DNA_VOTE) {
+                                this.txType = TX_TYPE_MST_LOCK
+                            }
+                        } else if (this.txType != TX_TYPE_MST_LOCK && this.txType != TX_TYPE_DNA_VOTE) {
                             this.txType = TX_TYPE_ASSET
                         }
                     }
@@ -161,7 +164,9 @@ export class TxItemComponent {
                     this.txType = TX_TYPE_COINSTAKE
                     break;
                 case 'message':
-                    if (this.txType === TX_TYPE_UNKNOWN) {
+                    if (output.attachment.content && output.attachment.content.indexOf('vote_supernode:') === 0) {
+                        this.txType = TX_TYPE_DNA_VOTE
+                    } else if (this.txType === TX_TYPE_UNKNOWN) {
                         this.txType = TX_TYPE_ETP
                     }
                     break;

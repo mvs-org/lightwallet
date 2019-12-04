@@ -847,6 +847,7 @@ export class MvsServiceProvider {
                     break;
                 case Metaverse.constants.ATTACHMENT.TYPE.MESSAGE:
                     output.attachment.type = 'message'
+                    output.attachment.content = output.attachment.message
                     break;
                 case Metaverse.constants.ATTACHMENT.TYPE.AVATAR:
                     switch (output.attachment.status) {
@@ -918,7 +919,18 @@ export class MvsServiceProvider {
             MST: {},
             MIT: {},
         }
-        return Promise.all([this.storage.get('asset_order'), this.wallet.getIcons(), this.getExplorerIconsList()])
+        return Promise.all([this.storage.get('asset_order'), this.wallet.getIcons()])
+            .then(([myMsts, localIconsList]) => {
+                myMsts.forEach((symbol) => {
+                    if (localIconsList.MST.indexOf(symbol) !== -1) {
+                        icons.MST[symbol] = 'assets/icon/' + symbol + '.png'
+                    } else {
+                        icons.MST[symbol] = 'assets/icon/default_mst.png'
+                    }
+                })
+                return icons
+            })
+        /*return Promise.all([this.storage.get('asset_order'), this.wallet.getIcons(), this.getExplorerIconsList()])
             .then(([myMsts, localIconsList, explorerIconsList]) => {
                 myMsts.forEach((symbol) => {
                     if (explorerIconsList.MST.indexOf(symbol) !== -1) {
@@ -930,7 +942,7 @@ export class MvsServiceProvider {
                     }
                 })
                 return icons
-            })
+            })*/
     }
 
 }
