@@ -4,6 +4,7 @@ import { VotePage } from './vote';
 import { TranslateModule} from '@ngx-translate/core';
 import { AlertProvider } from '../../providers/alert/alert';
 import { PipesModule } from '../../pipes/pipes.module';
+import { ProgressBarModule } from 'angular-progress-bar';
 
 @NgModule({
     declarations: [
@@ -12,7 +13,8 @@ import { PipesModule } from '../../pipes/pipes.module';
     imports: [
         IonicPageModule.forChild(VotePage),
         PipesModule,
-        TranslateModule
+        TranslateModule,
+        ProgressBarModule,
     ],
     providers:[
         AlertProvider

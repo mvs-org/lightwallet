@@ -1,5 +1,21 @@
 page-vote {
 
+    progress-bar .progress-outer {
+        border: 0 !important;
+        padding: 0 !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        border-radius: 0 !important;
+        width: 100% !important;
+    }
+
+    progress-bar .progress-inner {
+        height: 20px;
+        padding: 0 !important;
+        min-width: 20px !important;
+        border-radius: 0 !important;
+    }
+
     .right {
         text-align: right;
     }

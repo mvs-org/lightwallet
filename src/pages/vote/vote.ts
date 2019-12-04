@@ -3,15 +3,6 @@ import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { AlertProvider } from '../../providers/alert/alert';
 
-class RecipientSendMore {
-    constructor(
-        public address: string,
-        public avatar: string,
-        public target: any,
-        public attenuation_model: string
-    ) { }
-}
-
 @IonicPage({
     name: 'vote-page',
     segment: 'vote'
@@ -42,12 +33,16 @@ export class VotePage {
     showAdvanced: boolean = false
     numberPeriods: number = 1
     periodLength: number = 60000
+    periodOffsetLength: number = 1000
     addressbalancesObject: any = {}
     blocktime: number
     duration_days: number = 0
     duration_hours: number = 0
     current_time: number
     locked_until: number
+    currentVoteStart: number
+    electionProgress: number
+    height: number
 
     constructor(
         public navCtrl: NavController,
@@ -66,14 +61,20 @@ export class VotePage {
         this.current_time = Date.now()
 
         this.mvs.getHeight()
-        .then(height => this.mvs.getBlocktime(height))
-        .then(blocktime => {
-            this.blocktime = blocktime
-            this.durationChange()
-        })
-        .catch((error) => {
-            console.error(error.message)
-        })
+            .then(height => {
+                this.height = height
+                let startingVoteCycle = Math.floor((height + this.periodOffsetLength) / this.periodLength);
+                this.currentVoteStart = startingVoteCycle  * this.periodLength - this.periodOffsetLength
+                this.electionProgress = Math.round((height - this.currentVoteStart) / this.periodLength * 100)
+                return this.mvs.getBlocktime(height)
+            })
+            .then(blocktime => {
+                this.blocktime = blocktime
+                this.durationChange()
+            })
+            .catch((error) => {
+                console.error(error.message)
+            })
 
         //Load addresses and balances
         Promise.all([this.mvs.getBalances(), this.mvs.getAddresses(), this.mvs.getAddressBalances()])

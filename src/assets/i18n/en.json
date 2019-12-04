@@ -670,6 +670,7 @@
             "MINING_REWARD": "Mining reward",
             "BURN_ETP": "Burn ETP transaction",
             "BURN_MST": "Burn MST transaction",
+            "DNA_VOTE": "DNA vote",
             "UNKNOWN": "Unknown transaction type"
         },
         "SELECT_MODE": "Visualisation mode",
@@ -781,9 +782,13 @@
 
     "VOTE": "Vote",
     "VOTE.TITLE": "DNA election",
-    "VOTE.SELECT_DELEGATE": "Vote for delegate",
-    "VOTE.SELECT_PERIOD": "Number of periods",
+    "VOTE.SELECT_DELEGATE": "Select a candidate",
+    "VOTE.SELECT_PERIOD": "Lock for how many elections",
     "LOCK_ALL_BUTTON": "Lock all",
     "VOTE.DURATION_ESTIMATION": "Your DNA will be locked for approximately {{duration_days}} days and {{duration_hours}} hours, until {{unlock_time}}. Be aware that this estimation is based on the blocktime of the last 10000 blocks ({{blocktime}} sec.), and might vary based on block generation speed.",
-    "HELP.VOTE_LOCK_TOTAL_DURATION": "This is the number of periods your vote will count. Each period last around 2 weeks."
+    "HISTORY.LOCKS": "Locks",
+    "HISTORY.NO_LOCK_YET": "No lock yet",
+    "VOTE.START": "Vote start",
+    "VOTE.END": "Vote end",
+    "VOTE.CURRENT_ELECTION": "Current election"
 }
