@@ -270,5 +270,22 @@ export class AlertProvider {
         })
     }
 
+    confirm(action, title, subtitle, message, confirm, back) {
+        this.translate.get([title, subtitle, message, confirm, back]).subscribe(translations => {
+            this.alertCtrl.create({
+                title: translations[title],
+                subTitle: translations[subtitle],
+                message: translations[message],
+                buttons: [
+                    { text: translations[back] },
+                    {
+                        text: translations[confirm],
+                        handler: action
+                    }
+                ]
+            }).present()
+        })
+    }
+
 
 }

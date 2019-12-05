@@ -34,8 +34,11 @@ export class WalletServiceProvider {
         return tmp;
     }
 
-    getMstIcons() {
-        return ['ETP', 'MVS.ZGC', 'MVS.ZDC', 'CSD.CSD', 'PARCELX.GPX', 'PARCELX.TEST', 'SDG', 'META', 'MVS.HUG', 'RIGHTBTC.RT', 'TIPLR.TPC', 'PANDO', 'VALOTY', 'KOALA.KT', 'DNA'];
+    getIcons() {
+        let result = {
+            MST: ['MVS.ZGC', 'MVS.ZDC', 'CSD.CSD', 'PARCELX.GPX', 'PARCELX.TEST', 'SDG', 'META', 'MVS.HUG', 'RIGHTBTC.RT', 'TIPLR.TPC', 'PANDO', 'VALOTY', 'KOALA.KT', 'DNA', 'GKC'],
+        }
+        return result;
     }
 
     exportMemonic() {
@@ -341,6 +344,13 @@ export class WalletServiceProvider {
         return this.storage.get('saved_accounts')
             .then((accounts) => {
                 return accounts ? accounts : []
+            })
+    }
+
+    getMstList() {
+        return this.storage.get('asset_order')
+            .then((msts) => {
+                return msts ? msts : []
             })
     }
 

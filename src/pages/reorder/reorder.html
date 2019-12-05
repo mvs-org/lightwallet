@@ -12,7 +12,7 @@
         <ion-item-group reorder="true" (ionItemReorder)="$event.applyTo(assetOrder)">
             <ion-item *ngFor="let symbol of assetOrder" [ngClass]="{'hidden-asset':!isVisible(symbol)}">
                 <ion-avatar item-start>
-                    <img class="coinlogo" [src]="'assets/icon/'+icons[symbol]+'.png'" (error)="errorImg($event)" [ngClass]="{'default-logo': icon == 'default_mst'}">
+                    <img *ngIf="iconsLoaded" class="coinlogo" [src]="icons.MST[symbol]" (error)="errorImg($event, symbol)" [ngClass]="{'default-logo': icon == 'default_mst'}">
                 </ion-avatar>
                 {{symbol}}
                 <ion-icon class="eye-icon" name="eye" *ngIf="isVisible(symbol)" (click)="hide(symbol)"></ion-icon>

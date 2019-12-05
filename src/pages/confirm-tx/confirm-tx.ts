@@ -86,9 +86,9 @@ export class ConfirmTxPage {
         this.alert.showLoading()
             .then(() => this.mvs.send(tx))
             .then((result) => {
-                this.navCtrl.setRoot('AccountPage')
                 this.alert.stopLoading()
                 this.alert.showSent('SUCCESS_SEND_TEXT', result.hash)
+                this.navCtrl.setRoot('AccountPage')
             })
             .catch((error) => {
                 this.alert.stopLoading()

@@ -639,7 +639,8 @@
                 "naming": "Namens Zertifikat",
                 "mining": "Mining Zertifikat",
                 "witness": "Witness Zertifikat"
-            }
+            },
+            "BURN": "verbrannt"
         },
         "TX_FEE": "Gebühr",
         "LOCKED_SINCE_BLOCK": "Gesperrt seit Block {{block}} ({{time}})",
@@ -666,6 +667,10 @@
             "ETP_LOCK": "ETP Deposit",
             "ETP_LOCK_REWARD": "ETP Deposit Belohnung",
             "MST_LOCK": "MST Deposit",
+            "MINING_REWARD": "Mining Belohnung",
+            "BURN_ETP": "ETP Verbrennung",
+            "BURN_MST": "MST Verbrennung",
+            "DNA_VOTE": "DNA Wahl",
             "UNKNOWN": "Unbekannter Transaktionstyp"
         },
         "SELECT_MODE": "Anzeigemodus",
@@ -762,5 +767,28 @@
     "FOREIGN_INPUT": "Fremder Input",
     "INDEX": "Index",
     "MULTISIG_ALREADY_SIGNED": "Sie haben diese Transaktion bereits signiert.",
-    "EXPORT_MASTER_PUBLIC_KEY.YOUR_KEY": "Ihr Master Public Key:"
+    "EXPORT_MASTER_PUBLIC_KEY.YOUR_KEY": "Ihr Master Public Key:",
+    "MESSAGE.AUTH_SEND_INVALID_SIGNATURE": "Ungültige Signatur. Bitte Transaktion auf Korrektheit überprüfen und erneut versuchen.",
+    "MESSAGE.AUTH_HIGHER_VERSION": "Die Anfrage ist inkonpatibel mit der verwendeten Version von MyETPWallet. MyETPWallet sollte auf die neuste Version geupdatet werden.",
+    "PASSPHRASE.NOT_MATCH": "Passwörter stimmen nicht überein",
+    "BURN": "Verbrennen",
+    "BURN.TEXT": "ETP oder MST dauerhaft unnbrauchbar machen",
+    "BURN.SELECT_ASSET": "Asset auswählen",
+    "BURN.CONFIRM_TITLE": "Die Tokens werden dauerhaft unbrauchbar gemacht!",
+    "BURN.CONFIRM_MESSAGE": "Die Tokens werden verbrannt. Sie sind dadurch nicht mehr verwendbar und dies lässt sich nicht mehr umkehren. Wollen Sie die Tokens wirklich verbrennen?",
+    "BURN.CONFIRM_OK": "Ja, die Tokens sollen verbrannt werden",
+    "BURN.CONFIRM_BACK": "Vielleicht doch lieber nicht...",
+    "SEND.TOO_MANY_DECIMALS": "Zu viele Nachkommastellen angegeben",
+
+    "VOTE": "Wahl",
+    "VOTE.TITLE": "DNA Supernode Wahl",
+    "VOTE.SELECT_DELEGATE": "Kandidaten auswählen",
+    "VOTE.SELECT_PERIOD": "Für wie viele Wahlperioden sperren (teilnehmen)",
+    "LOCK_ALL_BUTTON": "Alles",
+    "VOTE.DURATION_ESTIMATION": "Ihre DNA Tokens werden für voraussichtlich {{duration_days}} tage und {{duration_hours}} Stunden, bis {{unlock_time}} gesperrt. Diese Schätzung basiert auf der Blockzeit der letzten 10000 Blöcke ({{blocktime}} Sekunden). Die Blockzeit kann variieren.",
+    "HISTORY.LOCKS": "Sperrungen",
+    "HISTORY.NO_LOCK_YET": "No lock yet",
+    "VOTE.START": "Wahl Start",
+    "VOTE.END": "Wahl Ende",
+    "VOTE.NO_ELECTION": "Aktuell ist keine Wahl möglich"
 }

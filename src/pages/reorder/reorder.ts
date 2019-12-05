@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, Platform } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { TranslateService } from '@ngx-translate/core';
-import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
 
 @IonicPage()
 @Component({
@@ -15,32 +14,24 @@ export class ReorderPage {
     originalAssetOrder: Array<string>
     hiddenAsset: Array<string> = []
     originalHiddenAsset: Array<string> = []
-    icons: any = {}
+    icons: any = { MST: [], MIT: [] }
     reordered: boolean = false
+    iconsLoaded = false
 
     constructor(
         public navCtrl: NavController,
         private mvs: MvsServiceProvider,
         public translate: TranslateService,
         public platform: Platform,
-        private wallet: WalletServiceProvider
     ) { }
 
-    ionViewDidEnter() {
-        this.mvs.assetOrder()
-            .then(assetOrder => this.assetOrder = assetOrder)
-            .then(() => {
-                this.originalAssetOrder = this.assetOrder.slice(0)
-                let iconsList = this.wallet.getMstIcons()
-                this.assetOrder.forEach((symbol) => {
-                    this.icons[symbol] = iconsList.indexOf(symbol) !== -1 ? symbol : 'default_mst'
-                })
-            })
-        this.mvs.getHiddenMst()
-            .then(hiddenAsset => {
-                this.hiddenAsset = hiddenAsset
-                this.originalHiddenAsset = hiddenAsset.slice(0)
-            })
+    async ionViewDidEnter() {
+        this.assetOrder = await this.mvs.assetOrder()
+        this.originalAssetOrder = this.assetOrder.slice(0)
+        this.icons = await this.mvs.getDefaultIcon()
+        this.iconsLoaded = true
+        this.hiddenAsset = await this.mvs.getHiddenMst()
+        this.originalHiddenAsset = this.hiddenAsset.slice(0)
     }
 
     async save(assetOrder) {
@@ -82,6 +73,6 @@ export class ReorderPage {
 
     isVisible = symbol => !this.hiddenAsset || this.hiddenAsset.indexOf(symbol) == -1
 
-    errorImg = e => e.target.remove()
+    errorImg = (e, symbol) => this.icons.MST[symbol] = this.icons.MST[symbol] !== 'assets/icon/' + symbol + '.png' ? 'assets/icon/' + symbol + '.png' : 'assets/icon/default_mst.png'
 
 }

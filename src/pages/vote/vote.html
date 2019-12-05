@@ -1,0 +1,143 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>{{ "VOTE.TITLE" | translate}}</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding style="padding-bottom: 0;">
+
+    <p align="center" *ngIf="etpBalance<fee/100000000" class="wrong-input">{{"NOTICE_TRANSACTION_FEE_UNCOVERED"|translate}}</p>
+    <ion-row *ngIf="!noCandidates">
+        <ion-col>
+            <p class="available">{{"AVAILABLE_BALANCE" | translate}}: <br *ngIf="platform.is('mobile')">{{showBalance |
+                format : decimals}} {{selectedAsset}}</p>
+        </ion-col>
+        <ion-col>
+            <p class="right">{{"FEE"|translate}}:<br *ngIf="platform.is('mobile')"> {{fee | format : 8}} ETP</p>
+        </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="noCandidates">
+        <h1 class="no-candidates">{{"VOTE.NO_ELECTION"|translate}}</h1>
+    </ion-row>
+
+    <form *ngIf="!noCandidates" #sendForm="ngForm" style="padding-bottom: 0;">
+        <ion-list style="padding-bottom: 0;">
+            <ion-item class="election-progress">
+                <ion-row>
+                    <ion-col>
+                        <p>{{"VOTE.START" | translate}}: <br *ngIf="platform.is('mobile')"> {{currentVoteTimestamp*1000
+                            | date : 'medium'}}</p>
+                    </ion-col>
+                    <ion-col>
+                        <p class="right">{{"VOTE.END"|translate}}:<br *ngIf="platform.is('mobile')">
+                            ~{{(currentVoteTimestamp + (blocktime*periodLength))*1000 | date : 'medium'}}</p>
+                    </ion-col>
+                </ion-row>
+                <progress-bar [progress]="electionProgress"></progress-bar>
+            </ion-item>
+            <br>
+            <ion-item [ngClass]="{'error-border':!candidate}">
+                <ion-label>{{"VOTE.SELECT_DELEGATE"|translate}}</ion-label>
+                <ion-select [(ngModel)]="candidate" name="candidate" multiple="false" okText="{{'OK'|translate}}"
+                    cancelText="{{'CANCEL'|translate}}">
+                    <ng-container *ngFor="let candidate of candidates">
+                        <ion-option value="{{candidate}}">{{candidate}}</ion-option>
+                    </ng-container>
+                </ion-select>
+            </ion-item>
+            <ion-item no-lines>
+                <ion-label color="primary">{{"VOTE.SELECT_PERIOD" | translate}}</ion-label>
+                <ion-badge item-end color="primary">{{numberPeriods}}</ion-badge>
+            </ion-item>
+            <ion-item>
+                <ion-range min="1" max="26" step="1" pin="true" color="primary" [(ngModel)]="numberPeriods" name="numberPeriods"
+                    (ionChange)="durationChange($event)">
+                    <ion-label range-left>1</ion-label>
+                    <ion-label range-right>26</ion-label>
+                </ion-range>
+            </ion-item>
+            <ion-item class="info-input" no-lines>
+                <span [translate]="'VOTE.DURATION_ESTIMATION'" [translateParams]="{blocktime: blocktime, duration_days: duration_days, duration_hours: duration_hours, unlock_time: locked_until | date : 'medium'}"></span>
+            </ion-item>
+
+            <ion-item [ngClass]="{'error-border':!validQuantity(quantity)}">
+                <ion-label color="primary" floating>{{"AMOUNT" | translate}}</ion-label>
+                <ion-input #quantityInput name="quantity" type="number" min="0" [(ngModel)]="quantity" required></ion-input>
+                <button type="button" *ngIf="etpBalance>10000" id="sendAll" ion-button item-right (click)="sendAll()">
+                    {{"LOCK_ALL_BUTTON"|translate}}
+                </button>
+            </ion-item>
+            <ion-item *ngIf="countDecimals(quantity) > 0" no-lines class="wrong-input">{{"SEND.TOO_MANY_DECIMALS" |
+                translate}}</ion-item>
+            <br>
+            <ion-item [ngClass]="{'error-border':!validFromAddress(sendFrom)}">
+                <ion-label>{{"SELECT_FROM_ADDRESS"|translate}}</ion-label>
+                <ion-select [(ngModel)]="sendFrom" name="sendfrom" multiple="false" (ngModelChange)="onFromAddressChange($event)"
+                    okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}">
+                    <ion-option selected="true" value="auto">{{"AUTO"| translate}}</ion-option>
+                    <ng-container *ngFor="let addressbalance of addressbalances">
+                        <ion-option *ngIf="addressbalance.balance>0" value="{{addressbalance.address}}">{{addressbalance.identifier}}
+                            - {{addressbalance.balance | format : decimals}} {{selectedAsset}}</ion-option>
+                    </ng-container>
+                </ion-select>
+            </ion-item>
+            <ion-item *ngIf="!validFromAddress(sendFrom)" no-lines class="wrong-input">{{"TRANSFER.FROM_ADDRESS_NO_ETP"
+                | translate}}</ion-item>
+            <br>
+            <ion-item>
+                <ion-label>{{"SHOW_ADVANCED"|translate}}</ion-label>
+                <ion-toggle [(ngModel)]="showAdvanced" name="showAdvanced" checked="false"></ion-toggle>
+            </ion-item>
+            <div *ngIf="showAdvanced">
+                <ion-item no-lines>
+                    <ion-label color="primary">{{"FEE" | translate}}</ion-label>
+                    <ion-badge item-end color="primary">{{fee | format : 8}} ETP</ion-badge>
+                </ion-item>
+                <ion-item>
+                    <ion-range min="10000" max="10000000" step="10000" color="primary" [(ngModel)]="fee" name="fee"
+                        (ionChange)="updateRange()">
+                        <ion-label range-left>{{10000 | format : 8}}</ion-label>
+                        <ion-label range-right>{{10000000 | format : 8}}</ion-label>
+                    </ion-range>
+                </ion-item>
+                <ion-item [ngClass]="{'error-border':!validMessageLength(message), 'valid-border': message.length > 0 && validMessageLength(message)}">
+                    <ion-label floating>{{"MESSAGE" | translate}}</ion-label>
+                    <ion-input name="message" [(ngModel)]="message"></ion-input>
+                </ion-item>
+                <div no-lines class="advice">{{"HELP.MESSAGE" | translate}}</div>
+                <ion-item *ngIf="!validMessageLength(message)" no-lines class="wrong-input">{{"MESSAGE_TOO_LONG" |
+                    translate}}</ion-item>
+                <br>
+                <ion-item>
+                    <ion-label>{{"SELECT_CHANGE_ADDRESS"|translate}}</ion-label>
+                    <ion-select [(ngModel)]="changeAddress" name="changeaddress" okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}">
+                        <ion-option selected="true" value="auto">{{"AUTO"| translate}}</ion-option>
+                        <ion-option *ngFor="let addressbalance of addressbalances" value="{{addressbalance.address}}">{{addressbalance.identifier}}
+                            - {{addressbalance.balance | format : decimals}} {{selectedAsset}}</ion-option>
+                    </ion-select>
+                </ion-item>
+                <br>
+            </div>
+        </ion-list>
+        <ion-row class="padding-bottom">
+            <ion-col>
+                <button type="submit" ion-button full icon-left [disabled]="!sendForm.form.valid||!candidate||!validQuantity(quantity)||!validMessageLength(message)||!validFromAddress(sendFrom)"
+                    (click)="send()" color="secondary">
+                    <ion-icon disabled="checked" name="cog"></ion-icon>
+                    {{'NEXT'|translate}}
+                </button>
+            </ion-col>
+            <ion-col>
+                <button ion-button color="danger" full item-right icon-left (click)="cancel($event)">
+                    <ion-icon name="close"></ion-icon>
+                    {{'CANCEL'|translate}}
+                </button>
+            </ion-col>
+        </ion-row>
+    </form>
+
+</ion-content>

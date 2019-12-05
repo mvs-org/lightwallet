@@ -34,8 +34,6 @@ export class AssetTransferPage {
     recipient_avatar: string
     recipient_avatar_valid: boolean
     quantity: string = ""
-    builtFor: string
-    passcodeSet: any
     addressbalances: Array<any>
     sendFrom: string = "auto"
     changeAddress: string

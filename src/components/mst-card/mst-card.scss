@@ -3,14 +3,14 @@ mst-card {
     width: 100%;
 
     .asset-container {
-       max-width: 100%;
+        max-width: 100%;
     }
 
     @media (min-width: 825px) {
         .asset-container {
             max-width: 50%;
         }
-     }
+    }
 
     @media (min-width: 1310px) {
         .asset-container {
@@ -94,44 +94,44 @@ mst-card {
     }
 
     .deposit-button {
-      top: -7px;
+        top: -7px;
     }
 
     .row-buttons {
-      position: absolute;
-      bottom: 20px;
-      left: -1px;
-      padding-right: 10px;
-      padding-left: 10px;
+        position: absolute;
+        bottom: 20px;
+        left: -1px;
+        padding-right: 10px;
+        padding-left: 10px;
     }
 
     .card-block {
-      padding-top: 10px;
-      padding-left: 0px;
-      padding-right: 0px;
-      padding-bottom: 50px;
+        padding-top: 10px;
+        padding-left: 0px;
+        padding-right: 0px;
+        padding-bottom: 50px;
     }
 
     .offlineIcon {
-      color: red;
-      padding-right: 10px;
+        color: red;
+        padding-right: 10px;
     }
 
 
     .block-iPhone {
-      line-height: 8;
-      font-size: 14px;
+        line-height: 8;
+        font-size: 14px;
     }
 
     .csdLogoDefault {
-      //filter: invert(100%);
-      filter: brightness(0.50);
+        //filter: invert(100%);
+        filter: brightness(0.50);
     }
 
     .default-logo {
-      box-shadow: 0px 0px 4px 1px;
-      color: rgba(255, 255, 255, 0.6);
-      background-color: rgba(255, 255, 255, 0.6);
+        box-shadow: 0px 0px 4px 1px;
+        color: rgba(255, 255, 255, 0.6);
+        background-color: rgba(255, 255, 255, 0.6);
     }
 
     .fiat {
@@ -165,7 +165,7 @@ mst-card {
     }
 
     .card-ios {
-      margin: 0;
-      width: 100%;
+        margin: 0;
+        width: 100%;
     }
 }
