@@ -789,5 +789,6 @@
     "HISTORY.LOCKS": "已锁定",
     "HISTORY.NO_LOCK_YET": "没有锁定记录",
     "VOTE.START": "投票开始",
-    "VOTE.END": "投票结束"
+    "VOTE.END": "投票结束",
+    "VOTE.NO_ELECTION": "目前没有进行投票"
 }

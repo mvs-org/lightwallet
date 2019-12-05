@@ -45,6 +45,7 @@ export class VotePage {
     electionProgress: number
     height: number
     noCandidates: boolean = false
+    dnaRichestAddress: string
 
     constructor(
         public navCtrl: NavController,
@@ -98,10 +99,14 @@ export class VotePage {
                 this.addressbalancesObject = addressbalancesObject
 
                 let addrblncs = []
+                this.dnaRichestAddress = addresses[0]
                 Object.keys(addresses).forEach((index) => {
                     let address = addresses[index]
                     if (addressbalancesObject[address]) {
-                        addrblncs.push({ "address": address, "avatar": addressbalancesObject[address].AVATAR ? addressbalancesObject[address].AVATAR : "", "identifier": addressbalancesObject[address].AVATAR ? addressbalancesObject[address].AVATAR : address, "balance": this.selectedAsset == 'ETP' ? addressbalancesObject[address].ETP.available : addressbalancesObject[address].MST[this.selectedAsset] ? addressbalancesObject[address].MST[this.selectedAsset].available : 0 })
+                        addrblncs.push({ "address": address, "avatar": addressbalancesObject[address].AVATAR ? addressbalancesObject[address].AVATAR : "", "identifier": addressbalancesObject[address].AVATAR ? addressbalancesObject[address].AVATAR : address, "balance": addressbalancesObject[address].MST[this.selectedAsset] ? addressbalancesObject[address].MST[this.selectedAsset].available : 0 })
+                        if(addressbalancesObject[address].MST[this.selectedAsset]) {
+                            this.dnaRichestAddress = addressbalancesObject[address].MST[this.selectedAsset].available > addressbalancesObject[this.dnaRichestAddress].MST[this.selectedAsset].available ? address : this.dnaRichestAddress
+                        }
                     } else {
                         addrblncs.push({ "address": address, "avatar": "", "identifier": address, "balance": 0 })
                     }
@@ -158,7 +163,7 @@ export class VotePage {
                     messages.push(this.message)
                 }
                 return this.mvs.createAssetDepositTx(
-                    (this.sendFrom != 'auto') ? this.sendFrom : this.addresses[0],
+                    (this.sendFrom != 'auto') ? this.sendFrom : this.dnaRichestAddress ? this.dnaRichestAddress : this.addresses[0],
                     undefined,
                     this.selectedAsset,
                     quantity,

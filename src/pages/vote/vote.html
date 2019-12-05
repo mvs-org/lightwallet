@@ -29,10 +29,12 @@
             <ion-item>
                 <ion-row>
                     <ion-col>
-                        <p>{{"VOTE.START" | translate}}: <br *ngIf="platform.is('mobile')"> {{currentVoteTimestamp*1000 | date : 'medium'}}</p>
+                        <p>{{"VOTE.START" | translate}}: <br *ngIf="platform.is('mobile')"> {{currentVoteTimestamp*1000
+                            | date : 'medium'}}</p>
                     </ion-col>
                     <ion-col>
-                        <p class="right">{{"VOTE.END"|translate}}:<br *ngIf="platform.is('mobile')"> ~{{(currentVoteTimestamp + (blocktime*periodLength))*1000 | date : 'medium'}}</p>
+                        <p class="right">{{"VOTE.END"|translate}}:<br *ngIf="platform.is('mobile')">
+                            ~{{(currentVoteTimestamp + (blocktime*periodLength))*1000 | date : 'medium'}}</p>
                     </ion-col>
                 </ion-row>
                 <progress-bar [progress]="electionProgress"></progress-bar>
