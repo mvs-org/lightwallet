@@ -76,6 +76,43 @@ export class MvsServiceProvider {
             })
     }
 
+    burn(asset: string, quantity: number, from_address: string, change_address: string, fee: number, messages: Array<string>) {
+        let target = {};
+        target[asset] = quantity;
+        return this.getUtxoFrom(from_address)
+            .then((utxo) => this.getHeight().then(height => Metaverse.output.findUtxo(utxo, target, height, fee)))
+            .then((result) => {
+                if (result.utxo.length > 676) {
+                    throw Error('ERR_TOO_MANY_INPUTS');
+                }
+                //Set etp change address to the first utxo's address with etp
+                let etp_change_address = change_address
+                if (etp_change_address == undefined) {
+                    result.utxo.forEach(utxo => {
+                        if (utxo.value !== 0) {
+                            etp_change_address = utxo.address
+                            return
+                        }
+                    });
+                }
+                //Set mst change address to first utxo's address with this mst
+                let mst_change_address = change_address
+                if (mst_change_address == undefined && asset != 'ETP') {
+                    result.utxo.forEach(utxo => {
+                        if (utxo.attachment.symbol == asset) {
+                            mst_change_address = utxo.address
+                            return
+                        }
+                    });
+                }
+                return Metaverse.transaction_builder.burn(result.utxo, target, undefined, etp_change_address, result.change, result.lockedAssetChange, messages, mst_change_address, fee);
+            })
+            .catch((error) => {
+                console.error(error)
+                throw Error(error.message);
+            })
+    }
+
     createSendMultisigTx(passphrase: string, asset: string, recipient_address: string, recipient_avatar: string, quantity: number, from_address: string, change_address: string, fee: number, messages: Array<string>, multisig: any) {
         let target = {};
         target[asset] = quantity;
@@ -254,7 +291,7 @@ export class MvsServiceProvider {
 
     async getUtxoFrom(address: any) {
         const utxo = await this.getUtxo()
-        return address ? utxo.filter(output=>output.address == address) : utxo
+        return address ? utxo.filter(output => output.address == address) : utxo
     }
 
     getUtxoFromMultisig(address: any) {
@@ -700,13 +737,13 @@ export class MvsServiceProvider {
         return this.organizeInputs(tx, true);
     }
 
-    async getTransactionMap(){
+    async getTransactionMap() {
         return keyBy(await this.getTxs(), 'hash')
     }
 
     async organizeInputs(tx, getForeignInputs, transactionMap?) {
-        if(transactionMap===undefined){
-            transactionMap=await this.getTransactionMap()
+        if (transactionMap === undefined) {
+            transactionMap = await this.getTransactionMap()
         }
         tx.inputs = await Promise.all(tx.inputs.map(input => this.organizeInput(input, getForeignInputs, transactionMap)))
         return tx
@@ -724,11 +761,11 @@ export class MvsServiceProvider {
         }
 
         const tx = transactionMap[input.previous_output.hash]
-        if(tx!==undefined){
+        if (tx !== undefined) {
             input = this.addInputData(input, tx.outputs[input.previous_output.index])
             return input
         }
-        
+
 
         if (getForeignInput) {
             input = this.addInputData(input, await this.getOutput(input.previous_output.hash, input.previous_output.index))
@@ -739,7 +776,7 @@ export class MvsServiceProvider {
     }
 
     addInputData(existingInputData, previousOutputData) {
-        if(previousOutputData) {
+        if (previousOutputData) {
             existingInputData.previous_output.script = previousOutputData.script
             existingInputData.previous_output.address = previousOutputData.address
             existingInputData.previous_output.value = previousOutputData.value
@@ -766,14 +803,14 @@ export class MvsServiceProvider {
                     switch (output.attachment.status) {
                         case Metaverse.constants.MST.STATUS.REGISTER:
                             output.attachment.type = 'asset-issue';
-                            output.attachment.decimals = output.attachment.precision ? output.attachment.precision : output.attachment.decimals
+                            output.attachment.decimals = output.attachment.precision != undefined ? output.attachment.precision : output.attachment.decimals
                             output.attachment.quantity = output.attachment.max_supply ? output.attachment.max_supply : output.attachment.original_quantity
                             break;
                         case Metaverse.constants.MST.STATUS.TRANSFER:
                             output.attachment.type = 'asset-transfer';
                             if (balances && balances.MST && balances.MST[output.attachment.symbol])
                                 output.attachment.decimals = balances.MST[output.attachment.symbol].decimals
-                            if(output.attenuation) {
+                            if (output.attenuation) {
                                 let attenuationObject = {}
                                 const attenuationArray = output.attenuation.model.split(';')
                                 attenuationArray.forEach(param => {
@@ -788,14 +825,14 @@ export class MvsServiceProvider {
                                     total_period_nbr: parseInt(attenuationObject['UN']),
                                     type: parseInt(attenuationObject['TYPE']),
                                 }
-                                if(attenuationObject['IR']) {
+                                if (attenuationObject['IR']) {
                                     output.attenuation_model_param.inflation_rate = parseInt(attenuationObject['IR'])
                                 }
-                                if(attenuationObject['UC'] && attenuationObject['UQ']) {
+                                if (attenuationObject['UC'] && attenuationObject['UQ']) {
                                     const numbers = attenuationObject['UC'].split(',')
                                     const quantities = attenuationObject['UQ'].split(',')
                                     let locked = []
-                                    for(let i=0; i < numbers.length; i++) {
+                                    for (let i = 0; i < numbers.length; i++) {
                                         locked.push({
                                             number: parseInt(numbers[i]),
                                             quantity: parseInt(quantities[i])
@@ -810,6 +847,7 @@ export class MvsServiceProvider {
                     break;
                 case Metaverse.constants.ATTACHMENT.TYPE.MESSAGE:
                     output.attachment.type = 'message'
+                    output.attachment.content = output.attachment.message
                     break;
                 case Metaverse.constants.ATTACHMENT.TYPE.AVATAR:
                     switch (output.attachment.status) {
@@ -867,6 +905,55 @@ export class MvsServiceProvider {
 
     getSignatureStatus(transaction, inputIndex, redeem, targetPublicKey) {
         return Metaverse.multisig.getSignatureStatus(transaction, inputIndex, redeem, Metaverse.networks[this.globals.network], targetPublicKey)
+    }
+
+    getExplorerIconsList() {
+        return this.blockchain.MST.icons()
+            .catch((error) => {
+                return { MST: [], MIT: [] };
+            })
+    }
+
+    getDefaultIcon() {
+        let icons = {
+            MST: {},
+            MIT: {},
+        }
+        return Promise.all([this.storage.get('asset_order'), this.wallet.getIcons()])
+            .then(([myMsts, localIconsList]) => {
+                myMsts.forEach((symbol) => {
+                    if (localIconsList.MST.indexOf(symbol) !== -1) {
+                        icons.MST[symbol] = 'assets/icon/' + symbol + '.png'
+                    } else {
+                        icons.MST[symbol] = 'assets/icon/default_mst.png'
+                    }
+                })
+                return icons
+            })
+        /*return Promise.all([this.storage.get('asset_order'), this.wallet.getIcons(), this.getExplorerIconsList()])
+            .then(([myMsts, localIconsList, explorerIconsList]) => {
+                myMsts.forEach((symbol) => {
+                    if (explorerIconsList.MST.indexOf(symbol) !== -1) {
+                        icons.MST[symbol] = 'https://explorer.mvs.org/img/assets/' + symbol + '.png'
+                    } else if (localIconsList.MST.indexOf(symbol) !== -1) {
+                        icons.MST[symbol] = 'assets/icon/' + symbol + '.png'
+                    } else {
+                        icons.MST[symbol] = 'assets/icon/default_mst.png'
+                    }
+                })
+                return icons
+            })*/
+    }
+
+    getCandidates() {
+        return this.blockchain.election.candidates()
+            .catch((error) => {
+                return [];
+            })
+    }
+
+    getBlock(height) {
+        return this.blockchain.block.get(height)
     }
 
 }

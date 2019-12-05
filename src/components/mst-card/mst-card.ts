@@ -5,6 +5,7 @@ import { NavController } from 'ionic-angular';
     selector: 'mst-card',
     templateUrl: 'mst-card.html'
 })
+
 export class MSTCardComponent {
 
     @Input() balance: any;
@@ -17,9 +18,9 @@ export class MSTCardComponent {
 
     constructor(
         private nav: NavController
-    ) {}
+    ) { }
 
-    errorImg = e => e.target.remove()
+    errorImg = e => this.icon = this.icon !== 'assets/icon/' + this.symbol + '.png' ? 'assets/icon/' + this.symbol + '.png' : 'assets/icon/default_mst.png'
 
     gotoTransactions = () => this.nav.push("transactions-page", { asset: this.symbol, icon: this.icon })
 
@@ -28,4 +29,6 @@ export class MSTCardComponent {
     gotoReceive = () => this.nav.push("receive-page", { asset: this.symbol })
 
     gotoSwap = () => this.nav.push("eth-swap-page", { asset: this.symbol })
+
+    gotoVote = () => this.nav.push("vote-page", { })
 }

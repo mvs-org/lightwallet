@@ -639,7 +639,8 @@
                 "naming": "Naming certificate",
                 "mining": "Mining certificate",
                 "witness": "Witness certificate"
-            }
+            },
+            "BURN": "To be burned"
         },
         "TX_FEE": "Fee",
         "LOCKED_SINCE_BLOCK": "Locked since block {{block}} ({{time}})",
@@ -667,6 +668,9 @@
             "ETP_LOCK_REWARD": "ETP lock reward",
             "MST_LOCK": "MST lock",
             "MINING_REWARD": "Mining reward",
+            "BURN_ETP": "Burn ETP transaction",
+            "BURN_MST": "Burn MST transaction",
+            "DNA_VOTE": "DNA vote",
             "UNKNOWN": "Unknown transaction type"
         },
         "SELECT_MODE": "Visualisation mode",
@@ -765,5 +769,26 @@
     "MULTISIG_ALREADY_SIGNED": "You have already signed this transaction!",
     "EXPORT_MASTER_PUBLIC_KEY.YOUR_KEY": "Your master public key:",
     "MESSAGE.AUTH_SEND_INVALID_SIGNATURE": "Your signature is incorrecte. Please make sure the information are correct and try again.",
-    "MESSAGE.AUTH_HIGHER_VERSION": "The request version is not compatible with your version of MyETPWallet. Please upgrade MyETPWallet to be able to authenticate."
+    "MESSAGE.AUTH_HIGHER_VERSION": "The request version is not compatible with your version of MyETPWallet. Please upgrade MyETPWallet to be able to authenticate.",
+    "PASSPHRASE.NOT_MATCH": "Password and confirm password do not match",
+    "BURN": "Burn",
+    "BURN.TEXT": "Burn ETP or MST to permanently destroy them",
+    "BURN.SELECT_ASSET": "Asset to burn",
+    "BURN.CONFIRM_TITLE": "These tokens will be permanently deleted!",
+    "BURN.CONFIRM_MESSAGE": "You are about to burn these tokens. They will be permanently destroyed, and there will be no way to get them back. Are you sure you want to destroy them?",
+    "BURN.CONFIRM_OK": "Yes, burn them!",
+    "BURN.CONFIRM_BACK": "Maybe not...",
+    "SEND.TOO_MANY_DECIMALS": "You have specified too many decimals",
+
+    "VOTE": "Vote",
+    "VOTE.TITLE": "DNA election",
+    "VOTE.SELECT_DELEGATE": "Select a candidate",
+    "VOTE.SELECT_PERIOD": "Lock for how many elections",
+    "LOCK_ALL_BUTTON": "All",
+    "VOTE.DURATION_ESTIMATION": "Your DNA will be locked for approximately {{duration_days}} days and {{duration_hours}} hours, until {{unlock_time}}. Be aware that this estimation is based on the blocktime of the last 10000 blocks ({{blocktime}} sec.), and might vary based on block generation speed.",
+    "HISTORY.LOCKS": "Locks",
+    "HISTORY.NO_LOCK_YET": "No lock yet",
+    "VOTE.START": "Vote start",
+    "VOTE.END": "Vote end",
+    "VOTE.NO_ELECTION": "There is currently no election ongoing"
 }

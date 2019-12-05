@@ -37,7 +37,7 @@
             <ion-row>
                 <ng-container class="asset-container">
                     <ion-col class="asset-container">
-                        <etp-card *ngIf="balances!=undefined" [balance]="balances.ETP" [tickers]="tickers.ETP" [base]="base"></etp-card>
+                        <etp-card *ngIf="balances!=undefined" [balance]="balances.ETP" [icon]="'assets/icon/ETP.png'" [tickers]="tickers.ETP" [base]="base"></etp-card>
                     </ion-col>
                 </ng-container>
             </ion-row>
@@ -45,7 +45,7 @@
             <ion-row *ngIf="balances!=undefined">
                 <ng-container *ngFor="let asset of balancesKeys" class="asset-container">
                     <ion-col *ngIf="balances.MST[asset]!==undefined" class="asset-container">
-                        <mst-card [balance]="balances.MST[asset]" [symbol]="asset" [theme]="theme" [icon]="icons[asset]"
+                        <mst-card [balance]="balances.MST[asset]" [symbol]="asset" [theme]="theme" [icon]="icons.MST[asset]"
                             [swap]="whitelist.indexOf(asset) > -1" [tickers]="tickers[asset]" [base]="base"></mst-card>
                     </ion-col>
                 </ng-container>
