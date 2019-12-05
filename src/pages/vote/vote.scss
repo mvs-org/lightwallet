@@ -116,10 +116,20 @@ page-vote {
         padding-left: 10px;
     }
 
-    .noCandidates {
+    .no-candidates {
         margin-right: auto;
         margin-left: auto;
         padding-top: 50px;
+    }
+
+    .election-progress .item-inner, .election-progress .label {
+        padding-right: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    .election-progress .col {
+        padding-right: 0;
+        padding-left: 0;
     }
 
 }

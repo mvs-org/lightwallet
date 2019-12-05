@@ -21,12 +21,12 @@
     </ion-row>
 
     <ion-row *ngIf="noCandidates">
-        <h1 class="noCandidates">{{"VOTE.NO_ELECTION"|translate}}</h1>
+        <h1 class="no-candidates">{{"VOTE.NO_ELECTION"|translate}}</h1>
     </ion-row>
 
     <form *ngIf="!noCandidates" #sendForm="ngForm" style="padding-bottom: 0;">
         <ion-list style="padding-bottom: 0;">
-            <ion-item>
+            <ion-item class="election-progress">
                 <ion-row>
                     <ion-col>
                         <p>{{"VOTE.START" | translate}}: <br *ngIf="platform.is('mobile')"> {{currentVoteTimestamp*1000
