@@ -44,6 +44,7 @@ export class VotePage {
     currentVoteTimestamp: number
     electionProgress: number
     height: number
+    noCandidates: boolean = false
 
     constructor(
         public navCtrl: NavController,
@@ -79,6 +80,12 @@ export class VotePage {
                 console.error(error.message)
             })
 
+        this.mvs.getCandidates()
+            .then(candidates => {
+                this.candidates = candidates.candidates
+                this.noCandidates = !this.candidates || this.candidates.length == 0
+            })
+
         //Load addresses and balances
         Promise.all([this.mvs.getBalances(), this.mvs.getAddresses(), this.mvs.getAddressBalances()])
             .then(([balances, addresses, addressbalancesObject]) => {
@@ -109,9 +116,6 @@ export class VotePage {
                 if (!Array.isArray(addresses) || !addresses.length)
                     this.navCtrl.setRoot("LoginPage")
             })
-
-        this.mvs.getCandidates()
-            .then(candidates => this.candidates = candidates.candidates)
     }
 
     onFromAddressChange(event) {

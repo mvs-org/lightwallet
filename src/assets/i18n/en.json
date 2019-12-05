@@ -784,10 +784,11 @@
     "VOTE.TITLE": "DNA election",
     "VOTE.SELECT_DELEGATE": "Select a candidate",
     "VOTE.SELECT_PERIOD": "Lock for how many elections",
-    "LOCK_ALL_BUTTON": "Lock all",
+    "LOCK_ALL_BUTTON": "All",
     "VOTE.DURATION_ESTIMATION": "Your DNA will be locked for approximately {{duration_days}} days and {{duration_hours}} hours, until {{unlock_time}}. Be aware that this estimation is based on the blocktime of the last 10000 blocks ({{blocktime}} sec.), and might vary based on block generation speed.",
     "HISTORY.LOCKS": "Locks",
     "HISTORY.NO_LOCK_YET": "No lock yet",
     "VOTE.START": "Vote start",
-    "VOTE.END": "Vote end"
+    "VOTE.END": "Vote end",
+    "VOTE.NO_ELECTION": "There is currently no election ongoing"
 }

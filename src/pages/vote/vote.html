@@ -10,7 +10,7 @@
 <ion-content padding style="padding-bottom: 0;">
 
     <p align="center" *ngIf="etpBalance<fee/100000000" class="wrong-input">{{"NOTICE_TRANSACTION_FEE_UNCOVERED"|translate}}</p>
-    <ion-row>
+    <ion-row *ngIf="!noCandidates">
         <ion-col>
             <p class="available">{{"AVAILABLE_BALANCE" | translate}}: <br *ngIf="platform.is('mobile')">{{showBalance |
                 format : decimals}} {{selectedAsset}}</p>
@@ -20,7 +20,11 @@
         </ion-col>
     </ion-row>
 
-    <form #sendForm="ngForm" style="padding-bottom: 0;">
+    <ion-row *ngIf="noCandidates">
+        <h1 class="noCandidates">{{"VOTE.NO_ELECTION"|translate}}</h1>
+    </ion-row>
+
+    <form *ngIf="!noCandidates" #sendForm="ngForm" style="padding-bottom: 0;">
         <ion-list style="padding-bottom: 0;">
             <ion-item>
                 <ion-row>
