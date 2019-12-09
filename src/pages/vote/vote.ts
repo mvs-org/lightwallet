@@ -75,7 +75,7 @@ export class VotePage {
                 this.blocktime = blocktime
                 this.durationChange()
             })
-            .then(() => this.mvs.getBlock(this.height))
+            .then(() => this.mvs.getBlock(this.currentVoteStart))
             .then((block) => this.currentVoteTimestamp = block.time_stamp)
             .catch((error) => {
                 console.error(error.message)
