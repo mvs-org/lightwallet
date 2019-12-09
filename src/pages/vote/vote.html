@@ -11,13 +11,13 @@
 
     <div *ngIf="loadingElectionInfo" class="mini-loader"></div>
 
-    <ion-row *ngIf="!loadingElectionInfo && (!electionInfo || !electionInfo.candidates || electionInfo.candidates.length == 0)">
+    <ion-row *ngIf="!loadingElectionInfo && (!electionInfo || !electionInfo.candidates || electionInfo.candidates.length == 0 || electionInfo.onHold == 1)">
         <ion-col>
             <p class="no-candidates">{{"VOTE.NO_ELECTION" | translate}}</p>
         </ion-col>
     </ion-row>
 
-    <div *ngIf="!loadingElectionInfo && electionInfo && electionInfo.candidates && electionInfo.candidates.length > 0">
+    <div *ngIf="!loadingElectionInfo && electionInfo && electionInfo.candidates && electionInfo.candidates.length > 0 && electionInfo.onHold == 0">
         <p align="center" *ngIf="etpBalance<fee/100000000" class="wrong-input">{{"NOTICE_TRANSACTION_FEE_UNCOVERED"|translate}}</p>
         <ion-row *ngIf="!electionInfo || !electionInfo.candidates">
             <ion-col>
