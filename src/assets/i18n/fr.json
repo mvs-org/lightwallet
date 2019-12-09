@@ -353,7 +353,7 @@
     "MITS.INFORMATION": "MIT (Metaverse Identifiable Token) est le standard utilisé par les uniques tokens sur Metaverse. Un MIT possède un symbole unique et son contenu ne peut être modifié. Sa quantité est toujours 1 et ne peut être divisé. Il peut uniquement être créé et transféré par et vers un Avatar. Les MITs peuvent être utilisés afin de représenter un object digital ou physique unique, et facilement retracer ses transferts entre Avatars. L'hitorique complet est enregistré sur la blockchain et publiquement visible",
     "SEND_ALL_TITLE": "Tout envoyer?",
     "SEND_ALL_MESSAGE": "Êtes vous sûr de vouloir envoyer la totalité de votre balance disponible?",
-    "DEPOSIT.DURATION_ESTIMATION": "Vos MST seront bloqués pendant environ {{duration_days}} jours et {{duration_hours}} heures. Veuillez noter que cette estimation est basée sur la vitesse de génération des 10000 derniers blocs ({{blocktime}} sec.), et peut varier suivant l'évolution de la vitesse de générationon des blocs.",
+    "DEPOSIT.DURATION_ESTIMATION": "Vos MST seront bloqués pendant environ {{duration_days}} jours et {{duration_hours}} heures. Veuillez noter que cette estimation est basée sur la vitesse de génération des 10000 derniers blocs ({{blocktime}} sec.), et peut varier suivant l'évolution de la vitesse de génération des blocs.",
     "HISTORY.UNLOCK_APPROXIMATION_INFORMATION": "*Veuillez noter que la date 'Déposés jusqu'à' est une estimation basée sur le nombre de blocs restant the la vitesse moyenne de génération des 10000 derniers blocs. Cette date varie en fonction de la vitesse de génération des blocs.",
     "RECIPIENT_ADDRESS_OR_AVATAR": "Destinataire Avatar ou adresse",
     "HELP.RECIPIENT_ADDRESS_OR_AVATAR": "Vous pouvez entrer l'Avatar ou l'adresse du destinataire.",
@@ -639,7 +639,8 @@
                 "naming": "Certificat d'appellation",
                 "mining": "Certificate de minage",
                 "witness": "Certificate de témoin"
-            }
+            },
+            "BURN": "Destruction"
         },
         "TX_FEE": "Frais",
         "LOCKED_SINCE_BLOCK": "Bloqué depuis le bloc {{block}} ({{time}})",
@@ -666,6 +667,10 @@
             "ETP_LOCK": "Blocage d'ETP",
             "ETP_LOCK_REWARD": "Récompense de blocage d'ETP",
             "MST_LOCK": "Blocage de MST",
+            "MINING_REWARD": "Mining reward",
+            "BURN_ETP": "Transaction destruction d'ETP",
+            "BURN_MST": "Transaction destruction de MST",
+            "DNA_VOTE": "Vote DNA",
             "UNKNOWN": "Type de transaction inconnu"
         },
         "SELECT_MODE": "Mode de visualisation",
@@ -762,5 +767,28 @@
     "FOREIGN_INPUT": "Input étrangère",
     "INDEX": "Indexe",
     "MULTISIG_ALREADY_SIGNED": "Vous avez déjà signé cette transaction!",
-    "EXPORT_MASTER_PUBLIC_KEY.YOUR_KEY": "Votre clé publique mère:"
+    "EXPORT_MASTER_PUBLIC_KEY.YOUR_KEY": "Votre clé publique mère:",
+    "MESSAGE.AUTH_SEND_INVALID_SIGNATURE": "Votre signature est incorrecte. Veuillez vous assurer que les informations sont correctes et réessayez.",
+    "MESSAGE.AUTH_HIGHER_VERSION": "La version de cette requête est incompatible avec votre version de MyETPWallet. Veuillez mettre à jour MyETPWallet afin de vous authentifier.",
+    "PASSPHRASE.NOT_MATCH": "Les deux mots de passes sont différents",
+    "BURN": "Destruction",
+    "BURN.TEXT": "Détruire des ETP ou MST les détruira de manière définitive.",
+    "BURN.SELECT_ASSET": "Actif à détruire",
+    "BURN.CONFIRM_TITLE": "Ces actifs seront détruits de manière définitive!",
+    "BURN.CONFIRM_MESSAGE": "Vous êtes sur le point de détruire ces actifs. Ils seront détruits de manière définitive, il n'y aura aucun moyen d'y accéder. Êtes-vous sûr de vouloir les détruire définitivement??",
+    "BURN.CONFIRM_OK": "Oui, détruisez-les!",
+    "BURN.CONFIRM_BACK": "Peut-être pas...",
+    "SEND.TOO_MANY_DECIMALS": "Vous avez spécifié trop de décimales",
+
+    "VOTE": "Vote",
+    "VOTE.TITLE": "Élection DNA",
+    "VOTE.SELECT_DELEGATE": "Sélectionner un candidat",
+    "VOTE.SELECT_PERIOD": "Bloquer pour combien d'élections",
+    "LOCK_ALL_BUTTON": "Tout",
+    "VOTE.DURATION_ESTIMATION": "Vos DNA seront bloqués pour environ {{duration_days}} jours et {{duration_hours}} heures, jusqu'au {{unlock_time}}. Veuillez noter que cette estimation est basée sur la vitesse de génération des 10000 derniers blocs ({{blocktime}} sec.), et peut varier suivant l'évolution de la vitesse de génération des blocs.",
+    "HISTORY.LOCKS": "Dépôt",
+    "HISTORY.NO_LOCK_YET": "Aucun dépôt",
+    "VOTE.START": "Début du vote",
+    "VOTE.END": "Fin du vote",
+    "VOTE.NO_ELECTION": "Il n'y a actuellement aucun vote en cours"
 }

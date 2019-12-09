@@ -47,7 +47,7 @@
                             <div *ngIf="multisig.status == 'MULTISIG'">
                                 <div class="unsigned">{{'MULTISIG_STATUS.MULTISIG' | translate}}</div>
                             </div>
-                            <div *ngIf="multisig.status == 'PARTIALLY_MULTISIG'" class="error-input">
+                            <div *ngIf="multisig.status == 'PARTIALLY_MULTISIG'" class="wrong-input">
                                 {{'MULTISIG_STATUS.PARTIALLY_MULTISIG' | translate}}
                             </div>
                             <div *ngIf="status == 'PENDING'" class="warning-input">

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { AppGlobals } from '../../app/app.global';
+import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
 
 @IonicPage({
     name: 'MITDetailsPage',
@@ -24,7 +25,8 @@ export class MITDetailsPage {
         public navCtrl: NavController,
         private mvs: MvsServiceProvider,
         private globals: AppGlobals,
-        public navParams: NavParams
+        public navParams: NavParams,
+        private wallet: WalletServiceProvider,
     ) {
         this.symbol = navParams.get('symbol')
         this.mvs.getGlobalMit(this.symbol)
@@ -52,6 +54,8 @@ export class MITDetailsPage {
     ionViewDidLoad() {
         console.log('ionViewDidLoad MitDetailsPage');
     }
+
+    checkTx = (type, data) => this.wallet.openLink(this.explorerURL(type, data));
 
     explorerURL = (type, data) => (this.globals.network == 'mainnet') ? 'https://explorer.mvs.org/#!/' + type + '/' + data : 'https://explorer-testnet.mvs.org/#!/' + type + '/' + data;
 

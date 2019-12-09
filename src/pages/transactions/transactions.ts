@@ -69,7 +69,7 @@ export class TransactionsPage {
         this.allAddresses = addresses.concat(multisigAddresses)
 
         this.showTxs({ symbol: this.asset });
-        this.iconsList = await this.wallet.getMstIcons()
+        this.iconsList = await this.wallet.getIcons().MST
     }
 
     depositProgress(start, end) {
@@ -213,5 +213,7 @@ export class TransactionsPage {
         this.txs = []
         this.selectAddresses.close().then(() => this.selectAddresses.open())
     }
+
+    errorImg = e => this.icon = this.icon !== 'assets/icon/' + this.asset + '.png' ? 'assets/icon/' + this.asset + '.png' : 'assets/icon/default_mst.png'
 
 }

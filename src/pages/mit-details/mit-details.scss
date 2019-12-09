@@ -4,18 +4,18 @@ page-mit-details {
     }
 
     .asset-container {
-       max-width: 100%;
+        max-width: 100%;
     }
 
     @media (min-width: 1310px) {
         .asset-container {
             max-width: 50%;
         }
-     }
-
+    }
 
     .card-block {
-      height: 120px;
+        min-height: 110px;
+        padding: 8px;
     }
 
     h1 {
@@ -35,5 +35,32 @@ page-mit-details {
         -moz-user-select: text;
         -ms-user-select: text;
         user-select: text;
+    }
+
+    .tx-hash {
+        width: calc(100% - 45px);
+        display: inline-block;
+    }
+
+    #explorerTxButton {
+        display: inline-block;
+        top: -10px;
+        position: absolute;
+        top: 4px;
+        right: 14px;
+    }
+
+    .align-small-button {
+        padding-top: 5px;
+    }
+
+    .align-small-button .button {
+        top: -5px;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    .history-info {
+        padding-top: 5px;
     }
 }

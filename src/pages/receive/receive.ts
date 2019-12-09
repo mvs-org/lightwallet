@@ -29,6 +29,14 @@ export class ReceivePage {
         this.selectedAsset = this.navParams.get('asset')
         this.displayType = this.selectedAsset == 'ETP' ? 'ETP' : 'asset'
 
+        this.mvs.getAddresses()
+            .then((addresses) => {
+                if (!Array.isArray(addresses) || !addresses.length)
+                    this.navCtrl.setRoot("LoginPage")
+                else
+                    this.showBalances()
+            })
+
     }
 
     showBalances() {
@@ -49,17 +57,6 @@ export class ReceivePage {
                         })
                     })
 
-            })
-    }
-
-    ionViewDidEnter() {
-        console.log('ionViewDidEnter Receive');
-        this.mvs.getAddresses()
-            .then((addresses) => {
-                if (!Array.isArray(addresses) || !addresses.length)
-                    this.navCtrl.setRoot("LoginPage")
-                else
-                    this.showBalances()
             })
     }
 

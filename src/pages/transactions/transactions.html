@@ -16,7 +16,7 @@
                     {{ "TRANSACTIONS" | translate}}
                 </ion-segment-button>
                 <ion-segment-button value="deposits">
-                    {{ "DEPOSITS" | translate}}
+                    {{ "HISTORY.LOCKS" | translate}}
                 </ion-segment-button>
             </ion-segment>
         </ion-item>
@@ -62,7 +62,7 @@
                 <ion-row>
                     <ion-col></ion-col>
                     <ion-col width-67>
-                        <img class="big-icon" [src]="'assets/icon/'+icon+'.png'" onerror="this.src='assets/icon/default_mst.png'">
+                        <img class="big-icon" [src]="icon" (error)="errorImg($event)">
                     </ion-col>
                     <ion-col></ion-col>
                 </ion-row>
@@ -102,7 +102,7 @@
                 <ion-item *ngFor="let output of frozen_outputs_locked | orderBy: [order_by, direction]">
                     <ion-item no-lines>
                         <ion-avatar item-start>
-                            <img class="coinlogo" [src]="'assets/icon/'+icon+'.png'" onerror="this.src='assets/icon/default_mst.png'">
+                            <img class="coinlogo" [src]="icon" onerror="this.src='assets/icon/default_mst.png'">
                         </ion-avatar>
                         <h1>{{asset}}</h1>
                         <p *ngFor="let transaction of output.transactions">{{'TRANSACTION'|translate}}: <a href="{{explorerURL(transaction)}}"
@@ -137,7 +137,7 @@
                 <ion-item *ngFor="let output of frozen_outputs_unlocked | orderBy: [order_by, direction] | paginate: { itemsPerPage: items_per_page, currentPage: page_deposit_unlocked }">
                     <ion-item no-lines>
                         <ion-avatar item-start>
-                            <img class="coinlogo" [src]="'assets/icon/'+icon+'.png'" onerror="this.src='assets/icon/default_mst.png'">
+                            <img class="coinlogo" [src]="icon" onerror="this.src='assets/icon/default_mst.png'">
                         </ion-avatar>
                         <h1>{{asset}}</h1>
                         <p *ngFor="let transaction of output.transactions">{{'TRANSACTION'|translate}}: <a href="{{explorerURL(transaction)}}"
@@ -164,15 +164,13 @@
                 <ion-row>
                     <ion-col></ion-col>
                     <ion-col width-67>
-                        <img class="big-icon" [src]="'assets/icon/'+icon+'.png'" onerror="this.src='assets/icon/default_mst.png'">
+                        <img class="big-icon" [src]="icon" onerror="this.src='assets/icon/default_mst.png'">
                     </ion-col>
                     <ion-col></ion-col>
                 </ion-row>
 
                 <ion-card-content>
-                    <ion-card-title class="center" [translate]="'HISTORY.NO_DEPOSIT_YET'"></ion-card-title>
-                    <p *ngIf="asset == 'ETP'" class="center" [translate]="'HISTORY.NO_DEPOSIT_YET_TEXT'">
-                    </p>
+                    <ion-card-title class="center" [translate]="'HISTORY.NO_LOCK_YET'"></ion-card-title>
                 </ion-card-content>
             </div>
         </div>

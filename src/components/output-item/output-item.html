@@ -15,7 +15,7 @@
         </ion-row>
         <ion-row>
             <ion-col class="right">
-                {{output.attachment.message}}
+                {{output.attachment.content}}
             </ion-col>
         </ion-row>
         <ion-row *ngIf="mode == 'satoshi'">
@@ -25,7 +25,7 @@
         </ion-row>
     </ion-item>
     <ion-item *ngIf="output.value != 0 || output.attachment.symbol == 'ETP'">
-        <ion-row>
+        <ion-row [ngClass]="{'wrong-input': output.script == 'OP_RETURN'}">
             <!--Left column-->
             <ion-col>
                 <div *ngIf="output.attachment.to_did">{{output.attachment.to_did}}</div>
@@ -49,7 +49,7 @@
         </ion-row>
     </ion-item>
     <ion-item *ngIf="output.attachment && output.attachment.symbol && output.attachment.symbol != 'ETP'">
-        <ion-row>
+        <ion-row [ngClass]="{'wrong-input': output.script == 'OP_RETURN'}">
             <!--Left column-->
             <ion-col>
                 <div *ngIf="output.attachment.to_did">{{output.attachment.to_did}}</div>
