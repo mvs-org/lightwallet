@@ -19,7 +19,6 @@ export class VotePage {
     decimals: number
     showBalance: number
     candidate: string
-    candidates: Array<string>
     quantity: string = ""
     addressbalances: Array<any>
     sendFrom: string = "auto"
@@ -32,20 +31,18 @@ export class VotePage {
     isApp: boolean
     showAdvanced: boolean = false
     numberPeriods: number = 1
-    periodLength: number = 60000
-    periodOffsetLength: number = 1000
     addressbalancesObject: any = {}
     blocktime: number
     duration_days: number = 0
     duration_hours: number = 0
     current_time: number
     locked_until: number
-    currentVoteStart: number
     currentVoteTimestamp: number
     electionProgress: number
     height: number
-    noCandidates: boolean = false
     dnaRichestAddress: string
+    electionInfo: any = {}
+    loadingElectionInfo = true
 
     constructor(
         public navCtrl: NavController,
@@ -66,26 +63,9 @@ export class VotePage {
         this.mvs.getHeight()
             .then(height => {
                 this.height = height
-                let startingVoteCycle = Math.floor((height + this.periodOffsetLength) / this.periodLength);
-                this.currentVoteStart = startingVoteCycle  * this.periodLength - this.periodOffsetLength
-                this.electionProgress = Math.round((height - this.currentVoteStart) / this.periodLength * 100)
-                return this.mvs.getBlocktime(height)
+                return Promise.all([this.getBlocktime(height), this.getCandidates(height)])
             })
-            .then(blocktime => {
-                this.blocktime = blocktime
-                this.durationChange()
-            })
-            .then(() => this.mvs.getBlock(this.height))
-            .then((block) => this.currentVoteTimestamp = block.time_stamp)
-            .catch((error) => {
-                console.error(error.message)
-            })
-
-        this.mvs.getCandidates()
-            .then(candidates => {
-                this.candidates = candidates.candidates
-                this.noCandidates = !this.candidates || this.candidates.length == 0
-            })
+            .then(() => this.durationChange())
 
         //Load addresses and balances
         Promise.all([this.mvs.getBalances(), this.mvs.getAddresses(), this.mvs.getAddressBalances()])
@@ -104,7 +84,7 @@ export class VotePage {
                     let address = addresses[index]
                     if (addressbalancesObject[address]) {
                         addrblncs.push({ "address": address, "avatar": addressbalancesObject[address].AVATAR ? addressbalancesObject[address].AVATAR : "", "identifier": addressbalancesObject[address].AVATAR ? addressbalancesObject[address].AVATAR : address, "balance": addressbalancesObject[address].MST[this.selectedAsset] ? addressbalancesObject[address].MST[this.selectedAsset].available : 0 })
-                        if(addressbalancesObject[address].MST[this.selectedAsset]) {
+                        if (addressbalancesObject[address].MST[this.selectedAsset]) {
                             this.dnaRichestAddress = addressbalancesObject[address].MST[this.selectedAsset].available > addressbalancesObject[this.dnaRichestAddress].MST[this.selectedAsset].available ? address : this.dnaRichestAddress
                         }
                     } else {
@@ -120,6 +100,34 @@ export class VotePage {
             .then((addresses) => {
                 if (!Array.isArray(addresses) || !addresses.length)
                     this.navCtrl.setRoot("LoginPage")
+            })
+    }
+
+    getBlocktime(height) {
+        return this.mvs.getBlocktime(height)
+            .then(blocktime => {
+                this.blocktime = blocktime
+            })
+            .catch((error) => {
+                console.error(error.message)
+            })
+    }
+
+    getCandidates(height) {
+        return this.mvs.getCandidates()
+            .then(electionInfo => {
+                this.loadingElectionInfo = false;
+                this.electionInfo = electionInfo ? electionInfo : {}
+
+                let startingVoteCycle = (Math.floor((height + this.electionInfo.voteOffset - this.electionInfo.mandateOffset) / this.electionInfo.votePeriod));
+                let currentVoteStart = startingVoteCycle * this.electionInfo.votePeriod - this.electionInfo.voteOffset + this.electionInfo.mandateOffset
+                this.electionProgress = Math.round((height - currentVoteStart) / this.electionInfo.votePeriod * 100)
+                return currentVoteStart
+            })
+            .then((currentVoteStart) => this.mvs.getBlock(currentVoteStart))
+            .then((block) => this.currentVoteTimestamp = block.time_stamp)
+            .catch((error) => {
+                console.error(error.message)
             })
     }
 
@@ -155,7 +163,7 @@ export class VotePage {
         return this.alert.showLoading()
             .then(() => {
                 let quantity = Math.round(parseFloat(this.quantity) * Math.pow(10, this.decimals))
-                let locktime = Math.floor(this.numberPeriods * this.periodLength)
+                let locktime = Math.floor(this.numberPeriods * this.electionInfo.votePeriod)
                 let attenuation_model = 'PN=0;LH=' + locktime + ';TYPE=1;LQ=' + quantity + ';LP=' + locktime + ';UN=1'
                 let messages = [];
                 messages.push('vote_supernode:' + this.candidate)
@@ -223,9 +231,9 @@ export class VotePage {
 
     durationChange() {
         this.zone.run(() => { })
-        this.duration_days = Math.floor(this.blocktime * this.numberPeriods * this.periodLength / (24 * 60 * 60))
-        this.duration_hours = Math.floor((this.blocktime * this.numberPeriods * this.periodLength / (60 * 60)) - (24 * this.duration_days))
-        this.locked_until = this.numberPeriods * this.periodLength * this.blocktime * 1000 + this.current_time;
+        this.duration_days = Math.floor(this.blocktime * this.numberPeriods * this.electionInfo.votePeriod / (24 * 60 * 60))
+        this.duration_hours = Math.floor((this.blocktime * this.numberPeriods * this.electionInfo.votePeriod / (60 * 60)) - (24 * this.duration_days))
+        this.locked_until = this.numberPeriods * this.electionInfo.votePeriod * this.blocktime * 1000 + this.current_time;
     }
 
     validaddress = this.mvs.validAddress
