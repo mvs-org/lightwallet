@@ -117,9 +117,8 @@ page-vote {
     }
 
     .no-candidates {
-        margin-right: auto;
-        margin-left: auto;
-        padding-top: 50px;
+        text-align: center;
+        font-size: 2rem;
     }
 
     .election-progress .item-inner, .election-progress .label {
@@ -130,6 +129,10 @@ page-vote {
     .election-progress .col {
         padding-right: 0;
         padding-left: 0;
+    }
+
+    .mini-loader {
+        margin: 40px auto;
     }
 
 }
