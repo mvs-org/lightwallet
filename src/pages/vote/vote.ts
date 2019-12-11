@@ -242,4 +242,8 @@ export class VotePage {
 
     validMessageLength = (message) => this.mvs.verifyMessageSize(message) < 253
 
+    arrayList(n: number): any[] {
+        return Array(n);
+    }
+
 }
