@@ -45,6 +45,7 @@ export class VotePage {
     dnaRichestAddress: string
     electionInfo: any = {}
     loadingElectionInfo = true
+    test = 1
 
     constructor(
         public navCtrl: NavController,
@@ -250,8 +251,8 @@ export class VotePage {
         return Array(n);
     }
 
-    checkElection = () => this.wallet.openLink('http://' + this.electionURL());
+    checkElection = () => this.wallet.openLink('https://' + this.electionURL())
 
-    electionURL = () => (this.globals.network == 'mainnet') ? 'www.dnavote.com/#/' : 'uat.dnavote.com/#/'
+    electionURL = () => (this.globals.network == 'mainnet') ? "www.dnavote.com" : "uat.dnavote.com"
 
 }
