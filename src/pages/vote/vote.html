@@ -9,6 +9,15 @@
 
 <ion-content padding style="padding-bottom: 0;">
 
+    <ion-row>
+        <ion-col>
+            <p align="center">
+                {{"VOTE.INFORMATION" | translate}}
+                <a (click)="checkElection()">{{electionURL()}}</a>
+            </p>
+        </ion-col>
+    </ion-row>
+
     <div *ngIf="loadingElectionInfo" class="mini-loader"></div>
 
     <ion-row *ngIf="!loadingElectionInfo && (!electionInfo || !electionInfo.candidates || electionInfo.candidates.length == 0 || electionInfo.onHold == 1)">
@@ -28,8 +37,6 @@
                 <p class="right">{{"FEE"|translate}}:<br *ngIf="platform.is('mobile')"> {{fee | format : 8}} ETP</p>
             </ion-col>
         </ion-row>
-
-
 
         <form *ngIf="!noCandidates" #sendForm="ngForm" style="padding-bottom: 0;">
             <ion-list style="padding-bottom: 0;">
