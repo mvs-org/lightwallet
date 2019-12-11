@@ -9,6 +9,15 @@
 
 <ion-content padding style="padding-bottom: 0;">
 
+    <ion-row>
+        <ion-col>
+            <p align="center">
+                {{"VOTE.INFORMATION" | translate}}
+                <a (click)="checkElection()">{{electionURL()}}</a>
+            </p>
+        </ion-col>
+    </ion-row>
+
     <div *ngIf="loadingElectionInfo" class="mini-loader"></div>
 
     <ion-row *ngIf="!loadingElectionInfo && (!electionInfo || !electionInfo.candidates || electionInfo.candidates.length == 0 || electionInfo.onHold == 1)">
@@ -28,8 +37,6 @@
                 <p class="right">{{"FEE"|translate}}:<br *ngIf="platform.is('mobile')"> {{fee | format : 8}} ETP</p>
             </ion-col>
         </ion-row>
-
-
 
         <form *ngIf="!noCandidates" #sendForm="ngForm" style="padding-bottom: 0;">
             <ion-list style="padding-bottom: 0;">
@@ -57,16 +64,19 @@
                         </ng-container>
                     </ion-select>
                 </ion-item>
-                <ion-item no-lines>
-                    <ion-label color="primary">{{"VOTE.SELECT_PERIOD" | translate}}</ion-label>
-                    <ion-badge item-end color="primary">{{numberPeriods}}</ion-badge>
-                </ion-item>
+
+                <br>
                 <ion-item>
-                    <ion-range min="1" max="26" step="1" pin="true" color="primary" [(ngModel)]="numberPeriods" name="numberPeriods"
-                        (ionChange)="durationChange($event)">
-                        <ion-label range-left>1</ion-label>
-                        <ion-label range-right>26</ion-label>
-                    </ion-range>
+                    <ion-label>{{"VOTE.SELECT_PERIOD"|translate}}</ion-label>
+                    <ion-select [(ngModel)]="numberPeriods" name="numberPeriods" multiple="false" (ngModelChange)="durationChange($event)"
+                        okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}">
+                        <ion-option value="1">
+                            <span [translate]="'VOTE.SELECT_PERIOD_OPTION_SINGULAR'" [translateParams]="{weeks: 2}"></span>
+                        </ion-option>
+                        <ion-option *ngFor="let addressbalance of arrayList(5-1); let i = index;" value="{{i+2}}">
+                            <span [translate]="'VOTE.SELECT_PERIOD_OPTION_PLURAL'" [translateParams]="{election: i+2, weeks: (i+2)*2}"></span>
+                        </ion-option>
+                    </ion-select>
                 </ion-item>
                 <ion-item class="info-input" no-lines>
                     <span [translate]="'VOTE.DURATION_ESTIMATION'" [translateParams]="{blocktime: blocktime, duration_days: duration_days, duration_hours: duration_hours, unlock_time: locked_until | date : 'medium'}"></span>

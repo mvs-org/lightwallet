@@ -2,6 +2,8 @@ import { Component, ViewChild, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { AlertProvider } from '../../providers/alert/alert';
+import { AppGlobals } from '../../app/app.global';
+import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
 
 @IonicPage({
     name: 'vote-page',
@@ -51,6 +53,8 @@ export class VotePage {
         public platform: Platform,
         private alert: AlertProvider,
         private zone: NgZone,
+        private globals: AppGlobals,
+        private wallet: WalletServiceProvider,
     ) {
 
         this.candidate = navParams.get('candidate') || ''
@@ -241,5 +245,13 @@ export class VotePage {
     validFromAddress = (address: string) => address == 'auto' || (this.addressbalancesObject[address] && this.addressbalancesObject[address].ETP.available !== 0)
 
     validMessageLength = (message) => this.mvs.verifyMessageSize(message) < 253
+
+    arrayList(n: number): any[] {
+        return Array(n);
+    }
+
+    checkElection = () => this.wallet.openLink('http://' + this.electionURL());
+
+    electionURL = () => (this.globals.network == 'mainnet') ? 'www.dnavote.com/#/' : 'uat.dnavote.com/#/'
 
 }
