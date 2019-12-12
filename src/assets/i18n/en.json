@@ -791,7 +791,7 @@
     "VOTE.START": "Vote start",
     "VOTE.END": "Vote end",
     "VOTE.NO_ELECTION": "There is currently no election ongoing",
-    "VOTE.SELECT_PERIOD_OPTION_SINGULAR": "1 election (~{{weeks}} weeks)",
-    "VOTE.SELECT_PERIOD_OPTION_PLURAL": "{{election}} elections (~{{weeks}} weeks)",
+    "VOTE.SELECT_PERIOD_OPTION_SINGULAR": "1 election",
+    "VOTE.SELECT_PERIOD_OPTION_PLURAL": "{{election}} elections",
     "VOTE.INFORMATION": "Check the information of the current vote on "
 }
