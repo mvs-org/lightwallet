@@ -791,7 +791,7 @@
     "VOTE.START": "投票开始",
     "VOTE.END": "投票结束",
     "VOTE.NO_ELECTION": "目前没有进行投票",
-    "VOTE.SELECT_PERIOD_OPTION_SINGULAR": "1 选举周期 (~{{weeks}} 周)",
-    "VOTE.SELECT_PERIOD_OPTION_PLURAL": "{{election}} 选举周期 (~{{weeks}} 周)",
+    "VOTE.SELECT_PERIOD_OPTION_SINGULAR": "1 选举周期",
+    "VOTE.SELECT_PERIOD_OPTION_PLURAL": "{{election}} 选举周期",
     "VOTE.INFORMATION": "查看当前投票信息"
 }
