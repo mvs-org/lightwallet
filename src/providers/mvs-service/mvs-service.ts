@@ -35,7 +35,7 @@ export class MvsServiceProvider {
         })
         this.globals.getNetwork()
             .then(network => {
-                this.blockchain = Blockchain({ network: network })
+                this.blockchain = Blockchain({ url: network === 'testnet' ? 'https://testnet-api.myetpwallet.com/api/' : 'https://mainnet-api.myetpwallet.com/api/' })
             })
     }
 
@@ -947,6 +947,13 @@ export class MvsServiceProvider {
 
     getCandidates() {
         return this.blockchain.election.candidates()
+            .catch((error) => {
+                return [];
+            })
+    }
+
+    getEarlybirdCandidates() {
+        return this.blockchain.election.earlybirdCandidates()
             .catch((error) => {
                 return [];
             })
