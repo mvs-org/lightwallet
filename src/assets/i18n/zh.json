@@ -784,11 +784,14 @@
     "VOTE.TITLE": "DNA超级节点投票",
     "VOTE.SELECT_DELEGATE": "选择节点",
     "VOTE.SELECT_PERIOD": "将锁定多少期",
-    "LOCK_ALL_BUTTON": "全部锁定",
+    "LOCK_ALL_BUTTON": "全额投票",
     "VOTE.DURATION_ESTIMATION": "您的DNA将被锁定约{{duration_days}}天{{duration_hours}}小时，直到{{unlock_time}}。 请注意，此估算基于前10000个区块的出块时间（{{blocktime}}秒），并且可能会根据区块产生速度而有所不同。",
     "HISTORY.LOCKS": "已锁定",
     "HISTORY.NO_LOCK_YET": "没有锁定记录",
     "VOTE.START": "投票开始",
     "VOTE.END": "投票结束",
-    "VOTE.NO_ELECTION": "目前没有进行投票"
+    "VOTE.NO_ELECTION": "目前没有进行投票",
+    "VOTE.SELECT_PERIOD_OPTION_SINGULAR": "1 选举周期 (~{{weeks}} 周)",
+    "VOTE.SELECT_PERIOD_OPTION_PLURAL": "{{election}} 选举周期 (~{{weeks}} 周)",
+    "VOTE.INFORMATION": "查看当前投票信息"
 }
