@@ -183,10 +183,9 @@ export class VotePage {
 
     create() {
         return this.alert.showLoading()
-            .then(() => Promise.all([this.mvs.getEarlybirdCandidates(), this.mvs.getHeight()]))
-            .then(([earlybirdInfo, localHeight]) => {
-                let height = Math.max(localHeight, this.earlybirdInfo.height)
-                this.lockPeriod = earlybirdInfo.lockUntil - height
+            .then(() => this.mvs.updateHeight())
+            .then((height) => {
+                this.lockPeriod = this.earlybirdInfo.lockUntil - height
                 let quantity = Math.round(parseFloat(this.quantity) * Math.pow(10, this.decimals))
                 let attenuation_model = 'PN=0;LH=' + this.lockPeriod + ';TYPE=1;LQ=' + quantity + ';LP=' + this.lockPeriod + ';UN=1'
                 let messages = [];
