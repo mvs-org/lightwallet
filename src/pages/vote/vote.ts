@@ -1,7 +1,9 @@
-import { Component, ViewChild, NgZone } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { AlertProvider } from '../../providers/alert/alert';
+import { AppGlobals } from '../../app/app.global';
+import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
 
 @IonicPage({
     name: 'vote-page',
@@ -41,8 +43,10 @@ export class VotePage {
     electionProgress: number
     height: number
     dnaRichestAddress: string
-    electionInfo: any = {}
+    //electionInfo: any = {}
+    earlybirdInfo: any = {}
     loadingElectionInfo = true
+    lockPeriod: number
 
     constructor(
         public navCtrl: NavController,
@@ -50,7 +54,8 @@ export class VotePage {
         private mvs: MvsServiceProvider,
         public platform: Platform,
         private alert: AlertProvider,
-        private zone: NgZone,
+        private globals: AppGlobals,
+        private wallet: WalletServiceProvider,
     ) {
 
         this.candidate = navParams.get('candidate') || ''
@@ -59,13 +64,6 @@ export class VotePage {
         this.isApp = (!document.URL.startsWith('http') || document.URL.startsWith('http://localhost:8080'));
 
         this.current_time = Date.now()
-
-        this.mvs.getHeight()
-            .then(height => {
-                this.height = height
-                return Promise.all([this.getBlocktime(height), this.getCandidates(height)])
-            })
-            .then(() => this.durationChange())
 
         //Load addresses and balances
         Promise.all([this.mvs.getBalances(), this.mvs.getAddresses(), this.mvs.getAddressBalances()])
@@ -101,6 +99,12 @@ export class VotePage {
                 if (!Array.isArray(addresses) || !addresses.length)
                     this.navCtrl.setRoot("LoginPage")
             })
+
+        this.mvs.getHeight()
+            .then(height => {
+                return Promise.all([this.getBlocktime(height), this.getEarlybirdCandidates(height)])
+            })
+            .then(() => this.durationChange())
     }
 
     getBlocktime(height) {
@@ -113,7 +117,7 @@ export class VotePage {
             })
     }
 
-    getCandidates(height) {
+    /*getCandidates(height) {
         return this.mvs.getCandidates()
             .then(electionInfo => {
                 this.loadingElectionInfo = false;
@@ -123,6 +127,24 @@ export class VotePage {
                 let currentVoteStart = startingVoteCycle * this.electionInfo.votePeriod - this.electionInfo.voteOffset + this.electionInfo.mandateOffset
                 this.electionProgress = Math.round((height - currentVoteStart) / this.electionInfo.votePeriod * 100)
                 return currentVoteStart
+            })
+            .then((currentVoteStart) => this.mvs.getBlock(currentVoteStart))
+            .then((block) => this.currentVoteTimestamp = block.time_stamp)
+            .catch((error) => {
+                console.error(error.message)
+            })
+    }*/
+
+    getEarlybirdCandidates(localHeight) {
+        return this.mvs.getEarlybirdCandidates()
+            .then(earlybirdInfo => {
+                //earlybirdInfo = {"candidates":['laurent','Sven'],"voteStart":2250000,"voteEnd":2320000,"lockUntil":2390000,"height":2254678}
+                this.loadingElectionInfo = false;
+                this.earlybirdInfo = earlybirdInfo && earlybirdInfo.voteStart < localHeight && earlybirdInfo.voteEnd > localHeight ? earlybirdInfo : {}
+                let height = Math.max(localHeight, this.earlybirdInfo.height)
+                this.lockPeriod = earlybirdInfo.lockUntil - height
+                this.electionProgress = Math.round((height - this.earlybirdInfo.voteStart) / (this.earlybirdInfo.voteEnd - this.earlybirdInfo.voteStart) * 100)
+                return this.earlybirdInfo.voteStart
             })
             .then((currentVoteStart) => this.mvs.getBlock(currentVoteStart))
             .then((block) => this.currentVoteTimestamp = block.time_stamp)
@@ -161,10 +183,11 @@ export class VotePage {
 
     create() {
         return this.alert.showLoading()
-            .then(() => {
+            .then(() => this.mvs.updateHeight())
+            .then((height) => {
+                this.lockPeriod = this.earlybirdInfo.lockUntil - height
                 let quantity = Math.round(parseFloat(this.quantity) * Math.pow(10, this.decimals))
-                let locktime = Math.floor(this.numberPeriods * this.electionInfo.votePeriod)
-                let attenuation_model = 'PN=0;LH=' + locktime + ';TYPE=1;LQ=' + quantity + ';LP=' + locktime + ';UN=1'
+                let attenuation_model = 'PN=0;LH=' + this.lockPeriod + ';TYPE=1;LQ=' + quantity + ';LP=' + this.lockPeriod + ';UN=1'
                 let messages = [];
                 messages.push('vote_supernode:' + this.candidate)
                 if (this.message) {
@@ -229,11 +252,17 @@ export class VotePage {
         this.quantityInput.setFocus()
     })
 
-    durationChange() {
+    /*durationChange() {
         this.zone.run(() => { })
-        this.duration_days = Math.floor(this.blocktime * this.numberPeriods * this.electionInfo.votePeriod / (24 * 60 * 60))
-        this.duration_hours = Math.floor((this.blocktime * this.numberPeriods * this.electionInfo.votePeriod / (60 * 60)) - (24 * this.duration_days))
-        this.locked_until = this.numberPeriods * this.electionInfo.votePeriod * this.blocktime * 1000 + this.current_time;
+        this.duration_days = Math.floor(this.blocktime * this.numberPeriods * this.electionInfo.lockPeriod / (24 * 60 * 60))
+        this.duration_hours = Math.floor((this.blocktime * this.numberPeriods * this.electionInfo.lockPeriod / (60 * 60)) - (24 * this.duration_days))
+        this.locked_until = this.numberPeriods * this.electionInfo.lockPeriod * this.blocktime * 1000 + this.current_time;
+    }*/
+
+    durationChange() {
+        this.duration_days = Math.floor(this.blocktime * this.lockPeriod / (24 * 60 * 60))
+        this.duration_hours = Math.floor((this.blocktime * this.lockPeriod / (60 * 60)) - (24 * this.duration_days))
+        this.locked_until = this.lockPeriod * this.blocktime * 1000 + this.current_time;
     }
 
     validaddress = this.mvs.validAddress
@@ -241,5 +270,13 @@ export class VotePage {
     validFromAddress = (address: string) => address == 'auto' || (this.addressbalancesObject[address] && this.addressbalancesObject[address].ETP.available !== 0)
 
     validMessageLength = (message) => this.mvs.verifyMessageSize(message) < 253
+
+    /*arrayList(n: number): any[] {
+        return Array(n);
+    }*/
+
+    checkElection = () => this.wallet.openLink('https://' + this.electionURL())
+
+    electionURL = () => (this.globals.network == 'mainnet') ? "www.dnavote.com" : "uat.dnavote.com"
 
 }
