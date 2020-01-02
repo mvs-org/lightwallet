@@ -209,7 +209,7 @@ export class WalletServiceProvider {
             })
     }
 
-    async getMasterPublicKey(passphrase){
+    async getMasterPublicKey(passphrase) {
         const seed = await this.getSeed(passphrase)
         const wallet = await Metaverse.wallet.fromSeed(Buffer.from(seed, 'hex'))
         return wallet.getMasterPublicKey()
@@ -424,9 +424,24 @@ export class WalletServiceProvider {
 
     openLink(url) {
         if (this.platform.is('mobile') && this.platform.is('ios'))
-                window.open(url, '_self');
-            else
-                window.open(url, '_blank');
+            window.open(url, '_self');
+        else
+            window.open(url, '_blank');
+    }
+
+    getElectionRewards(txs) {
+        console.log(this.globals.network)
+        let url = this.globals.network === 'testnet' ? 'https://testnet-api.myetpwallet.com/api/' : 'https://mainnet-api.myetpwallet.com/api/'
+        url += 'v2/election/rewards?'
+        txs.forEach(tx => {
+            url += 'txs=' + tx + '&'
+        })
+        url = url.substring(0, url.length - 1)
+        console.log(url)
+        return this.http.get(url).toPromise()
+            .catch((error) => {
+                return undefined
+            })
     }
 
 }

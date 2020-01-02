@@ -22,6 +22,7 @@ export class VoteItemComponent {
     @Input() height: number
     @Input() blocktime: number
     @Input() icon: string
+    @Input() reward: string
 
     current_time: number
 

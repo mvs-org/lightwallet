@@ -29,19 +29,12 @@
                     <ion-col>
                         <ion-item class="summaryTxType">
                             {{'VOTE.VOTE_FOR_DELEGATE' | translate}}: {{output.voteAvatar}}
-                            <div>
-                                <button class="ion-item" ion-button icon-left (click)="electAgain()">
-                                    <ion-icon name="ribbon"></ion-icon>
-                                    {{'VOTE.ELECT_AGAIN_BUTTON'|translate}}
-                                </button>
-                            </div>
                         </ion-item>
                     </ion-col>
                     <ion-col>
                         <ion-item class="right summaryAmount">
                             {{output.attenuation_model_param.lock_quantity | format : output.attachment.decimals}} DNA
-                            <div *ngIf="output.reward" class="default-color fee">{{'VOTE.REWARD' | translate}}: {{output.reward |
-                                format : output.attachment.decimals}} DNA</div>
+                            <div *ngIf="reward" class="default-color fee">{{'VOTE.REWARD' | translate}}: {{reward}} DNA</div>
                         </ion-item>
                     </ion-col>
                 </ion-row>

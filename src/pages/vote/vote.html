@@ -268,10 +268,10 @@
         <h2 class="center" *ngIf="frozen_outputs_locked && frozen_outputs_locked.length > 0">{{"VOTE.HISTORY_LOCKED" |
             translate}}</h2>
         <vote-item *ngFor="let output of frozen_outputs_locked" [output]="output" [height]="height" [blocktime]="blocktime"
-            [icon]="'assets/icon/DNA.png'"></vote-item>
+            [reward]="rewards[output.hash]" [icon]="'assets/icon/DNA.png'"></vote-item>
         <h2 class="center" *ngIf="frozen_outputs_unlocked && frozen_outputs_unlocked.length > 0">{{"VOTE.HISTORY_UNLOCKED"|translate}}</h2>
         <vote-item *ngFor="let output of frozen_outputs_unlocked" [output]="output" [height]="height" [blocktime]="blocktime"
-            [icon]="'assets/icon/DNA.png'"></vote-item>
+        [reward]="rewards[output.hash]" [icon]="'assets/icon/DNA.png'"></vote-item>
     </div>
 
 </ion-content>

@@ -205,6 +205,7 @@ export class MvsServiceProvider {
                 return Metaverse.output.findUtxo(utxo_to_use, target, height, fee)
             })
             .then((result) => {
+                //Verify that the UTXO of the previous is well included
                 if (result.utxo.length > 676) {
                     throw Error('ERR_TOO_MANY_INPUTS');
                 }

@@ -65,6 +65,7 @@ export class VotePage {
     availableUtxos: any = {}
     notPreviouslyVoteUtxo: any[] = []
     previousElectionStart: number = 2110000
+    rewards: any = {}
 
     constructor(
         public navCtrl: NavController,
@@ -168,7 +169,7 @@ export class VotePage {
     getEarlybirdCandidates(localHeight) {
         return this.mvs.getEarlybirdCandidates()
             .then(earlybirdInfo => {
-                //earlybirdInfo = {"candidates":['laurent','Sven'],"voteStart":2250000,"voteEnd":2320000,"lockUntil":2390000,"height":2254678}
+                //earlybirdInfo = {"candidates":['laurent','Sven'],"voteStart":2250000,"voteEnd":2420000,"lockUntil":2390000,"height":2254678}
                 this.loadingElectionInfo = false;
                 this.earlybirdInfo = earlybirdInfo && earlybirdInfo.voteStart < localHeight && earlybirdInfo.voteEnd > localHeight ? earlybirdInfo : {}
                 let height = Math.max(localHeight, this.earlybirdInfo.height)
@@ -314,6 +315,8 @@ export class VotePage {
         let txs = await this.mvs.getTransactionMap()
         this.frozen_outputs_locked = []
         this.frozen_outputs_unlocked = []
+        let frozen_outputs_locked_hash = []
+        let frozen_outputs_unlocked_hash = []
         this.revote_outputs = []
         outputs.forEach((locked_output) => {
             let tx = txs[locked_output.hash]
@@ -323,12 +326,12 @@ export class VotePage {
                     locked_output.voteType = /^vote_([a-z0-9]+)\:/.test(output.attachment.content) ? output.attachment.content.match(/^vote_([a-z0-9]+)\:/)[1] : 'Invalid Type';
                     locked_output.voteAvatar = /\:([A-Za-z0-9-_@\.]+)$/.test(output.attachment.content) ? output.attachment.content.match(/\:([A-Za-z0-9-_@\.]+)$/)[1] : 'Invalid Avatar';
                 }
-                locked_output.reward = Math.floor(locked_output.attachment.quantity * 0.13)
-                locked_output.newVoteAmount = Math.floor((locked_output.attachment.quantity + locked_output.reward) / Math.pow(10, this.decimals))
-                locked_output.maxNewVoteAmount = locked_output.newVoteAmount
+                //locked_output.newVoteAmount = Math.floor((locked_output.attachment.quantity + locked_output.reward) / Math.pow(10, this.decimals))
+                //locked_output.maxNewVoteAmount = locked_output.newVoteAmount
             }
             if (localHeight > locked_output.locked_until) {
                 this.frozen_outputs_unlocked.push(locked_output)
+                frozen_outputs_unlocked_hash.push(locked_output.hash)
                 if (this.availableUtxos[locked_output.hash + '/' + locked_output.index]) {
                     this.revote_outputs.push(locked_output)
                 } else {
@@ -336,8 +339,31 @@ export class VotePage {
                 }
             } else {
                 this.frozen_outputs_locked.push(locked_output)
+                frozen_outputs_locked_hash.push(locked_output.hash)
             }
         })
+        let frozen_rewards_locked_result = await this.wallet.getElectionRewards(frozen_outputs_locked_hash)
+        let rewards = frozen_rewards_locked_result && frozen_rewards_locked_result.json() ? frozen_rewards_locked_result.json().result : []
+        
+        let frozen_rewards_unlocked_result = await this.wallet.getElectionRewards(frozen_outputs_locked_hash)
+        rewards.concat(frozen_rewards_unlocked_result && frozen_rewards_unlocked_result.json() ? frozen_rewards_unlocked_result.json().result : [])
+
+        //TO DELETE
+        /*let test = await this.wallet.getElectionRewards(['5dd276da9f2ab08bdef125911504307336e4f5e4fecba399facd08f71e719778'])
+        rewards = rewards.concat(test.json().result)
+        console.log(test.json().result)
+        console.log(rewards)
+        console.log("1")
+        this.rewards['236cdde3e50620af47dffc2f8b15afbb91bf7fe523be9f7cd451c6f202b654bc'] = rewards[0].reward
+        */
+        //UNTIL HERE
+
+        if(rewards) {
+            rewards.forEach(reward => {
+                this.rewards[reward.txid] = reward.reward
+            })
+        }
+
     }
 
     voteAgain(locked_output) {
