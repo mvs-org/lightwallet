@@ -170,12 +170,14 @@ export class VotePage {
         return this.mvs.getEarlybirdCandidates()
             .then(earlybirdInfo => {
                 //earlybirdInfo = {"candidates":['laurent','Sven'],"voteStart":2250000,"voteEnd":2420000,"lockUntil":2390000,"height":2254678}
+                console.log(earlybirdInfo)
                 this.loadingElectionInfo = false;
-                this.earlybirdInfo = earlybirdInfo && earlybirdInfo.voteStart < localHeight && earlybirdInfo.voteEnd > localHeight ? earlybirdInfo : {}
+                this.earlybirdInfo = earlybirdInfo && earlybirdInfo.voteStartHeight < localHeight && earlybirdInfo.voteEndHeight > localHeight && earlybirdInfo.voteEnabled ? earlybirdInfo : {}
+                //this.earlybirdInfo = earlybirdInfo
                 let height = Math.max(localHeight, this.earlybirdInfo.height)
                 this.lockPeriod = earlybirdInfo.lockUntil - height
-                this.electionProgress = Math.round((height - this.earlybirdInfo.voteStart) / (this.earlybirdInfo.voteEnd - this.earlybirdInfo.voteStart) * 100)
-                return this.earlybirdInfo.voteStart
+                this.electionProgress = Math.round((height - this.earlybirdInfo.voteStartHeight) / (this.earlybirdInfo.voteEndHeight - this.earlybirdInfo.voteStartHeight) * 100)
+                return this.earlybirdInfo.voteStartHeight
             })
             .then((currentVoteStart) => currentVoteStart ? this.mvs.getBlock(currentVoteStart) : 0)
             .then((block) => this.currentVoteTimestamp = block && block.time_stamp ? block.time_stamp : 0)

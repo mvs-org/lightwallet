@@ -430,14 +430,12 @@ export class WalletServiceProvider {
     }
 
     getElectionRewards(txs) {
-        console.log(this.globals.network)
         let url = this.globals.network === 'testnet' ? 'https://testnet-api.myetpwallet.com/api/' : 'https://mainnet-api.myetpwallet.com/api/'
         url += 'v2/election/rewards?'
         txs.forEach(tx => {
             url += 'txs=' + tx + '&'
         })
         url = url.substring(0, url.length - 1)
-        console.log(url)
         return this.http.get(url).toPromise()
             .catch((error) => {
                 return undefined

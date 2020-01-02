@@ -64,8 +64,7 @@
                             </ion-col>
                             <ion-col>
                                 <p class="right">{{"VOTE.END"|translate}}:<br *ngIf="platform.is('mobile')">
-                                    ~{{(currentVoteTimestamp + (blocktime*(earlybirdInfo.voteEnd -
-                                    earlybirdInfo.voteStart)))*1000 | date : 'medium'}}</p>
+                                    ~{{earlybirdInfo.voteEndTime*1000 | date : 'medium'}}</p>
                             </ion-col>
                         </ion-row>
                         <progress-bar [progress]="electionProgress"></progress-bar>
@@ -188,8 +187,7 @@
                     </ion-col>
                     <ion-col>
                         <p class="right">{{"VOTE.END"|translate}}:<br *ngIf="platform.is('mobile')">
-                            ~{{(currentVoteTimestamp + (blocktime*(earlybirdInfo.voteEnd -
-                            earlybirdInfo.voteStart)))*1000 | date : 'medium'}}</p>
+                            ~{{earlybirdInfo.voteEndTime*1000 | date : 'medium'}}</p>
                     </ion-col>
                 </ion-row>
                 <progress-bar [progress]="electionProgress"></progress-bar>
