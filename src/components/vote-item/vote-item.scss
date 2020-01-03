@@ -1,9 +1,9 @@
-tx-item {
+vote-item {
     .right {
         text-align: right;
         width: 100%;
     }
-
+    
     .summaryTxType {
         color: black;
         font-size: 20px;
@@ -15,15 +15,7 @@ tx-item {
         float: right;
         width: 100%;
     }
-    
-    .sendAmount {
-        color: color($colors, danger);
-    }
-    
-    .receiveAmount {
-        color: color($colors, secondary);
-    }
-    
+
     .hash {
         font-size: 20px;
     }
@@ -90,6 +82,13 @@ tx-item {
     .card {
         margin-left: 10px;
         width: calc(100% - 20px);
+    }
+
+    .noPaddingTopBottom {
+        margin-top: 0;
+        margin-bottom: 0;
+        padding-top: 0;
+        padding-bottom: 0;
     }
 
 }

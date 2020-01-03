@@ -5,6 +5,7 @@ import { TranslateModule} from '@ngx-translate/core';
 import { AlertProvider } from '../../providers/alert/alert';
 import { PipesModule } from '../../pipes/pipes.module';
 import { ProgressBarModule } from 'angular-progress-bar';
+import { VoteItemModule } from '../../components/vote-item/vote-item.module';
 
 @NgModule({
     declarations: [
@@ -15,6 +16,7 @@ import { ProgressBarModule } from 'angular-progress-bar';
         PipesModule,
         TranslateModule,
         ProgressBarModule,
+        VoteItemModule,
     ],
     providers:[
         AlertProvider

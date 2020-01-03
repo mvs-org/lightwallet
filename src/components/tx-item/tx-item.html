@@ -99,7 +99,7 @@
                             <div *ngIf="txType == 'MIT_REGISTERED' || txType == 'MIT_TRANSFERED' || txType == 'DID_REGISTER' || txType == 'DID_TRANSFER'">
                                 {{txTypeValue}}
                             </div>
-                            <div *ngIf="txType == 'MST_LOCK'">
+                            <div *ngIf="txType == 'MST_LOCK' || txType == 'DNA_VOTE'">
                                 {{tx.locked_quantity | format : decimalsMst[txTypeValue]}} {{txTypeValue}}
                             </div>
                             <div *ngIf="txType == 'ETP_LOCK' || txType == 'ETP_LOCK_REWARD'">
