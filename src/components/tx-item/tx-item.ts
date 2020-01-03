@@ -36,7 +36,6 @@ export class TxItemComponent {
     txTypeValue: string = ''
     txTypeCert: string = ''
     devAvatar: string
-    current_time: number
 
     constructor(
         private mvs: MvsServiceProvider,
