@@ -976,15 +976,8 @@ export class MvsServiceProvider {
             })*/
     }
 
-    getCandidates() {
-        return this.blockchain.election.candidates()
-            .catch((error) => {
-                return [];
-            })
-    }
-
-    getEarlybirdCandidates() {
-        return this.blockchain.election.earlybirdCandidates()
+    getElectionInfo() {
+        return this.blockchain.election.electionInfo()
             .catch((error) => {
                 return [];
             })

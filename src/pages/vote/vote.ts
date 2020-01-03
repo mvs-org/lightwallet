@@ -5,6 +5,7 @@ import { AlertProvider } from '../../providers/alert/alert';
 import { AppGlobals } from '../../app/app.global';
 import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
 import { trigger, state, style, animate, transition } from '@angular/animations';
+import compareVersions from 'compare-versions';
 
 @IonicPage({
     name: 'vote-page',
@@ -66,6 +67,7 @@ export class VotePage {
     notPreviouslyVoteUtxo: any[] = []
     previousElectionStart: number = 2110000
     rewards: any = {}
+    updateRequired: boolean = false
 
     constructor(
         public navCtrl: NavController,
@@ -122,7 +124,7 @@ export class VotePage {
         this.mvs.getHeight()
             .then(height => {
                 this.height = height
-                return Promise.all([this.getBlocktime(height), this.getEarlybirdCandidates(height), this.calculateFrozenOutputs(height)])
+                return Promise.all([this.getBlocktime(height), this.getElectionInfo(height), this.calculateFrozenOutputs(height)])
             })
             .then(() => this.durationChange())
 
@@ -166,14 +168,12 @@ export class VotePage {
             })
     }*/
 
-    getEarlybirdCandidates(localHeight) {
-        return this.mvs.getEarlybirdCandidates()
+    getElectionInfo(localHeight) {
+        return this.mvs.getElectionInfo()
             .then(earlybirdInfo => {
-                //earlybirdInfo = {"candidates":['laurent','Sven'],"voteStart":2250000,"voteEnd":2420000,"lockUntil":2390000,"height":2254678}
-                console.log(earlybirdInfo)
+                this.updateRequired = compareVersions(this.globals.version, earlybirdInfo.walletVersionSupport) == -1
                 this.loadingElectionInfo = false;
                 this.earlybirdInfo = earlybirdInfo && earlybirdInfo.voteStartHeight < localHeight && earlybirdInfo.voteEndHeight > localHeight && earlybirdInfo.voteEnabled ? earlybirdInfo : {}
-                //this.earlybirdInfo = earlybirdInfo
                 let height = Math.max(localHeight, this.earlybirdInfo.height)
                 this.lockPeriod = earlybirdInfo.lockUntil - height
                 this.electionProgress = Math.round((height - this.earlybirdInfo.voteStartHeight) / (this.earlybirdInfo.voteEndHeight - this.earlybirdInfo.voteStartHeight) * 100)
