@@ -68,6 +68,7 @@ export class VotePage {
     previousElectionStart: number = 2110000
     rewards: any = {}
     updateRequired: boolean = false
+    requiredVersion: string = 'unknown'
 
     constructor(
         public navCtrl: NavController,
@@ -172,6 +173,7 @@ export class VotePage {
         return this.mvs.getElectionInfo()
             .then(earlybirdInfo => {
                 this.updateRequired = compareVersions(this.globals.version, earlybirdInfo.walletVersionSupport) == -1
+                this.requiredVersion = earlybirdInfo.walletVersionSupport
                 this.loadingElectionInfo = false;
                 this.earlybirdInfo = earlybirdInfo && earlybirdInfo.voteStartHeight < localHeight && earlybirdInfo.voteEndHeight > localHeight && earlybirdInfo.voteEnabled ? earlybirdInfo : {}
                 let height = Math.max(localHeight, this.earlybirdInfo.height)

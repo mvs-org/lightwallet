@@ -35,7 +35,7 @@
 
         <div *ngIf="!loadingElectionInfo && updateRequired">
             <ion-col>
-                <p class="no-candidates">{{"VOTE.UPDATE_REQUIRED" | translate}}</p>
+                <p class="no-candidates" [translate]="'VOTE.UPDATE_REQUIRED'" [translateParams]="{requiredVersion: requiredVersion}"></p>
             </ion-col>
         </div>
 
