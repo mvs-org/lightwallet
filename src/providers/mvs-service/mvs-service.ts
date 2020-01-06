@@ -191,6 +191,37 @@ export class MvsServiceProvider {
             })
     }
 
+    voteAgainTx(utxo_to_use: any, recipient_address: string, recipient_avatar: string, symbol: string, quantity: number, attenuation_model: string, change_address: string, fee: number, messages: Array<string>) {
+        let target = { [symbol]: quantity };
+        return Promise.all([this.getUtxoFrom(recipient_address), this.getHeight()])
+            .then(([utxo, height]) => {
+                for(let i=0; i<utxo.length; i++) {
+                    let current_utxo = utxo[i]
+                    if(current_utxo.value >= 10000) {
+                        utxo_to_use.push(current_utxo)
+                        break
+                    }
+                }
+                return Metaverse.output.findUtxo(utxo_to_use, target, height, fee)
+            })
+            .then((result) => {
+                //Verify that the UTXO of the previous is well included
+                if (result.utxo.length > 676) {
+                    throw Error('ERR_TOO_MANY_INPUTS');
+                }
+                //Set change address to first utxo's address
+                if (change_address == undefined)
+                    change_address = result.utxo[0].address;
+                if (recipient_address == undefined)
+                    recipient_address = result.utxo[0].address;
+                return Metaverse.transaction_builder.sendLockedAsset(result.utxo, recipient_address, recipient_avatar, symbol, quantity, attenuation_model, change_address, result.change, undefined, fee, messages);
+            })
+            .catch((error) => {
+                console.error(error)
+                throw Error(error.message);
+            })
+    }
+
     createAvatarTx(avatar_address: string, symbol: string, change_address: string, bounty_fee: number, messages: Array<string>) {
         return this.getUtxoFrom(avatar_address)
             .then((utxo) => this.getHeight().then(height => Metaverse.output.findUtxo(utxo, {}, height, Metaverse.constants.FEE.AVATAR_REGISTER)))
@@ -945,15 +976,8 @@ export class MvsServiceProvider {
             })*/
     }
 
-    getCandidates() {
-        return this.blockchain.election.candidates()
-            .catch((error) => {
-                return [];
-            })
-    }
-
-    getEarlybirdCandidates() {
-        return this.blockchain.election.earlybirdCandidates()
+    getElectionInfo() {
+        return this.blockchain.election.electionInfo()
             .catch((error) => {
                 return [];
             })

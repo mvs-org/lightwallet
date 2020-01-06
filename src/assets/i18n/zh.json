@@ -793,5 +793,19 @@
     "VOTE.NO_ELECTION": "目前没有进行投票",
     "VOTE.SELECT_PERIOD_OPTION_SINGULAR": "1 选举周期",
     "VOTE.SELECT_PERIOD_OPTION_PLURAL": "{{election}} 选举周期",
-    "VOTE.INFORMATION": "查看当前投票信息"
+    "VOTE.INFORMATION": "查看当前投票信息",
+    "VOTE.SEGMENT_VOTE": "投票",
+    "VOTE.SEGMENT_HISTORY": "投票历史",
+    "VOTE.HISTORY_LOCKED": "目前锁仓票数",
+    "VOTE.HISTORY_UNLOCKED": "已解锁票数",
+    "VOTE.REWARD": "投票奖励",
+    "VOTE.VOTE_FOR_DELEGATE": "投票候选人",
+    "VOTE.ELECT_AGAIN_BUTTON": "Elect again",
+    "VOTE.ROUND_A": "Round A",
+    "VOTE.ROUND_B": "Round B",
+    "VOTE.VOTES_TO_USE_AGAIN": "Vote for the same delegate",
+    "VOTE.VOTES_ALREADY_USED_AGAIN": "Votes already used",
+    "VOTE.UPDATE_REQUIRED": "请将MyETPWallet更新为{{requiredVersion}或更高版本，以便能够为下一次选举投票",
+    "VOTE.LOCKED_UNTIL_TIME": "解锁预计时间"
+
 }

@@ -4,6 +4,8 @@ import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { AlertProvider } from '../../providers/alert/alert';
 import { AppGlobals } from '../../app/app.global';
 import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
+import { trigger, state, style, animate, transition } from '@angular/animations';
+import compareVersions from 'compare-versions';
 
 @IonicPage({
     name: 'vote-page',
@@ -12,6 +14,13 @@ import { WalletServiceProvider } from '../../providers/wallet-service/wallet-ser
 @Component({
     selector: 'page-vote',
     templateUrl: 'vote.html',
+    animations: [
+        trigger('expandCollapse', [
+            state('expandCollapseState', style({ height: '*' })),
+            transition('* => void', [style({ height: '*' }), animate(500, style({ height: "0" }))]),
+            transition('void => *', [style({ height: '0' }), animate(500, style({ height: "*" }))])
+        ])
+    ],
 })
 export class VotePage {
 
@@ -47,6 +56,19 @@ export class VotePage {
     earlybirdInfo: any = {}
     loadingElectionInfo = true
     lockPeriod: number
+
+    display_segment: string = "vote"
+    frozen_outputs_locked: any[] = []
+    frozen_outputs_unlocked: any[] = []
+    currentElectionDay: number = 16
+    revote_outputs: any[] = []
+    revote_already_used_outputs: any[] = []
+    availableUtxos: any = {}
+    notPreviouslyVoteUtxo: any[] = []
+    previousElectionStart: number = 2110000
+    rewards: any = {}
+    updateRequired: boolean = false
+    requiredVersion: string = 'unknown'
 
     constructor(
         public navCtrl: NavController,
@@ -102,9 +124,21 @@ export class VotePage {
 
         this.mvs.getHeight()
             .then(height => {
-                return Promise.all([this.getBlocktime(height), this.getEarlybirdCandidates(height)])
+                this.height = height
+                return Promise.all([this.getBlocktime(height), this.getElectionInfo(height), this.calculateFrozenOutputs(height)])
             })
             .then(() => this.durationChange())
+
+        this.notPreviouslyVoteUtxo = []
+        this.mvs.getUtxo()
+            .then(utxos => {
+                utxos.forEach(utxo => {
+                    this.availableUtxos[utxo.hash + '/' + utxo.index] = utxo
+                    if (utxo.attachment.symbol == this.selectedAsset && utxo.attachment.type == 'asset-transfer' && (!utxo.attenuation_model_param || utxo.height + utxo.attenuation_model_param.lock_period < this.previousElectionStart)) {
+                        this.notPreviouslyVoteUtxo.push(utxo)
+                    }
+                })
+            })
     }
 
     getBlocktime(height) {
@@ -135,19 +169,20 @@ export class VotePage {
             })
     }*/
 
-    getEarlybirdCandidates(localHeight) {
-        return this.mvs.getEarlybirdCandidates()
+    getElectionInfo(localHeight) {
+        return this.mvs.getElectionInfo()
             .then(earlybirdInfo => {
-                //earlybirdInfo = {"candidates":['laurent','Sven'],"voteStart":2250000,"voteEnd":2320000,"lockUntil":2390000,"height":2254678}
+                this.updateRequired = compareVersions(this.globals.version, earlybirdInfo.walletVersionSupport) == -1
+                this.requiredVersion = earlybirdInfo.walletVersionSupport
                 this.loadingElectionInfo = false;
-                this.earlybirdInfo = earlybirdInfo && earlybirdInfo.voteStart < localHeight && earlybirdInfo.voteEnd > localHeight ? earlybirdInfo : {}
+                this.earlybirdInfo = earlybirdInfo && earlybirdInfo.voteStartHeight < localHeight && earlybirdInfo.voteEndHeight > localHeight && earlybirdInfo.voteEnabled ? earlybirdInfo : {}
                 let height = Math.max(localHeight, this.earlybirdInfo.height)
                 this.lockPeriod = earlybirdInfo.lockUntil - height
-                this.electionProgress = Math.round((height - this.earlybirdInfo.voteStart) / (this.earlybirdInfo.voteEnd - this.earlybirdInfo.voteStart) * 100)
-                return this.earlybirdInfo.voteStart
+                this.electionProgress = Math.round((height - this.earlybirdInfo.voteStartHeight) / (this.earlybirdInfo.voteEndHeight - this.earlybirdInfo.voteStartHeight) * 100)
+                return this.earlybirdInfo.voteStartHeight
             })
-            .then((currentVoteStart) => this.mvs.getBlock(currentVoteStart))
-            .then((block) => this.currentVoteTimestamp = block.time_stamp)
+            .then((currentVoteStart) => currentVoteStart ? this.mvs.getBlock(currentVoteStart) : 0)
+            .then((block) => this.currentVoteTimestamp = block && block.time_stamp ? block.time_stamp : 0)
             .catch((error) => {
                 console.error(error.message)
             })
@@ -278,5 +313,155 @@ export class VotePage {
     checkElection = () => this.wallet.openLink('https://' + this.electionURL())
 
     electionURL = () => (this.globals.network == 'mainnet') ? "www.dnavote.com" : "uat.dnavote.com"
+
+    async calculateFrozenOutputs(localHeight) {
+        let outputs = await this.mvs.getFrozenOutputs(this.selectedAsset)
+        let txs = await this.mvs.getTransactionMap()
+        this.frozen_outputs_locked = []
+        this.frozen_outputs_unlocked = []
+        let frozen_outputs_locked_hash = []
+        let frozen_outputs_unlocked_hash = []
+        this.revote_outputs = []
+        outputs.forEach((locked_output) => {
+            let tx = txs[locked_output.hash]
+            for (let i = 0; i < tx.outputs.length; i++) {
+                let output = tx.outputs[i]
+                if (output.attachment.type == 'message' && /^vote_([a-z0-9]+)\:([A-Za-z0-9-_@\.]+)$/.test(output.attachment.content)) {
+                    locked_output.voteType = /^vote_([a-z0-9]+)\:/.test(output.attachment.content) ? output.attachment.content.match(/^vote_([a-z0-9]+)\:/)[1] : 'Invalid Type';
+                    locked_output.voteAvatar = /\:([A-Za-z0-9-_@\.]+)$/.test(output.attachment.content) ? output.attachment.content.match(/\:([A-Za-z0-9-_@\.]+)$/)[1] : 'Invalid Avatar';
+                }
+                //locked_output.newVoteAmount = Math.floor((locked_output.attachment.quantity + locked_output.reward) / Math.pow(10, this.decimals))
+                //locked_output.maxNewVoteAmount = locked_output.newVoteAmount
+            }
+            if (localHeight > locked_output.locked_until) {
+                this.frozen_outputs_unlocked.push(locked_output)
+                frozen_outputs_unlocked_hash.push(locked_output.hash)
+                if (this.availableUtxos[locked_output.hash + '/' + locked_output.index]) {
+                    this.revote_outputs.push(locked_output)
+                } else {
+                    this.revote_already_used_outputs.push(locked_output)
+                }
+            } else {
+                this.frozen_outputs_locked.push(locked_output)
+                frozen_outputs_locked_hash.push(locked_output.hash)
+            }
+        })
+        let frozen_rewards_locked_result = await this.wallet.getElectionRewards(frozen_outputs_locked_hash)
+        let rewards = frozen_rewards_locked_result && frozen_rewards_locked_result.json() ? frozen_rewards_locked_result.json().result : []
+        
+        let frozen_rewards_unlocked_result = await this.wallet.getElectionRewards(frozen_outputs_locked_hash)
+        rewards.concat(frozen_rewards_unlocked_result && frozen_rewards_unlocked_result.json() ? frozen_rewards_unlocked_result.json().result : [])
+
+        //TO DELETE
+        /*let test = await this.wallet.getElectionRewards(['5dd276da9f2ab08bdef125911504307336e4f5e4fecba399facd08f71e719778'])
+        rewards = rewards.concat(test.json().result)
+        console.log(test.json().result)
+        console.log(rewards)
+        console.log("1")
+        this.rewards['236cdde3e50620af47dffc2f8b15afbb91bf7fe523be9f7cd451c6f202b654bc'] = rewards[0].reward
+        */
+        //UNTIL HERE
+
+        if(rewards) {
+            rewards.forEach(reward => {
+                this.rewards[reward.txid] = reward.reward
+            })
+        }
+
+    }
+
+    voteAgain(locked_output) {
+        return this.alert.showLoading()
+            .then(() => this.mvs.updateHeight())
+            .then((height) => {
+                this.lockPeriod = this.earlybirdInfo.lockUntil - height
+                let quantity = Math.round(parseFloat(locked_output.newVoteAmount) * Math.pow(10, this.decimals))
+                let attenuation_model = 'PN=0;LH=' + this.lockPeriod + ';TYPE=1;LQ=' + quantity + ';LP=' + this.lockPeriod + ';UN=1'
+                let messages = [];
+                messages.push('vote_supernode:' + locked_output.voteAvatar)
+                if (this.message) {
+                    messages.push(this.message)
+                }
+                let notPreviouslyVote = 0
+                let utxo_to_use = [locked_output]
+                let targetNotPreviouslyVote = quantity - locked_output.attachment.quantity
+
+                //First we try to macth the same sender address
+                for (let i = 0; i < this.notPreviouslyVoteUtxo.length; i++) {
+                    let current_utxo = this.notPreviouslyVoteUtxo[i]
+                    if (current_utxo.address == locked_output.address) {
+                        utxo_to_use.push(current_utxo)
+                        notPreviouslyVote += current_utxo.attachment.quantity
+                        if (notPreviouslyVote >= targetNotPreviouslyVote) {
+                            break
+                        }
+                    }
+                }
+
+                //If we didn't find any result, we take any other address
+                if (notPreviouslyVote < targetNotPreviouslyVote) {
+                    for (let i = 0; i < this.notPreviouslyVoteUtxo.length; i++) {
+                        let current_utxo = this.notPreviouslyVoteUtxo[i]
+                        utxo_to_use.push(current_utxo)
+                        notPreviouslyVote += current_utxo.attachment.quantity
+                        if (notPreviouslyVote >= targetNotPreviouslyVote) {
+                            break
+                        }
+                    }
+                }
+
+                return this.mvs.voteAgainTx(
+                    utxo_to_use,
+                    locked_output.address,
+                    undefined,
+                    this.selectedAsset,
+                    quantity,
+                    attenuation_model,
+                    undefined,
+                    10000,
+                    messages
+                )
+            })
+            .catch((error) => {
+                console.error(error.message)
+                this.alert.stopLoading()
+                switch (error.message) {
+                    case "ERR_DECRYPT_WALLET":
+                        this.alert.showError('MESSAGE.PASSWORD_WRONG', '')
+                        throw Error('ERR_CREATE_TX')
+                    case "ERR_INSUFFICIENT_BALANCE":
+                        this.alert.showError('MESSAGE.INSUFFICIENT_BALANCE', '')
+                        throw Error('ERR_CREATE_TX')
+                    case "ERR_TOO_MANY_INPUTS":
+                        this.alert.showErrorTranslated('ERROR_TOO_MANY_INPUTS', 'ERROR_TOO_MANY_INPUTS_TEXT')
+                        throw Error('ERR_CREATE_TX')
+                    default:
+                        this.alert.showError('MESSAGE.CREATE_TRANSACTION', error.message)
+                        throw Error('ERR_CREATE_TX')
+                }
+            })
+    }
+
+    sendVoteAgain(locked_ouput) {
+        this.voteAgain(locked_ouput)
+            .then((result) => {
+                this.navCtrl.push("confirm-tx-page", { tx: result.encode().toString('hex') })
+                this.alert.stopLoading()
+            })
+            .catch((error) => {
+                console.error(error)
+                this.alert.stopLoading()
+                switch (error.message) {
+                    case "ERR_CONNECTION":
+                        this.alert.showError('ERROR_SEND_TEXT', '')
+                        break;
+                    case "ERR_CREATE_TX":
+                        //already handle in create function
+                        break;
+                    default:
+                        this.alert.showError('MESSAGE.BROADCAST_ERROR', error.message)
+                }
+            })
+    }
 
 }

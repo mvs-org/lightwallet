@@ -793,5 +793,18 @@
     "VOTE.NO_ELECTION": "There is currently no election ongoing",
     "VOTE.SELECT_PERIOD_OPTION_SINGULAR": "1 election",
     "VOTE.SELECT_PERIOD_OPTION_PLURAL": "{{election}} elections",
-    "VOTE.INFORMATION": "Check the information of the current vote on "
+    "VOTE.INFORMATION": "Check the information of the current vote on ",
+    "VOTE.SEGMENT_VOTE": "Vote",
+    "VOTE.SEGMENT_HISTORY": "History",
+    "VOTE.HISTORY_LOCKED": "Currently locked votes",
+    "VOTE.HISTORY_UNLOCKED": "Unlocked votes",
+    "VOTE.REWARD": "Reward",
+    "VOTE.VOTE_FOR_DELEGATE": "Vote for delegate",
+    "VOTE.ELECT_AGAIN_BUTTON": "Elect again",
+    "VOTE.ROUND_A": "Round A",
+    "VOTE.ROUND_B": "Round B",
+    "VOTE.VOTES_TO_USE_AGAIN": "Vote for the same delegate",
+    "VOTE.VOTES_ALREADY_USED_AGAIN": "Votes already used",
+    "VOTE.UPDATE_REQUIRED": "Please update MyETPWallet to version {{requiredVersion}} or above in order to be able to vote for the next election",
+    "VOTE.LOCKED_UNTIL_TIME": "Locked until"
 }
