@@ -60,7 +60,6 @@ export class VotePage {
     display_segment: string = "vote"
     frozen_outputs_locked: any[] = []
     frozen_outputs_unlocked: any[] = []
-    currentElectionDay: number = 16
     revote_outputs: any[] = []
     revote_already_used_outputs: any[] = []
     availableUtxos: any = {}
@@ -172,14 +171,17 @@ export class VotePage {
     getElectionInfo(localHeight) {
         return this.mvs.getElectionInfo()
             .then(earlybirdInfo => {
+                console.log(earlybirdInfo)
+                earlybirdInfo.revoteEnabled = true
                 this.updateRequired = compareVersions(this.globals.version, earlybirdInfo.walletVersionSupport) == -1
                 this.requiredVersion = earlybirdInfo.walletVersionSupport
-                this.loadingElectionInfo = false;
-                this.earlybirdInfo = earlybirdInfo && earlybirdInfo.voteStartHeight < localHeight && earlybirdInfo.voteEndHeight > localHeight && earlybirdInfo.voteEnabled ? earlybirdInfo : {}
-                let height = Math.max(localHeight, this.earlybirdInfo.height)
+                let height = Math.max(localHeight, earlybirdInfo.height)
+                this.loadingElectionInfo = false;               
+
+                this.earlybirdInfo = earlybirdInfo && earlybirdInfo.voteStartHeight < height && earlybirdInfo.voteEndHeight > height ? earlybirdInfo : {}
                 this.lockPeriod = earlybirdInfo.lockUntil - height
                 this.electionProgress = Math.round((height - this.earlybirdInfo.voteStartHeight) / (this.earlybirdInfo.voteEndHeight - this.earlybirdInfo.voteStartHeight) * 100)
-                return this.earlybirdInfo.voteStartHeight
+                return earlybirdInfo.voteStartHeight
             })
             .then((currentVoteStart) => currentVoteStart ? this.mvs.getBlock(currentVoteStart) : 0)
             .then((block) => this.currentVoteTimestamp = block && block.time_stamp ? block.time_stamp : 0)
