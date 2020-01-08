@@ -48,6 +48,7 @@ export class VotePage {
     duration_hours: number = 0
     current_time: number
     locked_until: number
+    unlock_time: number
     currentVoteTimestamp: number
     electionProgress: number
     height: number
@@ -56,6 +57,7 @@ export class VotePage {
     earlybirdInfo: any = {}
     loadingElectionInfo = true
     lockPeriod: number
+    unlockPeriods: Array<number>
 
     display_segment: string = "vote"
     frozen_outputs_locked: any[] = []
@@ -179,7 +181,9 @@ export class VotePage {
                 this.loadingElectionInfo = false;               
 
                 this.earlybirdInfo = earlybirdInfo && earlybirdInfo.voteStartHeight < height && earlybirdInfo.voteEndHeight > height ? earlybirdInfo : {}
-                this.lockPeriod = earlybirdInfo.lockUntil - height
+                this.unlockPeriods = earlybirdInfo.votesUnlockPeriods.slice(earlybirdInfo.currentPeriod-1)
+                this.locked_until = this.unlockPeriods[0]
+                this.lockPeriod = this.unlockPeriods[0] - height
                 this.electionProgress = Math.round((height - this.earlybirdInfo.voteStartHeight) / (this.earlybirdInfo.voteEndHeight - this.earlybirdInfo.voteStartHeight) * 100)
                 return earlybirdInfo.voteStartHeight
             })
@@ -222,7 +226,7 @@ export class VotePage {
         return this.alert.showLoading()
             .then(() => this.mvs.updateHeight())
             .then((height) => {
-                this.lockPeriod = this.earlybirdInfo.lockUntil - height
+                this.lockPeriod = this.locked_until - height
                 let quantity = Math.round(parseFloat(this.quantity) * Math.pow(10, this.decimals))
                 let attenuation_model = 'PN=0;LH=' + this.lockPeriod + ';TYPE=1;LQ=' + quantity + ';LP=' + this.lockPeriod + ';UN=1'
                 let messages = [];
@@ -297,9 +301,10 @@ export class VotePage {
     }*/
 
     durationChange() {
+        this.lockPeriod = this.locked_until - this.height
         this.duration_days = Math.floor(this.blocktime * this.lockPeriod / (24 * 60 * 60))
         this.duration_hours = Math.floor((this.blocktime * this.lockPeriod / (60 * 60)) - (24 * this.duration_days))
-        this.locked_until = this.lockPeriod * this.blocktime * 1000 + this.current_time;
+        this.unlock_time = this.lockPeriod * this.blocktime * 1000 + this.current_time;
     }
 
     validaddress = this.mvs.validAddress
@@ -308,9 +313,9 @@ export class VotePage {
 
     validMessageLength = (message) => this.mvs.verifyMessageSize(message) < 253
 
-    /*arrayList(n: number): any[] {
+    arrayList(n: number): any[] {
         return Array(n);
-    }*/
+    }
 
     checkElection = () => this.wallet.openLink('https://' + this.electionURL())
 
@@ -355,13 +360,13 @@ export class VotePage {
         rewards.concat(frozen_rewards_unlocked_result && frozen_rewards_unlocked_result.json() ? frozen_rewards_unlocked_result.json().result : [])
 
         //TO DELETE
-        /*let test = await this.wallet.getElectionRewards(['5dd276da9f2ab08bdef125911504307336e4f5e4fecba399facd08f71e719778'])
+        let test = await this.wallet.getElectionRewards(['5dd276da9f2ab08bdef125911504307336e4f5e4fecba399facd08f71e719778'])
         rewards = rewards.concat(test.json().result)
         console.log(test.json().result)
         console.log(rewards)
         console.log("1")
-        this.rewards['236cdde3e50620af47dffc2f8b15afbb91bf7fe523be9f7cd451c6f202b654bc'] = rewards[0].reward
-        */
+        this.rewards['a83080dec232d964c71d7c2d41edaf6c6c3cac9242d02f5808874c70bb74b045'] = rewards[0].reward
+        
         //UNTIL HERE
 
         if(rewards) {
@@ -376,7 +381,7 @@ export class VotePage {
         return this.alert.showLoading()
             .then(() => this.mvs.updateHeight())
             .then((height) => {
-                this.lockPeriod = this.earlybirdInfo.lockUntil - height
+                this.lockPeriod = this.locked_until - height
                 let quantity = Math.round(parseFloat(locked_output.newVoteAmount) * Math.pow(10, this.decimals))
                 let attenuation_model = 'PN=0;LH=' + this.lockPeriod + ';TYPE=1;LQ=' + quantity + ';LP=' + this.lockPeriod + ';UN=1'
                 let messages = [];
