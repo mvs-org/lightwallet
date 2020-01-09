@@ -66,7 +66,7 @@ export class VotePage {
     revote_already_used_outputs: any[] = []
     availableUtxos: any = {}
     notPreviouslyVoteUtxo: any[] = []
-    previousElectionStart: number = 2110000
+    notPreviouslyVoteQuantity: number = 0
     rewards: any = {}
     updateRequired: boolean = false
     requiredVersion: string = 'unknown'
@@ -126,20 +126,9 @@ export class VotePage {
         this.mvs.getHeight()
             .then(height => {
                 this.height = height
-                return Promise.all([this.getBlocktime(height), this.getElectionInfo(height), this.calculateFrozenOutputs(height)])
+                return Promise.all([this.getBlocktime(height), this.getElectionInfo(height)])
             })
             .then(() => this.durationChange())
-
-        this.notPreviouslyVoteUtxo = []
-        this.mvs.getUtxo()
-            .then(utxos => {
-                utxos.forEach(utxo => {
-                    this.availableUtxos[utxo.hash + '/' + utxo.index] = utxo
-                    if (utxo.attachment.symbol == this.selectedAsset && utxo.attachment.type == 'asset-transfer' && (!utxo.attenuation_model_param || utxo.height + utxo.attenuation_model_param.lock_period < this.previousElectionStart)) {
-                        this.notPreviouslyVoteUtxo.push(utxo)
-                    }
-                })
-            })
     }
 
     getBlocktime(height) {
@@ -152,46 +141,47 @@ export class VotePage {
             })
     }
 
-    /*getCandidates(height) {
-        return this.mvs.getCandidates()
-            .then(electionInfo => {
-                this.loadingElectionInfo = false;
-                this.electionInfo = electionInfo ? electionInfo : {}
-
-                let startingVoteCycle = (Math.floor((height + this.electionInfo.voteOffset - this.electionInfo.mandateOffset) / this.electionInfo.votePeriod));
-                let currentVoteStart = startingVoteCycle * this.electionInfo.votePeriod - this.electionInfo.voteOffset + this.electionInfo.mandateOffset
-                this.electionProgress = Math.round((height - currentVoteStart) / this.electionInfo.votePeriod * 100)
-                return currentVoteStart
-            })
-            .then((currentVoteStart) => this.mvs.getBlock(currentVoteStart))
-            .then((block) => this.currentVoteTimestamp = block.time_stamp)
-            .catch((error) => {
-                console.error(error.message)
-            })
-    }*/
-
     getElectionInfo(localHeight) {
         return this.mvs.getElectionInfo()
             .then(earlybirdInfo => {
-                console.log(earlybirdInfo)
                 earlybirdInfo.revoteEnabled = true
                 this.updateRequired = compareVersions(this.globals.version, earlybirdInfo.walletVersionSupport) == -1
                 this.requiredVersion = earlybirdInfo.walletVersionSupport
-                let height = Math.max(localHeight, earlybirdInfo.height)
-                this.loadingElectionInfo = false;               
+                this.height = Math.max(localHeight, earlybirdInfo.height)
+                this.loadingElectionInfo = false      
 
-                this.earlybirdInfo = earlybirdInfo && earlybirdInfo.voteStartHeight < height && earlybirdInfo.voteEndHeight > height ? earlybirdInfo : {}
+                this.earlybirdInfo = earlybirdInfo && earlybirdInfo.voteStartHeight < this.height && earlybirdInfo.voteEndHeight > this.height ? earlybirdInfo : {}
                 this.unlockPeriods = earlybirdInfo.votesUnlockPeriods.slice(earlybirdInfo.currentPeriod-1)
                 this.locked_until = this.unlockPeriods[0]
-                this.lockPeriod = this.unlockPeriods[0] - height
-                this.electionProgress = Math.round((height - this.earlybirdInfo.voteStartHeight) / (this.earlybirdInfo.voteEndHeight - this.earlybirdInfo.voteStartHeight) * 100)
+                this.lockPeriod = this.unlockPeriods[0] - this.height
+                this.electionProgress = Math.round((this.height - this.earlybirdInfo.voteStartHeight) / (this.earlybirdInfo.voteEndHeight - this.earlybirdInfo.voteStartHeight) * 100)
                 return earlybirdInfo.voteStartHeight
             })
             .then((currentVoteStart) => currentVoteStart ? this.mvs.getBlock(currentVoteStart) : 0)
             .then((block) => this.currentVoteTimestamp = block && block.time_stamp ? block.time_stamp : 0)
+            .then(() => this.getNotPreviouslyVoteUtxo())
+            .then(() => this.calculateFrozenOutputs(this.height))
             .catch((error) => {
                 console.error(error.message)
             })
+    }
+
+    getNotPreviouslyVoteUtxo() {
+        if(this.earlybirdInfo) {
+            this.notPreviouslyVoteUtxo = []
+            this.notPreviouslyVoteQuantity = 0
+            this.mvs.getUtxo()
+                .then(utxos => {
+                    utxos.forEach(utxo => {
+                        this.availableUtxos[utxo.hash + '/' + utxo.index] = utxo
+                        if (utxo.attachment.symbol == this.selectedAsset && utxo.attachment.type == 'asset-transfer' && (!utxo.attenuation_model_param || utxo.height + utxo.attenuation_model_param.lock_period < this.earlybirdInfo.previousVoteEndHeight)) {
+                            this.notPreviouslyVoteUtxo.push(utxo)
+                            this.notPreviouslyVoteQuantity += utxo.attachment.quantity
+                        }
+                    })
+                })
+                
+        }
     }
 
     onFromAddressChange(event) {
@@ -208,8 +198,13 @@ export class VotePage {
 
     validQuantity = (quantity) => quantity != undefined
         && this.countDecimals(quantity) == 0
-        && ((this.selectedAsset == 'ETP' && this.showBalance >= (Math.round(parseFloat(quantity) * Math.pow(10, this.decimals)) + this.fee)) || (this.selectedAsset != 'ETP' && this.showBalance >= parseFloat(quantity) * Math.pow(10, this.decimals)))
+        && this.showBalance >= parseFloat(quantity) * Math.pow(10, this.decimals)
         && (quantity > 0)
+
+    validRevoteQuantity = (output) => output.newVoteAmount != undefined
+        && this.countDecimals(output.newVoteAmount) == 0
+        && output.maxVoteAmount >= output.newVoteAmount
+        && output.newVoteAmount > 0
 
     countDecimals(value) {
         if (Math.floor(value) !== value && value.toString().split(".").length > 1)
@@ -337,13 +332,14 @@ export class VotePage {
                     locked_output.voteType = /^vote_([a-z0-9]+)\:/.test(output.attachment.content) ? output.attachment.content.match(/^vote_([a-z0-9]+)\:/)[1] : 'Invalid Type';
                     locked_output.voteAvatar = /\:([A-Za-z0-9-_@\.]+)$/.test(output.attachment.content) ? output.attachment.content.match(/\:([A-Za-z0-9-_@\.]+)$/)[1] : 'Invalid Avatar';
                 }
-                //locked_output.newVoteAmount = Math.floor((locked_output.attachment.quantity + locked_output.reward) / Math.pow(10, this.decimals))
-                //locked_output.maxNewVoteAmount = locked_output.newVoteAmount
             }
+            
             if (localHeight > locked_output.locked_until) {
                 this.frozen_outputs_unlocked.push(locked_output)
                 frozen_outputs_unlocked_hash.push(locked_output.hash)
-                if (this.availableUtxos[locked_output.hash + '/' + locked_output.index]) {
+                if (locked_output.height + locked_output.attenuation_model_param.lock_period < this.earlybirdInfo.previousVoteEndHeight) {
+                    //Previous vote that was not reused on time
+                } else if (this.availableUtxos[locked_output.hash + '/' + locked_output.index]) {
                     this.revote_outputs.push(locked_output)
                 } else {
                     this.revote_already_used_outputs.push(locked_output)
@@ -362,10 +358,8 @@ export class VotePage {
         //TO DELETE
         let test = await this.wallet.getElectionRewards(['5dd276da9f2ab08bdef125911504307336e4f5e4fecba399facd08f71e719778'])
         rewards = rewards.concat(test.json().result)
-        console.log(test.json().result)
         console.log(rewards)
-        console.log("1")
-        this.rewards['a83080dec232d964c71d7c2d41edaf6c6c3cac9242d02f5808874c70bb74b045'] = rewards[0].reward
+        this.rewards['a83080dec232d964c71d7c2d41edaf6c6c3cac9242d02f5808874c70bb74b045'] = 1000
         
         //UNTIL HERE
 
@@ -374,6 +368,17 @@ export class VotePage {
                 this.rewards[reward.txid] = reward.reward
             })
         }
+
+        this.revote_outputs.forEach(output => {
+            output.initialVoteAmount = Math.round(output.attachment.quantity / Math.pow(10, this.decimals))
+
+            let maxPossibleVote = Math.floor(this.rewards[output.tx] ? output.initialVoteAmount + this.rewards[output.tx] : output.initialVoteAmount)
+            let maxAvailableVote = Math.floor(this.notPreviouslyVoteQuantity ? output.initialVoteAmount + (this.notPreviouslyVoteQuantity  / Math.pow(10, this.decimals)) : output.initialVoteAmount)
+
+            output.newVoteAmount = Math.min(maxPossibleVote, maxAvailableVote)
+            output.newVoteAmountWarningNotMax = maxPossibleVote > maxAvailableVote
+            output.maxVoteAmount = output.newVoteAmount
+        })
 
     }
 
@@ -393,7 +398,7 @@ export class VotePage {
                 let utxo_to_use = [locked_output]
                 let targetNotPreviouslyVote = quantity - locked_output.attachment.quantity
 
-                //First we try to macth the same sender address
+                //First we try to match the same sender address
                 for (let i = 0; i < this.notPreviouslyVoteUtxo.length; i++) {
                     let current_utxo = this.notPreviouslyVoteUtxo[i]
                     if (current_utxo.address == locked_output.address) {
@@ -409,10 +414,12 @@ export class VotePage {
                 if (notPreviouslyVote < targetNotPreviouslyVote) {
                     for (let i = 0; i < this.notPreviouslyVoteUtxo.length; i++) {
                         let current_utxo = this.notPreviouslyVoteUtxo[i]
-                        utxo_to_use.push(current_utxo)
-                        notPreviouslyVote += current_utxo.attachment.quantity
-                        if (notPreviouslyVote >= targetNotPreviouslyVote) {
-                            break
+                        if (current_utxo.address !== locked_output.address) {
+                            utxo_to_use.push(current_utxo)
+                            notPreviouslyVote += current_utxo.attachment.quantity
+                            if (notPreviouslyVote >= targetNotPreviouslyVote) {
+                                break
+                            }
                         }
                     }
                 }
@@ -469,6 +476,12 @@ export class VotePage {
                         this.alert.showError('MESSAGE.BROADCAST_ERROR', error.message)
                 }
             })
+    }
+
+    changeTab() {
+        this.revote_outputs.forEach((output) => {
+            output.show = false
+        })
     }
 
 }

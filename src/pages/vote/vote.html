@@ -10,7 +10,7 @@
 <ion-content padding style="padding-bottom: 0;">
 
     <ion-item no-lines>
-        <ion-segment [(ngModel)]="display_segment" color="primary">
+        <ion-segment [(ngModel)]="display_segment" color="primary" (ngModelChange)="changeTab($event)">
             <ion-segment-button value="vote">
                 {{ "VOTE.SEGMENT_VOTE" | translate}}
             </ion-segment-button>
@@ -45,7 +45,6 @@
             </ion-col>
         </ion-row>
 
-
         <div *ngIf="!loadingElectionInfo && !updateRequired && earlybirdInfo && earlybirdInfo.candidates && earlybirdInfo.candidates.length > 0 && earlybirdInfo.revoteEnabled">
             <h1 class="center">{{'VOTE.ROUND_A'|translate}}</h1>
             <ion-item class="election-progress">
@@ -63,7 +62,7 @@
             </ion-item>
             <br>
             <ion-item no-lines>
-                <h2 class="center">{{'VOTE.VOTES_TO_USE_AGAIN'|translate}}</h2>
+                <h2 class="center" *ngIf="revote_outputs && revote_outputs.length > 0">{{'VOTE.VOTES_TO_USE_AGAIN'|translate}}</h2>
                 <ion-card *ngFor="let output of revote_outputs" class="manual-copy display-overflow">
                     <ion-grid>
                         <ion-row>
@@ -74,12 +73,12 @@
                                             {{'VOTE.VOTE_FOR_DELEGATE' | translate}}: {{output.voteAvatar}}
                                             <div>{{output.attenuation_model_param.lock_quantity | format :
                                                 output.attachment.decimals}} DNA</div>
-                                            <div *ngIf="rewards[output.hash]" class="default-color fee">{{'VOTE.REWARD' |
-                                                translate}}: {{rewards[output.hash]}} DNA</div>
+                                            <div *ngIf="rewards[output.hash]" class="default-color fee">{{'VOTE.REWARD'
+                                                | translate}}: {{rewards[output.hash]}} DNA</div>
                                         </ion-item>
                                     </ion-col>
                                     <ion-col class="right">
-                                        <button class="ion-item" ion-button icon-left (click)="output.show = true">
+                                        <button class="ion-item" ion-button icon-left (click)="output.show = !output.show">
                                             <ion-icon name="ribbon"></ion-icon>
                                             {{'VOTE.ELECT_AGAIN_BUTTON'|translate}}
                                         </button>
@@ -88,25 +87,50 @@
                             </ion-col>
                         </ion-row>
                         <div [@expandCollapse]="output.show" *ngIf="output.show">
-                            <ion-item [ngClass]="{'error-border':!validQuantity(output.newVoteAmount), 'valid-border':validQuantity(output.newVoteAmount)}">
-                                <ion-label color="primary" floating>{{"AMOUNT" | translate}}</ion-label>
-                                <ion-input name="quantity" type="number" min="0" [(ngModel)]="output.newVoteAmount"
-                                    required></ion-input>
-                            </ion-item>
-                            <ion-row class="padding-bottom">
-                                <ion-col></ion-col>
+                            <ion-row>
                                 <ion-col>
-                                    <button type="submit" ion-button full icon-left [disabled]="!validQuantity(output.newVoteAmount)"
-                                        (click)="sendVoteAgain(output)" color="secondary">
-                                        <ion-icon disabled="checked" name="cog"></ion-icon>
-                                        {{'NEXT'|translate}}
-                                    </button>
+                                    <ion-row>
+                                        <ion-col>
+                                            <ion-item>
+                                                <ion-label>{{"VOTE.SELECT_PERIOD"|translate}}</ion-label>
+                                                <ion-select [(ngModel)]="locked_until" name="locked_until" multiple="false"
+                                                    (ngModelChange)="durationChange($event)" okText="{{'OK'|translate}}"
+                                                    cancelText="{{'CANCEL'|translate}}">
+                                                    <ion-option *ngFor="let period of unlockPeriods; let i = index;"
+                                                        value="{{unlockPeriods[i]}}">
+                                                        <span *ngIf="i === 0" [translate]="'VOTE.SELECT_PERIOD_OPTION_SINGULAR'"></span>
+                                                        <span *ngIf="i !== 0" [translate]="'VOTE.SELECT_PERIOD_OPTION_PLURAL'"
+                                                            [translateParams]="{election: i+1}"></span>
+                                                    </ion-option>
+                                                </ion-select>
+                                            </ion-item>
+                                            <ion-item class="info-input" no-lines>
+                                                <span [translate]="'VOTE.DURATION_ESTIMATION'" [translateParams]="{blocktime: blocktime, duration_days: duration_days, duration_hours: duration_hours, unlock_time: unlock_time | date : 'medium'}"></span>
+                                            </ion-item>
+                                            <ion-item [ngClass]="{'error-border':!validRevoteQuantity(output), 'valid-border':validRevoteQuantity(output)}">
+                                                <ion-label color="primary" floating>{{"AMOUNT" | translate}}</ion-label>
+                                                <ion-input name="quantity" type="number" min="0" [(ngModel)]="output.newVoteAmount"
+                                                    required></ion-input>
+                                            </ion-item>
+                                            <ion-item no-lines *ngIf="output.newVoteAmountWarningNotMax" class="warning">{{'VOTE.REVOTE_NOT_MAX_POSSIBLE' | translate}}</ion-item>
+                                        </ion-col>
+                                    </ion-row>
+                                    <ion-row class="padding-bottom">
+                                        <ion-col></ion-col>
+                                        <ion-col>
+                                            <button type="submit" ion-button full icon-left [disabled]="!validRevoteQuantity(output)"
+                                                (click)="sendVoteAgain(output)" color="secondary">
+                                                <ion-icon disabled="checked" name="cog"></ion-icon>
+                                                {{'NEXT'|translate}}
+                                            </button>
+                                        </ion-col>
+                                    </ion-row>
                                 </ion-col>
                             </ion-row>
                         </div>
                     </ion-grid>
                 </ion-card>
-                <h2 class="center">{{'VOTE.VOTES_ALREADY_USED_AGAIN'|translate}}</h2>
+                <h2 class="center" *ngIf="revote_already_used_outputs && revote_already_used_outputs.length > 0">{{'VOTE.VOTES_ALREADY_USED_AGAIN'|translate}}</h2>
                 <ion-card *ngFor="let output of revote_already_used_outputs" class="manual-copy display-overflow">
                     <ion-grid>
                         <ion-row>
@@ -117,8 +141,8 @@
                                             {{'VOTE.VOTE_FOR_DELEGATE' | translate}}: {{output.voteAvatar}}
                                             <div>{{output.attenuation_model_param.lock_quantity | format :
                                                 output.attachment.decimals}} DNA</div>
-                                            <div *ngIf="rewards[output.hash]" class="default-color fee">{{'VOTE.REWARD' |
-                                                translate}}: {{rewards[output.hash]}} DNA</div>
+                                            <div *ngIf="rewards[output.hash]" class="default-color fee">{{'VOTE.REWARD'
+                                                | translate}}: {{rewards[output.hash]}} DNA</div>
                                         </ion-item>
                                     </ion-col>
                                 </ion-row>
@@ -175,7 +199,8 @@
                             okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}">
                             <ion-option *ngFor="let period of unlockPeriods; let i = index;" value="{{unlockPeriods[i]}}">
                                 <span *ngIf="i === 0" [translate]="'VOTE.SELECT_PERIOD_OPTION_SINGULAR'"></span>
-                                <span *ngIf="i !== 0" [translate]="'VOTE.SELECT_PERIOD_OPTION_PLURAL'" [translateParams]="{election: i+1}"></span>
+                                <span *ngIf="i !== 0" [translate]="'VOTE.SELECT_PERIOD_OPTION_PLURAL'"
+                                    [translateParams]="{election: i+1}"></span>
                             </ion-option>
                         </ion-select>
                     </ion-item>
@@ -230,8 +255,7 @@
                         </ion-item>
                         <div no-lines class="advice">{{"HELP.MESSAGE" | translate}}</div>
                         <ion-item *ngIf="!validMessageLength(message)" no-lines class="wrong-input">{{"MESSAGE_TOO_LONG"
-                            |
-                            translate}}</ion-item>
+                            | translate}}</ion-item>
                         <br>
                         <ion-item>
                             <ion-label>{{"SELECT_CHANGE_ADDRESS"|translate}}</ion-label>
