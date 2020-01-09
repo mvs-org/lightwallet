@@ -806,6 +806,8 @@
     "VOTE.VOTES_TO_USE_AGAIN": "Vote for the same delegate",
     "VOTE.VOTES_ALREADY_USED_AGAIN": "Votes already used",
     "VOTE.UPDATE_REQUIRED": "请将MyETPWallet更新为{{requiredVersion}或更高版本，以便能够为下一次选举投票",
-    "VOTE.LOCKED_UNTIL_TIME": "解锁预计时间"
+    "VOTE.LOCKED_UNTIL_TIME": "解锁预计时间",
+    "VOTE.REVOTE_NOT_MAX_POSSIBLE": "You do not have enough available DNA to revote using the maximum bonus available.",
+    "VOTE.NO_REVOTE": "No previous vote eligible for revote"
 
 }

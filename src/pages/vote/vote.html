@@ -51,16 +51,17 @@
                 <ion-row>
                     <ion-col>
                         <p>{{"VOTE.START" | translate}}: <br *ngIf="platform.is('mobile')">
-                            {{currentVoteTimestamp*1000 | date : 'medium'}}</p>
+                            {{currentRevoteTimestamp*1000 | date : 'medium'}}</p>
                     </ion-col>
                     <ion-col>
                         <p class="right">{{"VOTE.END"|translate}}:<br *ngIf="platform.is('mobile')">
-                            ~{{earlybirdInfo.voteEndTime*1000 | date : 'medium'}}</p>
+                            ~{{earlybirdInfo.revoteEndTime*1000 | date : 'medium'}}</p>
                     </ion-col>
                 </ion-row>
-                <progress-bar [progress]="electionProgress"></progress-bar>
+                <progress-bar [progress]="electionProgressRevote || 0"></progress-bar>
             </ion-item>
             <br>
+            <h2 class="center" *ngIf="revote_outputs && revote_outputs.length == 0 && revote_already_used_outputs && revote_already_used_outputs.length == 0">{{'VOTE.NO_REVOTE'|translate}}</h2>
             <ion-item no-lines>
                 <h2 class="center" *ngIf="revote_outputs && revote_outputs.length > 0">{{'VOTE.VOTES_TO_USE_AGAIN'|translate}}</h2>
                 <ion-card *ngFor="let output of revote_outputs" class="manual-copy display-overflow">
@@ -179,7 +180,7 @@
                                     ~{{earlybirdInfo.voteEndTime*1000 | date : 'medium'}}</p>
                             </ion-col>
                         </ion-row>
-                        <progress-bar [progress]="electionProgress"></progress-bar>
+                        <progress-bar [progress]="electionProgressVote || 0"></progress-bar>
                     </ion-item>
                     <br>
                     <ion-item [ngClass]="{'error-border':!candidate}">

@@ -50,7 +50,9 @@ export class VotePage {
     locked_until: number
     unlock_time: number
     currentVoteTimestamp: number
-    electionProgress: number
+    currentRevoteTimestamp: number
+    electionProgressVote: number
+    electionProgressRevote: number
     height: number
     dnaRichestAddress: string
     //electionInfo: any = {}
@@ -144,21 +146,23 @@ export class VotePage {
     getElectionInfo(localHeight) {
         return this.mvs.getElectionInfo()
             .then(earlybirdInfo => {
-                earlybirdInfo.revoteEnabled = true
                 this.updateRequired = compareVersions(this.globals.version, earlybirdInfo.walletVersionSupport) == -1
                 this.requiredVersion = earlybirdInfo.walletVersionSupport
                 this.height = Math.max(localHeight, earlybirdInfo.height)
-                this.loadingElectionInfo = false      
+                this.loadingElectionInfo = false
 
-                this.earlybirdInfo = earlybirdInfo && earlybirdInfo.voteStartHeight < this.height && earlybirdInfo.voteEndHeight > this.height ? earlybirdInfo : {}
+                this.earlybirdInfo = earlybirdInfo ? earlybirdInfo : {}
                 this.unlockPeriods = earlybirdInfo.votesUnlockPeriods.slice(earlybirdInfo.currentPeriod-1)
                 this.locked_until = this.unlockPeriods[0]
                 this.lockPeriod = this.unlockPeriods[0] - this.height
-                this.electionProgress = Math.round((this.height - this.earlybirdInfo.voteStartHeight) / (this.earlybirdInfo.voteEndHeight - this.earlybirdInfo.voteStartHeight) * 100)
+                this.electionProgressVote = Math.round((this.height - this.earlybirdInfo.voteStartHeight) / (this.earlybirdInfo.voteEndHeight - this.earlybirdInfo.voteStartHeight) * 100)
+                this.electionProgressRevote = Math.round((this.height - this.earlybirdInfo.revoteStartHeight) / (this.earlybirdInfo.revoteEndHeight - this.earlybirdInfo.revoteStartHeight) * 100)
                 return earlybirdInfo.voteStartHeight
             })
             .then((currentVoteStart) => currentVoteStart ? this.mvs.getBlock(currentVoteStart) : 0)
             .then((block) => this.currentVoteTimestamp = block && block.time_stamp ? block.time_stamp : 0)
+            .then(() => this.earlybirdInfo.revoteStartHeight ? this.mvs.getBlock(this.earlybirdInfo.revoteStartHeight) : 0)
+            .then((block) => this.currentRevoteTimestamp = block && block.time_stamp ? block.time_stamp : 0)
             .then(() => this.getNotPreviouslyVoteUtxo())
             .then(() => this.calculateFrozenOutputs(this.height))
             .catch((error) => {
@@ -356,11 +360,11 @@ export class VotePage {
         rewards.concat(frozen_rewards_unlocked_result && frozen_rewards_unlocked_result.json() ? frozen_rewards_unlocked_result.json().result : [])
 
         //TO DELETE
-        let test = await this.wallet.getElectionRewards(['5dd276da9f2ab08bdef125911504307336e4f5e4fecba399facd08f71e719778'])
+        /*let test = await this.wallet.getElectionRewards(['5dd276da9f2ab08bdef125911504307336e4f5e4fecba399facd08f71e719778'])
         rewards = rewards.concat(test.json().result)
         console.log(rewards)
         this.rewards['a83080dec232d964c71d7c2d41edaf6c6c3cac9242d02f5808874c70bb74b045'] = 1000
-        
+        */
         //UNTIL HERE
 
         if(rewards) {
