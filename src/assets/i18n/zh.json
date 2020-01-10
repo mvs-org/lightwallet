@@ -800,12 +800,14 @@
     "VOTE.HISTORY_UNLOCKED": "已解锁票数",
     "VOTE.REWARD": "投票奖励",
     "VOTE.VOTE_FOR_DELEGATE": "投票候选人",
-    "VOTE.ELECT_AGAIN_BUTTON": "Elect again",
-    "VOTE.ROUND_A": "Round A",
-    "VOTE.ROUND_B": "Round B",
-    "VOTE.VOTES_TO_USE_AGAIN": "Vote for the same delegate",
-    "VOTE.VOTES_ALREADY_USED_AGAIN": "Votes already used",
+    "VOTE.ELECT_AGAIN_BUTTON": "再次投票",
+    "VOTE.ROUND_A": "第一轮",
+    "VOTE.ROUND_B": "第二轮",
+    "VOTE.VOTES_TO_USE_AGAIN": "投票给相同节点",
+    "VOTE.VOTES_ALREADY_USED_AGAIN": "投票已经使用",
     "VOTE.UPDATE_REQUIRED": "请将MyETPWallet更新为{{requiredVersion}或更高版本，以便能够为下一次选举投票",
-    "VOTE.LOCKED_UNTIL_TIME": "解锁预计时间"
+    "VOTE.LOCKED_UNTIL_TIME": "解锁预计时间",
+    "VOTE.REVOTE_NOT_MAX_POSSIBLE": "您没有足够的DNA来获得复投的最高额外奖励",
+    "VOTE.NO_REVOTE": "没有资格用先前投票来进行复投"
 
 }
