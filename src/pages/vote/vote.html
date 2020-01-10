@@ -47,7 +47,7 @@
 
         <div *ngIf="!loadingElectionInfo && !updateRequired && earlybirdInfo && earlybirdInfo.candidates && earlybirdInfo.candidates.length > 0 && earlybirdInfo.revoteEnabled">
             <h1 class="center">{{'VOTE.ROUND_A'|translate}}</h1>
-            <ion-item class="election-progress">
+            <ion-item class="election-progress noPadding">
                 <ion-row>
                     <ion-col>
                         <p>{{"VOTE.START" | translate}}: <br *ngIf="platform.is('mobile')">
@@ -62,23 +62,33 @@
             </ion-item>
             <br>
             <h2 class="center" *ngIf="revote_outputs && revote_outputs.length == 0 && revote_already_used_outputs && revote_already_used_outputs.length == 0">{{'VOTE.NO_REVOTE'|translate}}</h2>
-            <ion-item no-lines>
+            <ion-item no-lines class="noPadding">
                 <h2 class="center" *ngIf="revote_outputs && revote_outputs.length > 0">{{'VOTE.VOTES_TO_USE_AGAIN'|translate}}</h2>
-                <ion-card *ngFor="let output of revote_outputs" class="manual-copy display-overflow">
+                <ion-card *ngFor="let output of revote_outputs" class="manual-copy display-overflow revote-card">
                     <ion-grid>
                         <ion-row>
                             <ion-col>
                                 <ion-row>
-                                    <ion-col>
+                                    <ion-col col-md-8>
                                         <ion-item class="summaryTxType">
-                                            {{'VOTE.VOTE_FOR_DELEGATE' | translate}}: {{output.voteAvatar}}
-                                            <div>{{output.attenuation_model_param.lock_quantity | format :
-                                                output.attachment.decimals}} DNA</div>
-                                            <div *ngIf="rewards[output.hash]" class="default-color fee">{{'VOTE.REWARD'
-                                                | translate}}: {{rewards[output.hash]}} DNA</div>
+                                            <ion-row>
+                                                <ion-col col-12 col-sm-12 col-md-6>{{'VOTE.VOTE_FOR_DELEGATE' |
+                                                    translate}}:</ion-col>
+                                                <ion-col col-12 col-sm-12 col-md-6>
+                                                    {{output.voteAvatar}}
+                                                    <div>{{output.attenuation_model_param.lock_quantity | format :
+                                                        output.attachment.decimals}} DNA</div>
+                                                </ion-col>
+                                            </ion-row>
+                                            <ion-row>
+                                                <ion-col>
+                                                    <div *ngIf="rewards[output.hash]" class="default-color fee">{{'VOTE.REWARD'
+                                                        | translate}}: {{rewards[output.hash]}} DNA</div>
+                                                </ion-col>
+                                            </ion-row>
                                         </ion-item>
                                     </ion-col>
-                                    <ion-col class="right">
+                                    <ion-col col-md-4 class="right">
                                         <button class="ion-item" ion-button icon-left (click)="output.show = !output.show">
                                             <ion-icon name="ribbon"></ion-icon>
                                             {{'VOTE.ELECT_AGAIN_BUTTON'|translate}}
@@ -113,7 +123,8 @@
                                                 <ion-input name="quantity" type="number" min="0" [(ngModel)]="output.newVoteAmount"
                                                     required></ion-input>
                                             </ion-item>
-                                            <ion-item no-lines *ngIf="output.newVoteAmountWarningNotMax" class="warning">{{'VOTE.REVOTE_NOT_MAX_POSSIBLE' | translate}}</ion-item>
+                                            <ion-item no-lines *ngIf="output.newVoteAmountWarningNotMax" class="warning">{{'VOTE.REVOTE_NOT_MAX_POSSIBLE'
+                                                | translate}}</ion-item>
                                         </ion-col>
                                     </ion-row>
                                     <ion-row class="padding-bottom">
@@ -132,18 +143,28 @@
                     </ion-grid>
                 </ion-card>
                 <h2 class="center" *ngIf="revote_already_used_outputs && revote_already_used_outputs.length > 0">{{'VOTE.VOTES_ALREADY_USED_AGAIN'|translate}}</h2>
-                <ion-card *ngFor="let output of revote_already_used_outputs" class="manual-copy display-overflow">
+                <ion-card *ngFor="let output of revote_already_used_outputs" class="manual-copy display-overflow revote-card">
                     <ion-grid>
                         <ion-row>
                             <ion-col>
                                 <ion-row>
-                                    <ion-col>
+                                    <ion-col col-md-8>
                                         <ion-item class="summaryTxType">
-                                            {{'VOTE.VOTE_FOR_DELEGATE' | translate}}: {{output.voteAvatar}}
-                                            <div>{{output.attenuation_model_param.lock_quantity | format :
-                                                output.attachment.decimals}} DNA</div>
-                                            <div *ngIf="rewards[output.hash]" class="default-color fee">{{'VOTE.REWARD'
-                                                | translate}}: {{rewards[output.hash]}} DNA</div>
+                                            <ion-row>
+                                                <ion-col col-12 col-sm-12 col-md-6>{{'VOTE.VOTE_FOR_DELEGATE' |
+                                                    translate}}:</ion-col>
+                                                <ion-col col-12 col-sm-12 col-md-6>
+                                                    {{output.voteAvatar}}
+                                                    <div>{{output.attenuation_model_param.lock_quantity | format :
+                                                        output.attachment.decimals}} DNA</div>
+                                                </ion-col>
+                                            </ion-row>
+                                            <ion-row>
+                                                <ion-col>
+                                                    <div *ngIf="rewards[output.hash]" class="default-color fee">{{'VOTE.REWARD'
+                                                        | translate}}: {{rewards[output.hash]}} DNA</div>
+                                                </ion-col>
+                                            </ion-row>
                                         </ion-item>
                                     </ion-col>
                                 </ion-row>
