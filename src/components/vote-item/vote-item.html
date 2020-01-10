@@ -46,17 +46,16 @@
                     <ion-row>
                         <ion-col class="noPaddingTopBottom">
                             <p>
-                                {{'LOCKED_SINCE'|translate}}:
+                                {{'LOCKED_SINCE'|translate}}: {{output.height}}
                                 <br>
-                                {{output.confirmed_at*1000 | date : 'medium'}}
+                                ({{output.confirmed_at*1000 | date : 'medium'}})
                             </p>
                         </ion-col>
                         <ion-col class="right noPaddingTopBottom">
                             <p>
-                                {{'VOTE.LOCKED_UNTIL_TIME'|translate}}:
+                                {{'LOCKED_UNTIL'|translate}}: {{output.locked_until}}
                                 <br>
-                                ~{{((output.locked_until - height) * blocktime * 1000) + current_time | date :
-                                'medium'}}*
+                                (~{{((output.locked_until - height) * blocktime * 1000) + current_time |date : 'medium'}})*
                             </p>
                         </ion-col>
                     </ion-row>
