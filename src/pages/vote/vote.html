@@ -46,7 +46,9 @@
         </ion-row>
 
         <div *ngIf="!loadingElectionInfo && !updateRequired && earlybirdInfo && earlybirdInfo.candidates && earlybirdInfo.candidates.length > 0 && earlybirdInfo.revoteEnabled">
-            <h1 class="center">{{'VOTE.ROUND_A'|translate}}</h1>
+            <h1 class="center">
+                <span *ngIf="earlybirdInfo && earlybirdInfo.currentPeriod" [translate]="'VOTE.ELECTION_AND_ROUND'" [translateParams]="{election: earlybirdInfo.currentPeriod, round: 'A'}"></span> 
+            </h1>
             <ion-item class="election-progress noPadding">
                 <ion-row>
                     <ion-col>
@@ -142,6 +144,7 @@
                         </div>
                     </ion-grid>
                 </ion-card>
+                <br>
                 <h2 class="center" *ngIf="revote_already_used_outputs && revote_already_used_outputs.length > 0">{{'VOTE.VOTES_ALREADY_USED_AGAIN'|translate}}</h2>
                 <ion-card *ngFor="let output of revote_already_used_outputs" class="manual-copy display-overflow revote-card">
                     <ion-grid>
@@ -177,7 +180,9 @@
 
         <div *ngIf="!loadingElectionInfo && !updateRequired && earlybirdInfo && earlybirdInfo.candidates && earlybirdInfo.candidates.length > 0 && earlybirdInfo.voteEnabled">
             <p align="center" *ngIf="etpBalance<fee/100000000" class="wrong-input">{{"NOTICE_TRANSACTION_FEE_UNCOVERED"|translate}}</p>
-            <h1 class="center">{{'VOTE.ROUND_B'|translate}}</h1>
+            <h1 class="center">
+                <span *ngIf="earlybirdInfo && earlybirdInfo.currentPeriod" [translate]="'VOTE.ELECTION_AND_ROUND'" [translateParams]="{election: earlybirdInfo.currentPeriod, round: 'B'}"></span> 
+            </h1>
             <ion-row>
                 <ion-col>
                     <p class="available">{{"AVAILABLE_BALANCE" | translate}}: <br *ngIf="platform.is('mobile')">{{showBalance
