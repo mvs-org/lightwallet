@@ -67,4 +67,19 @@ page-vote {
         cursor: pointer;
     }
 
+    .warning {
+        color: orange !important;
+    }
+
+    .revote-card {
+        margin-left: 10px;
+        width: calc(100% - 20px);
+    }
+
+    .noPadding, .noPadding .item-inner, .noPadding .item-inner .label {
+        padding: 0;
+        padding-right: 0 !important;
+        margin-right: 0;
+    }
+
 }
