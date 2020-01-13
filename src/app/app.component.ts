@@ -8,6 +8,7 @@ import { AppGlobals } from './app.global'
 import { Storage } from '@ionic/storage'
 import { PluginProvider } from '../providers/plugin/plugin'
 import { MvsServiceProvider } from '../providers/mvs-service/mvs-service';
+import { Deeplinks } from '@ionic-native/deeplinks';
 
 @Component({
     templateUrl: 'app.html'
@@ -28,7 +29,8 @@ export class MyETPWallet {
         private mvs: MvsServiceProvider,
         private globals: AppGlobals,
         public statusBar: StatusBar,
-        public keyboard: Keyboard
+        public keyboard: Keyboard,
+        private deeplinks: Deeplinks,
     ) {
 
         const networkQueryParam = this.getQueryParameter('network')
@@ -49,6 +51,20 @@ export class MyETPWallet {
             })
             .then(() => this.keyboard.hideKeyboardAccessoryBar(false))
             .then(() => this.splashScreen.hide())
+            .then(() => {
+                if (this.rootPage !== 'LoadingPage') {
+                    return this.deeplinks.routeWithNavController(this.nav, {
+                        '/send/:asset': 'transfer-page',
+                        '/#/send/:asset': 'transfer-page',
+                    }).subscribe((match) => {
+                        console.log('Successfully matched route', match);
+                    },
+                        (nomatch) => {
+                            // nomatch.$link - the full link data
+                            console.error('Got a deeplink that didn\'t match', nomatch);
+                        })
+                }
+            })
             .catch((e) => console.error(e));
 
         this.setTheme();
