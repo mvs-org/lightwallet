@@ -73,6 +73,7 @@ export class AssetTransferPage {
         this.selectedAsset = navParams.get('asset')
         this.quantity = navParams.get('amount') || ""
         this.recipient_address = navParams.get('recipient') || ""
+        this.message = navParams.get('message') || ""
 
         if (this.selectedAsset == 'ETP') {
             this.recipients.push(new RecipientSendMore('', '', { "ETP": undefined }, undefined))
