@@ -193,7 +193,7 @@ export class MvsServiceProvider {
 
     voteAgainTx(utxo_to_use: any, recipient_address: string, recipient_avatar: string, symbol: string, quantity: number, attenuation_model: string, change_address: string, fee: number, messages: Array<string>) {
         let target = { [symbol]: quantity };
-        return Promise.all([this.getUtxoFrom(recipient_address), this.getHeight()])
+        return Promise.all([this.getUtxoFrom(undefined), this.getHeight()])
             .then(([utxo, height]) => {
                 for(let i=0; i<utxo.length; i++) {
                     let current_utxo = utxo[i]
