@@ -121,9 +121,6 @@ export class AssetTransferPage {
 
     private async loadTickers() {
         [this.base, this.tickers] = await this.mvs.getBaseAndTickers()
-        console.log(this.base)
-        console.log(this.tickers)
-        console.log(this.tickers[this.base])
     }
 
     onFromAddressChange(event) {
