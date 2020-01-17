@@ -113,7 +113,7 @@
             <ion-col>
                 <button type="submit" ion-button full icon-left [disabled]="!sendForm.form.valid||!validaddress(recipient_address)||!validQuantity(quantity)||!validMessageLength(message)||(lock && !attenuation_model)||!validFromAddress(sendFrom)" (click)="send()" color="secondary">
                     <ion-icon disabled="checked" name="cog"></ion-icon>
-                    {{'NEXT'|translate}}
+                    {{'BUTTON.NEXT'|translate}}
                 </button>
             </ion-col>
             <ion-col>
@@ -232,7 +232,7 @@
             <ion-col>
                 <button type="submit" ion-button full icon-left [disabled]="!sendForm.form.valid||!sendMoreValidQuantity||!sendMoreValidAddress||total > showBalance||!validMessageLength(message)||!validFromAddress(sendFrom)" (click)="send()" color="secondary">
                     <ion-icon disabled="checked" name="cog"></ion-icon>
-                    {{'NEXT' | translate}}
+                    {{'BUTTON.NEXT' | translate}}
                 </button>
             </ion-col>
             <ion-col>
