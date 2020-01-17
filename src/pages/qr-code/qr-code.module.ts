@@ -3,7 +3,6 @@ import { IonicPageModule } from 'ionic-angular';
 import { QRCodePage } from './qr-code'
 import { TranslateModule} from '@ngx-translate/core';
 import { QRCodeModule } from 'angular2-qrcode';
-import { ClipboardModule } from 'ngx-clipboard/dist';
 
 @NgModule({
     declarations: [
@@ -13,7 +12,6 @@ import { ClipboardModule } from 'ngx-clipboard/dist';
         IonicPageModule.forChild(QRCodePage),
         QRCodeModule,
         TranslateModule,
-        ClipboardModule
     ],
     providers:[
 

@@ -23,7 +23,7 @@ page-qr-code {
 
     ion-card {
         margin: 0 !important;
-        padding-top: 20px;
+        padding-top: 40px;
         padding-bottom: 20px;
         height: 100%;
     }
@@ -39,9 +39,4 @@ page-qr-code {
         resize: none;
     }
 
-    .copy-btn {
-        width: 100%;
-        position: absolute;
-        bottom: 0;
-    }
 }
