@@ -57,6 +57,8 @@ export class AssetTransferPage {
     showAdvanced: boolean = false
     locktime: number
     addressbalancesObject: any = {}
+    base: string
+    tickers = {}
 
     constructor(
         public navCtrl: NavController,
@@ -114,6 +116,14 @@ export class AssetTransferPage {
                 if (!Array.isArray(addresses) || !addresses.length)
                     this.navCtrl.setRoot("LoginPage")
             })
+        this.loadTickers()
+    }
+
+    private async loadTickers() {
+        [this.base, this.tickers] = await this.mvs.getBaseAndTickers()
+        console.log(this.base)
+        console.log(this.tickers)
+        console.log(this.tickers[this.base])
     }
 
     onFromAddressChange(event) {

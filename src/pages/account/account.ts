@@ -96,14 +96,7 @@ export class AccountPage {
     }
 
     private async loadTickers() {
-        this.base = await this.mvs.getBaseCurrency()
-        this.mvs.getTickers()
-            .then(tickers => {
-                Object.keys(tickers).forEach((symbol) => {
-                    let ticker: BaseTickers = tickers[symbol];
-                    this.tickers[symbol] = ticker;
-                })
-            })
+        [this.base, this.tickers] = await this.mvs.getBaseAndTickers()
 
     }
 

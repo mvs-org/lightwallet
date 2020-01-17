@@ -52,6 +52,9 @@
             <ion-item [ngClass]="{'error-border':!validQuantity(quantity)}">
                 <ion-label color="primary" floating>{{"AMOUNT" | translate}}</ion-label>
                 <ion-input #quantityInput name="quantity" type="number" min="0" [(ngModel)]="quantity" required></ion-input>
+                <div *ngIf="tickers && tickers[selectedAsset] && tickers[selectedAsset][base]" item-right class="fiat">
+                    ≈{{base}} {{quantity*tickers[selectedAsset][base].price | number : '1.0-2'}}
+                </div>
                 <button type="button" *ngIf="etpBalance>10000" id="sendAll" ion-button item-right (click)="sendAll()">
                     {{"SEND_ALL_BUTTON"|translate}}
                 </button>
