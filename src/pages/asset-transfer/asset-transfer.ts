@@ -59,7 +59,8 @@ export class AssetTransferPage {
     addressbalancesObject: any = {}
     base: string
     tickers = {}
-    disabledParams = {}
+    disableParams = false
+    params = {}
 
     constructor(
         public navCtrl: NavController,
@@ -77,11 +78,13 @@ export class AssetTransferPage {
         this.quantity = navParams.get('amount') || ""
         this.recipient_address = navParams.get('recipient') || ""
         this.message = navParams.get('message') || ""
-        if(navParams.get('disableParams')) {
-            this.disabledParams['amount'] = this.quantity !== ""
-            this.disabledParams['recipient_address'] = this.recipient_address !== ""
-            this.disabledParams['message'] = this.message !== ""
-        }
+        this.disableParams = navParams.get('disableParams') == 'true'
+
+        this.params['amount'] = this.quantity !== ""
+        this.params['recipient_address'] = this.recipient_address !== ""
+        this.params['message'] = this.message !== ""
+
+        console.log(this.params)
 
         if (this.selectedAsset == 'ETP') {
             this.recipients.push(new RecipientSendMore('', '', { "ETP": undefined }, undefined))
@@ -191,7 +194,7 @@ export class AssetTransferPage {
                                 (this.sendFrom != 'auto') ? this.sendFrom : null,
                                 (this.showAdvanced && this.changeAddress != 'auto') ? this.changeAddress : undefined,
                                 (this.showAdvanced) ? this.fee : 10000,
-                                ((this.showAdvanced || this.disabledParams['message']) && messages !== []) ? messages : undefined
+                                ((this.showAdvanced || this.params['message']) && messages !== []) ? messages : undefined
                             )
                         }
                     case "more":
