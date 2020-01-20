@@ -57,12 +57,12 @@
             <ion-item [ngClass]="{'error-border':!validQuantity(quantity), 'valid-border':validQuantity(quantity)}">
                 <ion-label color="primary" floating>{{"AMOUNT" | translate}}</ion-label>
                 <ion-input #quantityInput name="quantity" type="number" min="0" [(ngModel)]="quantity" [disabled]="disableParams && params['amount']" required></ion-input>
-                <div *ngIf="tickers && tickers[selectedAsset] && tickers[selectedAsset][base]" item-right class="fiat">
-                    ≈{{base}} {{quantity*tickers[selectedAsset][base].price | number : '1.0-2'}}
-                </div>
                 <button type="button" *ngIf="etpBalance>10000 && !(disableParams && params['amount'])" id="sendAll" ion-button item-right (click)="sendAll()">
                     {{"SEND_ALL_BUTTON"|translate}}
                 </button>
+            </ion-item>
+            <ion-item *ngIf="tickers && tickers[selectedAsset] && tickers[selectedAsset][base]" no-lines class="fiat">
+                ≈{{base}} {{quantity*tickers[selectedAsset][base].price | number : '1.0-2'}}
             </ion-item>
             <ion-item *ngIf="countDecimals(quantity) > decimals" no-lines class="wrong-input">{{"SEND.TOO_MANY_DECIMALS"
                 | translate}}</ion-item>
@@ -183,22 +183,17 @@
                             <ion-label color="primary" floating>{{"AMOUNT" | translate}} {{i+1}}</ion-label>
                             <ion-input type="number" min="0" [(ngModel)]="recipient.target['ETP']" [ngModelOptions]="{standalone:true}"
                                 (ngModelChange)="quantityETPChanged($event)" required></ion-input>
-                            <div *ngIf="tickers && tickers[selectedAsset] && tickers[selectedAsset][base] && recipient.target['ETP']"
-                                item-right class="fiat">
-                                ≈{{base}} {{recipient.target['ETP']*tickers[selectedAsset][base].price | number :
-                                '1.0-2'}}
-                            </div>
+                        </ion-item>
+                        <ion-item *ngIf="tickers && tickers[selectedAsset] && tickers[selectedAsset][base] && selectedAsset == 'ETP'" no-lines class="fiat">
+                            ≈{{base}} {{recipient.target['ETP']*tickers[selectedAsset][base].price || 0 | number : '1.0-2'}}
                         </ion-item>
                         <ion-item *ngIf="selectedAsset != 'ETP' && recipient.target['MST']" [ngClass]="{'error-border':!validQuantity(recipient.target['MST'][selectedAsset]), 'valid-border': validQuantity(recipient.target['MST'][selectedAsset])}">
                             <ion-label color="primary" floating>{{"AMOUNT" | translate}} {{i+1}}</ion-label>
                             <ion-input type="number" min="0" [(ngModel)]="recipient.target['MST'][selectedAsset]"
-                                [ngModelOptions]="{standalone:true}" (ngModelChange)="quantityMSTChanged($event)"
-                                required></ion-input>
-                            <div *ngIf="tickers && tickers[selectedAsset] && tickers[selectedAsset][base] && recipient.target['MST'][selectedAsset]"
-                                item-right class="fiat">
-                                ≈{{base}} {{recipient.target['MST'][selectedAsset]*tickers[selectedAsset][base].price |
-                                number : '1.0-2'}}
-                            </div>
+                                [ngModelOptions]="{standalone:true}" (ngModelChange)="quantityMSTChanged($event)" required></ion-input>
+                        </ion-item>
+                        <ion-item *ngIf="tickers && tickers[selectedAsset] && tickers[selectedAsset][base] && selectedAsset != 'ETP' && recipient.target['MST']" no-lines class="fiat">
+                            ≈{{base}} {{recipient.target['MST'][selectedAsset]*tickers[selectedAsset][base].price || 0 | number : '1.0-2'}}
                         </ion-item>
                     </ion-col>
                 </ion-row>
