@@ -39,11 +39,11 @@
 
             <ion-item>
                 <ion-label>{{"SEND_TO_AVATAR"|translate}}</ion-label>
-                <ion-toggle [(ngModel)]="sendToAvatar" name="sendToAvatar" checked="false"></ion-toggle>
+                <ion-toggle [(ngModel)]="sendToAvatar" name="sendToAvatar" [disabled]="disableParams && params['recipient_avatar']"></ion-toggle>
             </ion-item>
             <ion-item *ngIf="sendToAvatar" [ngClass]="{'error-border':!validAvatar(recipient_avatar)}">
                 <ion-label color="primary" floating>{{"RECIPIENT_AVATAR"|translate}}</ion-label>
-                <ion-input #recipientAvatarInput name="recipient_avatar" [(ngModel)]="recipient_avatar" (ngModelChange)="recipientAvatarChanged($event)"
+                <ion-input #recipientAvatarInput name="recipient_avatar" [(ngModel)]="recipient_avatar" [disabled]="disableParams && params['recipient_avatar']" (ngModelChange)="recipientAvatarChanged($event)"
                     required></ion-input>
             </ion-item>
             <ion-item [ngClass]="{'error-border':!validaddress(recipient_address), 'valid-border':validaddress(recipient_address)}">
@@ -54,7 +54,7 @@
                     <ion-icon name="qr-scanner"></ion-icon>
                 </button>
             </ion-item>
-            <ion-item [ngClass]="{'error-border':!validQuantity(quantity)}">
+            <ion-item [ngClass]="{'error-border':!validQuantity(quantity), 'valid-border':validQuantity(quantity)}">
                 <ion-label color="primary" floating>{{"AMOUNT" | translate}}</ion-label>
                 <ion-input #quantityInput name="quantity" type="number" min="0" [(ngModel)]="quantity" [disabled]="disableParams && params['amount']" required></ion-input>
                 <div *ngIf="tickers && tickers[selectedAsset] && tickers[selectedAsset][base]" item-right class="fiat">
