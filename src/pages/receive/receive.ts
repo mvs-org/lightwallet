@@ -17,6 +17,8 @@ export class ReceivePage {
     addressBalancesObject: any = {};
     addresses: Array<string>;
     displayType: string;
+    base: string
+    tickers = {}
 
     constructor(
         private navCtrl: NavController,
@@ -37,6 +39,10 @@ export class ReceivePage {
                     this.showBalances()
             })
 
+    }
+
+    ionViewDidEnter() {
+        this.loadTickers()
     }
 
     showBalances() {
@@ -60,6 +66,10 @@ export class ReceivePage {
             })
     }
 
+    private async loadTickers() {
+        [this.base, this.tickers] = await this.mvs.getBaseAndTickers()
+    }
+
     canAddAddress = () => this.platform.isPlatformMatch('mobile') && !this.platform.isPlatformMatch('mobileweb')
 
     addAddress = () =>  this.navCtrl.push('generate-address-page')
@@ -69,7 +79,7 @@ export class ReceivePage {
     format = (quantity, decimals) => quantity / Math.pow(10, decimals)
 
     show(address) {
-        let profileModal = this.modalCtrl.create('QRCodePage', { value: address });
+        let profileModal = this.modalCtrl.create('QRCodePage', { value: address, address: address, asset: this.selectedAsset, base: this.base, tickers: this.tickers });
         profileModal.present();
     }
 

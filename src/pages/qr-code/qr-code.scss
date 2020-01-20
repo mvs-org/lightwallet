@@ -1,11 +1,9 @@
 page-qr-code {
 
     overflow-y: inherit;
-    //height: 500px !important;
 
     ion-content {
         overflow-y: inherit;
-        //height: 500px;
     }
 
     .scroll-content {
@@ -25,6 +23,8 @@ page-qr-code {
         margin: 0 !important;
         padding-top: 40px;
         padding-bottom: 20px;
+        padding-left: 10px;
+        padding-right: 10px;
         height: 100%;
     }
 
@@ -37,6 +37,17 @@ page-qr-code {
         width:100%;
         border: 0px !important;
         resize: none;
+    }
+
+    .fiat {
+        color: grey;
+        height: 28px;
+        min-height: 28px;
+    }
+
+    .modal-body {
+        height: 100%;
+        overflow-y: auto;
     }
 
 }

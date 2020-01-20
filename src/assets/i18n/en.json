@@ -807,5 +807,8 @@
     "VOTE.LOCKED_UNTIL_TIME": "Locked until",
     "VOTE.REVOTE_NOT_MAX_POSSIBLE": "You do not have enough available DNA to revote using the maximum bonus available.",
     "VOTE.NO_REVOTE": "No previous vote eligible for revote",
-    "VOTE.ELECTION_AND_ROUND": "Election {{election}}, Round {{round}}"
+    "VOTE.ELECTION_AND_ROUND": "Election {{election}}, Round {{round}}",
+    "ASSET": "Asset",
+    "SCAN.PARAMS_EDITABLE": "Allow parameter modification",
+    "SCAN.SHOW_ADVANCED": "Enable wallet support"
 }
