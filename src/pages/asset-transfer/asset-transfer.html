@@ -49,18 +49,18 @@
             <ion-item [ngClass]="{'error-border':!validaddress(recipient_address), 'valid-border':validaddress(recipient_address)}">
                 <ion-label color="primary" floating>{{"RECIPIENT_ADDRESS"|translate}}</ion-label>
                 <ion-input #recipientAddressInput name="recipient_address" [(ngModel)]="recipient_address"
-                    (ngModelChange)="recipientChanged($event)" [disabled]="sendToAvatar" required></ion-input>
+                    (ngModelChange)="recipientChanged($event)" [disabled]="sendToAvatar || (disableParams && params['recipient_address'])" required></ion-input>
                 <button id="scanButton" *ngIf="isApp" ion-button item-right (click)="scan()">
                     <ion-icon name="qr-scanner"></ion-icon>
                 </button>
             </ion-item>
             <ion-item [ngClass]="{'error-border':!validQuantity(quantity)}">
                 <ion-label color="primary" floating>{{"AMOUNT" | translate}}</ion-label>
-                <ion-input #quantityInput name="quantity" type="number" min="0" [(ngModel)]="quantity" required></ion-input>
+                <ion-input #quantityInput name="quantity" type="number" min="0" [(ngModel)]="quantity" [disabled]="disableParams && params['amount']" required></ion-input>
                 <div *ngIf="tickers && tickers[selectedAsset] && tickers[selectedAsset][base]" item-right class="fiat">
                     ≈{{base}} {{quantity*tickers[selectedAsset][base].price | number : '1.0-2'}}
                 </div>
-                <button type="button" *ngIf="etpBalance>10000" id="sendAll" ion-button item-right (click)="sendAll()">
+                <button type="button" *ngIf="etpBalance>10000 && !(disableParams && params['amount'])" id="sendAll" ion-button item-right (click)="sendAll()">
                     {{"SEND_ALL_BUTTON"|translate}}
                 </button>
             </ion-item>
@@ -99,7 +99,7 @@
                 </ion-item>
                 <ion-item [ngClass]="{'error-border':!validMessageLength(message), 'valid-border': message.length > 0 && validMessageLength(message)}">
                     <ion-label floating>{{"MESSAGE" | translate}}</ion-label>
-                    <ion-input name="message" [(ngModel)]="message"></ion-input>
+                    <ion-input name="message" [(ngModel)]="message" [disabled]="disableParams && params['message']"></ion-input>
                 </ion-item>
                 <div no-lines class="advice">{{"HELP.MESSAGE" | translate}}</div>
                 <ion-item *ngIf="!validMessageLength(message)" no-lines class="wrong-input">{{"MESSAGE_TOO_LONG" |
@@ -197,8 +197,7 @@
                             <div *ngIf="tickers && tickers[selectedAsset] && tickers[selectedAsset][base] && recipient.target['MST'][selectedAsset]"
                                 item-right class="fiat">
                                 ≈{{base}} {{recipient.target['MST'][selectedAsset]*tickers[selectedAsset][base].price |
-                                number :
-                                '1.0-2'}}
+                                number : '1.0-2'}}
                             </div>
                         </ion-item>
                     </ion-col>
@@ -257,7 +256,7 @@
             <div *ngIf="showAdvanced">
                 <ion-item [ngClass]="{'error-border':!validMessageLength(message), 'valid-border': message.length > 0 && validMessageLength(message)}">
                     <ion-label floating>{{"MESSAGE" | translate}}</ion-label>
-                    <ion-input name="message" [(ngModel)]="message"></ion-input>
+                    <ion-input name="message" [(ngModel)]="message" [disabled]="disableParams && params['message']"></ion-input>
                 </ion-item>
                 <div no-lines class="advice">{{"HELP.MESSAGE" | translate}}</div>
                 <ion-item *ngIf="!validMessageLength(message)" no-lines class="wrong-input">{{"MESSAGE_TOO_LONG" |
