@@ -50,7 +50,7 @@
                 <ion-label color="primary" floating>{{"RECIPIENT_ADDRESS"|translate}}</ion-label>
                 <ion-input #recipientAddressInput name="recipient_address" [(ngModel)]="recipient_address"
                     (ngModelChange)="recipientChanged($event)" [disabled]="sendToAvatar || (disableParams && params['recipient_address'])" required></ion-input>
-                <button id="scanButton" *ngIf="isApp" ion-button item-right (click)="scan()">
+                <button id="scanButton" *ngIf="isApp && !sendToAvatar && !(disableParams && params['recipient_address'])" ion-button item-right (click)="scan()">
                     <ion-icon name="qr-scanner"></ion-icon>
                 </button>
             </ion-item>
