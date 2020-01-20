@@ -15,6 +15,8 @@ class RecipientSendMore {
     ) { }
 }
 
+export const deeplinkRegex = /^.*app\.myetpwallet\.com\/send\/(.+)\?(.*)$/
+
 @IonicPage({
     name: 'transfer-page',
     segment: 'send/:asset'
@@ -75,14 +77,9 @@ export class AssetTransferPage {
         private zone: NgZone,
     ) {
 
-        this.selectedAsset = navParams.get('asset')
-        this.quantity = navParams.get('q') || navParams.get('quantity') || navParams.get('amount') || ""
-        this.recipient_address = navParams.get('r') || navParams.get('recipient') || ""
-        this.recipient_avatar = navParams.get('a') || navParams.get('avatar') || ""
-        this.message = navParams.get('m') || navParams.get('message') || ""
-        this.disableParams = navParams.get('d') == 'true' || navParams.get('disableParams') == 'true'
+        this.initializeParameters(this.navParams.get('asset'), navParams)
 
-        if(this.recipient_avatar !== "") {
+        if (this.recipient_avatar !== "") {
             this.sendToAvatar = true
             this.recipientAvatarChanged()
         }
@@ -123,6 +120,16 @@ export class AssetTransferPage {
                 this.addressbalances = addrblncs
             })
     }
+
+    initializeParameters(asset: string, params: { get(param: string): any }) {
+        this.selectedAsset = asset
+        this.quantity = params.get('q') || params.get('quantity') || params.get('amount') || ''
+        this.recipient_address = params.get('r') || params.get('recipient') || ''
+        this.recipient_avatar = params.get('a') || params.get('avatar') || ''
+        this.message = params.get('m') || params.get('message') || ''
+        this.disableParams = params.get('d') == 'true' || params.get('disableParams') == 'true'
+    }
+
 
     ionViewDidEnter() {
         this.mvs.getAddresses()
@@ -393,13 +400,20 @@ export class AssetTransferPage {
                     formats: "QR_CODE",
                 }).then((result) => {
                     if (!result.cancelled) {
-                        let content = result.text.toString().split('&')
-                        if (this.mvs.validAddress(content[0]) == true) {
-                            this.recipient_address = content[0]
-                            this.recipientAddressInput.setFocus();
-                            this.keyboard.close()
+                        const codeContent = result.text.toString();
+                        if (deeplinkRegex.test(codeContent)) {
+                            const asset = codeContent.match(deeplinkRegex)[1]
+                            const params = new URLSearchParams(codeContent.match(deeplinkRegex)[2])
+                            this.initializeParameters(asset, params)
                         } else {
-                            this.alert.showWrongAddress()
+                            let content = result.text.toString().split('&')
+                            if (this.mvs.validAddress(content[0]) == true) {
+                                this.recipient_address = content[0]
+                                this.recipientAddressInput.setFocus();
+                                this.keyboard.close()
+                            } else {
+                                this.alert.showWrongAddress()
+                            }
                         }
                     }
                 })
