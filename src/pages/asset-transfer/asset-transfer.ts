@@ -61,6 +61,7 @@ export class AssetTransferPage {
     tickers = {}
     disableParams = false
     params = {}
+    sendToAvatar = false
 
     constructor(
         public navCtrl: NavController,
@@ -75,16 +76,20 @@ export class AssetTransferPage {
     ) {
 
         this.selectedAsset = navParams.get('asset')
-        this.quantity = navParams.get('amount') || ""
-        this.recipient_address = navParams.get('recipient') || ""
-        this.message = navParams.get('message') || ""
-        this.disableParams = navParams.get('disableParams') == 'true'
+        this.quantity = navParams.get('q') || navParams.get('quantity') || navParams.get('amount') || ""
+        this.recipient_address = navParams.get('r') || navParams.get('recipient') || ""
+        this.recipient_avatar = navParams.get('a') || navParams.get('avatar') || ""
+        this.message = navParams.get('m') || navParams.get('message') || ""
+        this.disableParams = navParams.get('d') == 'true' || navParams.get('disableParams') == 'true'
 
+        if(this.recipient_avatar !== "") {
+            this.sendToAvatar = true
+            this.recipientAvatarChanged()
+        }
         this.params['amount'] = this.quantity !== ""
         this.params['recipient_address'] = this.recipient_address !== ""
+        this.params['recipient_avatar'] = this.recipient_avatar !== ""
         this.params['message'] = this.message !== ""
-
-        console.log(this.params)
 
         if (this.selectedAsset == 'ETP') {
             this.recipients.push(new RecipientSendMore('', '', { "ETP": undefined }, undefined))
