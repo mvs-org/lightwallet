@@ -75,6 +75,12 @@
     color: #32db64;
 }
 
+.item.item-input.default-border .item-inner{
+    border-bottom-color: #488aff !important;
+    -webkit-box-shadow: inset 0 -1px 0 0 #488aff !important;
+    box-shadow: inset 0 -1px 0 0 #488aff !important;
+}
+
 .advice {
     font-size: 1.2rem;
     color: rgb(148, 148, 148);
@@ -192,10 +198,10 @@ ion-modal ion-backdrop {
 
 .modal-wrapper {
     left: calc(50% - (250px/2));
-    top: calc(50% - (280px/2));
+    top: 10%;
+    height: 80%;
     position: absolute;
     width: 250px;
-    height: 280px;
     box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
     overflow: hidden;
 }
@@ -207,18 +213,14 @@ ion-modal ion-backdrop {
 @media (min-width: 400px) {
     .modal-wrapper {
         left: calc(50% - (300px/2));
-        top: calc(50% - (310px/2));
         width: 300px;
-        height: 310px;
     }
 }
 
 @media (min-width: 600px) {
     .modal-wrapper {
         left: calc(50% - (400px/2));
-        top: calc(50% - (370px/2));
         width: 400px;
-        height: 370px;
     }
 }
 

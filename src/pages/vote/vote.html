@@ -135,7 +135,7 @@
                                             <button type="submit" ion-button full icon-left [disabled]="!validRevoteQuantity(output)"
                                                 (click)="sendVoteAgain(output)" color="secondary">
                                                 <ion-icon disabled="checked" name="cog"></ion-icon>
-                                                {{'NEXT'|translate}}
+                                                {{'BUTTON.NEXT'|translate}}
                                             </button>
                                         </ion-col>
                                     </ion-row>
@@ -301,7 +301,7 @@
                         <button type="submit" ion-button full icon-left [disabled]="!sendForm.form.valid||!candidate||!validQuantity(quantity)||!validMessageLength(message)||!validFromAddress(sendFrom)"
                             (click)="send()" color="secondary">
                             <ion-icon disabled="checked" name="cog"></ion-icon>
-                            {{'NEXT'|translate}}
+                            {{'BUTTON.NEXT'|translate}}
                         </button>
                     </ion-col>
                     <ion-col>
