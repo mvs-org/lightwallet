@@ -79,14 +79,7 @@ export class AssetTransferPage {
 
         this.initializeParameters(this.navParams.get('asset'), navParams)
 
-        if (this.recipient_avatar !== "") {
-            this.sendToAvatar = true
-            this.recipientAvatarChanged()
-        }
-        this.params['amount'] = this.quantity !== ""
-        this.params['recipient_address'] = this.recipient_address !== ""
-        this.params['recipient_avatar'] = this.recipient_avatar !== ""
-        this.params['message'] = this.message !== ""
+
 
         if (this.selectedAsset == 'ETP') {
             this.recipients.push(new RecipientSendMore('', '', { "ETP": undefined }, undefined))
@@ -128,6 +121,15 @@ export class AssetTransferPage {
         this.recipient_avatar = params.get('a') || params.get('avatar') || ''
         this.message = params.get('m') || params.get('message') || ''
         this.disableParams = params.get('d') == 'true' || params.get('disableParams') == 'true'
+
+        if (this.recipient_avatar !== "") {
+            this.sendToAvatar = true
+            this.recipientAvatarChanged()
+        }
+        this.params['amount'] = this.quantity !== ""
+        this.params['recipient_address'] = this.recipient_address !== ""
+        this.params['recipient_avatar'] = this.recipient_avatar !== ""
+        this.params['message'] = this.message !== ""
     }
 
 
