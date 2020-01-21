@@ -77,9 +77,8 @@ export class AssetTransferPage {
         private zone: NgZone,
     ) {
 
-        this.initializeParameters(this.navParams.get('asset'), navParams)
-
-
+        this.selectedAsset = this.navParams.get('asset')
+        this.initializeParameters(this.selectedAsset, navParams)
 
         if (this.selectedAsset == 'ETP') {
             this.recipients.push(new RecipientSendMore('', '', { "ETP": undefined }, undefined))
@@ -115,21 +114,24 @@ export class AssetTransferPage {
     }
 
     initializeParameters(asset: string, params: { get(param: string): any }) {
-        this.selectedAsset = asset
-        this.quantity = params.get('q') || params.get('quantity') || params.get('amount') || ''
-        this.recipient_address = params.get('r') || params.get('recipient') || ''
-        this.recipient_avatar = params.get('a') || params.get('avatar') || ''
-        this.message = params.get('m') || params.get('message') || ''
-        this.disableParams = params.get('d') == 'true' || params.get('disableParams') == 'true'
+        if (this.selectedAsset !== asset) {
+            this.alert.showErrorTranslated('ERROR_SCAN_ASSET_NOT_MATCH_TITLE', 'ERROR_SCAN_ASSET_NOT_MATCH_MESSAGE')
+        } else {
+            this.quantity = params.get('q') || params.get('quantity') || params.get('amount') || ''
+            this.recipient_address = params.get('r') || params.get('recipient') || ''
+            this.recipient_avatar = params.get('a') || params.get('avatar') || ''
+            this.message = params.get('m') || params.get('message') || ''
+            this.disableParams = params.get('d') == 'true' || params.get('disableParams') == 'true'
 
-        if (this.recipient_avatar !== "") {
-            this.sendToAvatar = true
-            this.recipientAvatarChanged()
+            if (this.recipient_avatar !== "") {
+                this.sendToAvatar = true
+                this.recipientAvatarChanged()
+            }
+            this.params['amount'] = this.quantity !== ""
+            this.params['recipient_address'] = this.recipient_address !== ""
+            this.params['recipient_avatar'] = this.recipient_avatar !== ""
+            this.params['message'] = this.message !== ""
         }
-        this.params['amount'] = this.quantity !== ""
-        this.params['recipient_address'] = this.recipient_address !== ""
-        this.params['recipient_avatar'] = this.recipient_avatar !== ""
-        this.params['message'] = this.message !== ""
     }
 
 
