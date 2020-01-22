@@ -37,7 +37,7 @@
     <form *ngIf="transfer_type == 'one'" #sendForm="ngForm" style="padding-bottom: 0;">
         <ion-list style="padding-bottom: 0;">
 
-            <ion-item>
+            <ion-item class="toggle-input">
                 <ion-label>{{"SEND_TO_AVATAR"|translate}}</ion-label>
                 <ion-toggle [(ngModel)]="sendToAvatar" name="sendToAvatar" [disabled]="disableParams && params['recipient_avatar']"></ion-toggle>
             </ion-item>
@@ -81,7 +81,7 @@
             <ion-item *ngIf="!validFromAddress(sendFrom)" no-lines class="wrong-input">{{"TRANSFER.FROM_ADDRESS_NO_ETP"
                 | translate}}</ion-item>
             <br>
-            <ion-item>
+            <ion-item class="toggle-input">
                 <ion-label>{{"SHOW_ADVANCED"|translate}}</ion-label>
                 <ion-toggle [(ngModel)]="showAdvanced" name="showAdvanced" checked="false"></ion-toggle>
             </ion-item>
@@ -114,7 +114,7 @@
                     </ion-select>
                 </ion-item>
                 <br>
-                <ion-item *ngIf="selectedAsset != 'ETP'">
+                <ion-item class="toggle-input" *ngIf="selectedAsset != 'ETP'">
                     <ion-label>{{"ASSET_LOCK"|translate}}</ion-label>
                     <ion-toggle [(ngModel)]="lock" name="lock"></ion-toggle>
                 </ion-item>
@@ -141,7 +141,7 @@
 
     <form *ngIf="transfer_type == 'more'" #sendForm="ngForm" style="padding-bottom: 0;">
         <ion-list style="padding-bottom: 0;">
-            <ion-item>
+            <ion-item class="toggle-input">
                 <ion-label>{{"SEND_TO_AVATAR"|translate}}</ion-label>
                 <ion-toggle [(ngModel)]="sendToAvatar" name="sendToAvatar" checked="false"></ion-toggle>
             </ion-item>
@@ -244,7 +244,7 @@
             <ion-item *ngIf="!validFromAddress(sendFrom)" no-lines class="wrong-input">{{"TRANSFER.FROM_ADDRESS_NO_ETP"
                 | translate}}</ion-item>
 
-            <ion-item>
+            <ion-item class="toggle-input">
                 <ion-label>{{"SHOW_ADVANCED"|translate}}</ion-label>
                 <ion-toggle [(ngModel)]="showAdvanced" name="showAdvanced" checked="false"></ion-toggle>
             </ion-item>
@@ -265,7 +265,7 @@
                     </ion-select>
                 </ion-item>
                 <br>
-                <ion-item *ngIf="selectedAsset != 'ETP'">
+                <ion-item class="toggle-input" *ngIf="selectedAsset != 'ETP'">
                     <ion-label>{{"ASSET_LOCK"|translate}}</ion-label>
                     <ion-toggle [(ngModel)]="lock" name="lock"></ion-toggle>
                 </ion-item>

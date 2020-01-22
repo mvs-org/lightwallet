@@ -810,5 +810,12 @@
     "VOTE.ELECTION_AND_ROUND": "Election {{election}}, Round {{round}}",
     "ASSET": "Asset",
     "SCAN.PARAMS_EDITABLE": "Allow parameter modification",
-    "SCAN.SHOW_ADVANCED": "Enable wallet support"
+    "SCAN.SHOW_ADVANCED": "Enable wallet support",
+    "ERROR_SCAN_ASSET_NOT_MATCH_TITLE": "The asset currently selected is different from the one used in the QRCode",
+    "ERROR_SCAN_ASSET_NOT_MATCH_MESSAGE": "Please make sure the other party and you are using the same asset",
+    "ETP_BRIDGE.TEXT": "Exchange ETP with other cryptocurrencies using SWFT",
+    "MOVIE_TICKETS": "Movie ticketing",
+    "MOVIE_TICKETS.TEXT": "Buy movie tickets using DNA",
+    "APPS": "Apps",
+    "SCAN.PARAMS_EDITABLE_TEXT": "If you allow the parameter modification, the person who scan this QRCode will be able to modify the amount, recipient and message before sending"
 }

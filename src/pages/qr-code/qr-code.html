@@ -6,7 +6,7 @@
                 <textarea ion-input full rows="1" cols="34" type="text" class="center" readonly>{{address}}</textarea>
             </h3>
         </ion-card-content>
-        <ion-item>
+        <ion-item class="toggle-input">
             <ion-label>{{"SCAN.SHOW_ADVANCED"|translate}}</ion-label>
             <ion-toggle [(ngModel)]="showAdvanced" name="showAdvanced" (ngModelChange)="changeQrcode($event)"></ion-toggle>
         </ion-item>
@@ -29,10 +29,11 @@
                 <ion-input name="message" [(ngModel)]="message" (ngModelChange)="changeQrcode($event)"></ion-input>
             </ion-item>
             <br>
-            <ion-item>
+            <ion-item class="toggle-input">
                 <ion-label>{{"SCAN.PARAMS_EDITABLE"|translate}}</ion-label>
                 <ion-toggle [(ngModel)]="editable" name="editable" checked="false" (ngModelChange)="changeQrcode($event)"></ion-toggle>
             </ion-item>
+            <div no-lines class="advice">{{"SCAN.PARAMS_EDITABLE_TEXT" | translate}}</div>
 
         </div>
     </ion-card>
