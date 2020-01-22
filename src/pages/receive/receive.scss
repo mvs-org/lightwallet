@@ -23,19 +23,15 @@ page-receive {
     }
 
     .address {
-        display: inline-block;
+        //display: inline-block;
         word-break: break-all;
-    }
-
-    .address-text {
-        margin-right: 10px;
     }
 
     .qrcode-btn {
         padding: 0px;
         height: auto;
         display: inline-block;
-        top: -4px;
+        top: -10px;
     }
 
     .qrcode-btn img {
@@ -47,7 +43,23 @@ page-receive {
         height: auto;
     }
 
+    .copy-btn {
+        width: 28px;
+        height: 28px;
+        margin: 0px;
+        top: -10px;
+        padding: inherit;
+        color: black;
+    }
+
     #history-btn {
         padding-right: 0;
+    }
+
+    .address-text {
+        border: 0px !important;
+        resize: none;
+        padding-top: 10px;
+        margin-right: 10px;
     }
 }

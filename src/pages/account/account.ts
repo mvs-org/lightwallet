@@ -5,23 +5,6 @@ import { AlertProvider } from '../../providers/alert/alert';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
 
-class Ticker {
-    market_cap: number
-    percent_change_1h: number
-    percent_change_7d: number
-    percent_change_24h: number
-    price: number
-    volume_24h: number
-}
-
-class BaseTickers {
-    BTC: Ticker
-    USD: Ticker
-    CNY: Ticker
-    EUR: Ticker
-    JPY: Ticker
-}
-
 @IonicPage()
 @Component({
     selector: 'page-account',
@@ -96,14 +79,7 @@ export class AccountPage {
     }
 
     private async loadTickers() {
-        this.base = await this.mvs.getBaseCurrency()
-        this.mvs.getTickers()
-            .then(tickers => {
-                Object.keys(tickers).forEach((symbol) => {
-                    let ticker: BaseTickers = tickers[symbol];
-                    this.tickers[symbol] = ticker;
-                })
-            })
+        [this.base, this.tickers] = await this.mvs.getBaseAndTickers()
 
     }
 

@@ -21,7 +21,7 @@
                 <span [translate]="'AVATAR_RECIPIENT_ADDRESS'" [translateParams]="{address: recipient_address, last_update: recipient_address_last_update*1000|date : 'medium'}"></span>
             </ion-item>
 
-            <ion-item>
+            <ion-item class="toggle-input">
                 <ion-label>{{"SHOW_ADVANCED"|translate}}</ion-label>
                 <ion-toggle [(ngModel)]="showAdvanced" name="showAdvanced" checked="false"></ion-toggle>
             </ion-item>
@@ -43,7 +43,7 @@
                 <button ion-button full [disabled]="!sendForm.form.valid||!validrecipient(recipient_address)||!validAvatar(recipient_avatar)"
                     (click)="send()" icon-left color="secondary">
                     <ion-icon disabled="checked" name="cog"></ion-icon>
-                    {{'NEXT'|translate}}
+                    {{'BUTTON.NEXT'|translate}}
                 </button>
             </ion-col>
             <ion-col>

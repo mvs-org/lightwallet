@@ -45,7 +45,7 @@
             <ion-item *ngIf="!validMessageLength(message)" no-lines class="wrong-input">{{"MESSAGE_TOO_LONG" | translate}}</ion-item>
             <br>
 
-            <ion-item>
+            <ion-item class="toggle-input">
                 <ion-label>{{"SHOW_ADVANCED"|translate}}</ion-label>
                 <ion-toggle [(ngModel)]="showAdvanced" name="showAdvanced" checked="false"></ion-toggle>
             </ion-item>
@@ -72,7 +72,7 @@
             <ion-col>
                 <button ion-button full [disabled]="!sendForm.form.valid||!validSymbol(symbol)||!validAddress(avatar_address)||!validMessageLength(message)" (click)="confirm()" icon-left color="secondary">
                     <ion-icon disabled="checked" name="cog"></ion-icon>
-                    {{'NEXT'|translate}}
+                    {{'BUTTON.NEXT'|translate}}
                 </button>
             </ion-col>
             <ion-col>

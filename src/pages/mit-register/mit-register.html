@@ -41,7 +41,7 @@
                 <ion-label color="primary" floating>{{"MIT_REGISTER.RECIPIENT_ADDRESS" | translate}}</ion-label>
                 <ion-input name="recipient_address" [(ngModel)]="recipient_address" disabled></ion-input>
             </ion-item>
-            <ion-item>
+            <ion-item class="toggle-input">
                 <ion-label>{{"SHOW_ADVANCED"|translate}}</ion-label>
                 <ion-toggle [(ngModel)]="showAdvanced" name="showAdvanced" checked="false"></ion-toggle>
             </ion-item>
@@ -63,7 +63,7 @@
                 <button ion-button full [disabled]="!sendForm.form.valid||!validSymbol(symbol)||!validContent(content)||!validName(recipient_avatar)||!validAddress(recipient_address)"
                     (click)="send()" icon-left color="secondary">
                     <ion-icon disabled="checked" name="cog"></ion-icon>
-                    {{'NEXT'|translate}}
+                    {{'BUTTON.NEXT'|translate}}
                 </button>
             </ion-col>
             <ion-col>

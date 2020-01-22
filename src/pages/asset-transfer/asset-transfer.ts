@@ -15,6 +15,8 @@ class RecipientSendMore {
     ) { }
 }
 
+export const deeplinkRegex = /^.*app\.myetpwallet\.com\/send\/(.+)\?(.*)$/
+
 @IonicPage({
     name: 'transfer-page',
     segment: 'send/:asset'
@@ -57,6 +59,11 @@ export class AssetTransferPage {
     showAdvanced: boolean = false
     locktime: number
     addressbalancesObject: any = {}
+    base: string
+    tickers = {}
+    disableParams = false
+    params = {}
+    sendToAvatar = false
 
     constructor(
         public navCtrl: NavController,
@@ -70,10 +77,8 @@ export class AssetTransferPage {
         private zone: NgZone,
     ) {
 
-        this.selectedAsset = navParams.get('asset')
-        this.quantity = navParams.get('amount') || ""
-        this.recipient_address = navParams.get('recipient') || ""
-        this.message = navParams.get('message') || ""
+        this.selectedAsset = this.navParams.get('asset')
+        this.initializeParameters(this.selectedAsset, navParams)
 
         if (this.selectedAsset == 'ETP') {
             this.recipients.push(new RecipientSendMore('', '', { "ETP": undefined }, undefined))
@@ -108,12 +113,39 @@ export class AssetTransferPage {
             })
     }
 
+    initializeParameters(asset: string, params: { get(param: string): any }) {
+        if (this.selectedAsset !== asset) {
+            this.alert.showErrorTranslated('ERROR_SCAN_ASSET_NOT_MATCH_TITLE', 'ERROR_SCAN_ASSET_NOT_MATCH_MESSAGE')
+        } else {
+            this.quantity = params.get('q') || params.get('quantity') || params.get('amount') || ''
+            this.recipient_address = params.get('r') || params.get('recipient') || ''
+            this.recipient_avatar = params.get('a') || params.get('avatar') || ''
+            this.message = params.get('m') || params.get('message') || ''
+            this.disableParams = params.get('d') == 'true' || params.get('disableParams') == 'true'
+
+            if (this.recipient_avatar !== "") {
+                this.sendToAvatar = true
+                this.recipientAvatarChanged()
+            }
+            this.params['amount'] = this.quantity !== ""
+            this.params['recipient_address'] = this.recipient_address !== ""
+            this.params['recipient_avatar'] = this.recipient_avatar !== ""
+            this.params['message'] = this.message !== ""
+        }
+    }
+
+
     ionViewDidEnter() {
         this.mvs.getAddresses()
             .then((addresses) => {
                 if (!Array.isArray(addresses) || !addresses.length)
                     this.navCtrl.setRoot("LoginPage")
             })
+        this.loadTickers()
+    }
+
+    private async loadTickers() {
+        [this.base, this.tickers] = await this.mvs.getBaseAndTickers()
     }
 
     onFromAddressChange(event) {
@@ -178,7 +210,7 @@ export class AssetTransferPage {
                                 (this.sendFrom != 'auto') ? this.sendFrom : null,
                                 (this.showAdvanced && this.changeAddress != 'auto') ? this.changeAddress : undefined,
                                 (this.showAdvanced) ? this.fee : 10000,
-                                (this.showAdvanced && messages !== []) ? messages : undefined
+                                ((this.showAdvanced || this.params['message']) && messages !== []) ? messages : undefined
                             )
                         }
                     case "more":
@@ -372,13 +404,20 @@ export class AssetTransferPage {
                     formats: "QR_CODE",
                 }).then((result) => {
                     if (!result.cancelled) {
-                        let content = result.text.toString().split('&')
-                        if (this.mvs.validAddress(content[0]) == true) {
-                            this.recipient_address = content[0]
-                            this.recipientAddressInput.setFocus();
-                            this.keyboard.close()
+                        const codeContent = result.text.toString();
+                        if (deeplinkRegex.test(codeContent)) {
+                            const asset = codeContent.match(deeplinkRegex)[1]
+                            const params = new URLSearchParams(codeContent.match(deeplinkRegex)[2])
+                            this.initializeParameters(asset, params)
                         } else {
-                            this.alert.showWrongAddress()
+                            let content = result.text.toString().split('&')
+                            if (this.mvs.validAddress(content[0]) == true) {
+                                this.recipient_address = content[0]
+                                this.recipientAddressInput.setFocus();
+                                this.keyboard.close()
+                            } else {
+                                this.alert.showWrongAddress()
+                            }
                         }
                     }
                 })
