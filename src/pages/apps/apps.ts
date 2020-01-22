@@ -2,13 +2,14 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, Platform } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { AppGlobals } from '../../app/app.global';
+import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
 
 @IonicPage()
 @Component({
-    selector: 'page-advanced',
-    templateUrl: 'advanced.html',
+    selector: 'page-apps',
+    templateUrl: 'apps.html',
 })
-export class AdvancedPage {
+export class AppsPage {
 
     network: string
 
@@ -17,6 +18,7 @@ export class AdvancedPage {
         public translate: TranslateService,
         private globals: AppGlobals,
         public platform: Platform,
+        private wallet: WalletServiceProvider,
     ) {
         this.network = this.globals.network
     }
@@ -25,12 +27,11 @@ export class AdvancedPage {
 
     }
 
-    MultisignaturePage = () => this.nav.push("MultisignaturePage")
+    EtpBridgePage = () => this.nav.push("EtpBridgePage")
 
-    ExportMasterPublicKeyPage = e => this.nav.push("ExportXpubPage")
+    PluginSettingsPage = e => this.nav.push("PluginSettingsPage")
 
-    DecodeTxPage = e => this.nav.push("DecodeTxPage")
+    MovieTicketsPage = () => this.wallet.openLink("https://movies.mvsdna.com")
 
-    BurnPage = () => this.nav.push("BurnPage")
 
 }
