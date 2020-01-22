@@ -91,7 +91,7 @@
                 </ion-range>
             </ion-item>
 
-            <ion-item>
+            <ion-item class="toggle-input">
                 <ion-label>{{"ISSUE.SECONDARYISSUE_TYPE" | translate}}</ion-label>
                 <ion-toggle [(ngModel)]="secondaryissue" name="secondaryissue" checked="false"></ion-toggle>
             </ion-item>
@@ -108,7 +108,7 @@
                 </ion-range>
             </ion-item>
 
-            <ion-item>
+            <ion-item class="toggle-input">
                 <ion-label>{{"MST_MINING.OPTION"|translate}}</ion-label>
                 <ion-toggle [(ngModel)]="mining" name="mining"></ion-toggle>
             </ion-item>
@@ -137,7 +137,7 @@
                 <ion-input name="description" [(ngModel)]="description" maxlength="63" required></ion-input>
             </ion-item>
             <br>
-            <ion-item>
+            <ion-item class="toggle-input">
                 <ion-label>{{"SHOW_ADVANCED"|translate}}</ion-label>
                 <ion-toggle [(ngModel)]="showAdvanced" name="showAdvanced" checked="false"></ion-toggle>
             </ion-item>
@@ -159,7 +159,7 @@
                         <ion-label range-right class="right">{{bounty_fee*10/100}} ETP</ion-label>
                     </ion-range>
                 </ion-item>
-                <ion-item>
+                <ion-item class="toggle-input">
                     <ion-label>{{"ASSET_LOCK"|translate}}</ion-label>
                     <ion-toggle [(ngModel)]="lock" name="lock"></ion-toggle>
                 </ion-item>
@@ -174,7 +174,7 @@
                 <button ion-button full [disabled]="!sendForm.form.valid||!validSymbol(symbol)||symbol_check=='exist'||symbol_check=='not_domain_owner'||symbol_check=='other_avatar_domain_owner'||!validMaxSupply(max_supply, asset_decimals)||(max_supply=='custom' && !validMaxSupplyCustom(custom_max_supply, asset_decimals))||!validDecimals(asset_decimals)||!validName(issuer_name)||!validAddress(issue_address)||!validDescription(description)||(issue_address=='custom' && !validIssueAddress(custom_issue_address))||((!addressbalances || !addressbalances[issue_address] || !addressbalances[issue_address][selectedAsset] || addressbalances[issue_address][selectedAsset].available<1000000000))||(lock && !attenuation_model)||(mining && !mst_mining_model)"
                     (click)="confirm()" icon-left color="secondary">
                     <ion-icon disabled="checked" name="cog"></ion-icon>
-                    {{'NEXT' | translate}}
+                    {{'BUTTON.NEXT' | translate}}
                 </button>
             </ion-col>
             <ion-col>

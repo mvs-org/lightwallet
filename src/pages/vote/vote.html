@@ -135,7 +135,7 @@
                                             <button type="submit" ion-button full icon-left [disabled]="!validRevoteQuantity(output)"
                                                 (click)="sendVoteAgain(output)" color="secondary">
                                                 <ion-icon disabled="checked" name="cog"></ion-icon>
-                                                {{'NEXT'|translate}}
+                                                {{'BUTTON.NEXT'|translate}}
                                             </button>
                                         </ion-col>
                                     </ion-row>
@@ -260,7 +260,7 @@
                     <ion-item *ngIf="!validFromAddress(sendFrom)" no-lines class="wrong-input">{{"TRANSFER.FROM_ADDRESS_NO_ETP"
                         | translate}}</ion-item>
                     <br>
-                    <ion-item>
+                    <ion-item class="toggle-input">
                         <ion-label>{{"SHOW_ADVANCED"|translate}}</ion-label>
                         <ion-toggle [(ngModel)]="showAdvanced" name="showAdvanced" checked="false"></ion-toggle>
                     </ion-item>
@@ -301,7 +301,7 @@
                         <button type="submit" ion-button full icon-left [disabled]="!sendForm.form.valid||!candidate||!validQuantity(quantity)||!validMessageLength(message)||!validFromAddress(sendFrom)"
                             (click)="send()" color="secondary">
                             <ion-icon disabled="checked" name="cog"></ion-icon>
-                            {{'NEXT'|translate}}
+                            {{'BUTTON.NEXT'|translate}}
                         </button>
                     </ion-col>
                     <ion-col>

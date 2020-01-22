@@ -7,6 +7,23 @@ import Metaverse from 'metaversejs/index.js';
 import Blockchain from 'mvs-blockchain';
 import { keyBy } from 'lodash';
 
+class Ticker {
+    market_cap: number
+    percent_change_1h: number
+    percent_change_7d: number
+    percent_change_24h: number
+    price: number
+    volume_24h: number
+}
+
+class BaseTickers {
+    BTC: Ticker
+    USD: Ticker
+    CNY: Ticker
+    EUR: Ticker
+    JPY: Ticker
+}
+
 @Injectable()
 export class MvsServiceProvider {
 
@@ -193,11 +210,11 @@ export class MvsServiceProvider {
 
     voteAgainTx(utxo_to_use: any, recipient_address: string, recipient_avatar: string, symbol: string, quantity: number, attenuation_model: string, change_address: string, fee: number, messages: Array<string>) {
         let target = { [symbol]: quantity };
-        return Promise.all([this.getUtxoFrom(recipient_address), this.getHeight()])
+        return Promise.all([this.getUtxoFrom(undefined), this.getHeight()])
             .then(([utxo, height]) => {
-                for(let i=0; i<utxo.length; i++) {
+                for (let i = 0; i < utxo.length; i++) {
                     let current_utxo = utxo[i]
-                    if(current_utxo.value >= 10000) {
+                    if (current_utxo.value >= 10000) {
                         utxo_to_use.push(current_utxo)
                         break
                     }
@@ -601,6 +618,17 @@ export class MvsServiceProvider {
 
     getTickers = () => {
         return this.blockchain.pricing.tickers();
+    }
+
+    async getBaseAndTickers() {
+        let base = await this.getBaseCurrency()
+        let tickersObj = {}
+        let tickersArray = await this.getTickers()
+        Object.keys(tickersArray).forEach((symbol) => {
+            let ticker: BaseTickers = tickersArray[symbol];
+            tickersObj[symbol] = ticker;
+        })
+        return [base, tickersObj]
     }
 
     assetOrder() {

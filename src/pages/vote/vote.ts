@@ -355,7 +355,7 @@ export class VotePage {
         })
         let frozen_rewards_locked_result = await this.wallet.getElectionRewards(frozen_outputs_locked_hash)
         let rewards = frozen_rewards_locked_result && frozen_rewards_locked_result.json() ? frozen_rewards_locked_result.json().result : []
-
+        
         let frozen_rewards_unlocked_result = await this.wallet.getElectionRewards(frozen_outputs_unlocked_hash)
         rewards = rewards.concat(frozen_rewards_unlocked_result && frozen_rewards_unlocked_result.json() ? frozen_rewards_unlocked_result.json().result : [])
 

@@ -31,19 +31,28 @@
                             <span>{{addressBalancesObject[address].AVATAR}}</span>
                         </h3>
                         <h3 class="address break-words">
-                            <span class="address-text">{{address}}</span>
+                            <textarea class="address-text" rows="1" cols="34" ion-input full type="text" #copy readonly>{{address}}</textarea>
+                            <button type="button" class="copy-btn" id="copybtn" ion-button item-right [ngxClipboard]="copy">
+                                <ion-icon name="copy"></ion-icon>
+                            </button>
                             <button type="button" class="qrcode-btn" id="qrcode" ion-button item-right (click)="show(address)">
                                 <img [src]="'assets/images/qrcode.png'">
                             </button>
                         </h3>
 
                         <div *ngIf="displayType == 'asset'">
-                            <b>{{selectedAsset}}: </b>{{(addressBalancesObject[address] && addressBalancesObject[address]['MST'] && addressBalancesObject[address]['MST'][selectedAsset])?format(addressBalancesObject[address]['MST'][selectedAsset].available,addressBalancesObject[address]['MST'][selectedAsset].decimals):0}}
+                            <b>{{selectedAsset}}: </b>{{(addressBalancesObject[address] &&
+                            addressBalancesObject[address]['MST'] &&
+                            addressBalancesObject[address]['MST'][selectedAsset])?format(addressBalancesObject[address]['MST'][selectedAsset].available,addressBalancesObject[address]['MST'][selectedAsset].decimals):0}}
                         </div>
                         <div *ngIf="displayType == 'ETP'">
-                            <b>{{'AVAILABLE'|translate}}: </b>{{(addressBalancesObject[address] && addressBalancesObject[address].ETP )?format(addressBalancesObject[address].ETP.available,addressBalancesObject[address].ETP.decimals):0}}
+                            <b>{{'AVAILABLE'|translate}}: </b>{{(addressBalancesObject[address] &&
+                            addressBalancesObject[address].ETP
+                            )?format(addressBalancesObject[address].ETP.available,addressBalancesObject[address].ETP.decimals):0}}
                             <span class="right">
-                                <b>{{'ACCOUNT.FROZEN'|translate}}: </b>{{(addressBalancesObject[address] && addressBalancesObject[address].ETP )?format(addressBalancesObject[address].ETP.frozen,addressBalancesObject[address].ETP.decimals):0}}
+                                <b>{{'ACCOUNT.FROZEN'|translate}}: </b>{{(addressBalancesObject[address] &&
+                                addressBalancesObject[address].ETP
+                                )?format(addressBalancesObject[address].ETP.frozen,addressBalancesObject[address].ETP.decimals):0}}
                             </span>
                         </div>
                         <div *ngIf="displayType == 'MST'">
@@ -60,7 +69,8 @@
                     </ion-card-content>
                 </ion-card>
                 <ion-row>
-                    <button ion-button full (click)="addAddress()">{{"GENERATE_ADDRESSES.CHANGE_ADDRESS_NUMBER" | translate}}</button>
+                    <button ion-button full (click)="addAddress()">{{"GENERATE_ADDRESSES.CHANGE_ADDRESS_NUMBER" |
+                        translate}}</button>
                 </ion-row>
             </ion-col>
         </ion-row>

@@ -160,7 +160,7 @@ export class MyETPWallet {
                     { title: 'AUTHENTICATION.TITLE', component: "AuthPage", icon: 'bitident', beta: true },
                     { title: 'REGISTER_MST', component: "AssetIssuePage", icon: 'globe' },
                     { title: 'REGISTER_MIT', component: "MITRegisterPage", icon: 'create' },
-                    ... (this.globals.network === 'mainnet' ? [{ title: 'ETP_BRIDGE', component: "EtpBridgePage", icon: 'cash' }] : []),
+                    { title: 'APPS', component: "AppsPage", icon: 'appstore', beta: true },
                     { title: 'NEWS', component: "NewsPage", icon: 'paper' },
                     { title: 'ADVANCED', component: "AdvancedPage", icon: 'settings' },
                     { title: 'SETTINGS', component: "SettingsPage", icon: 'options' },

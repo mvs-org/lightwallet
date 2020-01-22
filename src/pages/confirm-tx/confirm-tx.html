@@ -32,7 +32,7 @@
             <ion-input name="passphrase" type="password" [(ngModel)]="passphrase" required></ion-input>
         </ion-item>
         <br>
-        <ion-item *ngIf="multisig.status != 'MULTISIG'">
+        <ion-item class="toggle-input" *ngIf="multisig.status != 'MULTISIG'">
             <ion-label>{{"SHOW_ADVANCED"|translate}}</ion-label>
             <ion-toggle [(ngModel)]="showAdvanced" name="showAdvanced" checked="false"></ion-toggle>
         </ion-item>

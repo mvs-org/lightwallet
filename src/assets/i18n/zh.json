@@ -807,6 +807,15 @@
     "VOTE.LOCKED_UNTIL_TIME": "解锁预计时间",
     "VOTE.REVOTE_NOT_MAX_POSSIBLE": "您没有足够的DNA来获得复投的最高额外奖励",
     "VOTE.NO_REVOTE": "没有资格用先前投票来进行复投",
-    "VOTE.ELECTION_AND_ROUND": "第{{election}}期，{{round}}轮投票"
-
+    "VOTE.ELECTION_AND_ROUND": "第{{election}}期，{{round}}轮投票",
+    "ASSET": "资产",
+    "SCAN.PARAMS_EDITABLE": "允许修改资产数量",
+    "SCAN.SHOW_ADVANCED": "自动打开钱包",
+    "ERROR_SCAN_ASSET_NOT_MATCH_TITLE": "当前选择的资产与二维码中的资产不同",
+    "ERROR_SCAN_ASSET_NOT_MATCH_MESSAGE": "请确认对方和您使用的是同一资产",
+    "ETP_BRIDGE.TEXT": "通过SWFT使用ETP兑换其他数字货币",
+    "MOVIE_TICKETS": "电影购票",
+    "MOVIE_TICKETS.TEXT": "使用DNA购买电影票",
+    "APPS": "应用",
+    "SCAN.PARAMS_EDITABLE_TEXT": "如果允许参数修改，则扫描此QRCode的用户将能够在发送之前修改金额、收款地址和信息"
 }
