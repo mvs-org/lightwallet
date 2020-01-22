@@ -260,7 +260,7 @@
                     <ion-item *ngIf="!validFromAddress(sendFrom)" no-lines class="wrong-input">{{"TRANSFER.FROM_ADDRESS_NO_ETP"
                         | translate}}</ion-item>
                     <br>
-                    <ion-item>
+                    <ion-item class="toggle-input">
                         <ion-label>{{"SHOW_ADVANCED"|translate}}</ion-label>
                         <ion-toggle [(ngModel)]="showAdvanced" name="showAdvanced" checked="false"></ion-toggle>
                     </ion-item>

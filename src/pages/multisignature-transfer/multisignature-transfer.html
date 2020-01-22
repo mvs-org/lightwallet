@@ -34,7 +34,7 @@
     <form *ngIf="type == 'create'" #sendForm="ngForm" class="padding-bottom">
         <ion-list style="padding-bottom: 0;">
 
-            <ion-item>
+            <ion-item class="toggle-input">
                 <ion-label>{{"SEND_TO_AVATAR"|translate}}</ion-label>
                 <ion-toggle [(ngModel)]="sendToAvatar" name="sendToAvatar" checked="false"></ion-toggle>
             </ion-item>
@@ -72,7 +72,7 @@
                 </ion-select>
             </ion-item>
             <br>
-            <ion-item>
+            <ion-item class="toggle-input">
                 <ion-label>{{"SHOW_ADVANCED"|translate}}</ion-label>
                 <ion-toggle [(ngModel)]="showAdvanced" name="showAdvanced" checked="false"></ion-toggle>
             </ion-item>
