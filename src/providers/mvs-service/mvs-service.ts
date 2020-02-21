@@ -34,6 +34,7 @@ export class MvsServiceProvider {
         MST: {
             "DNA": { frozen: 0, available: 0, decimals: 4 },
             "APO": { frozen: 0, available: 0, decimals: 4 },
+            "SDG": { frozen: 0, available: 0, decimals: 8 },
         },
         MIT: []
     }
