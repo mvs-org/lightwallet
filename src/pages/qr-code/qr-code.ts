@@ -49,7 +49,6 @@ export class QRCodePage {
         } else {
             this.qrcodeValue = this.address
         }
-        console.log(this.qrcodeValue)
     }
 
 

@@ -33,9 +33,8 @@ export class MvsServiceProvider {
         ETP: { frozen: 0, available: 0, decimals: 8 },
         MST: {
             "DNA": { frozen: 0, available: 0, decimals: 4 },
-            "MVS.ZGC": { frozen: 0, available: 0, decimals: 8 },
-            "MVS.ZDC": { frozen: 0, available: 0, decimals: 6 },
-            "SDG": { frozen: 0, available: 0, decimals: 8 }
+            "APO": { frozen: 0, available: 0, decimals: 4 },
+            "SDG": { frozen: 0, available: 0, decimals: 8 },
         },
         MIT: []
     }
