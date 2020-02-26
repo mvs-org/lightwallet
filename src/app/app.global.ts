@@ -17,6 +17,7 @@ export class AppGlobals {
     readonly SwapAddress = '0xc1e5fd24fa2b4a3581335fc3f2850f717dd09c86';
     readonly crosschain_avatar = 'droplet'
     readonly dev_avatar = 'developer-community'
+    readonly min_confirmations = 100
 
     // Interval in seconds that the app will try to resync on account page
     readonly update_interval = 29

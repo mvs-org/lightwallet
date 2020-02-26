@@ -447,8 +447,8 @@ export class MvsServiceProvider {
                     .then(multisigAddresses => this.getTxs()
                         .then(txs => Metaverse.output.calculateUtxo(txs, addresses.concat(multisigAddresses)))
                         .then(utxos => Promise.all([
-                            this.blockchain.balance.all(utxos, addresses, height),
-                            this.blockchain.balance.addresses(utxos, addresses.concat(multisigAddresses), height)
+                            this.blockchain.balance.all(utxos, addresses, height, undefined, this.globals.min_confirmations),
+                            this.blockchain.balance.addresses(utxos, addresses.concat(multisigAddresses), height, undefined, this.globals.min_confirmations)
                         ]))
                         .then((balances) => Promise.all([
                             this.setBalances(balances[0]),
