@@ -8,7 +8,7 @@
                     </ion-avatar>
                     <h1 class="symbol">ETP</h1>
                     <h2 class="balances balance-text">
-                        <div class="balance-field">
+                        <div class="balance-field-fiat">
                             {{"ACCOUNT.TOTAL"|translate}}
                         </div>
                         <div class="balance-field">
@@ -19,7 +19,7 @@
                         </div>
                     </h2>
                     <h2 class="balances">
-                        <div class="balance-field">
+                        <div class="balance-field-fiat">
                             <div>{{balance.available + balance.unconfirmed + balance.frozen | format : balance.decimals}}</div>
                             <div *ngIf="tickers!==undefined" class="fiat">
                                 ≈{{base}} {{(balance.available + balance.unconfirmed + balance.frozen)/100000000*tickers[base].price | number : '1.0-2'}}
@@ -27,16 +27,10 @@
                         </div>
                         <div class="balance-field">
                             <div>{{balance.unconfirmed | format : balance.decimals}}</div>
-                            <div *ngIf="tickers!==undefined" class="fiat">
-                                ≈{{base}} {{(balance.unconfirmed)/100000000*tickers[base].price | number : '1.0-2'}}
-                            </div>
                         </div>
                         <div class="balance-field">
                             <div class="frozen-balance">
                                 {{balance.frozen | format : balance.decimals}}
-                            </div>
-                            <div *ngIf="tickers!==undefined" class="fiat">
-                                ≈{{base}} {{(balance.frozen)/100000000*tickers[base].price | number : '1.0-2'}}
                             </div>
                         </div>
                     </h2>
