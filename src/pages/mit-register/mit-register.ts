@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, Platform, Loading } from 'ionic-an
 import { TranslateService } from '@ngx-translate/core';
 import { AlertProvider } from '../../providers/alert/alert';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
+import { AppGlobals } from '../../app/app.global';
 
 @IonicPage()
 @Component({
@@ -21,8 +22,10 @@ export class MITRegisterPage {
     avatars: Array<any>;
     no_avatar: boolean = false;
     no_avatar_placeholder: string
-    fee: number = 10000
+    defaultFee: number
+    fee: number
     symbol_available: boolean = false
+    showAdvanced: boolean = false
 
     constructor(
         public navCtrl: NavController,
@@ -32,6 +35,7 @@ export class MITRegisterPage {
         private translate: TranslateService,
         private mvs: MvsServiceProvider,
         private zone: NgZone,
+        private globals: AppGlobals,
     ) {
 
         this.recipient_avatar = this.navParams.get('avatar_name')
@@ -66,6 +70,15 @@ export class MITRegisterPage {
                 }
                 this.addressbalances = addrblncs
             })
+
+        this.fee = this.globals.default_fees.mitIssue
+        this.defaultFee = this.fee
+        this.mvs.getFees()
+            .then(fees => {
+                this.fee = fees.mitIssue
+                this.defaultFee = this.fee
+            })
+
     }
 
     cancel() {
@@ -88,7 +101,7 @@ export class MITRegisterPage {
                 this.symbol,
                 this.content,
                 undefined,
-                this.fee)
+                (this.showAdvanced) ? this.fee : this.defaultFee)
             )
             .catch((error) => {
                 console.error(error)

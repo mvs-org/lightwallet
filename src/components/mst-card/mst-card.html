@@ -4,7 +4,7 @@
             <ion-col>
                 <ion-item class="grid-info">
                     <ion-avatar item-start>
-                        <img *ngIf="icon" class="coinlogo img" [src]="icon" (error)="errorImg($event)" [ngClass]="{'default-logo': icon == 'default_mst'}">
+                        <img *ngIf="icon" class="coinlogo coinlogosquare img" [src]="icon" (error)="errorImg($event)" [ngClass]="{'default-logo': icon == 'default_mst'}">
                     </ion-avatar>
                     <h1 class="symbol overflow">
                         {{symbol}}
@@ -16,26 +16,29 @@
                         </button>
                     </h1>
                     <h2 class="balances balance-text">
-                        <div class="balance-field">
+                            <div [ngClass]="{'balance-field-fiat': tickers && tickers[base], 'balance-field': !tickers || !tickers[base]}">
                             {{"ACCOUNT.TOTAL"|translate}}
+                        </div>
+                        <div class="balance-field">
+                            {{"ACCOUNT.UNCONFIRMED"|translate}}
                         </div>
                         <div class="balance-field">
                             {{"ACCOUNT.FROZEN"|translate}}
                         </div>
                     </h2>
                     <h2 class="balances">
-                        <div class="balance-field">
+                        <div [ngClass]="{'balance-field-fiat': tickers && tickers[base], 'balance-field': !tickers || !tickers[base]}">
                             <div>{{balance.available + balance.frozen | format : balance.decimals}}</div>
                             <div *ngIf="tickers && tickers[base]" class="fiat">
-                                ≈{{base}} {{(balance.available + balance.frozen)*tickers[base].price | decimals : balance.decimals | number : '1.0-2'}}
+                                ≈{{base}} {{(balance.available + balance.unconfirmed + balance.frozen)*tickers[base].price | decimals : balance.decimals | number : '1.0-2'}}
                             </div>
+                        </div>
+                        <div class="balance-field">
+                            <div>{{balance.unconfirmed ? balance.unconfirmed : 0 | format : balance.decimals}}</div>
                         </div>
                         <div class="balance-field">
                             <div class="frozen-balance">
                                 {{balance.frozen | format : balance.decimals}}
-                            </div>
-                            <div *ngIf="tickers && tickers[base]" class="fiat">
-                                ≈{{base}} {{(balance.frozen)*tickers[base].price | decimals : balance.decimals | number : '1.0-2'}}
                             </div>
                         </div>
                     </h2>

@@ -142,8 +142,12 @@ etp-card {
         margin-right: 10px;
     }
 
-    .balance-field {
+    .balance-field-fiat {
         height: 45px;
+    }
+
+    .balance-field {
+        height: 24px;
     }
 
     .symbol {

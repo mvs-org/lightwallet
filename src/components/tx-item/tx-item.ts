@@ -24,6 +24,7 @@ export class TxItemComponent {
     @Input() status: string     //to_confirm, pending or mined
     @Input() addresses?: Array<string>
     @Input() multisig?: Object = {}
+    @Input() height?: number;
 
     decimalsMst: any = {}
     totalInputs: any = { ETP: 0, MST: {} }

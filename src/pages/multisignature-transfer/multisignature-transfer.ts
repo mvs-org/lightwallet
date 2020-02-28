@@ -6,6 +6,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { AlertProvider } from '../../providers/alert/alert';
 import { Keyboard } from '@ionic-native/keyboard';
 import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
+import { AppGlobals } from '../../app/app.global';
 
 @IonicPage()
 @Component({
@@ -38,7 +39,7 @@ export class MultisignatureTransferPage {
     sendMore_limit: number = 1000
     total: number
     message: string = ""
-    fee: number = 10000
+    fee: number
     type: string = "create"
     input: string
     signedTx: string
@@ -57,6 +58,7 @@ export class MultisignatureTransferPage {
         private wallet: WalletServiceProvider,
         private translate: TranslateService,
         private zone: NgZone,
+        private globals: AppGlobals,
     ) {
 
         this.selectedAsset = navParams.get('asset')
@@ -106,6 +108,10 @@ export class MultisignatureTransferPage {
 
         this.wallet.getMultisigInfoFromAddress(this.sendFrom)
             .then((info) => this.address_info = info)
+
+        this.fee = this.globals.default_fees.default
+        this.mvs.getFees()
+            .then(fees => this.fee = fees.default)
     }
 
     ionViewDidEnter() {

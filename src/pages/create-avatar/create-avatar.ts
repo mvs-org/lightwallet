@@ -3,6 +3,7 @@ import { IonicPage, NavController, Platform, AlertController } from 'ionic-angul
 import { TranslateService } from '@ngx-translate/core';
 import { AlertProvider } from '../../providers/alert/alert';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
+import { AppGlobals } from '../../app/app.global';
 
 class AddressBalance {
     constructor(
@@ -20,7 +21,9 @@ export class CreateAvatarPage {
     symbol: string = ""
     avatar_address: string = ""
     addressbalances: Array<AddressBalance> = []
-    bounty_fee: number = 80
+    bounty_fee: number
+    default_bounty_fee: number
+    total_fee: number
     addressSelectOptions: any
     message: string = ""
     available_symbol: boolean = false
@@ -34,6 +37,7 @@ export class CreateAvatarPage {
         private alertCtrl: AlertController,
         private mvs: MvsServiceProvider,
         private zone: NgZone,
+        private globals: AppGlobals,
     ) {
 
         Promise.all([this.mvs.getAddresses(), this.mvs.getAddressBalances()])
@@ -43,6 +47,16 @@ export class CreateAvatarPage {
                         this.addressbalances.push(new AddressBalance(address, addressbalances[address].ETP.available))
                     }
                 })
+            })
+
+        this.bounty_fee = this.globals.default_fees.bountyShare
+        this.default_bounty_fee = this.bounty_fee
+        this.total_fee = this.globals.default_fees.avatar
+        this.mvs.getFees()
+            .then(fees => {
+                this.bounty_fee = fees.bountyShare
+                this.default_bounty_fee = this.bounty_fee
+                this.total_fee = fees.avatar
             })
     }
 
@@ -69,7 +83,7 @@ export class CreateAvatarPage {
                     this.avatar_address,
                     this.symbol,
                     undefined,
-                    (this.showAdvanced) ? this.bounty_fee * 100000000 / 100 : 80000000,
+                    (this.showAdvanced) ? this.bounty_fee * this.total_fee / 100 : this.default_bounty_fee * this.total_fee / 100,
                     messages
                 )
             })
