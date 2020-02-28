@@ -38,7 +38,8 @@ export class VotePage {
     etpBalance: number
     @ViewChild('quantityInput') quantityInput;
     message: string = ""
-    fee: number = 10000
+    fee: number
+    defaultFee: number
     isApp: boolean
     showAdvanced: boolean = false
     numberPeriods: number = 1
@@ -116,6 +117,14 @@ export class VotePage {
                 })
                 this.addressbalances = addrblncs
             })
+
+        this.fee = this.globals.default_fees.default
+        this.defaultFee = this.fee
+        this.mvs.getFees()
+            .then(fees => {
+                this.fee = fees.default
+                this.defaultFee = this.fee
+            })
     }
 
     ionViewDidEnter() {
@@ -152,7 +161,7 @@ export class VotePage {
                 this.loadingElectionInfo = false
 
                 this.earlybirdInfo = earlybirdInfo ? earlybirdInfo : {}
-                this.unlockPeriods = earlybirdInfo.votesUnlockPeriods.slice(earlybirdInfo.currentPeriod-1)
+                this.unlockPeriods = earlybirdInfo.votesUnlockPeriods.slice(earlybirdInfo.currentPeriod - 1)
                 this.locked_until = this.unlockPeriods[0]
                 this.lockPeriod = this.unlockPeriods[0] - this.height
                 this.electionProgressVote = Math.round((this.height - this.earlybirdInfo.voteStartHeight) / (this.earlybirdInfo.voteEndHeight - this.earlybirdInfo.voteStartHeight) * 100)
@@ -171,7 +180,7 @@ export class VotePage {
     }
 
     getNotPreviouslyVoteUtxo() {
-        if(this.earlybirdInfo) {
+        if (this.earlybirdInfo) {
             this.notPreviouslyVoteUtxo = []
             this.notPreviouslyVoteQuantity = 0
             this.mvs.getUtxo()
@@ -184,7 +193,7 @@ export class VotePage {
                         }
                     })
                 })
-                
+
         }
     }
 
@@ -337,7 +346,7 @@ export class VotePage {
                     locked_output.voteAvatar = /\:([A-Za-z0-9-_@\.]+)$/.test(output.attachment.content) ? output.attachment.content.match(/\:([A-Za-z0-9-_@\.]+)$/)[1] : 'Invalid Avatar';
                 }
             }
-            
+
             if (localHeight > locked_output.locked_until) {
                 this.frozen_outputs_unlocked.push(locked_output)
                 frozen_outputs_unlocked_hash.push(locked_output.hash)
@@ -355,7 +364,7 @@ export class VotePage {
         })
         let frozen_rewards_locked_result = await this.wallet.getElectionRewards(frozen_outputs_locked_hash)
         let rewards = frozen_rewards_locked_result && frozen_rewards_locked_result.json() ? frozen_rewards_locked_result.json().result : []
-        
+
         let frozen_rewards_unlocked_result = await this.wallet.getElectionRewards(frozen_outputs_unlocked_hash)
         rewards = rewards.concat(frozen_rewards_unlocked_result && frozen_rewards_unlocked_result.json() ? frozen_rewards_unlocked_result.json().result : [])
 
@@ -367,7 +376,7 @@ export class VotePage {
         */
         //UNTIL HERE
 
-        if(rewards) {
+        if (rewards) {
             rewards.forEach(reward => {
                 this.rewards[reward.txid] = reward.reward
             })
@@ -377,7 +386,7 @@ export class VotePage {
             output.initialVoteAmount = Math.round(output.attachment.quantity / Math.pow(10, this.decimals))
 
             let maxPossibleVote = Math.floor(this.rewards[output.tx] ? output.initialVoteAmount + this.rewards[output.tx] : output.initialVoteAmount)
-            let maxAvailableVote = Math.floor(this.notPreviouslyVoteQuantity ? output.initialVoteAmount + (this.notPreviouslyVoteQuantity  / Math.pow(10, this.decimals)) : output.initialVoteAmount)
+            let maxAvailableVote = Math.floor(this.notPreviouslyVoteQuantity ? output.initialVoteAmount + (this.notPreviouslyVoteQuantity / Math.pow(10, this.decimals)) : output.initialVoteAmount)
 
             output.newVoteAmount = Math.min(maxPossibleVote, maxAvailableVote)
             output.newVoteAmountWarningNotMax = maxPossibleVote > maxAvailableVote

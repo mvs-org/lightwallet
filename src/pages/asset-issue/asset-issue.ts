@@ -3,6 +3,7 @@ import { IonicPage, NavController, AlertController, Loading, NavParams, Platform
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { TranslateService } from '@ngx-translate/core';
 import { AlertProvider } from '../../providers/alert/alert';
+import { AppGlobals } from '../../app/app.global';
 
 @IonicPage()
 @Component({
@@ -44,7 +45,9 @@ export class AssetIssuePage {
     avatars: Array<any>;
     no_avatar: boolean = false;
     no_avatar_placeholder: string
-    bounty_fee: number = 80
+    bounty_fee: number
+    default_bounty_fee: number
+    total_fee: number
     attenuation_model: string
     blocktime: number
     lock: boolean = false
@@ -61,6 +64,7 @@ export class AssetIssuePage {
         private alert: AlertProvider,
         private translate: TranslateService,
         private zone: NgZone,
+        private globals: AppGlobals,
     ) {
 
         this.selectedAsset = "ETP"
@@ -112,6 +116,16 @@ export class AssetIssuePage {
                         }
                         this.myaddressbalances = addrblncs
                     })
+            })
+
+        this.bounty_fee = this.globals.default_fees.bountyShare
+        this.default_bounty_fee = this.bounty_fee
+        this.total_fee = globals.default_fees.mstIssue
+        this.mvs.getFees()
+            .then(fees => {
+                this.bounty_fee = fees.bountyShare
+                this.default_bounty_fee = this.bounty_fee
+                this.total_fee = fees.mstIssue
             })
 
     }
@@ -167,7 +181,7 @@ export class AssetIssuePage {
                 undefined,
                 (this.symbol_check == "available"),
                 (this.symbol_check == "naming_owner"),
-                (this.showAdvanced) ? this.bounty_fee * 100000000 / 100 * 10 : 800000000,
+                (this.showAdvanced) ? this.bounty_fee * this.total_fee / 100 : this.default_bounty_fee / 100 * this.total_fee,
                 (this.showAdvanced && this.lock) ? this.attenuation_model : undefined,
                 this.mining ? this.mst_mining_model : undefined
             ))

@@ -71,6 +71,8 @@ export class AccountPage {
         }
         else
             this.nav.setRoot("LoginPage")
+
+        this.mvs.updateFees()
     }
 
     private async checkAccess() {

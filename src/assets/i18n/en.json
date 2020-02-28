@@ -395,7 +395,7 @@
     "SWAP": "Swap",
     "EXPORT_CSV": "Export to CSV",
     "DOWNLOAD_CSV_EXAMPLE": "Download CSV Example",
-    "PENDING_CONFIRMATION": "Pending confirmation",
+    "PENDING_CONFIRMATION": "Waiting for confirmation",
     "COMPATIBLE_MST_LIST": "Compatible MST",
     "SWAP_MST.LIST_TITLE": "List of MST compatible with Ethereum swap",
     "SWAP_MST.LIST_EXPLAIN": "Please find below the full list of MST that can be swapped to their equivalent Ethereum token:",
@@ -817,5 +817,7 @@
     "MOVIE_TICKETS": "Movie ticketing",
     "MOVIE_TICKETS.TEXT": "Buy movie tickets using DNA",
     "APPS": "Apps",
-    "SCAN.PARAMS_EDITABLE_TEXT": "If you allow the parameter modification, the person who scan this QRCode will be able to modify the amount, recipient and message before sending"
+    "SCAN.PARAMS_EDITABLE_TEXT": "If you allow the parameter modification, the person who scan this QRCode will be able to modify the amount, recipient and message before sending",
+    "ACCOUNT.UNCONFIRMED": "Confirming",
+    "HISTORY.CONFIRMING": "Confirming"
 }

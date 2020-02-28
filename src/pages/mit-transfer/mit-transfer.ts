@@ -2,6 +2,7 @@ import { Component, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, Loading } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { AlertProvider } from '../../providers/alert/alert';
+import { AppGlobals } from '../../app/app.global';
 
 @IonicPage()
 @Component({
@@ -18,7 +19,8 @@ export class MITTransferPage {
     loading: Loading
     etpBalance: number
     addressbalances: Array<any>
-    fee: number = 10000
+    defaultFee: number
+    fee: number
     showAdvanced: boolean = false
 
     constructor(
@@ -28,6 +30,7 @@ export class MITTransferPage {
         private alert: AlertProvider,
         public navParams: NavParams,
         private zone: NgZone,
+        private globals: AppGlobals,
     ) {
         this.symbol = this.navParams.get('symbol')
         mvs.getBalances()
@@ -45,6 +48,14 @@ export class MITTransferPage {
                         }
                         this.addressbalances = addrblncs
                     })
+            })
+
+        this.fee = this.globals.default_fees.default
+        this.defaultFee = this.fee
+        this.mvs.getFees()
+            .then(fees => {
+                this.fee = fees.default
+                this.defaultFee = this.fee
             })
     }
 
@@ -66,7 +77,7 @@ export class MITTransferPage {
                 this.symbol,
                 undefined,
                 undefined,
-                (this.showAdvanced) ? this.fee : 10000
+                (this.showAdvanced) ? this.fee : this.defaultFee
             ))
             .catch((error) => {
                 console.error(error.message)
