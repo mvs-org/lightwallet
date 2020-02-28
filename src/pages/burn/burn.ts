@@ -2,6 +2,7 @@ import { Component, ViewChild, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { AlertProvider } from '../../providers/alert/alert';
+import { AppGlobals } from '../../app/app.global';
 
 @IonicPage()
 @Component({
@@ -24,7 +25,8 @@ export class BurnPage {
     @ViewChild('recipientAddressInput') recipientAddressInput
     @ViewChild('quantityInput') quantityInput
     message: string = ""
-    fee: number = 10000
+    fee: number
+    defaultFee: number
     showAdvanced: boolean = false
     addressbalancesObject: any = {}
 
@@ -35,6 +37,7 @@ export class BurnPage {
         public platform: Platform,
         private alert: AlertProvider,
         private zone: NgZone,
+        private globals: AppGlobals,
     ) {
 
         this.selectedAsset = navParams.get('asset') || 'ETP'
@@ -52,6 +55,14 @@ export class BurnPage {
                 this.addresses = addresses
                 this.addressbalancesObject = addressbalancesObject
                 this.updateBalancePerAddress()
+            })
+
+        this.fee = this.globals.default_fees.default
+        this.defaultFee = this.fee
+        this.mvs.getFees()
+            .then(fees => {
+                this.fee = fees.default
+                this.defaultFee = this.fee
             })
     }
 
@@ -115,7 +126,7 @@ export class BurnPage {
                     Math.round(parseFloat(this.quantity) * Math.pow(10, this.decimals)),
                     (this.sendFrom != 'auto') ? this.sendFrom : null,
                     (this.showAdvanced && this.changeAddress != 'auto') ? this.changeAddress : undefined,
-                    (this.showAdvanced) ? this.fee : 10000,
+                    (this.showAdvanced) ? this.fee : this.defaultFee,
                     (this.showAdvanced && messages !== []) ? messages : undefined
                 )
             })

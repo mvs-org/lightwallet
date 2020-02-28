@@ -5,6 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { AlertProvider } from '../../providers/alert/alert';
 import { Keyboard } from '@ionic-native/keyboard';
+import { AppGlobals } from '../../app/app.global';
 
 class RecipientSendMore {
     constructor(
@@ -51,7 +52,8 @@ export class AssetTransferPage {
     sendMore_limit: number = 1000
     total: number
     message: string = ""
-    fee: number = 10000
+    fee: number
+    defaultFee: number
     sendMoreValidEachAvatar: Array<boolean> = []
     attenuation_model: string
     lock: boolean = false
@@ -75,6 +77,7 @@ export class AssetTransferPage {
         private keyboard: Keyboard,
         private translate: TranslateService,
         private zone: NgZone,
+        private globals: AppGlobals,
     ) {
 
         this.selectedAsset = this.navParams.get('asset')
@@ -111,6 +114,14 @@ export class AssetTransferPage {
                 })
                 this.addressbalances = addrblncs
             })
+
+        this.fee = this.globals.default_fees.default
+        this.defaultFee = this.fee
+        this.mvs.getFees()
+            .then(fees => {
+                this.fee = fees.default
+                this.defaultFee = this.fee
+            })
     }
 
     initializeParameters(asset: string, params: { get(param: string): any }) {
@@ -142,8 +153,6 @@ export class AssetTransferPage {
                     this.navCtrl.setRoot("LoginPage")
             })
         this.loadTickers()
-        this.mvs.getFees()
-            .then(fees => this.fee = fees.default)
     }
 
     private async loadTickers() {
@@ -200,7 +209,7 @@ export class AssetTransferPage {
                                 (this.showAdvanced && this.lock) ? this.attenuation_model : undefined,
                                 (this.sendFrom != 'auto') ? this.sendFrom : null,
                                 (this.showAdvanced && this.changeAddress != 'auto') ? this.changeAddress : undefined,
-                                (this.showAdvanced) ? this.fee : 10000,
+                                (this.showAdvanced) ? this.fee : this.defaultFee,
                                 (this.showAdvanced && messages !== []) ? messages : undefined
                             )
                         } else {
@@ -211,7 +220,7 @@ export class AssetTransferPage {
                                 Math.round(parseFloat(this.quantity) * Math.pow(10, this.decimals)),
                                 (this.sendFrom != 'auto') ? this.sendFrom : null,
                                 (this.showAdvanced && this.changeAddress != 'auto') ? this.changeAddress : undefined,
-                                (this.showAdvanced) ? this.fee : 10000,
+                                (this.showAdvanced) ? this.fee : this.defaultFee,
                                 ((this.showAdvanced || this.params['message']) && messages !== []) ? messages : undefined
                             )
                         }
