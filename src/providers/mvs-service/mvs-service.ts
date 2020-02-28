@@ -627,7 +627,14 @@ export class MvsServiceProvider {
             }
         })
         await this.storage.set('mvs_txs', txs)
-        await this.setLastTxHeight(txs[0].height)
+        let lastTxHeight = txs[0].height
+        for (const tx of txs) {
+            if(!tx.unconfirmed) {
+                lastTxHeight = tx.height
+                break
+            }
+        }
+        await this.setLastTxHeight(lastTxHeight)
 
         return newtxs
     }
