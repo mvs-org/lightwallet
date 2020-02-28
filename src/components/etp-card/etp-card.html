@@ -20,7 +20,7 @@
                     </h2>
                     <h2 class="balances">
                         <div class="balance-field-fiat">
-                            <div>{{balance.available + balance.unconfirmed + balance.frozen | format : balance.decimals}}</div>
+                            <div>{{balance.available + (balance.unconfirmed ? balance.unconfirmed : 0) + balance.frozen | format : balance.decimals}}</div>
                             <div *ngIf="tickers!==undefined" class="fiat">
                                 ≈{{base}} {{(balance.available + (balance.unconfirmed ? balance.unconfirmed : 0) + balance.frozen)/100000000*tickers[base].price | number : '1.0-2'}}
                             </div>

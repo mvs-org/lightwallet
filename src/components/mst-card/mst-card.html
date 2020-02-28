@@ -28,7 +28,7 @@
                     </h2>
                     <h2 class="balances">
                         <div [ngClass]="{'balance-field-fiat': tickers && tickers[base], 'balance-field': !tickers || !tickers[base]}">
-                            <div>{{balance.available + balance.frozen | format : balance.decimals}}</div>
+                            <div>{{balance.available + (balance.unconfirmed ? balance.unconfirmed : 0) + balance.frozen | format : balance.decimals}}</div>
                             <div *ngIf="tickers && tickers[base]" class="fiat">
                                 ≈{{base}} {{(balance.available + (balance.unconfirmed ? balance.unconfirmed : 0) + balance.frozen)*tickers[base].price | decimals : balance.decimals | number : '1.0-2'}}
                             </div>
