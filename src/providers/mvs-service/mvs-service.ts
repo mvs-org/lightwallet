@@ -33,9 +33,8 @@ export class MvsServiceProvider {
         ETP: { frozen: 0, available: 0, decimals: 8 },
         MST: {
             "DNA": { frozen: 0, available: 0, decimals: 4 },
-            "MVS.ZGC": { frozen: 0, available: 0, decimals: 8 },
-            "MVS.ZDC": { frozen: 0, available: 0, decimals: 6 },
-            "SDG": { frozen: 0, available: 0, decimals: 8 }
+            "APO": { frozen: 0, available: 0, decimals: 4 },
+            "SDG": { frozen: 0, available: 0, decimals: 8 },
         },
         MIT: []
     }
@@ -333,8 +332,20 @@ export class MvsServiceProvider {
             .then((txs: Array<any>) => txs.sort(function (a, b) {
                 return b.height - a.height;
             }))
-            .then((txs: Array<any>) => this.getAddresses()
-                .then((addresses: Array<string>) => Metaverse.output.calculateUtxo(txs, addresses)));
+            .then((txs: Array<any>) => Promise.all([this.getAddresses(), this.removeOutputsForUnconfirmedTxs(txs)])
+                .then(([addresses, txs]) => Metaverse.output.calculateUtxo(txs, addresses)));
+    }
+
+    async removeOutputsForUnconfirmedTxs(txs) {
+        const height = await this.getHeight()
+        return txs.map((tx) => {
+            if (tx.height && height > tx.height + this.globals.min_confirmations) {
+                return tx
+            } else {
+                tx.outputs = []
+                return tx
+            }
+        })
     }
 
     async getUtxoFrom(address: any) {
@@ -448,8 +459,8 @@ export class MvsServiceProvider {
                     .then(multisigAddresses => this.getTxs()
                         .then(txs => Metaverse.output.calculateUtxo(txs, addresses.concat(multisigAddresses)))
                         .then(utxos => Promise.all([
-                            this.blockchain.balance.all(utxos, addresses, height),
-                            this.blockchain.balance.addresses(utxos, addresses.concat(multisigAddresses), height)
+                            this.blockchain.balance.all(utxos, addresses, height, undefined, this.globals.min_confirmations),
+                            this.blockchain.balance.addresses(utxos, addresses.concat(multisigAddresses), height, undefined, this.globals.min_confirmations)
                         ]))
                         .then((balances) => Promise.all([
                             this.setBalances(balances[0]),
@@ -522,6 +533,20 @@ export class MvsServiceProvider {
     getAddresses() {
         return this.storage.get('mvs_addresses')
             .then((addresses) => (addresses) ? addresses : [])
+    }
+
+    async updateFees() {
+        const fees = await this.blockchain.fee()
+        await this.setFees(fees)
+        return this.getFees()
+    }
+
+    setFees(fees) {
+        return this.storage.set('mvs_fees', fees)
+    }
+
+    getFees() {
+        return this.storage.get('mvs_fees').then((fees) => (fees) ? fees : this.globals.default_fees)
     }
 
     hardReset() {
@@ -602,7 +627,14 @@ export class MvsServiceProvider {
             }
         })
         await this.storage.set('mvs_txs', txs)
-        await this.setLastTxHeight(txs[0].height)
+        let lastTxHeight = txs[0].height
+        for (const tx of txs) {
+            if(!tx.unconfirmed) {
+                lastTxHeight = tx.height
+                break
+            }
+        }
+        await this.setLastTxHeight(lastTxHeight)
 
         return newtxs
     }
@@ -683,6 +715,9 @@ export class MvsServiceProvider {
         tx.hash = (await this.broadcast(tx.encode().toString('hex'))).hash
         tx.height = await this.getHeight()
         tx.unconfirmed = true
+        tx.outputs.forEach(output => {
+            output.unconfirmed = true
+        });
         tx = await this.organizeTx(tx)
         return this.addTxs([tx])
             .then(() => this.getData())

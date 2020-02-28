@@ -53,6 +53,9 @@
                             <div *ngIf="status == 'PENDING'" class="warning-input">
                                 {{'PENDING_CONFIRMATION' | translate}}
                             </div>
+                            <div *ngIf="status == 'MINED' && tx.height + globals.min_confirmations > height" class="warning-input">
+                                {{'HISTORY.CONFIRMING' | translate}} ({{height - tx.height >= 0 ? height - tx.height : 0}}/{{globals.min_confirmations}})
+                            </div>
                             <div *ngIf="status == 'PENDING' || status == 'MINED'">
                                 <button class="ion-item" ion-button icon-left (click)="showHideDetails()">
                                     <ion-icon *ngIf="mode == 'summary'" name="arrow-dropdown"></ion-icon>

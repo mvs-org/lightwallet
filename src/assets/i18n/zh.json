@@ -817,5 +817,7 @@
     "MOVIE_TICKETS": "电影购票",
     "MOVIE_TICKETS.TEXT": "使用DNA购买电影票",
     "APPS": "应用",
-    "SCAN.PARAMS_EDITABLE_TEXT": "如果允许参数修改，则扫描此QRCode的用户将能够在发送之前修改金额、收款地址和信息"
+    "SCAN.PARAMS_EDITABLE_TEXT": "如果允许参数修改，则扫描此QRCode的用户将能够在发送之前修改金额、收款地址和信息",
+    "ACCOUNT.UNCONFIRMED": "确认中",
+    "HISTORY.CONFIRMING": "确认中"
 }
