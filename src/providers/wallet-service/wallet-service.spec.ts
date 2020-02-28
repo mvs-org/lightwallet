@@ -4,14 +4,14 @@ import { WalletServiceProvider } from './wallet-service';
 import { CryptoServiceProvider } from '../crypto-service/crypto-service';
 import { IonicStorageModule } from '@ionic/storage';
 import { MockStorage, MockEvents } from '../../types/mocks';
+import { Platform } from 'ionic-angular'
 
 describe('Wallet Provider', () => {
     let walletservice = null
     let storage = new MockStorage({})
 
     beforeEach(() => {
-        walletservice = new WalletServiceProvider(undefined,
-                                                  storage, new AppGlobals(new MockEvents(), storage), new CryptoServiceProvider())
+        walletservice = new WalletServiceProvider(undefined, storage, new AppGlobals(new MockEvents(), storage), new CryptoServiceProvider(), new Platform())
     });
 
     it('Generate Wallet', (done) => {
