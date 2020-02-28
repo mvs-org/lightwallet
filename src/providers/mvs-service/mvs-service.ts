@@ -327,26 +327,26 @@ export class MvsServiceProvider {
         return this.getHeight()
     }
 
-getUtxo() {
-    return this.getTxs()
-        .then((txs: Array<any>) => txs.sort(function (a, b) {
-            return b.height - a.height;
-        }))
-        .then((txs: Array<any>) => Promise.all([this.getAddresses(), this.removeOutputsForUnconfirmedTxs(txs)])
-            .then(([addresses, txs]) => Metaverse.output.calculateUtxo(txs, addresses)));
-}
+    getUtxo() {
+        return this.getTxs()
+            .then((txs: Array<any>) => txs.sort(function (a, b) {
+                return b.height - a.height;
+            }))
+            .then((txs: Array<any>) => Promise.all([this.getAddresses(), this.removeOutputsForUnconfirmedTxs(txs)])
+                .then(([addresses, txs]) => Metaverse.output.calculateUtxo(txs, addresses)));
+    }
 
-async removeOutputsForUnconfirmedTxs(txs) {
-    const height = await this.getHeight()
-    return txs.map((tx) => {
-        if(tx.height && height > tx.height + this.globals.min_confirmations) {
-            return tx
-        } else {
-            tx.outputs = []
-            return tx
-        }
-    })
-}
+    async removeOutputsForUnconfirmedTxs(txs) {
+        const height = await this.getHeight()
+        return txs.map((tx) => {
+            if (tx.height && height > tx.height + this.globals.min_confirmations) {
+                return tx
+            } else {
+                tx.outputs = []
+                return tx
+            }
+        })
+    }
 
     async getUtxoFrom(address: any) {
         const utxo = await this.getUtxo()
@@ -533,6 +533,20 @@ async removeOutputsForUnconfirmedTxs(txs) {
     getAddresses() {
         return this.storage.get('mvs_addresses')
             .then((addresses) => (addresses) ? addresses : [])
+    }
+
+    async updateFees() {
+        const fees = await this.blockchain.fee()
+        await this.setFees(fees)
+        return this.getFees()
+    }
+
+    setFees(fees) {
+        return this.storage.set('mvs_fees', fees)
+    }
+
+    getFees() {
+        return this.storage.get('mvs_fees').then((fees) => (fees) ? fees : this.globals.default_fees)
     }
 
     hardReset() {

@@ -18,6 +18,7 @@ export class AppGlobals {
     readonly crosschain_avatar = 'droplet'
     readonly dev_avatar = 'developer-community'
     readonly min_confirmations = 3
+    readonly default_fees = {"avatar":100000000, "default":10000, "minimum":10000, "mitIssue":100000, "mstIssue":1000000000}
 
     // Interval in seconds that the app will try to resync on account page
     readonly update_interval = 29

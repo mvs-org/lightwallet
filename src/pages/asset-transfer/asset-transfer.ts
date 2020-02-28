@@ -142,6 +142,8 @@ export class AssetTransferPage {
                     this.navCtrl.setRoot("LoginPage")
             })
         this.loadTickers()
+        this.mvs.getFees()
+            .then(fees => this.fee = fees.default)
     }
 
     private async loadTickers() {
