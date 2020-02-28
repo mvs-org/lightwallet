@@ -327,14 +327,26 @@ export class MvsServiceProvider {
         return this.getHeight()
     }
 
-    getUtxo() {
-        return this.getTxs()
-            .then((txs: Array<any>) => txs.sort(function (a, b) {
-                return b.height - a.height;
-            }))
-            .then((txs: Array<any>) => this.getAddresses()
-                .then((addresses: Array<string>) => Metaverse.output.calculateUtxo(txs, addresses)));
-    }
+getUtxo() {
+    return this.getTxs()
+        .then((txs: Array<any>) => txs.sort(function (a, b) {
+            return b.height - a.height;
+        }))
+        .then((txs: Array<any>) => Promise.all([this.getAddresses(), this.removeOutputsForUnconfirmedTxs(txs)])
+            .then(([addresses, txs]) => Metaverse.output.calculateUtxo(txs, addresses)));
+}
+
+async removeOutputsForUnconfirmedTxs(txs) {
+    const height = await this.getHeight()
+    return txs.map((tx) => {
+        if(tx.height && height > tx.height + this.globals.min_confirmations) {
+            return tx
+        } else {
+            tx.outputs = []
+            return tx
+        }
+    })
+}
 
     async getUtxoFrom(address: any) {
         const utxo = await this.getUtxo()
@@ -682,6 +694,9 @@ export class MvsServiceProvider {
         tx.hash = (await this.broadcast(tx.encode().toString('hex'))).hash
         tx.height = await this.getHeight()
         tx.unconfirmed = true
+        tx.outputs.forEach(output => {
+            output.unconfirmed = true
+        });
         tx = await this.organizeTx(tx)
         return this.addTxs([tx])
             .then(() => this.getData())
