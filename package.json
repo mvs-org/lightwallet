@@ -3,7 +3,7 @@
   "version": "0.8.15",
   "author": "Sven Mutzl",
   "homepage": "https://www.myetpwallet.com/",
-  "private": true,
+  "private": false,
   "scripts": {
     "clean": "ionic-app-scripts clean",
     "build": "ionic-app-scripts build",
