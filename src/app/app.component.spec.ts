@@ -9,8 +9,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { Keyboard } from '@ionic-native/keyboard';
-
-
+import { Deeplinks } from '@ionic-native/deeplinks';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule, Http } from '@angular/http';
 import { ClipboardModule } from 'ngx-clipboard/dist';
@@ -60,7 +59,8 @@ describe('MyETPWallet Component', () => {
                 StatusBar,
                 SplashScreen,
                 PluginProvider,
-                WalletServiceProvider
+                WalletServiceProvider,
+                Deeplinks,
             ]
         })
     }));
