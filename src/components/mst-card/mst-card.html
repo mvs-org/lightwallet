@@ -34,7 +34,7 @@
                             </div>
                         </div>
                         <div class="balance-field">
-                            <div>{{balance.unconfirmed ? balance.unconfirmed : 0 | format : balance.decimals}}</div>
+                            <div>{{(balance.unconfirmed ? balance.unconfirmed : 0) | format : balance.decimals}}</div>
                         </div>
                         <div class="balance-field">
                             <div class="frozen-balance">
