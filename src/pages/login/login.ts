@@ -69,6 +69,8 @@ export class LoginPage {
 
     loginFromMobile = () => this.nav.push("ImportWalletMobilePage")
 
+    loginXpub = () => this.nav.push("LoginXpubPage")
+
     howToMobile = () => this.nav.push("HowToMobilePage")
 
     LoginAccountPage = (account) => this.nav.push("LoginAccountPage", { account: account })

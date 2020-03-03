@@ -215,6 +215,10 @@ export class WalletServiceProvider {
         return wallet.getMasterPublicKey()
     }
 
+    getWalletFromMasterPublicKey(xpub) {
+        return Metaverse.wallet.fromXPub(xpub, this.globals.network)
+    }
+
     getMultisigAddresses() {
         return this.storage.get('multisig_addresses')
             .then((addresses) => (addresses) ? addresses : [])

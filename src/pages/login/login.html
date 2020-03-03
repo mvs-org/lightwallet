@@ -46,45 +46,64 @@
         </ion-row>
 
         <!--Desktop-->
-        <ion-row *ngIf="!isApp" class="browser-button">
-            <button ion-button class="large-btn" block full icon-left (click)="ImportMnemonicPage();">
-                <ion-icon name="list-box"></ion-icon>
-                <span>{{"RECOVER_FROM_BACKUP_WORDS"|translate}}</span>
-            </button>
-        </ion-row>
+        <div *ngIf="!isApp">
+            <ion-row class="browser-button">
+                <button ion-button class="large-btn" block full icon-left (click)="ImportMnemonicPage();">
+                    <ion-icon name="list-box"></ion-icon>
+                    <span>{{"RECOVER_FROM_BACKUP_WORDS"|translate}}</span>
+                </button>
+            </ion-row>
 
-        <ion-row *ngIf="!isApp" class="browser-button">
-            <button ion-button full icon-left class="large-btn" id="open-wallet-button" color="secondary" (click)="login()">
-                <ion-icon name="download"></ion-icon>
-                {{"OPEN_WALLET_FILE"|translate}}
-            </button>
-        </ion-row>
+            <ion-row class="browser-button">
+                <button ion-button full icon-left class="large-btn" id="open-wallet-button" color="secondary" (click)="login()">
+                    <ion-icon name="download"></ion-icon>
+                    {{"OPEN_WALLET_FILE"|translate}}
+                </button>
+            </ion-row>
 
-        <ion-row *ngIf="!isApp" class="info-text">
-            <p>{{"LOGIN_MENU_INFO_TEXT"|translate}}</p>
-        </ion-row>
+            <ion-row class="browser-button">
+                <button ion-button full icon-left class="large-btn" id="open-wallet-button" color="secondary" (click)="loginXpub()">
+                    <ion-icon name="eye"></ion-icon>
+                    {{"OPEN_WALLET_VIEW_ONLY"|translate}}
+                </button>
+            </ion-row>
+
+            <ion-row class="info-text">
+                <p>{{"LOGIN_MENU_INFO_TEXT"|translate}}</p>
+            </ion-row>
+        </div>
 
         <!--App-->
-        <ion-row *ngIf="isApp" class="browser-button">
-            <button ion-button full icon-left class="large-btn" id="open-wallet-button" color="secondary" (click)="loginFromMobile()">
-                <ion-icon name="qr-scanner"></ion-icon>
-                {{"OPEN_FROM_QRCODE"|translate}}
-            </button>
-        </ion-row>
+        <div *ngIf="isApp">
+            <ion-row class="browser-button">
+                <button ion-button full icon-left class="large-btn" id="open-wallet-button" color="secondary" (click)="loginFromMobile()">
+                    <ion-icon name="qr-scanner"></ion-icon>
+                    {{"OPEN_FROM_QRCODE"|translate}}
+                </button>
+            </ion-row>
 
-        <ion-row *ngIf="isApp" class="browser-button">
-            <button ion-button class="large-btn" block full icon-left color="secondary" (click)="ImportMnemonicPage();">
-                <ion-icon name="list-box"></ion-icon>
-                <span>{{"OPEN_FROM_BACKUP_WORDS"|translate}}</span>
-            </button>
-        </ion-row>
+            <ion-row class="browser-button">
+                <button ion-button class="large-btn" block full icon-left color="secondary" (click)="ImportMnemonicPage();">
+                    <ion-icon name="list-box"></ion-icon>
+                    <span>{{"OPEN_FROM_BACKUP_WORDS"|translate}}</span>
+                </button>
+            </ion-row>
 
-        <ion-row *ngIf="isApp" class="browser-button">
-            <button ion-button full icon-left class="large-btn" id="open-howto-mobile-button" color="primary" (click)="howToMobile()">
-                <ion-icon name="information-circle"></ion-icon>
-                {{"HOW_TO_IMPORT_WALLET_MOBILE"|translate}}
-            </button>
-        </ion-row>
+            <ion-row class="browser-button">
+                <button ion-button full icon-left class="large-btn" id="open-wallet-button" color="secondary" (click)="loginXpub()">
+                    <ion-icon name="eye"></ion-icon>
+                    {{"OPEN_WALLET_VIEW_ONLY"|translate}}
+                </button>
+            </ion-row>
+
+            <ion-row class="browser-button">
+                <button ion-button full icon-left class="large-btn" id="open-howto-mobile-button" color="primary"
+                    (click)="howToMobile()">
+                    <ion-icon name="information-circle"></ion-icon>
+                    {{"HOW_TO_IMPORT_WALLET_MOBILE"|translate}}
+                </button>
+            </ion-row>
+        </div>
 
     </div>
 </ion-content>

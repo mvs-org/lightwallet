@@ -819,5 +819,7 @@
     "APPS": "Apps",
     "SCAN.PARAMS_EDITABLE_TEXT": "If you allow the parameter modification, the person who scan this QRCode will be able to modify the amount, recipient and message before sending",
     "ACCOUNT.UNCONFIRMED": "Confirming",
-    "HISTORY.CONFIRMING": "Confirming"
+    "HISTORY.CONFIRMING": "Confirming",
+    "OPEN_WALLET_VIEW_ONLY": "Open view only",
+    "XPUB.PUBLIC_KEY": "Public key"
 }

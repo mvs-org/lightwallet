@@ -1,0 +1,24 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>{{'LOGIN'| translate}}</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <form #loginAccountForm="ngForm">
+        <ion-row>
+            <ion-item class="center-psw more-bottom-padding">
+                <ion-label color="primary" floating>{{'XPUB.PUBLIC_KEY'| translate}}</ion-label>
+                <ion-input name="xpub" type="text" placeholder="" [(ngModel)]="xpub"></ion-input>
+            </ion-item>
+        </ion-row>
+
+        <ion-row class="button">
+            <button ion-button icon-left full [disabled]="!xpubValid(xpub)" (click)="login(xpub)">
+                <ion-icon name="arrow-forward"></ion-icon>
+                {{'BUTTON.NEXT'|translate}}
+            </button>
+        </ion-row>
+    </form>
+
+</ion-content>
