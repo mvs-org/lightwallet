@@ -17,7 +17,9 @@
                 <ion-input name="symbol" type="number" [(ngModel)]="index" required></ion-input>
             </ion-item>
             <div no-lines class="advice">{{"HELP.GENERATE_ADDRESSES_NUMBER" | translate}}</div>
-            <ion-item *ngIf="index > 50" no-lines class="wrong-input">{{"GENERATE_ADDRESSES.TOO_MANY_ADDRESSES" | translate}}</ion-item>
+            <ion-item *ngIf="index > globals.max_addresses" no-lines class="wrong-input">
+                <span [translate]="'GENERATE_ADDRESSES.TOO_MANY_ADDRESSES'" [translateParams]="{max_addresses: globals.max_addresses}"></span>
+            </ion-item>
             <ion-item [ngClass]="{'error-border': !validPassword(passphrase)}">
                 <ion-label color="primary" floating>{{"PASSWORD" | translate}}</ion-label>
                 <ion-input name="passphrase" type="password" [(ngModel)]="passphrase" required></ion-input>

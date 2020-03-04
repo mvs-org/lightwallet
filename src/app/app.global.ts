@@ -4,12 +4,12 @@ import { Storage } from '@ionic/storage';
 
 @Injectable()
 export class AppGlobals {
-    readonly version: string = '0.8.15';
-    readonly db_version = 6;
-    readonly name: string = 'Pillars of Creation';
-    readonly algo: string = 'aes';
-    readonly index: number = 10;
-    network: string = null;
+    readonly version: string = '0.8.15'
+    readonly db_version = 6
+    readonly name: string = 'Pillars of Creation'
+    readonly algo: string = 'aes'
+    readonly index: number = 10
+    network: string = null
     readonly ADDRESS_PREFIX_MAINNET = 'M'
     readonly ADDRESS_PREFIX_P2SH = '3'
     readonly ADDRESS_PREFIX_TESTNET = 't'
@@ -19,6 +19,7 @@ export class AppGlobals {
     readonly dev_avatar = 'developer-community'
     readonly min_confirmations = 3
     readonly default_fees = {"avatar":100000000, "bountyShare":80, "default":10000, "minimum":10000, "mitIssue":100000, "mstIssue":1000000000}
+    readonly max_addresses: number = 50
 
     // Interval in seconds that the app will try to resync on account page
     readonly update_interval = 29

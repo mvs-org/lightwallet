@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
 import { AlertProvider } from '../../providers/alert/alert';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
+import { AppGlobals } from '../../app/app.global';
 
 @IonicPage({
     name: 'generate-address-page',
@@ -22,7 +23,8 @@ export class GenerateAddressPage {
         private wallet: WalletServiceProvider,
         public navParams: NavParams,
         private alert: AlertProvider,
-        private mvs: MvsServiceProvider
+        private mvs: MvsServiceProvider,
+        private globals: AppGlobals,
     ) {
     }
 
@@ -62,7 +64,7 @@ export class GenerateAddressPage {
 
     }
 
-    validIndex = (index: number) => index >= 1 && index <= 50
+    validIndex = (index: number) => index >= 1 && index <= this.globals.max_addresses
 
     validPassword = (passphrase: string) => (passphrase) ? passphrase.length > 3 : false
 

@@ -341,7 +341,7 @@
     "GENERATE_ADDRESSES.HEADLINE": "Adressanpassung",
     "GENERATE_ADDRESSES.EXPLANATION": "MyETPWallet verwendet ein HD Wallet (hierarchisch, deterministisch) um Adressen zu generierten. Durch die deterministische Adressgenerierung kann die Anzahl nach belieben angepasst werden. Es werden dabei stets die selben Adressen generiert.",
     "GENERATE_ADDRESSES.TOTAL_NUMBER_OF_ADDRESSES": "Adressanzahl des Wallets",
-    "GENERATE_ADDRESSES.TOO_MANY_ADDRESSES": "Die Anzahl ist momentan begrenzt auf 50 Adressen. Sollten mehr Adressen benötigt werden empfehlen wir die Verwendung des Desktop Wallets.",
+    "GENERATE_ADDRESSES.TOO_MANY_ADDRESSES": "Die Anzahl ist momentan begrenzt auf {{max_addresses}} Adressen. Sollten mehr Adressen benötigt werden empfehlen wir die Verwendung des Desktop Wallets.",
     "GENERATE_ADDRESSES.ERROR": "Fehler bei der Adressgenerierung",
     "MIT_REGISTER.MIT_SYMBOL_TOO_SHORT": "Das MIT Symbol muss mindestens 3 Zeichen umfassen.",
     "HELP.GENERATE_ADDRESSES_NUMBER": "Um eine schnelle Ausführung des Wallets zu gewährleisten wollten Sie die Anzahl der Adressen möglichst gering halten. Standard sind 10 und maximal können 50 Adressen erstellt werden.",

@@ -341,7 +341,7 @@
     "GENERATE_ADDRESSES.HEADLINE": "Changer le nombre d'adresses",
     "GENERATE_ADDRESSES.EXPLANATION": "MyETPWallet utilise un HD Wallet (Hierarchical Deterministic) pour générer multiples adresses. Les adresses sont générées de manière déterministe, cela signifit que si vous supprimez certaines de vos adresses, vous pourrez les rajouter ultérieurement et les mêmes adresses seront regénérées.",
     "GENERATE_ADDRESSES.TOTAL_NUMBER_OF_ADDRESSES": "Nombre d'adresses dans mon portefeuille",
-    "GENERATE_ADDRESSES.TOO_MANY_ADDRESSES": "Le nombre d'adresses est limité à 50 dans le Lightwallet. Si vous avez besoin d'un plus grand nombre d'adresses, veuillez télécharger le Official Desktop wallet.",
+    "GENERATE_ADDRESSES.TOO_MANY_ADDRESSES": "Le nombre d'adresses est limité à {{max_addresses}} dans le Lightwallet. Si vous avez besoin d'un plus grand nombre d'adresses, veuillez télécharger le Official Desktop wallet.",
     "GENERATE_ADDRESSES.ERROR": "Erreur lors de la génération de vos adresses",
     "MIT_REGISTER.MIT_SYMBOL_TOO_SHORT": "Le symbole MIT doit contenir au moins 3 charactères",
     "HELP.GENERATE_ADDRESSES_NUMBER": "Afin de garder votre portefeuille fluide, il est recommandé de garder un faible nombre d'adresses. La valeur par défaut est de 10 adresses, le maximum est de 50 adresses",
