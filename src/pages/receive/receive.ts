@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, ModalController } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
+import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
 
 @IonicPage({
     name: 'receive-page',
@@ -19,6 +20,7 @@ export class ReceivePage {
     displayType: string;
     base: string
     tickers = {}
+    walletFromXpub: any
 
     constructor(
         private navCtrl: NavController,
@@ -26,6 +28,7 @@ export class ReceivePage {
         private platform: Platform,
         private mvs: MvsServiceProvider,
         public modalCtrl: ModalController,
+        public wallet: WalletServiceProvider,
     ) {
         this.addressbalances = {};
         this.selectedAsset = this.navParams.get('asset')
@@ -37,6 +40,14 @@ export class ReceivePage {
                     this.navCtrl.setRoot("LoginPage")
                 else
                     this.showBalances()
+            })
+
+        this.wallet.getXpub()
+            .then((xpub) => {
+                if(xpub) {
+                    this.wallet.getWalletFromMasterPublicKey(xpub)
+                        .then((wallet) => this.walletFromXpub = wallet)
+                }
             })
 
     }
@@ -72,7 +83,13 @@ export class ReceivePage {
 
     canAddAddress = () => this.platform.isPlatformMatch('mobile') && !this.platform.isPlatformMatch('mobileweb')
 
-    addAddress = () =>  this.navCtrl.push('generate-address-page')
+    async addAddress() {
+        this.addresses = await this.wallet.generateAddresses(this.walletFromXpub, 0, this.addresses.length + 1)
+        this.mvs.setAddresses(this.addresses)
+        this.wallet.setAddressIndex(this.addresses.length)
+    }
+
+    addAddresses = () => this.navCtrl.push('generate-address-page')
 
     history = (asset, address) =>  this.navCtrl.push('transactions-page', { asset: asset, addresses : [address] })
 

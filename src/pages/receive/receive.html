@@ -97,8 +97,11 @@
                         </div>
                     </ion-card-content>
                 </ion-card>
+                <ion-row *ngIf="addresses && addresses.length < 50">
+                    <button ion-button full (click)="addAddress()">+1</button>
+                </ion-row>
                 <ion-row>
-                    <button ion-button full (click)="addAddress()">{{"GENERATE_ADDRESSES.CHANGE_ADDRESS_NUMBER" |
+                    <button ion-button full (click)="addAddresses()">{{"GENERATE_ADDRESSES.CHANGE_ADDRESS_NUMBER" |
                         translate}}</button>
                 </ion-row>
             </ion-col>

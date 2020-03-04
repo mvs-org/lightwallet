@@ -20,7 +20,8 @@ export class LoginXpubPage {
         public globals: AppGlobals,
         public mvs: MvsServiceProvider,
         private alert: AlertProvider,
-        public wallet: WalletServiceProvider) {
+        public wallet: WalletServiceProvider,
+    ) {
 
     }
 
