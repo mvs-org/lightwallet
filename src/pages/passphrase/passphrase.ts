@@ -55,6 +55,8 @@ export class PassphrasePage {
         this.wallet.setWallet(wallet)
             .then((wallet) => this.wallet.setSeedMobile(password, this.mnemonic))
             .then((seed) => this.wallet.setMobileWallet(seed))
+            .then(() => this.wallet.getMasterPublicKey(password))
+            .then((xpub) => this.wallet.setXpub(xpub))
             .then(() => Promise.all([this.wallet.getWallet(password), this.wallet.getAddressIndex()]))
             .then((results) => this.wallet.generateAddresses(results[0], 0, results[1]))
             .then((addresses) => this.mvs.setAddresses(addresses))

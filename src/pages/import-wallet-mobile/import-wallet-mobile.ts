@@ -71,6 +71,8 @@ export class ImportWalletMobilePage {
     decrypt(password, seed) {
         this.alert.showLoading()
         this.wallet.setMobileWallet(seed)
+            .then(() => this.wallet.getMasterPublicKey(password))
+            .then((xpub) => this.wallet.setXpub(xpub))
             .then(() => Promise.all([this.wallet.getWallet(password), this.wallet.getAddressIndex()]))
             .then((results) => this.wallet.generateAddresses(results[0], 0, results[1]))
             .then((addresses) => this.mvs.setAddresses(addresses))

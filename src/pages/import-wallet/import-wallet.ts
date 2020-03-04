@@ -54,6 +54,8 @@ export class ImportWalletPage {
         this.alert.showLoading()
         this.mvs.dataReset()
             .then(() => this.wallet.setSeed(password))
+            .then(() => this.wallet.getMasterPublicKey(password))
+            .then((xpub) => this.wallet.setXpub(xpub))
             .then(() => Promise.all([this.wallet.getWallet(password), this.wallet.getAddressIndex()]))
             .then((results) => this.wallet.generateAddresses(results[0], 0, results[1]))
             .then((addresses) => this.mvs.setAddresses(addresses))
