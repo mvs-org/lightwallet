@@ -285,14 +285,15 @@ export class WalletServiceProvider {
     }
 
     saveSessionAccount(password) {
-        return Promise.all([this.storage.get('seed'), this.storage.get('wallet'), this.storage.get('multisig_addresses'), this.storage.get('multisigs'), this.storage.get('plugins')])
-            .then(([seed, wallet, multisig_addresses, multisigs, plugins]) => {
+        return Promise.all([this.storage.get('seed'), this.storage.get('wallet'), this.storage.get('multisig_addresses'), this.storage.get('multisigs'), this.storage.get('plugins'), this.storage.get('xpub')])
+            .then(([seed, wallet, multisig_addresses, multisigs, plugins, xpub]) => {
                 let new_account_content = {
                     seed: seed,
                     wallet: wallet,
                     multisig_addresses: multisig_addresses ? multisig_addresses : [],
                     multisigs: multisigs ? multisigs : [],
-                    plugins: plugins ? plugins : []
+                    plugins: plugins ? plugins : [],
+                    xpub: xpub ? xpub : [],
                 }
                 return this.crypto.encrypt(JSON.stringify(new_account_content), password)
                     .then((content) => this.storage.set('account_info', content))
@@ -333,7 +334,7 @@ export class WalletServiceProvider {
     }
 
     setupAccount(accountName, decryptedAccount) {
-        return Promise.all([this.setWallet(decryptedAccount.wallet), this.setMobileWallet(decryptedAccount.seed), this.setAccountName(accountName), this.setMultisigAddresses(decryptedAccount.multisig_addresses), this.setMultisigInfo(decryptedAccount.multisigs), this.setPlugins(decryptedAccount.plugins)])
+        return Promise.all([this.setWallet(decryptedAccount.wallet), this.setMobileWallet(decryptedAccount.seed), this.setAccountName(accountName), this.setMultisigAddresses(decryptedAccount.multisig_addresses), this.setMultisigInfo(decryptedAccount.multisigs), this.setPlugins(decryptedAccount.plugins), this.setXpub(decryptedAccount.xpub)])
             .catch((error) => {
                 console.error(error)
                 throw Error('ERR_SETUP_ACCOUNT')
@@ -444,6 +445,14 @@ export class WalletServiceProvider {
             .catch((error) => {
                 return undefined
             })
+    }
+
+    setXpub(xpub) {
+        return this.storage.set('xpub', xpub)
+    }
+
+    getXpub() {
+        return this.storage.get('xpub')
     }
 
 }

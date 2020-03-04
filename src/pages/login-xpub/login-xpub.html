@@ -18,6 +18,9 @@
             </ion-item>
         </ion-row>
         <ion-item *ngIf="xpub && !validXpub" no-lines class="wrong-input center-psw">{{"XPUB.INVALID_XPUB" | translate}}</ion-item>
+        <ion-item *ngIf="xpub && validXpub" no-lines class="valid-input center-psw">
+                <span [translate]="'XPUB.VALID_XPUB'" [translateParams]="{address: addresses[0]}"></span>
+        </ion-item>
 
         <ion-row class="button more-top-padding">
             <button ion-button icon-left full [disabled]="!validXpub" (click)="login(xpub)">

@@ -823,5 +823,6 @@
     "OPEN_WALLET_VIEW_ONLY": "Open view only",
     "XPUB.PUBLIC_KEY": "Public key",
     "XPUB.INVALID_XPUB": "Invalid public key. please make sure you are using the right format (starting with 'xpub')",
-    "XPUB.INFORMATION": "Use your public key to import an account in View only mode. You will be able to receive assets and see your addresses, balances and history, but you will not be able to send assets."
+    "XPUB.INFORMATION": "Use your public key to import an account in View only mode. You will be able to receive assets and see your addresses, balances and history, but you will not be able to send assets.",
+    "XPUB.VALID_XPUB": "Ready to open account starting with addresses {{address}}"
 }

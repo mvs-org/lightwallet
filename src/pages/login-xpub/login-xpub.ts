@@ -13,7 +13,7 @@ import { AlertProvider } from '../../providers/alert/alert';
 })
 export class LoginXpubPage {
 
-    walletObj: any
+    addresses: Array<string>
     validXpub: boolean = false
 
     constructor(public nav: NavController,
@@ -26,8 +26,8 @@ export class LoginXpubPage {
 
     login(xpub) {
         this.alert.showLoading()
-            .then(() => this.wallet.generateAddresses(this.walletObj, 0, this.globals.index))
-            .then((addresses) => this.mvs.addAddresses(addresses))
+            .then(() => this.wallet.setXpub(xpub))
+            .then(() => this.mvs.addAddresses(this.addresses))
             .then(() => this.alert.stopLoading())
             .then(() => this.nav.setRoot("LoadingPage", { reset: true }))
             .catch((error) => {
@@ -53,8 +53,9 @@ export class LoginXpubPage {
             return
         }
         return this.wallet.getWalletFromMasterPublicKey(xpub)
-            .then((wallet) => {
-                this.walletObj = wallet
+            .then((wallet) => this.wallet.generateAddresses(wallet, 0, this.globals.index))
+            .then((addresses) => {
+                this.addresses = addresses
                 this.validXpub = true
             })
             .catch((error) => {
