@@ -13,9 +13,9 @@ export class ExportWalletPage {
     showQRCode: boolean;
 
     constructor(public nav: NavController, private walletService: WalletServiceProvider) {
-      this.connectcode = "";
-      this.gencode();
-      this.showQRCode = false;
+        this.connectcode = "";
+        this.gencode();
+        this.showQRCode = false;
     }
 
     ionViewDidEnter() {
@@ -27,11 +27,11 @@ export class ExportWalletPage {
             })
     }
 
-    gencode = () =>{
+    gencode = () => {
         this.walletService.exportWallet()
-        .then((content)=>{
-            this.connectcode=content;
-        });
+            .then((content) => {
+                this.connectcode = content;
+            });
     }
 
 }

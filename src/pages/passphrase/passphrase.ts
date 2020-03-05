@@ -51,7 +51,7 @@ export class PassphrasePage {
     encrypt(password) {
         this.alert.showLoading();
         let wallet = {};
-        wallet = { "index": 10 }
+        wallet = { "index": this.globals.index }
         this.wallet.setWallet(wallet)
             .then((wallet) => this.wallet.setSeedMobile(password, this.mnemonic))
             .then((seed) => this.wallet.setMobileWallet(seed))

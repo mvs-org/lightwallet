@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, ModalController } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
+import { AppGlobals } from '../../app/app.global';
 
 @IonicPage({
     name: 'receive-page',
@@ -29,6 +30,7 @@ export class ReceivePage {
         private mvs: MvsServiceProvider,
         public modalCtrl: ModalController,
         public wallet: WalletServiceProvider,
+        private globals: AppGlobals,
     ) {
         this.addressbalances = {};
         this.selectedAsset = this.navParams.get('asset')
@@ -86,7 +88,6 @@ export class ReceivePage {
     async addAddress() {
         this.addresses = await this.wallet.generateAddresses(this.walletFromXpub, 0, this.addresses.length + 1)
         this.mvs.setAddresses(this.addresses)
-        this.wallet.setAddressIndex(this.addresses.length)
     }
 
     addAddresses = () => this.navCtrl.push('generate-address-page')

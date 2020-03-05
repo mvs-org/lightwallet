@@ -15,8 +15,9 @@ import { AppGlobals } from '../../app/app.global';
 })
 export class GenerateAddressPage {
 
-    index: number;
-    passphrase: string;
+    index: number
+    passphrase: string
+    walletFromXpub: any
 
     constructor(
         public navCtrl: NavController,
@@ -32,6 +33,14 @@ export class GenerateAddressPage {
         console.log('ionViewDidLoad GenerateAddressPage');
         this.wallet.getAddressIndex()
             .then(index => this.index = index)
+
+        this.wallet.getXpub()
+            .then((xpub) => {
+                if (xpub) {
+                    this.wallet.getWalletFromMasterPublicKey(xpub)
+                        .then((wallet) => this.walletFromXpub = wallet)
+                }
+            })
     }
 
     cancel() {
@@ -40,19 +49,18 @@ export class GenerateAddressPage {
 
     setIndex = () => {
         this.alert.showLoading()
-            .then(() => this.wallet.getWallet(this.passphrase))
+            .then(() => this.walletFromXpub || this.wallet.getWallet(this.passphrase))
             .then(wallet => {
-                let addresses = this.wallet.generateAddresses(wallet, 0, this.index )
+                let addresses = this.wallet.generateAddresses(wallet, 0, this.index)
                 return this.mvs.setAddresses(addresses)
             })
-            .then(() => this.wallet.setAddressIndex(this.index))
             .then(() => this.wallet.saveSessionAccount(this.passphrase))
             .then(() => this.alert.stopLoading())
             .then(() => this.navCtrl.setRoot("LoadingPage", { reset: true }))
-            .catch(error=>{
+            .catch(error => {
                 console.error(error)
                 this.alert.stopLoading()
-                switch(error.message){
+                switch (error.message) {
                     case "ERR_DECRYPT_WALLET":
                         this.alert.showError('MESSAGE.PASSWORD_WRONG', '')
                         break;

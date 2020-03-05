@@ -136,18 +136,18 @@ export class WalletServiceProvider {
             })
     }
 
-
-    setAddressIndex(index) {
-        return this.storage.get('wallet')
-            .then((wallet) => {
-                wallet.index = index
-                return this.storage.set('wallet', wallet)
+    getAddressIndex() {
+        return this.storage.get('addresses')
+            .then((addresses) => {
+                if(addresses) {
+                    return addresses.length
+                }
             })
     }
 
-    getAddressIndex() {
+    getAddressIndexFromWallet() {
         return this.storage.get('wallet')
-            .then((wallet) => wallet.index)
+            .then((wallet) => wallet && wallet.index ? wallet.index : undefined)
     }
 
     generateNewAddress(wallet: any, index: number) {
@@ -293,7 +293,7 @@ export class WalletServiceProvider {
                     multisig_addresses: multisig_addresses ? multisig_addresses : [],
                     multisigs: multisigs ? multisigs : [],
                     plugins: plugins ? plugins : [],
-                    xpub: xpub ? xpub : [],
+                    xpub: xpub ? xpub : '',
                 }
                 return this.crypto.encrypt(JSON.stringify(new_account_content), password)
                     .then((content) => this.storage.set('account_info', content))
@@ -360,12 +360,13 @@ export class WalletServiceProvider {
     }
 
     getAccountParams() {
-        return Promise.all([this.storage.get('asset_order'), this.storage.get('hidden_mst'), this.storage.get('plugins')])
-            .then(([asset_order, hidden_mst, plugins]) => {
+        return Promise.all([this.storage.get('asset_order'), this.storage.get('hidden_mst'), this.storage.get('plugins'), this.getAddressIndex()])
+            .then(([asset_order, hidden_mst, plugins, index]) => {
                 let params = {}
                 params['asset_order'] = asset_order ? asset_order : []
                 params['hidden_mst'] = hidden_mst ? hidden_mst : []
                 params['plugins'] = plugins ? plugins : []
+                params['index'] = index ? index : this.globals.index
                 return params
             })
     }
