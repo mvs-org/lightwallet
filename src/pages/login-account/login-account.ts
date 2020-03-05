@@ -44,6 +44,8 @@ export class LoginAccountPage {
             .then(() => Promise.all([this.wallet.getWallet(password), this.wallet.getAddressIndexFromWallet()]))
             .then(([wallet, indexFromWallet]) => this.wallet.generateAddresses(wallet, 0, account.params.index || indexFromWallet))
             .then((addresses) => this.mvs.addAddresses(addresses))
+            .then(() => this.wallet.getMasterPublicKey(password))
+            .then((xpub) => this.wallet.setXpub(xpub))
             .then(() => this.wallet.saveSessionAccount(password))
             .then(() => this.alert.stopLoading())
             .then(() => this.nav.setRoot("LoadingPage", { reset: true }))
