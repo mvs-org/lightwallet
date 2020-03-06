@@ -211,7 +211,7 @@ export class WalletServiceProvider {
 
     async getMasterPublicKey(passphrase) {
         const seed = await this.getSeed(passphrase)
-        const wallet = await Metaverse.wallet.fromSeed(Buffer.from(seed, 'hex'))
+        const wallet = await Metaverse.wallet.fromSeed(Buffer.from(seed, 'hex'), Metaverse.networks[this.globals.network])
         return wallet.getMasterPublicKey()
     }
 

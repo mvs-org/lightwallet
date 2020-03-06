@@ -49,7 +49,7 @@ export class LoginXpubPage {
     }
 
     xpubValid = (xpub) => {
-        if(!xpub || !xpub.startsWith("xpub")) {
+        if(!xpub || !(xpub.startsWith('xpub') || xpub.startsWith('tpub'))) {
             this.validXpub = false
             return
         }
