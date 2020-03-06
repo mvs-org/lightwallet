@@ -124,7 +124,6 @@ export class WalletServiceProvider {
         return await this.crypto.decrypt(seed, passphrase)
     }
 
-
     exportWallet() {
         return Promise.all([this.storage.get('seed'), this.getAddressIndex()])
             .then((results) => {
@@ -454,6 +453,11 @@ export class WalletServiceProvider {
 
     getXpub() {
         return this.storage.get('xpub')
+    }
+
+    isReadOnly() {
+        return this.storage.get('seed')
+            .then((seed) => seed == null)
     }
 
 }

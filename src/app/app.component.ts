@@ -86,7 +86,11 @@ export class MyETPWallet {
     isLoggedIn(): any {
         return this.storage.get('mvs_addresses')
             .then((addresses) => (addresses != undefined && addresses != null && Array.isArray(addresses) && addresses.length))
+    }
 
+    hasSeed() {
+        return this.storage.get('seed')
+            .then((seed) => seed !== null)
     }
 
     async getNetwork(networkQueryParam) {
@@ -103,10 +107,14 @@ export class MyETPWallet {
     }
 
     setMenu = () => {
-        return this.isLoggedIn()
-            .then((loggedin) => {
-                if (loggedin)
+        console.log("In setmenu")
+        return Promise.all([this.isLoggedIn(), this.hasSeed()])
+            .then(([loggedin, hasseed]) => {
+                console.log(loggedin, hasseed)
+                if (loggedin && hasseed)
                     return this.setPrivateMenu()
+                else if (loggedin && !hasseed)
+                    return this.setReadOnlyMenu()
                 else
                     return this.setPublicMenu()
             })
@@ -139,6 +147,19 @@ export class MyETPWallet {
             { title: 'NEWS', component: "NewsPage", icon: 'paper' },
             { title: 'REPORT_BUG', newtab: 'https://github.com/mvs-org/lightwallet/issues', icon: 'bug' },
             { title: 'INFORMATION.TITLE', component: "InformationPage", icon: 'information-circle' }
+        ].map((entry) => this.addToMenu(entry)))
+    }
+
+    setReadOnlyMenu() {
+        return Promise.all([
+            { title: 'ACCOUNT.TITLE', component: "AccountPage", icon: 'home', root: true },
+            { title: 'AVATARS', component: "AvatarsPage", icon: 'person' },
+            { title: 'REGISTER_MST', component: "AssetIssuePage", icon: 'globe' },
+            { title: 'REGISTER_MIT', component: "MITRegisterPage", icon: 'create' },
+            { title: 'NEWS', component: "NewsPage", icon: 'paper' },
+            { title: 'ADVANCED', component: "AdvancedPage", icon: 'settings' },
+            { title: 'SETTINGS', component: "SettingsPage", icon: 'options' },
+            { title: 'REPORT_BUG', component: "ReportPage", icon: 'bug' }
         ].map((entry) => this.addToMenu(entry)))
     }
 
