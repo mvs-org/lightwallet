@@ -47,14 +47,15 @@ export class GenerateAddressPage {
         this.navCtrl.pop();
     }
 
-    setIndex = () => {
+    setIndexFromWallet = () => {
         this.alert.showLoading()
-            .then(() => this.walletFromXpub || this.wallet.getWallet(this.passphrase))
+            .then(() => this.wallet.getWallet(this.passphrase))
             .then(wallet => {
                 let addresses = this.wallet.generateAddresses(wallet, 0, this.index)
                 return this.mvs.setAddresses(addresses)
             })
-            .then(() => this.wallet.saveSessionAccount(this.passphrase))
+            .then(() => this.wallet.getMasterPublicKey(this.passphrase))
+            .then((xpub) => this.wallet.setXpub(xpub))
             .then(() => this.alert.stopLoading())
             .then(() => this.navCtrl.setRoot("LoadingPage", { reset: true }))
             .catch(error => {
@@ -69,10 +70,31 @@ export class GenerateAddressPage {
                         break;
                 }
             })
-
     }
 
-    validIndex = (index: number) => index >= 1 && index <= this.globals.max_addresses
+    setIndexFromXpub = () => {
+        this.alert.showLoading()
+            .then(() => {
+                let addresses = this.wallet.generateAddresses(this.walletFromXpub, 0, this.index)
+                return this.mvs.setAddresses(addresses)
+            })
+            .then(() => this.alert.stopLoading())
+            .then(() => this.navCtrl.setRoot("LoadingPage", { reset: true }))
+            .catch(error => {
+                console.error(error)
+                this.alert.stopLoading()
+                switch (error.message) {
+                    case "ERR_DECRYPT_WALLET":
+                        this.alert.showError('MESSAGE.PASSWORD_WRONG', '')
+                        break;
+                    default:
+                        this.alert.showError('GENERATE_ADDRESSES.ERROR', error.message)
+                        break;
+                }
+            })
+    }
+
+    validIndex = (index: number) => index >= 2 && index <= this.globals.max_addresses
 
     validPassword = (passphrase: string) => (passphrase) ? passphrase.length > 3 : false
 

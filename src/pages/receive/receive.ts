@@ -21,7 +21,6 @@ export class ReceivePage {
     displayType: string;
     base: string
     tickers = {}
-    walletFromXpub: any
 
     constructor(
         private navCtrl: NavController,
@@ -42,14 +41,6 @@ export class ReceivePage {
                     this.navCtrl.setRoot("LoginPage")
                 else
                     this.showBalances()
-            })
-
-        this.wallet.getXpub()
-            .then((xpub) => {
-                if(xpub) {
-                    this.wallet.getWalletFromMasterPublicKey(xpub)
-                        .then((wallet) => this.walletFromXpub = wallet)
-                }
             })
 
     }
@@ -84,11 +75,6 @@ export class ReceivePage {
     }
 
     canAddAddress = () => this.platform.isPlatformMatch('mobile') && !this.platform.isPlatformMatch('mobileweb')
-
-    async addAddress() {
-        this.addresses = await this.wallet.generateAddresses(this.walletFromXpub, 0, this.addresses.length + 1)
-        this.mvs.setAddresses(this.addresses)
-    }
 
     addAddresses = () => this.navCtrl.push('generate-address-page')
 

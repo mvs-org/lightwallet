@@ -20,7 +20,7 @@
             <ion-item *ngIf="index > globals.max_addresses" no-lines class="wrong-input">
                 <span [translate]="'GENERATE_ADDRESSES.TOO_MANY_ADDRESSES'" [translateParams]="{max_addresses: globals.max_addresses}"></span>
             </ion-item>
-            <ion-item [ngClass]="{'error-border': !validPassword(passphrase)}">
+            <ion-item *ngIf="!walletFromXpub" [ngClass]="{'error-border': !validPassword(passphrase)}">
                 <ion-label color="primary" floating>{{"PASSWORD" | translate}}</ion-label>
                 <ion-input name="passphrase" type="password" [(ngModel)]="passphrase" required></ion-input>
             </ion-item>
@@ -28,7 +28,11 @@
         </ion-list>
         <ion-row class="padding-bottom">
             <ion-col col-12 col-sm-6>
-                <button ion-button full [disabled]="!sendForm.form.valid||!validIndex(index)||!validPassword(passphrase)" (click)="setIndex()" icon-left color="secondary">
+                <button *ngIf="!walletFromXpub" ion-button full [disabled]="!sendForm.form.valid||!validIndex(index)||!validPassword(passphrase)" (click)="setIndexFromWallet()" icon-left color="secondary">
+                    <ion-icon disabled="checked" name="send"></ion-icon>
+                    {{"GENERATE_ADDRESSES.CHANGE_ADDRESS_NUMBER" | translate}}
+                </button>
+                <button *ngIf="walletFromXpub" ion-button full [disabled]="!sendForm.form.valid||!validIndex(index)" (click)="setIndexFromXpub()" icon-left color="secondary">
                     <ion-icon disabled="checked" name="send"></ion-icon>
                     {{"GENERATE_ADDRESSES.CHANGE_ADDRESS_NUMBER" | translate}}
                 </button>
