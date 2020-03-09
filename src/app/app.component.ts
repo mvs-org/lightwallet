@@ -107,10 +107,8 @@ export class MyETPWallet {
     }
 
     setMenu = () => {
-        console.log("In setmenu")
         return Promise.all([this.isLoggedIn(), this.hasSeed()])
             .then(([loggedin, hasseed]) => {
-                console.log(loggedin, hasseed)
                 if (loggedin && hasseed)
                     return this.setPrivateMenu()
                 else if (loggedin && !hasseed)
