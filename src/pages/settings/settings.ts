@@ -13,9 +13,10 @@ import { AlertProvider } from '../../providers/alert/alert';
 })
 export class SettingsPage {
 
-    connectcode: any;
-    network: string;
-    saved_accounts_name: any = [];
+    connectcode: any
+    network: string
+    saved_accounts_name: any = []
+    isReadOnly: boolean
 
     constructor(
         public nav: NavController,
@@ -30,6 +31,10 @@ export class SettingsPage {
 
         this.wallet.getSavedAccounts()
             .then((accounts) => this.saved_accounts_name = (accounts && accounts.length >= 1) ? accounts.map(account => account.name) : [])
+
+        this.wallet.isReadOnly()
+            .then((isReadOnly) => this.isReadOnly = isReadOnly)
+
     }
 
     ionViewDidEnter() {
@@ -61,7 +66,7 @@ export class SettingsPage {
     logout() {
         this.wallet.getSessionAccountInfo()
             .then((account_info) => {
-                if (account_info) {
+                if(account_info || this.isReadOnly) {
                     this.alert.showLogout(this.saveAccountHandler, this.forgetAccountHandler)
                 } else {
                     this.alert.showLogoutNoAccount(() => this.mvs.hardReset()

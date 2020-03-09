@@ -32,8 +32,9 @@
         </ion-row>
         <ng-container *ngFor="let account of saved_accounts">
             <ion-row class="browser-button" *ngIf="account.network == globals.network || (!account.network && globals.network=='mainnet')">
-                <button ion-button class="large-btn account-btn" block full icon-left (click)="LoginAccountPage(account);">
-                    <ion-icon name="contact"></ion-icon>
+                <button ion-button class="large-btn account-btn" block full icon-left (click)="LoginAccount(account);">
+                    <ion-icon *ngIf="account.content" name="contact"></ion-icon>
+                    <ion-icon *ngIf="!account.content && account.view_only_content" name="eye"></ion-icon>
                     {{account.name}}
                 </button>
             </ion-row>

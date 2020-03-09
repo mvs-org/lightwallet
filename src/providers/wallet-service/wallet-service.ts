@@ -303,9 +303,26 @@ export class WalletServiceProvider {
             })
     }
 
+    getViewOnlySessionAccount() {
+        return Promise.all([this.storage.get('multisig_addresses'), this.storage.get('multisigs'), this.storage.get('plugins'), this.storage.get('xpub')])
+            .then(([multisig_addresses, multisigs, plugins, xpub]) => {
+                let new_account_content = {
+                    multisig_addresses: multisig_addresses ? multisig_addresses : [],
+                    multisigs: multisigs ? multisigs : [],
+                    plugins: plugins ? plugins : [],
+                    xpub: xpub ? xpub : '',
+                }
+                return new_account_content
+            })
+            .catch((error) => {
+                console.error(error)
+                throw Error('ERR_SAVE_VIEW_ONLY_SESSION_ACCOUNT')
+            })
+    }
+
     saveAccount(account_name) {
-        return Promise.all([this.getSavedAccounts(), this.getSessionAccountInfo(), this.getAccountParams()])
-            .then(([saved_accounts, content, params]) => {
+        return Promise.all([this.getSavedAccounts(), this.getSessionAccountInfo(), this.getAccountParams(), this.getViewOnlySessionAccount()])
+            .then(([saved_accounts, content, params, view_only_content]) => {
                 let old_account_index = -1;
                 if (saved_accounts) {
                     saved_accounts.find((o, i) => {
@@ -315,12 +332,12 @@ export class WalletServiceProvider {
                         }
                     });
                 }
-
                 let new_account = {
                     "name": account_name,
-                    "content": content,
+                    "content": content ? content : undefined,
                     "params": params,
                     "network": this.globals.network,
+                    "view_only_content": content ? undefined : view_only_content,
                     "type": "AES"
                 }
                 old_account_index > -1 ? saved_accounts[old_account_index] = new_account : saved_accounts.push(new_account);
@@ -337,6 +354,14 @@ export class WalletServiceProvider {
             .catch((error) => {
                 console.error(error)
                 throw Error('ERR_SETUP_ACCOUNT')
+            })
+    }
+
+    setupViewOnlyAccount(accountName, decryptedAccount) {
+        return Promise.all([this.setAccountName(accountName), this.setMultisigAddresses(decryptedAccount.multisig_addresses), this.setMultisigInfo(decryptedAccount.multisigs), this.setPlugins(decryptedAccount.plugins), this.setXpub(decryptedAccount.xpub)])
+            .catch((error) => {
+                console.error(error)
+                throw Error('ERR_SETUP_VIEW_ONLY_ACCOUNT')
             })
     }
 

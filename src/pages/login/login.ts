@@ -4,6 +4,8 @@ import { AppGlobals } from '../../app/app.global';
 import { Storage } from '@ionic/storage';
 import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
 import { TranslateService } from '@ngx-translate/core';
+import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
+import { AlertProvider } from '../../providers/alert/alert';
 
 @IonicPage()
 @Component({
@@ -26,6 +28,8 @@ export class LoginPage {
         private wallet: WalletServiceProvider,
         private navParams: NavParams,
         private translate: TranslateService,
+        public mvs: MvsServiceProvider,
+        private alert: AlertProvider,
     ) {
         this.isApp = (!document.URL.startsWith('http') || document.URL.startsWith('http://localhost:8080'));
 
@@ -37,10 +41,10 @@ export class LoginPage {
         this.loadNetwork()
     }
 
-    getLogoClasses(){
-        return{
+    getLogoClasses() {
+        return {
             banner: true,
-            china: this.translate.currentLang=='zh'
+            china: this.translate.currentLang == 'zh'
         }
     }
 
@@ -61,7 +65,7 @@ export class LoginPage {
             this.network = this.globals.network;
             this.event.publish('network_update', { network: this.network })
             return network;
-    });
+        });
 
     switchTheme = e => this.nav.push("ThemeSwitcherPage")
 
@@ -73,6 +77,39 @@ export class LoginPage {
 
     howToMobile = () => this.nav.push("HowToMobilePage")
 
+    LoginAccount(account) {
+        if (account.content) {
+            this.LoginAccountPage(account)
+        } else {
+            this.loginAccountViewOnly(account.name, account.view_only_content)
+        }
+    }
+
     LoginAccountPage = (account) => this.nav.push("LoginAccountPage", { account: account })
+
+    loginAccountViewOnly(account_name, content) {
+        this.alert.showLoading()
+            .then(() => this.wallet.getWalletFromMasterPublicKey(content.xpub))
+            .then((wallet) => this.wallet.generateAddresses(wallet, 0, this.globals.index))
+            .then((addresses) => this.mvs.addAddresses(addresses))
+            .then(() => this.wallet.setupViewOnlyAccount(account_name, content))
+            .then(() => this.alert.stopLoading())
+            .then(() => this.nav.setRoot("LoadingPage", { reset: true }))
+            .catch((error) => {
+                console.error(error.message)
+                this.alert.stopLoading()
+                switch (error.message) {
+                    case "ERR_DECRYPT_WALLET":
+                        this.alert.showError('MESSAGE.PASSWORD_WRONG', '')
+                        break;
+                    case "ERR_ACCOUNT_NAME_UNKNOWN":
+                        this.alert.showError('MESSAGE.ERR_ACCOUNT_NAME_UNKNOWN', '')
+                        break;
+                    default:
+                        this.alert.showError('MESSAGE.ERR_IMPORT_ACCOUNT', error.message)
+                        break;
+                }
+            })
+    }
 
 }
