@@ -12,7 +12,7 @@ import { WalletServiceProvider } from '../../providers/wallet-service/wallet-ser
 export class AdvancedPage {
 
     network: string
-    isReadOnly: boolean
+    hasSeed: boolean
 
     constructor(
         public nav: NavController,
@@ -23,8 +23,8 @@ export class AdvancedPage {
     ) {
         this.network = this.globals.network
 
-        this.wallet.isReadOnly()
-            .then((isReadOnly) => this.isReadOnly = isReadOnly)
+        this.wallet.hasSeed()
+            .then((hasSeed) => this.hasSeed = hasSeed)
     }
 
     ionViewDidEnter() {

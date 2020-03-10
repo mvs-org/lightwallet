@@ -47,12 +47,12 @@ export class ConfirmTxPage {
         const multisigAddresses = await this.wallet.getMultisigAddresses()
         this.addresses = addresses.concat(multisigAddresses)
 
-        this.wallet.isReadOnly()
-            .then((isReadOnly) => {
-                if(isReadOnly) {
-                    this.walletType = 'readOnly'
-                } else {
+        this.wallet.hasSeed()
+            .then((hasSeed) => {
+                if(hasSeed) {
                     this.walletType = 'hasSeed'
+                } else {
+                    this.walletType = 'readOnly'
                 }
             })
     }
