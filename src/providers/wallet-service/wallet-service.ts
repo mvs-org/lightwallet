@@ -126,8 +126,8 @@ export class WalletServiceProvider {
 
     exportWallet() {
         return Promise.all([this.storage.get('seed'), this.getAddressIndex()])
-            .then((results) => {
-                return results[0] + "&" + this.globals.network.charAt(0) + "&" + results[1]
+            .then(([seed, index]) => {
+                return seed + '&' + this.globals.network.charAt(0) + '&' + index + '&'
             })
             .catch((error) => {
                 console.error(error)
@@ -135,8 +135,19 @@ export class WalletServiceProvider {
             })
     }
 
+    exportWalletViewOnly() {
+        return Promise.all([this.getAddressIndex(), this.storage.get('xpub')])
+            .then(([index, xpub]) => {
+                return '' + '&' + this.globals.network.charAt(0) + '&' + index + '&' + xpub
+            })
+            .catch((error) => {
+                console.error(error)
+                throw Error('ERR_EXPORT_VIEW_ONLY_WALLET')
+            })
+    }
+
     getAddressIndex() {
-        return this.storage.get('addresses')
+        return this.storage.get('mvs_addresses')
             .then((addresses) => {
                 if(addresses) {
                     return addresses.length
@@ -480,9 +491,9 @@ export class WalletServiceProvider {
         return this.storage.get('xpub')
     }
 
-    isReadOnly() {
+    hasSeed() {
         return this.storage.get('seed')
-            .then((seed) => seed == null)
+            .then((seed) => seed !== null && seed !== undefined)
     }
 
 }

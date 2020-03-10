@@ -26,7 +26,7 @@ export class AccountPage {
     domains: any = []
     whitelist: any = []
     saved_accounts_name: any = []
-    isReadOnly: boolean
+    hasSeed: boolean
 
     private syncinterval: any;
 
@@ -53,8 +53,8 @@ export class AccountPage {
         this.wallet.getSavedAccounts()
             .then((accounts) => this.saved_accounts_name = (accounts && accounts.length >= 1) ? accounts.map(account => account.name) : [])
 
-        this.wallet.isReadOnly()
-            .then((isReadOnly) => this.isReadOnly = isReadOnly)
+        this.wallet.hasSeed()
+            .then((hasSeed) => this.hasSeed = hasSeed)
 
     }
 
@@ -124,7 +124,7 @@ export class AccountPage {
     logout() {
         this.wallet.getSessionAccountInfo()
             .then((account_info) => {
-                if(account_info || this.isReadOnly) {
+                if(account_info || !this.hasSeed) {
                     this.alert.showLogout(this.saveAccountHandler, this.forgetAccountHandler)
                 } else {
                     this.alert.showLogoutNoAccount(() => this.mvs.hardReset()

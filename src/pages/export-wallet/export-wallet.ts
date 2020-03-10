@@ -9,28 +9,39 @@ import { WalletServiceProvider } from '../../providers/wallet-service/wallet-ser
 })
 export class ExportWalletPage {
 
-    connectcode: any;
-    showQRCode: boolean;
+    connectcode: any = ''
+    showQRCode: boolean = false
+    hasSeed: boolean
+    hasXpub: boolean
 
-    constructor(public nav: NavController, private walletService: WalletServiceProvider) {
-        this.connectcode = "";
-        this.gencode();
-        this.showQRCode = false;
+    constructor(
+        public nav: NavController,
+        private wallet: WalletServiceProvider,
+    ) {
+        this.wallet.getXpub()
+            .then((xpub) => this.hasXpub = (xpub !== null && xpub !== undefined))
+
+        this.wallet.hasSeed()
+            .then((hasSeed) => this.hasSeed = hasSeed)
     }
 
     ionViewDidEnter() {
         console.log('Export wallet page loaded')
-        this.walletService.isSetup()
-            .then((result) => {
-                if (!result)
-                    this.nav.setRoot("LoginPage")
-            })
     }
 
-    gencode = () => {
-        this.walletService.exportWallet()
+    exportWallet = () => {
+        this.wallet.exportWallet()
             .then((content) => {
-                this.connectcode = content;
+                this.connectcode = content
+                this.showQRCode = true
+            });
+    }
+
+    exportViewOnlyWallet = () => {
+        this.wallet.exportWalletViewOnly()
+            .then((content) => {
+                this.connectcode = content
+                this.showQRCode = true
             });
     }
 
