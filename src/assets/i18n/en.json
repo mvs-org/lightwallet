@@ -826,5 +826,7 @@
     "XPUB.INFORMATION": "Use your public key to import an account in View only mode. You will be able to receive assets and see your addresses, balances and history, but you will not be able to send assets.",
     "XPUB.VALID_XPUB": "Ready to open account starting with addresses {{address}}",
     "TRANSACTION_PREVIEW.TEXT_UNSIGNED": "Your unsigned encoded transaction is:",
-    "RETURN_TO_HOME": "Return to home"
+    "RETURN_TO_HOME": "Return to home",
+    "IMPORT.SHOW_FULL_WALLET_QRCODE_BUTTON": "Export full wallet",
+    "IMPORT.SHOW_VIEW_ONLY_QRCODE_BUTTON": "Export view only wallet"
 }
