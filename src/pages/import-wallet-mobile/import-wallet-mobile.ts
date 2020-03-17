@@ -36,7 +36,6 @@ export class ImportWalletMobilePage {
     passwordValid = (password) => (password) ? password.length > 0 : false;
 
     scan() {
-        let wallet = {};
         this.alert.showLoading()
             .then(() => {
                 this.translate.get(['SCANNING.MESSAGE_ACCOUNT']).subscribe((translations: any) => {

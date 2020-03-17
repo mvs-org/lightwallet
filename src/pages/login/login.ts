@@ -81,16 +81,18 @@ export class LoginPage {
         if (account.content) {
             this.LoginAccountPage(account)
         } else {
-            this.loginAccountViewOnly(account.name, account.view_only_content)
+            this.loginAccountViewOnly(account)
         }
     }
 
     LoginAccountPage = (account) => this.nav.push("LoginAccountPage", { account: account })
 
-    loginAccountViewOnly(account_name, content) {
+    loginAccountViewOnly(account) {
+        let account_name = account.name
+        let content = account.view_only_content
         this.alert.showLoading()
             .then(() => this.wallet.getWalletFromMasterPublicKey(content.xpub))
-            .then((wallet) => this.wallet.generateAddresses(wallet, 0, this.globals.index))
+            .then((wallet) => this.wallet.generateAddresses(wallet, 0, account.params.index || this.globals.index))
             .then((addresses) => this.mvs.addAddresses(addresses))
             .then(() => this.wallet.setupViewOnlyAccount(account_name, content))
             .then(() => this.alert.stopLoading())
