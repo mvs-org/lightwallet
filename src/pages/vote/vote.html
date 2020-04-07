@@ -39,12 +39,13 @@
             </ion-col>
         </div>
 
-        <ion-row *ngIf="!loadingElectionInfo && !updateRequired && (!earlybirdInfo || !earlybirdInfo.candidates || earlybirdInfo.candidates.length == 0 || (!earlybirdInfo.voteEnabled && !earlybirdInfo.revoteEnabled))">
+        <ion-row *ngIf="!loadingElectionInfo && !updateRequired && (!earlybirdInfo || !earlybirdInfo.candidates || earlybirdInfo.candidates.length == 0 || (!earlybirdInfo.voteEnabled && !earlybirdInfo.revoteEnabled && !earlybirdInfo.secondaryVoteEnabled))">
             <ion-col>
                 <p class="no-candidates">{{"VOTE.NO_ELECTION" | translate}}</p>
             </ion-col>
         </ion-row>
 
+        <!--Supernode round A-->
         <div *ngIf="!loadingElectionInfo && !updateRequired && earlybirdInfo && earlybirdInfo.candidates && earlybirdInfo.candidates.length > 0 && earlybirdInfo.revoteEnabled">
             <h1 class="center">
                 <span *ngIf="earlybirdInfo && earlybirdInfo.currentPeriod" [translate]="'VOTE.ELECTION_AND_ROUND'" [translateParams]="{election: earlybirdInfo.currentPeriod, round: 'A'}"></span> 
@@ -178,6 +179,7 @@
             </ion-item>
         </div>
 
+        <!--Supernode Round B-->
         <div *ngIf="!loadingElectionInfo && !updateRequired && earlybirdInfo && earlybirdInfo.candidates && earlybirdInfo.candidates.length > 0 && earlybirdInfo.voteEnabled">
             <p align="center" *ngIf="etpBalance<fee/100000000" class="wrong-input">{{"NOTICE_TRANSACTION_FEE_UNCOVERED"|translate}}</p>
             <h1 class="center">
@@ -300,6 +302,129 @@
                     <ion-col>
                         <button type="submit" ion-button full icon-left [disabled]="!sendForm.form.valid||!candidate||!validQuantity(quantity)||!validMessageLength(message)||!validFromAddress(sendFrom)"
                             (click)="send()" color="secondary">
+                            <ion-icon disabled="checked" name="cog"></ion-icon>
+                            {{'BUTTON.NEXT'|translate}}
+                        </button>
+                    </ion-col>
+                    <ion-col>
+                        <button ion-button color="danger" full item-right icon-left (click)="cancel($event)">
+                            <ion-icon name="close"></ion-icon>
+                            {{'CANCEL'|translate}}
+                        </button>
+                    </ion-col>
+                </ion-row>
+            </form>
+        </div>
+
+        <!--Secondary nodes election-->
+        <div *ngIf="!loadingElectionInfo && !updateRequired && earlybirdInfo && earlybirdInfo.secondaryCandidates && earlybirdInfo.secondaryCandidates.length > 0 && earlybirdInfo.secondaryVoteEnabled">
+            <p align="center" *ngIf="etpBalance<fee/100000000" class="wrong-input">{{"NOTICE_TRANSACTION_FEE_UNCOVERED"|translate}}</p>
+            <h1 class="center">
+                <span [translate]="'VOTE.SECONDARY_ELECTION'"></span> 
+            </h1>
+            <ion-row>
+                <ion-col>
+                    <p class="available">{{"AVAILABLE_BALANCE" | translate}}: <br *ngIf="platform.is('mobile')">{{showBalance
+                        | format : decimals}} {{selectedAsset}}</p>
+                </ion-col>
+                <ion-col>
+                    <p class="right">{{"FEE"|translate}}:<br *ngIf="platform.is('mobile')"> {{fee | format : 8}} ETP</p>
+                </ion-col>
+            </ion-row>
+
+            <form #secondarySendForm="ngForm" style="padding-bottom: 0;">
+                <ion-list style="padding-bottom: 0;">
+                    <ion-item class="election-progress" *ngIf="secondaryVoteStartTimestamp && earlybirdInfo && earlybirdInfo.secondaryVoteEnabledUntil">
+                        <ion-row>
+                            <ion-col>
+                                <p>{{"VOTE.START" | translate}}: <br *ngIf="platform.is('mobile')">
+                                    {{secondaryVoteStartTimestamp*1000 | date : 'medium'}}</p>
+                            </ion-col>
+                            <ion-col>
+                                <p class="right">{{"VOTE.END"|translate}}:<br *ngIf="platform.is('mobile')">
+                                    ~{{earlybirdInfo.secondaryVoteEnabledUntil*1000 | date : 'medium'}}</p>
+                            </ion-col>
+                        </ion-row>
+                        <progress-bar [progress]="secondaryElectionProgress || 0"></progress-bar>
+                    </ion-item>
+                    <br>
+                    <ion-item [ngClass]="{'error-border':!secondaryCandidate}">
+                        <ion-label>{{"VOTE.SELECT_DELEGATE"|translate}}</ion-label>
+                        <ion-select [(ngModel)]="secondaryCandidate" name="secondaryCandidate" multiple="false" okText="{{'OK'|translate}}"
+                            cancelText="{{'CANCEL'|translate}}">
+                            <ng-container *ngFor="let secondaryCandidate of earlybirdInfo.secondaryCandidates">
+                                <ion-option value="{{secondaryCandidate}}">{{secondaryCandidate}}</ion-option>
+                            </ng-container>
+                        </ion-select>
+                    </ion-item>
+
+                    <ion-item [ngClass]="{'error-border':!validQuantity(secondaryQuantity)}">
+                        <ion-label color="primary" floating>{{"AMOUNT" | translate}}</ion-label>
+                        <ion-input #secondaryQuantityInput name="secondaryQuantity" type="number" min="0" [(ngModel)]="secondaryQuantity" required></ion-input>
+                        <button type="button" *ngIf="etpBalance>10000" id="secondarySendAll" ion-button item-right (click)="secondarySendAll()">
+                            {{"LOCK_ALL_BUTTON"|translate}}
+                        </button>
+                    </ion-item>
+                    <ion-item *ngIf="countDecimals(secondaryQuantity) > 0" no-lines class="wrong-input">{{"SEND.TOO_MANY_DECIMALS"
+                        | translate}}</ion-item>
+                    <ion-item class="info-input" no-lines>
+                        <span [translate]="'VOTE.DURATION_ESTIMATION'" [translateParams]="{blocktime: blocktime, duration_days: secondary_duration_days, duration_hours: secondary_duration_hours, unlock_time: secondary_unlock_time | date : 'medium'}"></span>
+                    </ion-item>
+                    <br>
+                    <ion-item [ngClass]="{'error-border':!validFromAddress(sendFrom)}">
+                        <ion-label>{{"SELECT_FROM_ADDRESS"|translate}}</ion-label>
+                        <ion-select [(ngModel)]="sendFrom" name="sendfrom" multiple="false" (ngModelChange)="onFromAddressChange($event)"
+                            okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}">
+                            <ion-option selected="true" value="auto">{{"AUTO"| translate}}</ion-option>
+                            <ng-container *ngFor="let addressbalance of addressbalances">
+                                <ion-option *ngIf="addressbalance.balance>0" value="{{addressbalance.address}}">{{addressbalance.identifier}}
+                                    - {{addressbalance.balance | format : decimals}} {{selectedAsset}}</ion-option>
+                            </ng-container>
+                        </ion-select>
+                    </ion-item>
+                    <ion-item *ngIf="!validFromAddress(sendFrom)" no-lines class="wrong-input">{{"TRANSFER.FROM_ADDRESS_NO_ETP"
+                        | translate}}</ion-item>
+                    <br>
+                    <ion-item class="toggle-input">
+                        <ion-label>{{"SHOW_ADVANCED"|translate}}</ion-label>
+                        <ion-toggle [(ngModel)]="showAdvanced" name="showAdvanced" checked="false"></ion-toggle>
+                    </ion-item>
+                    <div *ngIf="showAdvanced">
+                        <ion-item no-lines>
+                            <ion-label color="primary">{{"FEE" | translate}}</ion-label>
+                            <ion-badge item-end color="primary">{{fee | format : 8}} ETP</ion-badge>
+                        </ion-item>
+                        <ion-item>
+                            <ion-range min="10000" max="10000000" step="10000" color="primary" [(ngModel)]="fee" name="fee"
+                                (ionChange)="updateRange()">
+                                <ion-label range-left>{{10000 | format : 8}}</ion-label>
+                                <ion-label range-right>{{10000000 | format : 8}}</ion-label>
+                            </ion-range>
+                        </ion-item>
+                        <ion-item [ngClass]="{'error-border':!validMessageLength(message), 'valid-border': message.length > 0 && validMessageLength(message)}">
+                            <ion-label floating>{{"MESSAGE" | translate}}</ion-label>
+                            <ion-input name="message" [(ngModel)]="message"></ion-input>
+                        </ion-item>
+                        <div no-lines class="advice">{{"HELP.MESSAGE" | translate}}</div>
+                        <ion-item *ngIf="!validMessageLength(message)" no-lines class="wrong-input">{{"MESSAGE_TOO_LONG"
+                            | translate}}</ion-item>
+                        <br>
+                        <ion-item>
+                            <ion-label>{{"SELECT_CHANGE_ADDRESS"|translate}}</ion-label>
+                            <ion-select [(ngModel)]="changeAddress" name="changeaddress" okText="{{'OK'|translate}}"
+                                cancelText="{{'CANCEL'|translate}}">
+                                <ion-option selected="true" value="auto">{{"AUTO"| translate}}</ion-option>
+                                <ion-option *ngFor="let addressbalance of addressbalances" value="{{addressbalance.address}}">{{addressbalance.identifier}}
+                                    - {{addressbalance.balance | format : decimals}} {{selectedAsset}}</ion-option>
+                            </ion-select>
+                        </ion-item>
+                        <br>
+                    </div>
+                </ion-list>
+                <ion-row class="padding-bottom">
+                    <ion-col>
+                        <button type="submit" ion-button full icon-left [disabled]="!secondarySendForm.form.valid||!secondaryCandidate||!validQuantity(secondaryQuantity)||!validMessageLength(message)||!validFromAddress(sendFrom)"
+                            (click)="secondarySend()" color="secondary">
                             <ion-icon disabled="checked" name="cog"></ion-icon>
                             {{'BUTTON.NEXT'|translate}}
                         </button>
