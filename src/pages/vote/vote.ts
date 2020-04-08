@@ -76,7 +76,8 @@ export class VotePage {
 
     secondaryVoteStartTimestamp: number
     secondaryElectionProgress: number
-    secondaryCandidate: string
+    secondaryCandidateName: string
+    secondaryCandidates: Array<any>
     secondary_duration_days: number = 0
     secondary_duration_hours: number = 0
     secondary_locked_until: number
@@ -166,7 +167,6 @@ export class VotePage {
     getElectionInfo(localHeight) {
         return this.mvs.getElectionInfo()
             .then(earlybirdInfo => {
-                console.log(earlybirdInfo)
                 this.updateRequired = compareVersions(this.globals.version, earlybirdInfo.walletVersionSupport) == -1
                 this.requiredVersion = earlybirdInfo.walletVersionSupport
                 this.height = Math.max(localHeight, earlybirdInfo.height)
@@ -179,6 +179,12 @@ export class VotePage {
                 this.electionProgressVote = Math.round((this.height - this.earlybirdInfo.voteStartHeight) / (this.earlybirdInfo.voteEndHeight - this.earlybirdInfo.voteStartHeight) * 100)
                 this.electionProgressRevote = Math.round((this.height - this.earlybirdInfo.revoteStartHeight) / (this.earlybirdInfo.revoteEndHeight - this.earlybirdInfo.revoteStartHeight) * 100)
                 this.secondaryElectionProgress = Math.round((this.height - this.earlybirdInfo.secondaryElectionStart) / (this.earlybirdInfo.secondaryElectionEnd - this.earlybirdInfo.secondaryElectionStart) * 100)
+                if(earlybirdInfo && earlybirdInfo.secondaryCandidates) {
+                    this.secondaryCandidates = []
+                    earlybirdInfo.secondaryCandidates.forEach((candidate, index) => {
+                        this.secondaryCandidates.push({id: index, name: candidate})
+                    })
+                }
                 return earlybirdInfo.voteStartHeight
             })
             .then((currentVoteStart) => currentVoteStart && currentVoteStart > this.height ? this.mvs.getBlock(currentVoteStart) : 0)
@@ -250,6 +256,10 @@ export class VotePage {
     cancel(e) {
         e.preventDefault()
         this.navCtrl.pop()
+    }
+
+    secondaryCandidateChange(candidate) {
+        this.secondaryCandidateName = candidate.name
     }
 
     create() {
@@ -327,7 +337,7 @@ export class VotePage {
                 let quantity = Math.round(parseFloat(this.secondaryQuantity) * Math.pow(10, this.decimals))
                 let attenuation_model = 'PN=0;LH=' + this.secondaryLockPeriod + ';TYPE=1;LQ=' + quantity + ';LP=' + this.secondaryLockPeriod + ';UN=1'
                 let messages = [];
-                messages.push('vote_secondarynode:' + this.secondaryCandidate)
+                messages.push('vote_secondarynode:' + this.secondaryCandidateName)
                 if (this.message) {
                     messages.push(this.message)
                 }

@@ -17,7 +17,8 @@ import { PluginProvider } from '../providers/plugin/plugin';
 import { EtpBridgeServiceProvider } from '../providers/etp-bridge-service/etp-bridge-service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Deeplinks } from '@ionic-native/deeplinks';
-import { LedgerProvider } from '../providers/ledger/ledger'
+import { LedgerProvider } from '../providers/ledger/ledger';
+import { IonicSelectableModule } from 'ionic-selectable';
 
 
 var pckg = require('../../package.json');
@@ -46,6 +47,7 @@ export function HttpLoaderFactory(http: Http) {
             driverOrder: ['indexeddb', 'localstorage']
         }),
         BrowserAnimationsModule,
+        IonicSelectableModule,
     ],
     bootstrap: [IonicApp],
     entryComponents: [
