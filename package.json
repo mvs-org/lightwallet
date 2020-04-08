@@ -59,7 +59,7 @@
     "ionic-angular": "3.6.1",
     "ionic-plugin-deeplinks": "^1.0.20",
     "ionic-plugin-keyboard": "^2.2.1",
-    "ionic-selectable": "^3.4.0",
+    "ionic-selectable": "3.4.0",
     "ionicons": "3.0.0",
     "metaversejs": "^0.3.91",
     "mvs-blockchain": "^0.1.64",
