@@ -6,6 +6,7 @@ import { AlertProvider } from '../../providers/alert/alert';
 import { PipesModule } from '../../pipes/pipes.module';
 import { ProgressBarModule } from 'angular-progress-bar';
 import { VoteItemModule } from '../../components/vote-item/vote-item.module';
+import { IonicSelectableModule } from 'ionic-selectable';
 
 @NgModule({
     declarations: [
@@ -17,6 +18,7 @@ import { VoteItemModule } from '../../components/vote-item/vote-item.module';
         TranslateModule,
         ProgressBarModule,
         VoteItemModule,
+        IonicSelectableModule,
     ],
     providers:[
         AlertProvider

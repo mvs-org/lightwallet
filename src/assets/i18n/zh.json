@@ -341,7 +341,7 @@
     "GENERATE_ADDRESSES.HEADLINE": "更新地址数量",
     "GENERATE_ADDRESSES.EXPLANATION": "轻钱包（MyETPWallet）使用分层确定性钱包（HD Wallet）从您的助记词生成多个地址。由于您的地址是以确定的方式生成的，如果减少地址数量，稍后也可以通过增加地址数量将其添加回去。它会始终重新生成相同的地址。",
     "GENERATE_ADDRESSES.TOTAL_NUMBER_OF_ADDRESSES": "钱包中的地址数量",
-    "GENERATE_ADDRESSES.TOO_MANY_ADDRESSES": "轻钱包的地址数量上限为50，如果您需要更多的地址数量，请下载桌面版（全节点）钱包。",
+    "GENERATE_ADDRESSES.TOO_MANY_ADDRESSES": "轻钱包的地址数量上限为{{max_addresses}}，如果您需要更多的地址数量，请下载桌面版（全节点）钱包。",
     "GENERATE_ADDRESSES.ERROR": "生成地址时出错",
     "MIT_REGISTER.MIT_SYMBOL_TOO_SHORT": "MIT资产符号至少包含三个字母",
     "HELP.GENERATE_ADDRESSES_NUMBER": "为了确保钱包的安全性，不推荐使用过多的地址。默认的地址数量为10个，上限为50个。",
@@ -819,5 +819,16 @@
     "APPS": "应用",
     "SCAN.PARAMS_EDITABLE_TEXT": "如果允许参数修改，则扫描此QRCode的用户将能够在发送之前修改金额、收款地址和信息",
     "ACCOUNT.UNCONFIRMED": "确认中",
-    "HISTORY.CONFIRMING": "确认中"
+    "HISTORY.CONFIRMING": "确认中",
+    "OPEN_WALLET_VIEW_ONLY": "仅打开只读模式",
+    "XPUB.PUBLIC_KEY": "公钥",
+    "XPUB.INVALID_XPUB": "无效的公钥。请确保您使用的格式正确（以'xpub'开头）",
+    "XPUB.INFORMATION": "使用公用密钥以“只读”模式导入帐户。您将能够接收资产并查看地址，余额和历史记录，但将无法发送资产。",
+    "XPUB.VALID_XPUB": "准备以地址{{address}}建立帐户",
+    "TRANSACTION_PREVIEW.TEXT_UNSIGNED": "您未签名的编码交易是：",
+    "RETURN_TO_HOME": "返回主页",
+    "IMPORT.SHOW_FULL_WALLET_QRCODE_BUTTON": "导出钱包",
+    "IMPORT.SHOW_VIEW_ONLY_QRCODE_BUTTON": "导出只读钱包",
+
+    "VOTE.SECONDARY_ELECTION": "二级节点预选"
 }

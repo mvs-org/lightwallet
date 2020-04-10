@@ -1,22 +1,24 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { LoginPage } from './login'
+import { LoginXpubPage } from './login-xpub'
 import { TranslateModule} from '@ngx-translate/core';
 import { AlertProvider } from '../../providers/alert/alert';
 
 @NgModule({
     declarations: [
-        LoginPage,
+        LoginXpubPage,
     ],
     imports: [
-        IonicPageModule.forChild(LoginPage),
+        IonicPageModule.forChild(LoginXpubPage),
         TranslateModule
     ],
     providers:[
         AlertProvider
     ],
-    exports: [
-        LoginPage,
+    entryComponents: [
     ],
+    exports: [
+        LoginXpubPage
+    ]
 })
-export class LoginPageModule { }
+export class LoginXpubPageModule { }

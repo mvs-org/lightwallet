@@ -341,7 +341,7 @@
     "GENERATE_ADDRESSES.HEADLINE": "Update number of addresses",
     "GENERATE_ADDRESSES.EXPLANATION": "MyETPWallet uses a HD Wallet (Hierarchical Deterministic) to generate multiple addresses from your seed. Because your addresses are generated in a deterministic way it means that if you reduce the number of your addresses, you can add them back later by increasing your number of addresses. It will always regenerate the same addresses.",
     "GENERATE_ADDRESSES.TOTAL_NUMBER_OF_ADDRESSES": "Number of addresses in my wallet",
-    "GENERATE_ADDRESSES.TOO_MANY_ADDRESSES": "The number of addresses is limited to 50 in the Lightwallet. If you need more addresses, please download the Desktop wallet.",
+    "GENERATE_ADDRESSES.TOO_MANY_ADDRESSES": "The number of addresses is limited to {{max_addresses}} in the Lightwallet. If you need more addresses, please download the Desktop wallet.",
     "GENERATE_ADDRESSES.ERROR": "Error while regenerating your addresses",
     "MIT_REGISTER.MIT_SYMBOL_TOO_SHORT": "The MIT symbol must be at least 3 characters long",
     "HELP.GENERATE_ADDRESSES_NUMBER": "In order to keep your wallet smooth, it is recommended to keep the number low. The default value is 10 addresses, maximum 50 addresses",
@@ -819,5 +819,16 @@
     "APPS": "Apps",
     "SCAN.PARAMS_EDITABLE_TEXT": "If you allow the parameter modification, the person who scan this QRCode will be able to modify the amount, recipient and message before sending",
     "ACCOUNT.UNCONFIRMED": "Confirming",
-    "HISTORY.CONFIRMING": "Confirming"
+    "HISTORY.CONFIRMING": "Confirming",
+    "OPEN_WALLET_VIEW_ONLY": "Open view only",
+    "XPUB.PUBLIC_KEY": "Public key",
+    "XPUB.INVALID_XPUB": "Invalid public key. please make sure you are using the right format (starting with 'xpub')",
+    "XPUB.INFORMATION": "Use your public key to import an account in View only mode. You will be able to receive assets and see your addresses, balances and history, but you will not be able to send assets.",
+    "XPUB.VALID_XPUB": "Ready to open account starting with addresses {{address}}",
+    "TRANSACTION_PREVIEW.TEXT_UNSIGNED": "Your unsigned encoded transaction is:",
+    "RETURN_TO_HOME": "Return to home",
+    "IMPORT.SHOW_FULL_WALLET_QRCODE_BUTTON": "Export full wallet",
+    "IMPORT.SHOW_VIEW_ONLY_QRCODE_BUTTON": "Export view only wallet",
+
+    "VOTE.SECONDARY_ELECTION": "Secondary nodes election"
 }

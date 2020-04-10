@@ -17,6 +17,8 @@ export class ImportWalletMobilePage {
     loading: Loading;
     qrCodeLoaded: boolean = false
     seed: string
+    xpub: string
+    index: number
 
     constructor(
         public nav: NavController,
@@ -34,45 +36,67 @@ export class ImportWalletMobilePage {
     passwordValid = (password) => (password) ? password.length > 0 : false;
 
     scan() {
-        let wallet = {};
-        this.translate.get(['SCANNING.MESSAGE_ACCOUNT']).subscribe((translations: any) => {
-            this.barcodeScanner.scan(
-                {
-                    preferFrontCamera: false, // iOS and Android
-                    showFlipCameraButton: false, // iOS and Android
-                    showTorchButton: false, // iOS and Android
-                    torchOn: false, // Android, launch with the torch switched on (if available)
-                    prompt: translations['SCANNING.MESSAGE_ACCOUNT'], // Android
-                    resultDisplayDuration: 0, // Android, display scanned text for X ms. 0 suppresses it entirely, default 1500
-                    formats: "QR_CODE", // default: all but PDF_417 and RSS_EXPANDED
-                }).then((result) => {
-                    if (!result.cancelled) {
-                        let content = result.text.toString().split('&')
-                        this.seed = content[0]
-                        if (content.length != 3) {
-                            this.alert.showError('IMPORT_QRCODE', '')
-                        } else {
-                            this.globals.getNetwork()
-                                .then((network) => {
-                                    if (content[1] != network.charAt(0)) {
-                                        this.alert.showError('MESSAGE.NETWORK_MISMATCH', '')
-                                    } else {
-                                        wallet = { "index": Math.max(5, Math.min(parseInt(content[2]), 50)) }
-                                        this.wallet.setWallet(wallet)
-                                        this.wallet.setMobileWallet(content[0]).then(() => this.qrCodeLoaded = true)
-                                    }
-                                })
-                        }
-                    }
+        this.alert.showLoading()
+            .then(() => {
+                this.translate.get(['SCANNING.MESSAGE_ACCOUNT']).subscribe((translations: any) => {
+                    this.barcodeScanner.scan(
+                        {
+                            preferFrontCamera: false, // iOS and Android
+                            showFlipCameraButton: false, // iOS and Android
+                            showTorchButton: false, // iOS and Android
+                            torchOn: false, // Android, launch with the torch switched on (if available)
+                            prompt: translations['SCANNING.MESSAGE_ACCOUNT'], // Android
+                            resultDisplayDuration: 0, // Android, display scanned text for X ms. 0 suppresses it entirely, default 1500
+                            formats: "QR_CODE", // default: all but PDF_417 and RSS_EXPANDED
+                        }).then((result) => {
+                            if (!result.cancelled) {
+                                let content = result.text.toString().split('&')
+                                this.seed = content[0]
+                                let network = content[1]
+                                this.index = Math.max(5, Math.min(parseInt(content[2]), 50))
+                                let xpub = content[3]
+                                if (content.length < 3 || content.length > 4) {
+                                    this.alert.stopLoading()
+                                    this.alert.showError('IMPORT_QRCODE', '')
+                                } else {
+                                    this.globals.getNetwork()
+                                        .then((currentNetwork) => {
+                                            if (network != currentNetwork.charAt(0)) {
+                                                this.alert.stopLoading()
+                                                this.alert.showError('MESSAGE.NETWORK_MISMATCH', '')
+                                            } else {
+                                                if (this.seed) {
+                                                    this.wallet.setMobileWallet(this.seed).then(() => this.qrCodeLoaded = true)
+                                                    this.alert.stopLoading()
+                                                } else if (xpub) {
+                                                    this.wallet.getWalletFromMasterPublicKey(xpub)
+                                                        .then((wallet) => this.wallet.generateAddresses(wallet, 0, this.index))
+                                                        .then((addresses) => this.mvs.addAddresses(addresses))
+                                                        .then(() => this.wallet.setXpub(xpub))
+                                                        .then(() => this.nav.setRoot("LoadingPage", { reset: true }))
+                                                        .then(() => this.alert.stopLoading())
+                                                } else {
+                                                    this.alert.stopLoading()
+                                                    this.alert.showError('IMPORT_QRCODE', '')
+                                                }
+                                            }
+                                        })
+                                }
+                            } else {
+                                this.alert.stopLoading()
+                            }
+                        })
                 })
-        })
+            })
     }
 
     decrypt(password, seed) {
         this.alert.showLoading()
         this.wallet.setMobileWallet(seed)
-            .then(() => Promise.all([this.wallet.getWallet(password), this.wallet.getAddressIndex()]))
-            .then((results) => this.wallet.generateAddresses(results[0], 0, results[1]))
+            .then(() => this.wallet.getMasterPublicKey(password))
+            .then((xpub) => this.wallet.setXpub(xpub))
+            .then(() => Promise.all([this.wallet.getWallet(password)]))
+            .then(([wallet]) => this.wallet.generateAddresses(wallet, 0, this.index))
             .then((addresses) => this.mvs.setAddresses(addresses))
             .then(() => this.wallet.saveSessionAccount(password))
             .then(() => this.nav.setRoot("LoadingPage", { reset: true }))
