@@ -830,5 +830,5 @@
     "IMPORT.SHOW_FULL_WALLET_QRCODE_BUTTON": "导出钱包",
     "IMPORT.SHOW_VIEW_ONLY_QRCODE_BUTTON": "导出只读钱包",
 
-    "VOTE.SECONDARY_ELECTION": "Secondary nodes election"
+    "VOTE.SECONDARY_ELECTION": "二级节点预选"
 }
