@@ -36,7 +36,7 @@ export class WalletServiceProvider {
 
     getIcons() {
         let result = {
-            MST: ['MVS.ZGC', 'MVS.ZDC', 'CSD.CSD', 'PARCELX.GPX', 'PARCELX.TEST', 'SDG', 'META', 'MVS.HUG', 'RIGHTBTC.RT', 'TIPLR.TPC', 'PANDO', 'VALOTY', 'KOALA.KT', 'DNA', 'GKC', 'DAY', 'APO', 'JKB'],
+            MST: ['MVS.ZGC', 'MVS.ZDC', 'CSD.CSD', 'PARCELX.GPX', 'PARCELX.TEST', 'SDG', 'META', 'MVS.HUG', 'RIGHTBTC.RT', 'TIPLR.TPC', 'PANDO', 'VALOTY', 'KOALA.KT', 'DNA', 'GKC', 'DAY', 'APO', 'JKB', 'DIA'],
         }
         return result;
     }
@@ -124,11 +124,10 @@ export class WalletServiceProvider {
         return await this.crypto.decrypt(seed, passphrase)
     }
 
-
     exportWallet() {
         return Promise.all([this.storage.get('seed'), this.getAddressIndex()])
-            .then((results) => {
-                return results[0] + "&" + this.globals.network.charAt(0) + "&" + results[1]
+            .then(([seed, index]) => {
+                return seed + '&' + this.globals.network.charAt(0) + '&' + index + '&'
             })
             .catch((error) => {
                 console.error(error)
@@ -136,18 +135,29 @@ export class WalletServiceProvider {
             })
     }
 
-
-    setAddressIndex(index) {
-        return this.storage.get('wallet')
-            .then((wallet) => {
-                wallet.index = index
-                return this.storage.set('wallet', wallet)
+    exportWalletViewOnly() {
+        return Promise.all([this.getAddressIndex(), this.storage.get('xpub')])
+            .then(([index, xpub]) => {
+                return '' + '&' + this.globals.network.charAt(0) + '&' + index + '&' + xpub
+            })
+            .catch((error) => {
+                console.error(error)
+                throw Error('ERR_EXPORT_VIEW_ONLY_WALLET')
             })
     }
 
     getAddressIndex() {
+        return this.storage.get('mvs_addresses')
+            .then((addresses) => {
+                if(addresses) {
+                    return addresses.length
+                }
+            })
+    }
+
+    getAddressIndexFromWallet() {
         return this.storage.get('wallet')
-            .then((wallet) => wallet.index)
+            .then((wallet) => wallet && wallet.index ? wallet.index : undefined)
     }
 
     generateNewAddress(wallet: any, index: number) {
@@ -211,8 +221,12 @@ export class WalletServiceProvider {
 
     async getMasterPublicKey(passphrase) {
         const seed = await this.getSeed(passphrase)
-        const wallet = await Metaverse.wallet.fromSeed(Buffer.from(seed, 'hex'))
+        const wallet = await Metaverse.wallet.fromSeed(Buffer.from(seed, 'hex'), Metaverse.networks[this.globals.network])
         return wallet.getMasterPublicKey()
+    }
+
+    getWalletFromMasterPublicKey(xpub) {
+        return Metaverse.wallet.fromXPub(xpub, this.globals.network)
     }
 
     getMultisigAddresses() {
@@ -281,14 +295,15 @@ export class WalletServiceProvider {
     }
 
     saveSessionAccount(password) {
-        return Promise.all([this.storage.get('seed'), this.storage.get('wallet'), this.storage.get('multisig_addresses'), this.storage.get('multisigs'), this.storage.get('plugins')])
-            .then(([seed, wallet, multisig_addresses, multisigs, plugins]) => {
+        return Promise.all([this.storage.get('seed'), this.storage.get('wallet'), this.storage.get('multisig_addresses'), this.storage.get('multisigs'), this.storage.get('plugins'), this.storage.get('xpub')])
+            .then(([seed, wallet, multisig_addresses, multisigs, plugins, xpub]) => {
                 let new_account_content = {
                     seed: seed,
                     wallet: wallet,
                     multisig_addresses: multisig_addresses ? multisig_addresses : [],
                     multisigs: multisigs ? multisigs : [],
-                    plugins: plugins ? plugins : []
+                    plugins: plugins ? plugins : [],
+                    xpub: xpub ? xpub : '',
                 }
                 return this.crypto.encrypt(JSON.stringify(new_account_content), password)
                     .then((content) => this.storage.set('account_info', content))
@@ -299,9 +314,26 @@ export class WalletServiceProvider {
             })
     }
 
+    getViewOnlySessionAccount() {
+        return Promise.all([this.storage.get('multisig_addresses'), this.storage.get('multisigs'), this.storage.get('plugins'), this.storage.get('xpub')])
+            .then(([multisig_addresses, multisigs, plugins, xpub]) => {
+                let new_account_content = {
+                    multisig_addresses: multisig_addresses ? multisig_addresses : [],
+                    multisigs: multisigs ? multisigs : [],
+                    plugins: plugins ? plugins : [],
+                    xpub: xpub ? xpub : '',
+                }
+                return new_account_content
+            })
+            .catch((error) => {
+                console.error(error)
+                throw Error('ERR_SAVE_VIEW_ONLY_SESSION_ACCOUNT')
+            })
+    }
+
     saveAccount(account_name) {
-        return Promise.all([this.getSavedAccounts(), this.getSessionAccountInfo(), this.getAccountParams()])
-            .then(([saved_accounts, content, params]) => {
+        return Promise.all([this.getSavedAccounts(), this.getSessionAccountInfo(), this.getAccountParams(), this.getViewOnlySessionAccount()])
+            .then(([saved_accounts, content, params, view_only_content]) => {
                 let old_account_index = -1;
                 if (saved_accounts) {
                     saved_accounts.find((o, i) => {
@@ -311,12 +343,12 @@ export class WalletServiceProvider {
                         }
                     });
                 }
-
                 let new_account = {
                     "name": account_name,
-                    "content": content,
+                    "content": content ? content : undefined,
                     "params": params,
                     "network": this.globals.network,
+                    "view_only_content": content ? undefined : view_only_content,
                     "type": "AES"
                 }
                 old_account_index > -1 ? saved_accounts[old_account_index] = new_account : saved_accounts.push(new_account);
@@ -329,10 +361,18 @@ export class WalletServiceProvider {
     }
 
     setupAccount(accountName, decryptedAccount) {
-        return Promise.all([this.setWallet(decryptedAccount.wallet), this.setMobileWallet(decryptedAccount.seed), this.setAccountName(accountName), this.setMultisigAddresses(decryptedAccount.multisig_addresses), this.setMultisigInfo(decryptedAccount.multisigs), this.setPlugins(decryptedAccount.plugins)])
+        return Promise.all([this.setWallet(decryptedAccount.wallet), this.setMobileWallet(decryptedAccount.seed), this.setAccountName(accountName), this.setMultisigAddresses(decryptedAccount.multisig_addresses), this.setMultisigInfo(decryptedAccount.multisigs), this.setPlugins(decryptedAccount.plugins), this.setXpub(decryptedAccount.xpub)])
             .catch((error) => {
                 console.error(error)
                 throw Error('ERR_SETUP_ACCOUNT')
+            })
+    }
+
+    setupViewOnlyAccount(accountName, decryptedAccount) {
+        return Promise.all([this.setAccountName(accountName), this.setMultisigAddresses(decryptedAccount.multisig_addresses), this.setMultisigInfo(decryptedAccount.multisigs), this.setPlugins(decryptedAccount.plugins), this.setXpub(decryptedAccount.xpub)])
+            .catch((error) => {
+                console.error(error)
+                throw Error('ERR_SETUP_VIEW_ONLY_ACCOUNT')
             })
     }
 
@@ -355,12 +395,13 @@ export class WalletServiceProvider {
     }
 
     getAccountParams() {
-        return Promise.all([this.storage.get('asset_order'), this.storage.get('hidden_mst'), this.storage.get('plugins')])
-            .then(([asset_order, hidden_mst, plugins]) => {
+        return Promise.all([this.storage.get('asset_order'), this.storage.get('hidden_mst'), this.storage.get('plugins'), this.getAddressIndex()])
+            .then(([asset_order, hidden_mst, plugins, index]) => {
                 let params = {}
                 params['asset_order'] = asset_order ? asset_order : []
                 params['hidden_mst'] = hidden_mst ? hidden_mst : []
                 params['plugins'] = plugins ? plugins : []
+                params['index'] = index ? index : this.globals.index
                 return params
             })
     }
@@ -440,6 +481,19 @@ export class WalletServiceProvider {
             .catch((error) => {
                 return undefined
             })
+    }
+
+    setXpub(xpub) {
+        return this.storage.set('xpub', xpub)
+    }
+
+    getXpub() {
+        return this.storage.get('xpub')
+    }
+
+    hasSeed() {
+        return this.storage.get('seed')
+            .then((seed) => seed !== null && seed !== undefined)
     }
 
 }

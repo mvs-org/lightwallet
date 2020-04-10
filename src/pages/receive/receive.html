@@ -97,9 +97,10 @@
                         </div>
                     </ion-card-content>
                 </ion-card>
-                <ion-row>
-                    <button ion-button full (click)="addAddress()">{{"GENERATE_ADDRESSES.CHANGE_ADDRESS_NUMBER" |
-                        translate}}</button>
+                <ion-row class="right">
+                    <button type="button" ion-button icon-left (click)="addAddresses()">
+                        {{"GENERATE_ADDRESSES.CHANGE_ADDRESS_NUMBER" | translate}}
+                    </button>
                 </ion-row>
             </ion-col>
         </ion-row>

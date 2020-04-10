@@ -1,0 +1,33 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>{{'LOGIN'| translate}}</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <form #loginAccountForm="ngForm">
+        <ion-row>
+            <ion-col>
+                <p align="center">{{"XPUB.INFORMATION" | translate}}</p>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-item class="center-psw" [ngClass]="{'error-border':xpub && !validXpub, 'valid-border':validXpub}">
+                <ion-label color="primary" floating>{{'XPUB.PUBLIC_KEY'| translate}}</ion-label>
+                <ion-input name="xpub" type="text" placeholder="" [(ngModel)]="xpub" (ngModelChange)="xpubValid(xpub)"></ion-input>
+            </ion-item>
+        </ion-row>
+        <ion-item *ngIf="xpub && !validXpub" no-lines class="wrong-input center-psw">{{"XPUB.INVALID_XPUB" | translate}}</ion-item>
+        <ion-item *ngIf="xpub && validXpub" no-lines class="valid-input center-psw">
+                <span [translate]="'XPUB.VALID_XPUB'" [translateParams]="{address: addresses[0]}"></span>
+        </ion-item>
+
+        <ion-row class="button more-top-padding">
+            <button ion-button icon-left full [disabled]="!validXpub" (click)="login(xpub)">
+                <ion-icon name="arrow-forward"></ion-icon>
+                {{'BUTTON.NEXT'|translate}}
+            </button>
+        </ion-row>
+    </form>
+
+</ion-content>

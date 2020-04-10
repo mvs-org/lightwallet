@@ -74,6 +74,18 @@ export class VotePage {
     updateRequired: boolean = false
     requiredVersion: string = 'unknown'
 
+    secondaryVoteStartTimestamp: number
+    secondaryElectionProgress: number
+    secondaryCandidateName: string
+    secondaryCandidates: Array<any>
+    secondary_duration_days: number = 0
+    secondary_duration_hours: number = 0
+    secondary_locked_until: number
+    secondary_unlock_time: number
+    secondaryLockPeriod: number
+    secondaryQuantity: string = ""
+    @ViewChild('secondaryQuantityInput') secondaryQuantityInput;
+
     constructor(
         public navCtrl: NavController,
         public navParams: NavParams,
@@ -166,17 +178,33 @@ export class VotePage {
                 this.lockPeriod = this.unlockPeriods[0] - this.height
                 this.electionProgressVote = Math.round((this.height - this.earlybirdInfo.voteStartHeight) / (this.earlybirdInfo.voteEndHeight - this.earlybirdInfo.voteStartHeight) * 100)
                 this.electionProgressRevote = Math.round((this.height - this.earlybirdInfo.revoteStartHeight) / (this.earlybirdInfo.revoteEndHeight - this.earlybirdInfo.revoteStartHeight) * 100)
+                this.secondaryElectionProgress = Math.round((this.height - this.earlybirdInfo.secondaryElectionStart) / (this.earlybirdInfo.secondaryElectionEnd - this.earlybirdInfo.secondaryElectionStart) * 100)
+                if(earlybirdInfo && earlybirdInfo.secondaryCandidates) {
+                    this.secondaryCandidates = []
+                    earlybirdInfo.secondaryCandidates.forEach((candidate, index) => {
+                        this.secondaryCandidates.push({id: index, name: candidate})
+                    })
+                }
                 return earlybirdInfo.voteStartHeight
             })
-            .then((currentVoteStart) => currentVoteStart ? this.mvs.getBlock(currentVoteStart) : 0)
+            .then((currentVoteStart) => currentVoteStart && currentVoteStart > this.height ? this.mvs.getBlock(currentVoteStart) : 0)
             .then((block) => this.currentVoteTimestamp = block && block.time_stamp ? block.time_stamp : 0)
             .then(() => this.earlybirdInfo.revoteStartHeight ? this.mvs.getBlock(this.earlybirdInfo.revoteStartHeight) : 0)
             .then((block) => this.currentRevoteTimestamp = block && block.time_stamp ? block.time_stamp : 0)
+            .then(() => this.secondaryDurationChange())
+            .then(() => this.getSecondaryStartTimestamp())
             .then(() => this.getNotPreviouslyVoteUtxo())
             .then(() => this.calculateFrozenOutputs(this.height))
             .catch((error) => {
                 console.error(error.message)
             })
+    }
+
+    async getSecondaryStartTimestamp() {
+        if(this.earlybirdInfo && this.earlybirdInfo.secondaryElectionStart && this.earlybirdInfo.secondaryElectionStart > this.height) {
+            const block = await this.mvs.getBlock(this.earlybirdInfo.secondaryElectionStart)
+            this.secondaryVoteStartTimestamp = block && block.time_stamp ? block.time_stamp : 0
+        }
     }
 
     getNotPreviouslyVoteUtxo() {
@@ -228,6 +256,10 @@ export class VotePage {
     cancel(e) {
         e.preventDefault()
         this.navCtrl.pop()
+    }
+
+    secondaryCandidateChange(candidate) {
+        this.secondaryCandidateName = candidate.name
     }
 
     create() {
@@ -296,9 +328,81 @@ export class VotePage {
             })
     }
 
+
+    secondaryCreate() {
+        return this.alert.showLoading()
+            .then(() => this.mvs.updateHeight())
+            .then((height) => {
+                this.lockPeriod = this.earlybirdInfo.secondaryVoteUnlock - height
+                let quantity = Math.round(parseFloat(this.secondaryQuantity) * Math.pow(10, this.decimals))
+                let attenuation_model = 'PN=0;LH=' + this.secondaryLockPeriod + ';TYPE=1;LQ=' + quantity + ';LP=' + this.secondaryLockPeriod + ';UN=1'
+                let messages = [];
+                messages.push('vote_secondarynode:' + this.secondaryCandidateName)
+                if (this.message) {
+                    messages.push(this.message)
+                }
+                return this.mvs.createAssetDepositTx(
+                    (this.sendFrom != 'auto') ? this.sendFrom : this.dnaRichestAddress ? this.dnaRichestAddress : this.addresses[0],
+                    undefined,
+                    this.selectedAsset,
+                    quantity,
+                    attenuation_model,
+                    (this.sendFrom != 'auto') ? this.sendFrom : null,
+                    (this.showAdvanced && this.changeAddress != 'auto') ? this.changeAddress : undefined,
+                    (this.showAdvanced) ? this.fee : 10000,
+                    messages
+                )
+            })
+            .catch((error) => {
+                console.error(error.message)
+                this.alert.stopLoading()
+                switch (error.message) {
+                    case "ERR_DECRYPT_WALLET":
+                        this.alert.showError('MESSAGE.PASSWORD_WRONG', '')
+                        throw Error('ERR_CREATE_TX')
+                    case "ERR_INSUFFICIENT_BALANCE":
+                        this.alert.showError('MESSAGE.INSUFFICIENT_BALANCE', '')
+                        throw Error('ERR_CREATE_TX')
+                    case "ERR_TOO_MANY_INPUTS":
+                        this.alert.showErrorTranslated('ERROR_TOO_MANY_INPUTS', 'ERROR_TOO_MANY_INPUTS_TEXT')
+                        throw Error('ERR_CREATE_TX')
+                    default:
+                        this.alert.showError('MESSAGE.CREATE_TRANSACTION', error.message)
+                        throw Error('ERR_CREATE_TX')
+                }
+            })
+    }
+
+    secondarySend() {
+        this.secondaryCreate()
+            .then((result) => {
+                this.navCtrl.push("confirm-tx-page", { tx: result.encode().toString('hex') })
+                this.alert.stopLoading()
+            })
+            .catch((error) => {
+                console.error(error)
+                this.alert.stopLoading()
+                switch (error.message) {
+                    case "ERR_CONNECTION":
+                        this.alert.showError('ERROR_SEND_TEXT', '')
+                        break;
+                    case "ERR_CREATE_TX":
+                        //already handle in create function
+                        break;
+                    default:
+                        this.alert.showError('MESSAGE.BROADCAST_ERROR', error.message)
+                }
+            })
+    }
+
     sendAll = () => this.alert.showSendAll(() => {
         this.quantity = Math.floor(this.showBalance / Math.pow(10, this.decimals)) + ''
         this.quantityInput.setFocus()
+    })
+
+    secondarySendAll = () => this.alert.showSendAll(() => {
+        this.secondaryQuantity = Math.floor(this.showBalance / Math.pow(10, this.decimals)) + ''
+        this.secondaryQuantityInput.setFocus()
     })
 
     /*durationChange() {
@@ -313,6 +417,13 @@ export class VotePage {
         this.duration_days = Math.floor(this.blocktime * this.lockPeriod / (24 * 60 * 60))
         this.duration_hours = Math.floor((this.blocktime * this.lockPeriod / (60 * 60)) - (24 * this.duration_days))
         this.unlock_time = this.lockPeriod * this.blocktime * 1000 + this.current_time;
+    }
+
+    secondaryDurationChange() {
+        this.secondaryLockPeriod = this.earlybirdInfo ? this.earlybirdInfo.secondaryVoteUnlock - this.height : 0
+        this.secondary_duration_days = Math.floor(this.blocktime * this.secondaryLockPeriod / (24 * 60 * 60))
+        this.secondary_duration_hours = Math.floor((this.blocktime * this.secondaryLockPeriod / (60 * 60)) - (24 * this.secondary_duration_days))
+        this.secondary_unlock_time = this.secondaryLockPeriod * this.blocktime * 1000 + this.current_time;
     }
 
     validaddress = this.mvs.validAddress

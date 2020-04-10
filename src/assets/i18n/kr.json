@@ -408,7 +408,7 @@
     "GENERATE_ADDRESSES.HEADLINE": "업데이트 된 주소의 수",
     "GENERATE_ADDRESSES.EXPLANATION": "MyETPWallet은 HD Wallet(계층적 결정론)을 사용하여 시드로부터 여러 주소를 생성합니다. 주소가 결정론적 방식으로 생성되기 때문에 주소 수를 줄이면 후에 주소 수를 늘려 주소를 다시 추가할 수 있습니다. 항상 동일한 주소를 재생성합니다.",
     "GENERATE_ADDRESSES.TOTAL_NUMBER_OF_ADDRESSES": "지갑안의 주소의 수",
-    "GENERATE_ADDRESSES.TOO_MANY_ADDRESSES": "Lightwallet의 주소 수는 50개로 제한됩니다. 주소가 더 필요한 경우 데스크탑 지갑을 다운로드 해주세요.",
+    "GENERATE_ADDRESSES.TOO_MANY_ADDRESSES": "Lightwallet의 주소 수는 {{max_addresses}}개로 제한됩니다. 주소가 더 필요한 경우 데스크탑 지갑을 다운로드 해주세요.",
     "GENERATE_ADDRESSES.ERROR": "주소 재생성시 오류",
     "MIT_REGISTER.MIT_SYMBOL_TOO_SHORT": "MIT 기호는 최소 3자 이상이어야 합니다.",
     "HELP.GENERATE_ADDRESSES_NUMBER": "지갑을 원활하게 사용하기 위해서는 낮은 수치를 유지하는 것을 추천드립니다. 기본적으로 주어지는 주소는 10개이고, 최대 50개의 주소를 생성할수 있습니다.",
