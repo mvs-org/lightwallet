@@ -8,11 +8,8 @@
     "clean": "ionic-app-scripts clean",
     "build": "ionic-app-scripts build",
     "lint": "ionic-app-scripts lint",
-<<<<<<< HEAD
-=======
     "ionic:build:before": "sh scripts/ionic-selectable-fix.sh",
     "ionic:build:after": "node scripts/prevent_cache.js && sh scripts/rename.sh",
->>>>>>> dev
     "ionic:build": "ionic-app-scripts build",
     "ionic:serve": "ionic-app-scripts serve",
     "test": "karma start ./karma.conf.js",
