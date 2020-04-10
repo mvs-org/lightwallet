@@ -819,5 +819,16 @@
     "APPS": "应用",
     "SCAN.PARAMS_EDITABLE_TEXT": "如果允许参数修改，则扫描此QRCode的用户将能够在发送之前修改金额、收款地址和信息",
     "ACCOUNT.UNCONFIRMED": "确认中",
-    "HISTORY.CONFIRMING": "确认中"
+    "HISTORY.CONFIRMING": "确认中",
+    "OPEN_WALLET_VIEW_ONLY": "仅打开只读模式",
+    "XPUB.PUBLIC_KEY": "公钥",
+    "XPUB.INVALID_XPUB": "无效的公钥。请确保您使用的格式正确（以'xpub'开头）",
+    "XPUB.INFORMATION": "使用公用密钥以“只读”模式导入帐户。您将能够接收资产并查看地址，余额和历史记录，但将无法发送资产。",
+    "XPUB.VALID_XPUB": "准备以地址{{address}}建立帐户",
+    "TRANSACTION_PREVIEW.TEXT_UNSIGNED": "您未签名的编码交易是：",
+    "RETURN_TO_HOME": "返回主页",
+    "IMPORT.SHOW_FULL_WALLET_QRCODE_BUTTON": "导出钱包",
+    "IMPORT.SHOW_VIEW_ONLY_QRCODE_BUTTON": "导出只读钱包",
+
+    "VOTE.SECONDARY_ELECTION": "Secondary nodes election"
 }
