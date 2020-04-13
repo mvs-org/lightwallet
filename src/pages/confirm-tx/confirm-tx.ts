@@ -26,6 +26,7 @@ export class ConfirmTxPage {
     allMyInputs: boolean = true
     addresses: Array<string> = []
     multisig: any = {}
+    walletType: string = 'hasSeed'
 
     constructor(
         public navCtrl: NavController,
@@ -45,11 +46,24 @@ export class ConfirmTxPage {
         const addresses = await this.mvs.getAddresses()
         const multisigAddresses = await this.wallet.getMultisigAddresses()
         this.addresses = addresses.concat(multisigAddresses)
+
+        this.wallet.hasSeed()
+            .then((hasSeed) => {
+                if(hasSeed) {
+                    this.walletType = 'hasSeed'
+                } else {
+                    this.walletType = 'readOnly'
+                }
+            })
     }
 
     cancel(e) {
         e.preventDefault()
         this.navCtrl.pop()
+    }
+
+    home(e) {
+        this.navCtrl.setRoot('AccountPage')
     }
 
     async preview() {

@@ -9,7 +9,7 @@
 
 <ion-content padding>
     <ion-list>
-        <ion-row>
+        <ion-row *ngIf="hasSeed">
             <button ion-item (click)="MultisignaturePage()">
                 <ion-icon name="people" item-start></ion-icon>
                 <h1>
@@ -25,7 +25,7 @@
                 <p [translate]="'SETTINGS.EXPORT_MASTER_PUBLIC_KEY_TEXT'"></p>
             </button>
         </ion-row>
-        <ion-row>
+        <ion-row *ngIf="hasSeed">
             <button ion-item (click)="DecodeTxPage()">
                 <ion-icon name="create" item-start></ion-icon>
                 <h1>

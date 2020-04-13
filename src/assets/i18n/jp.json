@@ -410,7 +410,7 @@
   "GENERATE_ADDRESSES.HEADLINE": "更新用のアドレス数",
   "GENERATE_ADDRESSES.EXPLANATION": "ライトウォレット（MyETPWallet）は、階層的決定性ウォレット（HDウォレット）を使用してニーモニックフレーズから複数のアドレスを作成します。 アドレスは確定的な方法で作成されるので、アドレスの数を無くなると、後で再構築することが可能です。いつもおなじなアドレスは再作成されます",
   "GENERATE_ADDRESSES.TOTAL_NUMBER_OF_ADDRESSES": "ウォレットの中のアドレス数",
-  "GENERATE_ADDRESSES.TOO_MANY_ADDRESSES": "ライトウォレットのアドレスは最大50です。アドレスがさらに必要な場合は、デスクトップ（フルノード）ウォレットをダウンロードしてください。",
+  "GENERATE_ADDRESSES.TOO_MANY_ADDRESSES": "ライトウォレットのアドレスは最大{{max_addresses}}です。アドレスがさらに必要な場合は、デスクトップ（フルノード）ウォレットをダウンロードしてください。",
   "GENERATE_ADDRESSES.ERROR": "アドレス作成が失敗しました",
   "MIT_REGISTER.MIT_SYMBOL_TOO_SHORT": "MIT資産のシンボルには３文字以上してください",
   "HELP.GENERATE_ADDRESSES_NUMBER": "ウォレットのセキュリティを確保するには、多いアドレスを取得することがお勧めしません。デフオルトのアドレス数は１０で、上限は５０です。",

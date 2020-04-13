@@ -49,15 +49,14 @@ export class PassphrasePage {
     }
 
     encrypt(password) {
-        this.alert.showLoading();
-        let wallet = {};
-        wallet = { "index": 10 }
-        this.wallet.setWallet(wallet)
-            .then((wallet) => this.wallet.setSeedMobile(password, this.mnemonic))
+        this.alert.showLoading()
+        this.wallet.setSeedMobile(password, this.mnemonic)
             .then((seed) => this.wallet.setMobileWallet(seed))
-            .then(() => Promise.all([this.wallet.getWallet(password), this.wallet.getAddressIndex()]))
-            .then((results) => this.wallet.generateAddresses(results[0], 0, results[1]))
+            .then(() => this.wallet.getWallet(password))
+            .then((wallet) => this.wallet.generateAddresses(wallet, 0, this.globals.index))
             .then((addresses) => this.mvs.setAddresses(addresses))
+            .then(() => this.wallet.getMasterPublicKey(password))
+            .then((xpub) => this.wallet.setXpub(xpub))
             .then(() => this.wallet.saveSessionAccount(password))
             .then(() => this.nav.setRoot("LoadingPage", { reset: true }))
             .catch((e) => {
