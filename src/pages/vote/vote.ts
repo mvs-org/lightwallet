@@ -187,9 +187,9 @@ export class VotePage {
                 }
                 return earlybirdInfo.voteStartHeight
             })
-            .then((currentVoteStart) => currentVoteStart && currentVoteStart > this.height ? this.mvs.getBlock(currentVoteStart) : 0)
+            .then((currentVoteStart) => currentVoteStart && currentVoteStart < this.height ? this.mvs.getBlock(currentVoteStart) : 0)
             .then((block) => this.currentVoteTimestamp = block && block.time_stamp ? block.time_stamp : 0)
-            .then(() => this.earlybirdInfo.revoteStartHeight ? this.mvs.getBlock(this.earlybirdInfo.revoteStartHeight) : 0)
+            .then(() => this.earlybirdInfo && this.earlybirdInfo.revoteStartHeight && this.earlybirdInfo.revoteStartHeight < this.height ? this.mvs.getBlock(this.earlybirdInfo.revoteStartHeight) : 0)
             .then((block) => this.currentRevoteTimestamp = block && block.time_stamp ? block.time_stamp : 0)
             .then(() => this.secondaryDurationChange())
             .then(() => this.getSecondaryStartTimestamp())
@@ -201,7 +201,7 @@ export class VotePage {
     }
 
     async getSecondaryStartTimestamp() {
-        if(this.earlybirdInfo && this.earlybirdInfo.secondaryElectionStart && this.earlybirdInfo.secondaryElectionStart > this.height) {
+        if(this.earlybirdInfo && this.earlybirdInfo.secondaryElectionStart && this.earlybirdInfo.secondaryElectionStart < this.height) {
             const block = await this.mvs.getBlock(this.earlybirdInfo.secondaryElectionStart)
             this.secondaryVoteStartTimestamp = block && block.time_stamp ? block.time_stamp : 0
         }
