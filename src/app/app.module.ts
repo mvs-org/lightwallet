@@ -30,10 +30,9 @@ export function createTranslateLoader(http: HttpClient) {
   imports: [
     HttpClientModule,
     BrowserModule,
-    IonicStorageModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    //IonicStorageModule.forRoot(),
+    IonicStorageModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
