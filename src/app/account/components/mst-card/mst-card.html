@@ -1,0 +1,52 @@
+<ion-card>
+    <ion-grid>
+        <ion-row>
+            <ion-col>
+                <ion-item class="grid-info">
+                    <ion-avatar item-start>
+                        <img class="coinlogo" [src]="'assets/icon/'+icon+'.png'" (error)="errorImg($event)"
+                            [ngClass]="{'csdLogoDefault':symbol == 'CSD.CSD' && theme == 'theme-default', 'default-logo': icon == 'default_mst'}">
+                    </ion-avatar>
+                    <ion-label>
+                        <ion-row>
+                            <ion-col>
+                            <h1>{{symbol}}</h1>
+                                <ion-button *ngIf="swap" fill="clear" color="danger" icon-left routerLink="['swap']"
+                                    class="swap-buton">
+                                    <ion-icon name="swap"></ion-icon>{{"SWAP"|translate}}
+                                </ion-button>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col >{{"ACCOUNT.TOTAL"|translate}}</ion-col>
+                            <ion-col class="ion-text-right">{{balance.available + balance.frozen | format : balance.decimals}}</ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col >{{"ACCOUNT.FROZEN"|translate}}</ion-col>
+                            <ion-col  class="ion-text-right">{{balance.frozen | format : balance.decimals}}</ion-col>
+                        </ion-row>
+                    </ion-label>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+    <ion-grid no-padding class="button-row" >
+        <ion-row>
+            <ion-col col-4>
+                <ion-button expand="full" fill="clear" color="secondary" icon-left [routerLink]="['addresses', symbol]">
+                    <ion-icon name="download"></ion-icon>{{"ACCOUNT.BUTTON.RECEIVE" | translate}}
+                </ion-button>
+            </ion-col>
+            <ion-col col-4>
+                <ion-button expand="full" fill="clear" color="danger" icon-left [routerLink]="['send', symbol, 'single']">
+                    <ion-icon name="send"></ion-icon>{{ "ACCOUNT.BUTTON.SEND" | translate }}
+                </ion-button>
+            </ion-col>
+            <ion-col col-4>
+                <ion-button expand="full" fill="clear" color="primary" icon-left [routerLink]="['history', symbol]">
+                    <ion-icon name="time"></ion-icon>{{ "ACCOUNT.BUTTON.HISTORY" | translate }}
+                </ion-button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-card>

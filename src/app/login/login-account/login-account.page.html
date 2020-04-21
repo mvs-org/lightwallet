@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/login"></ion-back-button>
+    </ion-buttons>
+    <ion-title translate="LOGIN_ACCOUNT.TITLE"></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <form *ngIf="form" [formGroup]="form" (ngSubmit)="importAccount(account)">
+    <ion-row>
+      <h2>{{account.name}}</h2>
+    </ion-row>
+
+    <ion-item>
+      <ion-label *ngIf="!form.controls.passphrase.errors" position="floating">Password</ion-label>
+      <ion-label *ngIf="form.controls.passphrase.errors" position="floating" color="danger">
+        {{"ERROR.PASSWORD." + (form.controls.passphrase | firstError) |translate}}
+      </ion-label>
+      <ion-input formControlName="passphrase" type="password" clearOnEdit="false"></ion-input>
+    </ion-item>
+
+    <ion-row>
+      <ion-col>
+        <ion-button type="submit" icon-left expand="full" color="primary" [disabled]="!form.valid">
+          <ion-icon name="send"></ion-icon> {{"LOGIN_ACCOUNT.LOGIN_BUTTON"|translate}}
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button icon-left expand="full" color="danger" (click)="forgetAccount()">
+          <ion-icon name="trash"></ion-icon> {{"LOGIN_ACCOUNT.FORGET_BUTTON"|translate}}
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </form>
+
+</ion-content>

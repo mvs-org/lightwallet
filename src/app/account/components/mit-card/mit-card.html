@@ -1,0 +1,29 @@
+<ion-card class="card-block">
+    <ion-grid>
+        <ion-row>
+            <ion-col>
+                <ion-item class="grid-info">
+                    <ion-avatar item-start>
+                        <img class="coinlogo default-logo" [src]="'assets/icon/default_mit.png'" (error)="errorImg($event)">
+                    </ion-avatar>
+                    <h1 class="overflow">{{symbol}}</h1>
+                    <h2 class="overflow owner">
+                        {{"OWNER"|translate}}
+                        <span class="avatar">
+                            {{avatar}}
+                        </span>
+                    </h2>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-card>
+<ion-row col-12 class="row-buttons">
+    <ion-col col-4></ion-col>
+    <ion-col col-4>
+        <button ion-button full clear color="danger" icon-left (click)="MITTransfer($event)"><ion-icon name="send"></ion-icon>{{ "SEND" | translate }}</button>
+    </ion-col>
+    <ion-col col-4>
+        <button ion-button full clear color="primary" icon-left (click)="MITDetails($event)"><ion-icon name="information-circle"></ion-icon>{{ "INFO" | translate }}</button>
+    </ion-col>
+</ion-row>

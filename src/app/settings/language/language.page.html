@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/settings"></ion-back-button>
+    </ion-buttons>
+    <ion-title translate="LANGUAGE.TITLE"></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let language of languages | keyvalue" (click)="set(language.key)">
+      <ion-label>
+        <span [innerHTML]="language.value.name"></span>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/login"></ion-back-button>
+    </ion-buttons>
+    <ion-title translate="CREATE_WALLET.TITLE"></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-row center text-center class="title-text-padding">
+    <ion-col>
+      <h1 translate="CREATE_WALLET.YOUR_MNEMONIC_WORDS"></h1>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col center text-center>
+      <p translate="CREATE_WALLET.BACKUP_WORDS_WRITE_DOWN_TEXT"></p>
+    </ion-col>
+  </ion-row>
+  <ion-card *ngIf="wallet">
+      <ion-text color="danger">
+        <h1 class="ion-text-center">{{wallet.mnemonic}}</h1>
+      </ion-text>
+  </ion-card>
+  <ion-row class="more-bottom-padding">
+    <ion-col center text-center>
+      <p translate="CREATE_WALLET.LIGHT_WALLET_INFO_TEXT"></p>
+    </ion-col>
+  </ion-row>
+  <ion-button *ngIf="!config.isApp" icon-left expand="full" (click)="confirmBackup()">
+    <ion-icon name="arrow-forward"></ion-icon>
+    {{'CREATE_WALLET.BUTTON.NEXT'|translate}}
+  </ion-button>
+</ion-content>
+
+<ion-footer *ngIf="config.isApp">
+  <ion-row>
+    <ion-col>
+      <button ion-button icon-left expand="full" (click)="confirmBackup()">
+        <ion-icon name="arrow-forward"></ion-icon>
+        {{'CREATE_WALLET.BUTTON.NEXT'|translate}}
+      </button>
+    </ion-col>
+  </ion-row>
+</ion-footer>

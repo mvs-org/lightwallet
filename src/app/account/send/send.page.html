@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/account"></ion-back-button>
+    </ion-buttons>
+    <ion-title translate="SEND.TITLE"></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <nav mat-tab-nav-bar mat-align-tabs="center">
+    <a mat-tab-link
+      *ngFor="let link of navLinks"
+      [routerLink]="link.path"
+      routerLinkActive
+      #rla="routerLinkActive"
+      [active]="rla.isActive">
+      {{link.label | translate}}
+    </a>
+  </nav>
+
+  <router-outlet></router-outlet>
+
+  <div *ngIf="transactions">
+    <!-- {{transactions | async | json}} -->
+  </div>
+
+</ion-content>

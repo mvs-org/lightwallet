@@ -1,0 +1,26 @@
+.buttons-container {
+  height: 220px;
+}
+
+.inputfile {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+.inputfile + label {
+	color: white;
+	background-color: var(--ion-color-primary);
+	margin: auto;
+	margin-top: 50px;
+	padding: 5px;
+	padding-left: 15px;
+	padding-right: 15px;
+	border-radius: 2.5px;
+	display: block;
+	transition: all .4s;
+	cursor: pointer;
+}

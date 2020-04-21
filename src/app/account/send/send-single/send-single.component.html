@@ -1,0 +1,54 @@
+<form *ngIf="form" [formGroup]="form" (ngSubmit)="send()">
+  <ion-item>
+    <ion-label *ngIf="!getError(form.controls.recipientAddress)" position="floating">{{"SEND_SINGLE.RECIPIENT_ADDRESS"|translate}}</ion-label>
+    <ion-label *ngIf="getError(form.controls.recipientAddress)" position="floating" color="danger">
+      {{ 'ERROR.RECIPIENT_ADDRESS' + getError(form.controls.recipientAddress)[0] | uppercase | translate :
+      getError(form.controls.recipientAddress)[1]}}
+    </ion-label>
+    <ion-input formControlName="recipientAddress" type="address" clearOnEdit="false"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label *ngIf="!getError(form.controls.amount)" position="floating">{{"SEND_SINGLE.AMOUNT"|translate}}</ion-label>
+    <ion-label *ngIf="getError(form.controls.amount)" position="floating" color="danger">
+      {{ 'ERROR.AMOUNT' + getError(form.controls.amount)[0] | uppercase | translate :
+      getError(form.controls.amount)[1]}}
+    </ion-label>
+    <ion-input formControlName="amount" type="number" clearOnEdit="false"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label *ngIf="!getError(form.controls.passphrase)" position="floating">{{"SEND_SINGLE.PASSWORD"|translate}}</ion-label>
+    <ion-label *ngIf="getError(form.controls.passphrase)" position="floating" color="danger">
+      {{ 'SELECT_PASSPHRASE.ERROR.' + getError(form.controls.passphrase)[0] | uppercase | translate :
+      getError(form.controls.passphrase)[1]}}
+    </ion-label>
+    <ion-input formControlName="passphrase" type="password" clearOnEdit="false"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>{{"SEND_SINGLE.SEND_FROM"|translate}}</ion-label>
+    <ion-select formControlName="sendFrom" multiple="false" *ngIf="addresses$ && addressBalances">
+      <ion-select-option selected="true" value="auto">{{"AUTO"| translate}}</ion-select-option>
+      <ng-container *ngFor="let address of (addresses$|async)">
+        <ion-select-option *ngIf="addressBalances[address] && addressBalances[address].AVATAR" value="address">{{addressBalances[address].AVATAR}}
+          - {{addressBalances[address].ETP.available}} {{selectedAsset}}</ion-select-option>
+        <ion-select-option *ngIf="addressBalances[address] && !addressBalances[address].AVATAR" value="address">{{address}}
+          - {{addressBalances[address].ETP.available}} {{selectedAsset}}</ion-select-option>
+        <ion-select-option *ngIf="!addressBalances[address]" value="address">{{address}}
+          - 0 {{selectedAsset}}</ion-select-option>
+      </ng-container>
+    </ion-select>
+  </ion-item>
+
+  <ion-row>
+    <ion-col>
+      <ion-button type="submit" icon-left expand="full" color="primary" [disabled]="!form.valid">
+        <ion-icon name="send"></ion-icon> {{"SEND_SINGLE.SEND_BUTTON"|translate}}
+      </ion-button>
+    </ion-col>
+    <ion-col>
+      <ion-button icon-left expand="full" color="danger" routerLink="/account">
+        <ion-icon name="trash"></ion-icon> {{"SEND_SINGLE.CANCEL_BUTTON"|translate}}
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</form>

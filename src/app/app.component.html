@@ -1,3 +1,14 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-menu auto-hide="true" contentId="appContent" menuId="sideMenu" type="push" side="start">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>{{"MENU" | translate}}</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-item routerLink="/news" translate="NEWS.MENU_ENTRY"></ion-item>
+      <ion-item routerLink="/settings" translate="SETTINGS.MENU_ENTRY"></ion-item>
+    </ion-content>
+  </ion-menu>
+  <ion-router-outlet id="appContent" main></ion-router-outlet>
 </ion-app>

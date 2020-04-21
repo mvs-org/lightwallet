@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/login"></ion-back-button>
+    </ion-buttons>
+    <ion-title translate="SELECT_PASSPHRASE.TITLE"></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <p class="center-info" translate="SELECT_PASSPHRASE.TEXT"></p>
+  <form *ngIf="form" [formGroup]="form" (ngSubmit)="submit()">
+    <ion-item>
+      <ion-label *ngIf="!getError(form.controls.passphrase)" position="floating">Choose password</ion-label>
+      <ion-label *ngIf="getError(form.controls.passphrase)" position="floating" color="danger">
+        {{ 'SELECT_PASSPHRASE.ERROR.' + getError(form.controls.passphrase)[0] | uppercase | translate : getError(form.controls.passphrase)[1]}}
+      </ion-label>
+      <ion-input formControlName="passphrase" type="password" clearOnEdit="false"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label *ngIf="!getError(form.controls.repeat, form)" position="floating">Confirm password</ion-label>
+      <ion-label *ngIf="getError(form.controls.repeat, form)" position="floating" color="danger">
+        {{ 'SELECT_PASSPHRASE.ERROR.' + getError(form.controls.repeat, form)[0] | uppercase | translate}}</ion-label>
+      <ion-input formControlName="repeat" type="password" clearOnEdit="false"></ion-input>
+    </ion-item>
+    <ion-button *ngIf="!config.isApp" [disabled]="!form.valid" type="submit" expand="full">Download</ion-button>
+  </form>
+</ion-content>
+
+<ion-footer *ngIf="config.isApp">
+    <ion-button [disabled]="!form.valid" type="submit" expand="full">Download</ion-button>
+</ion-footer>

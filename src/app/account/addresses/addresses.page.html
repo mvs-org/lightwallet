@@ -1,0 +1,72 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/account"></ion-back-button>
+    </ion-buttons>
+    <ion-title translate="ADDRESSES.TITLE"></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content *ngIf="addressBalances" class="spread-out">
+  <ion-item>
+    <ion-segment [(ngModel)]="displayType" color="primary">
+      <ion-segment-button value="ETP">ETP</ion-segment-button>
+      <ion-segment-button *ngIf="selectedAsset != 'ETP'" value="asset" [innerHTML]="selectedAsset"></ion-segment-button>
+      <ion-segment-button value="MST">MST</ion-segment-button>
+    </ion-segment>
+  </ion-item>
+  <ion-item *ngFor="let address of (addresses$|async)" class="font-mono">
+    <ion-avatar slot="start">
+      <img *ngIf="addressBalances[address] && addressBalances[address].AVATAR" class="avatar-logo"
+        [src]="'assets/icon/default_avatar.png'">
+    </ion-avatar>
+    <ion-label>
+      <h3 *ngIf="addressBalances[address] && addressBalances[address].AVATAR">
+        <b>{{addressBalances[address].AVATAR}}</b>
+      </h3>
+      <h3 class="address break-words">
+        <span class="address-text">{{address}}</span>
+        <ion-button type="button" class="qrcode-btn" id="qrcode" item-right (click)="show(address)">
+          <img class="menu-icon" width="20" height="20" [src]="'assets/images/qrcode.png'">
+        </ion-button>
+      </h3>
+      <p *ngIf="displayType == 'asset'">
+        <b translate="ADDRESSES.AVAILABLE">:</b>
+        <span *ngIf="addressBalances && selectedAsset">
+            {{formatAvailable(addressBalances[address] ? addressBalances[address].MST[selectedAsset]: undefined)}}
+        </span>
+        <span class="ion-text-right">
+          <b translate="ADDRESSES.FROZEN"></b>:
+          <span *ngIf="addressBalances && selectedAsset">
+            {{formatFrozen(addressBalances[address] ? addressBalances[address].MST[selectedAsset]: undefined)}}
+          </span>
+        </span>
+      </p>
+      <p *ngIf="displayType == 'ETP'">
+        <b translate="ADDRESSES.AVAILABLE">:</b>
+        <span *ngIf="addressBalances">
+          {{addressBalances[address] ? formatAvailable(addressBalances[address].ETP) : 0 }}
+        </span>
+        <span class="right">
+          <b translate="ADDRESSES.FROZEN"></b>:
+          <span *ngIf="addressBalances">
+            {{addressBalances[address] ? formatFrozen(addressBalances[address].ETP) : 0 }}
+          </span>
+        </span>
+      </p>
+      <div *ngIf="displayType == 'MST'">
+        <p *ngFor="let balance of getMSTBalances(address) | keyvalue">
+          <b>{{balance.key}}: </b>
+          {{ formatAvailable(balance.value) }}
+        </p>
+        <p *ngIf="!addressBalances[address] || (addressBalances[address] && addressBalances[address].length == 0)">
+          {{'ADDRESSES.ADDRESS_NO_MST'|translate}}</p>
+      </div>
+    </ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-button expand="full" routerLink="/account/add-addresses" translate="ADDRESSES.CHANGE_ADDRESS_NUMBER">
+    </ion-button>
+  </ion-item>
+</ion-content>

@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-title translate="ACCOUNT.TITLE"></ion-title>
+    <ion-buttons slot="end">
+      <ion-spinner *ngIf="syncing!==false"></ion-spinner>
+      {{height$|async}}
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid no-padding>
+    <ion-row>
+      <ion-col size-lg="4">
+        <etp-card col-4 *ngIf="balances" [tickers]="tickers && tickers.ETP" [balance]="balances.ETP" [base]="base">
+        </etp-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <h2>MST</h2>
+  <ion-grid no-padding>
+    <ion-row>
+      <ion-col *ngFor="let symbol of MSTSymbols" size-lg="4" size="12">
+        <mst-card [symbol]="symbol" [balance]="balances.MST[symbol]"></mst-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <!-- <ion-card *ngFor="let balance of Object.values({foo: 'bar'})">{{balance | json}}</ion-card> -->
+
+</ion-content>

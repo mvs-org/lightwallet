@@ -6,37 +6,48 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
+//import { IonicStorageModule } from '@ionic/storage';
+
+
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { FormatPipe } from './pipes/format/format';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+
+export function createTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
+
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [
+    HttpClientModule,
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
+    //IonicStorageModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient],
+        useFactory: (createTranslateLoader),
+        deps: [HttpClient]
       }
     }),
-    HttpClientModule,
-  ],
+    BrowserAnimationsModule],
   providers: [
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports:[
+  ]
 })
-export class AppModule {}
-
-export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
-}
+export class AppModule { }

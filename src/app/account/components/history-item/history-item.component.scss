@@ -1,0 +1,41 @@
+.right {
+    text-align: right;
+    width: 100%;
+}
+
+.summaryTxType {
+    color: black;
+    font-size: 20px;
+}
+
+.personal-address ion-item {
+    font-weight: 500;
+}
+
+.summaryAmount {
+    color: var(--ion-color-primary);
+    font-size: 20px;
+    float: right;
+    width: 100%;
+}
+
+.sendAmount {
+    color: var(--ion-color-danger);
+}
+
+.receiveAmount {
+    color: var(--ion-color-success);
+}
+
+.hash {
+    color: black;
+    font-size: 20px;
+}
+
+.txType {
+    font-style: oblique;
+}
+
+::ng-deep .lockComplete .mat-progress-bar-fill::after {
+    background-color: var(--ion-color-success);
+}

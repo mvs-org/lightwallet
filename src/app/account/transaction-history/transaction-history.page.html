@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/account"></ion-back-button>
+    </ion-buttons>
+    <ion-title translate="HISTORY.TITLE"></ion-title>
+    <ion-buttons slot="end">
+      <ion-spinner *ngIf="syncing!==false"></ion-spinner>
+      {{height$|async}}
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <table mat-table [dataSource]="dataSource" matSort>
+
+    <ng-container matColumnDef="tx">
+      <td mat-cell *matCellDef="let transaction">
+        <app-history-item [transaction]="transaction" [height$]="height$" [blocktime]="blocktime">
+        </app-history-item>
+      </td>
+    </ng-container>
+
+    <tr mat-row *matRowDef="let myRowData; columns: ['tx']"></tr>
+
+  </table>
+  <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
+  </mat-paginator>
+</ion-content>

@@ -1,0 +1,12 @@
+.button-row{
+    --ion-grid-padding: 0px;
+    ion-col{
+        --ion-grid-column-padding: 0px;
+        ion-button{
+            font-size: 12px;
+        }
+    }
+}
+ion-avatar {
+    margin-right: 20px;
+}
