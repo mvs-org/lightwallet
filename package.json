@@ -5,6 +5,7 @@
   "homepage": "https://ionicframework.com/",
   "scripts": {
     "ng": "ng",
+    "postinstall": "node scripts/patch-webpack.js",
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
@@ -69,16 +70,16 @@
     "typescript": "^3.8.3"
   },
   "browser": {
-		"fs": false,
-		"path": false,
-		"os": false,
-		"crypto": false,
-		"stream": false,
-		"http": false,
-		"tls": false,
-		"zlib": false,
-		"https": false,
-		"net": false
-	},
+    "fs": false,
+    "path": false,
+    "os": false,
+    "crypto": false,
+    "stream": false,
+    "http": false,
+    "tls": false,
+    "zlib": false,
+    "https": false,
+    "net": false
+  },
   "description": "An Ionic project"
 }
