@@ -17,6 +17,7 @@ export class OpenFilePage implements OnInit {
   fileData: any
   fileLoaded: boolean
   loader: any
+  disclaimer_agreed: boolean
 
   constructor(
     private walletService: WalletService,

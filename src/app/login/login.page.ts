@@ -14,6 +14,7 @@ export class LoginPage implements OnInit {
 
   network: Network
   saved_accounts: Array<any> = []
+  isApp: boolean
 
   constructor(
     public config: ConfigService,
@@ -32,6 +33,10 @@ export class LoginPage implements OnInit {
   ionViewWillEnter() {
     this.account.getSavedAccounts()
       .then((accounts) => this.saved_accounts = accounts ? accounts : [])
+  }
+
+  switchTheme(){
+    console.trace('to be implemented')
   }
 
   setNetwork(event: CustomEvent) {

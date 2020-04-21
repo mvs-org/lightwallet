@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
+import { FormGroup, FormControl, AbstractControl, Validators, FormBuilder } from '@angular/forms'
 import { MetaverseService } from '../../../services/metaverse.service'
 import { WalletService, Balance, Balances } from '../../../services/wallet.service'
 import { Router } from '@angular/router'
@@ -24,6 +24,8 @@ export class SendSingleComponent implements OnInit {
   addresses$: Observable<string[]>
   decimals: number
   loader: any
+
+  selectedAsset: string
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -68,7 +70,7 @@ export class SendSingleComponent implements OnInit {
       })
   }
 
-  getError(control: FormControl, group?: FormGroup) {
+  getError(control: AbstractControl, group?: FormGroup) {
     if (control.pristine) {
       return
     }

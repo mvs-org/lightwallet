@@ -19,19 +19,19 @@ const routes: Routes = [
   },
   {
     path: 'send/:symbol',
-    loadChildren: './send/send.module#SendPageModule',
+    loadChildren: () => import('./send/send.module').then(m => m.SendPageModule),
   },
   {
     path: 'history/:symbol',
-    loadChildren: './transaction-history/transaction-history.module#TransactionHistoryPageModule',
+    loadChildren: () => import('./transaction-history/transaction-history.module').then(m => m.TransactionHistoryPageModule),
   },
   {
     path: 'history',
-    loadChildren: './transaction-history/transaction-history.module#TransactionHistoryPageModule',
+    loadChildren: () => import('./transaction-history/transaction-history.module').then(m => m.TransactionHistoryPageModule),
   },
   {
     path: 'addresses/:symbol',
-    loadChildren: './addresses/addresses.module#AddressesPageModule',
+    loadChildren: () => import('./addresses/addresses.module').then(m => m.AddressesPageModule),
   },
 ]
 

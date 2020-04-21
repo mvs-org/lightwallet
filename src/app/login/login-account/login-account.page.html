@@ -15,10 +15,10 @@
     </ion-row>
 
     <ion-item>
-      <ion-label *ngIf="!form.controls.passphrase.errors" position="floating">Password</ion-label>
-      <ion-label *ngIf="form.controls.passphrase.errors" position="floating" color="danger">
-        {{"ERROR.PASSWORD." + (form.controls.passphrase | firstError) |translate}}
-      </ion-label>
+      <!-- <ion-label *ngIf="!form.controls.passphrase.errors" position="floating">Password</ion-label> -->
+      <!-- <ion-label *ngIf="form.controls.passphrase.errors" position="floating" color="danger"> -->
+        <!-- {{"ERROR.PASSWORD." + (form.controls.passphrase | firstError) |translate}} -->
+      <!--/ion-label-->
       <ion-input formControlName="passphrase" type="password" clearOnEdit="false"></ion-input>
     </ion-item>
 

@@ -5,7 +5,7 @@ import { IonicModule } from '@ionic/angular'
 import { TranslateModule } from '@ngx-translate/core'
 import { QrAddressComponent } from './qr-address.component'
 import { Routes } from '@angular/router'
-import { NgxQRCodeModule } from 'ngx-qrcode2'
+//import { NgxQRCodeModule } from 'ngx-qrcode2'
 
 const routes: Routes = [
   {
@@ -19,7 +19,7 @@ const routes: Routes = [
     CommonModule,
     IonicModule,
     ClipboardModule,
-    NgxQRCodeModule,
+    //NgxQRCodeModule,
     TranslateModule.forChild(),
   ],
   entryComponents: [QrAddressComponent],

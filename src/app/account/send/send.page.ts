@@ -20,6 +20,7 @@ export class SendPage implements OnInit {
   ]
 
   symbol: string
+  transactions: Array<any>
 
   constructor(
     private router: Router,

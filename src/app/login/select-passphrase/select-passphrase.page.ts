@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
+import { FormGroup, FormControl, AbstractControl, Validators, FormBuilder } from '@angular/forms'
 import { ConfigService } from 'src/app/services/config.service'
 import { WalletService } from 'src/app/services/wallet.service'
 import { MetaverseService } from 'src/app/services/metaverse.service'
@@ -35,11 +35,11 @@ export class SelectPassphrasePage implements OnInit {
       })
   }
 
-  isSame(targetControl: FormControl, checkControl: FormControl) {
+  isSame(targetControl: AbstractControl, checkControl: FormControl) {
     return () => checkControl.value === targetControl.value ? null : { notSame: true }
   }
 
-  getError(control: FormControl, group?: FormGroup) {
+  getError(control: AbstractControl, group?: FormGroup) {
     if (control.pristine) {
       return
     }
