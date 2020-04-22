@@ -828,5 +828,8 @@
     "TRANSACTION_PREVIEW.TEXT_UNSIGNED": "Your unsigned encoded transaction is:",
     "RETURN_TO_HOME": "Return to home",
     "IMPORT.SHOW_FULL_WALLET_QRCODE_BUTTON": "Export full wallet",
-    "IMPORT.SHOW_VIEW_ONLY_QRCODE_BUTTON": "Export view only wallet"
+    "IMPORT.SHOW_VIEW_ONLY_QRCODE_BUTTON": "Export view only wallet",
+    "ACCOUNT.BUTTON.SEND": "Send",
+    "ACCOUNT.BUTTON.RECEIVE": "Receive",
+    "ACCOUNT.BUTTON.HISTORY": "History"
 }
