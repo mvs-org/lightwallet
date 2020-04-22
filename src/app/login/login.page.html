@@ -9,14 +9,14 @@
 
 <ion-content>
   <ion-grid>
-    <ion-row justify-content-center>
-      <ion-col size-md="6">
+    <IonRow justify-content-center>
+      <IonCol size-md="6">
 
-        <ion-row class="logo-row">
-          <ion-col class="logo">
+        <IonRow class="logo-row">
+          <IonCol class="logo">
             <div class="banner"></div>
-          </ion-col>
-        </ion-row>
+          </IonCol>
+        </IonRow>
 
         <div class="info-text">
           <div style="text-align: center;">{{config.version}}
@@ -66,24 +66,24 @@
 
         <p *ngIf="!platform.is('mobile')">{{"LOGIN.INFO_TEXT_BROWSER"|translate}}</p>
 
-      </ion-col>
-    </ion-row>
+      </IonCol>
+    </IonRow>
   </ion-grid>
 </ion-content>
 
 <ion-footer>
-  <ion-row>
-    <ion-col>
+  <IonRow>
+    <IonCol>
       <ion-button expand="full" fill="clear" icon-left (click)="switchTheme()">
         <ion-icon name="color-palette"></ion-icon>
         {{"LOGIN.BUTTON.THEME_SETTINGS"|translate}}
       </ion-button>
-    </ion-col>
-    <ion-col>
+    </IonCol>
+    <IonCol>
       <ion-button expand="full" fill="clear" icon-left routerLink="/settings/language">
         <ion-icon name="flag"></ion-icon>
         {{"LOGIN.BUTTON.SWITCH_LANGUAGE"|translate}}
       </ion-button>
-    </ion-col>
-  </ion-row>
+    </IonCol>
+  </IonRow>
 </ion-footer>
