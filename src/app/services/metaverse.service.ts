@@ -59,10 +59,15 @@ export class MetaverseService {
       })
   }
 
+  transactionCollection(){
+    return this.datastore.transactionCollection()
+  }
+
 
   transactionStream = async (): Promise<Observable<Transaction[]>> => {
     const collection = await this.datastore.transactionCollection()
-    return collection.watch()
+    return collection.find().limit(10).$
+    // return collection.watch()
   }
 
   async reset() {
@@ -123,12 +128,15 @@ export class MetaverseService {
   }
 
   async getLastTxHeight() {
-    if (await this.transactionStream() == undefined) { return undefined }
-    const transactions = await ((await this.transactionStream()).pipe(first())).toPromise()
-    if (!transactions || transactions.length === 0) {
-      return 0
-    }
-    return transactions[0].height
+    const txCollection = await this.datastore.transactionCollection()
+    const lastTx = await txCollection.findOne().sort({height: -1}).exec()
+    return lastTx ? lastTx.toJSON().height : 0
+    // if (await this.transactionStream() == undefined) { return undefined }
+    // const transactions = await ((await this.transactionStream()).pipe(first())).toPromise()
+    // if (!transactions || transactions.length === 0) {
+    //   return 0
+    // }
+    // return transactions[0].height
   }
 
   async getNewTxs(addresses: Array<string>, lastKnownHeight: number): Promise<any> {
