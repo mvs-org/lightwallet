@@ -66,8 +66,7 @@ export class MetaverseService {
 
   transactionStream = async (): Promise<Observable<Transaction[]>> => {
     const collection = await this.datastore.transactionCollection()
-    return collection.find().limit(10).$
-    // return collection.watch()
+    return collection.watch()
   }
 
   async reset() {

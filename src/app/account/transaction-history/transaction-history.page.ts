@@ -45,7 +45,7 @@ export class TransactionHistoryPage implements OnInit, OnDestroy {
     //this.dataSource.paginator = this.paginator
     // TODO: Merge transaction arrays for better ux
     const transactionCollection = await this.metaverse.transactionCollection()
-    const transactions = await (await transactionCollection.find().limit(20).exec()).map(tx=>tx.toJSON())
+    const transactions = await (await transactionCollection.find().sort({height: -1}).limit(20).exec()).map(tx=>tx.toJSON())
     this.dataSource.data = transactions
     this.height$.subscribe(async (height) => {
       if (height && !this.blocktime) {
