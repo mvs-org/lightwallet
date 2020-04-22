@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
 import { MetaverseService } from '../../services/metaverse.service'
-import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material'
+import { MatTableDataSource, } from '@angular/material/table'
 import { first } from 'rxjs/operators'
 
 @Component({
