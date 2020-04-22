@@ -152,12 +152,12 @@ export class WalletService {
 
   async setSeed(seed) {
     const collection = await this.datastore.configCollection()
-    return collection.insert({ key: 'seed', value: seed })
+    return collection.upsert({ key: 'seed', value: seed })
   }
 
   async setWallet(seed) {
     const collection = await this.datastore.configCollection()
-    return collection.insert({ key: 'wallet', value: seed })
+    return collection.upsert({ key: 'wallet', value: seed })
   }
 
   async getHDNode(passphrase: string, network: string) {
@@ -173,7 +173,7 @@ export class WalletService {
       return await collection.findOne().where('key').equals('addresses').update({ $set: { value: addresses } })
     } else {
       console.info('set addresses')
-      return await collection.insert({ key: 'addresses', value: addresses })
+      return await collection.upsert({ key: 'addresses', value: addresses })
     }
   }
 
