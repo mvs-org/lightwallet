@@ -14,7 +14,7 @@ export class AccountPage implements OnInit {
   height$ = this.metaverse.height$
   syncing: boolean
 
-  MSTSymbols = []
+  MSTInfo = []
 
   base = 'USD'
 
@@ -29,7 +29,13 @@ export class AccountPage implements OnInit {
       .then(balanceStream => {
         balanceStream.subscribe(balances => {
           this.balances = balances
-          this.MSTSymbols = Object.keys(balances.MST)
+          this.MSTInfo = []
+          Object.keys(balances.MST).forEach(symbol => {
+            this.MSTInfo.push({
+              symbol,
+              icon: symbol,     //TODO add check if logo available
+            })
+          })
         })
       })
     this.metaverse.syncing$.subscribe((syncing) => {

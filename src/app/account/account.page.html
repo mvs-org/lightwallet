@@ -23,8 +23,8 @@
   <h2>MST</h2>
   <ion-grid no-padding>
     <ion-row>
-      <ion-col *ngFor="let symbol of MSTSymbols" size-lg="4" size="12">
-        <mst-card [symbol]="symbol" [balance]="balances.MST[symbol]"></mst-card>
+      <ion-col *ngFor="let mst of MSTInfo" size-lg="4" size="12">
+        <mst-card [symbol]="mst.symbol" [balance]="balances.MST[mst.symbol]" [icon]="mst.icon"></mst-card>
       </ion-col>
     </ion-row>
   </ion-grid>
