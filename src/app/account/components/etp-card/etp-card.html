@@ -2,29 +2,25 @@
     <ion-grid>
         <ion-row>
             <ion-col>
-                <ion-item>
+                <ion-item lines="none">
                     <ion-avatar item-start>
                         <img class="coinlogo" [src]="'assets/icon/ETP.png'">
                     </ion-avatar>
                     <ion-label>
                         <ion-row>
-                            <ion-col>
+                            <ion-col size="6">
                                 <h1 class="symbol">ETP</h1>
                             </ion-col>
-                        </ion-row>
-                        <ion-row>
-                            <ion-col>{{"ACCOUNT.TOTAL"|translate}}</ion-col>
-                            <ion-col class="ion-text-right">
+                            <!--ion-col>{{"ACCOUNT.TOTAL"|translate}}</ion-col-->
+                            <ion-col class="ion-text-right" size="3">
                                     {{balance.available + balance.frozen | format : balance.decimals}}
                                     <div class="ion-text-right" *ngIf="tickers!==undefined && tickers[base]">
                                         ≈{{base}}
                                         {{(balance.available + balance.frozen)/100000000*tickers[base].price | number : '1.0-2'}}
                                     </div>
                             </ion-col>
-                        </ion-row>
-                        <ion-row>
-                            <ion-col>{{"ACCOUNT.FROZEN"|translate}}</ion-col>
-                            <ion-col class="ion-text-right">
+                            <!--ion-col>{{"ACCOUNT.FROZEN"|translate}}</ion-col-->
+                            <ion-col class="ion-text-right" size="3">
                                 {{balance.frozen | format : balance.decimals}}
                                 <div class="ion-text-right" *ngIf="tickers!==undefined && tickers[base]" class="fiat">
                                     ≈{{base}} {{(balance.frozen)/100000000*tickers[base].price | number : '1.0-2'}}
@@ -36,7 +32,7 @@
             </ion-col>
         </ion-row>
     </ion-grid>
-    <ion-grid no-padding class="button-row">
+    <!--ion-grid no-padding class="button-row">
         <ion-row>
             <ion-col>
                 <ion-button expand="full" fill="clear" color="secondary" icon-lef [routerLink]="['addresses','ETP']" t>
@@ -54,5 +50,5 @@
                 </ion-button>
             </ion-col>
         </ion-row>
-    </ion-grid>
+    </ion-grid-->
 </ion-card>

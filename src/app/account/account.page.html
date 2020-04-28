@@ -14,7 +14,7 @@
 <ion-content>
   <ion-grid no-padding>
     <ion-row>
-      <ion-col size-lg="4">
+      <ion-col size="12">
         <etp-card col-4 *ngIf="balances" [tickers]="tickers && tickers.ETP" [balance]="balances.ETP" [base]="base">
         </etp-card>
       </ion-col>
@@ -23,7 +23,7 @@
   <h2>MST</h2>
   <ion-grid no-padding>
     <ion-row>
-      <ion-col *ngFor="let mst of MSTInfo" size-lg="4" size="12">
+      <ion-col *ngFor="let mst of MSTInfo" size="12">
         <mst-card [symbol]="mst.symbol" [balance]="balances.MST[mst.symbol]" [icon]="mst.icon"></mst-card>
       </ion-col>
     </ion-row>
