@@ -5,6 +5,7 @@ import { WalletService } from '../services/wallet.service'
 import { MultisigService } from '../services/multisig.service'
 import { MetaverseService } from '../services/metaverse.service'
 import { AccountService } from '../services/account.service'
+import { map } from 'rxjs/operators'
 
 @Injectable({
   providedIn: 'root',
@@ -18,22 +19,9 @@ export class WalletGuard implements CanActivate {
     private router: Router,
   ) { }
 
-  canActivate(
-    next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean> {
-    return new Observable<boolean>((subscriber) => {
-      this.wallet.addresses$()
-        .then(collection => {
-          return collection.subscribe((addresses => {
-            if (addresses && addresses.length > 0) {
-              subscriber.next(true)
-            } else {
-              this.logout()
-              subscriber.next(false)
-            }
-          }))
-        })
-    })
+  canActivate(): Observable<boolean> {
+    return this.account.activeAccount$()
+      .pipe(map(account => !!account))
   }
 
   logout() {

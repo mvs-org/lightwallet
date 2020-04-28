@@ -3,6 +3,9 @@ import { Storage } from '@ionic/storage'
 import { WalletService } from '../services/wallet.service'
 import { MultisigService } from '../services/multisig.service'
 import { PluginService } from '../services/plugin.service'
+import { CoreService } from './core.service'
+import { AES, enc } from 'crypto-js'
+import { HDWallet } from 'metaverse-ts'
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +17,64 @@ export class AccountService {
     private walletService: WalletService,
     private multisig: MultisigService,
     private plugin: PluginService,
+    private coreService: CoreService,
   ) { }
+
+
+  activeAccount$() {
+    return this.coreService.core.db.accounts.activeAccount$()
+  }
+
+  async decryptData(data: string, passphrase: string) {
+    try {
+      return JSON.parse(AES.decrypt(data, passphrase).toString(enc.Utf8))
+    } catch (error) {
+      console.error(error)
+      throw Error('ERR_DECRYPT_WALLET')
+    }
+  }
+
+  getPathForIndex(index: number, path: string) {
+    if (!/^(m(?:\/[0-9]+\'?)*\/)([0-9]+)$/.test(path)) {
+      throw Error('Invalid path')
+    }
+    return /^(m(?:\/[0-9]+\'?)*\/)([0-9]+)$/.test(path)[1] + index;
+  }
+
+  async importEncryptedMnemonic(encryptedMnemonic, passphrase, network: any, index = 10, path = 'm/0', name?: string) {
+    if (name === undefined) {
+      const numberOfAccounts = (await this.coreService.core.db.accounts.find().exec()).length
+      name = 'account' + (numberOfAccounts + 1)
+    }
+    const mnemonic = await this.decryptData(encryptedMnemonic, passphrase)
+    const wallet = HDWallet.fromMnemonic(mnemonic, network)
+
+    const addresses = []
+    for (let i = 0; i < index; i++) {
+      const p = this.getPathForIndex(index, path);
+      const a = wallet.getAddress(i);
+      addresses.push({ a, p, });
+    }
+    addresses.push({
+      a: 'MSCHL3unfVqzsZbRVCJ3yVp7RgAmXiuGN3',
+      p: 'm',
+    })
+    return this.coreService.core.db.accounts.insert({
+      name,
+      addresses,
+      private: {
+        path,
+        xpub: 'xpub328402384023840923',
+        xpriv: 'xpriv348230984082304234',
+        algo: 'none',
+        multisig: [],
+      },
+      protected: encryptedMnemonic,
+      config: {
+        index,
+      }
+    })
+  }
 
   async getSessionAccountInfo() {
     return this.storage.get('account_info')

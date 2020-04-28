@@ -20,11 +20,10 @@ export class OpenFilePage implements OnInit {
   disclaimer_agreed: boolean
 
   constructor(
-    private walletService: WalletService,
     public metaverse: MetaverseService,
     private router: Router,
+    private accountService: AccountService,
     private formBuilder: FormBuilder,
-    private account: AccountService,
     private alertService: AlertService,
   ) { }
 
@@ -68,8 +67,10 @@ export class OpenFilePage implements OnInit {
     this.loader = await this.alertService.loading('OPEN_FILE.LOADER.ENTERING_WALLET')
     await this.loader.present()
     const passphrase = this.form.value.passphrase
-    await this.walletService.import(this.fileData, passphrase, this.metaverse.network)
-    await this.account.saveSessionAccount(passphrase)
+
+    const mnemonic = this.fileData.mnemonic
+    const index= this.fileData.index || 1
+    await this.accountService.importEncryptedMnemonic(mnemonic, passphrase, this.metaverse.network, index)
     this.router.navigate(['/account'])
     return this.loader.dismiss()
   }

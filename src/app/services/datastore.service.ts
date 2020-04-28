@@ -1,54 +1,20 @@
 import { Injectable } from '@angular/core'
-import { create, RxDatabase, plugin, RxCollection } from 'rxdb'
-import * as idb from 'pouchdb-adapter-idb'
 import { Transaction } from './metaverse.service'
-plugin(idb)
-import {
-  transactionSchema,
-  transactionCollectionMethods,
-  TransactionCollectionMethods,
-  TransactionCollection,
-  TransactionDocType,
-} from '../store/transaction.datastore'
-
-type MyETPWalletDatabaseCollections = {
-  transaction: TransactionCollection
-  config: RxCollection<any>
-}
+import { CoreService } from './core.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class DatastoreService {
 
-  db: Promise<RxDatabase<MyETPWalletDatabaseCollections>>
-
-  transactions: RxCollection<TransactionDocType>
-  config: RxCollection<any>
-
-  constructor() {
-
-    this.db = create({
-      name: 'myetpwallet',
-      adapter: 'idb',
-      password: '',
-      multiInstance: true,
-    })
+  constructor(
+    private coreService: CoreService,
+  ) {
+    // this.db = coreService.core.db;
   }
 
-  async transactionCollection(): Promise<RxCollection<TransactionDocType>> {
-    if (this.transactions) {
-      return this.transactions
-    }
-    const db = await this.db
-    if (db.transaction) {
-      return db.transaction
-    }
-    return db.collection({
-      name: 'transaction',
-      schema: transactionSchema,
-      statics: transactionCollectionMethods,
-    })
+  async transactionCollection() {
+    return this.coreService.core.db.transactions;
   }
 
   async saveTransactions(transactions: Transaction[]) {
@@ -61,14 +27,13 @@ export class DatastoreService {
   }
 
   async waitForLeadership() {
-    const db = await this.db
-    return db.waitForLeadership()
+    return this.coreService.core.db.waitForLeadership();
   }
 
   async saveTransaction(transaction: Transaction) {
     console.log('insert ', transaction)
     const collection = await this.transactionCollection()
-    const oldTxs = await collection.findOne({ hash: transaction.hash }).exec()
+    const oldTxs = await collection.findOne({ selector:{ hash: transaction.hash } }).exec()
     if (oldTxs) {
       console.log('already exists. updating', transaction.hash)
       return await collection.findOne().where('hash').equals(transaction.hash).update({ $set: transaction })
@@ -83,32 +48,8 @@ export class DatastoreService {
     return collection.find().exec().then(txs => txs.map(tx => tx.toJSON()))
   }
 
-  async configCollection() {
-    if (this.config) {
-      return this.config
-    }
-    const db = await this.db
-    if (db.config) {
-      return db.config
-    }
-    return db.collection({
-      name: 'config',
-      schema: {
-        title: 'config',
-        version: 0,
-        description: 'Metaverse wallet configuration',
-        type: 'object',
-        properties: {
-          key: {
-            type: 'string',
-            primary: true,
-          },
-          value: {
-            type: ['string', 'integer', 'object', 'array'],
-          },
-        },
-      },
-    })
+  configCollection() {
+    return this.coreService.core.db.accounts;
   }
 
 

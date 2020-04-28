@@ -54,7 +54,7 @@ export class HistoryItemComponent implements OnInit {
 
     this.txType = TX_TYPE_ETP
 
-    const addresses = await this.wallet.getAddresses()
+    const addresses = await this.wallet.getAddresses().toPromise()
 
     this.transaction.inputs.forEach(input => {
       if(input.attachment && (input.attachment.type == 'asset-issue' || input.attachment.type == 'asset-transfer')) {

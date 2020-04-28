@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -15,14 +15,16 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { FormatPipe } from './pipes/format/format';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CoreService } from './services/core.service';
 
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
-
+function appLoadFactory(core: CoreService) {
+  return () => core.init();
+}
 
 @NgModule({
   declarations: [AppComponent],
@@ -44,6 +46,12 @@ export function createTranslateLoader(http: HttpClient) {
   providers: [
     StatusBar,
     SplashScreen,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: appLoadFactory,
+      deps: [CoreService],
+      multi: true,
+    },
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent],

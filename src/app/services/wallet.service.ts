@@ -51,9 +51,10 @@ export class WalletService {
   ) {
   }
 
-  async addresses$() {
-    const collection = await this.datastore.configCollection()
-    return collection.findOne().where('key').equals('addresses').$.pipe(map(conf => conf ? conf.toJSON().value : []))
+  addresses$() {
+    return this.datastore.configCollection().activeAccount$().pipe(
+      map(account => account?.addresses ? account.addresses.map(address => address.a) : [])
+    )
   }
   async reset() {
     const configCollection = await this.datastore.configCollection()
@@ -91,11 +92,8 @@ export class WalletService {
       }),
     )
 
-  async getAddresses() {
-    const collection = await this.datastore.configCollection()
-    return collection.findOne().where('key').equals('addresses').$
-      .pipe(take(1), map(conf => conf ? conf.toJSON().value : []))
-      .toPromise()
+  getAddresses() {
+    return this.addresses$()
   }
 
   async generateWallet(): Promise<GeneratedWallet> {
@@ -120,61 +118,58 @@ export class WalletService {
   }
 
   async setIndex(index: number) {
-    const collection = await this.datastore.configCollection()
-    const wallet = await collection.findOne().where('key').equals('wallet').$
-      .pipe(take(1), map(conf => conf.toJSON().value))
-      .toPromise()
-    wallet.index = index
-    return collection.findOne().where('key').equals('wallet').update({ $set: { value: wallet } })
+    // const collection = await this.datastore.configCollection()
+    // const wallet = await collection.findOne().where('key').equals('wallet').$
+    //   .pipe(take(1), map(conf => conf.toJSON().value))
+    //   .toPromise()
+    // wallet.index = index
+    // return collection.findOne().where('key').equals('wallet').update({ $set: { value: wallet } })
   }
 
   async getAddressIndex() {
-    const collection = await this.datastore.configCollection()
-    const wallet = await collection.findOne().where('key').equals('wallet').$
-      .pipe(take(1), map(conf => conf.toJSON().value))
-      .toPromise()
-    return wallet.index
+    // const collection = await this.datastore.configCollection()
+    // const wallet = await collection.findOne().where('key').equals('wallet').$
+    //   .pipe(take(1), map(conf => conf.toJSON().value))
+    //   .toPromise()
+    // return wallet.index
   }
 
   async getWallet() {
-    const collection = await this.datastore.configCollection()
-    return collection.findOne().where('key').equals('wallet').$
-      .pipe(take(1), map(conf => conf.toJSON().value))
-      .toPromise()
+    // const collection = await this.datastore.configCollection()
+    // return collection.findOne().where('key').equals('wallet').$
+    //   .pipe(take(1), map(conf => conf.toJSON().value))
+    //   .toPromise()
   }
 
   async getSeed() {
-    const collection = await this.datastore.configCollection()
-    return collection.findOne().where('key').equals('seed').$
-      .pipe(take(1), map(conf => conf.toJSON().value))
-      .toPromise()
+    // const collection = await this.datastore.configCollection()
+    // return collection.findOne().where('key').equals('seed').$
+    //   .pipe(take(1), map(conf => conf.toJSON().value))
+    //   .toPromise()
   }
 
   async setSeed(seed) {
-    const collection = await this.datastore.configCollection()
-    return collection.upsert({ key: 'seed', value: seed })
+    // const collection = await this.datastore.configCollection()
+    // return collection.upsert({ key: 'seed', value: seed })
   }
 
   async setWallet(seed) {
-    const collection = await this.datastore.configCollection()
-    return collection.upsert({ key: 'wallet', value: seed })
+    // const collection = await this.datastore.configCollection()
+    // return collection.upsert({ key: 'wallet', value: seed })
   }
 
   async getHDNode(passphrase: string, network: string) {
-    const seed = await this.decryptData(await this.getSeed(), passphrase)
-    return this.getHDNodeFromSeed(Buffer.from(seed, 'hex'), network)
+    // const seed = await this.decryptData(await this.getSeed(), passphrase)
+    // return this.getHDNodeFromSeed(Buffer.from(seed, 'hex'), network)
   }
 
   async setAddresses(addresses) {
-    const collection = await this.datastore.configCollection()
-    const oldAddresses = await collection.findOne({ key: 'addresses' }).exec()
-    if (oldAddresses) {
-      console.info('update addresses')
-      return await collection.findOne().where('key').equals('addresses').update({ $set: { value: addresses } })
-    } else {
-      console.info('set addresses')
-      return await collection.upsert({ key: 'addresses', value: addresses })
-    }
+    const activeAccount = await this.datastore.configCollection().activeAccount$().toPromise()
+    return this.datastore.configCollection().findOne({ selector: { name: activeAccount.name } }).update({
+      $set: {
+        addresses
+      }
+    });
   }
 
   async import(encryptedWallet: EncryptedWallet, passphrase: string, network: string) {
@@ -183,8 +178,8 @@ export class WalletService {
     await this.setWallet(encryptedWallet)
     await this.setSeed(await this.encryptData(seed, passphrase))
     const hdNode = await this.getHDNode(passphrase, network)
-    const addresses = await this.generateAddresses(hdNode, 0, await this.getAddressIndex())
-    return await this.setAddresses(addresses)
+    // const addresses = await this.generateAddresses(hdNode, 0, await this.getAddressIndex())
+    // return await this.setAddresses(addresses)
   }
 
   private getHDNodeFromSeed(seed: any, network: string) {

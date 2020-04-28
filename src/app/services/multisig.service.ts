@@ -44,16 +44,16 @@ export class MultisigService {
   async signMultisigTx(address: string, tx: any, passphrase: string, network: string) {
     const wallet = await this.wallet.getHDNode(passphrase, network);
     const parameters = await this.getMultisigInfoFromAddress(address);
-    return wallet.signMultisig(tx, parameters)
-      .catch((error: any) => {
-        console.error(error);
-        switch (error) {
-          case 'Signature already included':
-            throw Error('SIGN_ALREADY_INCL');
-          default:
-            throw Error('ERR_SIGN_TX');
-        }
-      });
+    // return wallet.signMultisig(tx, parameters)
+    //   .catch((error: any) => {
+    //     console.error(error);
+    //     switch (error) {
+    //       case 'Signature already included':
+    //         throw Error('SIGN_ALREADY_INCL');
+    //       default:
+    //         throw Error('ERR_SIGN_TX');
+    //     }
+    //   });
   }
 
   getNewMultisigAddress(nbrSigReq: number, publicKeys: string[]) {

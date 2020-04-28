@@ -3,6 +3,7 @@ import { MetaverseService } from '../../services/metaverse.service'
 import { MatTableDataSource, } from '@angular/material/table'
 import { first } from 'rxjs/operators'
 import { Subscription } from 'rxjs'
+import { CoreService } from '../../services/core.service'
 
 @Component({
   selector: 'app-transaction-history',
@@ -25,6 +26,7 @@ export class TransactionHistoryPage implements OnInit, OnDestroy {
 
   constructor(
     private metaverse: MetaverseService,
+    private coreService: CoreService,
   ) {
 
     this.metaverse.syncing$.subscribe((syncing) => {
@@ -33,8 +35,8 @@ export class TransactionHistoryPage implements OnInit, OnDestroy {
 
   }
 
-  ngOnDestroy(){
-    if(this.transactionSubscription){
+  ngOnDestroy() {
+    if (this.transactionSubscription) {
       this.transactionSubscription.unsubscribe();
     }
   }
@@ -44,14 +46,13 @@ export class TransactionHistoryPage implements OnInit, OnDestroy {
     //this.dataSource.sort = this.sort
     //this.dataSource.paginator = this.paginator
     // TODO: Merge transaction arrays for better ux
-    const transactionCollection = await this.metaverse.transactionCollection()
-    const transactions = await (await transactionCollection.find().sort({height: -1}).limit(20).exec()).map(tx=>tx.toJSON())
-    this.dataSource.data = transactions
-    this.height$.subscribe(async (height) => {
-      if (height && !this.blocktime) {
-        this.blocktime = await this.metaverse.getBlocktime(height)
-      }
-    })
+    // const transactionCollection = await this.metaverse.transactionCollection()
+    this.dataSource.data = await (await this.coreService.core.db.transactions.find().sort({ height: 'desc' }).limit(20).exec()).map(tx => tx.toJSON());
+      this.height$.subscribe(async (height) => {
+        if (height && !this.blocktime) {
+          this.blocktime = await this.metaverse.getBlocktime(height)
+        }
+      })
   }
 
 }
