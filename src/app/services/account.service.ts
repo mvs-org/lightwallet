@@ -55,10 +55,10 @@ export class AccountService {
       const a = wallet.getAddress(i);
       addresses.push({ a, p, });
     }
-    addresses.push({
-      a: 'MSCHL3unfVqzsZbRVCJ3yVp7RgAmXiuGN3',
-      p: 'm',
-    })
+    // addresses.push({
+    //   a: 'MSCHL3unfVqzsZbRVCJ3yVp7RgAmXiuGN3',
+    //   p: 'm',
+    // })
     return this.coreService.core.db.accounts.insert({
       name,
       addresses,
