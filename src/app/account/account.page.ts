@@ -37,6 +37,7 @@ export class AccountPage implements OnInit, OnDestroy {
         this.MSTInfo.push({
           symbol,
           icon: symbol,  // TODO: add check if logo available
+          balance: balances.MST[symbol]
         });
       });
     });

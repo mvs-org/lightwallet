@@ -11,6 +11,9 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core'
 import { PipesModule } from '../pipes/pipes.module'
 import { TranslateHttpLoader } from '@ngx-translate/http-loader'
 import { HttpClient } from '@angular/common/http'
+import { MatTableModule } from '@angular/material/table'
+import { MatSortModule } from '@angular/material/sort'
+import { MSTTableComponent } from './components/mst-table/mst-table'
 
 const routes: Routes = [
   {
@@ -53,12 +56,18 @@ export function createTranslateLoader(http: HttpClient) {
       },
     }),
     PipesModule,
+    MatTableModule,
+    MatSortModule,
   ],
   declarations: [
     AccountPage,
     EtpCardComponent,
     MSTCardComponent,
     MITCardComponent,
+    MSTTableComponent,
   ],
+  exports: [
+
+  ]
 })
 export class AccountPageModule { }

@@ -37,7 +37,7 @@
     "metaverse-ts": "^0.1.0",
     "metaversejs": "^0.3.91",
     "mvs-blockchain": "^0.1.65",
-    "mvs-lightwallet-core": "0.0.2",
+    "mvs-lightwallet-core": "0.0.5",
     "ngx-clipboard": "^12.3.0",
     "rxjs": "~6.5.1",
     "rxjs-compat": "^6.5.5",

@@ -12,22 +12,5 @@
 </ion-header>
 
 <ion-content>
-  <ion-grid no-padding *ngIf="balances">
-    <ion-row>
-      <ion-col size="12">
-        <etp-card col-4 [tickers]="tickers && tickers.ETP" [balance]="balances.ETP" [base]="base">
-        </etp-card>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-  <h2>MST</h2>
-  <ion-grid no-padding *ngIf="balances">
-    <ion-row>
-      <ion-col *ngFor="let item of balances.MST | keyvalue" size="12">
-        <mst-card [symbol]="item.key" [balance]="item.value" [icon]="item.value.icon"></mst-card>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-  <!-- <ion-card *ngFor="let balance of Object.values({foo: 'bar'})">{{balance | json}}</ion-card> -->
-
+  <mst-table [MSTInfo]="MSTInfo"></mst-table>
 </ion-content>

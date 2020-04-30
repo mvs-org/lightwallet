@@ -1,37 +1,30 @@
-<ion-card>
-    <ion-grid>
+<ion-item lines="none">
+    <ion-avatar item-start>
+        <img class="coinlogo" [src]="'assets/icon/ETP.png'">
+    </ion-avatar>
+    <ion-label>
         <ion-row>
-            <ion-col>
-                <ion-item lines="none">
-                    <ion-avatar item-start>
-                        <img class="coinlogo" [src]="'assets/icon/ETP.png'">
-                    </ion-avatar>
-                    <ion-label>
-                        <ion-row>
-                            <ion-col size="6">
-                                <h1 class="symbol">ETP</h1>
-                            </ion-col>
-                            <!--ion-col>{{"ACCOUNT.TOTAL"|translate}}</ion-col-->
-                            <ion-col class="ion-text-right" size="3">
-                                    {{balance.available + balance.frozen | format : balance.decimals}}
-                                    <div class="ion-text-right" *ngIf="tickers!==undefined && tickers[base]">
-                                        ≈{{base}}
-                                        {{(balance.available + balance.frozen)/100000000*tickers[base].price | number : '1.0-2'}}
-                                    </div>
-                            </ion-col>
-                            <!--ion-col>{{"ACCOUNT.FROZEN"|translate}}</ion-col-->
-                            <ion-col class="ion-text-right" size="3">
-                                {{balance.frozen | format : balance.decimals}}
-                                <div class="ion-text-right" *ngIf="tickers!==undefined && tickers[base]" class="fiat">
-                                    ≈{{base}} {{(balance.frozen)/100000000*tickers[base].price | number : '1.0-2'}}
-                                </div>
-                            </ion-col>
-                        </ion-row>
-                    </ion-label>
-                </ion-item>
+            <ion-col size="6">
+                <h2 class="symbol">ETP</h2>
+            </ion-col>
+            <!--ion-col>{{"ACCOUNT.TOTAL"|translate}}</ion-col-->
+            <ion-col class="ion-text-right" size="3">
+                    {{balance.available + balance.frozen | format : balance.decimals}}
+                    <div class="ion-text-right" *ngIf="tickers!==undefined && tickers[base]">
+                        ≈{{base}}
+                        {{(balance.available + balance.frozen)/100000000*tickers[base].price | number : '1.0-2'}}
+                    </div>
+            </ion-col>
+            <!--ion-col>{{"ACCOUNT.FROZEN"|translate}}</ion-col-->
+            <ion-col class="ion-text-right" size="3">
+                {{balance.frozen | format : balance.decimals}}
+                <div class="ion-text-right" *ngIf="tickers!==undefined && tickers[base]" class="fiat">
+                    ≈{{base}} {{(balance.frozen)/100000000*tickers[base].price | number : '1.0-2'}}
+                </div>
             </ion-col>
         </ion-row>
-    </ion-grid>
+    </ion-label>
+</ion-item>
     <!--ion-grid no-padding class="button-row">
         <ion-row>
             <ion-col>
@@ -51,4 +44,3 @@
             </ion-col>
         </ion-row>
     </ion-grid-->
-</ion-card>

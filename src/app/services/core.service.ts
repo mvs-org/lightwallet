@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { MetaverseLightwalletCore, MetaverseLightwalletDatabaseIDBPurge, MetaverseLightwalletDatabase } from '../../../../mvs-lightwallet-core'
+import { MetaverseLightwalletCore, MetaverseLightwalletDatabaseIDBPurge, MetaverseLightwalletDatabase } from 'mvs-lightwallet-core'
 
 @Injectable({
   providedIn: 'root'
