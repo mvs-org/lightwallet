@@ -215,4 +215,11 @@ export class WalletService {
     return Metaverse.wallet.validateMnemonic(mnemonic, wordlist)
   }
 
+  async getIcons() {
+    let result = {
+      MST: ['MVS.ZGC', 'MVS.ZDC', 'CSD.CSD', 'PARCELX.GPX', 'PARCELX.TEST', 'SDG', 'META', 'MVS.HUG', 'RIGHTBTC.RT', 'TIPLR.TPC', 'PANDO', 'VALOTY', 'KOALA.KT', 'DNA', 'GKC', 'DAY', 'APO', 'JKB', 'DIA'],
+    }
+    return result;
+}
+
 }

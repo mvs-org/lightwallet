@@ -17,6 +17,7 @@ export class AccountPage implements OnInit, OnDestroy {
   syncing$ = this.datastore.core.syncing$;
 
   MSTInfo = []
+  icons = {}
 
   base = 'USD'
 
@@ -27,24 +28,28 @@ export class AccountPage implements OnInit, OnDestroy {
   constructor(
     private datastore: CoreService,
     private metaverse: MetaverseService,
+    private wallet: WalletService,
   ) {
     this.height$ = this.datastore.core.height$;
     console.log('loading')
+  }
+
+  async ngOnInit() {
+    this.tickers = await this.metaverse.getTickers()
+    let icons = await this.wallet.getIcons()
+    console.log(icons)
+
     this.balanceSubscription = this.datastore.core.balances$().subscribe(balances => {
       this.balances = balances;
       this.MSTInfo = []
       Object.keys(balances.MST).forEach(symbol => {
         this.MSTInfo.push({
           symbol,
-          icon: symbol,  // TODO: add check if logo available
+          icon: icons.MST.indexOf(symbol) !== -1 ? symbol : 'default_mst',  // TODO: add check if logo available
           balance: balances.MST[symbol]
         });
       });
     });
-  }
-
-  async ngOnInit() {
-    this.tickers = await this.metaverse.getTickers()
   }
 
   ngOnDestroy(){
