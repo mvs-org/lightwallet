@@ -246,5 +246,9 @@
         "ERR_CONNECTION": "Unable to broadcast the transaction. Please check you internet connection or try again later.",
         "ERR_INSUFFICIENT_BALANCE": "Insufficient balance. Please double check your available balance.",
         "ERR_TOO_MANY_INPUTS": "This transaction contains too many inputs. Please try a smaller amount."
+    },
+    "DEVELOPER": {
+        "REMOVE_ACCOUNTS": "Clear Accounts",
+        "REMOVE_TRANSACTIONS": "Clear Transactions"
     }
 }

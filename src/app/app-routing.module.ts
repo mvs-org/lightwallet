@@ -19,6 +19,10 @@ const routes: Routes = [
   { path: 'settings', loadChildren: () => import('./settings/settings.module').then(m => m.SettingsPageModule) },
   { path: 'settings/language', loadChildren: () => import('./settings/language/language.module').then(m => m.LanguagePageModule) },
   { path: 'send', loadChildren: () => import('./account/send/send.module').then(m => m.SendPageModule) },
+  {
+    path: 'developer',
+    loadChildren: () => import('./developer/developer.module').then( m => m.DeveloperPageModule)
+  },
 ]
 
 @NgModule({
