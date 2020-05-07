@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { AlertProvider } from '../../providers/alert/alert';
@@ -78,12 +78,18 @@ export class VotePage {
     secondaryElectionProgress: number
     secondaryCandidateName: string
     secondaryCandidates: Array<any>
+    secondaryCandidate: any
     secondary_duration_days: number = 0
     secondary_duration_hours: number = 0
     secondary_locked_until: number
     secondary_unlock_time: number
     secondaryLockPeriod: number
     secondaryQuantity: string = ""
+    secondaryRevoteStartTimestamp: number
+    secondaryRevoteElectionProgress: number
+    secondary_revote_outputs: any[] = []
+    secondary_revote_already_used_outputs: any[] = []
+
     @ViewChild('secondaryQuantityInput') secondaryQuantityInput;
 
     constructor(
@@ -94,6 +100,7 @@ export class VotePage {
         private alert: AlertProvider,
         private globals: AppGlobals,
         private wallet: WalletServiceProvider,
+        private zone: NgZone,
     ) {
 
         this.candidate = navParams.get('candidate') || ''
@@ -109,7 +116,7 @@ export class VotePage {
                 let balance = balances.MST[this.selectedAsset]
                 this.balance = (balance && balance.available) ? balance.available : 0
                 this.decimals = balance.decimals
-                this.etpBalance = balances.ETP.available
+                this.etpBalance = (balances && balances.ETP) ? balances.ETP.available : 0
                 this.showBalance = this.balance
                 this.addresses = addresses
                 this.addressbalancesObject = addressbalancesObject
@@ -121,7 +128,7 @@ export class VotePage {
                     if (addressbalancesObject[address]) {
                         addrblncs.push({ "address": address, "avatar": addressbalancesObject[address].AVATAR ? addressbalancesObject[address].AVATAR : "", "identifier": addressbalancesObject[address].AVATAR ? addressbalancesObject[address].AVATAR : address, "balance": addressbalancesObject[address].MST[this.selectedAsset] ? addressbalancesObject[address].MST[this.selectedAsset].available : 0 })
                         if (addressbalancesObject[address].MST[this.selectedAsset]) {
-                            this.dnaRichestAddress = addressbalancesObject[address].MST[this.selectedAsset].available > addressbalancesObject[this.dnaRichestAddress].MST[this.selectedAsset].available ? address : this.dnaRichestAddress
+                            this.dnaRichestAddress = addressbalancesObject[address].MST[this.selectedAsset] && addressbalancesObject[address].MST[this.selectedAsset].available > (addressbalancesObject[this.dnaRichestAddress].MST[this.selectedAsset] ? addressbalancesObject[this.dnaRichestAddress].MST[this.selectedAsset].available : 0) ? address : this.dnaRichestAddress
                         }
                     } else {
                         addrblncs.push({ "address": address, "avatar": "", "identifier": address, "balance": 0 })
@@ -179,6 +186,7 @@ export class VotePage {
                 this.electionProgressVote = Math.round((this.height - this.earlybirdInfo.voteStartHeight) / (this.earlybirdInfo.voteEndHeight - this.earlybirdInfo.voteStartHeight) * 100)
                 this.electionProgressRevote = Math.round((this.height - this.earlybirdInfo.revoteStartHeight) / (this.earlybirdInfo.revoteEndHeight - this.earlybirdInfo.revoteStartHeight) * 100)
                 this.secondaryElectionProgress = Math.round((this.height - this.earlybirdInfo.secondaryElectionStart) / (this.earlybirdInfo.secondaryElectionEnd - this.earlybirdInfo.secondaryElectionStart) * 100)
+                this.secondaryRevoteElectionProgress = Math.round((this.height - this.earlybirdInfo.secondaryRevoteStartHeight) / (this.earlybirdInfo.secondaryRevoteEndHeight - this.earlybirdInfo.secondaryRevoteStartHeight) * 100)
                 if(earlybirdInfo && earlybirdInfo.secondaryCandidates) {
                     this.secondaryCandidates = []
                     earlybirdInfo.secondaryCandidates.forEach((candidate, index) => {
@@ -203,7 +211,9 @@ export class VotePage {
     async getSecondaryStartTimestamp() {
         if(this.earlybirdInfo && this.earlybirdInfo.secondaryElectionStart && this.earlybirdInfo.secondaryElectionStart < this.height) {
             const block = await this.mvs.getBlock(this.earlybirdInfo.secondaryElectionStart)
+            const revoteBlock = await this.mvs.getBlock(this.earlybirdInfo.secondaryRevoteStartHeight)
             this.secondaryVoteStartTimestamp = block && block.time_stamp ? block.time_stamp : 0
+            this.secondaryRevoteStartTimestamp = revoteBlock && revoteBlock.time_stamp ? revoteBlock.time_stamp : 0
         }
     }
 
@@ -333,7 +343,7 @@ export class VotePage {
         return this.alert.showLoading()
             .then(() => this.mvs.updateHeight())
             .then((height) => {
-                this.lockPeriod = this.earlybirdInfo.secondaryVoteUnlock - height
+                this.secondaryLockPeriod = this.earlybirdInfo.secondaryVoteUnlock - height
                 let quantity = Math.round(parseFloat(this.secondaryQuantity) * Math.pow(10, this.decimals))
                 let attenuation_model = 'PN=0;LH=' + this.secondaryLockPeriod + ';TYPE=1;LQ=' + quantity + ';LP=' + this.secondaryLockPeriod + ';UN=1'
                 let messages = [];
@@ -405,13 +415,6 @@ export class VotePage {
         this.secondaryQuantityInput.setFocus()
     })
 
-    /*durationChange() {
-        this.zone.run(() => { })
-        this.duration_days = Math.floor(this.blocktime * this.numberPeriods * this.electionInfo.lockPeriod / (24 * 60 * 60))
-        this.duration_hours = Math.floor((this.blocktime * this.numberPeriods * this.electionInfo.lockPeriod / (60 * 60)) - (24 * this.duration_days))
-        this.locked_until = this.numberPeriods * this.electionInfo.lockPeriod * this.blocktime * 1000 + this.current_time;
-    }*/
-
     durationChange() {
         this.lockPeriod = this.locked_until - this.height
         this.duration_days = Math.floor(this.blocktime * this.lockPeriod / (24 * 60 * 60))
@@ -448,6 +451,9 @@ export class VotePage {
         let frozen_outputs_locked_hash = []
         let frozen_outputs_unlocked_hash = []
         this.revote_outputs = []
+        this.revote_already_used_outputs = []
+        this.secondary_revote_outputs = []
+        this.secondary_revote_already_used_outputs = []
         outputs.forEach((locked_output) => {
             let tx = txs[locked_output.hash]
             for (let i = 0; i < tx.outputs.length; i++) {
@@ -461,12 +467,22 @@ export class VotePage {
             if (localHeight > locked_output.locked_until) {
                 this.frozen_outputs_unlocked.push(locked_output)
                 frozen_outputs_unlocked_hash.push(locked_output.hash)
-                if (locked_output.height + locked_output.attenuation_model_param.lock_period < this.earlybirdInfo.previousVoteEndHeight) {
-                    //Previous vote that was not reused on time
-                } else if (this.availableUtxos[locked_output.hash + '/' + locked_output.index]) {
-                    this.revote_outputs.push(locked_output)
+                if(locked_output.voteType == 'secondarynode') {
+                    if (locked_output.height + locked_output.attenuation_model_param.lock_period < this.earlybirdInfo.previousSecondaryVoteEndHeight) {
+                        //Previous vote that was not reused on time
+                    } else if (this.availableUtxos[locked_output.hash + '/' + locked_output.index]) {
+                        this.secondary_revote_outputs.push(locked_output)
+                    } else {
+                        this.secondary_revote_already_used_outputs.push(locked_output)
+                    }
                 } else {
-                    this.revote_already_used_outputs.push(locked_output)
+                    if (locked_output.height + locked_output.attenuation_model_param.lock_period < this.earlybirdInfo.previousVoteEndHeight) {
+                        //Previous vote that was not reused on time
+                    } else if (this.availableUtxos[locked_output.hash + '/' + locked_output.index]) {
+                        this.revote_outputs.push(locked_output)
+                    } else {
+                        this.revote_already_used_outputs.push(locked_output)
+                    }
                 }
             } else {
                 this.frozen_outputs_locked.push(locked_output)
@@ -483,7 +499,7 @@ export class VotePage {
         /*let test = await this.wallet.getElectionRewards(['5dd276da9f2ab08bdef125911504307336e4f5e4fecba399facd08f71e719778'])
         rewards = rewards.concat(test.json().result)
         console.log(rewards)
-        this.rewards['a83080dec232d964c71d7c2d41edaf6c6c3cac9242d02f5808874c70bb74b045'] = 1000
+        this.rewards['2da3140d7b491b7c4165763c93f2a3c246faa6d2663652e84976547a0c748996'] = 1000
         */
         //UNTIL HERE
 
@@ -494,6 +510,17 @@ export class VotePage {
         }
 
         this.revote_outputs.forEach(output => {
+            output.initialVoteAmount = Math.round(output.attachment.quantity / Math.pow(10, this.decimals))
+
+            let maxPossibleVote = Math.floor(this.rewards[output.tx] ? output.initialVoteAmount + this.rewards[output.tx] : output.initialVoteAmount)
+            let maxAvailableVote = Math.floor(this.notPreviouslyVoteQuantity ? output.initialVoteAmount + (this.notPreviouslyVoteQuantity / Math.pow(10, this.decimals)) : output.initialVoteAmount)
+
+            output.newVoteAmount = Math.min(maxPossibleVote, maxAvailableVote)
+            output.newVoteAmountWarningNotMax = maxPossibleVote > maxAvailableVote
+            output.maxVoteAmount = output.newVoteAmount
+        })
+
+        this.secondary_revote_outputs.forEach(output => {
             output.initialVoteAmount = Math.round(output.attachment.quantity / Math.pow(10, this.decimals))
 
             let maxPossibleVote = Math.floor(this.rewards[output.tx] ? output.initialVoteAmount + this.rewards[output.tx] : output.initialVoteAmount)
@@ -515,6 +542,81 @@ export class VotePage {
                 let attenuation_model = 'PN=0;LH=' + this.lockPeriod + ';TYPE=1;LQ=' + quantity + ';LP=' + this.lockPeriod + ';UN=1'
                 let messages = [];
                 messages.push('vote_supernode:' + locked_output.voteAvatar)
+                if (this.message) {
+                    messages.push(this.message)
+                }
+                let notPreviouslyVote = 0
+                let utxo_to_use = [locked_output]
+                let targetNotPreviouslyVote = quantity - locked_output.attachment.quantity
+
+                //First we try to match the same sender address
+                for (let i = 0; i < this.notPreviouslyVoteUtxo.length; i++) {
+                    let current_utxo = this.notPreviouslyVoteUtxo[i]
+                    if (current_utxo.address == locked_output.address) {
+                        utxo_to_use.push(current_utxo)
+                        notPreviouslyVote += current_utxo.attachment.quantity
+                        if (notPreviouslyVote >= targetNotPreviouslyVote) {
+                            break
+                        }
+                    }
+                }
+
+                //If we didn't find any result, we take any other address
+                if (notPreviouslyVote < targetNotPreviouslyVote) {
+                    for (let i = 0; i < this.notPreviouslyVoteUtxo.length; i++) {
+                        let current_utxo = this.notPreviouslyVoteUtxo[i]
+                        if (current_utxo.address !== locked_output.address) {
+                            utxo_to_use.push(current_utxo)
+                            notPreviouslyVote += current_utxo.attachment.quantity
+                            if (notPreviouslyVote >= targetNotPreviouslyVote) {
+                                break
+                            }
+                        }
+                    }
+                }
+
+                return this.mvs.voteAgainTx(
+                    utxo_to_use,
+                    locked_output.address,
+                    undefined,
+                    this.selectedAsset,
+                    quantity,
+                    attenuation_model,
+                    undefined,
+                    10000,
+                    messages
+                )
+            })
+            .catch((error) => {
+                console.error(error.message)
+                this.alert.stopLoading()
+                switch (error.message) {
+                    case "ERR_DECRYPT_WALLET":
+                        this.alert.showError('MESSAGE.PASSWORD_WRONG', '')
+                        throw Error('ERR_CREATE_TX')
+                    case "ERR_INSUFFICIENT_BALANCE":
+                        this.alert.showError('MESSAGE.INSUFFICIENT_BALANCE', '')
+                        throw Error('ERR_CREATE_TX')
+                    case "ERR_TOO_MANY_INPUTS":
+                        this.alert.showErrorTranslated('ERROR_TOO_MANY_INPUTS', 'ERROR_TOO_MANY_INPUTS_TEXT')
+                        throw Error('ERR_CREATE_TX')
+                    default:
+                        this.alert.showError('MESSAGE.CREATE_TRANSACTION', error.message)
+                        throw Error('ERR_CREATE_TX')
+                }
+            })
+    }
+
+
+    secondaryVoteAgain(locked_output) {
+        return this.alert.showLoading()
+            .then(() => this.mvs.updateHeight())
+            .then((height) => {
+                this.secondaryLockPeriod = this.earlybirdInfo.secondaryVoteUnlock - height
+                let quantity = Math.round(parseFloat(locked_output.newVoteAmount) * Math.pow(10, this.decimals))
+                let attenuation_model = 'PN=0;LH=' + this.secondaryLockPeriod + ';TYPE=1;LQ=' + quantity + ';LP=' + this.secondaryLockPeriod + ';UN=1'
+                let messages = [];
+                messages.push('vote_secondarynode:' + locked_output.voteAvatar)
                 if (this.message) {
                     messages.push(this.message)
                 }
@@ -602,10 +704,39 @@ export class VotePage {
             })
     }
 
+    sendSecondaryVoteAgain(locked_ouput) {
+        this.secondaryVoteAgain(locked_ouput)
+            .then((result) => {
+                this.navCtrl.push("confirm-tx-page", { tx: result.encode().toString('hex') })
+                this.alert.stopLoading()
+            })
+            .catch((error) => {
+                console.error(error)
+                this.alert.stopLoading()
+                switch (error.message) {
+                    case "ERR_CONNECTION":
+                        this.alert.showError('ERROR_SEND_TEXT', '')
+                        break;
+                    case "ERR_CREATE_TX":
+                        //already handle in create function
+                        break;
+                    default:
+                        this.alert.showError('MESSAGE.BROADCAST_ERROR', error.message)
+                }
+            })
+    }
+
     changeTab() {
         this.revote_outputs.forEach((output) => {
             output.show = false
         })
+        this.secondary_revote_outputs.forEach((output) => {
+            output.show = false
+        })
+    }
+
+    updateRange() {
+        this.zone.run(() => { });
     }
 
 }

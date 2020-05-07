@@ -345,6 +345,139 @@
             </form>
         </div>
 
+        <!--Secondary nodes revote-->
+        <div
+            *ngIf="!loadingElectionInfo && !updateRequired && earlybirdInfo && earlybirdInfo.secondaryCandidates && earlybirdInfo.secondaryCandidates.length > 0 && earlybirdInfo.secondaryRevoteEnabled
+            && !(secondary_revote_outputs && secondary_revote_outputs.length == 0 && secondary_revote_already_used_outputs && secondary_revote_already_used_outputs.length == 0)">
+            <h1 class="center">
+                <span [translate]="'VOTE.SECONDARY_ELECTION'"></span>
+            </h1>
+            <ion-item class="election-progress"
+                *ngIf="secondaryRevoteStartTimestamp && earlybirdInfo && earlybirdInfo.secondaryRevoteEndTime">
+                <ion-row>
+                    <ion-col>
+                        <p>{{"VOTE.START" | translate}}: <br *ngIf="platform.is('mobile')">
+                            {{secondaryRevoteStartTimestamp*1000 | date : 'medium'}}</p>
+                    </ion-col>
+                    <ion-col>
+                        <p class="right">{{"VOTE.END"|translate}}:<br *ngIf="platform.is('mobile')">
+                            ~{{earlybirdInfo.secondaryRevoteEndTime*1000 | date : 'medium'}}</p>
+                    </ion-col>
+                </ion-row>
+                <progress-bar [progress]="secondaryRevoteElectionProgress || 0"></progress-bar>
+            </ion-item>
+            <br>
+            <h2 class="center"
+                *ngIf="secondary_revote_outputs && secondary_revote_outputs.length == 0 && secondary_revote_already_used_outputs && secondary_revote_already_used_outputs.length == 0">
+                {{'VOTE.NO_REVOTE'|translate}}</h2>
+            <ion-item no-lines class="noPadding">
+                <h2 class="center" *ngIf="secondary_revote_outputs && secondary_revote_outputs.length > 0">
+                    {{'VOTE.VOTES_TO_USE_AGAIN'|translate}}</h2>
+                <ion-card *ngFor="let output of secondary_revote_outputs" class="manual-copy display-overflow revote-card">
+                    <ion-grid>
+                        <ion-row>
+                            <ion-col>
+                                <ion-row>
+                                    <ion-col col-md-8>
+                                        <ion-item class="summaryTxType">
+                                            <ion-row>
+                                                <ion-col col-12 col-sm-12 col-md-6>{{'VOTE.VOTE_FOR_DELEGATE' |
+                                                    translate}}:</ion-col>
+                                                <ion-col col-12 col-sm-12 col-md-6>
+                                                    {{output.voteAvatar}}
+                                                    <div>{{output.attenuation_model_param.lock_quantity | format :
+                                                        output.attachment.decimals}} DNA</div>
+                                                </ion-col>
+                                            </ion-row>
+                                            <ion-row>
+                                                <ion-col>
+                                                    <div *ngIf="rewards[output.hash]" class="default-color fee">{{'VOTE.REWARD'
+                                                        | translate}}: {{rewards[output.hash]}} DNA</div>
+                                                </ion-col>
+                                            </ion-row>
+                                        </ion-item>
+                                    </ion-col>
+                                    <ion-col col-md-4 class="right">
+                                        <button class="ion-item" ion-button icon-left
+                                            (click)="output.show = !output.show">
+                                            <ion-icon name="ribbon"></ion-icon>
+                                            {{'VOTE.ELECT_AGAIN_BUTTON'|translate}}
+                                        </button>
+                                    </ion-col>
+                                </ion-row>
+                            </ion-col>
+                        </ion-row>
+                        <div [@expandCollapse]="output.show" *ngIf="output.show">
+                            <ion-row>
+                                <ion-col>
+                                    <ion-row>
+                                        <ion-col>
+                                            <ion-item
+                                                [ngClass]="{'error-border':!validRevoteQuantity(output), 'valid-border':validRevoteQuantity(output)}">
+                                                <ion-label color="primary" floating>{{"AMOUNT" | translate}}</ion-label>
+                                                <ion-input name="quantity" type="number" min="0"
+                                                    [(ngModel)]="output.newVoteAmount" required></ion-input>
+                                            </ion-item>
+                                            <ion-item no-lines *ngIf="output.newVoteAmountWarningNotMax"
+                                                class="warning">{{'VOTE.REVOTE_NOT_MAX_POSSIBLE' | translate}}</ion-item>
+                                            <ion-item class="info-input" no-lines>
+                                                <span [translate]="'VOTE.DURATION_ESTIMATION'"
+                                                    [translateParams]="{blocktime: blocktime, duration_days: secondary_duration_days, duration_hours: secondary_duration_hours, unlock_time: secondary_unlock_time | date : 'medium'}"></span>
+                                            </ion-item>
+                                        </ion-col>
+                                    </ion-row>
+                                    <ion-row class="padding-bottom">
+                                        <ion-col></ion-col>
+                                        <ion-col>
+                                            <button type="submit" ion-button full icon-left
+                                                [disabled]="!validRevoteQuantity(output)"
+                                                (click)="sendSecondaryVoteAgain(output)" color="secondary">
+                                                <ion-icon disabled="checked" name="cog"></ion-icon>
+                                                {{'BUTTON.NEXT'|translate}}
+                                            </button>
+                                        </ion-col>
+                                    </ion-row>
+                                </ion-col>
+                            </ion-row>
+                        </div>
+                    </ion-grid>
+                </ion-card>
+                <br>
+                <h2 class="center" *ngIf="secondary_revote_already_used_outputs && secondary_revote_already_used_outputs.length > 0">
+                    {{'VOTE.VOTES_ALREADY_USED_AGAIN'|translate}}</h2>
+                <ion-card *ngFor="let output of secondary_revote_already_used_outputs"
+                    class="manual-copy display-overflow revote-card">
+                    <ion-grid>
+                        <ion-row>
+                            <ion-col>
+                                <ion-row>
+                                    <ion-col col-md-8>
+                                        <ion-item class="summaryTxType">
+                                            <ion-row>
+                                                <ion-col col-12 col-sm-12 col-md-6>{{'VOTE.VOTE_FOR_DELEGATE' |
+                                                    translate}}:</ion-col>
+                                                <ion-col col-12 col-sm-12 col-md-6>
+                                                    {{output.voteAvatar}}
+                                                    <div>{{output.attenuation_model_param.lock_quantity | format :
+                                                        output.attachment.decimals}} DNA</div>
+                                                </ion-col>
+                                            </ion-row>
+                                            <ion-row>
+                                                <ion-col>
+                                                    <div *ngIf="rewards[output.hash]" class="default-color fee">{{'VOTE.REWARD'
+                                                        | translate}}: {{rewards[output.hash]}} DNA</div>
+                                                </ion-col>
+                                            </ion-row>
+                                        </ion-item>
+                                    </ion-col>
+                                </ion-row>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </ion-card>
+            </ion-item>
+        </div>
+
         <!--Secondary nodes election-->
         <div
             *ngIf="!loadingElectionInfo && !updateRequired && earlybirdInfo && earlybirdInfo.secondaryCandidates && earlybirdInfo.secondaryCandidates.length > 0 && earlybirdInfo.secondaryVoteEnabled">
@@ -382,8 +515,9 @@
                     <br>
                     <ion-item [ngClass]="{'error-border':!secondaryCandidate}">
                         <ion-label>{{"VOTE.SELECT_DELEGATE"|translate}}</ion-label>
-                        <ionic-selectable item-content name="secondaryCandidate" [(ngModel)]="secondaryCandidate" [items]="secondaryCandidates"
-                            itemValueField="id" itemTextField="name" [canSearch]="true"(onChange)="secondaryCandidateChange(secondaryCandidate)">
+                        <ionic-selectable item-content name="secondaryCandidate" [(ngModel)]="secondaryCandidate"
+                            [items]="secondaryCandidates" itemValueField="id" itemTextField="name" [canSearch]="true"
+                            (onChange)="secondaryCandidateChange(secondaryCandidate)">
                         </ionic-selectable>
                     </ion-item>
 
