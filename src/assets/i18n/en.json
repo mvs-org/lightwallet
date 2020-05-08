@@ -830,5 +830,6 @@
     "IMPORT.SHOW_FULL_WALLET_QRCODE_BUTTON": "Export full wallet",
     "IMPORT.SHOW_VIEW_ONLY_QRCODE_BUTTON": "Export view only wallet",
 
-    "VOTE.SECONDARY_ELECTION": "Secondary nodes election"
+    "VOTE.SECONDARY_ELECTION": "Secondary nodes election",
+    "VOTE.ELECTION_NUMBER": "Election {{number}}"
 }

@@ -781,7 +781,7 @@
     "SEND.TOO_MANY_DECIMALS": "您指定的小数位过多",
 
     "VOTE": "投票",
-    "VOTE.TITLE": "DNA超级节点投票",
+    "VOTE.TITLE": "DNA选举",
     "VOTE.SELECT_DELEGATE": "选择节点",
     "VOTE.SELECT_PERIOD": "将锁定多少期",
     "LOCK_ALL_BUTTON": "全额投票",
@@ -830,5 +830,6 @@
     "IMPORT.SHOW_FULL_WALLET_QRCODE_BUTTON": "导出钱包",
     "IMPORT.SHOW_VIEW_ONLY_QRCODE_BUTTON": "导出只读钱包",
 
-    "VOTE.SECONDARY_ELECTION": "二级节点预选"
+    "VOTE.SECONDARY_ELECTION": "二级节点预选",
+    "VOTE.ELECTION_NUMBER": "第{{number}}期选举"
 }

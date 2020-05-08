@@ -350,7 +350,8 @@
             *ngIf="!loadingElectionInfo && !updateRequired && earlybirdInfo && earlybirdInfo.secondaryCandidates && earlybirdInfo.secondaryCandidates.length > 0 && earlybirdInfo.secondaryRevoteEnabled
             && !(secondary_revote_outputs && secondary_revote_outputs.length == 0 && secondary_revote_already_used_outputs && secondary_revote_already_used_outputs.length == 0)">
             <h1 class="center">
-                <span [translate]="'VOTE.SECONDARY_ELECTION'"></span>
+                <span *ngIf="earlybirdInfo && earlybirdInfo.currentPeriod" [translate]="'VOTE.ELECTION_NUMBER'"
+                    [translateParams]="{number: earlybirdInfo.currentPeriod}"></span>
             </h1>
             <ion-item class="election-progress"
                 *ngIf="secondaryRevoteStartTimestamp && earlybirdInfo && earlybirdInfo.secondaryRevoteEndTime">
@@ -484,7 +485,8 @@
             <p align="center" *ngIf="etpBalance<fee/100000000" class="wrong-input">
                 {{"NOTICE_TRANSACTION_FEE_UNCOVERED"|translate}}</p>
             <h1 class="center">
-                <span [translate]="'VOTE.SECONDARY_ELECTION'"></span>
+                <span *ngIf="earlybirdInfo && earlybirdInfo.currentPeriod" [translate]="'VOTE.ELECTION_NUMBER'"
+                    [translateParams]="{number: earlybirdInfo.currentPeriod}"></span>
             </h1>
             <ion-row>
                 <ion-col>
