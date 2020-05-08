@@ -4,7 +4,7 @@ import { Storage } from '@ionic/storage';
 
 @Injectable()
 export class AppGlobals {
-    readonly version: string = '0.9.2'
+    readonly version: string = '0.9.3'
     readonly db_version = 6
     readonly name: string = 'Pillars of Creation'
     readonly algo: string = 'aes'
