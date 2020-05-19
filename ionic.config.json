@@ -1,5 +1,7 @@
 {
   "name": "lightwallet-ionic5-working",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
