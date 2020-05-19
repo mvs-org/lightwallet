@@ -41,7 +41,13 @@ export class AccountPage implements OnInit, OnDestroy {
 
     this.balanceSubscription = this.datastore.core.balances$().subscribe(balances => {
       this.balances = balances;
-      this.MSTInfo = []
+      this.MSTInfo = [
+        {
+          symbol: 'ETP',
+          icon: 'ETP',
+          balance: balances.ETP
+        }
+      ]
       Object.keys(balances.MST).forEach(symbol => {
         this.MSTInfo.push({
           symbol,
