@@ -1,20 +1,21 @@
 import { NgModule } from '@angular/core';
-  
+
 // Pipes
-import { FormatPipe } from './format/format';
-import { FirstErrorPipe } from './first-error.pipe'
+import { FormatPipe } from './format/format'
+import { OrderByPipe } from './order-by/order-by'
+import { DecimalsPipe } from './decimals/decimals'
 
 @NgModule({
     declarations: [
         FormatPipe,
-        FirstErrorPipe,
+        OrderByPipe,
+        DecimalsPipe,
     ],
-    imports: [],
+    imports: [ ],
     exports: [
         FormatPipe,
-        FirstErrorPipe,
-    ],
-    providers: [
+        OrderByPipe,
+        DecimalsPipe,
     ]
 })
-export class PipesModule { }
+export class PipesModule {}

@@ -4,7 +4,7 @@ import { Pipe, PipeTransform } from '@angular/core';
     name: 'format',
 })
 export class FormatPipe implements PipeTransform {
-    transform(quantity: number, decimals: number = 8) {
-        return (quantity / Math.pow(10, decimals)).toLocaleString(undefined, { maximumFractionDigits: decimals })
+    transform(quantity: number, decimals: number) {
+        return (quantity / Math.pow(10, decimals)).toLocaleString(undefined, {maximumFractionDigits: decimals})
     }
 }
