@@ -8,7 +8,6 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { IonicStorageModule } from '@ionic/storage';
 
-
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
@@ -18,6 +17,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreService } from './services/core.service';
 
+import { NgxQRCodeModule } from 'ngx-qrcode2';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -52,6 +52,7 @@ function appLoadFactory(core: CoreService) {
       deps: [CoreService],
       multi: true,
     },
+    NgxQRCodeModule,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent],

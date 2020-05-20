@@ -70,7 +70,6 @@ export class ReceivePage implements OnInit {
   }
 
   formatAvailable(balance: Balance = { available: 0, frozen: 0, decimals: 0 }) {
-    console.log(balance)
     return balance.available && balance.decimals ? this.formatPipe.transform(balance.available, balance.decimals) : 0
   }
 

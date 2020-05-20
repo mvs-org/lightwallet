@@ -7,13 +7,11 @@
 </ion-header>
 
 <ion-content class="ion-text-center">
-    <!--ngx-qrcode 
-    [qrc-value] = "address"
-    qrc-class = "qr-address"
-    qrc-width=256
-    qrc-scale=10
-    qrc-errorCorrectionLevel = "L">
-    </ngx-qrcode-->
+    <ngx-qrcode 
+    [value] = "address"
+    cssClass = "aclass"
+    errorCorrectionLevel = "L">
+    </ngx-qrcode>
   <p>{{address}}</p>
 </ion-content>
 

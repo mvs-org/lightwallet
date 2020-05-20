@@ -4,7 +4,6 @@ import { TranslateService } from '@ngx-translate/core'
 import { ClipboardService } from 'ngx-clipboard'
 import { ConfigService } from 'src/app/services/config.service'
 
-
 @Component({
   selector: 'app-qr-address',
   templateUrl: './qr-address.component.html',
