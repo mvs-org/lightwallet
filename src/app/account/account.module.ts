@@ -32,10 +32,6 @@ const routes: Routes = [
     path: 'history',
     loadChildren: () => import('./transaction-history/transaction-history.module').then(m => m.TransactionHistoryPageModule),
   },
-  {
-    path: 'addresses/:symbol',
-    loadChildren: () => import('./addresses/addresses.module').then(m => m.AddressesPageModule),
-  },
 ]
 
 export function createTranslateLoader(http: HttpClient) {

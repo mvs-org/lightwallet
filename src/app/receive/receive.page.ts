@@ -9,13 +9,12 @@ import { keyBy, Dictionary } from 'lodash'
 import { fromEventPattern, Observable } from 'rxjs'
 
 @Component({
-  selector: 'app-addresses',
-  templateUrl: './addresses.page.html',
-  styleUrls: ['./addresses.page.scss'],
+  selector: 'app-receive',
+  templateUrl: './receive.page.html',
+  styleUrls: ['./receive.page.scss'],
 })
-export class AddressesPage implements OnInit {
+export class ReceivePage implements OnInit {
 
-  selectedAsset: string
   addressBalances: Dictionary<Balances>
   addresses$: Observable<string[]>
   displayType: string
@@ -34,14 +33,32 @@ export class AddressesPage implements OnInit {
       .then(addressBalanceStream => {
         addressBalanceStream
           .subscribe(addressBalances => {
-            this.addressBalances = addressBalances
+            //this.addressBalances = addressBalances
+            this.addressBalances = {
+              'tK8TaQix9QSgaAAPTaUj7NwKMfbkWRKgVf': {
+                'AVATAR': 'TOTO',
+                'ETP': {
+                  'available': 12345678,
+                  'unconfirmed': 123,
+                  'frozen': 111,
+                  'decimals': 8,
+                },
+                'MST': {
+                  'DNA': {
+                    'available': 8888,
+                    'unconfirmed': 444,
+                    'frozen': 333,
+                    'decimals': 4,
+                  }
+                }
+              }
+            }
           })
       })
-    this.activatedRoute.params
-      .subscribe(params => {
-        this.selectedAsset = params.symbol
-        this.displayType = this.selectedAsset === 'ETP' ? 'ETP' : 'asset'
-      })
+  }
+
+  getETPBalances(address) {
+    return this.addressBalances[address] !== undefined ? this.addressBalances[address].ETP : {}
   }
 
   getMSTBalances(address) {
@@ -49,11 +66,12 @@ export class AddressesPage implements OnInit {
   }
 
   formatFrozen(balance: Balance = { available: 0, frozen: 0, decimals: 0 }) {
-    return this.formatPipe.transform(balance.frozen, balance.decimals)
+    return balance.available && balance.decimals ? this.formatPipe.transform(balance.frozen, balance.decimals) : 0
   }
 
   formatAvailable(balance: Balance = { available: 0, frozen: 0, decimals: 0 }) {
-    return this.formatPipe.transform(balance.available, balance.decimals)
+    console.log(balance)
+    return balance.available && balance.decimals ? this.formatPipe.transform(balance.available, balance.decimals) : 0
   }
 
   async show(address: string) {

@@ -5,7 +5,7 @@ import { Routes, RouterModule } from '@angular/router'
 
 import { IonicModule } from '@ionic/angular'
 
-import { AddressesPage } from './addresses.page'
+import { ReceivePage } from './receive.page'
 import { TranslateModule } from '@ngx-translate/core'
 import { PipesModule } from 'src/app/pipes/pipes.module'
 import { QrAddressComponent } from './qr-address/qr-address.component'
@@ -15,7 +15,7 @@ import { FormatPipe } from 'src/app/pipes/format/format'
 const routes: Routes = [
   {
     path: '',
-    component: AddressesPage,
+    component: ReceivePage,
   },
 ]
 
@@ -32,6 +32,6 @@ const routes: Routes = [
   providers: [
     FormatPipe,
   ],
-  declarations: [AddressesPage],
+  declarations: [ReceivePage],
 })
-export class AddressesPageModule {}
+export class ReceivePageModule {}

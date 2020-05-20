@@ -16,6 +16,7 @@ const routes: Routes = [
   {
     path: 'account', loadChildren: () => import('./account/account.module').then(m => m.AccountPageModule), canActivate: [WalletGuard]
   },
+  { path: 'receive', loadChildren: () => import('./receive/receive.module').then(m => m.ReceivePageModule) },
   { path: 'settings', loadChildren: () => import('./settings/settings.module').then(m => m.SettingsPageModule) },
   { path: 'settings/language', loadChildren: () => import('./settings/language/language.module').then(m => m.LanguagePageModule) },
   { path: 'send', loadChildren: () => import('./account/send/send.module').then(m => m.SendPageModule) },

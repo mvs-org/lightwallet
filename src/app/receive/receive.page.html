@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/account"></ion-back-button>
+    </ion-buttons>
+    <ion-title translate="RECEIVE.TITLE"></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content *ngIf="addressBalances" class="spread-out">
+  <ion-item *ngFor="let address of (addresses$|async)" class="font-mono">
+    <ion-avatar slot="start">
+      <img *ngIf="addressBalances[address] && addressBalances[address].AVATAR" class="avatar-logo"
+        [src]="'assets/icon/default_avatar.png'">
+    </ion-avatar>
+    <ion-label>
+      <h3 *ngIf="addressBalances[address] && addressBalances[address].AVATAR">
+        <b>{{addressBalances[address].AVATAR}}</b>
+      </h3>
+      <h3 class="address break-words">
+        <span class="address-text">{{address}}</span>
+        <ion-button type="button" class="qrcode-btn" id="qrcode" item-right (click)="show(address)">
+          <img class="menu-icon" width="20" height="20" [src]="'assets/images/qrcode.png'">
+        </ion-button>
+      </h3>
+      <div>
+        <p>
+          <b>ETP: </b>
+          {{ formatAvailable(getETPBalances(address)) }}
+        </p>
+        <p *ngFor="let balance of getMSTBalances(address) | keyvalue">
+          <b>{{balance.key}}: </b>
+          {{ formatAvailable(balance.value) }}
+        </p>
+      </div>
+    </ion-label>
+  </ion-item>
+</ion-content>
