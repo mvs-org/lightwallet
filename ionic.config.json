@@ -1,8 +1,5 @@
 {
-  "name": "myetpwallet",
-  "integrations": {
-    "cordova": {}
-  },
-  "type": "ionic-angular",
-  "id": "8a12ec1e"
+  "name": "lightwallet-ion5",
+  "integrations": {},
+  "type": "angular"
 }
