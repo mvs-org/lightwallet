@@ -15,6 +15,10 @@ const routes: Routes = [
   {
     path: 'passphrase',
     loadChildren: () => import('./passphrase/passphrase.module').then( m => m.PassphrasePageModule)
+  },
+  {
+    path: 'open-file',
+    loadChildren: () => import('./open-file/open-file.module').then( m => m.OpenFilePageModule)
   }
 ];
 
