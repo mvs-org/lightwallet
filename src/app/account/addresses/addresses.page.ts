@@ -77,7 +77,7 @@ export class AddressesPage implements OnInit {
 
     addAddresses = () => console.log('go to add address page')
 
-    history = (asset, address) =>  this.router.navigate(['..', 'history', asset], {queryParams: {addresses: [address]}})
+    history = (asset, address) =>  this.router.navigate(['account', 'history', asset], {queryParams: {addresses: [address]}})
 
     format = (quantity, decimals) => quantity / Math.pow(10, decimals)
 
