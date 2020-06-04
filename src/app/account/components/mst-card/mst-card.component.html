@@ -49,15 +49,15 @@
 </ion-card>
 <ion-row col-12 class="row-buttons">
     <ion-col col-4>
-        <button ion-button full clear color="secondary" icon-left (click)="gotoReceive()">
-            <ion-icon name="download"></ion-icon>{{"RECEIVE" | translate}}</button>
+        <ion-button expand="full" fill="clear" color="secondary" icon-left [routerLink]="'/account/addresses/'+symbol">
+            <ion-icon name="download"></ion-icon>{{"ACCOUNT.BUTTON.RECEIVE" | translate}}</ion-button>
     </ion-col>
     <ion-col col-4>
-        <button ion-button full clear color="danger" icon-left (click)="gotoTransfer()">
-            <ion-icon name="send"></ion-icon>{{ "SEND" | translate }}</button>
+        <ion-button expand="full" fill="clear" color="danger" icon-left [routerLink]="'/account/send/'+symbol">
+            <ion-icon name="send"></ion-icon>{{ "ACCOUNT.BUTTON.SEND" | translate }}</ion-button>
     </ion-col>
     <ion-col col-4>
-        <button ion-button full clear color="primary" icon-left (click)="gotoTransactions()">
-            <ion-icon name="time"></ion-icon>{{ "HISTORY" | translate }}</button>
+        <ion-button expand="full" fill="clear" color="primary" icon-left [routerLink]="'/account/history/'+symbol">
+            <ion-icon name="time"></ion-icon>{{ "ACCOUNT.BUTTON.HISTORY" | translate }}</ion-button>
     </ion-col>
 </ion-row>

@@ -22,12 +22,6 @@ export class MSTCardComponent {
 
     errorImg = e => this.icon = this.icon !== 'assets/icon/' + this.symbol + '.png' ? 'assets/icon/' + this.symbol + '.png' : 'assets/icon/default_mst.png'
 
-    gotoTransactions = () => this.router.navigate(['/account', 'history', this.symbol])
-
-    gotoTransfer = () => this.router.navigate(['/account', 'send', this.symbol])
-
-    gotoReceive = () => this.router.navigate(['/account', 'receuve', this.symbol])
-
     gotoSwap = () => this.router.navigate(['/swap', this.symbol])
 
     gotoVote = () => this.router.navigate(['/vote'])

@@ -1,35 +1,31 @@
 <ion-header>
-    <ion-navbar>
-        <ion-buttons>
-            <ion-button menuToggle>
-                <ion-icon name="menu"></ion-icon>
-            </ion-button>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-menu-button autoHide="false"></ion-menu-button>
         </ion-buttons>
         <ion-title>
             {{'ACCOUNT.TITLE'|translate}} 
             <ion-icon *ngIf="!hasSeed" name="eye"></ion-icon>
         </ion-title>
-        <ion-buttons end>
+        <ion-buttons slot="end">
             <ion-spinner *ngIf="isSyncing() && platform.is('mobile')"></ion-spinner>
             <ion-icon *ngIf="isOffline()" name="flash" class="offlineIcon"></ion-icon>
-        </ion-buttons>
-        <ion-buttons end>
-            <button *ngIf="!platform.is('mobile')" ion-button icon-left (click)="logout()">
+            <ion-button *ngIf="!platform.is('mobile')" ion-button icon-left (click)="logout()">
                 <ion-icon name="log-out"></ion-icon>
                 <span [translate]="'LOGOUT'"></span>
-            </button>
-            <button ion-button icon-left (click)="sync()">
+            </ion-button>
+            <ion-button ion-button icon-left (click)="sync()">
                 <span *ngIf="platform.is('mobile')&&platform.is('ios')&&!isSyncing()" class="block-iPhone">{{height}}
                     <ion-icon name="cube"></ion-icon></span>
                 <span *ngIf="!(platform.is('mobile')&&platform.is('ios'))"><span [translate]="'HEIGHT'"></span>:
                     {{height}}</span>
-            </button>
-            <button *ngIf="!platform.is('mobile')" class="refresh-btn" ion-button (click)="sync()" icon-left>
+            </ion-button>
+            <ion-button *ngIf="!platform.is('mobile')" class="refresh-btn" ion-button (click)="sync()" icon-left>
                 <ion-icon *ngIf="!isSyncing()" name="refresh"></ion-icon>
                 <ion-spinner *ngIf="isSyncing()"></ion-spinner>
-            </button>
+            </ion-button>
         </ion-buttons>
-    </ion-navbar>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content class="center spread-out">

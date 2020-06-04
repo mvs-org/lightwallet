@@ -55,9 +55,7 @@ export class HistoryPage implements OnInit {
     this.metaverseService.assetOrder().then(result => this.assets = ['ETP'].concat(result))
   }
 
-  ngOnInit(){
-
-  }
+  ngOnInit(){}
 
   async ionViewDidEnter() {
     this.height = await this.metaverseService.getHeight()
