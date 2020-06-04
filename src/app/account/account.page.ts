@@ -5,6 +5,7 @@ import { WalletService } from '../services/wallet.service'
 import { MetaverseService } from '../services/metaverse.service'
 import { AlertController } from '@ionic/angular'
 import { Router } from '@angular/router'
+import { AlertService } from '../services/alert.service'
 
 @Component({
   selector: 'app-account',
@@ -32,25 +33,25 @@ export class AccountPage implements OnInit {
   private syncinterval: any
 
   constructor(
-    public nav: NavController,
     public translate: TranslateService,
-    private wallet: WalletService,
-    private mvs: MetaverseService,
+    private walletService: WalletService,
+    private metaverseService: MetaverseService,
     public platform: Platform,
     private router: Router,
+    private alertService: AlertService,
   ) {
 
     this.loading = true
     // Reset last update time
     let lastupdate = new Date()
-    this.mvs.setUpdateTime(lastupdate)
+    this.metaverseService.setUpdateTime(lastupdate)
 
     // this.theme = document.getElementById('theme').className
 
-    this.wallet.getSavedAccounts()
+    this.walletService.getSavedAccounts()
       .then((accounts) => this.saved_accounts_name = (accounts && accounts.length >= 1) ? accounts.map(account => account.name) : [])
 
-    this.wallet.hasSeed()
+    this.walletService.hasSeed()
       .then((hasSeed) => this.hasSeed = hasSeed)
 
   }
@@ -68,7 +69,7 @@ export class AccountPage implements OnInit {
       this.loadTickers()
       this.initialize()
       try {
-        this.whitelist = await this.mvs.getWhitelist()
+        this.whitelist = await this.metaverseService.getWhitelist()
       } catch (e) {
         console.error(e)
       }
@@ -78,22 +79,22 @@ export class AccountPage implements OnInit {
       this.router.navigate(['/'])
     }
 
-    this.mvs.updateFees()
+    this.metaverseService.updateFees()
   }
 
   private async checkAccess() {
-    const addresses = await this.mvs.getAddresses()
+    const addresses = await this.metaverseService.getAddresses()
     return Array.isArray(addresses) && addresses.length
   }
 
   private async loadTickers() {
-    [this.base, this.tickers] = await this.mvs.getBaseAndTickers()
+    [this.base, this.tickers] = await this.metaverseService.getBaseAndTickers()
 
   }
 
   private loadFromCache() {
     return this.showBalances()
-      .then(() => this.mvs.getHeight())
+      .then(() => this.metaverseService.getHeight())
       .then((height: number) => {
         this.height = height
         return height
@@ -104,7 +105,7 @@ export class AccountPage implements OnInit {
 
     this.syncinterval = setInterval(() => this.update(), 5000)
 
-    return this.mvs.getDbUpdateNeeded()
+    return this.metaverseService.getDbUpdateNeeded()
       .then((target: any) => {
         if (target) {
           this.router.navigate(['/loading'])
@@ -112,26 +113,26 @@ export class AccountPage implements OnInit {
         return this.loadFromCache()
       })
       .then(() => this.update())
-      .then(() => this.mvs.getDefaultIcon())
+      .then(() => this.metaverseService.getDefaultIcon())
       .then((icons) => this.icons = icons)
   }
 
   private update = async () => {
-    return (await this.mvs.getUpdateNeeded()) ? this.sync()
-      .then(() => this.mvs.setUpdateTime())
+    return (await this.metaverseService.getUpdateNeeded()) ? this.sync()
+      .then(() => this.metaverseService.setUpdateTime())
       .catch(() => console.log('Can\'t update')) : null
   }
 
   ionViewWillLeave = () => clearInterval(this.syncinterval)
 
   logout() {
-    this.wallet.getSessionAccountInfo()
+    this.walletService.getSessionAccountInfo()
       .then((account_info) => {
         if (account_info || !this.hasSeed) {
-          // this.alert.showLogout(this.saveAccountHandler, this.forgetAccountHandler)
+          this.alertService.showLogout(this.saveAccountHandler, this.forgetAccountHandler)
         } else {
-          // this.alert.showLogoutNoAccount(() => this.mvs.hardReset()
-          //  .then(() => this.nav.setRoot("LoginPage")))
+          this.alertService.showLogoutNoAccount(() => this.metaverseService.hardReset()
+           .then(() => this.router.navigate(['/'])))
         }
       })
   }
@@ -150,14 +151,14 @@ export class AccountPage implements OnInit {
   }
 
   private forgetAccountHandler = () => {
-    return this.wallet.getAccountName()
-      .then((account_name) => this.wallet.deleteAccount(account_name))
-      .then(() => this.mvs.hardReset())
+    return this.walletService.getAccountName()
+      .then((account_name) => this.walletService.deleteAccount(account_name))
+      .then(() => this.metaverseService.hardReset())
       .then(() => this.router.navigate(['/']))
   }
 
   private saveAccountHandler = () => {
-    return this.wallet.getAccountName()
+    return this.walletService.getAccountName()
       .then((current_username) => {
         if (current_username) {
           this.saveAccount(current_username)
@@ -170,18 +171,16 @@ export class AccountPage implements OnInit {
   askUsername(title, message, placeholder) {
     return new Promise((resolve, reject) => {
       this.translate.get([title, message, placeholder]).subscribe((translations: any) => {
-        /*
-        this.alert.askInfo(translations[title], translations[message], translations[placeholder], 'text', (info) => {
+        this.alertService.askInfo(translations[title], translations[message], translations[placeholder], 'text', (info) => {
           resolve(info)
         })
-        */
       })
     })
   }
 
   saveAccount(username) {
-    this.wallet.saveAccount(username)
-      .then(() => this.mvs.hardReset())
+    this.walletService.saveAccount(username)
+      .then(() => this.metaverseService.hardReset())
       .then(() => this.router.navigate(['/']))
       .catch((error) => {
         // this.alert.showError('MESSAGE.ERR_SAVE_ACCOUNT', error.message)
@@ -196,7 +195,7 @@ export class AccountPage implements OnInit {
     } else {
       this.syncing = true
       this.syncingSmall = true
-      return Promise.all([this.mvs.updateHeight(), this.updateBalances()])
+      return Promise.all([this.metaverseService.updateHeight(), this.updateBalances()])
         .then(([height, balances]) => {
           this.height = height
           this.syncing = false
@@ -220,21 +219,21 @@ export class AccountPage implements OnInit {
   }
 
   private updateBalances = async () => {
-    return this.mvs.getData()
+    return this.metaverseService.getData()
       .then(() => {
         this.showBalances()
-        return this.mvs.setUpdateTime()
+        return this.metaverseService.setUpdateTime()
       })
       .catch((error) => console.error('Can\'t update balances: ' + error))
   }
 
   private showBalances() {
-    return this.mvs.getBalances()
+    return this.metaverseService.getBalances()
       .then((_) => {
         this.balances = _
-        return this.mvs.addAssetsToAssetOrder(Object.keys(_.MST))
+        return this.metaverseService.addAssetsToAssetOrder(Object.keys(_.MST))
       })
-      .then(() => Promise.all([this.mvs.assetOrder(), this.mvs.getHiddenMst()]))
+      .then(() => Promise.all([this.metaverseService.assetOrder(), this.metaverseService.getHiddenMst()]))
       .then(([all, hidden]) => {
         const order = []
         all.forEach(symbol => {
