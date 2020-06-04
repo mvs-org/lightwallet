@@ -19,8 +19,12 @@ const routes: Routes = [
   {
     path: 'open-file',
     loadChildren: () => import('./open-file/open-file.module').then( m => m.OpenFilePageModule)
-  }
-];
+  },
+  {
+    path: 'import-backup',
+    loadChildren: () => import('./import-backup/import-backup.module').then( m => m.ImportBackupPageModule)
+  },
+]
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

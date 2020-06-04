@@ -1,57 +1,59 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/login"></ion-back-button>
-    </ion-buttons>
-    <ion-title translate="OPEN_FILE.TITLE"></ion-title>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/login"></ion-back-button>
+        </ion-buttons>
+        <ion-title translate="OPEN_FILE.TITLE"></ion-title>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-  <br>
-  <h2 class="pageHeadline">{{"DISCLAIMER.HEADLINE"|translate}}</h2>
-  <p>{{"DISCLAIMER.INTRODUCTION"|translate}}</p>
-  <p>{{"DISCLAIMER.LIST_INTRODUCTION"|translate}}</p>
-  <ol>
-      <li>{{"DISCLAIMER.LIST_ITEM_1"|translate}}</li>
-      <li>{{"DISCLAIMER.LIST_ITEM_2"|translate}}</li>
-      <li>{{"DISCLAIMER.LIST_ITEM_3"|translate}}</li>
-      <li>{{"DISCLAIMER.LIST_ITEM_4"|translate}}</li>
-  </ol>
-  <ion-item>
-      <ion-label id="disclaimer-agree-label" text-wrap>{{"DISCLAIMER.READ_AND_AGREE"|translate}}</ion-label>
-      <ion-checkbox [(ngModel)]="disclaimer_agreed" id="disclaimer-agree"></ion-checkbox>
-  </ion-item>
-  <form *ngIf="disclaimer_agreed" offset-md-3 col-md-6 (ngSubmit)="decrypt(password)" #importForm="ngForm" no-lines
-      class="buttons-container">
-      <ion-item class="center-text" no-lines>
-          <h1>{{"OPEN_FILE.IMPORT_FILE"|translate}}</h1>
-      </ion-item>
-      <ion-row *ngIf="!fileLoaded">
-          <input type="file" name="file" id="file" class="inputfile" accept=".json" (change)="open($event)" />
-          <label for="file">
-              <ion-icon name="download"></ion-icon> {{"OPEN_FILE.CHOOSE_A_FILE"|translate}}
-          </label>
-      </ion-row>
-      <div *ngIf="fileLoaded">
-          <ion-row>
-              <ion-icon name="md-checkmark-circle" class="verifiedFile"></ion-icon>
-          </ion-row>
-          <ion-row class="top-padding">
-              <ion-item>
-                  <ion-label color="primary" position="floating" translate="PASSWORD"></ion-label>
-                  <ion-input name="password" id="password-input" type="password" [(ngModel)]="password" required></ion-input>
-              </ion-item>
-          </ion-row>
-          <br>
-          <ion-row>
-              <ion-button type="submit" id="submit-button" expand="full" [disabled]="!importForm.form.valid||!fileLoaded"
-                  color="primary" translate="OPEN_FILE.IMPORT_BUTTON"></ion-button>
-          </ion-row>
-      </div>
-  </form>
-  <ion-row *ngIf="!disclaimer_agreed" class="buttons-container">
-  </ion-row>
-  <br>
-  <br>
+    <br>
+    <h2 class="pageHeadline">{{"DISCLAIMER.HEADLINE"|translate}}</h2>
+    <p>{{"DISCLAIMER.INTRODUCTION"|translate}}</p>
+    <p>{{"DISCLAIMER.LIST_INTRODUCTION"|translate}}</p>
+    <ol>
+        <li>{{"DISCLAIMER.LIST_ITEM_1"|translate}}</li>
+        <li>{{"DISCLAIMER.LIST_ITEM_2"|translate}}</li>
+        <li>{{"DISCLAIMER.LIST_ITEM_3"|translate}}</li>
+        <li>{{"DISCLAIMER.LIST_ITEM_4"|translate}}</li>
+    </ol>
+    <ion-item>
+        <ion-label id="disclaimer-agree-label" text-wrap>{{"DISCLAIMER.READ_AND_AGREE"|translate}}</ion-label>
+        <ion-checkbox [(ngModel)]="disclaimer_agreed" id="disclaimer-agree"></ion-checkbox>
+    </ion-item>
+    <form *ngIf="disclaimer_agreed" offset-md-3 col-md-6 (ngSubmit)="decrypt(password)" #importForm="ngForm" no-lines
+        class="buttons-container">
+        <ion-item class="center-text" no-lines>
+            <h1>{{"OPEN_FILE.IMPORT_FILE"|translate}}</h1>
+        </ion-item>
+        <ion-row *ngIf="!fileLoaded">
+            <input type="file" name="file" id="file" class="inputfile" accept=".json" (change)="open($event)" />
+            <label for="file">
+                <ion-icon name="download"></ion-icon> {{"OPEN_FILE.CHOOSE_A_FILE"|translate}}
+            </label>
+        </ion-row>
+        <div *ngIf="fileLoaded">
+            <ion-row>
+                <ion-icon name="md-checkmark-circle" class="verifiedFile"></ion-icon>
+            </ion-row>
+            <ion-row class="top-padding">
+                <ion-item>
+                    <ion-label color="primary" position="floating" translate="PASSWORD"></ion-label>
+                    <ion-input name="password" id="password-input" type="password" [(ngModel)]="password" required>
+                    </ion-input>
+                </ion-item>
+            </ion-row>
+            <br>
+            <ion-row>
+                <ion-button type="submit" id="submit-button" expand="full"
+                    [disabled]="!importForm.form.valid||!fileLoaded" color="primary"
+                    translate="OPEN_FILE.IMPORT_BUTTON"></ion-button>
+            </ion-row>
+        </div>
+    </form>
+    <ion-row *ngIf="!disclaimer_agreed" class="buttons-container">
+    </ion-row>
+    <br>
+    <br>
 </ion-content>

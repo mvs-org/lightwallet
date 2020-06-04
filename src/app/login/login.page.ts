@@ -26,8 +26,8 @@ export class LoginPage implements OnInit {
 
   }
 
-  ngOnInit() {
-    this.network = this.appService.network
+  async ngOnInit() {
+    this.network = await this.appService.getNetwork()
   }
 
   ionViewWillEnter() {
