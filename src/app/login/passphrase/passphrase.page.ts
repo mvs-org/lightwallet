@@ -66,7 +66,7 @@ export class PassphrasePage implements OnInit {
 
   async submit() {
     const passphrase = this.form.value.passphrase
-    if (this.platform.is('mobile')) {
+    if (!this.platform.is('mobile')) {
       await this.encrypt(passphrase)
     } else {
       this.downloadAndReturnLogin(passphrase)
@@ -93,6 +93,7 @@ export class PassphrasePage implements OnInit {
   }
 
   encrypt(password) {
+    console.log('create encrypted wallet record')
     this.wallet.setSeedMobile(password, this.mnemonic)
       .then((seed) => this.wallet.setMobileWallet(seed))
       .then(() => this.wallet.getWallet(password))

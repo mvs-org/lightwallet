@@ -61,7 +61,7 @@ export class OpenFilePage implements OnInit {
       .then(([wallet, index]) => this.wallet.generateAddresses(wallet, 0, index))
       .then((addresses) => this.mvs.setAddresses(addresses))
       .then(() => this.wallet.saveSessionAccount(password))
-      .then(() => this.router.navigate(['/loading']))
+      .then(() => this.router.navigate(['/account','loading']))
       //.then(() => this.nav.setRoot("LoadingPage", { reset: true }))
       .catch((e) => {
         console.error(e);

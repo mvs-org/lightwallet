@@ -1,0 +1,79 @@
+<ion-header>
+    <ion-navbar>
+        <ion-buttons>
+            <ion-button menuToggle>
+                <ion-icon name="menu"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-title>
+            {{'ACCOUNT.TITLE'|translate}} 
+            <ion-icon *ngIf="!hasSeed" name="eye"></ion-icon>
+        </ion-title>
+        <ion-buttons end>
+            <ion-spinner *ngIf="isSyncing() && platform.is('mobile')"></ion-spinner>
+            <ion-icon *ngIf="isOffline()" name="flash" class="offlineIcon"></ion-icon>
+        </ion-buttons>
+        <ion-buttons end>
+            <button *ngIf="!platform.is('mobile')" ion-button icon-left (click)="logout()">
+                <ion-icon name="log-out"></ion-icon>
+                <span [translate]="'LOGOUT'"></span>
+            </button>
+            <button ion-button icon-left (click)="sync()">
+                <span *ngIf="platform.is('mobile')&&platform.is('ios')&&!isSyncing()" class="block-iPhone">{{height}}
+                    <ion-icon name="cube"></ion-icon></span>
+                <span *ngIf="!(platform.is('mobile')&&platform.is('ios'))"><span [translate]="'HEIGHT'"></span>:
+                    {{height}}</span>
+            </button>
+            <button *ngIf="!platform.is('mobile')" class="refresh-btn" ion-button (click)="sync()" icon-left>
+                <ion-icon *ngIf="!isSyncing()" name="refresh"></ion-icon>
+                <ion-spinner *ngIf="isSyncing()"></ion-spinner>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+
+<ion-content class="center spread-out">
+    <ion-refresher *ngIf="platform.is('mobile')&&!syncingSmall" (ionRefresh)="sync($event)">
+        <ion-refresher-content class="mini-loader mini-loader-mobile"></ion-refresher-content>
+    </ion-refresher>
+    <div class="mini-loader" *ngIf="syncing&&balances==undefined"></div>
+    <ion-list no-lines *ngIf="!syncing||balances!=undefined">
+        <ion-grid>
+            <ion-row>
+                <ng-container class="asset-container">
+                    <ion-col class="asset-container">
+                        <etp-card *ngIf="balances!=undefined" [balance]="balances.ETP" [icon]="'assets/icon/ETP.png'" [tickers]="tickers.ETP" [base]="base"></etp-card>
+                    </ion-col>
+                </ng-container>
+            </ion-row>
+            <h2 [translate]="'HEADLINE_MST'"></h2>
+            <ion-row *ngIf="balances!=undefined">
+                <ng-container *ngFor="let asset of balancesKeys" class="asset-container">
+                    <ion-col *ngIf="balances.MST[asset]!==undefined" class="asset-container">
+                        <mst-card [balance]="balances.MST[asset]" [symbol]="asset" [theme]="theme" [icon]="icons.MST[asset]"
+                            [swap]="whitelist.indexOf(asset) > -1" [tickers]="tickers[asset]" [base]="base"></mst-card>
+                    </ion-col>
+                </ng-container>
+            </ion-row>
+            <ion-row>
+                <br>
+                <ion-col>
+                    <button col-12 offset-sm-6 col-sm-6 offset-md-8 col-md-4 offset-lg-10 col-lg-2 ion-button icon-left item-end (click)="reorder()">
+                        <ion-icon name="reorder"></ion-icon>
+                        <span [translate]="'REORDER'"></span>
+                    </button>
+                </ion-col>
+            </ion-row>
+            <br>
+            <h2 [translate]="'HEADLINE_MIT'"></h2>
+            <div *ngIf="balances!=undefined&&balances.MIT.length==0" [translate]="'NO_MIT_TEXT'"></div>
+            <ion-row *ngIf="balances!=undefined">
+                <ng-container *ngFor="let mit of balances.MIT" class="asset-container">
+                    <ion-col class="asset-container">
+                        <mit-card [avatar]="mit.owner" [symbol]="mit.symbol"></mit-card>
+                    </ion-col>
+                </ng-container>
+            </ion-row>
+        </ion-grid>
+    </ion-list>
+</ion-content>

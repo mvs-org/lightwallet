@@ -1,0 +1,34 @@
+<ion-content padding class="center">
+    <ion-row class="top-message">
+        <ion-col>
+            <h1>{{"LOADING.TITLE" | translate}}</h1>
+        </ion-col>
+    </ion-row>
+
+    <ion-row class="logo-row">
+        <ion-col class="logo">
+            <div class="banner"></div>
+        </ion-col>
+    </ion-row>
+    
+    <div *ngIf="!showRestartOption" class="mini-loader"></div>
+    <progress-bar id="load_progress" [progress]="progress"></progress-bar>
+    <h4 *ngIf="progress != 100" [translate]="'LOADING.CURRENT_HEIGHT'" [translateParams]="{height: loadingHeight}"></h4>
+    <h4 class="valid-input" *ngIf="progress == 100" [translate]="'LOADING.FULLY_LOADED'"></h4>
+    
+    <p class="wrong-input" *ngIf="showRestartOption" [translate]="'LOADING.STOPPED'"></p>
+    <ion-row *ngIf="showRestartOption" class="padding-bottom">
+        <ion-col>
+            <button type="submit" ion-button full icon-left (click)="updateBalances()" color="primary">
+                <ion-icon name="retry"></ion-icon>
+                {{"LOADING.RETRY" | translate}}
+            </button>
+        </ion-col>
+        <ion-col>
+            <button ion-button color="danger" full item-right icon-left (click)="cancel()">
+                <ion-icon name="close"></ion-icon>
+                {{'RETURN_LOGIN'|translate}}
+            </button>
+        </ion-col>
+    </ion-row>
+</ion-content>
