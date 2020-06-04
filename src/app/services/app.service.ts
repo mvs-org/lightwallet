@@ -40,6 +40,7 @@ export class AppService {
   constructor(
     private storage: Storage
   ) {
+    this.updateNetwork()
   }
 
   async updateNetwork(newNetwork?: string) {

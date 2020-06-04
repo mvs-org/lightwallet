@@ -90,7 +90,7 @@ export class WalletService {
     }
 
     getHDNodeFromMnemonic(mnemonic) {
-        return Metaverse.wallet.fromMnemonic(mnemonic)
+        return Metaverse.wallet.fromMnemonic(mnemonic, Metaverse.networks[this.appService.network])
     }
 
     verifyMessage(message, address, signature) {
