@@ -24,3 +24,129 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+
+.alert-md .alert-wrapper, .alert-ios .alert-wrapper {
+    max-width: 600px;
+}
+
+.alert-message {
+    overflow-y: inherit;
+}
+
+.scroll-content {
+    padding-bottom: 0 !important;
+    top: -5px;
+    padding-top: 21px !important;
+}
+
+.error-border {
+    --highlight-background: red !important;
+    --border-color: red !important;
+}
+
+.warning-border {
+    --highlight-background: orange !important;
+    --border-color: orange !important;
+}
+
+.valid-border {
+    --highlight-background: #32db64 !important;
+    --border-color: #32db64 !important;
+}
+
+.item-input.ion-untouched {
+    --highlight-background: #488aff !important;
+    --border-color: #488aff !important;
+}
+
+.wrong-input {
+    color: red;
+}
+
+.warning-input {
+    color: orange;
+}
+
+.valid-input{
+    color: #32db64;
+}
+
+.beta-tag {
+    color: red;
+    font-size: 0.8em;
+    top: 10px;
+    position: absolute;
+    padding-left: 5px;
+}
+
+
+.advice {
+    font-size: 1.2rem;
+    color: rgb(148, 148, 148);
+    padding-left: 16px;
+    margin-top: 10px;
+}
+
+.alert-sub-title, .alert-message{
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+}
+
+.rawtx {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+}
+
+.manual-copy {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+}
+
+.valid-input, .wrong-input, .info-input, .warning-input, .toggle-input, .valid-input ion-label, .wrong-input ion-label, .info-input ion-label, .warning-input ion-label, .toggle-input ion-label {
+    text-overflow: initial;
+    white-space: initial;
+}
+
+.small-label {
+    min-height: 22px;
+    height: 22px;
+}
+
+.display-overflow {
+    text-overflow: initial;
+    white-space: initial;
+}
+
+.overflow {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.info-input {
+    min-height: 0;
+}
+
+.info-input ion-label {
+    margin-top: 10px;
+    margin-bottom: 0;
+}
+
+.alert-input {
+    color: inherit !important;
+}
+
+.textareaCard {
+    padding: 0 10px;
+    border-radius: 2px;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+    margin-top: 10px;
+    margin-bottom: 10px;
+}

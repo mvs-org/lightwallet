@@ -9,18 +9,19 @@
 
 <ion-content>
   <ion-row>
-    <ion-item no-lines>
       <h2 class="center-text info" translate="IMPORT_WALLET_MNEMONIC.TWO_WAYS_TITLE"></h2>
+  </ion-row>
+  <ion-row>
       <h2 class="center-text info" translate="IMPORT_WALLET_MNEMONIC.VIA_TEXTBOX"></h2>
-    </ion-item>
+  </ion-row>
+  <ion-row>
     <ion-item class="textareaCard" [ngClass]="{'error-border': !validmnemonic}">
-      <ion-textarea fz-elastic ion-input rows="3" full type="text" class="textbox" [(ngModel)]="all_words"
+      <ion-textarea fz-elastic ion-input rows="3" type="text" class="textbox" [(ngModel)]="all_words"
         (ngModelChange)="onChange()" name="all_words"></ion-textarea>
     </ion-item>
   </ion-row>
 
   <ion-row>
-    <ion-item no-lines>
       <h2 *ngIf="amount_words < 24" translate="IMPORT_WALLET_MNEMONIC.WORDS_REMAINING" [translateParams]="{nbr_words: 24 - amount_words}"></h2>
       <h2 *ngIf="validmnemonic" class="valid-input">
         <ion-icon name="checkmark"></ion-icon> {{'IMPORT_WALLET_MNEMONIC.WORDS_ALL_OK'|translate}}
@@ -34,7 +35,6 @@
       <h2 *ngIf="amount_words > 24" class="wrong-input">
         <ion-icon name="close"></ion-icon> {{'IMPORT_WALLET_MNEMONIC.WORDS_TOO_MANY'|translate}}
       </h2>
-    </ion-item>
   </ion-row>
 
   <ion-row>
@@ -42,9 +42,7 @@
   </ion-row>
 
   <ion-row>
-    <ion-item>
-      <h2 item-center class="center-text">{{"IMPORT_WALLET_MNEMONIC.WORD_BY_WORD"|translate}}</h2>
-    </ion-item>
+    <h2 item-center class="center-text">{{"IMPORT_WALLET_MNEMONIC.WORD_BY_WORD"|translate}}</h2>
   </ion-row>
   <form (ngSubmit)="import()" #importForm="ngForm">
     <ion-row *ngFor="let i of [0,1,2,3,4,5,6,7,8,9,10,11]">
@@ -61,19 +59,18 @@
         </ion-item>
       </ion-col>
     </ion-row>
-    <ion-row class="button">
+    <ion-row class="buttons">
       <ion-col col-sm-6 offset-md-1 col-md-5 offset-lg-2 col-lg-4 offset-xl-3 col-xl-3>
-        <button ion-button full icon-left color="secondary" type="submit" class="clear"
-          [disabled]="!importForm.form.valid || !validmnemonic">
+        <ion-button icon-left color="secondary" expand="full" type="submit" [disabled]="!importForm.form.valid || !validmnemonic">
           <ion-icon name="download"></ion-icon>
           {{"IMPORT_WALLET_MNEMONIC.IMPORT_BUTTON"|translate}}
-        </button>
+        </ion-button>
       </ion-col>
       <ion-col col-sm-6 col-md-5 col-lg-4 col-xl-3>
-        <button ion-button full icon-left color="danger" type="button" class="clear" (click)="clear()">
+        <ion-button icon-left color="danger" expand="full" type="button" (click)="clear()">
           <ion-icon name="trash"></ion-icon>
           {{"IMPORT_WALLET_MNEMONIC.RESET"|translate}}
-        </button>
+        </ion-button>
       </ion-col>
     </ion-row>
     <ion-row>

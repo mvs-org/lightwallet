@@ -1,5 +1,5 @@
 
-.button {
+.buttons {
     margin-top: 25px;
     margin-bottom: 25px;
 }
@@ -19,13 +19,5 @@
 
 .textareaCard {
     font-size: 1.3em;
-}
-
-.clear {
-    transition: all;
-    cursor: pointer;
-}
-
-.clear:active {
-    color: black;
+    width: 100%;
 }

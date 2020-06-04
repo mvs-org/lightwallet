@@ -37,13 +37,10 @@
             <ion-row>
                 <ion-icon name="md-checkmark-circle" class="verifiedFile"></ion-icon>
             </ion-row>
-            <ion-row class="top-padding">
-                <ion-item>
-                    <ion-label color="primary" position="floating" translate="PASSWORD"></ion-label>
-                    <ion-input name="password" id="password-input" type="password" [(ngModel)]="password" required>
-                    </ion-input>
-                </ion-item>
-            </ion-row>
+            <ion-item>
+                <ion-label color="primary" position="floating" translate="OPEN_FILE.PASSWORD"></ion-label>
+                <ion-input name="password" id="password-input" type="password" [(ngModel)]="password" required></ion-input>
+            </ion-item>
             <br>
             <ion-row>
                 <ion-button type="submit" id="submit-button" expand="full"
