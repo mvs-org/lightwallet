@@ -1,0 +1,108 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>{{'RECEIVE'|translate}}</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="spread-out">
+
+    <ion-item no-lines>
+        <ion-segment [(ngModel)]="displayType" color="primary">
+            <ion-segment-button value="ETP">
+                ETP
+            </ion-segment-button>
+            <ion-segment-button *ngIf="selectedAsset != 'ETP'" value="asset">
+                {{selectedAsset}}
+            </ion-segment-button>
+            <ion-segment-button value="MST">
+                MST
+            </ion-segment-button>
+        </ion-segment>
+    </ion-item>
+
+    <ion-grid>
+        <ion-row>
+            <ion-col>
+                <ion-card *ngFor="let address of addresses" class="font-mono">
+                    <ion-card-content>
+
+                        <h3 *ngIf="addressBalancesObject[address] && addressBalancesObject[address].AVATAR">
+                            <img class="avatar-logo" [src]="'assets/icon/default_avatar.png'">
+                            <span>{{addressBalancesObject[address].AVATAR}}</span>
+                        </h3>
+                        <h3 class="address break-words">
+                            <textarea class="address-text" rows="1" cols="34" ion-input full type="text" #copy readonly>{{address}}</textarea>
+                            <button type="button" class="copy-btn" id="copybtn" ion-button item-right [ngxClipboard]="copy">
+                                <ion-icon name="copy"></ion-icon>
+                            </button>
+                            <button type="button" class="qrcode-btn" id="qrcode" ion-button item-right (click)="show(address)">
+                                <img [src]="'assets/images/qrcode.png'">
+                            </button>
+                        </h3>
+
+                        <div *ngIf="displayType == 'ETP'">
+                            <div>
+                                <b>{{'AVAILABLE'|translate}}: </b>{{(addressBalancesObject[address] &&
+                                addressBalancesObject[address].ETP
+                                )?format(addressBalancesObject[address].ETP.available,addressBalancesObject[address].ETP.decimals):0}}
+                                <span class="right">
+                                    <b>{{'ACCOUNT.FROZEN'|translate}}: </b>{{(addressBalancesObject[address] &&
+                                    addressBalancesObject[address].ETP
+                                    )?format(addressBalancesObject[address].ETP.frozen,
+                                    addressBalancesObject[address].ETP.decimals):0}}
+                                </span>
+                            </div>
+                            <div>
+                                <b>{{'ACCOUNT.UNCONFIRMED'|translate}}: </b>{{(addressBalancesObject[address] &&
+                                addressBalancesObject[address].ETP && addressBalancesObject[address].ETP.unconfirmed
+                                )?format(addressBalancesObject[address].ETP.unconfirmed,addressBalancesObject[address].ETP.decimals):0}}
+                            </div>
+                        </div>
+
+                        <div *ngIf="displayType == 'asset'">
+                            <div>
+                                <b>{{'AVAILABLE'|translate}}: </b>{{(addressBalancesObject[address] &&
+                                addressBalancesObject[address]['MST'] &&
+                                addressBalancesObject[address]['MST'][selectedAsset])?format(addressBalancesObject[address]['MST'][selectedAsset].available,
+                                addressBalancesObject[address]['MST'][selectedAsset].decimals):0}}
+                                <span class="right">
+                                    <b>{{'ACCOUNT.FROZEN'|translate}}: </b>{{(addressBalancesObject[address] &&
+                                    addressBalancesObject[address]['MST'] &&
+                                    addressBalancesObject[address]['MST'][selectedAsset] &&
+                                    addressBalancesObject[address]['MST'][selectedAsset].frozen
+                                    )?format(addressBalancesObject[address]['MST'][selectedAsset].frozen,
+                                    addressBalancesObject[address]['MST'][selectedAsset].decimals):0}}
+                                </span>
+                            </div>
+                            <div>
+                                <b>{{'ACCOUNT.UNCONFIRMED'|translate}}: </b>{{(addressBalancesObject[address] &&
+                                addressBalancesObject[address]['MST'] &&
+                                addressBalancesObject[address]['MST'][selectedAsset] &&
+                                addressBalancesObject[address]['MST'][selectedAsset].unconfirmed
+                                )?format(addressBalancesObject[address]['MST'][selectedAsset].unconfirmed, 
+                                addressBalancesObject[address]['MST'][selectedAsset].decimals):0}}
+                            </div>
+                        </div>
+
+                        <div *ngIf="displayType == 'MST'">
+                            <p *ngFor="let balance of addressbalances[address]">
+                                <b>{{balance.name}}: </b> {{format(balance.available + balance.unconfirmed + balance.frozen, balance.decimals)}}
+                            </p>
+                            <p *ngIf="!addressbalances[address] || (addressbalances[address] && addressbalances[address].length == 0)">{{'RECEIVE.ADDRESS_NO_MST'|translate}}</p>
+                        </div>
+                        <div class="right">
+                            <button type="button" id="history-btn" ion-button clear (click)="history((displayType == 'asset' ? selectedAsset : 'ETP'), address)">
+                                {{'RECEIVE.HISTORY_BTN'|translate}}
+                            </button>
+                        </div>
+                    </ion-card-content>
+                </ion-card>
+                <ion-row class="right">
+                    <button type="button" ion-button icon-left (click)="addAddresses()">
+                        {{"GENERATE_ADDRESSES.CHANGE_ADDRESS_NUMBER" | translate}}
+                    </button>
+                </ion-row>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>

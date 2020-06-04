@@ -33,6 +33,7 @@
     "lodash": "^4.17.15",
     "metaversejs": "^0.3.94",
     "mvs-blockchain": "^0.1.65",
+    "ngx-clipboard": "^13.0.1",
     "ngx-pagination": "^5.0.0",
     "rxjs": "~6.5.1",
     "tslib": "^1.10.0",

@@ -1,0 +1,62 @@
+.icon {
+    max-width: 30px;
+}
+
+ion-card-content {
+    text-align: left;
+}
+
+.right {
+    float: right;
+}
+
+.card-ios {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.avatar-logo {
+    width: 18px;
+    display: inline-block;
+}
+
+.address {
+    //display: inline-block;
+    word-break: break-all;
+}
+
+.qrcode-btn {
+    padding: 0px;
+    height: auto;
+    display: inline-block;
+    top: -10px;
+}
+
+.qrcode-btn img {
+    height: 28px;
+    width: 28px;
+}
+
+.qrcode-btn .button-inner {
+    height: auto;
+}
+
+.copy-btn {
+    width: 28px;
+    height: 28px;
+    margin: 0px;
+    top: -10px;
+    padding: inherit;
+    color: black;
+}
+
+#history-btn {
+    padding-right: 0;
+}
+
+.address-text {
+    border: 0px !important;
+    resize: none;
+    padding-top: 10px;
+    margin-right: 10px;
+}
