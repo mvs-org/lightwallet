@@ -1,0 +1,63 @@
+<ion-card class="card-block">
+    <ion-grid>
+        <ion-row>
+            <ion-col>
+                <ion-item class="grid-info">
+                    <ion-avatar item-start>
+                        <img *ngIf="icon" class="coinlogo coinlogosquare img" [src]="icon" (error)="errorImg($event)" [ngClass]="{'default-logo': icon == 'default_mst'}">
+                    </ion-avatar>
+                    <h1 class="symbol overflow">
+                        {{symbol}}
+                        <button *ngIf="swap" ion-button clear color="danger" icon-left (click)="gotoSwap()" class="swap-buton">
+                            <ion-icon name="swap"></ion-icon>{{"SWAP"|translate}}
+                        </button>
+                        <button *ngIf="symbol == 'DNA'" ion-button clear color="danger" icon-left (click)="gotoVote()" class="swap-buton">
+                            <ion-icon name="ribbon"></ion-icon>{{"VOTE"|translate}}
+                        </button>
+                    </h1>
+                    <h2 class="balances balance-text">
+                            <div [ngClass]="{'balance-field-fiat': tickers && tickers[base], 'balance-field': !tickers || !tickers[base]}">
+                            {{"ACCOUNT.TOTAL"|translate}}
+                        </div>
+                        <div class="balance-field">
+                            {{"ACCOUNT.UNCONFIRMED"|translate}}
+                        </div>
+                        <div class="balance-field">
+                            {{"ACCOUNT.FROZEN"|translate}}
+                        </div>
+                    </h2>
+                    <h2 class="balances">
+                        <div [ngClass]="{'balance-field-fiat': tickers && tickers[base], 'balance-field': !tickers || !tickers[base]}">
+                            <div>{{balance.available + (balance.unconfirmed ? balance.unconfirmed : 0) + balance.frozen | format : balance.decimals}}</div>
+                            <div *ngIf="tickers && tickers[base]" class="fiat">
+                                ≈{{base}} {{(balance.available + (balance.unconfirmed ? balance.unconfirmed : 0) + balance.frozen)*tickers[base].price | decimals : balance.decimals | number : '1.0-2'}}
+                            </div>
+                        </div>
+                        <div class="balance-field">
+                            <div>{{(balance.unconfirmed ? balance.unconfirmed : 0) | format : balance.decimals}}</div>
+                        </div>
+                        <div class="balance-field">
+                            <div class="frozen-balance">
+                                {{balance.frozen | format : balance.decimals}}
+                            </div>
+                        </div>
+                    </h2>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-card>
+<ion-row col-12 class="row-buttons">
+    <ion-col col-4>
+        <button ion-button full clear color="secondary" icon-left (click)="gotoReceive()">
+            <ion-icon name="download"></ion-icon>{{"RECEIVE" | translate}}</button>
+    </ion-col>
+    <ion-col col-4>
+        <button ion-button full clear color="danger" icon-left (click)="gotoTransfer()">
+            <ion-icon name="send"></ion-icon>{{ "SEND" | translate }}</button>
+    </ion-col>
+    <ion-col col-4>
+        <button ion-button full clear color="primary" icon-left (click)="gotoTransactions()">
+            <ion-icon name="time"></ion-icon>{{ "HISTORY" | translate }}</button>
+    </ion-col>
+</ion-row>

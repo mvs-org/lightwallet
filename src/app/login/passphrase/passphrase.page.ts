@@ -93,6 +93,7 @@ export class PassphrasePage implements OnInit {
   }
 
   encrypt(password) {
+    console.log('create encrypted wallet record')
     this.wallet.setSeedMobile(password, this.mnemonic)
       .then((seed) => this.wallet.setMobileWallet(seed))
       .then(() => this.wallet.getWallet(password))

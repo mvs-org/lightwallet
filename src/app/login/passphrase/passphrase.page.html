@@ -28,5 +28,5 @@
 </ion-content>
 
 <ion-footer *ngIf="isApp">
-    <ion-button [disabled]="!form.valid" type="submit" expand="full">Download</ion-button>
+    <ion-button [disabled]="!form.valid" (click)="submit()" type="submit" expand="full">Download</ion-button>
 </ion-footer>
