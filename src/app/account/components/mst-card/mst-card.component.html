@@ -45,19 +45,19 @@
                 </ion-item>
             </ion-col>
         </ion-row>
+        <ion-row col-12 class="row-buttons">
+            <ion-col col-4>
+                <ion-button expand="full" fill="clear" color="secondary" icon-left [routerLink]="'/account/addresses/'+symbol">
+                    <ion-icon name="download"></ion-icon>{{"ACCOUNT.BUTTON.RECEIVE" | translate}}</ion-button>
+            </ion-col>
+            <ion-col col-4>
+                <ion-button expand="full" fill="clear" color="danger" icon-left [routerLink]="'/account/send/'+symbol">
+                    <ion-icon name="send"></ion-icon>{{ "ACCOUNT.BUTTON.SEND" | translate }}</ion-button>
+            </ion-col>
+            <ion-col col-4>
+                <ion-button expand="full" fill="clear" color="primary" icon-left [routerLink]="'/account/history/'+symbol">
+                    <ion-icon name="time"></ion-icon>{{ "ACCOUNT.BUTTON.HISTORY" | translate }}</ion-button>
+            </ion-col>
+        </ion-row>
     </ion-grid>
 </ion-card>
-<ion-row col-12 class="row-buttons">
-    <ion-col col-4>
-        <ion-button expand="full" fill="clear" color="secondary" icon-left [routerLink]="'/account/addresses/'+symbol">
-            <ion-icon name="download"></ion-icon>{{"ACCOUNT.BUTTON.RECEIVE" | translate}}</ion-button>
-    </ion-col>
-    <ion-col col-4>
-        <ion-button expand="full" fill="clear" color="danger" icon-left [routerLink]="'/account/send/'+symbol">
-            <ion-icon name="send"></ion-icon>{{ "ACCOUNT.BUTTON.SEND" | translate }}</ion-button>
-    </ion-col>
-    <ion-col col-4>
-        <ion-button expand="full" fill="clear" color="primary" icon-left [routerLink]="'/account/history/'+symbol">
-            <ion-icon name="time"></ion-icon>{{ "ACCOUNT.BUTTON.HISTORY" | translate }}</ion-button>
-    </ion-col>
-</ion-row>

@@ -58,6 +58,7 @@
         "TITLE": "Portfolio",
         "FROZEN": "Frozen",
         "AVAILABLE": "Available",
+        "UNCONFIRMED": "Unconfirmed",
         "TOTAL": "Total",
         "BUTTON": {
             "SEND": "Send",

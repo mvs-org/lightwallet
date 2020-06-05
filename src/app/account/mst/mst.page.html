@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+      <ion-back-button></ion-back-button>
     </ion-buttons>
     <ion-title>
       {{'MST.TITLE'|translate}}
@@ -9,13 +9,11 @@
   </ion-toolbar>
 </ion-header>
 
-
-
 <ion-content class="center spread-out">
   <ion-grid>
     <ion-row *ngIf="balances!=undefined">
-      <ng-container *ngFor="let asset of balancesKeys" class="asset-container">
-        <ion-col *ngIf="balances.MST[asset]!==undefined" class="asset-container">
+      <ng-container *ngFor="let asset of balancesKeys">
+        <ion-col *ngIf="balances.MST[asset]!==undefined" class="asset-container" size="12" size-md="4">
           <mst-card [balance]="balances.MST[asset]" [symbol]="asset" [theme]="theme" [icon]="icons.MST[asset]"
             [swap]="whitelist.indexOf(asset) > -1" [tickers]="tickers[asset]" [base]="base"></mst-card>
         </ion-col>
@@ -24,11 +22,11 @@
     <ion-row>
       <br>
       <ion-col>
-        <button col-12 offset-sm-6 col-sm-6 offset-md-8 col-md-4 offset-lg-10 col-lg-2 ion-button icon-left item-end
+        <ion-button col-12 offset-sm-6 col-sm-6 offset-md-8 col-md-4 offset-lg-10 col-lg-2 ion-button icon-left item-end
           (click)="reorder()">
           <ion-icon name="reorder"></ion-icon>
-          <span [translate]="'REORDER'"></span>
-        </button>
+          {{'REORDER'|translate}}
+        </ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>

@@ -12,14 +12,13 @@
 
 
 <ion-content class="center spread-out">
-  <ion-grid>
-            <div *ngIf="balances!=undefined&&balances.MIT.length==0" [translate]="'NO_MIT_TEXT'"></div>
-            <ion-row *ngIf="balances!=undefined">
-                <ng-container *ngFor="let mit of balances.MIT" class="asset-container">
-                    <ion-col class="asset-container">
-                        <mit-card [avatar]="mit.owner" [symbol]="mit.symbol"></mit-card>
-                    </ion-col>
-                </ng-container>
-            </ion-row>
-  </ion-grid>
+  <div *ngIf="balances!=undefined&&balances.MIT.length==0" [translate]="'NO_MIT_TEXT'"></div>
+<ion-list *ngIf="balances!=undefined">
+  <ion-item *ngFor="let mit of balances.MIT" button [routerLink]="'/account/mit/'+mit.symbol" detail>
+    <ion-label>
+      <b>{{mit.symbol}}</b>
+      <p>{{mit.owner}}</p>
+    </ion-label>
+  </ion-item>
+</ion-list>
 </ion-content>
