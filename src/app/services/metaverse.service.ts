@@ -32,6 +32,7 @@ export class MetaverseService {
     private blockchain//= Blockchain({ url: true ? 'https://testnet-api.myetpwallet.com/api/' : 'https://mainnet-api.myetpwallet.com/api/' })
 
     ready$ = new BehaviorSubject<boolean>(false)
+    lastTxHeight$ = new BehaviorSubject<number>(0)
 
     DEFAULT_BALANCES = {
         ETP: { frozen: 0, available: 0, decimals: 8 },
@@ -48,7 +49,7 @@ export class MetaverseService {
         private wallet: WalletService,
         private storage: Storage
     ) {
-        this.appService.network$.subscribe(network=>{
+        this.appService.network$.subscribe(network => {
             console.info('setup metaverse service for network', network)
             this.blockchain = Blockchain({ url: network === 'testnet' ? 'https://testnet-api.myetpwallet.com/api/' : 'https://mainnet-api.myetpwallet.com/api/' })
             this.ready$.next(true)
@@ -464,7 +465,7 @@ export class MetaverseService {
         addresses = addresses.concat(multisigAddresses)
         let newTxs = await this.getNewTxs(addresses, await this.getLastTxHeight())
         while (newTxs && newTxs.length) {
-            // this.event.publish('last_tx_height_update', await this.getLastTxHeight());
+            this.lastTxHeight$.next(await this.getLastTxHeight())
             newTxs = await this.getNewTxs(addresses, await this.getLastTxHeight())
         }
         await this.calculateBalances()
@@ -1032,35 +1033,21 @@ export class MetaverseService {
             })
     }
 
-    getDefaultIcon() {
+    async getDefaultIcon() {
         const icons = {
             MST: {},
             MIT: {},
         }
-        return Promise.all([this.storage.get('asset_order'), this.wallet.getIcons()])
-            .then(([myMsts, localIconsList]) => {
-                myMsts.forEach((symbol) => {
-                    if (localIconsList.MST.indexOf(symbol) !== -1) {
-                        icons.MST[symbol] = 'assets/icon/' + symbol + '.png'
-                    } else {
-                        icons.MST[symbol] = 'assets/icon/default_mst.png'
-                    }
-                })
-                return icons
-            })
-        /*return Promise.all([this.storage.get('asset_order'), this.wallet.getIcons(), this.getExplorerIconsList()])
-            .then(([myMsts, localIconsList, explorerIconsList]) => {
-                myMsts.forEach((symbol) => {
-                    if (explorerIconsList.MST.indexOf(symbol) !== -1) {
-                        icons.MST[symbol] = 'https://explorer.mvs.org/img/assets/' + symbol + '.png'
-                    } else if (localIconsList.MST.indexOf(symbol) !== -1) {
-                        icons.MST[symbol] = 'assets/icon/' + symbol + '.png'
-                    } else {
-                        icons.MST[symbol] = 'assets/icon/default_mst.png'
-                    }
-                })
-                return icons
-            })*/
+        const order = (await this.storage.get('asset_order')) || []
+        const localIconsList = await this.wallet.getIcons()
+        order.forEach((symbol: string) => {
+            if (localIconsList.MST.indexOf(symbol) !== -1) {
+                icons.MST[symbol] = 'assets/icon/' + symbol + '.png'
+            } else {
+                icons.MST[symbol] = 'assets/icon/default_mst.png'
+            }
+        })
+        return icons
     }
 
     getElectionInfo() {

@@ -9,10 +9,6 @@ const routes: Routes = [
     component: AccountPage,
     children: [
       {
-        path: 'loading',
-        loadChildren: () => import('./loading/loading.module').then(m => m.LoadingPageModule)
-      },
-      {
         path: 'history',
         loadChildren: () => import('./history/history.module').then(m => m.HistoryPageModule)
       },

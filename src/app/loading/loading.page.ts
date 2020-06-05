@@ -1,16 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MetaverseService } from 'src/app/services/metaverse.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Platform } from '@ionic/angular';
 import { AppService } from 'src/app/services/app.service';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-loading',
-  templateUrl: './loading.page.html',
-  styleUrls: ['./loading.page.scss'],
+    selector: 'app-loading',
+    templateUrl: './loading.page.html',
+    styleUrls: ['./loading.page.scss'],
 })
-export class LoadingPage implements OnInit {
+export class LoadingPage implements OnInit, OnDestroy {
 
     loadingHeight: number = 0
     maxHeight: number
@@ -19,6 +20,8 @@ export class LoadingPage implements OnInit {
     reset: boolean = false
 
     showRestartOption = false
+
+    lastTxHeightSubscription: Subscription
 
     constructor(
         private metaverseService: MetaverseService,
@@ -30,19 +33,25 @@ export class LoadingPage implements OnInit {
 
         // this.reset = navParams.get('reset') || false;
 
-        // this.event.subscribe("last_tx_height_update", (height) => {
-        //     this.loadingHeight = height
-        //     if (this.firstTxHeight === undefined) {
-        //         this.firstTxHeight = height
-        //     }
-        //     this.progress = this.calculateProgress()
-        // });
 
     }
 
-    ngOnInit(){
-  
+    ngOnInit() {
+        this.lastTxHeightSubscription = this.metaverseService.lastTxHeight$.subscribe(height => {
+            this.loadingHeight = height
+            if (this.firstTxHeight === undefined) {
+                this.firstTxHeight = height
+            }
+            this.progress = this.calculateProgress()
+        })
     }
+
+    ngOnDestroy() {
+        if (this.lastTxHeightSubscription) {
+            this.lastTxHeightSubscription.unsubscribe()
+        }
+    }
+
 
     ionViewDidEnter() {
         this.metaverseService.getDbUpdateNeeded()
@@ -51,7 +60,7 @@ export class LoadingPage implements OnInit {
                     return this.metaverseService.dataReset()
                         .then(() => this.metaverseService.setDbVersion(this.appService.db_version))
             })
-            .then(() => setTimeout(()=>this.updateBalances(), 1000))
+            .then(() => setTimeout(() => this.updateBalances(), 1000))
     }
 
     private getHeight() {
