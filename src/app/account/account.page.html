@@ -25,8 +25,15 @@
                     </ion-button>
                 </ion-buttons>
                 <ion-item-divider>
+                    <ion-icon slot="start" name="moon"></ion-icon>
                     <ion-label>
-                        <ion-note>THE NEW RALITY</ion-note>
+                        Toggle Dark Theme
+                    </ion-label>
+                    <ion-toggle id="themeToggle" slot="end" (ionChange)="updateTheme()"></ion-toggle>
+                </ion-item-divider>
+                <ion-item-divider>
+                    <ion-label>
+                        <ion-note>THE NEW REALITY</ion-note>
                     </ion-label>
                 </ion-item-divider>
                 <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">

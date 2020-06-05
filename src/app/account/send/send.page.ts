@@ -151,8 +151,9 @@ export class SendPage implements OnInit {
   ionViewDidEnter() {
     this.metaverseService.getAddresses()
       .then((addresses) => {
-        if (!Array.isArray(addresses) || !addresses.length)
-          this.navCtrl.setRoot("LoginPage")
+        if (!Array.isArray(addresses) || !addresses.length) {
+          //this.navCtrl.setRoot("LoginPage")
+        }
       })
     this.loadTickers()
   }

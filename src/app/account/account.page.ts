@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core'
-import { MetaverseService } from '../services/metaverse.service';
-import { Router } from '@angular/router';
-import { Platform } from '@ionic/angular';
-import { WalletService } from '../services/wallet.service';
-import { AlertService } from '../services/alert.service';
-import { TranslateService } from '@ngx-translate/core';
+import { MetaverseService } from '../services/metaverse.service'
+import { Router } from '@angular/router'
+import { Platform } from '@ionic/angular'
+import { WalletService } from '../services/wallet.service'
+import { AlertService } from '../services/alert.service'
+import { TranslateService } from '@ngx-translate/core'
 import { filter } from 'rxjs/operators'
 @Component({
   selector: 'app-account',
@@ -22,7 +22,7 @@ export class AccountPage implements OnInit {
   height: number
   offline = false
   hasSeed: boolean
-  public selectedIndex = 0;
+  public selectedIndex = 0
   public appPages = [
     {
       title: 'Portfolio',
@@ -44,7 +44,7 @@ export class AccountPage implements OnInit {
       url: '/account/mit',
       icon: 'pricetag'
     },
-  ];
+  ]
 
   constructor(
     private metaverseService: MetaverseService,
@@ -55,25 +55,50 @@ export class AccountPage implements OnInit {
     private router: Router,
   ) {
     this.metaverseService.ready$
-      .pipe(filter(ready=>ready))
-      .subscribe(()=>{
+      .pipe(filter(ready => ready))
+      .subscribe(() => {
         const lastupdate = new Date()
         this.metaverseService.setUpdateTime(lastupdate)
         this.sync()
         this.metaverseService.updateFees()
         this.syncinterval = setInterval(() => this.update(), 5000)
       })
+
+    // Query for the toggle that is used to change between themes
+    //const toggle = document.querySelector('#themeToggle')
+
+    // Listen for the toggle check/uncheck to toggle the dark class on the <body>
+    /*toggle.addEventListener('ionChange', (ev) => {
+      console.log(ev)
+      document.body.classList.toggle('dark')
+    })
+
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)')
+
+    // Listen for changes to the prefers-color-scheme media query
+    prefersDark.addListener((e) => checkToggle(e.matches))
+
+    // Called when the app loads
+    function loadApp() {
+      checkToggle(prefersDark.matches)
+    }
+
+    // Called by the media query to check/uncheck the toggle
+    function checkToggle(shouldCheck) {
+      //toggle.checked = shouldCheck
+      console.log("toggle.checked")
+    }*/
   }
 
   ngOnInit() {
 
-    
+
     this.walletService.getSavedAccounts()
       .then((accounts) => this.saved_accounts_name = (accounts && accounts.length >= 1) ? accounts.map(account => account.name) : [])
 
     this.walletService.hasSeed()
       .then((hasSeed) => this.hasSeed = hasSeed)
-    
+
     this.metaverseService.getDbUpdateNeeded()
       .then((target: any) => {
         if (target) {
@@ -185,5 +210,9 @@ export class AccountPage implements OnInit {
       .catch((error) => {
         // this.alert.showError('MESSAGE.ERR_SAVE_ACCOUNT', error.message)
       })
+  }
+
+  updateTheme() {
+    document.body.classList.toggle('dark')
   }
 }
