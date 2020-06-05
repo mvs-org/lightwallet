@@ -68,7 +68,7 @@ export class LoadingPage implements OnInit {
             .then(() => this.metaverseService.setUpdateTime())
             .then(() => {
                 this.progress = 100
-                setTimeout(() => this.router.navigate(['/account']), 2000)
+                setTimeout(() => this.router.navigate(['/account/portfolio']), 2000)
             })
             .catch((error) => {
                 this.showRestartOption = true

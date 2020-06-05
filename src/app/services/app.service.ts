@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core'
 import { Storage } from '@ionic/storage'
+import { Subject, BehaviorSubject } from 'rxjs'
 
 @Injectable({
   providedIn: 'root'
@@ -37,6 +38,8 @@ export class AppService {
 
   readonly DEFAULT_NETWORK = 'mainnet'
 
+  network$ = new BehaviorSubject<string>(this.DEFAULT_NETWORK)
+
   constructor(
     private storage: Storage
   ) {
@@ -44,10 +47,12 @@ export class AppService {
   }
 
   async updateNetwork(newNetwork?: string) {
+    console.log('set network')
     if(newNetwork){
-      this.storage.set('network', newNetwork)
+      await this.storage.set('network', newNetwork)
     }
     this.network = await this.getNetwork()
+    this.network$.next(this.network)
     return this.network
   }
 

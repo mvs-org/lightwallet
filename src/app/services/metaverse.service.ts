@@ -48,11 +48,11 @@ export class MetaverseService {
         private wallet: WalletService,
         private storage: Storage
     ) {
-        this.appService.getNetwork()
-            .then(network => {
-                this.blockchain = Blockchain({ url: network === 'testnet' ? 'https://testnet-api.myetpwallet.com/api/' : 'https://mainnet-api.myetpwallet.com/api/' })
-                this.ready$.next(true)
-            })
+        this.appService.network$.subscribe(network=>{
+            console.info('setup metaverse service for network', network)
+            this.blockchain = Blockchain({ url: network === 'testnet' ? 'https://testnet-api.myetpwallet.com/api/' : 'https://mainnet-api.myetpwallet.com/api/' })
+            this.ready$.next(true)
+        })
     }
 
     createSendTx(asset: string, recipient_address: string, recipient_avatar: string, quantity: number, from_address: string, change_address: string, fee: number, messages: Array<string>) {
