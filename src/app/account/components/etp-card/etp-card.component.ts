@@ -17,10 +17,4 @@ export class EtpCardComponent {
         private router: Router,
     ) { }
 
-    gotoTransactions = () => this.router.navigate(['/account', 'history', 'ETP'])
-
-    gotoTransfer = () => this.router.navigate(['/account', 'send', 'ETP'])
-
-    gotoReceive = () => this.router.navigate(['/account', 'recevie', 'ETP'])
-
 }

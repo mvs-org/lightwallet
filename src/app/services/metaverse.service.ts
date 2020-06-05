@@ -5,6 +5,7 @@ import { WalletService } from './wallet.service'
 import Metaverse from 'metaversejs/index.js'
 import Blockchain from 'mvs-blockchain'
 import { keyBy } from 'lodash'
+import { Subject, BehaviorSubject } from 'rxjs'
 
 class Ticker {
     market_cap: number
@@ -24,13 +25,13 @@ class BaseTickers {
 }
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class MetaverseService {
 
+    private blockchain//= Blockchain({ url: true ? 'https://testnet-api.myetpwallet.com/api/' : 'https://mainnet-api.myetpwallet.com/api/' })
 
-
-    private blockchain
+    ready$ = new BehaviorSubject<boolean>(false)
 
     DEFAULT_BALANCES = {
         ETP: { frozen: 0, available: 0, decimals: 8 },
@@ -50,6 +51,7 @@ export class MetaverseService {
         this.appService.getNetwork()
             .then(network => {
                 this.blockchain = Blockchain({ url: network === 'testnet' ? 'https://testnet-api.myetpwallet.com/api/' : 'https://mainnet-api.myetpwallet.com/api/' })
+                this.ready$.next(true)
             })
     }
 
@@ -236,17 +238,17 @@ export class MetaverseService {
                     recipient_address = result.utxo[0].address;
                 }
                 return Metaverse.transaction_builder.sendLockedAsset(
-                  result.utxo,
-                  recipient_address,
-                  recipient_avatar,
-                  symbol,
-                  quantity,
-                  attenuation_model,
-                  change_address,
-                  result.change,
-                  undefined,
-                  fee,
-                  messages
+                    result.utxo,
+                    recipient_address,
+                    recipient_avatar,
+                    symbol,
+                    quantity,
+                    attenuation_model,
+                    change_address,
+                    result.change,
+                    undefined,
+                    fee,
+                    messages
                 )
             })
             .catch((error) => {
@@ -328,7 +330,7 @@ export class MetaverseService {
                             }
                             else if (output.attachment.type == 'asset-cert' && output.attachment.symbol == symbol && ['naming', 'issue'].indexOf(output.attachment.cert) !== -1) {
                                 return true;
- }
+                            }
                             return false
                         }
                     })
@@ -353,7 +355,7 @@ export class MetaverseService {
 
     getUtxo() {
         return this.getTxs()
-            .then((txs: Array<any>) => txs.sort(function(a, b) {
+            .then((txs: Array<any>) => txs.sort(function (a, b) {
                 return b.height - a.height
             }))
             .then((txs: Array<any>) => Promise.all([this.getAddresses(), this.removeOutputsForUnconfirmedTxs(txs)])
@@ -379,7 +381,7 @@ export class MetaverseService {
 
     getUtxoFromMultisig(address: any) {
         return this.getTxs()
-            .then((txs: Array<any>) => txs.sort(function(a, b) {
+            .then((txs: Array<any>) => txs.sort(function (a, b) {
                 return b.height - a.height
             }))
             .then((txs: Array<any>) => Metaverse.output.calculateUtxo(txs, [address]))
@@ -826,7 +828,7 @@ export class MetaverseService {
     }
 
     setBlocktime(time, height) {
-        return this.storage.set('blocktime', {time, height})
+        return this.storage.set('blocktime', { time, height })
     }
 
 

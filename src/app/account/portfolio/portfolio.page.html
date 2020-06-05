@@ -1,0 +1,47 @@
+
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>
+            {{'ACCOUNT.TITLE'|translate}} 
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+
+
+<ion-content class="center spread-out">
+    <ion-list no-lines *ngIf="!syncing||balances!=undefined">
+        <ion-grid>
+            <ion-row>
+                <ng-container class="asset-container">
+                    <ion-col class="asset-container">
+                        <etp-card *ngIf="balances!=undefined" [balance]="balances.ETP" [icon]="'assets/icon/ETP.png'" [tickers]="tickers.ETP" [base]="base"></etp-card>
+                    </ion-col>
+                </ng-container>
+            </ion-row>
+            <h2 [translate]="'HEADLINE_MST'"></h2>
+            <ion-row *ngIf="balances!=undefined">
+                <ng-container *ngFor="let asset of balancesKeys" class="asset-container">
+                    <ion-col *ngIf="balances.MST[asset]!==undefined" class="asset-container">
+                        <mst-card [balance]="balances.MST[asset]" [symbol]="asset" [theme]="theme" [icon]="icons.MST[asset]"
+                            [swap]="whitelist.indexOf(asset) > -1" [tickers]="tickers[asset]" [base]="base"></mst-card>
+                    </ion-col>
+                </ng-container>
+            </ion-row>
+            <ion-row>
+                <br>
+                <ion-col>
+                    <button col-12 offset-sm-6 col-sm-6 offset-md-8 col-md-4 offset-lg-10 col-lg-2 ion-button icon-left item-end (click)="reorder()">
+                        <ion-icon name="reorder"></ion-icon>
+                        <span [translate]="'REORDER'"></span>
+                    </button>
+                </ion-col>
+            </ion-row>
+            <br>
+            
+        </ion-grid>
+    </ion-list>
+</ion-content>

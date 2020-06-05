@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      {{'MIT.TITLE'|translate}}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+
+<ion-content class="center spread-out">
+  <ion-grid>
+            <div *ngIf="balances!=undefined&&balances.MIT.length==0" [translate]="'NO_MIT_TEXT'"></div>
+            <ion-row *ngIf="balances!=undefined">
+                <ng-container *ngFor="let mit of balances.MIT" class="asset-container">
+                    <ion-col class="asset-container">
+                        <mit-card [avatar]="mit.owner" [symbol]="mit.symbol"></mit-card>
+                    </ion-col>
+                </ng-container>
+            </ion-row>
+  </ion-grid>
+</ion-content>

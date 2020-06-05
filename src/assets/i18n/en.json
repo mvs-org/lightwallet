@@ -46,6 +46,14 @@
             "NOTSAME": "Entered values don't match."
         }
     },
+    "MIT": {
+        "TITLE": "MIT - Metaverse Identifiable Token",
+        "MENU_ENTRY": "Identifiable Token"
+    },
+    "MST": {
+        "TITLE": "MST - Metaverse Smart Token",
+        "MENU_ENTRY": "Smart Token"
+    },
     "ACCOUNT": {
         "TITLE": "Portfolio",
         "FROZEN": "Frozen",
