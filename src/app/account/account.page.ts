@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, OnDestroy } from '@angular/core'
 import { MetaverseService } from '../services/metaverse.service'
 import { Router } from '@angular/router'
 import { Platform } from '@ionic/angular'
@@ -11,7 +11,7 @@ import { filter } from 'rxjs/operators'
   templateUrl: './account.page.html',
   styleUrls: ['./account.page.scss'],
 })
-export class AccountPage implements OnInit {
+export class AccountPage implements OnInit, OnDestroy {
 
   private syncinterval: any
 
@@ -63,31 +63,6 @@ export class AccountPage implements OnInit {
         this.metaverseService.updateFees()
         this.syncinterval = setInterval(() => this.update(), 5000)
       })
-
-    // Query for the toggle that is used to change between themes
-    //const toggle = document.querySelector('#themeToggle')
-
-    // Listen for the toggle check/uncheck to toggle the dark class on the <body>
-    /*toggle.addEventListener('ionChange', (ev) => {
-      console.log(ev)
-      document.body.classList.toggle('dark')
-    })
-
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)')
-
-    // Listen for changes to the prefers-color-scheme media query
-    prefersDark.addListener((e) => checkToggle(e.matches))
-
-    // Called when the app loads
-    function loadApp() {
-      checkToggle(prefersDark.matches)
-    }
-
-    // Called by the media query to check/uncheck the toggle
-    function checkToggle(shouldCheck) {
-      //toggle.checked = shouldCheck
-      console.log("toggle.checked")
-    }*/
   }
 
   ngOnInit() {
@@ -106,6 +81,11 @@ export class AccountPage implements OnInit {
         }
       })
       .then(() => this.update())
+  }
+
+  ngOnDestroy() {
+    console.log('leave account')
+    clearInterval(this.syncinterval)
   }
 
   private update = async () => {
@@ -208,7 +188,7 @@ export class AccountPage implements OnInit {
       .then(() => this.metaverseService.hardReset())
       .then(() => this.router.navigate(['/']))
       .catch((error) => {
-        // this.alert.showError('MESSAGE.ERR_SAVE_ACCOUNT', error.message)
+        this.alertService.showError('MESSAGE.ERR_SAVE_ACCOUNT', error.message)
       })
   }
 
