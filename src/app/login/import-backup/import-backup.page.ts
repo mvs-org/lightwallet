@@ -3,7 +3,7 @@ import { Platform } from '@ionic/angular'
 import { MetaverseService } from 'src/app/services/metaverse.service'
 import { WalletService } from 'src/app/services/wallet.service'
 import { TranslateService } from '@ngx-translate/core'
-import { ActivatedRoute, Router } from '@angular/router'
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-import-backup',

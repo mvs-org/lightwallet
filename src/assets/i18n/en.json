@@ -217,6 +217,7 @@
     },
     "LOGIN_ACCOUNT": {
         "TITLE": "Login from account",
+        "PASSWORD": "Password",
         "LOGIN_BUTTON": "Next",
         "FORGET_BUTTON": "Forget account",
         "FORGET": {

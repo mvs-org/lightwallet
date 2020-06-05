@@ -19,10 +19,10 @@
         </ion-row>
 
         <div class="info-text">
-          <div style="text-align: center;">{{appService.version}}
-            <span style="text-align: center;" id="label-network" value="mainnet" *ngIf="network=='mainnet'"
+          <div class="center">{{appService.version}}
+            <span id="label-network" value="mainnet" *ngIf="network=='mainnet'"
               [translate]="'MAINNET'"></span>
-            <span style="text-align: center;" id="label-network" value="testnet" *ngIf="network=='testnet'"
+            <span id="label-network" value="testnet" *ngIf="network=='testnet'"
               [translate]="'TESTNET'"></span>
           </div>
         </div>

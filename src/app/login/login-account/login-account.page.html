@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/login"></ion-back-button>
+    </ion-buttons>
+    <ion-title translate="LOGIN_ACCOUNT.TITLE"></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form #loginAccountForm="ngForm">
+
+    <h2 class="center top-padding">{{account.name}}</h2>
+
+    <ion-item>
+      <ion-label color="primary" position="floating" translate="LOGIN_ACCOUNT.PASSWORD"></ion-label>
+      <ion-input name="password" id="password-input" type="password" [(ngModel)]="password" required>
+      </ion-input>
+    </ion-item>
+
+    <ion-row>
+      <ion-col col-sm-6 col-md-5 col-lg-4 col-xl-3>
+        <ion-button expand="full" color="danger" (click)="deleteAccount(account.name)">
+          <ion-icon name="trash"></ion-icon>
+          {{'LOGIN_ACCOUNT.FORGET_BUTTON'|translate}}
+        </ion-button>
+      </ion-col>
+      <ion-col col-sm-6 offset-md-1 col-md-5 offset-lg-2 col-lg-4 offset-xl-3 col-xl-3>
+        <ion-button type="submit" expand="full" [disabled]="!complete(password)"
+          (click)="importAccount(account, password)">
+          <ion-icon name="arrow-forward"></ion-icon>
+          {{'LOGIN_ACCOUNT.LOGIN_BUTTON'|translate}}
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </form>
+</ion-content>

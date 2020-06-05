@@ -24,6 +24,10 @@ const routes: Routes = [
     path: 'import-backup',
     loadChildren: () => import('./import-backup/import-backup.module').then( m => m.ImportBackupPageModule)
   },
+  {
+    path: 'account',
+    loadChildren: () => import('./login-account/login-account.module').then( m => m.LoginAccountPageModule)
+  },
 ]
 
 @NgModule({

@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms'
 
 import { IonicModule } from '@ionic/angular'
 
-import { CreatePageRoutingModule } from './create-routing.module'
+import { LoginAccountPageRoutingModule } from './login-account-routing.module'
 
-import { CreatePage } from './create.page'
+import { LoginAccountPage } from './login-account.page'
 import { TranslateModule } from '@ngx-translate/core'
 
 @NgModule({
@@ -15,8 +15,8 @@ import { TranslateModule } from '@ngx-translate/core'
     FormsModule,
     TranslateModule.forChild(),
     IonicModule,
-    CreatePageRoutingModule,
+    LoginAccountPageRoutingModule,
   ],
-  declarations: [CreatePage]
+  declarations: [LoginAccountPage]
 })
-export class CreatePageModule {}
+export class LoginAccountPageModule {}
