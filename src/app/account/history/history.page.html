@@ -10,7 +10,7 @@
 <ion-content>
     <div *ngIf="!loading">
 
-        <ion-item no-lines>
+        <ion-item lines="none">
             <ion-segment [(ngModel)]="display_segment" color="primary">
                 <ion-segment-button value="transactions">
                     {{ "TRANSACTIONS" | translate}}
@@ -100,7 +100,7 @@
             <ion-list [hidden]="!frozen_outputs_locked.length">
                 <h2 class="center">{{"HISTORY.FROZEN_TX"|translate}}</h2>
                 <ion-item *ngFor="let output of frozen_outputs_locked | orderBy: [order_by, direction]">
-                    <ion-item no-lines>
+                    <ion-item lines="none">
                         <ion-avatar item-start>
                             <img class="coinlogo" [src]="icon" onerror="this.src='assets/icon/default_mst.png'">
                         </ion-avatar>
@@ -135,7 +135,7 @@
             <ion-list [hidden]="!frozen_outputs_unlocked.length">
                 <h2 class="center">{{"HISTORY.UNFROZEN_TX"|translate}}</h2>
                 <ion-item *ngFor="let output of frozen_outputs_unlocked | orderBy: [order_by, direction] | paginate: { itemsPerPage: items_per_page, currentPage: page_deposit_unlocked }">
-                    <ion-item no-lines>
+                    <ion-item lines="none">
                         <ion-avatar item-start>
                             <img class="coinlogo" [src]="icon" onerror="this.src='assets/icon/default_mst.png'">
                         </ion-avatar>

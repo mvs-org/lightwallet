@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms'
 
 import { IonicModule } from '@ionic/angular'
 
-import { ImportBackupPageRoutingModule } from './import-backup-routing.module'
+import { LoginXpubPageRoutingModule } from './login-xpub-routing.module'
 
-import { ImportBackupPage } from './import-backup.page'
+import { LoginXpubPage } from './login-xpub.page'
 import { TranslateModule } from '@ngx-translate/core'
 
 @NgModule({
@@ -15,8 +15,8 @@ import { TranslateModule } from '@ngx-translate/core'
     FormsModule,
     IonicModule,
     TranslateModule.forChild(),
-    ImportBackupPageRoutingModule
+    LoginXpubPageRoutingModule
   ],
-  declarations: [ImportBackupPage]
+  declarations: [LoginXpubPage]
 })
-export class ImportBackupPageModule {}
+export class LoginXpubPageModule {}

@@ -6,6 +6,7 @@
             "CREATE_NEW_WALLET": "Create new wallet",
             "CREATE_FROM_BACKUP_WORDS": "Create file from backup words",
             "OPEN_WALLET_FILE": "Open wallet from file",
+            "OPEN_WALLET_VIEW_ONLY": "Open view only",
             "THEME_SETTINGS": "Theme switcher",
             "SWITCH_LANGUAGE": "Language"
         },
@@ -265,5 +266,15 @@
     "DEVELOPER": {
         "REMOVE_ACCOUNTS": "Clear Accounts",
         "REMOVE_TRANSACTIONS": "Clear Transactions"
+    },
+    "XPUB": {
+        "TITLE": "Login from public key",
+        "INFORMATION": "Use your public key to import an account in View only mode. You will be able to receive assets and see your addresses, balances and history, but you will not be able to send assets.",
+        "PUBLIC_KEY": "Public key",
+        "VALID_XPUB": "Ready to open account starting with addresses {{address}}",
+        "INVALID_XPUB": "Invalid public key. please make sure you are using the right format (starting with 'xpub')",
+        "BUTTON": {
+            "NEXT": "Next"
+        }
     }
 }

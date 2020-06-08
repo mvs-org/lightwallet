@@ -22,9 +22,9 @@
         <ion-label id="disclaimer-agree-label" text-wrap>{{"DISCLAIMER.READ_AND_AGREE"|translate}}</ion-label>
         <ion-checkbox [(ngModel)]="disclaimer_agreed" id="disclaimer-agree"></ion-checkbox>
     </ion-item>
-    <form *ngIf="disclaimer_agreed" offset-md-3 col-md-6 (ngSubmit)="decrypt(password)" #importForm="ngForm" no-lines
+    <form *ngIf="disclaimer_agreed" offset-md-3 col-md-6 (ngSubmit)="decrypt(password)" #importForm="ngForm" lines="none"
         class="buttons-container">
-        <ion-item class="center-text" no-lines>
+        <ion-item class="center-text" lines="none">
             <h1>{{"OPEN_FILE.IMPORT_FILE"|translate}}</h1>
         </ion-item>
         <ion-row *ngIf="!fileLoaded">

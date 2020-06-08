@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content padding style="padding-bottom: 0;">
-    <ion-item no-lines>
+    <ion-item lines="none">
         <ion-segment [(ngModel)]="transfer_type" color="primary">
             <ion-segment-button value="one">
                 {{ "SEND_TO_ONE" | translate}}
@@ -70,10 +70,10 @@
                     {{"SEND_ALL_BUTTON"|translate}}
                 </button>
             </ion-item>
-            <ion-item *ngIf="tickers && tickers[selectedAsset] && tickers[selectedAsset][base]" no-lines class="fiat">
+            <ion-item *ngIf="tickers && tickers[selectedAsset] && tickers[selectedAsset][base]" lines="none" class="fiat">
                 ≈{{base}} {{quantity*tickers[selectedAsset][base].price | number : '1.0-2'}}
             </ion-item>
-            <ion-item *ngIf="countDecimals(quantity) > decimals" no-lines class="wrong-input">{{"SEND.TOO_MANY_DECIMALS"
+            <ion-item *ngIf="countDecimals(quantity) > decimals" lines="none" class="wrong-input">{{"SEND.TOO_MANY_DECIMALS"
                 | translate}}</ion-item>
             <br>
             <ion-item [ngClass]="{'error-border':!validFromAddress(sendFrom)}">
@@ -89,7 +89,7 @@
                     </ng-container>
                 </ion-select>
             </ion-item>
-            <ion-item *ngIf="!validFromAddress(sendFrom)" no-lines class="wrong-input">{{"TRANSFER.FROM_ADDRESS_NO_ETP"
+            <ion-item *ngIf="!validFromAddress(sendFrom)" lines="none" class="wrong-input">{{"TRANSFER.FROM_ADDRESS_NO_ETP"
                 | translate}}</ion-item>
             <br>
             <ion-item class="toggle-input">
@@ -97,7 +97,7 @@
                 <ion-toggle [(ngModel)]="showAdvanced" name="showAdvanced" checked="false"></ion-toggle>
             </ion-item>
             <div *ngIf="showAdvanced">
-                <ion-item no-lines>
+                <ion-item lines="none">
                     <ion-label color="primary">{{"FEE" | translate}}</ion-label>
                     <ion-badge item-end color="primary">{{fee | format : 8}} ETP</ion-badge>
                 </ion-item>
@@ -114,8 +114,8 @@
                     <ion-input name="message" [(ngModel)]="message" [disabled]="disableParams && params['message']">
                     </ion-input>
                 </ion-item>
-                <div no-lines class="advice">{{"HELP.MESSAGE" | translate}}</div>
-                <ion-item *ngIf="!validMessageLength(message)" no-lines class="wrong-input">{{"MESSAGE_TOO_LONG" |
+                <div lines="none" class="advice">{{"HELP.MESSAGE" | translate}}</div>
+                <ion-item *ngIf="!validMessageLength(message)" lines="none" class="wrong-input">{{"MESSAGE_TOO_LONG" |
                     translate}}</ion-item>
                 <br>
                 <ion-item>
@@ -207,8 +207,7 @@
                                 required></ion-input>
                         </ion-item>
                         <ion-item
-                            *ngIf="tickers && tickers[selectedAsset] && tickers[selectedAsset][base] && selectedAsset == 'ETP'"
-                            no-lines class="fiat">
+                            *ngIf="tickers && tickers[selectedAsset] && tickers[selectedAsset][base] && selectedAsset == 'ETP'" lines="none" class="fiat">
                             ≈{{base}}
                             {{recipient.target['ETP']*tickers[selectedAsset][base].price || 0 | number : '1.0-2'}}
                         </ion-item>
@@ -220,8 +219,7 @@
                                 required></ion-input>
                         </ion-item>
                         <ion-item
-                            *ngIf="tickers && tickers[selectedAsset] && tickers[selectedAsset][base] && selectedAsset != 'ETP' && recipient.target['MST']"
-                            no-lines class="fiat">
+                            *ngIf="tickers && tickers[selectedAsset] && tickers[selectedAsset][base] && selectedAsset != 'ETP' && recipient.target['MST']" lines="none" class="fiat">
                             ≈{{base}}
                             {{recipient.target['MST'][selectedAsset]*tickers[selectedAsset][base].price || 0 | number : '1.0-2'}}
                         </ion-item>
@@ -258,7 +256,7 @@
                     </p>
                 </ion-label>
             </ion-item>
-            <ion-item *ngIf="total > showBalance" no-lines class="wrong-input">{{"SEND_MORE.TOTAL_MORE_AVAILABLE" |
+            <ion-item *ngIf="total > showBalance" lines="none" class="wrong-input">{{"SEND_MORE.TOTAL_MORE_AVAILABLE" |
                 translate}}</ion-item>
             <br>
             <ion-item [ngClass]="{'error-border':!validFromAddress(sendFrom)}">
@@ -274,7 +272,7 @@
                     </ng-container>
                 </ion-select>
             </ion-item>
-            <ion-item *ngIf="!validFromAddress(sendFrom)" no-lines class="wrong-input">{{"TRANSFER.FROM_ADDRESS_NO_ETP"
+            <ion-item *ngIf="!validFromAddress(sendFrom)" lines="none" class="wrong-input">{{"TRANSFER.FROM_ADDRESS_NO_ETP"
                 | translate}}</ion-item>
 
             <ion-item class="toggle-input">
@@ -288,8 +286,8 @@
                     <ion-input name="message" [(ngModel)]="message" [disabled]="disableParams && params['message']">
                     </ion-input>
                 </ion-item>
-                <div no-lines class="advice">{{"HELP.MESSAGE" | translate}}</div>
-                <ion-item *ngIf="!validMessageLength(message)" no-lines class="wrong-input">{{"MESSAGE_TOO_LONG" |
+                <div lines="none" class="advice">{{"HELP.MESSAGE" | translate}}</div>
+                <ion-item *ngIf="!validMessageLength(message)" lines="none" class="wrong-input">{{"MESSAGE_TOO_LONG" |
                     translate}}</ion-item>
                 <br>
                 <ion-item>

@@ -54,6 +54,11 @@
           {{"LOGIN.BUTTON.OPEN_WALLET_FILE"|translate}}
         </ion-button>
 
+        <ion-button routerLink="/login/xpub" expand="full" icon-left color="secondary">
+          <ion-icon name="eye"></ion-icon>
+          {{"LOGIN.BUTTON.OPEN_WALLET_VIEW_ONLY"|translate}}
+        </ion-button>
+
         <ion-button *ngIf="isApp" expand="full" icon-left color="secondary" routerLink="/login/scan">
           <ion-icon name="qr-scanner"></ion-icon>
           {{"LOGIN.BUTTON.OPEN_FROM_QRCODE"|translate}}

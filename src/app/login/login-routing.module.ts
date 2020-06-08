@@ -28,6 +28,10 @@ const routes: Routes = [
     path: 'account',
     loadChildren: () => import('./login-account/login-account.module').then( m => m.LoginAccountPageModule)
   },
+  {
+    path: 'xpub',
+    loadChildren: () => import('./login-xpub/login-xpub.module').then( m => m.LoginXpubPageModule)
+  },
 ]
 
 @NgModule({
