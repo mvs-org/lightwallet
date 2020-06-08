@@ -276,5 +276,13 @@
         "BUTTON": {
             "NEXT": "Next"
         }
+    },
+    "EXPORT_MASTER_PUBLIC_KEY": {
+        "MENU_ENTRY": "Export public key",
+        "TITLE": "Export Master Public Key",
+        "WARNING": "The Master Public Key allows the generation of all your wallets addresses. Even though it cannot be used to access the funds you should be very careful when you share it with somebody.",
+        "PASSWORD": "Password",
+        "BUTTON": "Show Key",
+        "YOUR_KEY": "Your master public key:"
     }
 }

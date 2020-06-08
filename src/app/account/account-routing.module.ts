@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { AppComponent } from '../app.component';
-import { AccountPage } from './account.page';
+import { NgModule } from '@angular/core'
+import { Routes, RouterModule } from '@angular/router'
+import { AppComponent } from '../app.component'
+import { AccountPage } from './account.page'
 
 const routes: Routes = [
   {
@@ -31,9 +31,14 @@ const routes: Routes = [
       {
         path: 'portfolio',
         loadChildren: () => import('./portfolio/portfolio.module').then(m => m.PortfolioPageModule)
-      }]
+      },
+      {
+        path: 'export-xpub',
+        loadChildren: () => import('./export-xpub/export-xpub.module').then( m => m.ExportXpubPageModule)
+      },
+    ]
   },
-];
+]
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
