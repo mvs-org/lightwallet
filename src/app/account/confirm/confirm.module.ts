@@ -4,11 +4,11 @@ import { FormsModule } from '@angular/forms'
 
 import { IonicModule } from '@ionic/angular'
 
-import { HistoryPageRoutingModule } from './history-routing.module'
-import {NgxPaginationModule} from 'ngx-pagination'
-import { HistoryPage } from './history.page'
+import { ConfirmPageRoutingModule } from './confirm-routing.module'
+
+import { ConfirmPage } from './confirm.page'
 import { TranslateModule } from '@ngx-translate/core'
-import { PipesModule } from 'src/app/pipes/pipes.module'
+import { ClipboardModule } from 'ngx-clipboard'
 import { TransactionItemComponent } from './../components/transaction-item/transaction-item.component'
 
 @NgModule({
@@ -16,14 +16,13 @@ import { TransactionItemComponent } from './../components/transaction-item/trans
     CommonModule,
     FormsModule,
     IonicModule,
-    PipesModule,
-    NgxPaginationModule,
     TranslateModule.forChild(),
-    HistoryPageRoutingModule,
+    ClipboardModule,
+    ConfirmPageRoutingModule,
   ],
   declarations: [
-    HistoryPage,
+    ConfirmPage,
     TransactionItemComponent,
   ]
 })
-export class HistoryPageModule {}
+export class ConfirmPageModule {}

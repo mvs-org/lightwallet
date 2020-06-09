@@ -36,6 +36,10 @@ const routes: Routes = [
         path: 'export-xpub',
         loadChildren: () => import('./export-xpub/export-xpub.module').then( m => m.ExportXpubPageModule)
       },
+      {
+        path: 'confirm',
+        loadChildren: () => import('./confirm/confirm.module').then( m => m.ConfirmPageModule)
+      },
     ]
   },
 ]

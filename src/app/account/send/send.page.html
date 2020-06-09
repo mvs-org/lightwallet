@@ -3,7 +3,7 @@
         <ion-buttons slot="start">
             <ion-back-button></ion-back-button>
         </ion-buttons>
-        <ion-title>{{selectedAsset}} {{ "TRANSFER" | translate}}</ion-title>
+        <ion-title>{{selectedAsset}} {{ "SEND.TITLE" | translate}}</ion-title>
     </ion-toolbar>
 </ion-header>
 
@@ -11,26 +11,26 @@
     <ion-item lines="none">
         <ion-segment [(ngModel)]="transfer_type" color="primary">
             <ion-segment-button value="one">
-                {{ "SEND_TO_ONE" | translate}}
+                {{ "SEND.SEND_SINGLE" | translate}}
             </ion-segment-button>
             <ion-segment-button value="more">
-                {{ "SEND_MORE" | translate}}
+                {{ "SEND.SEND_MANY" | translate}}
             </ion-segment-button>
         </ion-segment>
     </ion-item>
 
 
     <p align="center" *ngIf="etpBalance<fee/100000000" class="wrong-input">
-        {{"NOTICE_TRANSACTION_FEE_UNCOVERED"|translate}}</p>
+        {{"SEND.NOTICE_TRANSACTION_FEE_UNCOVERED"|translate}}</p>
     <ion-row>
         <ion-col>
-            <p class="available">{{"AVAILABLE_BALANCE" | translate}}: <br *ngIf="platform.is('mobile')">{{showBalance |
+            <p class="available">{{"SEND.AVAILABLE_BALANCE" | translate}}: <br *ngIf="platform.is('mobile')">{{showBalance |
                 format : decimals}} {{selectedAsset}}</p>
         </ion-col>
         <ion-col>
-            <p *ngIf="transfer_type == 'one'" class="right">{{"FEE"|translate}}:<br *ngIf="platform.is('mobile')">
+            <p *ngIf="transfer_type == 'one'" class="right">{{"SEND.FEE"|translate}}:<br *ngIf="platform.is('mobile')">
                 {{fee | format : 8}} ETP</p>
-            <p *ngIf="transfer_type == 'more'" class="right">{{"FEE"|translate}}:<br *ngIf="platform.is('mobile')">
+            <p *ngIf="transfer_type == 'more'" class="right">{{"SEND.FEE"|translate}}:<br *ngIf="platform.is('mobile')">
                 {{10000*recipients.length | format : 8}} ETP</p>
         </ion-col>
     </ion-row>
@@ -39,19 +39,19 @@
         <ion-list style="padding-bottom: 0;">
 
             <ion-item class="toggle-input">
-                <ion-label>{{"SEND_TO_AVATAR"|translate}}</ion-label>
+                <ion-label>{{"SEND_SINGLE.TO_AVATAR"|translate}}</ion-label>
                 <ion-toggle [(ngModel)]="sendToAvatar" name="sendToAvatar"
                     [disabled]="disableParams && params['recipient_avatar']"></ion-toggle>
             </ion-item>
             <ion-item *ngIf="sendToAvatar" [ngClass]="{'error-border':!validAvatar(recipient_avatar)}">
-                <ion-label color="primary" floating>{{"RECIPIENT_AVATAR"|translate}}</ion-label>
+                <ion-label color="primary" position="floating">{{"SEND_SINGLE.RECIPIENT_AVATAR"|translate}}</ion-label>
                 <ion-input #recipientAvatarInput name="recipient_avatar" [(ngModel)]="recipient_avatar"
                     [disabled]="disableParams && params['recipient_avatar']"
                     (ngModelChange)="recipientAvatarChanged($event)" required></ion-input>
             </ion-item>
             <ion-item
                 [ngClass]="{'error-border':!validaddress(recipient_address), 'valid-border':validaddress(recipient_address)}">
-                <ion-label color="primary" floating>{{"RECIPIENT_ADDRESS"|translate}}</ion-label>
+                <ion-label color="primary" position="floating">{{"SEND_SINGLE.RECIPIENT_ADDRESS"|translate}}</ion-label>
                 <ion-input #recipientAddressInput name="recipient_address" [(ngModel)]="recipient_address"
                     (ngModelChange)="recipientChanged($event)"
                     [disabled]="sendToAvatar || (disableParams && params['recipient_address'])" required></ion-input>
@@ -62,13 +62,13 @@
                 </button>
             </ion-item>
             <ion-item [ngClass]="{'error-border':!validQuantity(quantity), 'valid-border':validQuantity(quantity)}">
-                <ion-label color="primary" floating>{{"AMOUNT" | translate}}</ion-label>
+                <ion-label color="primary" position="floating">{{"SEND_SINGLE.AMOUNT" | translate}}</ion-label>
                 <ion-input #quantityInput name="quantity" type="number" min="0" [(ngModel)]="quantity"
                     [disabled]="disableParams && params['amount']" required></ion-input>
-                <button type="button" *ngIf="etpBalance>10000 && !(disableParams && params['amount'])" id="sendAll"
-                    ion-button item-right (click)="sendAll()">
-                    {{"SEND_ALL_BUTTON"|translate}}
-                </button>
+                <ion-button type="button" *ngIf="etpBalance>10000 && !(disableParams && params['amount'])" id="sendAll"
+                    (click)="sendAll()">
+                    {{"SEND_SINGLE.SEND_ALL_BUTTON"|translate}}
+                </ion-button>
             </ion-item>
             <ion-item *ngIf="tickers && tickers[selectedAsset] && tickers[selectedAsset][base]" lines="none" class="fiat">
                 ≈{{base}} {{quantity*tickers[selectedAsset][base].price | number : '1.0-2'}}
@@ -77,11 +77,11 @@
                 | translate}}</ion-item>
             <br>
             <ion-item [ngClass]="{'error-border':!validFromAddress(sendFrom)}">
-                <ion-label>{{"SELECT_FROM_ADDRESS"|translate}}</ion-label>
+                <ion-label>{{"SEND_SINGLE.SEND_FROM"|translate}}</ion-label>
                 <ion-select [(ngModel)]="sendFrom" name="sendfrom" multiple="false"
                     (ngModelChange)="onFromAddressChange($event)" okText="{{'OK'|translate}}"
                     cancelText="{{'CANCEL'|translate}}">
-                    <ion-option selected="true" value="auto">{{"AUTO"| translate}}</ion-option>
+                    <ion-option selected="true" value="auto">{{"SEND_SINGLE.SEND_FROM_AUTO"| translate}}</ion-option>
                     <ng-container *ngFor="let addressbalance of addressbalances">
                         <ion-option *ngIf="addressbalance.balance>0" value="{{addressbalance.address}}">
                             {{addressbalance.identifier}}
@@ -89,16 +89,16 @@
                     </ng-container>
                 </ion-select>
             </ion-item>
-            <ion-item *ngIf="!validFromAddress(sendFrom)" lines="none" class="wrong-input">{{"TRANSFER.FROM_ADDRESS_NO_ETP"
+            <ion-item *ngIf="!validFromAddress(sendFrom)" lines="none" class="wrong-input">{{"SEND_SINGLE.FROM_ADDRESS_NO_ETP"
                 | translate}}</ion-item>
             <br>
             <ion-item class="toggle-input">
-                <ion-label>{{"SHOW_ADVANCED"|translate}}</ion-label>
+                <ion-label>{{"SEND_SINGLE.SHOW_ADVANCED"|translate}}</ion-label>
                 <ion-toggle [(ngModel)]="showAdvanced" name="showAdvanced" checked="false"></ion-toggle>
             </ion-item>
             <div *ngIf="showAdvanced">
                 <ion-item lines="none">
-                    <ion-label color="primary">{{"FEE" | translate}}</ion-label>
+                    <ion-label color="primary">{{"SEND_SINGLE.FEE" | translate}}</ion-label>
                     <ion-badge item-end color="primary">{{fee | format : 8}} ETP</ion-badge>
                 </ion-item>
                 <ion-item>
@@ -110,19 +110,19 @@
                 </ion-item>
                 <ion-item
                     [ngClass]="{'error-border':!validMessageLength(message), 'valid-border': message.length > 0 && validMessageLength(message)}">
-                    <ion-label floating>{{"MESSAGE" | translate}}</ion-label>
+                    <ion-label position="floating">{{"SEND_SINGLE.MESSAGE" | translate}}</ion-label>
                     <ion-input name="message" [(ngModel)]="message" [disabled]="disableParams && params['message']">
                     </ion-input>
                 </ion-item>
-                <div lines="none" class="advice">{{"HELP.MESSAGE" | translate}}</div>
-                <ion-item *ngIf="!validMessageLength(message)" lines="none" class="wrong-input">{{"MESSAGE_TOO_LONG" |
+                <div lines="none" class="advice">{{"SEND_SINGLE.HELP.MESSAGE" | translate}}</div>
+                <ion-item *ngIf="!validMessageLength(message)" lines="none" class="wrong-input">{{"SEND_SINGLE.MESSAGE_TOO_LONG" |
                     translate}}</ion-item>
                 <br>
                 <ion-item>
-                    <ion-label>{{"SELECT_CHANGE_ADDRESS"|translate}}</ion-label>
+                    <ion-label>{{"SEND_SINGLE.CHANGE_ADDRESS"|translate}}</ion-label>
                     <ion-select [(ngModel)]="changeAddress" name="changeaddress" okText="{{'OK'|translate}}"
                         cancelText="{{'CANCEL'|translate}}">
-                        <ion-option selected="true" value="auto">{{"AUTO"| translate}}</ion-option>
+                        <ion-option selected="true" value="auto">{{"SEND_SINGLE.CHANGE_ADDRESS_AUTO"| translate}}</ion-option>
                         <ion-option *ngFor="let addressbalance of addressbalances" value="{{addressbalance.address}}">
                             {{addressbalance.identifier}}
                             - {{addressbalance.balance | format : decimals}} {{selectedAsset}}</ion-option>
@@ -130,7 +130,7 @@
                 </ion-item>
                 <br>
                 <ion-item class="toggle-input" *ngIf="selectedAsset != 'ETP'">
-                    <ion-label>{{"ASSET_LOCK"|translate}}</ion-label>
+                    <ion-label>{{"ASSET_LOCK.TITLE"|translate}}</ion-label>
                     <ion-toggle [(ngModel)]="lock" name="lock"></ion-toggle>
                 </ion-item>
                 <attenuation-model-selector *ngIf="lock" (modelChanged)="setAttenuationModel($event)"
@@ -140,18 +140,18 @@
         </ion-list>
         <ion-row class="padding-bottom">
             <ion-col>
-                <button type="submit" ion-button full icon-left
+                <ion-button color="danger" expand="full" (click)="cancel($event)">
+                    <ion-icon name="close"></ion-icon>
+                    {{'SEND_SINGLE.CANCEL_BUTTON'|translate}}
+                </ion-button>
+            </ion-col>
+            <ion-col>
+                <ion-button type="submit" expand="full"
                     [disabled]="!sendForm.form.valid||!validaddress(recipient_address)||!validQuantity(quantity)||!validMessageLength(message)||(lock && !attenuation_model)||!validFromAddress(sendFrom)"
                     (click)="send()" color="secondary">
                     <ion-icon disabled="checked" name="cog"></ion-icon>
-                    {{'BUTTON.NEXT'|translate}}
-                </button>
-            </ion-col>
-            <ion-col>
-                <button ion-button color="danger" full item-right icon-left (click)="cancel($event)">
-                    <ion-icon name="close"></ion-icon>
-                    {{'CANCEL'|translate}}
-                </button>
+                    {{'SEND_SINGLE.SEND_BUTTON'|translate}}
+                </ion-button>
             </ion-col>
         </ion-row>
     </form>
@@ -184,7 +184,7 @@
                     <ion-col col-md-6 col-sm-12 col-12 *ngIf="sendToAvatar">
                         <ion-item
                             [ngClass]="{'error-border':!validSendMoreAvatar(recipient.avatar, i), 'valid-border': validSendMoreAvatar(recipient.avatar, i)}">
-                            <ion-label color="primary" floating>{{"RECIPIENT_AVATAR"|translate}} {{i+1}}</ion-label>
+                            <ion-label color="primary" position="floating">{{"RECIPIENT_AVATAR"|translate}} {{i+1}}</ion-label>
                             <ion-input [(ngModel)]="recipient.avatar"
                                 (ngModelChange)="sendMoreRecipientAvatarChanged(i)" [ngModelOptions]="{standalone:true}"
                                 required></ion-input>
@@ -193,7 +193,7 @@
                     <ion-col col-md-6 col-sm-12 col-12 *ngIf="!sendToAvatar">
                         <ion-item
                             [ngClass]="{'error-border':!validaddress(recipient.address), 'valid-border': validaddress(recipient.address)}">
-                            <ion-label color="primary" floating>{{"RECIPIENT_ADDRESS"|translate}} {{i+1}}</ion-label>
+                            <ion-label color="primary" position="floating">{{"RECIPIENT_ADDRESS"|translate}} {{i+1}}</ion-label>
                             <ion-input [(ngModel)]="recipient.address" (ngModelChange)="sendMoreAddressChanged(i)"
                                 [ngModelOptions]="{standalone:true}" required></ion-input>
                         </ion-item>
@@ -201,7 +201,7 @@
                     <ion-col col-md-6 col-sm-12 col-12>
                         <ion-item *ngIf="selectedAsset == 'ETP'"
                             [ngClass]="{'error-border':!validQuantity(recipient.target['ETP']), 'valid-border': validQuantity(recipient.target['ETP'])}">
-                            <ion-label color="primary" floating>{{"AMOUNT" | translate}} {{i+1}}</ion-label>
+                            <ion-label color="primary" position="floating">{{"AMOUNT" | translate}} {{i+1}}</ion-label>
                             <ion-input type="number" min="0" [(ngModel)]="recipient.target['ETP']"
                                 [ngModelOptions]="{standalone:true}" (ngModelChange)="quantityETPChanged($event)"
                                 required></ion-input>
@@ -213,7 +213,7 @@
                         </ion-item>
                         <ion-item *ngIf="selectedAsset != 'ETP' && recipient.target['MST']"
                             [ngClass]="{'error-border':!validQuantity(recipient.target['MST'][selectedAsset]), 'valid-border': validQuantity(recipient.target['MST'][selectedAsset])}">
-                            <ion-label color="primary" floating>{{"AMOUNT" | translate}} {{i+1}}</ion-label>
+                            <ion-label color="primary" position="floating">{{"AMOUNT" | translate}} {{i+1}}</ion-label>
                             <ion-input type="number" min="0" [(ngModel)]="recipient.target['MST'][selectedAsset]"
                                 [ngModelOptions]="{standalone:true}" (ngModelChange)="quantityMSTChanged($event)"
                                 required></ion-input>
@@ -260,11 +260,11 @@
                 translate}}</ion-item>
             <br>
             <ion-item [ngClass]="{'error-border':!validFromAddress(sendFrom)}">
-                <ion-label>{{"SELECT_FROM_ADDRESS"|translate}}</ion-label>
+                <ion-label>{{"SEND_FROM"|translate}}</ion-label>
                 <ion-select [(ngModel)]="sendFrom" name="sendfrom" multiple="false"
                     (ngModelChange)="onFromAddressChange($event)" okText="{{'OK'|translate}}"
                     cancelText="{{'CANCEL'|translate}}">
-                    <ion-option selected="true" value="auto">{{"AUTO"| translate}}</ion-option>
+                    <ion-option selected="true" value="auto">{{"SEND_FROM.AUTO"| translate}}</ion-option>
                     <ng-container *ngFor="let addressbalance of addressbalances">
                         <ion-option *ngIf="addressbalance.balance>0" value="{{addressbalance.address}}">
                             {{addressbalance.identifier}}
@@ -282,7 +282,7 @@
             <div *ngIf="showAdvanced">
                 <ion-item
                     [ngClass]="{'error-border':!validMessageLength(message), 'valid-border': message.length > 0 && validMessageLength(message)}">
-                    <ion-label floating>{{"MESSAGE" | translate}}</ion-label>
+                    <ion-label position="floating">{{"MESSAGE" | translate}}</ion-label>
                     <ion-input name="message" [(ngModel)]="message" [disabled]="disableParams && params['message']">
                     </ion-input>
                 </ion-item>

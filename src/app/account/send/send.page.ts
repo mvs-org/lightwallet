@@ -24,7 +24,6 @@ export const deeplinkRegex = /^.*app\.myetpwallet\.com\/send\/(.+)\?(.*)$/
 })
 export class SendPage implements OnInit {
 
-
   selectedAsset: any
   addresses: Array<string>
   balance: number
@@ -82,13 +81,13 @@ export class SendPage implements OnInit {
     this.initializeParameters(this.selectedAsset, this.activatedRoute.snapshot.paramMap)
 
     if (this.selectedAsset == 'ETP') {
-      this.recipients.push(new RecipientSendMore('', '', { "ETP": undefined }, undefined))
+      this.recipients.push(new RecipientSendMore('', '', { 'ETP': undefined }, undefined))
     } else {
-      this.recipients.push(new RecipientSendMore('', '', { "MST": { [this.selectedAsset]: undefined } }, undefined))
+      this.recipients.push(new RecipientSendMore('', '', { 'MST': { [this.selectedAsset]: undefined } }, undefined))
     }
     this.total_to_send[this.selectedAsset] = 0
     this.total = 0
-    this.isApp = (!document.URL.startsWith('http') || document.URL.startsWith('http://localhost:8080'));
+    this.isApp = (!document.URL.startsWith('http') || document.URL.startsWith('http://localhost:8080'))
 
     //Load addresses and balances
     Promise.all([this.metaverseService.getBalances(), this.metaverseService.getAddresses(), this.metaverseService.getAddressBalances()])
@@ -105,9 +104,9 @@ export class SendPage implements OnInit {
         Object.keys(addresses).forEach((index) => {
           let address = addresses[index]
           if (addressbalancesObject[address]) {
-            addrblncs.push({ "address": address, "avatar": addressbalancesObject[address].AVATAR ? addressbalancesObject[address].AVATAR : "", "identifier": addressbalancesObject[address].AVATAR ? addressbalancesObject[address].AVATAR : address, "balance": this.selectedAsset == 'ETP' ? addressbalancesObject[address].ETP.available : addressbalancesObject[address].MST[this.selectedAsset] ? addressbalancesObject[address].MST[this.selectedAsset].available : 0 })
+            addrblncs.push({ 'address': address, 'avatar': addressbalancesObject[address].AVATAR ? addressbalancesObject[address].AVATAR : '', 'identifier': addressbalancesObject[address].AVATAR ? addressbalancesObject[address].AVATAR : address, 'balance': this.selectedAsset == 'ETP' ? addressbalancesObject[address].ETP.available : addressbalancesObject[address].MST[this.selectedAsset] ? addressbalancesObject[address].MST[this.selectedAsset].available : 0 })
           } else {
-            addrblncs.push({ "address": address, "avatar": "", "identifier": address, "balance": 0 })
+            addrblncs.push({ 'address': address, 'avatar': '', 'identifier': address, 'balance': 0 })
           }
         })
         this.addressbalances = addrblncs
@@ -136,14 +135,14 @@ export class SendPage implements OnInit {
       this.message = params.get('m') || params.get('message') || ''
       this.disableParams = params.get('d') == 'true' || params.get('disableParams') == 'true'
 
-      if (this.recipient_avatar !== "") {
+      if (this.recipient_avatar !== '') {
         this.sendToAvatar = true
         this.recipientAvatarChanged()
       }
-      this.params['amount'] = this.quantity !== ""
-      this.params['recipient_address'] = this.recipient_address !== ""
-      this.params['recipient_avatar'] = this.recipient_avatar !== ""
-      this.params['message'] = this.message !== ""
+      this.params['amount'] = this.quantity !== ''
+      this.params['recipient_address'] = this.recipient_address !== ''
+      this.params['recipient_avatar'] = this.recipient_avatar !== ''
+      this.params['message'] = this.message !== ''
     }
   }
 
@@ -180,14 +179,14 @@ export class SendPage implements OnInit {
     && (quantity > 0)
 
   countDecimals(value) {
-    if (Math.floor(value) !== value && value.toString().split(".").length > 1)
-      return value.toString().split(".")[1].length || 0;
-    return 0;
+    if (Math.floor(value) !== value && value.toString().split('.').length > 1)
+      return value.toString().split('.')[1].length || 0
+    return 0
   }
 
   updateRange() {
     // TODO: What is this code doing?
-    this.zone.run(() => { });
+    this.zone.run(() => { })
   }
 
   cancel(e) {
@@ -198,12 +197,12 @@ export class SendPage implements OnInit {
   create() {
     return this.alertService.showLoading()
       .then(() => {
-        let messages = [];
+        let messages = []
         if (this.message) {
           messages.push(this.message)
         }
         switch (this.transfer_type) {
-          case "one":
+          case 'one':
             if (this.lock) {
               return this.metaverseService.createAssetDepositTx(
                 this.recipient_address,
@@ -228,7 +227,7 @@ export class SendPage implements OnInit {
                 ((this.showAdvanced || this.params['message']) && messages !== []) ? messages : undefined
               )
             }
-          case "more":
+          case 'more':
             let target = {}
             let recipients = JSON.parse(JSON.stringify(this.recipients))
             target[this.selectedAsset] = Math.round(parseFloat(this.total_to_send[this.selectedAsset]) * Math.pow(10, this.decimals))
@@ -246,8 +245,8 @@ export class SendPage implements OnInit {
             return this.metaverseService.createSendMoreTx(
               target,
               recipients,
-              (this.sendFrom != 'auto') ? this.sendFrom : null,
-              (this.showAdvanced && this.changeAddress != 'auto') ? this.changeAddress : undefined,
+              (this.sendFrom !== 'auto') ? this.sendFrom : null,
+              (this.showAdvanced && this.changeAddress !== 'auto') ? this.changeAddress : undefined,
               (this.showAdvanced && messages !== []) ? messages : undefined
             )
           default:
@@ -260,13 +259,13 @@ export class SendPage implements OnInit {
         console.error(error.message)
         this.alertService.stopLoading()
         switch (error.message) {
-          case "ERR_DECRYPT_WALLET":
+          case 'ERR_DECRYPT_WALLET':
             this.alertService.showError('MESSAGE.PASSWORD_WRONG', '')
             throw Error('ERR_CREATE_TX')
-          case "ERR_INSUFFICIENT_BALANCE":
+          case 'ERR_INSUFFICIENT_BALANCE':
             this.alertService.showError('MESSAGE.INSUFFICIENT_BALANCE', '')
             throw Error('ERR_CREATE_TX')
-          case "ERR_TOO_MANY_INPUTS":
+          case 'ERR_TOO_MANY_INPUTS':
             this.alertService.showErrorTranslated('ERROR_TOO_MANY_INPUTS', 'ERROR_TOO_MANY_INPUTS_TEXT')
             throw Error('ERR_CREATE_TX')
           default:
@@ -286,12 +285,12 @@ export class SendPage implements OnInit {
         console.error(error)
         this.alertService.stopLoading()
         switch (error.message) {
-          case "ERR_CONNECTION":
+          case 'ERR_CONNECTION':
             this.alertService.showError('ERROR_SEND_TEXT', '')
-            break;
-          case "ERR_CREATE_TX":
+            break
+          case 'ERR_CREATE_TX':
             //already handle in create function
-            break;
+            break
           default:
             this.alertService.showError('MESSAGE.BROADCAST_ERROR', error.message)
         }
@@ -300,14 +299,12 @@ export class SendPage implements OnInit {
 
   sendAll = () => this.alertService.showSendAll(() => {
     if (this.selectedAsset == 'ETP') {
-      this.quantity = parseFloat(((this.showBalance / 100000000 - this.fee / 100000000).toFixed(this.decimals)) + "") + ""
+      this.quantity = parseFloat(((this.showBalance / 100000000 - this.fee / 100000000).toFixed(this.decimals)) + '') + ''
     } else {
-      this.quantity = parseFloat((this.showBalance / Math.pow(10, this.decimals)).toFixed(this.decimals) + "") + ""
+      this.quantity = parseFloat((this.showBalance / Math.pow(10, this.decimals)).toFixed(this.decimals) + '') + ''
     }
     this.quantityInput.setFocus()
   })
-
-  validaddress = this.metaverseService.validAddress
 
   validAvatar = (input: string) => /[A-Za-z0-9.-]/.test(input) && this.recipient_avatar_valid
 
@@ -333,7 +330,7 @@ export class SendPage implements OnInit {
         })
         .catch((e) => {
           this.recipient_avatar_valid = false
-          this.recipient_address = ""
+          this.recipient_address = ''
         })
     }
   }
@@ -352,7 +349,7 @@ export class SendPage implements OnInit {
       })
       .catch((e) => {
         this.sendMoreValidEachAvatar[index] = false
-        this.recipients[index].address = ""
+        this.recipients[index].address = ''
         this.sendMoreValidAddress = false
       })
   }
@@ -362,8 +359,8 @@ export class SendPage implements OnInit {
     if (this.recipients) {
       this.recipients.forEach((recipient) => total = recipient.target['ETP'] ? total + parseFloat(recipient.target['ETP']) : total)
     }
-    this.total_to_send[this.selectedAsset] = +total.toFixed(this.decimals);
-    this.total = this.total_to_send[this.selectedAsset] * Math.pow(10, this.decimals);
+    this.total_to_send[this.selectedAsset] = +total.toFixed(this.decimals)
+    this.total = this.total_to_send[this.selectedAsset] * Math.pow(10, this.decimals)
     this.checkEtpSendMoreQuantity()
   }
 
@@ -372,8 +369,8 @@ export class SendPage implements OnInit {
     if (this.recipients) {
       this.recipients.forEach((recipient) => total = recipient.target['MST'][this.selectedAsset] ? total + parseFloat(recipient.target['MST'][this.selectedAsset]) : total)
     }
-    this.total_to_send[this.selectedAsset] = +total.toFixed(this.decimals);
-    this.total = this.total_to_send[this.selectedAsset] * Math.pow(10, this.decimals);
+    this.total_to_send[this.selectedAsset] = +total.toFixed(this.decimals)
+    this.total = this.total_to_send[this.selectedAsset] * Math.pow(10, this.decimals)
     this.checkMstSendMoreQuantity()
   }
 
@@ -444,9 +441,9 @@ export class SendPage implements OnInit {
     this.sendMoreValidQuantity = false
     this.sendMoreValidAddress = false
     if (this.selectedAsset == 'ETP') {
-      this.recipients.push(new RecipientSendMore('', '', { "ETP": undefined }, undefined))
+      this.recipients.push(new RecipientSendMore('', '', { 'ETP': undefined }, undefined))
     } else {
-      this.recipients.push(new RecipientSendMore('', '', { "MST": { [this.selectedAsset]: undefined } }, undefined))
+      this.recipients.push(new RecipientSendMore('', '', { 'MST': { [this.selectedAsset]: undefined } }, undefined))
     }
   }
 
@@ -474,37 +471,37 @@ export class SendPage implements OnInit {
       .then(() => {
         setTimeout(() => {
           this.open(e)
-        }, 500);
+        }, 500)
       })
   }
 
   open(e) {
     let file = e.target.files
-    let reader = new FileReader();
-    const COLUMN_RECIPIENT_HEADER = 'recipient';
-    const COLUMN_AMOUNT_HEADER = 'amount';
-    const COLUMN_LOCK_BLOCK_HEADER = 'lock_blocks';
-    const COLUMN_LOCK_MODEL_HEADER = 'lock_model';
+    let reader = new FileReader()
+    const COLUMN_RECIPIENT_HEADER = 'recipient'
+    const COLUMN_AMOUNT_HEADER = 'amount'
+    const COLUMN_LOCK_BLOCK_HEADER = 'lock_blocks'
+    const COLUMN_LOCK_MODEL_HEADER = 'lock_model'
 
     let errorLine = 0
 
     reader.onload = (e: any) => {
-      let content = e.target.result;
+      let content = e.target.result
       try {
-        let data = content.split('\n');
+        let data = content.split('\n')
         this.recipients = []
         let columnIndex = {}
         data[0].split(',').forEach((columnName, index) => columnIndex[columnName] = index)
         for (let i = 1; i < this.sendMore_limit; i++) {
           if (data[i]) {
-            let line = data[i].split(',');
+            let line = data[i].split(',')
             let recipient = line[columnIndex[COLUMN_RECIPIENT_HEADER]] ? line[columnIndex[COLUMN_RECIPIENT_HEADER]].trim() : line[columnIndex[COLUMN_RECIPIENT_HEADER]]
             let amount = line[columnIndex[COLUMN_AMOUNT_HEADER]] ? line[columnIndex[COLUMN_AMOUNT_HEADER]].trim() : line[columnIndex[COLUMN_AMOUNT_HEADER]]
             if (this.selectedAsset == 'ETP') {
               if (this.validaddress(recipient)) {
-                this.recipients.push(new RecipientSendMore(recipient, '', { "ETP": amount }, undefined))
+                this.recipients.push(new RecipientSendMore(recipient, '', { 'ETP': amount }, undefined))
               } else {
-                this.recipients.push(new RecipientSendMore('', recipient, { "ETP": amount }, undefined))
+                this.recipients.push(new RecipientSendMore('', recipient, { 'ETP': amount }, undefined))
                 this.sendMoreRecipientAvatarChanged(i - 1)
               }
             } else {
@@ -521,9 +518,9 @@ export class SendPage implements OnInit {
                 attenuation_model = line[columnIndex[COLUMN_LOCK_MODEL_HEADER]]
               }
               if (this.validaddress(recipient)) {
-                this.recipients.push(new RecipientSendMore(recipient, '', { "MST": { [this.selectedAsset]: amount } }, attenuation_model))
+                this.recipients.push(new RecipientSendMore(recipient, '', { 'MST': { [this.selectedAsset]: amount } }, attenuation_model))
               } else {
-                this.recipients.push(new RecipientSendMore('', recipient, { "MST": { [this.selectedAsset]: amount } }, attenuation_model))
+                this.recipients.push(new RecipientSendMore('', recipient, { 'MST': { [this.selectedAsset]: amount } }, attenuation_model))
                 this.sendMoreRecipientAvatarChanged(i - 1)
               }
             }
@@ -542,7 +539,7 @@ export class SendPage implements OnInit {
         this.alertService.stopLoading()
         console.error(error.message)
         switch (error.message) {
-          case "ERR_TWO_LOCK_MODEL":
+          case 'ERR_TWO_LOCK_MODEL':
             this.alertService.showError('ERROR_TWO_LOCK_MODEL', errorLine)
             throw Error('ERR_IMPORT_CSV')
           default:
@@ -550,9 +547,9 @@ export class SendPage implements OnInit {
             throw Error('ERR_IMPORT_CSV')
         }
       }
-    };
+    }
     if (file[0])
-      reader.readAsText(file[0]);
+      reader.readAsText(file[0])
   }
 
   download() {
@@ -584,23 +581,23 @@ export class SendPage implements OnInit {
     var text = 'recipient' + ',' + 'amount' + ',' + 'lock_blocks' + ',' + 'lock_model' + '\n'
     text += 'MAwLwVGwJyFsTBfNj2j5nCUrQXGVRvHzPh,2,10,\n'
     text += 'MEWdqvhETJex22kBbYDSD999Vs4xFwQ4fo,2,,PN=0;LH=20;TYPE=1;LP=20;UN=1;LQ=2\n'
-    text += 'avatar-name,4';
+    text += 'avatar-name,4'
     var filename = 'mvs_example.csv'
     this.downloadFile(filename, text)
   }
 
   downloadFile(filename, text) {
-    var pom = document.createElement('a');
-    pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
-    pom.setAttribute('download', filename);
+    var pom = document.createElement('a')
+    pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text))
+    pom.setAttribute('download', filename)
 
     if (document.createEvent) {
-      var event = document.createEvent('MouseEvents');
-      event.initEvent('click', true, true);
-      pom.dispatchEvent(event);
+      var event = document.createEvent('MouseEvents')
+      event.initEvent('click', true, true)
+      pom.dispatchEvent(event)
     }
     else {
-      pom.click();
+      pom.click()
     }
   }
 

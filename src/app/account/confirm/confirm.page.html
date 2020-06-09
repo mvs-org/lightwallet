@@ -1,0 +1,121 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title translate="CONFIRM.TITLE"></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <form #signTxForm="ngForm" class="padding-bottom">
+
+    <h3>{{"CONFIRM.PAGE_TITLE" | translate}}</h3>
+
+    <ion-item>
+      <ion-label>{{"TX.SELECT_MODE"|translate}}</ion-label>
+      <ion-select [(ngModel)]="mode" name="mode" multiple="false" okText="{{'OK'|translate}}"
+        cancelText="{{'CANCEL'|translate}}">
+        <ion-option selected="true" value="default">{{"TX.MODE.DEFAULT"| translate}}</ion-option>
+        <ion-option value="satoshi">{{"TX.MODE.SATOSHI"| translate}}</ion-option>
+        <ion-option value="hex">{{"TX.MODE.HEX"| translate}}</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <tx-item *ngIf="displayedTx" [tx]="displayedTx" [hexTx]="hexTx" [mode]="mode" [status]="status"
+      [multisig]="multisig" [addresses]="addresses"></tx-item>
+
+    <ion-item *ngIf="!allMyInputs" lines="none" class="wrong-input">{{"TX.INPUTS_NOT_ALL_MINE" | translate}}</ion-item>
+
+    <ion-item *ngIf="status != 'SIGNED' && walletType == 'hasSeed'"
+      [ngClass]="{'error-border': !validPassword(passphrase)}">
+      <ion-label color="primary" position="floating">{{"CONFIRM.PASSWORD" | translate}}</ion-label>
+      <ion-input name="passphrase" type="password" [(ngModel)]="passphrase" required></ion-input>
+    </ion-item>
+    <br>
+    <ion-item class="toggle-input" *ngIf="multisig.status != 'MULTISIG' && walletType !== 'readOnly'">
+      <ion-label>{{"CONFIRM.SHOW_ADVANCED"|translate}}</ion-label>
+      <ion-toggle [(ngModel)]="showAdvanced" name="showAdvanced" checked="false"></ion-toggle>
+    </ion-item>
+
+    <div *ngIf="showAdvanced || multisig.status == 'MULTISIG'">
+      <ion-row>
+        <ion-col *ngIf="status != 'SIGNED'">
+          <ion-button full icon-left
+            [disabled]="!signTxForm.form.valid||!validPassword(passphrase)||(multisig.status == 'MULTISIG' && multisig.selfSigned)"
+            (click)="preview()" color="primary">
+            <ion-icon name="create"></ion-icon>
+            {{"CONFIRM.SIGN_ONLY" | translate}}
+          </ion-button>
+          <ion-item *ngIf="multisig.status == 'MULTISIG' && multisig.selfSigned" lines="none" class="wrong-input">
+            {{"MULTISIG_ALREADY_SIGNED" | translate}}</ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col *ngIf="signedTx">
+          <br>
+          <h4 translate="CONFIRM.PREVIEW_SIGNED_TX"></h4>
+          <ion-textarea fz-elastic full class="rawtx" type="text" #copySignedTx value="{{signedTx}}"
+            readonly>{{signedTx}}</ion-textarea>
+          <ion-button expand="full" [ngxClipboard]="copySignedTx">
+            <ion-icon name="copy"></ion-icon>
+            {{'COPY'|translate}}
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </div>
+
+    <div *ngIf="walletType == 'readOnly'">
+      <ion-row>
+        <ion-col>
+          <h4 translate="CONFIRM.PREVIEW_UNSIGNED_TX"></h4>
+          <ion-textarea fz-elastic full class="rawtx" type="text" #copyHexTx value="{{hexTx}}"
+            readonly>{{hexTx}}</ion-textarea>
+        </ion-col>
+      </ion-row>
+    </div>
+    <ion-row *ngIf="walletType == 'hasSeed'">
+      <ion-col>
+        <ion-button *ngIf="status != 'SIGNED'" type="submit" expand="full" (click)="send()"
+          [disabled]="!signTxForm.form.valid||!validPassword(passphrase)||(multisig.status == 'MULTISIG' && (multisig.selfSigned || multisig.info.m + 1 < multisig.info.n))"
+          color="secondary">
+          <ion-icon name="send"></ion-icon>
+          {{"CONFIRM.SIGN_AND_SEND" | translate}}
+        </ion-button>
+        <ion-button *ngIf="status == 'SIGNED'" type="submit" expand="full" (click)="broadcast(decodedTx)"
+          color="secondary">
+          <ion-icon name="send"></ion-icon>
+          {{"CONFIRM.BROADCAST" | translate}}
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button color="danger" expand="full" (click)="cancel($event)">
+          <ion-icon name="close"></ion-icon>
+          {{'CONFIRM.CANCEL'|translate}}
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="walletType == 'readOnly'">
+      <ion-col>
+        <ion-button color="secondary" type="submit" expand="full" [ngxClipboard]="copyHexTx"
+          (click)="home($event)">
+          <ion-icon name="arrow-back"></ion-icon>
+          {{"RETURN_TO_HOME" | translate}}
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button *ngIf="status == 'SIGNED'" type="submit" expand="full" (click)="broadcast(decodedTx)"
+          color="secondary">
+          <ion-icon name="send"></ion-icon>
+          {{"CONFIRM_TX.BROADCAST" | translate}}
+        </ion-button>
+        <ion-button *ngIf="status !== 'SIGNED'" type="submit" expand="full"
+          [ngxClipboard]="copyHexTx">
+          <ion-icon name="copy"></ion-icon>
+          {{'CONFIRM.COPY'|translate}}
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+
+  </form>
+</ion-content>
