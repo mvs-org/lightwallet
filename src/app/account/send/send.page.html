@@ -81,11 +81,11 @@
                 <ion-select [(ngModel)]="sendFrom" name="sendfrom" multiple="false"
                     (ngModelChange)="onFromAddressChange($event)" okText="{{'OK'|translate}}"
                     cancelText="{{'CANCEL'|translate}}">
-                    <ion-option selected="true" value="auto">{{"SEND_SINGLE.SEND_FROM_AUTO"| translate}}</ion-option>
+                    <ion-select-option selected="true" value="auto">{{"SEND_SINGLE.SEND_FROM_AUTO"| translate}}</ion-select-option>
                     <ng-container *ngFor="let addressbalance of addressbalances">
-                        <ion-option *ngIf="addressbalance.balance>0" value="{{addressbalance.address}}">
+                        <ion-select-option *ngIf="addressbalance.balance>0" value="{{addressbalance.address}}">
                             {{addressbalance.identifier}}
-                            - {{addressbalance.balance | format : decimals}} {{selectedAsset}}</ion-option>
+                            - {{addressbalance.balance | format : decimals}} {{selectedAsset}}</ion-select-option>
                     </ng-container>
                 </ion-select>
             </ion-item>
@@ -122,10 +122,10 @@
                     <ion-label>{{"SEND_SINGLE.CHANGE_ADDRESS"|translate}}</ion-label>
                     <ion-select [(ngModel)]="changeAddress" name="changeaddress" okText="{{'OK'|translate}}"
                         cancelText="{{'CANCEL'|translate}}">
-                        <ion-option selected="true" value="auto">{{"SEND_SINGLE.CHANGE_ADDRESS_AUTO"| translate}}</ion-option>
-                        <ion-option *ngFor="let addressbalance of addressbalances" value="{{addressbalance.address}}">
+                        <ion-select-option selected="true" value="auto">{{"SEND_SINGLE.CHANGE_ADDRESS_AUTO"| translate}}</ion-select-option>
+                        <ion-select-option *ngFor="let addressbalance of addressbalances" value="{{addressbalance.address}}">
                             {{addressbalance.identifier}}
-                            - {{addressbalance.balance | format : decimals}} {{selectedAsset}}</ion-option>
+                            - {{addressbalance.balance | format : decimals}} {{selectedAsset}}</ion-select-option>
                     </ion-select>
                 </ion-item>
                 <br>
@@ -264,11 +264,11 @@
                 <ion-select [(ngModel)]="sendFrom" name="sendfrom" multiple="false"
                     (ngModelChange)="onFromAddressChange($event)" okText="{{'OK'|translate}}"
                     cancelText="{{'CANCEL'|translate}}">
-                    <ion-option selected="true" value="auto">{{"SEND_FROM.AUTO"| translate}}</ion-option>
+                    <ion-select-option selected="true" value="auto">{{"SEND_FROM.AUTO"| translate}}</ion-select-option>
                     <ng-container *ngFor="let addressbalance of addressbalances">
-                        <ion-option *ngIf="addressbalance.balance>0" value="{{addressbalance.address}}">
+                        <ion-select-option *ngIf="addressbalance.balance>0" value="{{addressbalance.address}}">
                             {{addressbalance.identifier}}
-                            - {{addressbalance.balance | format : decimals}} {{selectedAsset}}</ion-option>
+                            - {{addressbalance.balance | format : decimals}} {{selectedAsset}}</ion-select-option>
                     </ng-container>
                 </ion-select>
             </ion-item>
@@ -294,8 +294,8 @@
                     <ion-label>{{"SELECT_CHANGE_ADDRESS"|translate}}</ion-label>
                     <ion-select [(ngModel)]="changeAddress" name="changeaddress" okText="{{'OK'|translate}}"
                         cancelText="{{'CANCEL'|translate}}">
-                        <ion-option selected="true" value="auto">{{"AUTO"| translate}}</ion-option>
-                        <ion-option *ngFor="let address of addresses" value="{{address}}">{{address}}</ion-option>
+                        <ion-select-option selected="true" value="auto">{{"AUTO"| translate}}</ion-select-option>
+                        <ion-select-option *ngFor="let address of addresses" value="{{address}}">{{address}}</ion-select-option>
                     </ion-select>
                 </ion-item>
                 <br>

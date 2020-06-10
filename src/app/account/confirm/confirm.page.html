@@ -14,9 +14,9 @@
       <ion-label>{{"TX.SELECT_MODE"|translate}}</ion-label>
       <ion-select [(ngModel)]="mode" name="mode" multiple="false" okText="{{'OK'|translate}}"
         cancelText="{{'CANCEL'|translate}}">
-        <ion-option selected="true" value="default">{{"TX.MODE.DEFAULT"| translate}}</ion-option>
-        <ion-option value="satoshi">{{"TX.MODE.SATOSHI"| translate}}</ion-option>
-        <ion-option value="hex">{{"TX.MODE.HEX"| translate}}</ion-option>
+        <ion-select-option selected="true" value="default">{{"TX.MODE.DEFAULT"| translate}}</ion-select-option>
+        <ion-select-option value="satoshi">{{"TX.MODE.SATOSHI"| translate}}</ion-select-option>
+        <ion-select-option value="hex">{{"TX.MODE.HEX"| translate}}</ion-select-option>
       </ion-select>
     </ion-item>
 

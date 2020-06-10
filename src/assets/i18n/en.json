@@ -334,13 +334,6 @@
         "CANCEL": "Cancel",
         "COPY": "Copy"
     },
-
-    "TRANSACTION_PREVIEW_TEXT": "Your encoded transaction will be:",
-    "TRANSACTION_PREVIEW.TEXT_SIGNED": "Your signed encoded transaction is:",
-    "TRANSACTION_PREVIEW.TEXT_UNSIGNED": "Your unsigned encoded transaction is:",
-    
-
-
     "TX": {
         "INPUTS": "Inputs",
         "OUTPUTS": "Outputs",
@@ -412,5 +405,25 @@
             "LOCKED_UNTIL_BLOCK": "Locked until block {{block}} (~{{time}})"
         },
         "INPUTS_NOT_ALL_MINE": "Some inputs are not yours! Only your inputs will be signed."
+    },
+    "CREATE_MIT": {
+        "MENU_ENTRY": "Create MIT",
+        "TITLE": "Create MIT",
+        "INFORMATION": "MIT (Metaverse Identifiable Token) is the non-fungible token standard on Metaverse. A MIT has a unique symbol and a content that cannot be changed. Its quantity is always 1 and cannot be split. It can only be created by and transferred to an Avatar. MITs can be used to represent any unique digital or physical object, and easily trace its transfer from Avatars to Avatars. The complete ownership history is recorded on the blockchain and publicly visible",
+        "FEE": "MIT Creation fee",
+        "SYMBOL": "Symbol",
+        "CONTENT": "Content",
+        "AVATAR_NAME": "Recipient Avatar name",
+        "NO_AVATAR": "You need an Avatar to register a MIT. Please create an Avatar first",
+        "RECIPIENT_ADDRESS": "Recipient Avatar address",
+        "SELECT_AVATAR": "Please select a Recipient Avatar first",
+        "NO_AVATAR_PLACEHOLDER": "No Avatar",
+        "MIT_ALREADY_EXIST": "This MIT symbol has already been registered",
+        "MIT_SYMBOL_TOO_SHORT": "The MIT symbol must be at least 3 characters long",
+        "SHOW_ADVANCED": "Show advanced",
+        "BUTTON": {
+            "NEXT": "Next",
+            "CANCEL": "Cancel"
+        }
     }
 }

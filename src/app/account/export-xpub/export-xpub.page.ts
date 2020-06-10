@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { WalletService } from 'src/app/services/wallet.service'
-import { AlertService } from '../../services/alert.service'
+import { AlertService } from 'src/app/services/alert.service'
 
 @Component({
   selector: 'app-export-xpub',

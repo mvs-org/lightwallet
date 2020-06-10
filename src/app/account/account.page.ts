@@ -49,6 +49,11 @@ export class AccountPage implements OnInit, OnDestroy {
       url: '/account/export-xpub',
       icon: 'pricetag'
     },
+    {
+      title: 'CREATE_MIT.MENU_ENTRY',
+      url: '/account/mit/create',
+      icon: 'pricetag'
+    },
   ]
 
   constructor(
