@@ -235,8 +235,7 @@
         "SEND_SINGLE": "Send to one",
         "SEND_MANY": "Send to many",
         "NOTICE_TRANSACTION_FEE_UNCOVERED": "Please make sure that you have enough ETP to cover the transaction fee.",
-        "AVAILABLE_BALANCE": "Available balance",
-        "FEE": "Fee"
+        "AVAILABLE_BALANCE": "Available balance"
     },
     "ERROR": {
         "PASSWORD": {
@@ -254,6 +253,7 @@
         "SEND_FROM_AUTO": "Automatic",
         "FROM_ADDRESS_NO_ETP": "This address doesn't have any ETP. Please add ETP to this address or use the Automatic option.",
         "SHOW_ADVANCED": "Show advanced options",
+        "FEE": "Fee",
         "MESSAGE": "Public message (optional)",
         "HELP": {
             "MESSAGE": "This message will be clearly and publicly displayed in your transaction. Do not enter any personal data!"
@@ -285,11 +285,10 @@
         "DURATION_CUSTOM_PERIOD": "Duration of period {{period_nbr}} (in blocks)",
         "AMOUNT_CUSTOM_PERIOD": "Amount unlocked at the end of period {{period_nbr}}",
         "TOTAL_MORE_SEND": "The sum of the amounts of each period is higher than the send amount specified above",
+        "DURATION_ESTIMATION": "Your MST will be locked for approximately {{duration_days}} days and {{duration_hours}} hours. Be aware that this estimation is based on the blocktime of the last 10000 blocks ({{blocktime}} sec.), and might vary based on block generation speed.",
         "HELP": {
-            "ASSET_LOCK_NBR_PERIOD": "This is the total number of periods that will be used.",
-            "ASSET_LOCK_TOTAL_QUANTITY": "This is the total number of assets that will be locked.",
-            "ASSET_LOCK_TOTAL_DURATION": "This is the total number of blocks until the last period terminates."
-            
+            "NBR_PERIOD": "This is the total number of periods that will be used.",
+            "TOTAL_DURATION": "This is the total number of blocks until the last period terminates."
         }
     },
     "TOAST": {

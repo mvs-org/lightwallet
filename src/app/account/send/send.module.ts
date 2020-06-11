@@ -9,6 +9,7 @@ import { SendPageRoutingModule } from './send-routing.module'
 import { SendPage } from './send.page'
 import { TranslateModule } from '@ngx-translate/core'
 import { PipesModule } from 'src/app/pipes/pipes.module'
+import { AttenuationModelSelectorComponent } from '../components/attenuation-model-selector/attenuation-model-selector.component'
 
 @NgModule({
   imports: [
@@ -19,6 +20,9 @@ import { PipesModule } from 'src/app/pipes/pipes.module'
     PipesModule,
     SendPageRoutingModule
   ],
-  declarations: [SendPage]
+  declarations: [
+    AttenuationModelSelectorComponent,
+    SendPage,
+  ]
 })
 export class SendPageModule { }

@@ -606,4 +606,8 @@ export class SendPage implements OnInit {
     this.locktime = output.locktime
   }
 
+  validaddress(address) {
+    return this.metaverseService.validAddress(address)
+  }
+
 }

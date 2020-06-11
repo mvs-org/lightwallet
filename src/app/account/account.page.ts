@@ -6,6 +6,7 @@ import { WalletService } from '../services/wallet.service'
 import { AlertService } from '../services/alert.service'
 import { TranslateService } from '@ngx-translate/core'
 import { filter } from 'rxjs/operators'
+
 @Component({
   selector: 'app-account',
   templateUrl: './account.page.html',

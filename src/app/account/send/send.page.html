@@ -133,9 +133,9 @@
                     <ion-label>{{"ASSET_LOCK.TITLE"|translate}}</ion-label>
                     <ion-toggle [(ngModel)]="lock" name="lock"></ion-toggle>
                 </ion-item>
-                <attenuation-model-selector *ngIf="lock" (modelChanged)="setAttenuationModel($event)"
+                <app-attenuation-model-selector *ngIf="lock" (modelChanged)="setAttenuationModel($event)"
                     [quantity]="validQuantity(quantity) ? quantity : undefined" [decimals]="decimals"
-                    [asset]="selectedAsset"></attenuation-model-selector>
+                    [asset]="selectedAsset"></app-attenuation-model-selector>
             </div>
         </ion-list>
         <ion-row class="padding-bottom">
@@ -303,9 +303,9 @@
                     <ion-label>{{"ASSET_LOCK"|translate}}</ion-label>
                     <ion-toggle [(ngModel)]="lock" name="lock"></ion-toggle>
                 </ion-item>
-                <attenuation-model-selector *ngIf="lock" (modelChanged)="setAttenuationModel($event)"
+                <app-attenuation-model-selector *ngIf="lock" (modelChanged)="setAttenuationModel($event)"
                     [quantity]="undefined" [decimals]="decimals" [asset]="selectedAsset" [toMany]="true">
-                </attenuation-model-selector>
+                </app-attenuation-model-selector>
             </div>
         </ion-list>
         <ion-row class="padding-bottom">

@@ -9,12 +9,12 @@ import { Router } from '@angular/router'
 export class EtpCardComponent {
 
   @Input() balance: any
-    @Input() tickers: any
-    @Input() base: string
-    @Input() icon: string
+  @Input() tickers: any
+  @Input() base: string
+  @Input() icon: string
 
-    constructor(
-        private router: Router,
-    ) { }
+  constructor(
+    private router: Router,
+  ) { }
 
 }
