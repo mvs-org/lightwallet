@@ -32,6 +32,8 @@ export class MetaverseService {
     private blockchain
 
     ready$ = new BehaviorSubject<boolean>(false)
+    syncing$ = new BehaviorSubject<boolean>(false)
+
     lastTxHeight$ = new BehaviorSubject<number>(0)
 
     DEFAULT_BALANCES = {
@@ -460,16 +462,18 @@ export class MetaverseService {
     }
 
     async getData(): Promise<any> {
+        this.syncing$.next(true)
         let addresses = await this.getAddresses()
         const multisigAddresses = await this.wallet.getMultisigAddresses()
         addresses = addresses.concat(multisigAddresses)
         let newTxs = await this.getNewTxs(addresses, await this.getLastTxHeight())
-        while (newTxs && newTxs.length) {
+        while (this.syncing$.value && newTxs && newTxs.length) {
             const lastTxHeight = await this.getLastTxHeight()
             this.lastTxHeight$.next(lastTxHeight)
             newTxs = await this.getNewTxs(addresses, lastTxHeight)
         }
         await this.calculateBalances()
+        this.syncing$.next(false)
         return await this.getBalances()
     }
 
@@ -577,6 +581,7 @@ export class MetaverseService {
     }
 
     hardReset() {
+        this.syncing$.next(false)
         return this.storage.get('theme')
             .then((theme: any) => {
                 return this.storage.get('language')
@@ -594,6 +599,7 @@ export class MetaverseService {
     }
 
     async dataReset() {
+        this.syncing$.next(false)
         console.info('reset data')
         await Promise.all([
             'mvs_last_tx_height',
