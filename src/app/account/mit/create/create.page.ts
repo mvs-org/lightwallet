@@ -80,10 +80,6 @@ export class CreatePage implements OnInit {
   ngOnInit() {
   }
 
-  cancel() {
-    this.router.navigate(['account'])
-  }
-
   validSymbol = (symbol) => /^[A-Za-z0-9._\-]{3,64}$/g.test(symbol) && this.symbol_available
 
   validContent = (content) => content == undefined || content.length < 253

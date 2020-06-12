@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms'
 
 import { IonicModule } from '@ionic/angular'
 
-import { MitPageRoutingModule } from './mit-routing.module'
+import { CreatePageRoutingModule } from './create-routing.module'
 
-import { MitPage } from './mit.page'
+import { CreatePage } from './create.page'
 import { TranslateModule } from '@ngx-translate/core'
 import { PipesModule } from 'src/app/pipes/pipes.module'
 
@@ -17,10 +17,8 @@ import { PipesModule } from 'src/app/pipes/pipes.module'
     IonicModule,
     TranslateModule.forChild(),
     PipesModule,
-    MitPageRoutingModule
+    CreatePageRoutingModule,
   ],
-  declarations: [
-    MitPage,
-  ]
+  declarations: [CreatePage]
 })
-export class MitPageModule {}
+export class CreatePageModule {}

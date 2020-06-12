@@ -23,6 +23,7 @@ export class ConfirmPage implements OnInit {
   addresses: Array<string> = []
   multisig: any = {}
   walletType = 'hasSeed'
+  showAdvanced = false
 
   constructor(
     public mvs: MetaverseService,

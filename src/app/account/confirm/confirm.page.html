@@ -74,6 +74,12 @@
     </div>
     <ion-row *ngIf="walletType == 'hasSeed'">
       <ion-col>
+        <ion-button color="danger" expand="full" (click)="cancel($event)">
+          <ion-icon name="close"></ion-icon>
+          {{'CONFIRM.CANCEL'|translate}}
+        </ion-button>
+      </ion-col>
+      <ion-col>
         <ion-button *ngIf="status != 'SIGNED'" type="submit" expand="full" (click)="send()"
           [disabled]="!signTxForm.form.valid||!validPassword(passphrase)||(multisig.status == 'MULTISIG' && (multisig.selfSigned || multisig.info.m + 1 < multisig.info.n))"
           color="secondary">
@@ -84,12 +90,6 @@
           color="secondary">
           <ion-icon name="send"></ion-icon>
           {{"CONFIRM.BROADCAST" | translate}}
-        </ion-button>
-      </ion-col>
-      <ion-col>
-        <ion-button color="danger" expand="full" (click)="cancel($event)">
-          <ion-icon name="close"></ion-icon>
-          {{'CONFIRM.CANCEL'|translate}}
         </ion-button>
       </ion-col>
     </ion-row>

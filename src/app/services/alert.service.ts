@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { AlertController, LoadingController } from '@ionic/angular';
-import { TranslateService } from '@ngx-translate/core';
+import { Injectable } from '@angular/core'
+import { AlertController, LoadingController } from '@ionic/angular'
+import { TranslateService } from '@ngx-translate/core'
 
 @Injectable({
   providedIn: 'root'
@@ -52,7 +52,7 @@ export class AlertService {
           }
         ]
       })
-      alert.present();
+      alert.present()
     })
   }
 
@@ -94,12 +94,12 @@ export class AlertService {
 
   showSent(message_key, hash) {
     this.translate.get(['MESSAGE.SUCCESS', 'OK', message_key]).subscribe(async (translations: any) => {
-      let alert = await this.alertCtrl.create({
+      const alert = await this.alertCtrl.create({
         header: translations['MESSAGE.SUCCESS'],
         subHeader: translations[message_key] + hash,
         buttons: [
           {
-            text: translations['OK'],
+            text: translations.OK,
           }
         ]
       })
@@ -109,21 +109,21 @@ export class AlertService {
 
   askPassphrase(message_key, onSubmit) {
     this.translate.get(['PASSWORD', 'OK', 'CANCEL', message_key]).subscribe(async (translations: any) => {
-      let alert = await this.alertCtrl.create({
-        header: translations['PASSWORD'],
+      const alert = await this.alertCtrl.create({
+        header: translations.PASSWORD,
         subHeader: translations[message_key],
         backdropDismiss: false,
         inputs: [
-          { name: 'passphrase', placeholder: translations['PASSWORD'], type: 'password' }
+          { name: 'passphrase', placeholder: translations.PASSWORD, type: 'password' }
         ],
         buttons: [
           {
-            text: translations['CANCEL'],
+            text: translations.CANCEL,
             role: 'cancel',
             handler: data => onSubmit()
           },
           {
-            text: translations['OK'],
+            text: translations.OK,
             handler: data => onSubmit(data.passphrase)
           }
         ]
@@ -134,7 +134,7 @@ export class AlertService {
 
   askInfo(title, message, placeholder, type, onSubmit) {
     this.translate.get(['OK', 'CANCEL', title, message, placeholder]).subscribe(async (translations: any) => {
-      let alert = await this.alertCtrl.create({
+      const alert = await this.alertCtrl.create({
         header: translations[title],
         message: translations[message],
         backdropDismiss: false,
@@ -143,11 +143,11 @@ export class AlertService {
         ],
         buttons: [
           {
-            text: translations['CANCEL'],
+            text: translations.CANCEL,
             role: 'cancel'
           },
           {
-            text: translations['OK'],
+            text: translations.OK,
             handler: data => onSubmit(data.info)
           }
         ]
@@ -158,7 +158,7 @@ export class AlertService {
 
   ask2Info(title, message, placeholder1, placeholder2, type1, type2, onSubmit) {
     this.translate.get(['OK', 'CANCEL', title, message, placeholder1, placeholder2]).subscribe(async (translations: any) => {
-      let alert = await this.alertCtrl.create({
+      const alert = await this.alertCtrl.create({
         header: translations[title],
         message: translations[message],
         backdropDismiss: false,
@@ -168,11 +168,11 @@ export class AlertService {
         ],
         buttons: [
           {
-            text: translations['CANCEL'],
+            text: translations.CANCEL,
             role: 'cancel'
           },
           {
-            text: translations['OK'],
+            text: translations.OK,
             handler: data => onSubmit(data)
           }
         ]
@@ -183,75 +183,75 @@ export class AlertService {
 
   showError(message_key, error) {
     this.translate.get(['MESSAGE.ERROR_TITLE', message_key, 'OK']).subscribe(async (translations: any) => {
-      let alert = await this.alertCtrl.create({
+      const alert = await this.alertCtrl.create({
         header: translations['MESSAGE.ERROR_TITLE'],
         subHeader: translations[message_key],
         message: error,
         buttons: [{
-          text: translations['OK']
+          text: translations.OK
         }]
-      });
-      alert.present();
+      })
+      alert.present()
     })
   }
 
   showErrorTranslated(subtitle, message) {
     this.translate.get(['MESSAGE.ERROR_TITLE', subtitle, message, 'OK']).subscribe(async (translations: any) => {
-      let alert = await this.alertCtrl.create({
+      const alert = await this.alertCtrl.create({
         header: translations['MESSAGE.ERROR_TITLE'],
         subHeader: translations[subtitle],
         message: translations[message],
         buttons: [{
-          text: translations['OK']
+          text: translations.OK
         }]
-      });
-      alert.present();
+      })
+      alert.present()
     })
   }
 
   showWrongAddress() {
     this.translate.get(['MESSAGE.NOT_ETP_ADDRESS_TITLE', 'MESSAGE.NOT_ETP_ADDRESS_TEXT', 'OK']).subscribe(async (translations: any) => {
-      let alert = await this.alertCtrl.create({
+      const alert = await this.alertCtrl.create({
         header: translations['MESSAGE.NOT_ETP_ADDRESS_TITLE'],
         message: translations['MESSAGE.NOT_ETP_ADDRESS_TEXT'],
         buttons: [{
-          text: translations['OK']
+          text: translations.OK
         }]
-      });
-      alert.present();
+      })
+      alert.present()
     })
   }
 
   showMessage(title, subtitle, message) {
     this.translate.get([title, subtitle, message, 'OK']).subscribe(async (translations: any) => {
-      let alert = await this.alertCtrl.create({
+      const alert = await this.alertCtrl.create({
         header: translations[title],
         subHeader: translations[subtitle],
         message: translations[message],
         buttons: [{
-          text: translations['OK']
+          text: translations.OK
         }]
-      });
-      alert.present();
+      })
+      alert.present()
     })
   }
 
   showLimitReached(title, message, limit) {
     this.translate.get([title, message, 'OK']).subscribe(async (translations: any) => {
-      let alert = await this.alertCtrl.create({
+      const alert = await this.alertCtrl.create({
         header: translations[title],
         message: translations[message] + limit,
         buttons: [{
-          text: translations['OK']
+          text: translations.OK
         }]
-      });
-      alert.present();
+      })
+      alert.present()
     })
   }
 
   showCheckbox(title, message, checkbox, checked, onSubmit) {
     this.translate.get(['OK', title, message, checkbox]).subscribe(async (translations: any) => {
-      let alert = await this.alertCtrl.create({
+      const alert = await this.alertCtrl.create({
         header: translations[title],
         message: translations[message],
         backdropDismiss: false,
@@ -261,12 +261,12 @@ export class AlertService {
             type: 'checkbox',
             label: translations[checkbox],
             value: 'checked',
-            checked: checked,
+            checked,
           }
         ],
         buttons: [
           {
-            text: translations['OK'],
+            text: translations.OK,
             handler: data => onSubmit(data && data.length > 0)
           },
         ]
@@ -291,6 +291,39 @@ export class AlertService {
       })
       alert.present()
     })
+  }
+
+  async alertConfirm(title, message, cancel, ok) {
+    let choice
+    const translations = await this.translate.get([title, message, cancel, ok]).toPromise()
+    const alert = await this.alertCtrl.create({
+      cssClass: 'my-custom-class',
+      header: translations[title],
+      message: translations[message],
+      buttons: [
+        {
+          text: translations[cancel],
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            alert.dismiss(false)
+            return false
+          }
+        }, {
+          text: translations[ok],
+          handler: () => {
+            alert.dismiss(true)
+            return false
+          }
+        }
+      ]
+    })
+
+    await alert.present()
+    await alert.onDidDismiss().then((data) => {
+      choice = data.data === true
+    })
+    return choice
   }
 
 }

@@ -21,9 +21,9 @@
         <ion-input name="symbol" [(ngModel)]="symbol" maxlength="63" (ngModelChange)="symbolChanged($event)" required>
         </ion-input>
       </ion-item>
-      <ion-item *ngIf="symbol.length >= 3 && !symbol_available" no-lines class="wrong-input">{{"CREATE_MIT.MIT_ALREADY_EXIST"
+      <ion-item *ngIf="symbol.length >= 3 && !symbol_available" lines="none" class="wrong-input">{{"CREATE_MIT.MIT_ALREADY_EXIST"
             | translate}}</ion-item>
-      <ion-item *ngIf="symbol.length > 0 && symbol.length < 3" no-lines class="wrong-input">{{"CREATE_MIT.MIT_SYMBOL_TOO_SHORT"
+      <ion-item *ngIf="symbol.length > 0 && symbol.length < 3" lines="none" class="wrong-input">{{"CREATE_MIT.MIT_SYMBOL_TOO_SHORT"
             | translate}}</ion-item>
 
       <ion-item [ngClass]="{'error-border':!validContent(content)}">
@@ -38,7 +38,7 @@
         </ion-select>
         <ion-input name="no_avatar" *ngIf="no_avatar" [(ngModel)]="no_avatar_placeholder" disabled></ion-input>
       </ion-item>
-      <ion-item *ngIf="no_avatar" no-lines class="wrong-input">{{"CREATE_MIT.NO_AVATAR" | translate}}</ion-item>
+      <ion-item *ngIf="no_avatar" lines="none" class="wrong-input">{{"CREATE_MIT.NO_AVATAR" | translate}}</ion-item>
 
       <ion-item [ngClass]="{'error-border':!validAddress(recipient_address)}">
         <ion-label color="primary" position="floating">{{"CREATE_MIT.RECIPIENT_ADDRESS" | translate}}</ion-label>
@@ -49,7 +49,7 @@
         <ion-toggle [(ngModel)]="showAdvanced" name="showAdvanced" checked="false"></ion-toggle>
       </ion-item>
       <div *ngIf="showAdvanced">
-        <ion-item no-lines>
+        <ion-item lines="none">
           <ion-label color="primary">{{"CREATE_MIT.FEE" | translate}}</ion-label>
           <ion-badge item-end color="primary">{{fee | format : 8}} ETP</ion-badge>
         </ion-item>
@@ -64,7 +64,7 @@
     </ion-list>
     <ion-row class="padding-bottom">
       <ion-col>
-        <ion-button color="danger" expand="full" (click)="cancel($event)">
+        <ion-button color="danger" expand="full" routerLink="/account/mit">
           <ion-icon name="close"></ion-icon>
           {{'CREATE_MIT.BUTTON.CANCEL' | translate}}
         </ion-button>

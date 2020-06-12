@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { MetaverseService } from 'src/app/services/metaverse.service'
-import { ActivatedRoute, Router } from '@angular/router'
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-avatar',
@@ -19,26 +19,19 @@ export class AvatarPage implements OnInit {
   ) { }
 
   ngOnInit() {
-  }
-
-  create() {
-    this.router.navigate(['avatar', 'create'])
+    this.loadAvatars()
+      .then(() => this.loadCerts())
+      .catch(console.error)
   }
 
   createAsset(avatar_name: string, avatar_address: string) {
     // this.navCtrl.push("AssetIssuePage", { avatar_name: avatar_name, avatar_address: avatar_address })
-    this.router.navigate(['mst', 'create'])
+    this.router.navigate(['account', 'mst', 'create'])
   }
 
   registerMIT(avatar_name: string, avatar_address: string) {
     // this.navCtrl.push("MITRegisterPage", { avatar_name: avatar_name, avatar_address: avatar_address })
-    this.router.navigate(['mit', 'create'])
-  }
-
-  ionViewDidLoad() {
-    this.loadAvatars()
-      .then(() => this.loadCerts())
-      .catch(console.error)
+    this.router.navigate(['account', 'mit', 'create'])
   }
 
   loadAvatars() {
