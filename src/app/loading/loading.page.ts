@@ -5,7 +5,7 @@ import { Platform } from '@ionic/angular';
 import { AppService } from 'src/app/services/app.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, throttleTime } from 'rxjs/operators';
 
 @Component({
     selector: 'app-loading',
@@ -31,9 +31,11 @@ export class LoadingPage implements OnInit, OnDestroy {
         private router: Router,
     ) { }
 
-    progress$ = this.metaverseService.lastTxHeight$.pipe(map(height => {
-        return this.calcProgress(height, this.maxHeight, this.firstTxHeight)
-    }))
+    progress$ = this.metaverseService.lastTxHeight$
+        .pipe(
+            map(height => this.calcProgress(height, this.maxHeight, this.firstTxHeight)),
+            throttleTime(300),
+        )
 
     async ngOnInit() {
         console.log('init loading page')
@@ -44,7 +46,7 @@ export class LoadingPage implements OnInit, OnDestroy {
         console.log('start sync')
         await this.updateBalances()
     }
-    
+
     ngOnDestroy() {
         console.log('leave loading')
         if (this.lastTxHeightSubscription) {
