@@ -5,6 +5,7 @@ import { Platform } from '@ionic/angular';
 import { AppService } from 'src/app/services/app.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
     selector: 'app-loading',
@@ -13,11 +14,10 @@ import { Subscription } from 'rxjs';
 })
 export class LoadingPage implements OnInit, OnDestroy {
 
-    loadingHeight: number = 0
+    loadingHeight = 0
     maxHeight: number
-    progress: number = 1
     firstTxHeight: number
-    reset: boolean = false
+    reset = false
 
     showRestartOption = false
 
@@ -29,69 +29,52 @@ export class LoadingPage implements OnInit, OnDestroy {
         public platform: Platform,
         private appService: AppService,
         private router: Router,
-    ) {
+    ) { }
 
-        // this.reset = navParams.get('reset') || false;
+    progress$ = this.metaverseService.lastTxHeight$.pipe(map(height => {
+        return this.calcProgress(height, this.maxHeight, this.firstTxHeight)
+    }))
 
-
+    async ngOnInit() {
+        console.log('init loading page')
+        if (this.reset || await this.metaverseService.getDbUpdateNeeded()) {
+            // await this.metaverseService.dataReset()
+            await this.metaverseService.setDbVersion(this.appService.db_version)
+        }
+        console.log('start sync')
+        await this.updateBalances()
     }
-
-    ngOnInit() {
-        this.lastTxHeightSubscription = this.metaverseService.lastTxHeight$.subscribe(height => {
-            this.loadingHeight = height
-            if (this.firstTxHeight === undefined) {
-                this.firstTxHeight = height
-            }
-            this.progress = this.calculateProgress()
-        })
-    }
-
+    
     ngOnDestroy() {
+        console.log('leave loading')
         if (this.lastTxHeightSubscription) {
             this.lastTxHeightSubscription.unsubscribe()
         }
     }
 
-
-    ionViewDidEnter() {
-        this.metaverseService.getDbUpdateNeeded()
-            .then((target: any) => {
-                if (this.reset || target)
-                    return this.metaverseService.dataReset()
-                        .then(() => this.metaverseService.setDbVersion(this.appService.db_version))
-            })
-            .then(() => setTimeout(() => this.updateBalances(), 1000))
-    }
-
-    private getHeight() {
-        return this.metaverseService.updateHeight()
-            .then((height: number) => {
-                this.maxHeight = height;
-            })
-    }
-
-    private updateBalances = () => {
+    private async updateBalances() {
+        console.log('update balances')
         this.showRestartOption = false
-        return this.getHeight()
-            .then(() => this.metaverseService.getData())
-            .then(() => this.metaverseService.setUpdateTime())
-            .then(() => {
-                this.progress = 100
-                setTimeout(() => this.router.navigate(['/account/portfolio']), 2000)
-            })
-            .catch((error) => {
-                this.showRestartOption = true
-                console.error(error)
-            })
+        try {
+            console.info('load height')
+            this.maxHeight = await this.metaverseService.updateHeight()
+            console.log('current blockchain height:', this.maxHeight)
+            await this.metaverseService.getData()
+            await this.metaverseService.setUpdateTime()
+        } catch (error) {
+            this.showRestartOption = true
+            console.error(error)
+        }
+        setTimeout(() => this.router.navigate(['/account', 'portfolio'], { replaceUrl: true }), 2000)
     }
 
-    calculateProgress() {
-        return (this.loadingHeight && this.maxHeight && this.firstTxHeight) ? Math.max(1, Math.min(99, Math.round((this.loadingHeight - this.firstTxHeight) / (this.maxHeight - this.firstTxHeight) * 100))) : 1
+    calcProgress(currentHeight, targetHeight, startHeight = 0) {
+        return currentHeight && targetHeight ? Math.max(1, Math.min(99, Math.round((currentHeight - startHeight) / (targetHeight - startHeight) * 100))) : 0
     }
 
-    cancel() {
-        this.metaverseService.hardReset()
-            .then(() => this.router.navigate(['/']))
+    async cancel() {
+        await this.metaverseService.hardReset()
+        this.router.navigate(['/'])
     }
 
 }

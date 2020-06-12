@@ -12,7 +12,10 @@
     </ion-row>
     
     <div *ngIf="!showRestartOption" class="mini-loader"></div>
-    <ion-progress-bar color="primary" [value]="progress/100"></ion-progress-bar>
+
+    {{progress$|async}}
+    <ion-progress-bar color="primary" [value]="(progress$|async)/100"></ion-progress-bar>
+
     <h4 *ngIf="progress != 100" [translate]="'LOADING.CURRENT_HEIGHT'" [translateParams]="{height: loadingHeight}"></h4>
     <h4 class="valid-input" *ngIf="progress == 100" [translate]="'LOADING.FULLY_LOADED'"></h4>
     

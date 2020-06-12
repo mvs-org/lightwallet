@@ -29,7 +29,7 @@ class BaseTickers {
 })
 export class MetaverseService {
 
-    private blockchain//= Blockchain({ url: true ? 'https://testnet-api.myetpwallet.com/api/' : 'https://mainnet-api.myetpwallet.com/api/' })
+    private blockchain
 
     ready$ = new BehaviorSubject<boolean>(false)
     lastTxHeight$ = new BehaviorSubject<number>(0)
@@ -465,8 +465,9 @@ export class MetaverseService {
         addresses = addresses.concat(multisigAddresses)
         let newTxs = await this.getNewTxs(addresses, await this.getLastTxHeight())
         while (newTxs && newTxs.length) {
-            this.lastTxHeight$.next(await this.getLastTxHeight())
-            newTxs = await this.getNewTxs(addresses, await this.getLastTxHeight())
+            const lastTxHeight = await this.getLastTxHeight()
+            this.lastTxHeight$.next(lastTxHeight)
+            newTxs = await this.getNewTxs(addresses, lastTxHeight)
         }
         await this.calculateBalances()
         return await this.getBalances()
@@ -592,9 +593,19 @@ export class MetaverseService {
             })
     }
 
-    dataReset() {
+    async dataReset() {
         console.info('reset data')
-        return Promise.all(['mvs_last_tx_height', 'mvs_height', 'utxo', 'last_update', 'addressbalances', 'balances', 'mvs_txs'].map((key) => this.storage.remove(key)))
+        await Promise.all([
+            'mvs_last_tx_height',
+            'mvs_height',
+            'utxo',
+            'last_update',
+            'addressbalances',
+            'balances',
+            'mvs_txs'
+        ]
+            .map((key) => this.storage.remove(key)))
+        console.info('reset done')
     }
 
     async getNewTxs(addresses: Array<string>, lastKnownHeight: number): Promise<any> {
