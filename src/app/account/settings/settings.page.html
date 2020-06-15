@@ -6,7 +6,7 @@
 
 <ion-content>
   <ion-list>
-    <ion-item routerLink="/loading" expand="full">
+    <ion-item (click)="reset()" expand="full">
       <ion-icon name="refresh"></ion-icon>
       <ion-label>
         <h1 translate="SETTINGS.RESYNC.TITLE"></h1>
