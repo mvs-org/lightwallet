@@ -13,11 +13,13 @@
       <p align="center">{{"CREATE_MIT.INFORMATION" | translate}}</p>
     </ion-col>
   </ion-row>
-  <p class="right">{{"CREATE_MIT.FEE"|translate}}:<br *ngIf="platform.is('mobile')"> {{fee | format : 8}} ETP</p>
-  <form #sendForm="ngForm" style="padding-bottom: 0;">
-    <ion-list style="padding-bottom: 0;">
+  <ion-row>
+    <ion-col class="right" translate="CREATE_MIT.FEE_WARNING" [translateParams]="{fee: fee | format : 8}"></ion-col>
+  </ion-row>
+  <form #sendForm="ngForm">
+    <ion-list>
       <ion-item [ngClass]="{'error-border':!validSymbol(symbol)}">
-        <ion-label color="primary" position="floating">{{"CREATE_MIT.SYMBOL" | translate}}</ion-label>
+        <ion-label color="primary" position="floating" translate="CREATE_MIT.SYMBOL"></ion-label>
         <ion-input name="symbol" [(ngModel)]="symbol" maxlength="63" (ngModelChange)="symbolChanged($event)" required>
         </ion-input>
       </ion-item>
@@ -27,30 +29,30 @@
             | translate}}</ion-item>
 
       <ion-item [ngClass]="{'error-border':!validContent(content)}">
-        <ion-label color="primary" position="floating">{{"CREATE_MIT.CONTENT" | translate}}</ion-label>
+        <ion-label color="primary" position="floating" translate="CREATE_MIT.CONTENT"></ion-label>
         <ion-input name="content" [(ngModel)]="content" maxlength="252"></ion-input>
       </ion-item>
       <ion-item [ngClass]="{'error-border':!validName(recipient_avatar)}">
-        <ion-label color="primary" position="floating">{{"CREATE_MIT.AVATAR_NAME" | translate}}</ion-label>
+        <ion-label color="primary" position="floating" translate="CREATE_MIT.AVATAR_NAME"></ion-label>
         <ion-select *ngIf="!no_avatar" [(ngModel)]="recipient_avatar" name="recipient_avatar" multiple="false"
           okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}" (ngModelChange)="avatarChanged($event)">
           <ion-select-option *ngFor="let avatar of avatars" value="{{avatar.symbol}}">{{avatar.symbol}}</ion-select-option>
         </ion-select>
         <ion-input name="no_avatar" *ngIf="no_avatar" [(ngModel)]="no_avatar_placeholder" disabled></ion-input>
       </ion-item>
-      <ion-item *ngIf="no_avatar" lines="none" class="wrong-input">{{"CREATE_MIT.NO_AVATAR" | translate}}</ion-item>
+      <ion-item *ngIf="no_avatar" lines="none" class="wrong-input" translate="CREATE_MIT.NO_AVATAR"></ion-item>
 
       <ion-item [ngClass]="{'error-border':!validAddress(recipient_address)}">
-        <ion-label color="primary" position="floating">{{"CREATE_MIT.RECIPIENT_ADDRESS" | translate}}</ion-label>
+        <ion-label color="primary" position="floating" translate="CREATE_MIT.RECIPIENT_ADDRESS"></ion-label>
         <ion-input name="recipient_address" [(ngModel)]="recipient_address" disabled></ion-input>
       </ion-item>
       <ion-item class="toggle-input">
-        <ion-label>{{"CREATE_MIT.SHOW_ADVANCED"|translate}}</ion-label>
+        <ion-label translate="CREATE_MIT.SHOW_ADVANCED"></ion-label>
         <ion-toggle [(ngModel)]="showAdvanced" name="showAdvanced" checked="false"></ion-toggle>
       </ion-item>
       <div *ngIf="showAdvanced">
         <ion-item lines="none">
-          <ion-label color="primary">{{"CREATE_MIT.FEE" | translate}}</ion-label>
+          <ion-label color="primary" translate="CREATE_MIT.FEE"></ion-label>
           <ion-badge item-end color="primary">{{fee | format : 8}} ETP</ion-badge>
         </ion-item>
         <ion-item>

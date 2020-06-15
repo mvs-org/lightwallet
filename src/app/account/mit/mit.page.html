@@ -10,13 +10,17 @@
 
 
 <ion-content class="center spread-out">
-  <div *ngIf="balances!=undefined&&balances.MIT.length==0" [translate]="'NO_MIT_TEXT'"></div>
-<ion-list *ngIf="balances!=undefined">
-  <ion-item *ngFor="let mit of balances.MIT" button [routerLink]="'/account/mit/'+mit.symbol" detail>
-    <ion-label>
-      <b>{{mit.symbol}}</b>
-      <p>{{mit.owner}}</p>
-    </ion-label>
-  </ion-item>
-</ion-list>
+  <div *ngIf="balances!=undefined&&balances.MIT.length==0" translate="MIT.NO_MIT"></div>
+  <ion-list *ngIf="balances!=undefined">
+    <ion-item *ngFor="let mit of balances.MIT" button [routerLink]="'/account/mit/'+mit.symbol" detail>
+      <ion-label>
+        <b>{{mit.symbol}}</b>
+        <p>{{mit.owner}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+  <ion-button color="primary" routerLink="/account/mit/create">
+    <ion-icon name="add"></ion-icon>
+    {{"MIT.BUTTON.CREATE_MIT" | translate}}
+  </ion-button>
 </ion-content>
