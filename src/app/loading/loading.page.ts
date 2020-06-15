@@ -63,6 +63,7 @@ export class LoadingPage implements OnInit, OnDestroy {
             console.log('current blockchain height:', this.maxHeight)
             await this.metaverseService.getData()
             await this.metaverseService.setUpdateTime()
+            setTimeout(() => this.router.navigate(['/account', 'portfolio'], { replaceUrl: true }), 2000)
         } catch (error) {
             console.error(error)
             switch (error.message) {
@@ -73,7 +74,6 @@ export class LoadingPage implements OnInit, OnDestroy {
                     this.showRestartOption = true
             }
         }
-        setTimeout(() => this.router.navigate(['/account', 'portfolio'], { replaceUrl: true }), 2000)
     }
 
     calcProgress(currentHeight, targetHeight, startHeight = 0) {
