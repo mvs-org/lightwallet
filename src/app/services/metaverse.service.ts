@@ -464,6 +464,9 @@ export class MetaverseService {
     async getData(): Promise<any> {
         this.syncing$.next(true)
         let addresses = await this.getAddresses()
+        if (!addresses || addresses.length === 0) {
+            throw Error('ERR_NO_ADDRESS')
+        }
         const multisigAddresses = await this.wallet.getMultisigAddresses()
         addresses = addresses.concat(multisigAddresses)
         let newTxs = await this.getNewTxs(addresses, await this.getLastTxHeight())
