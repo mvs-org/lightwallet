@@ -438,7 +438,9 @@
         },
         "MINING": "Mining",
         "BUTTON": {
-            "CREATE": "Create"
+            "CREATE_MIT": "Create MIT",
+            "CREATE_MST": "Create MST",
+            "CREATE_AVATAR": "Create Avatar"
         }
     },
     "CREATE_AVATAR": {
