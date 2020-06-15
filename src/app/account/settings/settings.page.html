@@ -1,0 +1,66 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title translate="SETTINGS.TITLE"></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item routerLink="/loading" expand="full">
+      <ion-icon name="refresh"></ion-icon>
+      <ion-label>
+        <h1 translate="SETTINGS.RESYNC.TITLE"></h1>
+        <p translate="SETTINGS.RESYNC.SUBTITLE"></p>
+      </ion-label>
+    </ion-item>
+    <ion-item routerLink="/settings/language" expand="full">
+      <ion-icon name="flag"></ion-icon>
+      <ion-label>
+        <h1 translate="SETTINGS.LANGUAGE.TITLE"></h1>
+        <p translate="SETTINGS.LANGUAGE.SUBTITLE"></p>
+      </ion-label>
+    </ion-item>
+    <!--ion-row *ngIf="!platform.is('mobile')" >
+        <button ion-item (click)="ExportWalletPage();">
+            <ion-icon name="phone-portrait" item-start></ion-icon>
+            <h1 [translate]="'SETTINGS.SHOW_QRCODE_BUTTON'"></h1>
+            <p [translate]="'SETTINGS.SHOW_QRCODE_TEXT'"></p>
+        </button>
+    </ion-row>
+    <ion-row>
+        <button ion-item (click)="LanguageSwitcherPage()">
+            <ion-icon name="flag" item-start></ion-icon>
+            <h1 [translate]="'LANGUAGE_SETTINGS'"></h1>
+            <p [translate]="'LANGUAGE_SETTINGS_TEXT'"></p>
+        </button>
+    </ion-row>
+    <ion-row>
+        <button ion-item (click)="ThemeSwitcherPage()">
+            <ion-icon name="color-palette" item-start></ion-icon>
+            <h1 [translate]="'THEME_SETTINGS'"></h1>
+            <p [translate]="'THEME_SETTINGS_TEXT'"></p>
+        </button>
+    </ion-row>
+    <ion-row>
+        <button ion-item (click)="BaseCurrencyPage()">
+            <ion-icon name="logo-usd" item-start></ion-icon>
+            <h1 [translate]="'SETTINGS.BASE_CURRENCY'"></h1>
+            <p [translate]="'SETTINGS.BASE_CURRENCY_TEXT'"></p>
+        </button>
+    </ion-row>
+    <ion-row>
+        <button ion-item (click)="InformationPage()">
+            <ion-icon name="information-circle" item-start></ion-icon>
+            <h1 [translate]="'INFORMATION.TITLE'"></h1>
+            <p [translate]="'INFORMATION.TEXT'"></p>
+        </button>
+    </ion-row>
+    <ion-row>
+        <button ion-item (click)="logout()">
+            <ion-icon name="log-out" item-start></ion-icon>
+            <h1 [translate]="'LOGOUT'"></h1>
+            <p [translate]="'LOGOUT_TEXT'"></p>
+        </button>
+    </ion-row-->
+  </ion-list>
+</ion-content>

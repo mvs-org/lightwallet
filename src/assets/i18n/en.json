@@ -129,6 +129,10 @@
     "SETTINGS": {
         "MENU_ENTRY": "Settings",
         "TITLE": "Settings",
+        "RESYNC": {
+            "TITLE": "Force resync",
+            "SUBTITLE": "Force the wallet to resync all transactions and balance data."
+        },
         "LANGUAGE": "Language",
         "LOGOUT": "Logout"
     },

@@ -56,6 +56,11 @@ export class AccountPage implements OnInit, OnDestroy {
       url: '/account/export-xpub',
       icon: 'pricetag'
     },
+    {
+      title: 'SETTINGS.MENU_ENTRY',
+      url: '/account/settings',
+      icon: 'cog'
+    },
   ]
 
   private readySubscription: Subscription

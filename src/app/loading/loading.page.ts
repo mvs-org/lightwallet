@@ -64,8 +64,14 @@ export class LoadingPage implements OnInit, OnDestroy {
             await this.metaverseService.getData()
             await this.metaverseService.setUpdateTime()
         } catch (error) {
-            this.showRestartOption = true
             console.error(error)
+            switch (error.message) {
+                case 'ERR_NO_ADDRESS':
+                    this.router.navigate(['login'])
+                    break
+                default:
+                    this.showRestartOption = true
+            }
         }
         setTimeout(() => this.router.navigate(['/account', 'portfolio'], { replaceUrl: true }), 2000)
     }
