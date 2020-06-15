@@ -34,10 +34,12 @@
           </ion-segment-button>
         </ion-segment>
 
-        <ion-button expand="full" icon-left *ngFor="let account of saved_accounts" (click)="loginViaAccount(account)">
-          <ion-icon name="contact"></ion-icon>
-          {{account.name}}
-        </ion-button>
+        <ng-container *ngFor="let account of saved_accounts">
+          <ion-button expand="full" icon-left *ngIf="account.network == network" (click)="loginViaAccount(account)">
+            <ion-icon name="contact"></ion-icon>
+            {{account.name}}
+          </ion-button>
+        </ng-container>
 
         <ion-button expand="full" routerLink="/login/create" icon-left>
           <ion-icon name="add"></ion-icon>
