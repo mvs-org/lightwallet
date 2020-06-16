@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core'
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router'
 import { AccountGuard } from './account.guard'
+import { PublicGuard } from './public.guard'
 
 const routes: Routes = [
     {
@@ -10,6 +11,8 @@ const routes: Routes = [
     },
     {
         path: 'login',
+        canActivate: [PublicGuard],
+        canActivateChild: [PublicGuard],
         loadChildren: () => import('./login/login.module').then(m => m.LoginPageModule)
     },
     {
