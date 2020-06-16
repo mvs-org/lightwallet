@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title translate="CERTIFICATES.TITLE"></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list *ngIf="certificates">
+    <ion-item *ngFor="let certificate of certificates">
+      <ion-label>
+        <b>{{certificate.attachment.symbol}}</b>
+        <div>{{certificate.attachment.owner}}</div>
+        <div>{{certificate.attachment.cert}}</div>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+</ion-content>
