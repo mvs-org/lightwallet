@@ -14,10 +14,11 @@ export class AccountGuard implements CanActivate, CanActivateChild {
 
     async canActivate(
         next: ActivatedRouteSnapshot,
-        state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+        state: RouterStateSnapshot): Promise<boolean> {
         const addresses = await this.metaverseService.getAddresses()
-        if (Array.isArray(addresses) && addresses.length)
+        if (Array.isArray(addresses) && addresses.length) {
             return true;
+        }
         console.log('account not initialized. redirect to login')
         this.router.navigate(['/'])
         return false;
