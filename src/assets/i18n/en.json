@@ -47,6 +47,11 @@
             "NOTSAME": "Entered values don't match."
         }
     },
+    "CERTIFICATES": {
+        "TITLE": "Certificates",
+        "MENU_ENTRY": "Certificates",
+        "NO_CERTIFICATE": "You don't have any certificates yet."
+    },
     "MIT": {
         "TITLE": "MIT - Metaverse Identifiable Token",
         "MENU_ENTRY": "Identifiable Token",
