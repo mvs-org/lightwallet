@@ -134,13 +134,13 @@
             "SUBTITLE": "Force the wallet to resync all transactions and balance data."
         },
         "LANGUAGE": {
-            "TITLE": "Language",
+            "TITLE": "语言设置",
             "SUBTITLE": "Change the language."
         },
         "LOGOUT": "Logout"
     },
     "LANGUAGE": {
-        "TITLE": "Change Language"
+        "TITLE": "语言设置"
     },
     "IMPORT_WALLET_MNEMONIC": {
         "TITLE": "Import from words",

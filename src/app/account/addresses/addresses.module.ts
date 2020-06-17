@@ -1,13 +1,13 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { NgModule } from '@angular/core'
+import { CommonModule } from '@angular/common'
+import { FormsModule } from '@angular/forms'
 
-import { IonicModule } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular'
 
-import { AddressesPageRoutingModule } from './addresses-routing.module';
-import { ClipboardModule } from 'ngx-clipboard';
-import { AddressesPage } from './addresses.page';
-import { TranslateModule } from '@ngx-translate/core';
+import { AddressesPageRoutingModule } from './addresses-routing.module'
+import { ClipboardModule } from 'ngx-clipboard'
+import { AddressesPage } from './addresses.page'
+import { TranslateModule } from '@ngx-translate/core'
 
 @NgModule({
   imports: [
@@ -16,7 +16,7 @@ import { TranslateModule } from '@ngx-translate/core';
     TranslateModule.forChild(),
     IonicModule,
     ClipboardModule,
-    AddressesPageRoutingModule
+    AddressesPageRoutingModule,
   ],
   declarations: [AddressesPage]
 })

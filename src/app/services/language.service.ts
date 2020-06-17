@@ -39,4 +39,8 @@ export class LanguageService {
     }
   }
 
+  async getLanguages() {
+    return this.languages
+  }
+
 }
