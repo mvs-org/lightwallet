@@ -9,7 +9,7 @@
                     <ion-icon *ngIf="isOffline()" name="flash" class="offlineIcon"></ion-icon>
                     <ion-button *ngIf="!platform.is('mobile')" ion-button icon-left (click)="logout()">
                         <ion-icon name="log-out"></ion-icon>
-                        <span [translate]="'LOGOUT'"></span>
+                        <span translate="LOGOUT.BUTTON"></span>
                     </ion-button>
                     <ion-button ion-button icon-left (click)="sync()">
                         <span *ngIf="platform.is('mobile')&&platform.is('ios')&&!isSyncing()"

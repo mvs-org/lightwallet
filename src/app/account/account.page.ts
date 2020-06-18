@@ -3,8 +3,7 @@ import { MetaverseService } from '../services/metaverse.service'
 import { Router } from '@angular/router'
 import { Platform } from '@ionic/angular'
 import { WalletService } from '../services/wallet.service'
-import { AlertService } from '../services/alert.service'
-import { TranslateService } from '@ngx-translate/core'
+import { LogoutService } from '../services/logout.service'
 import { filter } from 'rxjs/operators'
 import { Subscription } from 'rxjs'
 
@@ -20,7 +19,6 @@ export class AccountPage implements OnInit, OnDestroy {
     private syncing = false
     private syncingSmall = false
 
-    saved_accounts_name: any = []
     height: number
     offline = false
     hasSeed: boolean
@@ -74,9 +72,8 @@ export class AccountPage implements OnInit, OnDestroy {
         private metaverseService: MetaverseService,
         public platform: Platform,
         private walletService: WalletService,
-        private alertService: AlertService,
-        private translate: TranslateService,
         private router: Router,
+        private logoutService: LogoutService,
     ) {
         this.readySubscription = this.metaverseService.ready$
             .pipe(filter(ready => ready))
@@ -90,9 +87,6 @@ export class AccountPage implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-
-        this.walletService.getSavedAccounts()
-            .then((accounts) => this.saved_accounts_name = (accounts && accounts.length >= 1) ? accounts.map(account => account.name) : [])
 
         this.walletService.hasSeed()
             .then((hasSeed) => this.hasSeed = hasSeed)
@@ -159,66 +153,9 @@ export class AccountPage implements OnInit, OnDestroy {
             })
             .catch((error) => console.error('Can\'t update balances: ' + error))
     }
+
     logout() {
-        this.walletService.getSessionAccountInfo()
-            .then((accountInfo) => {
-                if (accountInfo || !this.hasSeed) {
-                    this.alertService.showLogout(this.saveAccountHandler, this.forgetAccountHandler)
-                } else {
-                    this.alertService.showLogoutNoAccount(() => this.metaverseService.hardReset()
-                        .then(() => this.router.navigate(['/'])))
-                }
-            })
-    }
-
-    newUsername(title, message, placeholder) {
-        this.askUsername(title, message, placeholder)
-            .then((username) => {
-                if (!username) {
-                    this.newUsername('SAVE_ACCOUNT_TITLE_NO_NAME', 'SAVE_ACCOUNT_MESSAGE', placeholder)
-                } else if (this.saved_accounts_name.indexOf(username) !== -1) {
-                    this.newUsername('SAVE_ACCOUNT_TITLE_ALREADY_EXIST', 'SAVE_ACCOUNT_MESSAGE_ALREADY_EXIST', placeholder)
-                } else {
-                    this.saveAccount(username)
-                }
-            })
-    }
-
-    private forgetAccountHandler = () => {
-        return this.walletService.getAccountName()
-            .then((accountName) => this.walletService.deleteAccount(accountName))
-            .then(() => this.metaverseService.hardReset())
-            .then(() => this.router.navigate(['/']))
-    }
-
-    private saveAccountHandler = () => {
-        return this.walletService.getAccountName()
-            .then((currentUsername) => {
-                if (currentUsername) {
-                    this.saveAccount(currentUsername)
-                } else {
-                    this.newUsername('SAVE_ACCOUNT_TITLE', 'SAVE_ACCOUNT_MESSAGE', 'SAVE_ACCOUNT_PLACEHOLDER')
-                }
-            })
-    }
-
-    askUsername(title, message, placeholder) {
-        return new Promise((resolve, reject) => {
-            this.translate.get([title, message, placeholder]).subscribe((translations: any) => {
-                this.alertService.askInfo(translations[title], translations[message], translations[placeholder], 'text', (info) => {
-                    resolve(info)
-                })
-            })
-        })
-    }
-
-    saveAccount(username) {
-        this.walletService.saveAccount(username)
-            .then(() => this.metaverseService.hardReset())
-            .then(() => this.router.navigate(['/']))
-            .catch((error) => {
-                this.alertService.showError('MESSAGE.ERR_SAVE_ACCOUNT', error.message)
-            })
+        this.logoutService.logout()
     }
 
 }

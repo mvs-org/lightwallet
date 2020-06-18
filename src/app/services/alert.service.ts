@@ -33,46 +33,6 @@ export class AlertService {
     })
   }
 
-  showLogout(saveAccountHandler, forgetAccountHandler) {
-    this.translate.get(['RESET_TITLE', 'RESET_MESSAGE_CHOICE', 'SAVE', 'DELETE', 'BACK']).subscribe(async translations => {
-      const alert = await this.alertCtrl.create({
-        header: translations.RESET_TITLE,
-        message: translations.RESET_MESSAGE_CHOICE,
-        buttons: [
-          {
-            text: translations.SAVE,
-            handler: saveAccountHandler
-          },
-          {
-            text: translations.DELETE,
-            handler: forgetAccountHandler
-          },
-          {
-            text: translations.BACK
-          }
-        ]
-      })
-      alert.present()
-    })
-  }
-
-  showLogoutNoAccount(onLogout) {
-    this.translate.get(['RESET_TITLE', 'RESET_MESSAGE', 'CONFIRM', 'BACK']).subscribe(async translations => {
-      const alert = await this.alertCtrl.create({
-        header: translations.RESET_TITLE,
-        message: translations.RESET_MESSAGE,
-        buttons: [
-          { text: translations.BACK },
-          {
-            text: translations.CONFIRM,
-            handler: onLogout
-          }
-        ]
-      })
-      alert.present()
-    })
-  }
-
   showSendAll(action) {
     this.translate.get(['SEND_ALL_TITLE', 'SEND_ALL_MESSAGE', 'OK', 'CANCEL']).subscribe(async translations => {
       const alert = await this.alertCtrl.create({
@@ -322,6 +282,44 @@ export class AlertService {
     await alert.present()
     await alert.onDidDismiss().then((data) => {
       choice = data.data === true
+    })
+    return choice
+  }
+
+  async alertTripleChoice(title, message, cancel, option1, option2) {
+    let choice
+    const translations = await this.translate.get([title, message, cancel, option1, option2]).toPromise()
+    const alert = await this.alertCtrl.create({
+      cssClass: 'my-custom-class',
+      header: translations[title],
+      message: translations[message],
+      buttons: [
+        {
+          text: translations[cancel],
+          cssClass: 'secondary',
+          handler: () => {
+            alert.dismiss('cancel')
+            return false
+          }
+        }, {
+          text: translations[option1],
+          handler: () => {
+            alert.dismiss('option1')
+            return false
+          }
+        }, {
+          text: translations[option2],
+          handler: () => {
+            alert.dismiss('option2')
+            return false
+          }
+        }
+      ]
+    })
+
+    await alert.present()
+    await alert.onDidDismiss().then((data) => {
+      choice = data.data
     })
     return choice
   }
