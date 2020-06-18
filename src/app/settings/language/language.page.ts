@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core'
-import { TranslateService } from '@ngx-translate/core'
 import { LanguageService } from 'src/app/services/language.service'
 
 export class Language {
@@ -17,14 +16,14 @@ export class LanguagePage implements OnInit {
   languages: Language[]
 
   constructor(
-    private translate: TranslateService,
     private language: LanguageService,
   ) {}
 
   async ngOnInit() {
     this.languages = []
+
     const langObj = await this.language.getLanguages()
-    console.log(langObj)
+
     Object.keys(langObj).forEach(key => {
       console.log(key)
       this.languages.push({
@@ -36,7 +35,6 @@ export class LanguagePage implements OnInit {
   }
 
   select(key) {
-      this.translate.use(key)
       this.language.set(key)
   }
 

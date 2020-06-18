@@ -10,7 +10,9 @@ import { LanguageService } from './services/language.service'
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss']
 })
+
 export class AppComponent {
+
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
@@ -28,7 +30,7 @@ export class AppComponent {
     })
   }
 
-  initializeLanguage() {
+  async initializeLanguage() {
     this.language.init()
   }
 
