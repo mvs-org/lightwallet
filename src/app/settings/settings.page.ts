@@ -119,4 +119,8 @@ export class SettingsPage implements OnInit {
             })
     }
 
+    updateTheme() {
+        document.body.classList.toggle('dark')
+    }
+
 }

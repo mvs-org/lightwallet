@@ -6,19 +6,27 @@
 
 <ion-content>
   <ion-list>
-    <ion-item button (click)="reset()" expand="full">
+    <ion-item button (click)="reset()">
       <ion-icon name="refresh"></ion-icon>
       <ion-label>
         <h1 translate="SETTINGS.RESYNC.TITLE"></h1>
         <p translate="SETTINGS.RESYNC.SUBTITLE"></p>
       </ion-label>
     </ion-item>
-    <ion-item routerLink="language" expand="full">
+    <ion-item routerLink="language">
       <ion-icon name="flag"></ion-icon>
       <ion-label>
         <h1 translate="SETTINGS.LANGUAGE.TITLE"></h1>
         <p translate="SETTINGS.LANGUAGE.SUBTITLE"></p>
       </ion-label>
+    </ion-item>
+    <ion-item button>
+      <ion-icon name="moon"></ion-icon>
+      <ion-label>
+        <h1 translate="SETTINGS.THEME.TITLE"></h1>
+        <p translate="SETTINGS.THEME.SUBTITLE"></p>
+      </ion-label>
+      <ion-toggle id="themeToggle" slot="end" (ionChange)="updateTheme()"></ion-toggle>
     </ion-item>
     <!--ion-row *ngIf="!platform.is('mobile')" >
         <button ion-item (click)="ExportWalletPage();">

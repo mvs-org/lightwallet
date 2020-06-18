@@ -221,7 +221,4 @@ export class AccountPage implements OnInit, OnDestroy {
             })
     }
 
-    updateTheme() {
-        document.body.classList.toggle('dark')
-    }
 }
