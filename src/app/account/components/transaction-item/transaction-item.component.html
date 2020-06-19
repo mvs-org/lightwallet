@@ -5,34 +5,22 @@
                 <ion-row>
                     <ion-col>
                         <ion-item>
-                            <h1>{{'TX.TX_SUMMARY'|translate}}</h1>
+                            <h1 translate="TX.TX_SUMMARY"></h1>
                         </ion-item>
                     </ion-col>
                 </ion-row>
             </ion-col>
         </ion-row>
         <ion-row *ngIf="status == 'PENDING' || status == 'MINED'" class="hash">
-            <ion-col>
-                <ion-row>
-                    <ion-col>
-                        <ion-item>
-                            <div class="tx-hash">
-                                <h2 class="font-mono overflow">
-                                    {{tx.hash}}
-                                </h2>
-                            </div>
-                            <button id="explorerTxButton" ion-button (click)="checkTx()">
-                                <ion-icon name="open"></ion-icon>
-                            </button>
-                        </ion-item>
-                    </ion-col>
-                    <ion-col *ngIf="tx.confirmed_at">
-                        <ion-item class="right timestamp">
-                            <h2>{{tx.confirmed_at*1000 | date : 'medium'}}</h2>
-                        </ion-item>
-                    </ion-col>
-                </ion-row>
-            </ion-col>
+            <ion-toolbar>
+                <h2>{{tx.hash}}</h2>
+                <ion-buttons slot="end">
+                    <ion-button color="primary" (click)="checkTx()">
+                        <ion-icon slot="icon-only" name="open" size="small"></ion-icon>
+                    </ion-button>
+                </ion-buttons>
+            </ion-toolbar>
+            <h2 *ngIf="tx.confirmed_at" class="right">{{tx.confirmed_at*1000 | date : 'medium'}}</h2>
         </ion-row>
         <ion-row>
             <ion-col>
@@ -45,24 +33,24 @@
                                 {{'TX.SIGN_STATUS.' + status | translate}}
                             </div>
                             <div *ngIf="multisig.status == 'MULTISIG'">
-                                <div class="unsigned">{{'MULTISIG_STATUS.MULTISIG' | translate}}</div>
+                                <div class="unsigned" translate="MULTISIG_STATUS.MULTISIG"></div>
                             </div>
-                            <div *ngIf="multisig.status == 'PARTIALLY_MULTISIG'" class="wrong-input">
-                                {{'MULTISIG_STATUS.PARTIALLY_MULTISIG' | translate}}
+                            <div *ngIf="multisig.status == 'PARTIALLY_MULTISIG'" class="wrong-input"
+                                translate="MULTISIG_STATUS.PARTIALLY_MULTISIG"></div>
+                            <div *ngIf="status == 'PENDING'" class="warning-input" translate="PENDING_CONFIRMATION">
                             </div>
-                            <div *ngIf="status == 'PENDING'" class="warning-input">
-                                {{'PENDING_CONFIRMATION' | translate}}
-                            </div>
-                            <div *ngIf="status == 'MINED' && tx.height + appService.min_confirmations > height" class="warning-input">
-                                {{'HISTORY.CONFIRMING' | translate}} ({{height - tx.height >= 0 ? height - tx.height : 0}}/{{appService.min_confirmations}})
+                            <div *ngIf="status == 'MINED' && tx.height + appService.min_confirmations > height"
+                                class="warning-input">
+                                {{'HISTORY.CONFIRMING' | translate}}
+                                ({{height - tx.height >= 0 ? height - tx.height : 0}}/{{appService.min_confirmations}})
                             </div>
                             <div *ngIf="status == 'PENDING' || status == 'MINED'">
-                                <button class="ion-item" ion-button icon-left (click)="showHideDetails()">
-                                    <ion-icon *ngIf="mode == 'summary'" name="arrow-dropdown"></ion-icon>
-                                    <span *ngIf="mode == 'summary'">{{'SHOW_DETAILS'|translate}}</span>
-                                    <ion-icon *ngIf="mode !== 'summary'" name="arrow-dropup"></ion-icon>
-                                    <span *ngIf="mode !== 'summary'">{{'HIDE_DETAILS'|translate}}</span>
-                                </button>
+                                <ion-button class="ion-item" (click)="showHideDetails()">
+                                    <ion-icon *ngIf="mode == 'summary'" name="arrow-down"></ion-icon>
+                                    <span *ngIf="mode == 'summary'" translate="SHOW_DETAILS"></span>
+                                    <ion-icon *ngIf="mode !== 'summary'" name="arrow-up"></ion-icon>
+                                    <span *ngIf="mode !== 'summary'" translate="HIDE_DETAILS"></span>
+                                </ion-button>
                             </div>
                         </ion-item>
                     </ion-col>
@@ -92,14 +80,16 @@
                                     +{{totalPersonalOutputs.MST[txTypeValue] | format : decimalsMst[txTypeValue]}}
                                     {{txTypeValue}}
                                 </div>
-                                <div *ngIf="totalPersonalInputs.MST[txTypeValue] - totalPersonalOutputs.MST[txTypeValue] == 0">
+                                <div
+                                    *ngIf="totalPersonalInputs.MST[txTypeValue] - totalPersonalOutputs.MST[txTypeValue] == 0">
                                     {{'TX.INTRAWALLET' | translate}}
                                 </div>
                             </div>
                             <div *ngIf="txType == 'CERT'">
                                 {{'TX.TX_TYPE.CERT_TYPE.' + txTypeCert | translate}} {{txTypeValue}}
                             </div>
-                            <div *ngIf="txType == 'MIT_REGISTERED' || txType == 'MIT_TRANSFERED' || txType == 'DID_REGISTER' || txType == 'DID_TRANSFER'">
+                            <div
+                                *ngIf="txType == 'MIT_REGISTERED' || txType == 'MIT_TRANSFERED' || txType == 'DID_REGISTER' || txType == 'DID_TRANSFER'">
                                 {{txTypeValue}}
                             </div>
                             <div *ngIf="txType == 'MST_LOCK' || txType == 'DNA_VOTE'">
@@ -111,10 +101,12 @@
                             <div *ngIf="txType == 'MINING_REWARD'" class="receiveAmount">
                                 +{{totalPersonalOutputs.ETP | format : 8}} ETP
                                 <div *ngIf="txTypeValue !== 'ETP'" class="receiveAmount">
-                                    +{{totalPersonalOutputs.MST[txTypeValue] | format : decimalsMst[txTypeValue]}} {{txTypeValue}}
+                                    +{{totalPersonalOutputs.MST[txTypeValue] | format : decimalsMst[txTypeValue]}}
+                                    {{txTypeValue}}
                                 </div>
                             </div>
-                            <div *ngIf="txFee" class="default-color fee">{{'TX.TX_FEE' | translate}}: {{txFee | format : 8}} ETP</div>
+                            <div *ngIf="txFee" class="default-color fee">{{'TX.TX_FEE' | translate}}:
+                                {{txFee | format : 8}} ETP</div>
                         </ion-item>
                     </ion-col>
                 </ion-row>
@@ -164,8 +156,9 @@
                     </ion-row>
                     <ion-row>
                         <ion-col>
-                            <input-item *ngFor="let input of tx.inputs; let i = index" (modelChanged)="inputLoad($event, i)"
-                                [input]="input" [decimalsMst]="decimalsMst" [mode]="mode"></input-item>
+                            <input-item *ngFor="let input of tx.inputs; let i = index"
+                                (modelChanged)="inputLoad($event, i)" [input]="input" [decimalsMst]="decimalsMst"
+                                [mode]="mode"></input-item>
                         </ion-col>
                     </ion-row>
                 </ion-col>
@@ -218,11 +211,12 @@
                 </ion-col>
             </ion-row>
             <ion-row *ngIf="mode == 'hex'">
-                <textarea fz-elastic ion-input full class="hexTx" type="text" #copyHexTx value="{{hexTx}}" readonly>{{hexTx}}</textarea>
-                <button ion-button full item-right icon-left [ngxClipboard]="copyHexTx">
+                <textarea fz-elastic ion-input full class="hexTx" type="text" #copyHexTx value="{{hexTx}}"
+                    readonly>{{hexTx}}</textarea>
+                <ion-button expand="full" [ngxClipboard]="copyHexTx">
                     <ion-icon name="copy"></ion-icon>
                     {{'COPY'|translate}}
-                </button>
+                </ion-button>
             </ion-row>
         </div>
     </ion-grid>

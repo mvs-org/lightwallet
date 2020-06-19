@@ -1,9 +1,9 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
-import { trigger, state, style, animate, transition } from '@angular/animations';
-import { TranslateService } from '@ngx-translate/core';
-import { MetaverseService } from 'src/app/services/metaverse.service';
-import { AppService } from 'src/app/services/app.service';
-import { WalletService } from 'src/app/services/wallet.service';
+import { Component, Input, SimpleChanges } from '@angular/core'
+import { trigger, state, style, animate, transition } from '@angular/animations'
+import { TranslateService } from '@ngx-translate/core'
+import { MetaverseService } from 'src/app/services/metaverse.service'
+import { AppService } from 'src/app/services/app.service'
+import { WalletService } from 'src/app/services/wallet.service'
 
 @Component({
     selector: 'tx-item',
@@ -11,20 +11,20 @@ import { WalletService } from 'src/app/services/wallet.service';
     animations: [
         trigger('expandCollapse', [
             state('expandCollapseState', style({ height: '*' })),
-            transition('* => void', [style({ height: '*' }), animate(500, style({ height: "0" }))]),
-            transition('void => *', [style({ height: '0' }), animate(500, style({ height: "*" }))])
+            transition('* => void', [style({ height: '*' }), animate(500, style({ height: '0' }))]),
+            transition('void => *', [style({ height: '0' }), animate(500, style({ height: '*' }))])
         ])
     ],
 })
 export class TransactionItemComponent {
 
-    @Input() tx: any;
-    @Input() hexTx: any;
-    @Input() mode: string;
-    @Input() status: string     //to_confirm, pending or mined
+    @Input() tx: any
+    @Input() hexTx: any
+    @Input() mode: string
+    @Input() status: string     // to_confirm, pending or mined
     @Input() addresses?: Array<string>
-    @Input() multisig?: Object = {}
-    @Input() height?: number;
+    @Input() multisig?: any
+    @Input() height?: number
 
     decimalsMst: any = {}
     totalInputs: any = { ETP: 0, MST: {} }
@@ -32,10 +32,10 @@ export class TransactionItemComponent {
     totalPersonalInputs: any = { ETP: 0, MST: {} }
     totalPersonalOutputs: any = { ETP: 0, MST: {} }
     involvedMst: Array<string>
-    txFee: number = 0
-    txType: string = ''
-    txTypeValue: string = ''
-    txTypeCert: string = ''
+    txFee = 0
+    txType = ''
+    txTypeValue = ''
+    txTypeCert = ''
     devAvatar: string
 
     constructor(
@@ -45,19 +45,22 @@ export class TransactionItemComponent {
         public translate: TranslateService,
     ) {
         this.devAvatar = this.appService.dev_avatar
+        if(!this.multisig) {
+            this.multisig = {}
+        }
     }
 
     ngOnChanges(changes: SimpleChanges) {
         this.inputChange()
     }
 
-    countable(input){
+    countable(input) {
         return this.addresses.indexOf(input.previous_output.address) > -1
     }
 
     async inputChange() {
 
-        if(!this.addresses || this.addresses == []) {
+        if (!this.addresses || this.addresses === []) {
             const addresses = await this.metaverseService.getAddresses()
             const multisigAddresses = await this.walletService.getMultisigAddresses()
             this.addresses = addresses.concat(multisigAddresses)
@@ -69,22 +72,22 @@ export class TransactionItemComponent {
         this.totalPersonalOutputs = { ETP: 0, MST: {} }
         this.txFee = 0
 
-        const TX_TYPE_ETP = 'ETP';
-        const TX_TYPE_ETP_LOCK = 'ETP_LOCK';
-        const TX_TYPE_ETP_LOCK_REWARD = 'ETP_LOCK_REWARD';
-        const TX_TYPE_ASSET = 'ASSET';
-        const TX_TYPE_MST_LOCK = 'MST_LOCK';
-        const TX_TYPE_ISSUE = 'ISSUE';
-        const TX_TYPE_CERT = 'CERT';
-        const TX_TYPE_DID_REGISTER = 'DID_REGISTER';
-        const TX_TYPE_DID_TRANSFER = 'DID_TRANSFER';
-        const TX_TYPE_MIT_REGISTERED = 'MIT_REGISTERED';
-        const TX_TYPE_MIT_TRANSFERED = 'MIT_TRANSFERED';
-        const TX_TYPE_COINSTAKE = 'COINSTAKE';
-        const TX_TYPE_MINING_REWARD = 'MINING_REWARD';
-        const TX_TYPE_BURN_ETP = 'BURN_ETP';
-        const TX_TYPE_BURN_MST = 'BURN_MST';
-        const TX_TYPE_DNA_VOTE = 'DNA_VOTE';
+        const TX_TYPE_ETP = 'ETP'
+        const TX_TYPE_ETP_LOCK = 'ETP_LOCK'
+        const TX_TYPE_ETP_LOCK_REWARD = 'ETP_LOCK_REWARD'
+        const TX_TYPE_ASSET = 'ASSET'
+        const TX_TYPE_MST_LOCK = 'MST_LOCK'
+        const TX_TYPE_ISSUE = 'ISSUE'
+        const TX_TYPE_CERT = 'CERT'
+        const TX_TYPE_DID_REGISTER = 'DID_REGISTER'
+        const TX_TYPE_DID_TRANSFER = 'DID_TRANSFER'
+        const TX_TYPE_MIT_REGISTERED = 'MIT_REGISTERED'
+        const TX_TYPE_MIT_TRANSFERED = 'MIT_TRANSFERED'
+        const TX_TYPE_COINSTAKE = 'COINSTAKE'
+        const TX_TYPE_MINING_REWARD = 'MINING_REWARD'
+        const TX_TYPE_BURN_ETP = 'BURN_ETP'
+        const TX_TYPE_BURN_MST = 'BURN_MST'
+        const TX_TYPE_DNA_VOTE = 'DNA_VOTE'
         const TX_TYPE_UNKNOWN = 'UNKNOWN'
 
         this.tx.inputs.forEach((input) => {
@@ -99,7 +102,7 @@ export class TransactionItemComponent {
                 if (input.previous_output.attachment && (input.previous_output.attachment.type == 'asset-issue' || input.previous_output.attachment.type == 'asset-transfer')) {
                     this.totalPersonalInputs.MST[input.previous_output.attachment.symbol] = this.totalPersonalInputs.MST[input.previous_output.attachment.symbol] ? this.totalPersonalInputs.MST[input.previous_output.attachment.symbol] + input.previous_output.attachment.quantity : input.previous_output.attachment.quantity
 
-                    //If there is no change output for the MST, we put the personal output to 0
+                    // If there is no change output for the MST, we put the personal output to 0
                     if (!this.totalPersonalOutputs.MST[input.previous_output.attachment.symbol]) {
                         this.totalPersonalOutputs.MST[input.previous_output.attachment.symbol] = 0
                     }
@@ -118,7 +121,7 @@ export class TransactionItemComponent {
                     this.totalPersonalInputs.MST[output.attachment.symbol] = this.totalPersonalInputs.MST[output.attachment.symbol] || 0
                     this.txType = TX_TYPE_ISSUE
                     this.txTypeValue = output.attachment.symbol
-                    break;
+                    break
                 case 'asset-transfer':
                     if (this.txType != TX_TYPE_ISSUE && this.txType != TX_TYPE_BURN_MST) {
                         this.decimalsMst[output.attachment.symbol] = output.attachment.decimals
@@ -133,43 +136,43 @@ export class TransactionItemComponent {
                         } else if (output.attenuation_model_param) {
                             this.tx.locked_until = this.tx.height + output.attenuation_model_param.lock_period
                             this.tx.locked_quantity = output.attenuation_model_param.lock_quantity
-                            if(this.txType != TX_TYPE_DNA_VOTE) {
+                            if (this.txType !== TX_TYPE_DNA_VOTE) {
                                 this.txType = TX_TYPE_MST_LOCK
                             }
-                        } else if (this.txType != TX_TYPE_MST_LOCK && this.txType != TX_TYPE_DNA_VOTE) {
+                        } else if (this.txType !== TX_TYPE_MST_LOCK && this.txType !== TX_TYPE_DNA_VOTE) {
                             this.txType = TX_TYPE_ASSET
                         }
                     }
-                    break;
+                    break
                 case 'asset-cert':
-                    if (this.txType != TX_TYPE_ISSUE) {
+                    if (this.txType !== TX_TYPE_ISSUE) {
                         this.txType = TX_TYPE_CERT
                         this.txTypeCert = output.attachment.cert
                         this.txTypeValue = output.attachment.symbol
                     }
-                    break;
+                    break
                 case 'did-register':
                     this.txType = TX_TYPE_DID_REGISTER
                     this.txTypeValue = output.attachment.symbol
-                    break;
+                    break
                 case 'did-transfer':
                     this.txType = TX_TYPE_DID_TRANSFER
                     this.txTypeValue = output.attachment.symbol
-                    break;
+                    break
                 case 'mit':
-                    this.txType = output.attachment.status == 'registered' ? TX_TYPE_MIT_REGISTERED : TX_TYPE_MIT_TRANSFERED
+                    this.txType = output.attachment.status === 'registered' ? TX_TYPE_MIT_REGISTERED : TX_TYPE_MIT_TRANSFERED
                     this.txTypeValue = output.attachment.symbol
-                    break;
+                    break
                 case 'coinstake':
                     this.txType = TX_TYPE_COINSTAKE
-                    break;
+                    break
                 case 'message':
                     if (output.attachment.content && output.attachment.content.indexOf('vote_supernode:') === 0) {
                         this.txType = TX_TYPE_DNA_VOTE
                     } else if (this.txType === TX_TYPE_UNKNOWN) {
                         this.txType = TX_TYPE_ETP
                     }
-                    break;
+                    break
                 case 'etp':
                     if (this.txType === TX_TYPE_UNKNOWN) {
                         if (output.script === 'OP_RETURN') {
@@ -180,21 +183,21 @@ export class TransactionItemComponent {
                         } else if (output.locked_height_range) {
                             this.tx.locked_until = this.tx.height + output.locked_height_range
                             this.tx.locked_quantity = output.value
-                            this.txType = this.tx.inputs[0].previous_output.hash == '0000000000000000000000000000000000000000000000000000000000000000' ? TX_TYPE_ETP_LOCK_REWARD : TX_TYPE_ETP_LOCK
-                        } else if (this.tx.inputs[0].previous_output.hash == '0000000000000000000000000000000000000000000000000000000000000000') {
+                            this.txType = this.tx.inputs[0].previous_output.hash === '0000000000000000000000000000000000000000000000000000000000000000' ? TX_TYPE_ETP_LOCK_REWARD : TX_TYPE_ETP_LOCK
+                        } else if (this.tx.inputs[0].previous_output.hash === '0000000000000000000000000000000000000000000000000000000000000000') {
                             this.txType = TX_TYPE_MINING_REWARD
                         } else {
                             this.txType = TX_TYPE_ETP
                         }
                         this.txTypeValue = 'ETP'
                     }
-                    break;
+                    break
                 default:
-                    break;
+                    break
             }
 
             this.totalOutputs.ETP += output.value
-            if (output.attachment && (output.attachment.type == 'asset-issue' || output.attachment.type == 'asset-transfer')) {
+            if (output.attachment && (output.attachment.type === 'asset-issue' || output.attachment.type == 'asset-transfer')) {
                 this.totalOutputs.MST[output.attachment.symbol] = this.totalOutputs.MST[output.attachment.symbol] ? this.totalOutputs.MST[output.attachment.symbol] + output.attachment.quantity : output.attachment.quantity
             }
 
@@ -202,30 +205,32 @@ export class TransactionItemComponent {
                 if (output.value) {
                     this.totalPersonalOutputs.ETP += output.value
                 }
-                if (output.attachment && (output.attachment.type == 'asset-issue' || output.attachment.type == 'asset-transfer')) {
+                if (output.attachment && (output.attachment.type === 'asset-issue' || output.attachment.type == 'asset-transfer')) {
                     this.totalPersonalOutputs.MST[output.attachment.symbol] = this.totalPersonalOutputs.MST[output.attachment.symbol] ? this.totalPersonalOutputs.MST[output.attachment.symbol] + output.attachment.quantity : output.attachment.quantity
                 }
                 output.personal = true
             }
-            if (output.attachment.to_did == this.devAvatar)
+            if (output.attachment.to_did === this.devAvatar) {
                 this.txFee += output.value
+            }
 
-        });
+        })
 
         this.involvedMst = Object.keys(this.decimalsMst)
 
         this.txFee += this.totalInputs.ETP - this.totalOutputs.ETP
-        if (this.txFee < 0)
+        if (this.txFee < 0) {
             this.txFee = 0
+        }
     }
 
     async showHideDetails() {
-        this.mode = this.mode == 'summary' ? 'satoshi' : 'summary'
+        this.mode = this.mode === 'summary' ? 'satoshi' : 'summary'
     }
 
-    checkTx = () => this.walletService.openLink(this.explorerURL(this.tx.hash));
+    checkTx = () => this.walletService.openLink(this.explorerURL(this.tx.hash))
 
-    explorerURL = (tx) => (this.appService.network == 'mainnet') ? 'https://explorer.mvs.org/tx/' + tx : 'https://explorer-testnet.mvs.org/tx/' + tx
+    explorerURL = (tx) => (this.appService.network === 'mainnet') ? 'https://explorer.mvs.org/tx/' + tx : 'https://explorer-testnet.mvs.org/tx/' + tx
 
     inputLoad(input, index) {
         this.tx.inputs[index] = input

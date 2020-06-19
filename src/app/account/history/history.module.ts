@@ -9,7 +9,7 @@ import {NgxPaginationModule} from 'ngx-pagination'
 import { HistoryPage } from './history.page'
 import { TranslateModule } from '@ngx-translate/core'
 import { PipesModule } from 'src/app/pipes/pipes.module'
-import { TransactionItemComponent } from './../components/transaction-item/transaction-item.component'
+import { TransactionItemModule } from '../components/transaction-item/transaction-item.module'
 
 @NgModule({
   imports: [
@@ -18,12 +18,12 @@ import { TransactionItemComponent } from './../components/transaction-item/trans
     IonicModule,
     PipesModule,
     NgxPaginationModule,
+    TransactionItemModule,
     TranslateModule.forChild(),
     HistoryPageRoutingModule,
   ],
   declarations: [
     HistoryPage,
-    TransactionItemComponent,
   ]
 })
 export class HistoryPageModule {}
