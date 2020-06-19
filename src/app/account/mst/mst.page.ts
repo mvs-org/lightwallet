@@ -24,8 +24,11 @@ export class MstPage implements OnInit, OnDestroy {
     private router: Router,
   ) { }
 
-  ngOnInit() {
+  ionViewDidEnter() {
     this.showBalances()
+  }
+
+  ngOnInit() {
     this.loadTickers()
     this.heightSubscription = this.metaverseService.height$.subscribe(() => {
       this.showBalances()

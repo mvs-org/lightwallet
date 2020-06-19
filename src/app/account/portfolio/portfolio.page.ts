@@ -32,9 +32,12 @@ export class PortfolioPage implements OnInit, OnDestroy {
     private alertService: AlertService,
   ) { }
 
+  ionViewDidEnter() {
+    this.initialize()
+  }
+
   async ngOnInit() {
     this.loadTickers()
-    this.initialize()
     this.heightSubscription = this.metaverseService.height$.subscribe(() => {
       this.showBalances()
     })
