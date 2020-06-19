@@ -1,16 +1,17 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, OnDestroy } from '@angular/core'
 import { TranslateService } from '@ngx-translate/core'
 import { WalletService } from '../../services/wallet.service'
 import { MetaverseService } from '../../services/metaverse.service'
 import { Router } from '@angular/router'
 import { AlertService } from '../../services/alert.service'
+import { Subscription } from 'rxjs'
 
 @Component({
   selector: 'app-portfolio',
   templateUrl: './portfolio.page.html',
   styleUrls: ['./portfolio.page.scss'],
 })
-export class PortfolioPage implements OnInit {
+export class PortfolioPage implements OnInit, OnDestroy {
 
   balances: any
   balancesKeys: any
@@ -21,19 +22,29 @@ export class PortfolioPage implements OnInit {
   whitelist: any = []
 
 
+  heightSubscription: Subscription
+
   constructor(
     public translate: TranslateService,
     private walletService: WalletService,
     private metaverseService: MetaverseService,
     private router: Router,
     private alertService: AlertService,
-  ) {
-  }
+  ) { }
 
   async ngOnInit() {
-      this.loadTickers()
-      this.initialize()
-      this.whitelist = await this.metaverseService.getWhitelist()
+    this.loadTickers()
+    this.initialize()
+    this.heightSubscription = this.metaverseService.height$.subscribe(() => {
+      this.showBalances()
+    })
+    this.whitelist = await this.metaverseService.getWhitelist()
+  }
+
+  onDestroy() {
+    if (this.heightSubscription) {
+      this.heightSubscription.unsubscribe()
+    }
   }
 
   private async loadTickers() {

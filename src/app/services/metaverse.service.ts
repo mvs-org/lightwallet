@@ -33,6 +33,7 @@ export class MetaverseService {
 
     ready$ = new BehaviorSubject<boolean>(false)
     syncing$ = new BehaviorSubject<boolean>(false)
+    height$ = new BehaviorSubject<number>(null)
 
     lastTxHeight$ = new BehaviorSubject<number>(0)
 
@@ -549,6 +550,7 @@ export class MetaverseService {
     }
 
     setHeight(height) {
+        this.height$.next(height)
         return this.storage.set('mvs_height', height)
     }
 
