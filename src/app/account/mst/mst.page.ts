@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MetaverseService } from 'src/app/services/metaverse.service';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-mst',
   templateUrl: './mst.page.html',
   styleUrls: ['./mst.page.scss'],
 })
-export class MstPage implements OnInit {
+export class MstPage implements OnInit, OnDestroy {
 
   balances: any
   balancesKeys: string[]
@@ -15,6 +16,8 @@ export class MstPage implements OnInit {
   whitelist: any = []
   tickers = {}
   base: string
+
+  heightSubscription: Subscription
 
   constructor(
     private metaverseService: MetaverseService,
@@ -24,6 +27,15 @@ export class MstPage implements OnInit {
   ngOnInit() {
     this.showBalances()
     this.loadTickers()
+    this.heightSubscription = this.metaverseService.height$.subscribe(() => {
+      this.showBalances()
+    })
+  }
+
+  ngOnDestroy() {
+    if (this.heightSubscription) {
+      this.heightSubscription.unsubscribe()
+    }
   }
 
   private async loadTickers() {
