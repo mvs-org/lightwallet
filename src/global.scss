@@ -160,3 +160,7 @@
     text-align: right;
     float: right;
 }
+
+textarea:focus { 
+    outline: none; 
+}

@@ -8,6 +8,7 @@ import { AddressesPageRoutingModule } from './addresses-routing.module'
 import { ClipboardModule } from 'ngx-clipboard'
 import { AddressesPage } from './addresses.page'
 import { TranslateModule } from '@ngx-translate/core'
+import { QrModule } from 'src/app/qr/qr.module'
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { TranslateModule } from '@ngx-translate/core'
     TranslateModule.forChild(),
     IonicModule,
     ClipboardModule,
+    QrModule,
     AddressesPageRoutingModule,
   ],
   declarations: [AddressesPage]

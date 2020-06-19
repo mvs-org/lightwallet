@@ -1,21 +1,23 @@
-import { Component, OnInit } from '@angular/core';
-import { Platform, ModalController } from '@ionic/angular';
-import { MetaverseService } from 'src/app/services/metaverse.service';
-import { WalletService } from 'src/app/services/wallet.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core'
+import { Platform, ModalController } from '@ionic/angular'
+import { MetaverseService } from 'src/app/services/metaverse.service'
+import { WalletService } from 'src/app/services/wallet.service'
+import { ActivatedRoute, Router } from '@angular/router'
+import { QrComponent } from 'src/app/qr/qr.component'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
-  selector: 'app-addresses',
-  templateUrl: './addresses.page.html',
-  styleUrls: ['./addresses.page.scss'],
+    selector: 'app-addresses',
+    templateUrl: './addresses.page.html',
+    styleUrls: ['./addresses.page.scss'],
 })
 export class AddressesPage implements OnInit {
 
-    selectedAsset: any;
-    addressbalances: any;
-    addressBalancesObject: any = {};
-    addresses: Array<string>;
-    displayType: string;
+    selectedAsset: any
+    addressbalances: any
+    addressBalancesObject: any = {}
+    addresses: Array<string>
+    displayType: string
     base: string
     tickers = {}
 
@@ -26,23 +28,25 @@ export class AddressesPage implements OnInit {
         public walletService: WalletService,
         private activatedRoute: ActivatedRoute,
         private router: Router,
+        public modalController: ModalController,
+        private translate: TranslateService,
     ) {
-        this.addressbalances = {};
+        this.addressbalances = {}
         this.selectedAsset = this.activatedRoute.snapshot.params.symbol
         this.displayType = this.selectedAsset == 'ETP' ? 'ETP' : 'asset'
 
         this.metaverseService.getAddresses()
             .then((addresses) => {
-                if (!Array.isArray(addresses) || !addresses.length){
-                  this.router.navigate(['/'])
-                }
-                else
+                if (!Array.isArray(addresses) || !addresses.length) {
+                    this.router.navigate(['/'])
+                } else {
                     this.showBalances()
+                }
             })
 
     }
 
-    ngOnInit(){}
+    ngOnInit() { }
 
     ionViewDidEnter() {
         this.loadTickers()
@@ -51,16 +55,17 @@ export class AddressesPage implements OnInit {
     showBalances() {
         return this.metaverseService.getAddresses()
             .then((_: string[]) => {
-                this.addresses = _;
+                this.addresses = _
                 return this.metaverseService.getAddressBalances()
                     .then((addressbalances) => {
-                        this.addressBalancesObject = addressbalances;
+                        this.addressBalancesObject = addressbalances
                         Object.keys(addressbalances).map((address) => {
-                            if (this.addressbalances[address] == undefined)
+                            if (this.addressbalances[address] === undefined) {
                                 this.addressbalances[address] = []
-                            Object.keys(addressbalances[address]['MST']).map((asset) => {
-                                let balance = addressbalances[address]['MST'][asset];
-                                balance.name = asset;
+                            }
+                            Object.keys(addressbalances[address].MST).map((asset) => {
+                                const balance = addressbalances[address].MST[asset]
+                                balance.name = asset
                                 this.addressbalances[address].push(balance)
                             })
                         })
@@ -77,13 +82,22 @@ export class AddressesPage implements OnInit {
 
     addAddresses = () => console.log('go to add address page')
 
-    history = (asset, address) =>  this.router.navigate(['account', 'history', asset], {queryParams: {addresses: [address]}})
+    history = (asset, address) => this.router.navigate(['account', 'history', asset], { queryParams: { addresses: [address] } })
 
     format = (quantity, decimals) => quantity / Math.pow(10, decimals)
 
-    show(address) {
-        // let profileModal = this.modalCtrl.create('QRCodePage', { value: address, address: address, asset: this.selectedAsset, base: this.base, tickers: this.tickers });
-        // profileModal.present();
+    async show(address) {
+        const content = address
+        const title = address
+
+        const qrcodeModal = await this.modalController.create({
+            component: QrComponent,
+            componentProps: {
+                title,
+                content,
+            }
+        })
+        await qrcodeModal.present()
     }
 
 }

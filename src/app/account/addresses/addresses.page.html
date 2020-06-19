@@ -29,20 +29,25 @@
         <ion-card *ngFor="let address of addresses" class="font-mono">
           <ion-card-content>
 
-            <h3 *ngIf="addressBalancesObject[address] && addressBalancesObject[address].AVATAR">
+            <h2 *ngIf="addressBalancesObject[address] && addressBalancesObject[address].AVATAR">
               <img class="avatar-logo" [src]="'assets/icon/default_avatar.png'">
               <span>{{addressBalancesObject[address].AVATAR}}</span>
-            </h3>
-            <h3 class="address break-words">
-              <textarea class="address-text" rows="1" cols="34" ion-input full type="text" #copy
+            </h2>
+
+            <ion-toolbar>
+              <h3 class="address">
+                <textarea class="address-text" rows="1" cols="34" ion-input full type="text" #copy
                 readonly>{{address}}</textarea>
-              <button type="button" class="copy-btn" id="copybtn" ion-button item-right [ngxClipboard]="copy">
-                <ion-icon name="copy"></ion-icon>
-              </button>
-              <button type="button" class="qrcode-btn" id="qrcode" ion-button item-right (click)="show(address)">
-                <img [src]="'assets/images/qrcode.png'">
-              </button>
-            </h3>
+              </h3>
+              <ion-buttons slot="end">
+                <ion-button color="primary" class="copy-btn" id="copybtn" [ngxClipboard]="copy">
+                  <ion-icon slot="icon-only" name="copy" size="small"></ion-icon>
+                </ion-button>
+                <ion-button color="primary" class="qrcode-btn" id="qrcode" (click)="show(address)">
+                  <ion-icon slot="icon-only" name="qr-code" size="small"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </ion-toolbar>
 
             <div *ngIf="displayType == 'ETP'">
               <div>
@@ -100,17 +105,13 @@
                 {{'ADDRESSES.ADDRESS_NO_MST'|translate}}</p>
             </div>
             <div class="right">
-              <button type="button" id="history-btn" ion-button clear
-                (click)="history((displayType == 'asset' ? selectedAsset : 'ETP'), address)">
-                {{'RECEIVE.HISTORY_BTN'|translate}}
-              </button>
+              <ion-button id="history-btn" (click)="history((displayType == 'asset' ? selectedAsset : 'ETP'), address)"
+                translate="ADDRESSES.BUTTON.HISTORY"></ion-button>
             </div>
           </ion-card-content>
         </ion-card>
         <ion-row class="right">
-          <button type="button" ion-button icon-left (click)="addAddresses()">
-            {{"GENERATE_ADDRESSES.CHANGE_ADDRESS_NUMBER" | translate}}
-          </button>
+          <ion-button (click)="addAddresses()" translate="ADDRESSES.BUTTON.CHANGE_ADDRESS_NUMBER"></ion-button>
         </ion-row>
       </ion-col>
     </ion-row>

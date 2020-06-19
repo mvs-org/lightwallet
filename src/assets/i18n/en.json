@@ -121,8 +121,13 @@
         "TITLE": "Addresses",
         "AVAILABLE": "Available",
         "FROZEN": "Frozen",
+        "UNCONFIRMED": "Unconfirmed",
         "ADDRESS_NO_MST": "This address has no MST.",
-        "CHANGE_ADDRESS_NUMBER": "Change number of addresses"
+        "CHANGE_ADDRESS_NUMBER": "Change number of addresses",
+        "BUTTON": {
+            "CHANGE_ADDRESS_NUMBER": "Change number of addresses",
+            "HISTORY": "History"
+        }
     },
     "QR_ADDRESS": {
         "CLOSE": "Close",
