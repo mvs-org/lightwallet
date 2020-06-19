@@ -41,7 +41,7 @@ export class PortfolioPage implements OnInit, OnDestroy {
     this.whitelist = await this.metaverseService.getWhitelist()
   }
 
-  onDestroy() {
+  ngOnDestroy() {
     if (this.heightSubscription) {
       this.heightSubscription.unsubscribe()
     }
