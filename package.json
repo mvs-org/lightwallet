@@ -35,6 +35,7 @@
     "mvs-blockchain": "^0.1.65",
     "ngx-clipboard": "^13.0.1",
     "ngx-pagination": "^5.0.0",
+    "ngx-qrcode2": "^9.0.0",
     "rxjs": "~6.5.1",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"

@@ -12,6 +12,10 @@ const routes: Routes = [
     path: 'language',
     loadChildren: () => import('./language/language.module').then( m => m.LanguagePageModule)
   },
+  {
+    path: 'export-mobile',
+    loadChildren: () => import('./export-mobile/export-mobile.module').then( m => m.ExportMobilePageModule)
+  },
 ]
 
 @NgModule({

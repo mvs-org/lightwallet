@@ -136,6 +136,10 @@
             "TITLE": "Force resync",
             "SUBTITLE": "Force the wallet to resync all transactions and balance data."
         },
+        "EXPORT_MOBILE": {
+            "TITLE": "Connect phone",
+            "SUBTITLE": "Export your private key to the mobile application MyETPWallet."
+        },
         "LANGUAGE": {
             "TITLE": "Language",
             "SUBTITLE": "Change the language."
@@ -180,6 +184,23 @@
     },
     "LANGUAGE": {
         "TITLE": "Change Language"
+    },
+    "EXPORT_MOBILE": {
+        "TITLE": "Connect phone",
+        "HEADLINE": "Connect your phone",
+        "INTRODUCTION": "To download MyETPWallet on your phone, please visit MyETPWallet.com and click on 'Download wallet'.",
+        "TEXT": "This action will export your private key to your phone. Your private key will be encrypted with the password used for this account and saved on your mobile device. Please scan this QR code from the mobile application MyETPWallet.",
+        "REMINDER_LOGOUT": "Please logout from the app if you switch your phone.",
+        "BUTTON": {
+            "SHOW_FULL_WALLET": "Export full wallet",
+            "SHOW_VIEW_ONLY": "Export view only wallet"
+        },
+        "SHOW_FULL_WALLET": {
+            "TITLE": "Export full wallet"
+        },
+        "SHOW_VIEW_ONLY": {
+            "TITLE": "Export view only wallet"
+        }
     },
     "IMPORT_WALLET_MNEMONIC": {
         "TITLE": "Import from words",

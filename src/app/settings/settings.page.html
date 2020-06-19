@@ -13,6 +13,13 @@
         <p translate="SETTINGS.RESYNC.SUBTITLE"></p>
       </ion-label>
     </ion-item>
+    <ion-item routerLink="export-mobile" *ngIf="!platform.is('mobile')">
+      <ion-icon name="phone-portrait"></ion-icon>
+      <ion-label>
+        <h1 translate="SETTINGS.EXPORT_MOBILE.TITLE"></h1>
+        <p translate="SETTINGS.EXPORT_MOBILE.SUBTITLE"></p>
+      </ion-label>
+    </ion-item>
     <ion-item routerLink="language">
       <ion-icon name="flag"></ion-icon>
       <ion-label>

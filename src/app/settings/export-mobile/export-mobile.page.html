@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title translate="EXPORT_MOBILE.TITLE"></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <h2 class="pageHeadline" translate="EXPORT_MOBILE.HEADLINE"></h2>
+  <p translate="EXPORT_MOBILE.INTRODUCTION"></p>
+  <p translate="EXPORT_MOBILE.TEXT"></p>
+  <p translate="EXPORT_MOBILE.REMINDER_LOGOUT"></p>
+  <ion-item>
+    <ion-label text-wrap translate="DISCLAIMER.READ_AND_AGREE"></ion-label>
+    <ion-checkbox [(ngModel)]="disclaimerAgreed"></ion-checkbox>
+  </ion-item>
+  <form *ngIf="disclaimerAgreed" #importForm="ngForm" no-lines>
+    <br>
+    <ion-row offset-md-1 col-md-10 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6>
+      <ion-col>
+        <ion-button *ngIf="hasSeed" id="open-wallet-button" color="danger" expand="full" (click)="exportWallet()">
+          <ion-icon name="person"></ion-icon>
+          {{"EXPORT_MOBILE.BUTTON.SHOW_FULL_WALLET"|translate}}
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button *ngIf="hasXpub" id="open-view-only-wallet-button" expand="full" (click)="exportViewOnlyWallet()">
+          <ion-icon name="eye"></ion-icon>
+          {{"EXPORT_MOBILE.BUTTON.SHOW_VIEW_ONLY"|translate}}
+        </ion-button>
+      </ion-col>
+    </ion-row>
+    <div>
+      <br>
+      <!--qr-code class="center" *ngIf="showQRCode" [value]="connectcode" [size]="300" class="center"></qr-code-->
+    </div>
+  </form>
+</ion-content>
