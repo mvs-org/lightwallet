@@ -80,7 +80,7 @@ export class SendPage implements OnInit {
     this.selectedAsset = this.activatedRoute.snapshot.params.symbol
     this.initializeParameters(this.selectedAsset, this.activatedRoute.snapshot.paramMap)
 
-    if (this.selectedAsset == 'ETP') {
+    if (this.selectedAsset === 'ETP') {
       this.recipients.push(new RecipientSendMore('', '', { 'ETP': undefined }, undefined))
     } else {
       this.recipients.push(new RecipientSendMore('', '', { 'MST': { [this.selectedAsset]: undefined } }, undefined))

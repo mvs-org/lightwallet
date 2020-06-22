@@ -1,0 +1,184 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref=".."></ion-back-button>
+    </ion-buttons>
+    <ion-title translate="CREATE_MST.TITLE"></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-row>
+    <ion-col>
+      <p align="center" translate="CREATE_MST.INFORMATION"></p>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <p>
+        {{"CREATE_MST.TOTAL_AVAILABLE_BALANCE" | translate}}:
+        <br *ngIf="platform.is('mobile')">{{showBalance | format : decimals}} {{selectedAsset}}
+      </p>
+      <p *ngIf="addressbalances && addressbalances[issue_address] && addressbalances[issue_address][selectedAsset]">
+        {{issuer_name}} {{"CREATE_MST.AVATAR_AVAILABLE_BALANCE" | translate}}:
+        <br *ngIf="platform.is('mobile')">{{addressbalances[issue_address][selectedAsset].available | format :
+            decimals}} {{selectedAsset}}
+      </p>
+    </ion-col>
+    <ion-col>
+      <p class="right">{{"CREATE_MST.FEE"|translate}}:<br *ngIf="platform.is('mobile')"> 10 ETP</p>
+    </ion-col>
+  </ion-row>
+  <h2 align="center"
+    *ngIf="issuer_name && (!addressbalances || !addressbalances[issue_address] || !addressbalances[issue_address][selectedAsset] || addressbalances[issue_address][selectedAsset].available<1000000000)">
+    {{"CREATE_MST.NOTICE_TRANSACTION_FEE_UNCOVERED"|translate}}</h2>
+  <form #sendForm="ngForm" style="padding-bottom: 0;">
+    <ion-list style="padding-bottom: 0;">
+
+      <ion-item
+        [ngClass]="{'error-border': !validSymbol(symbol) || symbol_check == 'exist' || symbol_check == 'not_domain_owner' || symbol_check == 'other_avatar_domain_owner', 'warning-border': error_loading_msts || error_loading_certs || symbol_check == 'cant_check_domain'}">
+        <ion-label color="primary" position="floating" translate="CREATE_MST.SYMBOL.LABEL"></ion-label>
+        <ion-input class="uppercase" name="symbol" [(ngModel)]="symbol" (ngModelChange)="symbolChanged($event)"
+          maxlength="63" required></ion-input>
+      </ion-item>
+      <ion-item *ngIf="symbol_check == 'available'" lines="none" class="valid-input" translate="CREATE_MST.SYMBOL.AVAILABLE"></ion-item>
+      <ion-item *ngIf="symbol_check == 'domain_owner'" lines="none" class="valid-input" translate="CREATE_MST.SYMBOL.DOMAIN_OWNER"></ion-item>
+      <ion-item *ngIf="symbol_check == 'naming_owner'" lines="none" class="valid-input" translate="CREATE_MST.SYMBOL.NAMING_OWNER"></ion-item>
+      <ion-item *ngIf="symbol_check == 'exist'" lines="none" class="wrong-input" translate="CREATE_MST.SYMBOL.ALREADY_EXIST"></ion-item>
+      <ion-item *ngIf="symbol_check == 'not_domain_owner'" lines="none" class="wrong-input" translate="CREATE_MST.SYMBOL.NOT_CERT_OWNER"></ion-item>
+      <ion-item *ngIf="symbol_check == 'other_avatar_domain_owner'" lines="none" class="wrong-input" translate="CREATE_MST.SYMBOL.DOMAIN_OWNER_OTHER_MY_AVATARS"></ion-item>
+      <ion-item *ngIf="error_loading_msts" lines="none" class="warning-input" translate="CREATE_MST.SYMBOL.ERROR_LOADING_MSTS"></ion-item>
+      <ion-item *ngIf="error_loading_certs || symbol_check == 'cant_check_domain'" lines="none" class="warning-input" translate="CREATE_MST.SYMBOL.ERROR_LOADING_CERTS"></ion-item>
+
+      <ion-item [ngClass]="{'error-border':!validMaxSupply(max_supply, asset_decimals)}">
+        <ion-label color="primary" position="floating" translate="CREATE_MST.MAX_SUPPLY.LABEL"></ion-label>
+        <ion-select [(ngModel)]="max_supply" name="max_supply" multiple="false"
+          (ngModelChange)="maxSupplyChanged($event)" okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}"
+          required>
+          <ion-select-option value="1000000" translate="CREATE_MST.MAX_SUPPLY.ONE_MILLION" [translateParams]="{number: 1000000 | number}"></ion-select-option>
+          <ion-select-option value="10000000" translate="CREATE_MST.MAX_SUPPLY.TEN_MILLION" [translateParams]="{number: 10000000 | number}"></ion-select-option>
+          <ion-select-option value="100000000" translate="CREATE_MST.MAX_SUPPLY.ONE_HUNDRED_MILLION" [translateParams]="{number: 100000000 | number}"></ion-select-option>
+          <ion-select-option value="1000000000" translate="CREATE_MST.MAX_SUPPLY.ONE_BILLION" [translateParams]="{number: 1000000000 | number}"></ion-select-option>
+          <ion-select-option value="10000000000" translate="CREATE_MST.MAX_SUPPLY.TEN_BILLION" [translateParams]="{number: 10000000000 | number}"></ion-select-option>
+          <ion-select-option value="custom" translate="CREATE_MST.MAX_SUPPLY.CUSTOM"></ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item *ngIf="max_supply == 'custom'"
+        [ngClass]="{'error-border':!validMaxSupplyCustom(custom_max_supply, asset_decimals)}">
+        <ion-label color="primary" position="floating" translate="CREATE_MST.CUSTOM_MAX_SUPPLY.LABEL"></ion-label>
+        <ion-input name="custom_max_supply" type="tel" min="0" [(ngModel)]="custom_max_supply"
+          (ngModelChange)="maxSupplyChanged($event)"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="error_too_high_max_supply" lines="none" class="wrong-input" translate="CREATE_MST.CUSTOM_MAX_SUPPLY.TOO_HIGH"></ion-item>
+      <br>
+      <ion-item lines="none">
+        <ion-label color="primary" translate="CREATE_MST.DECIMALS"></ion-label>
+        <ion-badge item-end color="primary">{{asset_decimals}}</ion-badge>
+      </ion-item>
+      <ion-item>
+        <ion-range min="0" max="8" step="1" pin="true" snaps="true" color="primary" [(ngModel)]="asset_decimals"
+          name="asset_decimals" (ngModelChange)="maxSupplyChanged($event)">
+          <ion-label range-left>0</ion-label>
+          <ion-label range-right>8</ion-label>
+        </ion-range>
+      </ion-item>
+
+      <ion-item class="toggle-input">
+        <ion-label translate="CREATE_MST.SECONDARY_ISSUE.ALLOW"></ion-label>
+        <ion-toggle [(ngModel)]="secondaryissue" name="secondaryissue" checked="false"></ion-toggle>
+      </ion-item>
+
+      <ion-item *ngIf="secondaryissue" lines="none">
+        <ion-label color="primary" translate="CREATE_MST.SECONDARY_ISSUE.THRESHOLD"></ion-label>
+        <ion-badge item-end color="primary">{{secondaryissue_threshold}}%</ion-badge>
+      </ion-item>
+      <ion-item *ngIf="secondaryissue">
+        <ion-range min="0" max="100" step="1" pin="true" color="primary" [(ngModel)]="secondaryissue_threshold"
+          name="secondaryissue_threshold">
+          <ion-label range-left>0%</ion-label>
+          <ion-label range-right>100%</ion-label>
+        </ion-range>
+      </ion-item>
+
+      <ion-item class="toggle-input">
+        <ion-label translate="CREATE_MST.MST_MINING.ALLOW"></ion-label>
+        <ion-toggle [(ngModel)]="mining" name="mining"></ion-toggle>
+      </ion-item>
+      <!--mining-model-selector *ngIf="mining" (modelChanged)="setMiningModel($event)" [decimals]="asset_decimals"
+        [asset]="symbol">
+      </mining-model-selector-->
+
+      <ion-item
+        [ngClass]="{'error-border':!validName(issuer_name) || !addressbalances || !addressbalances[issue_address] || !addressbalances[issue_address][selectedAsset] || addressbalances[issue_address][selectedAsset].available<1000000000}">
+        <ion-label color="primary" position="floating" translate="CREATE_MST.ISSUER.LABEL"></ion-label>
+        <ion-select *ngIf="!no_avatar" [(ngModel)]="issuer_name" name="issuer_name" multiple="false"
+          okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}" (ngModelChange)="issuerChanged($event)">
+          <ion-select-option *ngFor="let avatar of avatars" value="{{avatar.symbol}}">{{avatar.symbol}}</ion-select-option>
+        </ion-select>
+        <ion-input name="no_avatar" *ngIf="no_avatar" [(ngModel)]="no_avatar_placeholder" disabled></ion-input>
+      </ion-item>
+      <ion-item *ngIf="no_avatar" lines="none" class="wrong-input" translate="CREATE_MST.ISSUER.NO_AVATAR"></ion-item>
+      <ion-item
+        *ngIf="issuer_name && (!addressbalances || !addressbalances[issue_address] || !addressbalances[issue_address][selectedAsset] || addressbalances[issue_address][selectedAsset].available<1000000000)"
+        lines="none" class="wrong-input" translate="CREATE_MST.ISSUER.TRANSACTION_FEE_UNCOVERED"></ion-item>
+
+      <ion-item [ngClass]="{'error-border':!validAddress(issue_address)}">
+        <ion-label color="primary" position="floating" translate="CREATE_MST.ISSUE_ADDRESS"></ion-label>
+        <ion-input name="issue_address" [(ngModel)]="issue_address" disabled></ion-input>
+      </ion-item>
+      <ion-item [ngClass]="{'error-border':!validDescription(description)}">
+        <ion-label color="primary" position="floating" translate="CREATE_MST.DESCRIPTION"></ion-label>
+        <ion-input name="description" [(ngModel)]="description" maxlength="63" required></ion-input>
+      </ion-item>
+      <br>
+      <ion-item class="toggle-input">
+        <ion-label translate="CREATE_MST.SHOW_ADVANCED"></ion-label>
+        <ion-toggle [(ngModel)]="showAdvanced" name="showAdvanced" checked="false"></ion-toggle>
+      </ion-item>
+
+      <div *ngIf="showAdvanced">
+        <br>
+        <ion-item lines="none">
+          <ion-label color="primary" translate="CREATE_MST.FEE_DISTRIBUTION.LABEL"></ion-label>
+        </ion-item>
+        <div lines="none" class="advice" translate="CREATE_MST.HELP.FEE_DISTRIBUTION"></div>
+        <ion-item lines="none">
+          <span class="rangeTextLeft" translate="CREATE_MST.FEE_DISTRIBUTION.MINERS"></span>
+          <span class="right" translate="CREATE_MST.FEE_DISTRIBUTION.DEVELOPERS"></span>
+        </ion-item>
+        <ion-item>
+          <ion-range class="bountyFeeRange" min="0" max="80" step="10" snaps="true" color="primary"
+            [(ngModel)]="bounty_fee" name="bounty_fee">
+            <ion-label range-left>{{(100-bounty_fee)*10/100}} ETP</ion-label>
+            <ion-label range-right class="right">{{bounty_fee*10/100}} ETP</ion-label>
+          </ion-range>
+        </ion-item>
+        <ion-item class="toggle-input">
+          <ion-label translate="CREATE_MST.LOCK"></ion-label>
+          <ion-toggle [(ngModel)]="lock" name="lock"></ion-toggle>
+        </ion-item>
+        <app-attenuation-model-selector *ngIf="lock" (modelChanged)="setAttenuationModel($event)"
+          [quantity]="max_supply == 'custom' ? custom_max_supply : max_supply" [decimals]="asset_decimals"
+          [asset]="symbol">
+        </app-attenuation-model-selector>
+      </div>
+    </ion-list>
+
+    <ion-row>
+      <ion-col>
+        <ion-button color="danger" expand="full" (click)="cancel($event)">
+          <ion-icon name="close"></ion-icon>
+          {{'CREATE_MST.BUTTON.CANCEL'|translate}}
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button expand="full"
+          [disabled]="!sendForm.form.valid||!validSymbol(symbol)||symbol_check=='exist'||symbol_check=='not_domain_owner'||symbol_check=='other_avatar_domain_owner'||!validMaxSupply(max_supply, asset_decimals)||(max_supply=='custom' && !validMaxSupplyCustom(custom_max_supply, asset_decimals))||!validDecimals(asset_decimals)||!validName(issuer_name)||!validAddress(issue_address)||!validDescription(description)||((!addressbalances || !addressbalances[issue_address] || !addressbalances[issue_address][selectedAsset] || addressbalances[issue_address][selectedAsset].available<1000000000))||(lock && !attenuation_model)||(mining && !mst_mining_model)"
+          (click)="confirm()" icon-left color="secondary">
+          <ion-icon disabled="checked" name="cog"></ion-icon>
+          {{'CREATE_MST.BUTTON.NEXT' | translate}}
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </form>
+</ion-content>

@@ -69,6 +69,75 @@
         "TITLE": "MST - Metaverse Smart Token",
         "MENU_ENTRY": "Smart Token"
     },
+    "CREATE_MST": {
+        "TITLE": "Create MST",
+        "INFORMATION": "MST (Metaverse Smart Token) is the token standard use on Metaverse. Any Avatar can create a MST using the form below.",
+        "TOTAL_AVAILABLE_BALANCE": "Total available balance",
+        "AVATAR_AVAILABLE_BALANCE": "Avatar available balance",
+        "FEE": "MST creation fee",
+        "NOTICE_TRANSACTION_FEE_UNCOVERED": "Please make sure that you have enough ETP to cover the transaction fee.",
+        "SYMBOL": {
+            "LABEL": "Symbol",
+            "AVAILABLE": "This Domain name is available. After issuing this MST, you will receive a Domain certificate",
+            "DOMAIN_OWNER": "Your Avatar own the Domain certificate to create this MST",
+            "NAMING_OWNER": "Your Avatar own the Naming certificate to create this MST",
+            "ALREADY_EXIST": "This MST symbol has already been registered",
+            "NOT_CERT_OWNER": "You do not own the Domain certificate to create this MST",
+            "DOMAIN_OWNER_OTHER_MY_AVATARS": "The domain certificate to create this MST is owned by another one of your Avatars. Please issue this MST using the Avatar owning the matching domain certificate.",
+            "ERROR_LOADING_MSTS": "Error while loading MSTs. Please make sure this MST Symbol is not already used",
+            "ERROR_LOADING_CERTS": "Error while loading the Domain certificates. Please make sure you have the right to create this Symbol"   
+        },
+        "MAX_SUPPLY": {
+            "LABEL": "Maximum supply",
+            "CUSTOM": "Custom Maximum supply",
+            "ONE_MILLION": "One million",
+            "TEN_MILLION": "Ten million",
+            "ONE_HUNDRED_MILLION": "One hundred million",
+            "ONE_BILLION": "One billion",
+            "TEN_BILLION": "{{number}} (Ten billion)"
+        },
+        "CUSTOM_MAX_SUPPLY": {
+            "LABEL": "Custom maximum supply",
+            "TOO_HIGH": "Invalid maximum supply. Please decrease the maximum supply or the number of decimals"
+        },
+        "DECIMALS": "Decimals",
+        "SECONDARY_ISSUE": {
+            "ALLOW": "Allow future Secondary Issue",
+            "THRESHOLD": "Secondary Issue threshold"
+        },
+        "MST_MINING": {
+            "ALLOW": "Allow this MST to be mined"
+        },
+        "ISSUER": {
+            "LABEL": "Issuer name",
+            "NO_AVATAR": "You need an Avatar to register a MST. Please create an Avatar first",
+            "TRANSACTION_FEE_UNCOVERED": "This Avatar needs at least 10 ETP to create a MST"
+        },
+        "ISSUE_ADDRESS": "Issue address (address receiving the new token)",
+        "ADDRESS_SELECT_AVATAR": "Please select an Issuer first",
+        "NO_AVATAR_PLACEHOLDER": "No Avatar",
+        "DESCRIPTION": "Description",
+        "SHOW_ADVANCED": "Show advanced",
+        "FEE_DISTRIBUTION": {
+            "LABEL": "Transaction fee distribution",
+            "MINERS": "Miners",
+            "DEVELOPERS": "Developer Community"
+        },
+        "LOCK": "I want to lock this MST",
+        "HELP": {
+            "FEE_DISTRIBUTION": "Transaction fee distribution"
+        },
+        "BUTTON": {
+            "NEXT": "Next",
+            "CANCEL": "Cancel"
+        },
+        "CONFIRMATION": {
+            "TITLE": "Issuing a MST will cost 10 ETP.",
+            "SUBTITLE": "Are you sure you want to create a MST?",
+            "CANCEL": "Cancel",
+            "OK": "Register MST"
+        }
+    },
     "ACCOUNT": {
         "TITLE": "Portfolio",
         "FROZEN": "Frozen",
