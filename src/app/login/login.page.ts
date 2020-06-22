@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, OnDestroy } from '@angular/core'
 import { Platform } from '@ionic/angular'
 import { WalletService, } from '../services/wallet.service'
 import { Router } from '@angular/router'
@@ -6,17 +6,21 @@ import { MetaverseService } from '../services/metaverse.service'
 import { AppService } from '../services/app.service'
 import { Title } from '@angular/platform-browser'
 import { TranslateService } from '@ngx-translate/core'
+import { Subscription } from 'rxjs'
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
-export class LoginPage implements OnInit {
+export class LoginPage implements OnInit, OnDestroy {
 
   network: string
   saved_accounts: Array<any> = []
   isApp: boolean
+
+  networkSubscription: Subscription
+  translateSubscription: Subscription
 
   constructor(
     public metaverse: MetaverseService,
@@ -31,8 +35,22 @@ export class LoginPage implements OnInit {
   }
 
   async ngOnInit() {
-    this.network = await this.appService.getNetwork()
-    this.title.setTitle((await this.translate.get('LOGIN.TITLE').toPromise()) as string)
+    this.networkSubscription = this.appService.network$.subscribe(network => {
+      this.network = network
+    })
+    this.translateSubscription = this.translate.onLangChange.subscribe(async () => {
+      const title = await this.translate.get('LOGIN.TITLE').toPromise() || 'MyETPWallet'
+      this.title.setTitle(title)
+    })
+  }
+
+  ngOnDestroy() {
+    if (this.translateSubscription) {
+      this.translateSubscription.unsubscribe()
+    }
+    if (this.networkSubscription) {
+      this.networkSubscription.unsubscribe()
+    }
   }
 
   ionViewWillEnter() {
@@ -40,7 +58,7 @@ export class LoginPage implements OnInit {
       .then((accounts) => this.saved_accounts = accounts ? accounts : [])
   }
 
-  switchTheme(){
+  switchTheme() {
     console.trace('to be implemented')
   }
 

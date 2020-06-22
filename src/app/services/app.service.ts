@@ -38,7 +38,7 @@ export class AppService {
 
   readonly DEFAULT_NETWORK = 'mainnet'
 
-  network$ = new BehaviorSubject<string>(this.DEFAULT_NETWORK)
+  network$ = new BehaviorSubject<string>(undefined)
 
   constructor(
     private storage: Storage
@@ -52,6 +52,7 @@ export class AppService {
       await this.storage.set('network', newNetwork)
     }
     this.network = await this.getNetwork()
+    console.log(this.network)
     this.network$.next(this.network)
     return this.network
   }
