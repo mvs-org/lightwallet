@@ -90,11 +90,11 @@
 
       <ion-item *ngIf="secondaryissue" lines="none">
         <ion-label color="primary" translate="CREATE_MST.SECONDARY_ISSUE.THRESHOLD"></ion-label>
-        <ion-badge item-end color="primary">{{secondaryissue_threshold}}%</ion-badge>
+        <ion-badge item-end color="primary">{{secondaryissueThreshold}}%</ion-badge>
       </ion-item>
       <ion-item *ngIf="secondaryissue">
-        <ion-range min="0" max="100" step="1" pin="true" color="primary" [(ngModel)]="secondaryissue_threshold"
-          name="secondaryissue_threshold">
+        <ion-range min="0" max="100" step="1" pin="true" color="primary" [(ngModel)]="secondaryissueThreshold"
+          name="secondaryissueThreshold">
           <ion-label range-left>0%</ion-label>
           <ion-label range-right>100%</ion-label>
         </ion-range>
@@ -104,9 +104,10 @@
         <ion-label translate="CREATE_MST.MST_MINING.ALLOW"></ion-label>
         <ion-toggle [(ngModel)]="mining" name="mining"></ion-toggle>
       </ion-item>
-      <!--mining-model-selector *ngIf="mining" (modelChanged)="setMiningModel($event)" [decimals]="asset_decimals"
+      <div lines="none" class="advice" translate="CREATE_MST.MST_MINING.HELP.ALLOW"></div>
+      <app-mining-model-selector *ngIf="mining" (modelChanged)="setMiningModel($event)" [decimals]="asset_decimals"
         [asset]="symbol">
-      </mining-model-selector-->
+      </app-mining-model-selector>
 
       <ion-item
         [ngClass]="{'error-border':!validName(issuer_name) || !addressbalances || !addressbalances[issue_address] || !addressbalances[issue_address][selectedAsset] || addressbalances[issue_address][selectedAsset].available<1000000000}">
@@ -173,7 +174,7 @@
       </ion-col>
       <ion-col>
         <ion-button expand="full"
-          [disabled]="!sendForm.form.valid||!validSymbol(symbol)||symbol_check=='exist'||symbol_check=='not_domain_owner'||symbol_check=='other_avatar_domain_owner'||!validMaxSupply(max_supply, asset_decimals)||(max_supply=='custom' && !validMaxSupplyCustom(custom_max_supply, asset_decimals))||!validDecimals(asset_decimals)||!validName(issuer_name)||!validAddress(issue_address)||!validDescription(description)||((!addressbalances || !addressbalances[issue_address] || !addressbalances[issue_address][selectedAsset] || addressbalances[issue_address][selectedAsset].available<1000000000))||(lock && !attenuation_model)||(mining && !mst_mining_model)"
+          [disabled]="!sendForm.form.valid||!validSymbol(symbol)||symbol_check=='exist'||symbol_check=='not_domain_owner'||symbol_check=='other_avatar_domain_owner'||!validMaxSupply(max_supply, asset_decimals)||(max_supply=='custom' && !validMaxSupplyCustom(custom_max_supply, asset_decimals))||!validDecimals(asset_decimals)||!validName(issuer_name)||!validAddress(issue_address)||!validDescription(description)||((!addressbalances || !addressbalances[issue_address] || !addressbalances[issue_address][selectedAsset] || addressbalances[issue_address][selectedAsset].available<1000000000))||(lock && !attenuation_model)||(mining && !mstMiningModel)"
           (click)="confirm()" icon-left color="secondary">
           <ion-icon disabled="checked" name="cog"></ion-icon>
           {{'CREATE_MST.BUTTON.NEXT' | translate}}

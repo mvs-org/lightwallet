@@ -90,10 +90,10 @@
         "MAX_SUPPLY": {
             "LABEL": "Maximum supply",
             "CUSTOM": "Custom Maximum supply",
-            "ONE_MILLION": "One million",
-            "TEN_MILLION": "Ten million",
-            "ONE_HUNDRED_MILLION": "One hundred million",
-            "ONE_BILLION": "One billion",
+            "ONE_MILLION": "{{number}} (One million)",
+            "TEN_MILLION": "{{number}} (Ten million)",
+            "ONE_HUNDRED_MILLION": "{{number}} (One hundred million)",
+            "ONE_BILLION": "{{number}} (One billion)",
             "TEN_BILLION": "{{number}} (Ten billion)"
         },
         "CUSTOM_MAX_SUPPLY": {
@@ -106,7 +106,16 @@
             "THRESHOLD": "Secondary Issue threshold"
         },
         "MST_MINING": {
-            "ALLOW": "Allow this MST to be mined"
+            "ALLOW": "Allow this MST to be mined",
+            "INITIAL_REWARD": "Initial reward per block",
+            "INTERVAL": "Reward decrease interval",
+            "BASE": "Reward decrease per interval",
+            "HELP": {
+                "ALLOW": "MST mining will allow miners to mine this MST. New tokens will be created in each block mined by a miner who choosed to mine it, according the the model selected below",
+                "INITIAL_REWARD": "This is the initial reward of this MST, received by the miner, per block. For instance, this value was 3 for ETP and 50 for BTC",
+                "INTERVAL": "This is the number of blocks between each decrease of reward per block. For instance this value is 500 000 blocks for ETP and 210 000 blocks (4 years) for BTC",
+                "BASE": "This is the base to define the new block reward amount at the end of an interval. For instance this value is 5% decrease per period for ETP and 50% decrease, or halving, for BTC"
+            }
         },
         "ISSUER": {
             "LABEL": "Issuer name",

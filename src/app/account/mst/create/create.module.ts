@@ -10,6 +10,7 @@ import { CreatePage } from './create.page'
 import { TranslateModule } from '@ngx-translate/core'
 import { PipesModule } from 'src/app/pipes/pipes.module'
 import { AttenuationModelSelectorComponent } from '../../components/attenuation-model-selector/attenuation-model-selector.component'
+import { MiningModelSelectorComponent } from './mining-model-selector/mining-model-selector.component'
 
 @NgModule({
   imports: [
@@ -22,6 +23,7 @@ import { AttenuationModelSelectorComponent } from '../../components/attenuation-
   ],
   declarations: [
     AttenuationModelSelectorComponent,
+    MiningModelSelectorComponent,
     CreatePage,
   ]
 })

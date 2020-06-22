@@ -24,7 +24,7 @@ export class CreatePage implements OnInit {
   addressbalances: Array<any>
   myaddressbalances: Array<any>
   secondaryissue: boolean
-  secondaryissue_threshold: number
+  secondaryissueThreshold: number
   feeAddress: string
   etpBalance: number
   symbol: string
@@ -54,7 +54,7 @@ export class CreatePage implements OnInit {
   blocktime: number
   lock: boolean = false
   mining: boolean = false
-  mst_mining_model: any
+  mstMiningModel: any
   showAdvanced: boolean = false
 
   constructor(
@@ -74,6 +74,7 @@ export class CreatePage implements OnInit {
     this.max_supply = ''
     this.custom_max_supply = ''
     this.symbol = ''
+    this.description = ''
     this.issuer_name = this.activatedRoute.snapshot.params.avatar_name
     this.issue_address = this.activatedRoute.snapshot.params.avatar_address
     if (!this.issue_address) {
@@ -86,7 +87,7 @@ export class CreatePage implements OnInit {
     })
     this.description = ''
     this.secondaryissue = false
-    this.secondaryissue_threshold = 51
+    this.secondaryissueThreshold = 51
 
     // Load addresses
     this.addresses = await this.metaverseService.getAddresses()
@@ -150,7 +151,7 @@ export class CreatePage implements OnInit {
 
   validAddress = (issue_address) => (issue_address !== undefined && issue_address.length > 0)
 
-  validDescription = (description) => (description.length > 0) && (description.length < 64)
+  validDescription = (description) => description && (description.length > 0) && (description.length < 64)
 
   validIssueAddress = (address) => this.metaverseService.validAddress(address)
 
@@ -162,7 +163,7 @@ export class CreatePage implements OnInit {
         this.asset_decimals,
         this.issuer_name,
         this.description,
-        (this.secondaryissue) ? (this.secondaryissue_threshold === 0) ? -1 : this.secondaryissue_threshold : 0,
+        (this.secondaryissue) ? (this.secondaryissueThreshold === 0) ? -1 : this.secondaryissueThreshold : 0,
         false,
         this.issue_address,
         undefined,
@@ -170,7 +171,7 @@ export class CreatePage implements OnInit {
         (this.symbol_check === 'naming_owner'),
         (this.showAdvanced) ? this.bounty_fee * this.total_fee / 100 : this.default_bounty_fee / 100 * this.total_fee,
         (this.showAdvanced && this.lock) ? this.attenuation_model : undefined,
-        this.mining ? this.mst_mining_model : undefined
+        this.mining ? this.mstMiningModel : undefined
       ))
       .catch((error) => {
         console.error(error)
@@ -295,7 +296,7 @@ export class CreatePage implements OnInit {
   }
 
   setMiningModel = (model: string) => {
-    this.mst_mining_model = model
+    this.mstMiningModel = model
   }
 
   symbolChanged = () => {
