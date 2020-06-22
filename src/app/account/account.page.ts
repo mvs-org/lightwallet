@@ -55,11 +55,6 @@ export class AccountPage implements OnInit, OnDestroy {
             icon: 'receipt'
         },
         {
-            title: 'EXPORT_MASTER_PUBLIC_KEY.MENU_ENTRY',
-            url: '/account/export-xpub',
-            icon: 'pricetag'
-        },
-        {
             title: 'SETTINGS.MENU_ENTRY',
             url: '/account/settings',
             icon: 'cog'
