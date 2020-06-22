@@ -18,6 +18,13 @@
             "LOADING_FAILED": "Unable to sync latest news from server."
         }
     },
+    "LOADING": {
+        "TITLE": "Syncing the new reality",
+        "RETRY": "Retry",
+        "TO_LOGIN": "Return to Login",
+        "COMPLETE": "Complete",
+        "CURRENT_HEIGHT": "Synced to block {{height}}"
+    },
     "CREATE_WALLET": {
         "TITLE": "Create new Wallet",
         "YOUR_MNEMONIC_WORDS": "Your backup words",

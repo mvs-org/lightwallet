@@ -24,7 +24,7 @@ export class LoadingPage implements OnInit, OnDestroy {
     lastTxHeightSubscription: Subscription
 
     constructor(
-        private metaverseService: MetaverseService,
+        public metaverseService: MetaverseService,
         public translate: TranslateService,
         public platform: Platform,
         private appService: AppService,
