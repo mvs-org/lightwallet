@@ -569,7 +569,7 @@ export class MetaverseService {
     return this.storage.set('mvs_last_tx_height', height)
   }
 
-  async getAddresses() : string[] {
+  async getAddresses() : Promise<string[]> {
     return await this.storage.get('mvs_addresses') || []
   }
 
@@ -587,7 +587,7 @@ export class MetaverseService {
     return this.storage.get('mvs_fees').then((fees) => (fees) ? fees : this.appService.default_fees)
   }
 
-  hardReset() {
+  async hardReset() {
     this.syncing$.next(false)
     const [theme, language, saved_accounts] = await Promise.all([
       this.storage.get('theme'),
