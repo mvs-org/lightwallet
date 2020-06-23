@@ -557,8 +557,8 @@ export class MetaverseService {
     return this.storage.set('mvs_height', height)
   }
 
-  getHeight() {
-    return this.storage.get('mvs_height').then((height) => (height) ? height : 0)
+  async getHeight() {
+    return await this.storage.get('mvs_height') || 0
   }
 
   getLastTxHeight() {
@@ -569,9 +569,8 @@ export class MetaverseService {
     return this.storage.set('mvs_last_tx_height', height)
   }
 
-  getAddresses() {
-    return this.storage.get('mvs_addresses')
-      .then((addresses) => (addresses) ? addresses : [])
+  async getAddresses() : string[] {
+    return await this.storage.get('mvs_addresses') || []
   }
 
   async updateFees() {
@@ -590,20 +589,17 @@ export class MetaverseService {
 
   hardReset() {
     this.syncing$.next(false)
-    return this.storage.get('theme')
-      .then((theme: any) => {
-        return this.storage.get('language')
-          .then((language: any) => {
-            return this.storage.get('saved_accounts')
-              .then((saved_accounts: any) => {
-                return this.storage.clear()
-                  .then(() => {
-                    // this.event.publish('settings_update', {});
-                    return Promise.all([this.storage.set('language', language), this.storage.set('theme', theme), this.storage.set('saved_accounts', saved_accounts)])
-                  })
-              })
-          })
-      })
+    const [theme, language, saved_accounts] = await Promise.all([
+      this.storage.get('theme'),
+      this.storage.get('language'),
+      this.storage.get('saved_accounts'),
+    ])
+    await this.storage.clear()
+    return Promise.all([
+      this.storage.set('language', language),
+      this.storage.set('theme', theme),
+      this.storage.set('saved_accounts', saved_accounts),
+    ])
   }
 
   async dataReset() {
@@ -631,9 +627,9 @@ export class MetaverseService {
     return this.storage.get('db_version')
   }
 
-  setDbVersion(version) {
-    return this.storage.set('db_version', version)
-      .then(() => this.getDbVersion())
+  async setDbVersion(version) {
+    await this.storage.set('db_version', version)
+    return this.getDbVersion()
   }
 
   getDbUpdateNeeded(): any {
@@ -646,15 +642,14 @@ export class MetaverseService {
       })
   }
 
-  getTxs() {
-    return this.storage.get('mvs_txs')
-      .then((txs) => (txs) ? txs : [])
+  async getTxs() {
+    return await this.storage.get('mvs_txs') || []
   }
 
-  addAddresses(addresses: Array<string>) {
-    return this.getAddresses()
-      .then((addr: Array<string>) => this.storage.set('mvs_addresses', addr.concat(addresses)))
-      .then(() => this.getAddresses())
+  async addAddresses(addresses: Array<string>) {
+    const newAddresses = (await this.getAddresses()).concat(addresses)
+    await this.storage.set('mvs_addresses', newAddresses)
+    return newAddresses
   }
 
   setAddresses(addresses: Array<string>) {
