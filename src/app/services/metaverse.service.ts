@@ -360,13 +360,12 @@ export class MetaverseService {
     return this.getHeight()
   }
 
-  getUtxo() {
-    return this.getTxs()
-      .then((txs: Array<any>) => txs.sort(function(a, b) {
-        return b.height - a.height
-      }))
-      .then((txs: Array<any>) => Promise.all([this.getAddresses(), this.removeOutputsForUnconfirmedTxs(txs)])
-        .then(([addresses, txs]) => Metaverse.output.calculateUtxo(txs, addresses)))
+  async getUtxo(): Promise<any[]> {
+    let transactions = await this.getTxs()
+    transactions = transactions.sort( (a, b) => b.height - a.height )
+    const addresses = await this.getAddresses()
+    transactions = await this.removeOutputsForUnconfirmedTxs(transactions)
+    return Metaverse.output.calculateUtxo(transactions, addresses)
   }
 
   async removeOutputsForUnconfirmedTxs(txs) {
@@ -394,14 +393,14 @@ export class MetaverseService {
       .then((txs: Array<any>) => Metaverse.output.calculateUtxo(txs, [address]))
   }
 
-  listAvatars() {
-    return this.getUtxo()
-      .then((outputs) => this.blockchain.avatar.extract(outputs))
+  async listAvatars() {
+    const utxos = await this.getUtxo()
+    return this.blockchain.avatar.extract(utxos)
   }
 
-  listCerts() {
-    return this.getUtxo()
-      .then((outputs) => Metaverse.output.filter(outputs, { type: 'asset-cert' }))
+  async listCerts() {
+    const utxos = await this.getUtxo()
+    return Metaverse.output.filter(utxos, { type: 'asset-cert' })
   }
 
   getGlobalAvatar = (symbol) => this.blockchain.avatar.get(symbol)
@@ -489,21 +488,22 @@ export class MetaverseService {
     return typeof lastUpdateTime === 'undefined' || (+(new Date()) - +lastUpdateTime) / 1000 > update_interval
   }
 
-  calculateBalances() {
-    return this.getHeight()
-      .then(height => this.getAddresses()
-        .then(addresses => this.wallet.getMultisigAddresses()
-          .then(multisigAddresses => this.getTxs()
-            .then(txs => Metaverse.output.calculateUtxo(txs, addresses.concat(multisigAddresses)))
-            .then(utxos => Promise.all([
-              this.blockchain.balance.all(utxos, addresses, height, undefined, this.appService.min_confirmations),
-              this.blockchain.balance.addresses(utxos, addresses.concat(multisigAddresses), height, undefined, this.appService.min_confirmations)
-            ]))
-            .then((balances) => Promise.all([
-              this.setBalances(balances[0]),
-              this.setAddressBalances(balances[1])
-            ]))
-          )))
+  async calculateBalances() {
+    const [height, addresses, multisigAddresses, transactions] = await Promise.all([
+      this.getUtxo(),
+      this.getAddresses(),
+      this.wallet.getMultisigAddresses(),
+      this.getTxs(),
+    ])
+
+    const utxos = await Metaverse.output.calculateUtxo(transactions, addresses.concat(multisigAddresses))
+    const [balances, addressBalances] = await Promise.all([
+      this.blockchain.balance.all(utxos, addresses, height, undefined, this.appService.min_confirmations),
+      this.blockchain.balance.addresses(utxos, addresses.concat(multisigAddresses), height, undefined, this.appService.min_confirmations)
+    ])
+
+    await this.setBalances(balances)
+    await this.setAddressBalances(addressBalances)
   }
 
   async getFrozenOutputs(asset) {
@@ -642,7 +642,7 @@ export class MetaverseService {
       })
   }
 
-  async getTxs() {
+  async getTxs(): Promise<any[]> {
     return await this.storage.get('mvs_txs') || []
   }
 
