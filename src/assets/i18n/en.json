@@ -85,7 +85,7 @@
             "NOT_CERT_OWNER": "You do not own the Domain certificate to create this MST",
             "DOMAIN_OWNER_OTHER_MY_AVATARS": "The domain certificate to create this MST is owned by another one of your Avatars. Please issue this MST using the Avatar owning the matching domain certificate.",
             "ERROR_LOADING_MSTS": "Error while loading MSTs. Please make sure this MST Symbol is not already used",
-            "ERROR_LOADING_CERTS": "Error while loading the Domain certificates. Please make sure you have the right to create this Symbol"   
+            "ERROR_LOADING_CERTS": "Error while loading the Domain certificates. Please make sure you have the right to create this Symbol"
         },
         "MAX_SUPPLY": {
             "LABEL": "Maximum supply",
@@ -651,6 +651,36 @@
             "STEP1": "Open the website where you want to authenticate using your Metaverse Avatar",
             "STEP2": "Using MyETPWallet, scan the provided QR Code",
             "STEP3": "Access the website with your Avatar!"
+        },
+        "CONFIRM": {
+            "TITLE": "Please verify the requester information:",
+            "SELECT_AVATAR": "Select an avatar",
+            "VERIFY_SOURCE": "Source",
+            "VERIFY_AVATAR": "Avatar",
+            "VERIFY_HOST": "Host",
+            "VERIFY_REMAINING_TIME": "Remaining time",
+            "VERIFY_CALLBACK": "Callback",
+            "VERIFY_TIME_OF_REQUEST": "Time of request",
+            "VERIFY_REQUEST_DURATION": "Timeout",
+            "SHOW_DETAILS": "Show Details"
+        },
+        "MESSAGE": {
+            "TOKEN_MISSING": "No authentication token found",
+            "SEND_INVALID_SIGNATURE": "Your signature is incorrect. Please make sure the information are correct and try again.",
+            "HIGHER_VERSION": "The request version is not compatible with your version of MyETPWallet. Please upgrade MyETPWallet to be able to authenticate.",
+            "NO_AVATAR_TITLE": "No Avatar",
+            "NO_AVATAR_TITLE_BODY": "You need an Avatar in order to use the authentication feature. Please create an Avatar first.",
+            "TYPE_NOT_SUPPORTED": "This type of request is not supported. Only 'auth' is supported.",
+            "UNKNOWN_AVATAR": "You do not possess this Avatar, please make sure you are the owner of it:",
+            "TIMEOUT": "This request has already timeout. Please get a new request.",
+            "SIGN": "Error while signing the message",
+            "WRONG_INCOMING_DATA": "Error in the incoming data. Please make sure the data is correct and try again.",
+            "WRONG_SIGNATURE": "The signature provided by the source's avatar is incorrect",
+            "SIGNIN_SUCCESSFUL_TITLE": "Authentication successfull!",
+            "SIGNIN_SUCCESSFUL_BODY": "You have been logged in successfully. You can now go back to the webiste.",
+            "SEND_SIG_ERROR": "Error while sending your signature. Please check your connection and try again.",
+            "EXPIRED": "Authentication token expired. Please get a new token.",
+            "DIFFERENT_NETWORK": "You are not using the network matching this request. Please switch to the following network:"
         }
     }
 }
