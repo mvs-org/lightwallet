@@ -3,7 +3,8 @@ import { Router } from '@angular/router'
 
 @Component({
     selector: 'mst-card',
-    templateUrl: 'mst-card.component.html'
+    templateUrl: 'mst-card.component.html',
+    styleUrls: ['./mst-card.component.scss'],
 })
 
 export class MSTCardComponent {

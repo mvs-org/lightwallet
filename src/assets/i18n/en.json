@@ -310,6 +310,12 @@
     },
     "HISTORY": {
         "TITLE": "Transaction history",
+        "TRANSACTIONS": "Transactions",
+        "LOCKS": "Locks",
+        "ASSETS_LIST": "Asset",
+        "ADDRESSES_LIST": "Addresses",
+        "SELECT_ALL_ADDRESSES": "Select all",
+        "SELECT_NONE_ADDRESSES": "Unselect all",
         "TOTAL_INPUTS": "Total inputs",
         "TOTAL_OUTPUTS": "Total outputs",
         "INPUT_COINBASE": "From coinbase",

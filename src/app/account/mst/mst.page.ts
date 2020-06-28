@@ -18,6 +18,7 @@ export class MstPage implements OnInit, OnDestroy {
   base: string
 
   heightSubscription: Subscription
+  status = 'default'
 
   constructor(
     private metaverseService: MetaverseService,
@@ -70,5 +71,12 @@ export class MstPage implements OnInit, OnDestroy {
       })
   }
 
-  reorder = () => this.router.navigate(['/account', 'mst', 'reorder'])
+  //reorder = () => this.router.navigate(['/account', 'mst', 'reorder'])
+
+  reorderMst(event) {
+    console.log("Reorder")
+    //const draggedItem = this.reorderingMenus.splice(event.detail.from, 1)[0]
+    //this.reorderingMenus.splice(event.detail.to, 0, draggedItem)
+    event.detail.complete()
+  }
 }

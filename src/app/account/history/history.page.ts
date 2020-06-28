@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core'
 import { IonSelect } from '@ionic/angular'
-import { AppService } from 'src/app/services/app.service';
-import { MetaverseService } from 'src/app/services/metaverse.service';
-import { WalletService } from 'src/app/services/wallet.service';
-import { ActivatedRoute } from '@angular/router';
+import { AppService } from 'src/app/services/app.service'
+import { MetaverseService } from 'src/app/services/metaverse.service'
+import { WalletService } from 'src/app/services/wallet.service'
+import { ActivatedRoute } from '@angular/router'
 
 @Component({
   selector: 'app-history',
@@ -16,19 +16,19 @@ export class HistoryPage implements OnInit {
   txs: any[] = []
   loading: boolean
 
-  display_segment: string = "transactions"
+  displaySegment = 'transactions'
   height: number
 
   frozen_outputs_locked: any[] = []
   frozen_outputs_unlocked: any[] = []
-  order_by: string = 'locked_until'
-  direction: number = 0
+  order_by = 'locked_until'
+  direction = 0
   blocktime: number
   current_time: number
-  icon: string = 'default_mst'
-  page_tx: number = 1
-  page_deposit_unlocked: number = 1
-  items_per_page: number = 25
+  icon = 'default_mst'
+  page_tx = 1
+  page_deposit_unlocked = 1
+  items_per_page = 25
   txs_history: any[]
   transactionMap: Promise<any>
   assets: Array<string> = []
@@ -36,10 +36,10 @@ export class HistoryPage implements OnInit {
   addresses: Array<string>
   allAddresses: Array<string> = []
   iconsList: Array<string> = []
-  selected: boolean = true
-  allSelected: boolean = true
+  selected = true
+  allSelected = true
 
-  @ViewChild('selectAddresses') selectAddresses: IonSelect;
+  @ViewChild('selectAddresses') selectAddresses: IonSelect
 
   constructor(
     private appService: AppService,
@@ -49,13 +49,13 @@ export class HistoryPage implements OnInit {
   ) {
     this.addresses = this.activatedRoute.snapshot.queryParams.addresses
     this.asset = this.activatedRoute.snapshot.params.symbol
-    this.loading = true;
+    this.loading = true
     this.current_time = Date.now()
     this.transactionMap = this.metaverseService.getTransactionMap()
     this.metaverseService.assetOrder().then(result => this.assets = ['ETP'].concat(result))
   }
 
-  ngOnInit(){}
+  ngOnInit() { }
 
   async ionViewDidEnter() {
     this.height = await this.metaverseService.getHeight()
@@ -66,8 +66,8 @@ export class HistoryPage implements OnInit {
     const multisigAddresses = await this.walletService.getMultisigAddresses()
     this.allAddresses = addresses.concat(multisigAddresses)
 
-    this.showTxs({ symbol: this.asset });
-    this.iconsList = await this.walletService.getIcons().MST
+    this.showTxs({ symbol: this.asset })
+    this.iconsList = this.walletService.getIcons().MST
   }
 
   depositProgress(start, end) {
@@ -81,12 +81,12 @@ export class HistoryPage implements OnInit {
     this.loading = false
   }
 
-  explorerURL = (tx) => (this.appService.network == 'mainnet') ? 'https://explorer.mvs.org/tx/' + tx : 'https://explorer-testnet.mvs.org/tx/' + tx
+  explorerURL = (tx) => (this.appService.network === 'mainnet') ? 'https://explorer.mvs.org/tx/' + tx : 'https://explorer-testnet.mvs.org/tx/' + tx
 
   async filterTxs(txs: any[], symbol, addresses) {
-    let filteredTxs = []
+    const filteredTxs = []
     for (let i = 0; i < txs.length; i++) {
-      let tx = await this.filterTx(txs[i], symbol, addresses, filteredTxs.length < this.items_per_page)
+      const tx = await this.filterTx(txs[i], symbol, addresses, filteredTxs.length < this.items_per_page)
       if (tx) {
         filteredTxs.push(tx)
       }
@@ -95,33 +95,41 @@ export class HistoryPage implements OnInit {
   }
 
   async updateFilters(symbol, addresses) {
+    console.log('Change')
     this.icon = this.iconsList.indexOf(this.asset) !== -1 ? this.asset : 'default_mst'
     this.txs = await this.filterTxs(this.txs_history, symbol, addresses)
   }
 
+  onChange(evt) {
+    // Change address filter
+  }
+
   async filterTx(tx: any, asset: string, addresses: Array<string>, loadInputs: boolean = true) {
     let result = false
-    let include_mst = false
+    let includeMst = false
     if (tx.inputs) {
       for (let i = 0; i < tx.inputs.length; i++) {
-        let input = tx.inputs[i]
+        const input = tx.inputs[i]
         if (!tx.unconfirmed) {
           if (['asset-transfer', 'asset-issue'].indexOf(input.attachment.type) !== -1) {
-            include_mst = true
+            includeMst = true
             result = false
             if (input.attachment.symbol == asset && this.isMineTXIO(input, addresses)) {
               result = true
               break
             }
-          } else if (asset == 'ETP' && input.value && !include_mst && this.isMineTXIO(input, addresses)) {
+          } else if (asset === 'ETP' && input.value && !includeMst && this.isMineTXIO(input, addresses)) {
             result = true
             break
-          } else if (asset == 'ETP' && input.previous_output.hash == '0000000000000000000000000000000000000000000000000000000000000000' && this.isMineTXIO(input, addresses)) {
+          } else if (
+            asset === 'ETP' &&
+            input.previous_output.hash === '0000000000000000000000000000000000000000000000000000000000000000' &&
+            this.isMineTXIO(input, addresses)) {
             result = true
             break
           }
         }
-      };
+      }
     }
     if (result) {
       if (loadInputs) {
@@ -132,19 +140,19 @@ export class HistoryPage implements OnInit {
     }
     if (tx.outputs) {
       for (let i = 0; i < tx.outputs.length; i++) {
-        let output = tx.outputs[i]
+        const output = tx.outputs[i]
         if (['asset-transfer', 'asset-issue'].indexOf(output.attachment.type) !== -1) {
-          include_mst = true
+          includeMst = true
           result = false
-          if (output.attachment.symbol == asset && this.isMineTXIO(output, addresses)) {
+          if (output.attachment.symbol === asset && this.isMineTXIO(output, addresses)) {
             result = true
             break
           }
-        } else if (asset == 'ETP' && output.value && !include_mst && this.isMineTXIO(output, addresses)) {
+        } else if (asset === 'ETP' && output.value && !includeMst && this.isMineTXIO(output, addresses)) {
           result = true
           break
         }
-      };
+      }
     }
     if (result) {
       if (loadInputs) {
@@ -158,39 +166,40 @@ export class HistoryPage implements OnInit {
   private isMineTXIO = (txio, addresses) => (addresses && addresses.indexOf(txio.address) !== -1)
 
   async calculateFrozenOutputs() {
-    let outputs = await this.metaverseService.getFrozenOutputs(this.asset)
+    const outputs = await this.metaverseService.getFrozenOutputs(this.asset)
     this.frozen_outputs_locked = []
     this.frozen_outputs_unlocked = []
-    let grouped_frozen_ouputs = {}
+    let groupedFrozenOuputs = {}
     outputs.forEach((output) => {
-      grouped_frozen_ouputs[output.height] = grouped_frozen_ouputs[output.height] ? grouped_frozen_ouputs[output.height] : {}
-      if (grouped_frozen_ouputs[output.height][output.locked_until]) {
+      groupedFrozenOuputs[output.height] = groupedFrozenOuputs[output.height] ? groupedFrozenOuputs[output.height] : {}
+      if (groupedFrozenOuputs[output.height][output.locked_until]) {
         if (this.asset == 'ETP') {
-          grouped_frozen_ouputs[output.height][output.locked_until].value += output.value
+          groupedFrozenOuputs[output.height][output.locked_until].value += output.value
         } else {
-          grouped_frozen_ouputs[output.height][output.locked_until].attachment.quantity += output.attachment.quantity
+          groupedFrozenOuputs[output.height][output.locked_until].attachment.quantity += output.attachment.quantity
         }
-        grouped_frozen_ouputs[output.height][output.locked_until].transactions.push(output.hash)
+        groupedFrozenOuputs[output.height][output.locked_until].transactions.push(output.hash)
       } else {
         output.transactions = [output.hash]
-        grouped_frozen_ouputs[output.height][output.locked_until] = output
+        groupedFrozenOuputs[output.height][output.locked_until] = output
       }
     })
-    for (var height in grouped_frozen_ouputs) {
-      var unlock = grouped_frozen_ouputs[height];
-      for (var output in unlock) {
-        if (this.height > parseInt(output))
+    for (var height in groupedFrozenOuputs) {
+      var unlock = groupedFrozenOuputs[height]
+      for (let output in unlock) {
+        if (this.height > parseInt(output)) {
           this.frozen_outputs_unlocked.push(unlock[output])
-        else
+        } else {
           this.frozen_outputs_locked.push(unlock[output])
+        }
       }
     }
   }
 
-  async pageChange(page_number) {
+  async pageChange(pageNumber) {
     this.loading = true
-    this.page_tx = page_number
-    for (let i = this.items_per_page * (page_number - 1); i < this.txs.length; i++) {
+    this.page_tx = pageNumber
+    for (let i = this.items_per_page * (pageNumber - 1); i < this.txs.length; i++) {
       if (this.txs[i] && !this.txs[i].inputsLoaded) {
         this.txs[i] = await this.metaverseService.organizeInputs(JSON.parse(JSON.stringify(this.txs[i])), false, await this.transactionMap)
         this.txs[i].inputsLoaded = true
@@ -200,12 +209,14 @@ export class HistoryPage implements OnInit {
   }
 
   selectAll() {
+    console.log('Select All')
     this.allSelected = true
     this.addresses = this.allAddresses
     // this.selectAddresses.close().then(() => this.selectAddresses.open())
   }
 
   selectNone() {
+    console.log('Select None')
     this.allSelected = false
     this.addresses = []
     this.txs = []

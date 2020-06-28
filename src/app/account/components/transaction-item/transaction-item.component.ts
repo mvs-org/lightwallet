@@ -15,6 +15,7 @@ import { WalletService } from 'src/app/services/wallet.service'
             transition('void => *', [style({ height: '0' }), animate(500, style({ height: '*' }))])
         ])
     ],
+    styleUrls: ['./transaction-item.component.scss'],
 })
 export class TransactionItemComponent {
 
