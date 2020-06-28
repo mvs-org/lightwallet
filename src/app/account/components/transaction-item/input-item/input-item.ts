@@ -5,7 +5,8 @@ import { AppService } from 'src/app/services/app.service'
 
 @Component({
     selector: 'input-item',
-    templateUrl: 'input-item.html'
+    templateUrl: 'input-item.html',
+    styleUrls: ['./input-item.scss'],
 })
 export class InputItemComponent {
 

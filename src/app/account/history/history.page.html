@@ -20,7 +20,7 @@
         <div *ngIf="displaySegment=='transactions'">
 
             <ion-row class="order-selectors">
-                <ion-col col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6>
+                <ion-col size="6">
                     <ion-item class="no-padding no-color-border">
                         <ion-label translate="HISTORY.ASSETS_LIST"></ion-label>
                         <ion-select [(ngModel)]="asset" (ionChange)="updateFilters(asset, addresses)">
@@ -28,7 +28,7 @@
                         </ion-select>
                     </ion-item>
                 </ion-col>
-                <ion-col col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6>
+                <ion-col size="6">
                     <ion-item class="no-padding no-color-border">
                         <ion-label translate="HISTORY.ADDRESSES_LIST"></ion-label>
                         <ion-select [(ngModel)]="addresses" multiple="true" (ngModelChange)="onChange($event)" (ionChange)="updateFilters(asset, addresses)" #selectAddresses>
@@ -73,18 +73,18 @@
 
         <div *ngIf="displaySegment=='deposits'">
             <ion-row class="order-selectors" [hidden]="frozen_outputs_locked.length < 2 && frozen_outputs_unlocked.length < 2">
-                <ion-col col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6>
+                <ion-col size="6">
                     <ion-item class="no-padding no-color-border">
-                        <ion-label>{{"HISTORY.ORDER_BY"|translate}}</ion-label>
+                        <ion-label translate="HISTORY.ORDER_BY"></ion-label>
                         <ion-select [(ngModel)]="order_by">
                             <ion-select-option value="locked_until">{{"HISTORY.ORDER_BY_UNLOCK_HEIGHT"|translate}}</ion-select-option>
                             <ion-select-option value="height">{{"HISTORY.ORDER_BY_HEIGHT"|translate}}</ion-select-option>
                         </ion-select>
                     </ion-item>
                 </ion-col>
-                <ion-col col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6>
+                <ion-col size="6">
                     <ion-item class="no-padding no-color-border">
-                        <ion-label>{{"HISTORY.DIRECTION"|translate}}</ion-label>
+                        <ion-label translate="HISTORY.DIRECTION"></ion-label>
                         <ion-select [(ngModel)]="direction">
                             <ion-select-option value="0">{{"HISTORY.DIRECTION_EARLIEST_TOP"|translate}}</ion-select-option>
                             <ion-select-option value="1">{{"HISTORY.DIRECTION_LATEST_TOP"|translate}}</ion-select-option>
@@ -94,7 +94,7 @@
             </ion-row>
 
             <ion-list [hidden]="!frozen_outputs_locked.length">
-                <h2 class="center">{{"HISTORY.FROZEN_TX"|translate}}</h2>
+                <h2 class="center" translate="HISTORY.FROZEN_TX"></h2>
                 <ion-item *ngFor="let output of frozen_outputs_locked | orderBy: [order_by, direction]">
                     <ion-item lines="none">
                         <ion-avatar item-start>
@@ -111,7 +111,7 @@
                         <p>{{'LOCKED_SINCE'|translate}}: {{output.height}} ({{output.confirmed_at*1000 | date :
                             'medium'}})</p>
                         <p>{{'LOCKED_UNTIL'|translate}}: {{output.locked_until}} (~{{((output.locked_until - height) *
-                            blocktime * 1000) + current_time |date : 'medium'}})*</p>
+                            blocktime * 1000) + current_time | date : 'medium'}})*</p>
                         <p>{{'LOCKED_FOR_BLOCKS'|translate}}: {{asset == 'ETP' ? output.locked_until-output.height :
                             output.attenuation_model_param.lock_period}} {{'BLOCKS'|translate}}</p>
                         <div *ngIf="output.height<= height">
@@ -128,30 +128,24 @@
             </ion-row>
 
             <ion-list [hidden]="!frozen_outputs_unlocked.length">
-                <h2 class="center">{{"HISTORY.UNFROZEN_TX"|translate}}</h2>
-                <ion-item *ngFor="let output of frozen_outputs_unlocked | orderBy: [order_by, direction] | paginate: { itemsPerPage: items_per_page, currentPage: page_deposit_unlocked }">
-                    <ion-item lines="none">
+                <ion-item>
+                    <h2 class="center" translate="HISTORY.UNFROZEN_TX"></h2>
+                </ion-item>
+                <div *ngFor="let output of frozen_outputs_unlocked | orderBy: [order_by, direction] | paginate: { itemsPerPage: items_per_page, currentPage: page_deposit_unlocked }">
                         <ion-avatar item-start>
                             <img class="coinlogo" [src]="icon" onerror="this.src='assets/icon/default_mst.png'">
                         </ion-avatar>
                         <h1>{{asset}}</h1>
-                        <p *ngFor="let transaction of output.transactions">{{'TRANSACTION'|translate}}: <a href="{{explorerURL(transaction)}}"
-                                target="_blank">{{transaction}}</a></p>
-                        <p>{{'AMOUNT'|translate}}:
-                            <span *ngIf="asset == 'ETP'">{{output.value | format : output.attachment.decimals}}</span>
-                            <span *ngIf="asset != 'ETP'">{{output.attenuation_model_param.lock_quantity | format :
-                                output.attachment.decimals}}</span>
-                        </p>
-                        <p>{{'LOCKED_SINCE'|translate}}: {{output.height}} ({{output.confirmed_at*1000|date :
-                            'medium'}})</p>
-                        <p>{{'LOCKED_UNTIL'|translate}}: {{output.locked_until}}</p>
-                        <p>{{'LOCKED_FOR_BLOCKS'|translate}}: {{asset == 'ETP' ? output.locked_until-output.height :
-                            output.attenuation_model_param.lock_period}} {{'BLOCKS'|translate}}</p>
+                        <div *ngFor="let transaction of output.transactions">{{'HISTORY.LOCKED_TRANSACTION'|translate}}: <a href="{{explorerURL(transaction)}}"
+                                target="_blank">{{transaction}}</a></div>
+                        <div translate="HISTORY.LOCKED_AMOUNT" [translateParams]="{asset: asset, number: asset == 'ETP' ? (output.value | format : output.attachment.decimals) : output.attenuation_model_param.lock_quantity | format : output.attachment.decimals}"></div>
+                        <div translate="HISTORY.LOCKED_SINCE_BLOCK" [translateParams]="{block: output.height, time: output.confirmed_at*1000|date:'medium'}"></div>
+                        <div translate="HISTORY.LOCKED_UNTIL_BLOCK_ONLY" [translateParams]="{block: output.locked_until}"></div>
+                        <div translate="HISTORY.LOCKED_FOR_BLOCKS" [translateParams]="{number: asset == 'ETP' ? output.locked_until - output.height : output.attenuation_model_param.lock_period}"></div>
                         <div *ngIf="output.height <= height">
                             <ion-progress-bar color="primary" *ngIf="height>output.locked_until" [value]="100"></ion-progress-bar>
                         </div>
-                    </ion-item>
-                </ion-item>
+                    </div>
                 <pagination-controls (pageChange)="page_deposit_unlocked = $event" *ngIf="frozen_outputs_unlocked && frozen_outputs_unlocked.length > items_per_page"></pagination-controls>
             </ion-list>
 

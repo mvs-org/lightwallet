@@ -332,8 +332,12 @@
                 "witness": "Witness certificate"
             }
         },
+        "LOCKED_TRANSACTION": "Transaction:",
+        "LOCKED_AMOUNT": "Locked amount: {{number}} {{asset}}",
         "LOCKED_SINCE_BLOCK": "Locked since block {{block}} ({{time}})",
+        "LOCKED_UNTIL_BLOCK_ONLY": "Locked until block {{block}}",
         "LOCKED_UNTIL_BLOCK": "Locked until block {{block}} (~{{time}})",
+        "LOCKED_FOR_BLOCKS": "Locked for {{number}} blocks",
         "INTRAWALLET": "Intrawallet",
         "TX_TYPE": {
             "ETP": "ETP transfer",
@@ -355,7 +359,17 @@
             "ETP_LOCK": "ETP lock",
             "ETP_LOCK_REWARD": "ETP lock reward",
             "MST_LOCK": "MST lock"
-        }
+        },
+        "NO_DEPOSIT_YET": "No deposit yet",
+        "NO_DEPOSIT_YET_TEXT": "Freeze your ETP to earn interests!",
+        "ORDER_BY": "Order by",
+        "ORDER_BY_HEIGHT": "Locking time",
+        "ORDER_BY_UNLOCK_HEIGHT": "Unlocking time",
+        "DIRECTION": "Direction",
+        "DIRECTION_LATEST_TOP": "Latest on top",
+        "DIRECTION_EARLIEST_TOP": "Earliest on top",
+        "FROZEN_TX": "Currently locked transactions",
+        "UNFROZEN_TX": "Unlocked transactions"
     },
     "ACCOUNT_MANAGEMENT": {
         "LOGOUT": {
@@ -502,8 +516,8 @@
         "COPY": "Copy"
     },
     "TX": {
-        "INPUTS": "Inputs",
-        "OUTPUTS": "Outputs",
+        "INPUTS": "Inputs:",
+        "OUTPUTS": "Outputs:",
         "TX_SUMMARY": "Transaction summary",
         "TOTAL_INPUTS": "Total inputs",
         "TOTAL_OUTPUTS": "Total outputs",
@@ -525,6 +539,7 @@
             },
             "BURN": "To be burned"
         },
+        "CONFIRMING": "Confirming",
         "TX_FEE": "Fee",
         "LOCKED_SINCE_BLOCK": "Locked since block {{block}} ({{time}})",
         "LOCKED_UNTIL_BLOCK": "Locked until block {{block}} (~{{time}})",
@@ -571,6 +586,11 @@
         "OUTPUT": {
             "LOCKED_UNTIL_BLOCK": "Locked until block {{block}} (~{{time}})"
         },
+        "SHOW_DETAILS": "Show details",
+        "HIDE_DETAILS": "Hide details",
+        "INPUT_HASH": "Hash",
+        "INPUT_INDEX": "Index",
+        "FOREIGN_INPUT": "Foreign input",
         "INPUTS_NOT_ALL_MINE": "Some inputs are not yours! Only your inputs will be signed."
     },
     "CREATE_MIT": {

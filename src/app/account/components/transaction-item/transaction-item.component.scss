@@ -1,3 +1,104 @@
 .hash {
-    padding: 20px;
+    margin-top: 10px;
+    --min-height: 16px;
+}
+
+.hash h2 {
+    margin-bottom: 10px;
+}
+
+.timestamp {
+    margin: 0;
+    --min-height: 16px;
+}
+
+.summaryTxType {
+    color: black;
+    font-size: 20px;
+}
+
+.summaryAmount {
+    color: var(--ion-color-primary);
+    font-size: 20px;
+    float: right;
+    width: 100%;
+}
+
+.summaryAmount div {
+    text-align: right;
+    width: 100%;
+}
+
+.sendAmount {
+    color: var(--ion-color-danger);
+}
+
+.receiveAmount {
+    color: var(--ion-color-secondary);
+}
+
+.hash {
+    font-size: 20px;
+}
+
+.txType {
+    font-style: oblique;
+}
+
+.fee {
+    font-size: 16px;
+}
+
+.unsigned {
+    color: var(--ion-color-primary);
+}
+
+textarea{
+    width:100%;
+    border: 0px !important;
+    resize: none;
+    font-size: 1.8rem;
+    margin: 20px;
+}
+
+.hash .col {
+    padding-bottom: 0px;
+}
+
+.hash ion-label {
+    margin: 0px;
+}
+
+.hash h1 {
+    padding-top: 10px;
+}
+
+.hash h1 .button {
+    top: -10px;
+}
+
+.summaryTxType .label {
+    margin: 0;
+}
+
+.tx-hash {
+    width: calc(100% - 45px);
+    display: inline-block;
+}
+
+#explorerTxButton {
+    display: inline-block;
+    top: -10px;
+    position: absolute;
+    top: 4px;
+    right: 14px;
+}
+
+.card {
+    margin-left: 10px;
+    width: calc(100% - 20px);
+}
+
+.show-more-btn {
+    margin-left: 20px;
 }

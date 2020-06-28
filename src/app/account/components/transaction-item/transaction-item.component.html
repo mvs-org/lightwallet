@@ -11,16 +11,20 @@
                 </ion-row>
             </ion-col>
         </ion-row>
-        <ion-row *ngIf="status == 'PENDING' || status == 'MINED'" class="hash">
+        <ion-row *ngIf="status == 'PENDING' || status == 'MINED'">
             <ion-toolbar>
-                <h2>{{tx.hash}}</h2>
+                    <ion-item class="hash" lines="none">
+                        <h2>{{tx.hash}}</h2>
+                    </ion-item>
+                    <ion-item class="timestamp" lines="none">
+                        <p>{{tx.confirmed_at*1000 | date : 'medium'}}</p>
+                    </ion-item>
                 <ion-buttons slot="end">
                     <ion-button color="primary" (click)="checkTx()">
                         <ion-icon slot="icon-only" name="open" size="small"></ion-icon>
                     </ion-button>
                 </ion-buttons>
             </ion-toolbar>
-            <h2 *ngIf="tx.confirmed_at" class="right">{{tx.confirmed_at*1000 | date : 'medium'}}</h2>
         </ion-row>
         <ion-row>
             <ion-col>
@@ -32,30 +36,23 @@
                                 class="unsigned">
                                 {{'TX.SIGN_STATUS.' + status | translate}}
                             </div>
-                            <div *ngIf="multisig.status == 'MULTISIG'">
-                                <div class="unsigned" translate="MULTISIG_STATUS.MULTISIG"></div>
-                            </div>
-                            <div *ngIf="multisig.status == 'PARTIALLY_MULTISIG'" class="wrong-input"
-                                translate="MULTISIG_STATUS.PARTIALLY_MULTISIG"></div>
-                            <div *ngIf="status == 'PENDING'" class="warning-input" translate="PENDING_CONFIRMATION">
-                            </div>
-                            <div *ngIf="status == 'MINED' && tx.height + appService.min_confirmations > height"
-                                class="warning-input">
-                                {{'HISTORY.CONFIRMING' | translate}}
+                            <div *ngIf="multisig.status == 'MULTISIG'" class="unsigned" translate="MULTISIG_STATUS.MULTISIG"></div>
+                            <div *ngIf="multisig.status == 'PARTIALLY_MULTISIG'" class="wrong-input" translate="MULTISIG_STATUS.PARTIALLY_MULTISIG"></div>
+                            <div *ngIf="status == 'PENDING'" class="warning-input" translate="PENDING_CONFIRMATION"></div>
+                            <div *ngIf="status == 'MINED' && tx.height + appService.min_confirmations > height" class="warning-input">
+                                {{'TX.CONFIRMING' | translate}}
                                 ({{height - tx.height >= 0 ? height - tx.height : 0}}/{{appService.min_confirmations}})
                             </div>
-                            <div *ngIf="status == 'PENDING' || status == 'MINED'">
-                                <ion-button class="ion-item" (click)="showHideDetails()">
-                                    <ion-icon *ngIf="mode == 'summary'" name="arrow-down"></ion-icon>
-                                    <span *ngIf="mode == 'summary'" translate="SHOW_DETAILS"></span>
-                                    <ion-icon *ngIf="mode !== 'summary'" name="arrow-up"></ion-icon>
-                                    <span *ngIf="mode !== 'summary'" translate="HIDE_DETAILS"></span>
-                                </ion-button>
-                            </div>
                         </ion-item>
+                        <ion-button *ngIf="status == 'PENDING' || status == 'MINED'" class="ion-item show-more-btn" (click)="showHideDetails()">
+                            <ion-icon *ngIf="mode == 'summary'" name="arrow-down"></ion-icon>
+                            <span *ngIf="mode == 'summary'" translate="TX.SHOW_DETAILS"></span>
+                            <ion-icon *ngIf="mode !== 'summary'" name="arrow-up"></ion-icon>
+                            <span *ngIf="mode !== 'summary'" translate="TX.HIDE_DETAILS"></span>
+                        </ion-button>
                     </ion-col>
                     <ion-col>
-                        <ion-item class="right summaryAmount" lines="none">
+                        <ion-item class="summaryAmount" lines="none">
                             <div *ngIf="txType == 'ETP' || txType == 'COINSTAKE'">
                                 <div *ngIf="totalPersonalInputs.ETP && totalPersonalInputs.ETP - totalPersonalOutputs.ETP - txFee > 0"
                                     class="sendAmount">
@@ -146,27 +143,27 @@
             </ion-row>
 
             <ion-row *ngIf="mode == 'default' || mode == 'satoshi'">
-                <ion-col col-12 col-md-6>
+                <ion-col size="12" size-sm="6">
                     <ion-row>
                         <ion-col>
-                            <ion-item>
-                                <ion-col>{{'TX.INPUTS'|translate}}:</ion-col>
+                            <ion-item lines="none">
+                                <ion-col translate="TX.INPUTS"></ion-col>
                             </ion-item>
                         </ion-col>
                     </ion-row>
                     <ion-row>
                         <ion-col>
-                            <input-item *ngFor="let input of tx.inputs; let i = index"
+                            <input-item lines="none" *ngFor="let input of tx.inputs; let i = index"
                                 (modelChanged)="inputLoad($event, i)" [input]="input" [decimalsMst]="decimalsMst"
                                 [mode]="mode"></input-item>
                         </ion-col>
                     </ion-row>
                 </ion-col>
-                <ion-col col-12 col-md-6>
+                <ion-col size="12" size-sm="6">
                     <ion-row>
                         <ion-col>
-                            <ion-item>
-                                <ion-col>{{'TX.OUTPUTS'|translate}}:</ion-col>
+                            <ion-item lines="none">
+                                <ion-col translate="TX.OUTPUTS"></ion-col>
                             </ion-item>
                         </ion-col>
                     </ion-row>

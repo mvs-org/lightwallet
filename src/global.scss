@@ -80,7 +80,6 @@
     padding-left: 5px;
 }
 
-
 .advice {
     font-size: 0.8rem !important;
     color: rgb(148, 148, 148);
@@ -163,4 +162,8 @@
 
 textarea:focus { 
     outline: none; 
+}
+
+ion-item span {
+    overflow: overlay;
 }

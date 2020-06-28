@@ -1,85 +1,111 @@
 <div [ngClass]="{'personal': output.personal}">
-    <ion-item *ngIf="output.attachment.type == 'message'">
+    <div *ngIf="output.attachment.type == 'message'">
         <ion-row>
             <!--Left column-->
             <ion-col>
-                <div *ngIf="output.attachment.to_did">{{output.attachment.to_did}}</div>
-                <div *ngIf="!output.attachment.to_did">{{output.address}}</div>
+                <ion-item lines="none" *ngIf="output.attachment.to_did">
+                    <span>{{output.attachment.to_did}}</span>
+                </ion-item>
+                <ion-item lines="none" *ngIf="!output.attachment.to_did">
+                    <span>{{output.address}}</span>
+                </ion-item>
             </ion-col>
             <!--Right column-->
-            <ion-col class="right txType">
-                <div>
-                    {{'TX.TYPE.message'|translate}}:
-                </div>
+            <ion-col>
+                <ion-item class="right txType" lines="none">
+                    <span translate="TX.TYPE.message"></span>
+                </ion-item>
             </ion-col>
         </ion-row>
         <ion-row>
-            <ion-col class="right">
-                {{output.attachment.content}}
+            <ion-col>
+                <ion-item class="right" lines="none">
+                    <span>{{output.attachment.content}}</span>
+                </ion-item>
             </ion-col>
         </ion-row>
         <ion-row *ngIf="mode == 'satoshi'">
-            <ion-col class="script">
-                {{output.script}}
+            <ion-col>
+                <ion-item class="script" lines="none">
+                    <span>{{output.script}}</span>
+                </ion-item>
             </ion-col>
         </ion-row>
-    </ion-item>
-    <ion-item *ngIf="output.value != 0 || output.attachment.symbol == 'ETP'">
+    </div>
+    <div *ngIf="output.value != 0 || output.attachment.symbol == 'ETP'">
         <ion-row [ngClass]="{'wrong-input': output.script == 'OP_RETURN'}">
             <!--Left column-->
             <ion-col>
-                <div *ngIf="output.attachment.to_did">{{output.attachment.to_did}}</div>
-                <div *ngIf="!output.attachment.to_did">{{output.address}}</div>
+                <ion-item lines="none" *ngIf="output.attachment.to_did">
+                    <span>{{output.attachment.to_did}}</span>
+                </ion-item>
+                <ion-item lines="none" *ngIf="!output.attachment.to_did">
+                    <span>{{output.address}}</span>
+                </ion-item>
             </ion-col>
             <!--Right column-->
-            <ion-col class="right">
-                <div>{{output.value | format : 8}} ETP</div>
+            <ion-col>
+                <ion-item class="right" lines="none">
+                    <span>{{output.value | format : 8}} ETP</span>
+                </ion-item>
             </ion-col>
         </ion-row>
         <ion-row *ngIf="output.attenuation">
-            <ion-col class="script">
-                {{'LOCKED_UNTIL'|translate}}: {{output.locked_until}} (~{{((output.locked_until - height) *
-                blocktime * 1000) + currentTime |date : 'medium'}})
+            <ion-col>
+                <ion-item class="script" lines="none">
+                    <span translate="HISTORY.LOCKED_UNTIL_BLOCK" [translateParams]="{block: output.locked_until, time: ((output.locked_until - height) * blocktime * 1000) + currentTime | date : 'medium'}"></span>
+                </ion-item>
             </ion-col>
         </ion-row>
         <ion-row *ngIf="mode == 'satoshi'">
-            <ion-col class="script">
-                {{output.script}}
+            <ion-col>
+                <ion-item class="script" lines="none">
+                    <span>{{output.script}}</span>
+                </ion-item>
             </ion-col>
         </ion-row>
-    </ion-item>
-    <ion-item *ngIf="output.attachment && output.attachment.symbol && output.attachment.symbol != 'ETP'">
+    </div>
+    <div *ngIf="output.attachment && output.attachment.symbol && output.attachment.symbol != 'ETP'">
         <ion-row [ngClass]="{'wrong-input': output.script == 'OP_RETURN'}">
             <!--Left column-->
             <ion-col>
-                <div *ngIf="output.attachment.to_did">{{output.attachment.to_did}}</div>
-                <div *ngIf="!output.attachment.to_did">{{output.address}}</div>
+                <ion-item lines="none" *ngIf="output.attachment.to_did">
+                    <span>{{output.attachment.to_did}}</span>
+                </ion-item>
+                <ion-item lines="none" *ngIf="!output.attachment.to_did">
+                    <span>{{output.address}}</span>
+                </ion-item>
             </ion-col>
             <!--Right column-->
-            <ion-col class="right">
-                <div *ngIf="output.attachment.type == 'did-register' || output.attachment.type == 'did-transfer'">
-                    <div class="txType">{{'TX.TYPE.' + output.attachment.type | translate}}:</div>{{output.attachment.symbol}}
-                </div>
-                <div *ngIf="output.attachment.type == 'mit'">
-                    <div class="txType">{{'TX.TYPE.MIT.' + output.attachment.status | translate}}:</div>{{output.attachment.symbol}}
-                </div>
-                <div *ngIf="output.attachment.cert">
-                    <div class="txType">{{'TX.TYPE.CERT.' + output.attachment.cert | translate}}:</div>{{output.attachment.symbol}}
-                </div>
-                <div *ngIf="output.attachment.type != 'did-register' && output.attachment.type != 'did-transfer' && output.attachment.type != 'mit' && !output.attachment.cert">{{output.attachment.quantity
-                    | format : decimalsMst[output.attachment.symbol]}} {{output.attachment.symbol}}</div>
+            <ion-col>
+                <ion-item class="right" lines="none" *ngIf="output.attachment.type == 'did-register' || output.attachment.type == 'did-transfer'">
+                    <span class="txType">{{'TX.TYPE.' + output.attachment.type | translate}}:</span>{{output.attachment.symbol}}
+                </ion-item>
+                <ion-item class="right" lines="none" *ngIf="output.attachment.type == 'mit'">
+                    <span class="txType">{{'TX.TYPE.MIT.' + output.attachment.status | translate}}:</span>{{output.attachment.symbol}}
+                </ion-item>
+                <ion-item class="right" lines="none" *ngIf="output.attachment.cert">
+                    <span class="txType">{{'TX.TYPE.CERT.' + output.attachment.cert | translate}}:</span>{{output.attachment.symbol}}
+                </ion-item>
+                <ion-item class="right" lines="none" *ngIf="output.attachment.type != 'did-register' && output.attachment.type != 'did-transfer' && output.attachment.type != 'mit' && !output.attachment.cert">
+                    <span>{{output.attachment.quantity | format : decimalsMst[output.attachment.symbol]}} {{output.attachment.symbol}}</span>
+                </ion-item>
             </ion-col>
         </ion-row>
         <ion-row *ngIf="output.attenuation">
-            <ion-col class="script right">
-                {{'LOCKED_UNTIL'|translate}}: {{output.locked_until}} (~{{((output.locked_until - height) *
-                blocktime * 1000) + currentTime |date : 'medium'}})
+            <ion-col>
+                <ion-item class="script right" lines="none">
+                    <span translate="HISTORY.LOCKED_UNTIL_BLOCK_ONLY" [translateParams]="{block: output.locked_until, time: ((output.locked_until - height) * blocktime * 1000) + currentTime | date : 'medium'}"></span>
+                </ion-item>
             </ion-col>
         </ion-row>
         <ion-row *ngIf="mode == 'satoshi'">
-            <ion-col class="script">
-                {{output.script}}
+            <ion-col>
+                <ion-item class="script" lines="none">
+                    <span>{{output.script}}</span>
+                </ion-item>
             </ion-col>
         </ion-row>
-    </ion-item>
+    </div>
+    <br>
 </div>

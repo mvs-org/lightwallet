@@ -3,7 +3,8 @@ import { MetaverseService } from 'src/app/services/metaverse.service'
 
 @Component({
     selector: 'output-item',
-    templateUrl: 'output-item.html'
+    templateUrl: 'output-item.html',
+    styleUrls: ['./output-item.scss'],
 })
 export class OutputItemComponent {
 
