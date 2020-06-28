@@ -17,20 +17,18 @@ export class AlertService {
   }
 
   stopLoading() {
-    this.loadingCtrl.create()
+    // this.loadingCtrl.create()
+    if(this.loading){
     this.loading.dismiss()
+    }
   }
 
-  showLoading() {
-    return new Promise((resolve, reject) => {
-      this.translate.get('MESSAGE.LOADING').subscribe(async (loading: string) => {
-        this.loading = await this.loadingCtrl.create({
-          message: loading,
-        })
-        this.loading.present()
-        resolve()
-      })
+  async showLoading() {
+    this.loading = await this.loadingCtrl.create({
+      message: await this.translate.get('MESSAGE.LOADING').toPromise(),
     })
+    await this.loading.present()
+    return this.loading
   }
 
   showSendAll(action) {

@@ -52,6 +52,10 @@ const routes: Routes = [
                 path: 'certificates',
                 loadChildren: () => import('./certificates/certificates.module').then(m => m.CertificatesPageModule)
             },
+            {
+                path: 'bitident',
+                loadChildren: () => import('./bitident/bitident.module').then(m => m.BitidentPageModule)
+            },
         ]
     },
 ]

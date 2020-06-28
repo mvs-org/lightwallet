@@ -636,5 +636,21 @@
             "NEXT": "Create Avatar",
             "CANCEL": "Cancel"
         }
+    },
+    "BITIDENT": {
+        "MENU_ENTRY": "Bitident",
+        "INFORMATION": "You can use your Metaverse Avatar to authenticate to various websites or applications. After verifying the provider of the request, it will sign a message using your private key and send the signed message to the requester in order to prove ownership of this Avatar. These steps will neither create any transaction on the blockchain nor reveal your private key to the requester.",
+        "TITLE": "Bitident",
+        "DESCRIPTION_PICTURE": "Using the MyETPWallet mobile app, you can directly scan the QR Code from the requester. Alternatively, you can also manually enter the request code into the field below.",
+        "GET_ON_MOBILE": "Get the mobile app",
+        "CHECK": "Check",
+        "HOW_TO_AUTH": "How to authenticate",
+        "TOKEN_INPUT_LABEL": "Request code",
+        "HOWTO": {
+            "TITLE": "How to use bitident",
+            "STEP1": "Open the website where you want to authenticate using your Metaverse Avatar",
+            "STEP2": "Using MyETPWallet, scan the provided QR Code",
+            "STEP3": "Access the website with your Avatar!"
+        }
     }
 }
