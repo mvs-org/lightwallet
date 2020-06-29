@@ -238,6 +238,10 @@
             "TITLE": "Theme",
             "SUBTITLE": "Switch between light and dark mode."
         },
+        "EXPORT_XPUB": {
+            "TITLE": "Export Master Public Key",
+            "SUBTITLE": "The Master Public Key allows to generate all addresses of the wallet but cannot send funds."
+        },
         "LOGOUT": {
             "TITLE": "Logout",
             "SUBTITLE": "Log out of the wallet."
@@ -494,7 +498,6 @@
         }
     },
     "EXPORT_MASTER_PUBLIC_KEY": {
-        "MENU_ENTRY": "Export public key",
         "TITLE": "Export Master Public Key",
         "WARNING": "The Master Public Key allows the generation of all your wallets addresses. Even though it cannot be used to access the funds you should be very careful when you share it with somebody.",
         "PASSWORD": "Password",

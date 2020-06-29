@@ -35,7 +35,7 @@
     <ion-row *ngIf="!platform.is('mobile')">
       <input type="file" name="file" id="file" class="inputfile" accept=".csv" (change)="import($event)" />
       <label for="file">
-        <ion-icon name="document"></ion-icon> {{"IMPORT_FROM_CSV"|translate}}
+        <ion-icon slot="start" name="document"></ion-icon> {{"IMPORT_FROM_CSV"|translate}}
       </label>
     </ion-row>
 
@@ -74,14 +74,14 @@
 
     <ion-button *ngIf="!platform.is('mobile')" type="button" class="right-buttons" color="secondary"
       (click)="download()">
-      <ion-icon name="download"></ion-icon> {{"EXPORT_CSV" | translate}}
+      <ion-icon slot="icon-only" name="download"></ion-icon> {{"EXPORT_CSV" | translate}}
     </ion-button>
     <ion-button *ngIf="!platform.is('mobile')" type="button" class="right-buttons" color="light" (click)="csvExample()">
-      <ion-icon name="download"></ion-icon> {{"DOWNLOAD_CSV_EXAMPLE" | translate}}
+      <ion-icon slot="icon-only" name="download"></ion-icon> {{"DOWNLOAD_CSV_EXAMPLE" | translate}}
     </ion-button>
     <ion-button *ngIf="periods.length < periods_nbr_limit" type="button" class="right-buttons" color="primary"
       (click)="addPeriod()">
-      <ion-icon name="add"></ion-icon>
+      <ion-icon slot="start" name="add"></ion-icon>
       {{"ASSET_LOCK.ADD_PERIOD" | translate}}
     </ion-button>
 

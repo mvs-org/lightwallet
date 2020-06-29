@@ -14,6 +14,7 @@ export class SettingsPage implements OnInit {
 
     connectcode: any
     network: string
+    darkTheme = false
 
     constructor(
         private metaverseService: MetaverseService,
@@ -50,6 +51,7 @@ export class SettingsPage implements OnInit {
     }
 
     updateTheme() {
+        this.darkTheme = !this.darkTheme
         document.body.classList.toggle('dark')
     }
 

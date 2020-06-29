@@ -27,19 +27,19 @@
         <p translate="SETTINGS.LANGUAGE.SUBTITLE"></p>
       </ion-label>
     </ion-item>
-    <ion-item button>
+    <ion-item button (click)="updateTheme()">
       <ion-icon name="moon"></ion-icon>
       <ion-label>
         <h1 translate="SETTINGS.THEME.TITLE"></h1>
         <p translate="SETTINGS.THEME.SUBTITLE"></p>
       </ion-label>
-      <ion-toggle id="themeToggle" slot="end" (ionChange)="updateTheme()"></ion-toggle>
+      <ion-toggle id="themeToggle" slot="end" [(ngModel)]="darkTheme"></ion-toggle>
     </ion-item>
     <ion-item routerLink="/account/export-xpub" button>
       <ion-icon name="pricetag"></ion-icon>
       <ion-label>
-        <h1 translate="EXPORT_MASTER_PUBLIC_KEY.MENU_ENTRY"></h1>
-        <p></p>
+        <h1 translate="SETTINGS.EXPORT_XPUB.TITLE"></h1>
+        <p translate="SETTINGS.EXPORT_XPUB.SUBTITLE"></p>
       </ion-label>
     </ion-item>
     <ion-item button (click)="logout()">
