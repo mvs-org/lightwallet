@@ -18,13 +18,17 @@ import { isString } from 'lodash';
 export class ConfirmPage {
   @Input() token: string = '';
 
+  avatar = ''
   avatars: Array<string> = []
   avatars_address: any = {}
   verifiedToken: any
   sourceSignature: string
   hostname: string
+  showDetails = false
+  passphrase = ''
+  noSigAgreed = false
 
-  leftTime: number = 0;
+  leftTime = 0
 
   @ViewChild('selectAvatar') selectAvatar: IonSelect;
 

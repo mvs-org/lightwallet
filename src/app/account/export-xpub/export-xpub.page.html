@@ -27,7 +27,7 @@
     </ion-list>
 
     <ion-list *ngIf="xpub">
-      <h4>{{"EXPORT_MASTER_PUBLIC_KEY.YOUR_KEY"|translate}}</h4>
+      <h4 translate="EXPORT_MASTER_PUBLIC_KEY.YOUR_KEY"></h4>
       <textarea fz-elastic ion-input full type="text" #xpubElement [value]="xpub" readonly>{{xpub}}</textarea>
       <ion-button icon-left expand="full" [ngxClipboard]="xpubElement">
         <ion-icon name="copy"></ion-icon>

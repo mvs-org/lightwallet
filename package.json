@@ -35,6 +35,7 @@
     "metaversejs": "^0.3.94",
     "mvs-blockchain": "^0.1.65",
     "ngx-clipboard": "^13.0.1",
+    "ngx-countdown": "^10.0.0",
     "ngx-pagination": "^5.0.0",
     "ngx-qrcode2": "^9.0.0",
     "rxjs": "~6.5.1",

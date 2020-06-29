@@ -94,7 +94,7 @@
         </ion-row>
         <ion-row *ngIf="output.attenuation">
             <ion-col>
-                <ion-item class="script right" lines="none">
+                <ion-item class="script" lines="none">
                     <span translate="HISTORY.LOCKED_UNTIL_BLOCK_ONLY" [translateParams]="{block: output.locked_until, time: ((output.locked_until - height) * blocktime * 1000) + currentTime | date : 'medium'}"></span>
                 </ion-item>
             </ion-col>

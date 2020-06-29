@@ -680,6 +680,7 @@
             "STEP3": "Access the website with your Avatar!"
         },
         "CONFIRM": {
+            "INFORMATION": "You can use your Metaverse Avatar to authenticate to various websites or applications. After verifying the provider of the request, it will sign a message using your private key and send the signed message to the requester in order to prove ownership of this Avatar. These steps will neither create any transaction on the blockchain nor reveal your private key to the requester.",
             "TITLE": "Please verify the requester information:",
             "SELECT_AVATAR": "Select an avatar",
             "VERIFY_SOURCE": "Source",
@@ -689,7 +690,15 @@
             "VERIFY_CALLBACK": "Callback",
             "VERIFY_TIME_OF_REQUEST": "Time of request",
             "VERIFY_REQUEST_DURATION": "Timeout",
-            "SHOW_DETAILS": "Show Details"
+            "VERIFY_REQUEST_DURATION_VALUE": "{{seconds}} seconds",
+            "SHOW_DETAILS": "Show Details",
+            "HIDE_DETAILS": "Hide Details",
+            "NO_SIG_AGREE": "This request was not signed. Please make sure this request is legit before signing it.",
+            "PASSWORD": "Password",
+            "BUTTON": {
+                "NEXT": "Confirm signing",
+                "CANCEL": "Cancel"
+            }
         },
         "MESSAGE": {
             "TOKEN_MISSING": "No authentication token found",
