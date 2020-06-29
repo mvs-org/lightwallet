@@ -35,7 +35,7 @@
         </ion-segment>
 
         <ng-container *ngFor="let account of saved_accounts">
-          <ion-button expand="full" icon-left *ngIf="account.network == network" (click)="loginViaAccount(account)">
+          <ion-button expand="full"class="account-btn" *ngIf="account.network == network" (click)="loginViaAccount(account)">
             <ion-icon slot="start" name="contact"></ion-icon>
             {{account.name}}
           </ion-button>
@@ -43,7 +43,7 @@
 
         <ion-button expand="full" routerLink="/login/create" icon-left>
           <ion-icon slot="start" name="add"></ion-icon>
-          {{"LOGIN.BUTTON.CREATE_NEW_WALLET"|translate}}
+          <span translate="LOGIN.BUTTON.CREATE_NEW_WALLET"></span>
         </ion-button>
 
         <ion-button routerLink="/login/import-backup" expand="full" icon-left>
@@ -53,44 +53,27 @@
 
         <ion-button *ngIf="!platform.is('mobile')" routerLink="/login/open-file" expand="full" icon-left color="secondary">
           <ion-icon slot="start" name="download"></ion-icon>
-          {{"LOGIN.BUTTON.OPEN_WALLET_FILE"|translate}}
+          <span translate="LOGIN.BUTTON.OPEN_WALLET_FILE"></span>
         </ion-button>
 
         <ion-button routerLink="/login/xpub" expand="full" icon-left color="secondary">
           <ion-icon slot="start" name="eye"></ion-icon>
-          {{"LOGIN.BUTTON.OPEN_WALLET_VIEW_ONLY"|translate}}
+          <span translate="LOGIN.BUTTON.OPEN_WALLET_VIEW_ONLY"></span>
         </ion-button>
 
         <ion-button *ngIf="isApp" expand="full" icon-left color="secondary" routerLink="/login/scan">
           <ion-icon slot="start" name="qr-scanner"></ion-icon>
-          {{"LOGIN.BUTTON.OPEN_FROM_QRCODE"|translate}}
+          <span translate="LOGIN.BUTTON.OPEN_FROM_QRCODE"></span>
         </ion-button>
 
         <ion-button *ngIf="isApp" expand="full" icon-left color="primary" routerLink="/login/how-to-import">
           <ion-icon slot="start" name="information-circle"></ion-icon>
-          {{"LOGIN.BUTTON.HOW_TO_IMPORT_WALLET_MOBILE"|translate}}
+          <span translate="LOGIN.BUTTON.HOW_TO_IMPORT_WALLET_MOBILE"></span>
         </ion-button>
 
-        <p *ngIf="!platform.is('mobile')">{{"LOGIN.INFO_TEXT_BROWSER"|translate}}</p>
+        <p *ngIf="!platform.is('mobile')" translate="LOGIN.INFO_TEXT_BROWSER"></p>
 
       </ion-col>
     </ion-row>
   </ion-grid>
 </ion-content>
-
-<ion-footer>
-  <ion-row>
-    <ion-col>
-      <ion-button expand="full" fill="clear" icon-left (click)="switchTheme()">
-        <ion-icon slot="start" name="color-palette"></ion-icon>
-        {{"LOGIN.BUTTON.THEME_SETTINGS"|translate}}
-      </ion-button>
-    </ion-col>
-    <ion-col>
-      <ion-button expand="full" fill="clear" icon-left routerLink="/settings/language">
-        <ion-icon slot="start" name="flag"></ion-icon>
-        {{"LOGIN.BUTTON.SWITCH_LANGUAGE"|translate}}
-      </ion-button>
-    </ion-col>
-  </ion-row>
-</ion-footer>
