@@ -35,3 +35,11 @@ ion-col {
 ion-item {
     --min-height: 16px;
 }
+
+.txType {
+    font-style: oblique;
+}
+
+.txType span {
+    padding-right: 2px !important;
+}

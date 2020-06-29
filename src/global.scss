@@ -61,15 +61,15 @@
 }
 
 .wrong-input {
-    color: red;
+    color: red !important;
 }
 
 .warning-input {
-    color: orange;
+    color: orange !important;
 }
 
 .valid-input{
-    color: #32db64;
+    color: #32db64 !important;
 }
 
 .beta-tag {
@@ -155,7 +155,7 @@
     text-align: center;
 }
 
-.right {
+.right, .right ion-item {
     text-align: right;
     float: right;
 }
@@ -165,5 +165,5 @@ textarea:focus {
 }
 
 ion-item span {
-    overflow: overlay;
+    overflow: visible;
 }

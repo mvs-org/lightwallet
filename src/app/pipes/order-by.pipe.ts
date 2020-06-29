@@ -1,4 +1,4 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform } from '@angular/core'
 
 @Pipe({
     name: 'orderBy',
@@ -10,13 +10,17 @@ export class OrderByPipe implements PipeTransform {
         const direction = args[1]
         array.sort((a: any, b: any) => {
             if (a[param] < b[param]) {
-                return direction === 1 ? 1 : -1
+                // Do not use === for the direction, it will always be false
+                // tslint:disable-next-line: triple-equals
+                return direction == 1 ? 1 : -1
             } else if (a[param] > b[param]) {
-                return direction === 1 ? -1 : 1
+                // tslint:disable-next-line: triple-equals
+                return direction == 1 ? -1 : 1
             } else {
-                return 0;
+                return 0
             }
-        });
-        return array;
+        })
+        console.log(array)
+        return array
     }
 }

@@ -12,21 +12,16 @@
     --min-height: 16px;
 }
 
-.summaryTxType {
+.summaryTxType ion-item {
     color: black;
     font-size: 20px;
 }
 
-.summaryAmount {
+.summaryAmount ion-item {
     color: var(--ion-color-primary);
     font-size: 20px;
     float: right;
-    width: 100%;
-}
-
-.summaryAmount div {
-    text-align: right;
-    width: 100%;
+    --min-height: 20px;
 }
 
 .sendAmount {
@@ -41,12 +36,9 @@
     font-size: 20px;
 }
 
-.txType {
-    font-style: oblique;
-}
-
 .fee {
-    font-size: 16px;
+    font-size: 16px !important;
+    color: black !important;
 }
 
 .unsigned {
@@ -75,10 +67,6 @@ textarea{
 
 .hash h1 .button {
     top: -10px;
-}
-
-.summaryTxType .label {
-    margin: 0;
 }
 
 .tx-hash {
