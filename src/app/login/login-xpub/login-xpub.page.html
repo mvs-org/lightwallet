@@ -14,7 +14,7 @@
                 <form #loginAccountForm="ngForm">
                     <ion-row>
                         <ion-col>
-                            <p align="center">{{"XPUB.INFORMATION" | translate}}</p>
+                            <p align="center" translate="XPUB.INFORMATION"></p>
                         </ion-col>
                     </ion-row>
                     <ion-item class="center-psw" [ngClass]="{'error-border':xpub && !validXpub, 'valid-border':validXpub}">
@@ -25,13 +25,13 @@
                     <ion-item *ngIf="xpub && !validXpub" lines="none" class="wrong-input center-psw">{{"XPUB.INVALID_XPUB" | translate}}
                     </ion-item>
                     <ion-item *ngIf="xpub && validXpub" lines="none" class="valid-input center-psw">
-                        <span [translate]="'XPUB.VALID_XPUB'" [translateParams]="{address: addresses[0]}"></span>
+                        <span translate="XPUB.VALID_XPUB" [translateParams]="{address: addresses[0]}"></span>
                     </ion-item>
 
                     <div class="next-button more-top-padding">
                         <ion-button expand="full" [disabled]="!validXpub" (click)="login(xpub)">
                             <ion-icon slot="start" name="arrow-forward"></ion-icon>
-                            {{'XPUB.BUTTON.NEXT'|translate}}
+                            <span translate="XPUB.BUTTON.NEXT"></span>
                         </ion-button>
                     </div>
                 </form>

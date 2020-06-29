@@ -20,22 +20,18 @@
 
         <div class="info-text">
           <div class="center">{{appService.version}}
-            <span id="label-network" value="mainnet" *ngIf="network=='mainnet'"
-              [translate]="'MAINNET'"></span>
-            <span id="label-network" value="testnet" *ngIf="network=='testnet'"
-              [translate]="'TESTNET'"></span>
+            <span id="label-network" value="mainnet" *ngIf="network=='mainnet'" translate="MAINNET"></span>
+            <span id="label-network" value="testnet" *ngIf="network=='testnet'" translate="TESTNET"></span>
           </div>
         </div>
 
         <ion-segment [(ngModel)]="network" (ionChange)="setNetwork($event)" color="primary" id="network-switch">
-          <ion-segment-button id="network-switch-option-mainnet" value="mainnet" [translate]="'MAINNET'">
-          </ion-segment-button>
-          <ion-segment-button id="network-switch-option-testnet" value="testnet" [translate]="'TESTNET'">
-          </ion-segment-button>
+          <ion-segment-button id="network-switch-option-mainnet" value="mainnet" translate="MAINNET"></ion-segment-button>
+          <ion-segment-button id="network-switch-option-testnet" value="testnet" translate="TESTNET"></ion-segment-button>
         </ion-segment>
 
         <ng-container *ngFor="let account of saved_accounts">
-          <ion-button expand="full"class="account-btn" *ngIf="account.network == network" (click)="loginViaAccount(account)">
+          <ion-button expand="full" class="account-btn" *ngIf="account.network == network" (click)="loginViaAccount(account)">
             <ion-icon slot="start" name="contact"></ion-icon>
             {{account.name}}
           </ion-button>

@@ -11,24 +11,24 @@
     <ion-grid>
         <ion-row>
             <ion-col size-md="12" size-lg="6" offset-lg="3">
-                <h2 class="pageHeadline">{{"DISCLAIMER.HEADLINE"|translate}}</h2>
-                <p>{{"DISCLAIMER.INTRODUCTION"|translate}}</p>
-                <p>{{"DISCLAIMER.LIST_INTRODUCTION"|translate}}</p>
+                <h2 class="pageHeadline" translate="DISCLAIMER.HEADLINE"></h2>
+                <p translate="DISCLAIMER.INTRODUCTION"></p>
+                <p translate="DISCLAIMER.LIST_INTRODUCTION"></p>
                 <ol>
-                    <li>{{"DISCLAIMER.LIST_ITEM_1"|translate}}</li>
-                    <li>{{"DISCLAIMER.LIST_ITEM_2"|translate}}</li>
-                    <li>{{"DISCLAIMER.LIST_ITEM_3"|translate}}</li>
-                    <li>{{"DISCLAIMER.LIST_ITEM_4"|translate}}</li>
+                    <li translate="DISCLAIMER.LIST_ITEM_1"></li>
+                    <li translate="DISCLAIMER.LIST_ITEM_2"></li>
+                    <li translate="DISCLAIMER.LIST_ITEM_3"></li>
+                    <li translate="DISCLAIMER.LIST_ITEM_4"></li>
                 </ol>
                 <ion-item>
-                    <ion-label id="disclaimer-agree-label" text-wrap>{{"DISCLAIMER.READ_AND_AGREE"|translate}}
+                    <ion-label id="disclaimer-agree-label" text-wrap translate="DISCLAIMER.READ_AND_AGREE">
                     </ion-label>
                     <ion-checkbox [(ngModel)]="disclaimer_agreed" id="disclaimer-agree"></ion-checkbox>
                 </ion-item>
                 <form *ngIf="disclaimer_agreed" offset-md-3 col-md-6 (ngSubmit)="decrypt(password)" #importForm="ngForm"
                     lines="none" class="buttons-container">
                     <ion-item class="center-text" lines="none">
-                        <h1>{{"OPEN_FILE.IMPORT_FILE"|translate}}</h1>
+                        <h1 translate="OPEN_FILE.IMPORT_FILE"></h1>
                     </ion-item>
                     <ion-row *ngIf="!fileLoaded">
                         <input type="file" name="file" id="file" class="inputfile" accept=".json"

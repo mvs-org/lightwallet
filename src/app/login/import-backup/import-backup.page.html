@@ -63,20 +63,19 @@
                         <ion-col col-sm-6 offset-md-1 col-md-5 offset-lg-2 col-lg-4 offset-xl-3 col-xl-3>
                             <ion-button icon-left color="secondary" expand="full" type="submit" [disabled]="!importForm.form.valid || !validmnemonic">
                                 <ion-icon slot="start" name="download"></ion-icon>
-                                {{"IMPORT_WALLET_MNEMONIC.IMPORT_BUTTON"|translate}}
+                                <span translate="IMPORT_WALLET_MNEMONIC.IMPORT_BUTTON"></span>
                             </ion-button>
                         </ion-col>
                         <ion-col col-sm-6 col-md-5 col-lg-4 col-xl-3>
                             <ion-button icon-left color="danger" expand="full" type="button" (click)="clear()">
                                 <ion-icon slot="start" name="trash"></ion-icon>
-                                {{"IMPORT_WALLET_MNEMONIC.RESET"|translate}}
+                                <span translate="IMPORT_WALLET_MNEMONIC.RESET"></span>
                             </ion-button>
                         </ion-col>
                     </ion-row>
                     <ion-row>
-                        <h4 *ngIf="!platform.is('mobile')" class="center-text wallet-create">{{"IMPORT_WALLET_MNEMONIC.BOTTOM_TEXT"|translate}}</h4>
-                        <h4 *ngIf="platform.is('mobile')" class="center-text wallet-create">{{"IMPORT_WALLET_MNEMONIC.BOTTOM_TEXT_MOBILE"|translate}}
-                        </h4>
+                        <h4 *ngIf="!platform.is('mobile')" class="center-text wallet-create" translate="IMPORT_WALLET_MNEMONIC.BOTTOM_TEXT"></h4>
+                        <h4 *ngIf="platform.is('mobile')" class="center-text wallet-create" translate="IMPORT_WALLET_MNEMONIC.BOTTOM_TEXT_MOBILE"></h4>
                     </ion-row>
                 </form>
             </ion-col>

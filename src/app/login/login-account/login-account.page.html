@@ -9,28 +9,31 @@
 
 <ion-content>
   <form #loginAccountForm="ngForm">
-
-    <h2 class="center top-padding">{{account.name}}</h2>
-
-    <ion-item>
-      <ion-label color="primary" position="floating" translate="LOGIN_ACCOUNT.PASSWORD"></ion-label>
-      <ion-input name="password" id="password-input" type="password" [(ngModel)]="password" required>
-      </ion-input>
-    </ion-item>
-
     <ion-row>
-      <ion-col col-sm-6 col-md-5 col-lg-4 col-xl-3>
-        <ion-button expand="full" color="danger" (click)="deleteAccount(account.name)">
-          <ion-icon slot="start" name="trash"></ion-icon>
-          {{'LOGIN_ACCOUNT.FORGET_BUTTON'|translate}}
-        </ion-button>
-      </ion-col>
-      <ion-col col-sm-6 offset-md-1 col-md-5 offset-lg-2 col-lg-4 offset-xl-3 col-xl-3>
-        <ion-button type="submit" expand="full" [disabled]="!complete(password)"
-          (click)="importAccount(account, password)">
-          <ion-icon slot="start" name="arrow-forward"></ion-icon>
-          {{'LOGIN_ACCOUNT.LOGIN_BUTTON'|translate}}
-        </ion-button>
+      <ion-col size-md="12" size-lg="6" offset-lg="3">
+        <h2 class="center top-padding">{{account.name}}</h2>
+
+        <ion-item>
+          <ion-label color="primary" position="floating" translate="LOGIN_ACCOUNT.PASSWORD"></ion-label>
+          <ion-input name="password" id="password-input" type="password" [(ngModel)]="password" required>
+          </ion-input>
+        </ion-item>
+
+        <ion-row>
+          <ion-col size="12" size-sm="6">
+            <ion-button expand="full" color="danger" (click)="deleteAccount(account.name)">
+              <ion-icon slot="start" name="trash"></ion-icon>
+              <span translate="LOGIN_ACCOUNT.FORGET_BUTTON"></span>
+            </ion-button>
+          </ion-col>
+          <ion-col size="12" size-sm="6">
+            <ion-button type="submit" expand="full" [disabled]="!complete(password)"
+              (click)="importAccount(account, password)">
+              <ion-icon slot="start" name="arrow-forward"></ion-icon>
+              <span translate="LOGIN_ACCOUNT.LOGIN_BUTTON"></span>
+            </ion-button>
+          </ion-col>
+        </ion-row>
       </ion-col>
     </ion-row>
   </form>
