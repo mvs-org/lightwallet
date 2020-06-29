@@ -30,12 +30,13 @@
               <!--h1><ion-icon name="person"></ion-icon> {{avatar.symbol}}</h1-->
               <!--textarea ion-input type="text" #copy value="{{avatar.address}}" readonly>{{avatar.address}}</textarea>
                     <button ion-button item-right icon-left [ngxClipboard]="copy">
-                        <ion-icon name="copy"></ion-icon>
+                        <ion-icon slot="start" name="copy"></ion-icon>
                     </button-->
             </ion-item>
             <ion-item *ngIf="avatar.certs && avatar.certs.length > 0" lines="none">
               <h2 class="certificates-title">
-                <ion-icon name="paper"></ion-icon> {{"AVATARS.CERT.TITLE" | translate}}:
+                <ion-icon slot="start" name="paper"></ion-icon>
+                <span translate="AVATARS.CERT.TITLE"></span>
               </h2>
               <ion-row *ngFor="let cert of avatar.certs">
                 <ion-col *ngIf="cert.cert_type == 'issue'" class="cert-type" translate="AVATAR.CERT.SECONDARY_ISSUE">
@@ -49,11 +50,11 @@
           </ion-col>
           <ion-col col-sm-12 col-md-6>
             <ion-button class="right-buttons" color="primary" (click)="registerMIT(avatar.symbol, avatar.address)">
-              <ion-icon name="add"></ion-icon>
+              <ion-icon slot="start" name="add"></ion-icon>
               {{"AVATAR.BUTTON.REGISTER_MIT" | translate}}
             </ion-button>
             <ion-button class="right-buttons" color="danger" (click)="createAsset(avatar.symbol, avatar.address)">
-              <ion-icon name="add"></ion-icon>
+              <ion-icon slot="start" name="add"></ion-icon>
               {{"AVATAR.BUTTON.REGISTER_MST" | translate}}
             </ion-button>
           </ion-col>
@@ -61,7 +62,7 @@
       </ion-grid>
     </ion-card>
     <ion-button color="primary" routerLink="/account/avatar/create" class="create-avatar-btn">
-      <ion-icon name="person-add"></ion-icon>
+      <ion-icon slot="start" name="person-add"></ion-icon>
       {{"AVATAR.BUTTON.CREATE_AVATAR" | translate}}
     </ion-button>
   </div>

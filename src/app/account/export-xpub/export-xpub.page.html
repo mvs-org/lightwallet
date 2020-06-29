@@ -8,9 +8,7 @@
 </ion-header>
 
 <ion-content>
-  <p align="center" class="wrong-input">
-    {{"EXPORT_MASTER_PUBLIC_KEY.WARNING" | translate}}
-  </p>
+  <p align="center" class="wrong-input" translate="EXPORT_MASTER_PUBLIC_KEY.WARNING"></p>
 
   <form #exportXpubForm="ngForm">
     <ion-list *ngIf="!xpub">
@@ -21,8 +19,8 @@
       <br>
       <ion-button type="submit" expand="full" (click)="export(this.passphrase)"
         [disabled]="!validPassword(passphrase)">
-        <ion-icon name="key"></ion-icon>
-        {{"EXPORT_MASTER_PUBLIC_KEY.BUTTON" | translate}}
+        <ion-icon slot="start" name="key"></ion-icon>
+        <span translate="EXPORT_MASTER_PUBLIC_KEY.BUTTON"></span>
       </ion-button>
     </ion-list>
 
@@ -30,8 +28,8 @@
       <h4 translate="EXPORT_MASTER_PUBLIC_KEY.YOUR_KEY"></h4>
       <textarea fz-elastic ion-input full type="text" #xpubElement [value]="xpub" readonly>{{xpub}}</textarea>
       <ion-button icon-left expand="full" [ngxClipboard]="xpubElement">
-        <ion-icon name="copy"></ion-icon>
-        {{'COPY'|translate}}
+        <ion-icon slot="start" name="copy"></ion-icon>
+        <span translate="COPY"></span>
       </ion-button>
     </ion-list>
   </form>

@@ -32,7 +32,7 @@
                     </ion-col>
                 </ion-row>
                 <ion-button *ngIf="!isApp" icon-left expand="full" (click)="confirmBackup()">
-                    <ion-icon name="arrow-forward"></ion-icon>
+                    <ion-icon slot="start" name="arrow-forward"></ion-icon>
                     {{'CREATE_WALLET.BUTTON.NEXT'|translate}}
                 </ion-button>
             </ion-col>
@@ -43,10 +43,10 @@
 <ion-footer *ngIf="isApp">
     <ion-row>
         <ion-col>
-            <button ion-button icon-left expand="full" (click)="confirmBackup()">
-        <ion-icon name="arrow-forward"></ion-icon>
-        {{'CREATE_WALLET.BUTTON.NEXT'|translate}}
-      </button>
+            <ion-button expand="full" (click)="confirmBackup()">
+                <ion-icon slot="start" name="arrow-forward"></ion-icon>
+                <span translate="CREATE_WALLET.BUTTON.NEXT"></span>
+            </ion-button>
         </ion-col>
     </ion-row>
 </ion-footer>

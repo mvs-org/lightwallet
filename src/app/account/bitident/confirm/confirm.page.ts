@@ -1,14 +1,14 @@
-import { Component, ViewChild, Input } from '@angular/core';
-import { IonSelect, } from '@ionic/angular';
-import { Router, ActivatedRoute } from '@angular/router';
-import { AppService } from 'src/app/services/app.service';
-import { MetaverseService } from 'src/app/services/metaverse.service';
-import { WalletService } from 'src/app/services/wallet.service';
-import { AlertService } from 'src/app/services/alert.service';
-import { Request, Message } from 'bitident';
-import { Location } from '@angular/common';
-import { BitidentService } from '../bitident.service';
-import { isString } from 'lodash';
+import { Component, ViewChild, Input } from '@angular/core'
+import { IonSelect, } from '@ionic/angular'
+import { Router, ActivatedRoute } from '@angular/router'
+import { AppService } from 'src/app/services/app.service'
+import { MetaverseService } from 'src/app/services/metaverse.service'
+import { WalletService } from 'src/app/services/wallet.service'
+import { AlertService } from 'src/app/services/alert.service'
+import { Request, Message } from 'bitident'
+import { Location } from '@angular/common'
+import { BitidentService } from '../bitident.service'
+import { isString } from 'lodash'
 
 @Component({
   selector: 'app-confirm',
@@ -16,11 +16,11 @@ import { isString } from 'lodash';
   styleUrls: ['./confirm.page.scss'],
 })
 export class ConfirmPage {
-  @Input() token: string = '';
+  @Input() token: ''
 
   avatar = ''
   avatars: Array<string> = []
-  avatars_address: any = {}
+  avatarsAddress: any = {}
   verifiedToken: any
   sourceSignature: string
   hostname: string
@@ -30,7 +30,7 @@ export class ConfirmPage {
 
   leftTime = 0
 
-  @ViewChild('selectAvatar') selectAvatar: IonSelect;
+  @ViewChild('selectAvatar') selectAvatar: IonSelect
 
   constructor(
     private router: Router,
@@ -63,9 +63,9 @@ export class ConfirmPage {
           this.alert.showMessage('BITIDENT.MESSAGE.NO_AVATAR_TITLE', '', 'BITIDENT.MESSAGE.NO_AVATAR_TITLE_BODY')
         } else {
           return avatars.forEach(avatar => {
-            this.avatars_address[avatar.symbol] = avatar.address
+            this.avatarsAddress[avatar.symbol] = avatar.address
             this.avatars.push(avatar.symbol)
-          });
+          })
         }
       })
   }
@@ -88,19 +88,19 @@ export class ConfirmPage {
 
       if (signedToken.version > 1) {
         this.location.back()
-        this.alert.showError('BITIDENT.MESSAGE.HIGHER_VERSION', 'version ' + signedToken.version);
+        this.alert.showError('BITIDENT.MESSAGE.HIGHER_VERSION', 'version ' + signedToken.version)
       } else if (signedToken.network !== this.appService.network) {
         this.location.back()
-        this.alert.showError('BITIDENT.MESSAGE.DIFFERENT_NETWORK', signedToken.network);
+        this.alert.showError('BITIDENT.MESSAGE.DIFFERENT_NETWORK', signedToken.network)
       } else if (signedToken.type != 'auth') {
         this.location.back()
-        this.alert.showError('BITIDENT.MESSAGE.TYPE_NOT_SUPPORTED', signedToken.type);
+        this.alert.showError('BITIDENT.MESSAGE.TYPE_NOT_SUPPORTED', signedToken.type)
       } else if ((signedToken.time + signedToken.timeout) * 1000 < Date.now()) {
         this.location.back()
-        this.alert.showError('BITIDENT.MESSAGE.TIMEOUT', '');
+        this.alert.showError('BITIDENT.MESSAGE.TIMEOUT', '')
       } else if (signedToken.target && this.avatars.indexOf(signedToken.target) === -1) {
         this.location.back()
-        this.alert.showError('BITIDENT.MESSAGE.UNKNOWN_AVATAR', signedToken.target);
+        this.alert.showError('BITIDENT.MESSAGE.UNKNOWN_AVATAR', signedToken.target)
       } else {
 
         signedToken.sourceSignature = ''
@@ -112,19 +112,20 @@ export class ConfirmPage {
 
         if (this.sourceSignature && !Message.verify(encodedUnsignedToken, sourceAddress, Buffer.from(this.sourceSignature, 'hex'), signedToken.source)) {
           this.location.back()
-          this.alert.showError('BITIDENT.MESSAGE.WRONG_SIGNATURE', signedToken.source);
+          this.alert.showError('BITIDENT.MESSAGE.WRONG_SIGNATURE', signedToken.source)
         } else {
           this.hostname = new URL(signedToken.callback).hostname
-          this.verifiedToken = signedToken;
+          this.verifiedToken = signedToken
           this.leftTime = (signedToken.time + signedToken.timeout) - (Math.floor(Date.now()) / 1000)
-          if (!this.verifiedToken.target)
+          if (!this.verifiedToken.target) {
             setTimeout(() => this.selectAvatar.open(), 100)
+          }
         }
       }
     } catch (e) {
-      console.error(e);
+      console.error(e)
       this.location.back()
-      this.alert.showError('BITIDENT.MESSAGE.WRONG_INCOMING_DATA', e);
+      this.alert.showError('BITIDENT.MESSAGE.WRONG_INCOMING_DATA', e)
     }
     this.alert.stopLoading()
 
@@ -135,7 +136,7 @@ export class ConfirmPage {
     try {
       await this.alert.showLoading()
       const wallet = await this.wallet.getWallet(passphrase)
-      const node = await wallet.findDeriveNodeByAddess(this.avatars_address[this.verifiedToken.target], 200)
+      const node = await wallet.findDeriveNodeByAddess(this.avatarsAddress[this.verifiedToken.target], 200)
       const signature = await Message.signPK(
         this.verifiedToken.encode('hex'),
         node.keyPair.d.toBuffer(32),
@@ -150,19 +151,19 @@ export class ConfirmPage {
       this.alert.showMessage('BITIDENT.MESSAGE.SIGNIN_SUCCESSFUL_TITLE', 'BITIDENT.MESSAGE.SIGNIN_SUCCESSFUL_BODY', '')
     } catch (error) {
       this.alert.stopLoading()
-      if (error.message) { //internal error
+      if (error.message) { // internal error
         console.error(error.message)
         switch (error.message) {
-          case "ERR_DECRYPT_WALLET":
+          case 'ERR_DECRYPT_WALLET':
             this.alert.showError('BITIDENT.MESSAGE.PASSWORD_WRONG', '')
             break
-          case "EXPIRED":
+          case 'EXPIRED':
             this.alert.showError('BITIDENT.MESSAGE.EXPIRED', '')
             break
-          case "ERR_AUTH":
+          case 'ERR_AUTH':
             this.alert.showError('BITIDENT.MESSAGE.SEND_SIG_ERROR', '')
             break
-          case "ERR_INVALID_SIGNATURE":
+          case 'ERR_INVALID_SIGNATURE':
             this.alert.showError('BITIDENT.MESSAGE.SEND_INVALID_SIGNATURE', '')
             break
           default:

@@ -58,7 +58,7 @@
                 <button id="scanButton"
                     *ngIf="isApp && !sendToAvatar && !(disableParams && params['recipient_address'])" ion-button
                     item-right (click)="scan()">
-                    <ion-icon name="qr-scanner"></ion-icon>
+                    <ion-icon slot="icon-only" name="qr-scanner"></ion-icon>
                 </button>
             </ion-item>
             <ion-item [ngClass]="{'error-border':!validQuantity(quantity), 'valid-border':validQuantity(quantity)}">
@@ -66,18 +66,15 @@
                 <ion-input #quantityInput name="quantity" type="number" min="0" [(ngModel)]="quantity"
                     [disabled]="disableParams && params['amount']" required></ion-input>
                 <ion-button type="button" *ngIf="etpBalance>10000 && !(disableParams && params['amount'])" id="sendAll"
-                    (click)="sendAll()">
-                    {{"SEND_SINGLE.SEND_ALL_BUTTON"|translate}}
-                </ion-button>
+                    (click)="sendAll()" translate="SEND_SINGLE.SEND_ALL_BUTTON"></ion-button>
             </ion-item>
             <ion-item *ngIf="tickers && tickers[selectedAsset] && tickers[selectedAsset][base]" lines="none" class="fiat">
                 ≈{{base}} {{quantity*tickers[selectedAsset][base].price | number : '1.0-2'}}
             </ion-item>
-            <ion-item *ngIf="countDecimals(quantity) > decimals" lines="none" class="wrong-input">{{"SEND.TOO_MANY_DECIMALS"
-                | translate}}</ion-item>
+            <ion-item *ngIf="countDecimals(quantity) > decimals" lines="none" class="wrong-input" translate="SEND.TOO_MANY_DECIMALS"></ion-item>
             <br>
             <ion-item [ngClass]="{'error-border':!validFromAddress(sendFrom)}">
-                <ion-label>{{"SEND_SINGLE.SEND_FROM"|translate}}</ion-label>
+                <ion-label translate="SEND_SINGLE.SEND_FROM"></ion-label>
                 <ion-select [(ngModel)]="sendFrom" name="sendfrom" multiple="false"
                     (ngModelChange)="onFromAddressChange($event)" okText="{{'OK'|translate}}"
                     cancelText="{{'CANCEL'|translate}}">
@@ -141,16 +138,16 @@
         <ion-row class="padding-bottom">
             <ion-col>
                 <ion-button color="danger" expand="full" (click)="cancel($event)">
-                    <ion-icon name="close"></ion-icon>
-                    {{'SEND_SINGLE.CANCEL_BUTTON'|translate}}
+                    <ion-icon slot="start" name="close"></ion-icon>
+                    <span translate="SEND_SINGLE.CANCEL_BUTTON"></span>
                 </ion-button>
             </ion-col>
             <ion-col>
                 <ion-button type="submit" expand="full"
                     [disabled]="!sendForm.form.valid||!validaddress(recipient_address)||!validQuantity(quantity)||!validMessageLength(message)||(lock && !attenuation_model)||!validFromAddress(sendFrom)"
                     (click)="send()" color="secondary">
-                    <ion-icon disabled="checked" name="cog"></ion-icon>
-                    {{'SEND_SINGLE.SEND_BUTTON'|translate}}
+                    <ion-icon slot="start" disabled="checked" name="cog"></ion-icon>
+                    <span translate="SEND_SINGLE.SEND_BUTTON"></span>
                 </ion-button>
             </ion-col>
         </ion-row>
@@ -166,7 +163,8 @@
             <ion-row *ngIf="!platform.is('mobile')">
                 <input type="file" name="file" id="file" class="inputfile" accept=".csv" (change)="import($event)" />
                 <label for="file">
-                    <ion-icon name="document"></ion-icon> {{"IMPORT_FROM_CSV"|translate}}
+                    <ion-icon slot="start" name="document"></ion-icon>
+                    <span translate="IMPORT_FROM_CSV"></span>
                 </label>
             </ion-row>
 
@@ -230,16 +228,18 @@
 
             <button *ngIf="!platform.is('mobile')" type="button" class="right-buttons" ion-button icon-left
                 color="secondary" (click)="download()">
-                <ion-icon name="download"></ion-icon> {{"EXPORT_CSV" | translate}}
+                <ion-icon slot="start" name="download"></ion-icon>
+                <span translate="EXPORT_CSV"></span>
             </button>
             <button *ngIf="!platform.is('mobile')" type="button" class="right-buttons" ion-button icon-left
                 color="light" (click)="csvExample()">
-                <ion-icon name="download"></ion-icon> {{"DOWNLOAD_CSV_EXAMPLE" | translate}}
+                <ion-icon slot="start" name="download"></ion-icon>
+                <span  translate="DOWNLOAD_CSV_EXAMPLE"></span>
             </button>
             <button *ngIf="recipients.length < sendMore_limit" type="button" class="right-buttons" ion-button icon-left
                 color="primary" (click)="addRecipient()">
-                <ion-icon name="add"></ion-icon>
-                {{"ADD_RECIPIENT" | translate}}
+                <ion-icon slot="start" name="add"></ion-icon>
+                <span translate="ADD_RECIPIENT"></span>
             </button>
 
             <ion-item [ngClass]="{'error-border':total > showBalance}">
@@ -310,17 +310,17 @@
         </ion-list>
         <ion-row class="padding-bottom">
             <ion-col>
-                <button type="submit" ion-button full icon-left
-                    [disabled]="!sendForm.form.valid||!sendMoreValidQuantity||!sendMoreValidAddress||total > showBalance||!validMessageLength(message)||!validFromAddress(sendFrom)"
-                    (click)="send()" color="secondary">
-                    <ion-icon disabled="checked" name="cog"></ion-icon>
-                    {{'BUTTON.NEXT' | translate}}
+                <button ion-button color="danger" full item-right icon-left (click)="cancel($event)">
+                    <ion-icon slot="start" name="close"></ion-icon>
+                    <span translate="CANCEL"></span>
                 </button>
             </ion-col>
             <ion-col>
-                <button ion-button color="danger" full item-right icon-left (click)="cancel($event)">
-                    <ion-icon name="close"></ion-icon>
-                    {{'CANCEL'|translate}}
+                <button type="submit" ion-button full icon-left
+                    [disabled]="!sendForm.form.valid||!sendMoreValidQuantity||!sendMoreValidAddress||total > showBalance||!validMessageLength(message)||!validFromAddress(sendFrom)"
+                    (click)="send()" color="secondary">
+                    <ion-icon slot="start" disabled="checked" name="cog"></ion-icon>
+                    <span translate="BUTTON.NEXT"></span>
                 </button>
             </ion-col>
         </ion-row>

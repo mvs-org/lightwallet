@@ -5,8 +5,8 @@
             <ion-list id="inbox-list">
                 <ion-buttons slot="end">
                     <ion-spinner *ngIf="isSyncing() && platform.is('mobile')"></ion-spinner>
-                    <ion-icon *ngIf="!hasSeed" name="eye"></ion-icon>
-                    <ion-icon *ngIf="isOffline()" name="flash" class="offlineIcon"></ion-icon>
+                    <ion-icon slot="start" *ngIf="!hasSeed" name="eye"></ion-icon>
+                    <ion-icon slot="start" *ngIf="isOffline()" name="flash" class="offlineIcon"></ion-icon>
                     <ion-button *ngIf="!platform.is('mobile')" ion-button icon-left (click)="logout()">
                         <ion-icon name="log-out"></ion-icon>
                         <span translate="LOGOUT.BUTTON"></span>
@@ -14,13 +14,13 @@
                     <ion-button ion-button icon-left (click)="sync()">
                         <span *ngIf="platform.is('mobile')&&platform.is('ios')&&!isSyncing()"
                             class="block-iPhone">{{height}}
-                            <ion-icon name="cube"></ion-icon></span>
-                        <span *ngIf="!(platform.is('mobile')&&platform.is('ios'))"><span [translate]="'HEIGHT'"></span>:
-                            {{height}}</span>
+                            <ion-icon slot="start" name="cube"></ion-icon></span>
+                        <span *ngIf="!(platform.is('mobile')&&platform.is('ios'))">
+                            <span translate="HEIGHT"></span>: {{height}}</span>
                     </ion-button>
                     <ion-button *ngIf="!platform.is('mobile')" class="refresh-btn" ion-button (click)="sync()"
                         icon-left>
-                        <ion-icon *ngIf="!isSyncing()" name="refresh"></ion-icon>
+                        <ion-icon slot="start" *ngIf="!isSyncing()" name="refresh"></ion-icon>
                         <ion-spinner *ngIf="isSyncing()"></ion-spinner>
                     </ion-button>
                 </ion-buttons>

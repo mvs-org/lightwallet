@@ -62,13 +62,13 @@
                     <ion-row class="buttons">
                         <ion-col col-sm-6 offset-md-1 col-md-5 offset-lg-2 col-lg-4 offset-xl-3 col-xl-3>
                             <ion-button icon-left color="secondary" expand="full" type="submit" [disabled]="!importForm.form.valid || !validmnemonic">
-                                <ion-icon name="download"></ion-icon>
+                                <ion-icon slot="start" name="download"></ion-icon>
                                 {{"IMPORT_WALLET_MNEMONIC.IMPORT_BUTTON"|translate}}
                             </ion-button>
                         </ion-col>
                         <ion-col col-sm-6 col-md-5 col-lg-4 col-xl-3>
                             <ion-button icon-left color="danger" expand="full" type="button" (click)="clear()">
-                                <ion-icon name="trash"></ion-icon>
+                                <ion-icon slot="start" name="trash"></ion-icon>
                                 {{"IMPORT_WALLET_MNEMONIC.RESET"|translate}}
                             </ion-button>
                         </ion-col>

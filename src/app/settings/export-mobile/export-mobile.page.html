@@ -21,13 +21,13 @@
     <ion-row offset-md-1 col-md-10 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6>
       <ion-col>
         <ion-button *ngIf="hasSeed" id="open-wallet-button" color="danger" expand="full" (click)="exportWallet()">
-          <ion-icon name="person"></ion-icon>
+          <ion-icon slot="start" name="person"></ion-icon>
           {{"EXPORT_MOBILE.BUTTON.SHOW_FULL_WALLET"|translate}}
         </ion-button>
       </ion-col>
       <ion-col>
         <ion-button *ngIf="hasXpub" id="open-view-only-wallet-button" expand="full" (click)="exportViewOnlyWallet()">
-          <ion-icon name="eye"></ion-icon>
+          <ion-icon slot="start" name="eye"></ion-icon>
           {{"EXPORT_MOBILE.BUTTON.SHOW_VIEW_ONLY"|translate}}
         </ion-button>
       </ion-col>

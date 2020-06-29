@@ -621,7 +621,7 @@
         "INFORMATION": "Avatars represent your Digital Identity on Metaverse Blockchain. You can use your Avatar name to send and receive ETP in place of your address. Avatars can create MST and MIT",
         "NO_AVATARS": "You do not have any avatar yet. Click on Create to create your first Avatar!",
         "CERT": {
-            "TITLE": "My certificates",
+            "TITLE": "My certificates:",
             "SECONDARY_ISSUE": "Secondary Issue",
             "DOMAIN": "Domain",
             "NAMING": "Naming"

@@ -26,13 +26,13 @@
                 <ion-row *ngIf="showRestartOption" class="padding-bottom">
                     <ion-col>
                         <button type="submit" ion-button full icon-left (click)="updateBalances()" color="primary">
-                <ion-icon name="retry"></ion-icon>
+                <ion-icon slot="start" name="retry"></ion-icon>
                 {{"LOADING.RETRY" | translate}}
             </button>
                     </ion-col>
                     <ion-col>
                         <button ion-button color="danger" full item-right icon-left (click)="cancel()">
-                <ion-icon name="close"></ion-icon>
+                <ion-icon slot="start" name="close"></ion-icon>
                 {{'LOADING.TO_LOGIN'|translate}}
             </button>
                     </ion-col>

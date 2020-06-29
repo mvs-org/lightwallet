@@ -45,9 +45,9 @@
                             </ion-item>
                         </div>
                         <ion-button *ngIf="status == 'PENDING' || status == 'MINED'" class="ion-item show-more-btn" (click)="showHideDetails()">
-                            <ion-icon *ngIf="mode == 'summary'" name="arrow-down"></ion-icon>
+                            <ion-icon slot="start" *ngIf="mode == 'summary'" name="arrow-down"></ion-icon>
                             <span *ngIf="mode == 'summary'" translate="TX.SHOW_DETAILS"></span>
-                            <ion-icon *ngIf="mode !== 'summary'" name="arrow-up"></ion-icon>
+                            <ion-icon slot="start" *ngIf="mode !== 'summary'" name="arrow-up"></ion-icon>
                             <span *ngIf="mode !== 'summary'" translate="TX.HIDE_DETAILS"></span>
                         </ion-button>
                     </ion-col>
@@ -210,8 +210,8 @@
                 <textarea fz-elastic ion-input full class="hexTx" type="text" #copyHexTx value="{{hexTx}}"
                     readonly>{{hexTx}}</textarea>
                 <ion-button expand="full" [ngxClipboard]="copyHexTx">
-                    <ion-icon name="copy"></ion-icon>
-                    {{'COPY'|translate}}
+                    <ion-icon slot="start" name="copy"></ion-icon>
+                    <span translate="COPY"></span>
                 </ion-button>
             </ion-row>
         </div>

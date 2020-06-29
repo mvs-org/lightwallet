@@ -11,7 +11,7 @@
             <ion-item lines="none" *ngIf="input.previous_output.address === undefined && input.previous_output.hash !== '0000000000000000000000000000000000000000000000000000000000000000'" class="align-small-button">
                 <span translate="TX.FOREIGN_INPUT"></span>
                 <ion-button fill="clear" color="primary" (click)="loadForeignInput()">
-                    <ion-icon name="eye"></ion-icon>
+                    <ion-icon slot="icon-only" name="eye"></ion-icon>
                 </ion-button>
             </ion-item>
         </ion-col>
@@ -30,7 +30,7 @@
             <ion-item lines="none" class="script align-small-button" *ngIf="input.previous_output.hash !== '0000000000000000000000000000000000000000000000000000000000000000'">
                 <span>{{'TX.INPUT_INDEX'|translate}}: {{input.previous_output.index}}</span>
                 <ion-button fill="clear" color="primary" (click)="checkInput()">
-                    <ion-icon name="open"></ion-icon>
+                    <ion-icon slot="icon-only" name="open"></ion-icon>
                 </ion-button>
             </ion-item>
         </ion-col>
@@ -79,7 +79,7 @@
             <ion-item lines="none" class="script align-small-button" *ngIf="input.previous_output.hash !== '0000000000000000000000000000000000000000000000000000000000000000'">
                 <span>{{'TX.INPUT_INDEX'|translate}}: {{input.previous_output.index}}</span>
                 <ion-button fill="clear" color="primary" (click)="checkInput()">
-                    <ion-icon name="open"></ion-icon>
+                    <ion-icon slot="icon-only" name="open"></ion-icon>
                 </ion-button>
             </ion-item>
         </ion-col>

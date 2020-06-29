@@ -82,7 +82,7 @@
     <ion-row class="padding-bottom">
       <ion-col>
         <ion-button color="danger" expand="full" routerLink="/avatar">
-          <ion-icon name="close"></ion-icon>
+          <ion-icon slot="start" name="close"></ion-icon>
           {{'CREATE_AVATAR.BUTTON.CANCEL'|translate}}
         </ion-button>
       </ion-col>
@@ -90,7 +90,7 @@
         <ion-button expand="full"
           [disabled]="!sendForm.form.valid||!validSymbol(symbol)||!validAddress(avatar_address)||!validMessageLength(message)"
           (click)="confirm()" color="secondary">
-          <ion-icon disabled="checked" name="cog"></ion-icon>
+          <ion-icon slot="start" disabled="checked" name="cog"></ion-icon>
           {{'CREATE_AVATAR.BUTTON.NEXT'|translate}}
         </ion-button>
       </ion-col>

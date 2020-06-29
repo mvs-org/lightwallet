@@ -92,8 +92,8 @@
                     <ion-row>
                         <ion-col>
                             <ion-button class="right-buttons" (click)="showDetails = !showDetails">
-                                <ion-icon *ngIf="!showDetails" name="arrow-down"></ion-icon>
-                                <ion-icon *ngIf="showDetails" name="arrow-up"></ion-icon>
+                                <ion-icon slot="start" *ngIf="!showDetails" name="arrow-down"></ion-icon>
+                                <ion-icon slot="start" *ngIf="showDetails" name="arrow-up"></ion-icon>
                                 <span *ngIf="!showDetails" translate="BITIDENT.CONFIRM.SHOW_DETAILS"></span>
                                 <span *ngIf="showDetails" translate="BITIDENT.CONFIRM.HIDE_DETAILS"></span>
                             </ion-button>
@@ -117,7 +117,7 @@
             <ion-row>
                 <ion-col>
                     <ion-button color="danger" expand="full" (click)="cancel($event)">
-                        <ion-icon name="close"></ion-icon>
+                        <ion-icon slot="start" name="close"></ion-icon>
                         <span translate="BITIDENT.CONFIRM.BUTTON.CANCEL"></span>
                     </ion-button>
                 </ion-col>

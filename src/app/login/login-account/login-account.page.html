@@ -21,14 +21,14 @@
     <ion-row>
       <ion-col col-sm-6 col-md-5 col-lg-4 col-xl-3>
         <ion-button expand="full" color="danger" (click)="deleteAccount(account.name)">
-          <ion-icon name="trash"></ion-icon>
+          <ion-icon slot="start" name="trash"></ion-icon>
           {{'LOGIN_ACCOUNT.FORGET_BUTTON'|translate}}
         </ion-button>
       </ion-col>
       <ion-col col-sm-6 offset-md-1 col-md-5 offset-lg-2 col-lg-4 offset-xl-3 col-xl-3>
         <ion-button type="submit" expand="full" [disabled]="!complete(password)"
           (click)="importAccount(account, password)">
-          <ion-icon name="arrow-forward"></ion-icon>
+          <ion-icon slot="start" name="arrow-forward"></ion-icon>
           {{'LOGIN_ACCOUNT.LOGIN_BUTTON'|translate}}
         </ion-button>
       </ion-col>

@@ -42,22 +42,23 @@
           <ion-button full icon-left
             [disabled]="!signTxForm.form.valid||!validPassword(passphrase)||(multisig.status == 'MULTISIG' && multisig.selfSigned)"
             (click)="preview()" color="primary">
-            <ion-icon name="create"></ion-icon>
-            {{"CONFIRM.SIGN_ONLY" | translate}}
+            <ion-icon slot="start" name="create"></ion-icon>
+            <span translate="CONFIRM.SIGN_ONLY"></span>
           </ion-button>
           <ion-item *ngIf="multisig.status == 'MULTISIG' && multisig.selfSigned" lines="none" class="wrong-input">
-            {{"MULTISIG_ALREADY_SIGNED" | translate}}</ion-item>
+            <span translate="MULTISIG_ALREADY_SIGNED"></span>
+          </ion-item>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col *ngIf="signedTx">
           <br>
           <h4 translate="CONFIRM.PREVIEW_SIGNED_TX"></h4>
-          <ion-textarea fz-elastic full class="rawtx" type="text" #copySignedTx value="{{signedTx}}"
-            readonly>{{signedTx}}</ion-textarea>
+          <ion-textarea fz-elastic full class="rawtx" type="text" #copySignedTx value="{{signedTx}}" readonly>
+            {{signedTx}}</ion-textarea>
           <ion-button expand="full" [ngxClipboard]="copySignedTx">
-            <ion-icon name="copy"></ion-icon>
-            {{'COPY'|translate}}
+            <ion-icon slot="start" name="copy"></ion-icon>
+            <span translate="COPY"></span>
           </ion-button>
         </ion-col>
       </ion-row>
@@ -67,51 +68,49 @@
       <ion-row>
         <ion-col>
           <h4 translate="CONFIRM.PREVIEW_UNSIGNED_TX"></h4>
-          <ion-textarea fz-elastic full class="rawtx" type="text" #copyHexTx value="{{hexTx}}"
-            readonly>{{hexTx}}</ion-textarea>
+          <ion-textarea fz-elastic full class="rawtx" type="text" #copyHexTx value="{{hexTx}}" readonly>{{hexTx}}
+          </ion-textarea>
         </ion-col>
       </ion-row>
     </div>
     <ion-row *ngIf="walletType == 'hasSeed'">
       <ion-col>
         <ion-button color="danger" expand="full" (click)="cancel($event)">
-          <ion-icon name="close"></ion-icon>
-          {{'CONFIRM.CANCEL'|translate}}
+          <ion-icon slot="start" name="close"></ion-icon>
+          <span translate="CONFIRM.CANCEL"></span>
         </ion-button>
       </ion-col>
       <ion-col>
         <ion-button *ngIf="status != 'SIGNED'" type="submit" expand="full" (click)="send()"
           [disabled]="!signTxForm.form.valid||!validPassword(passphrase)||(multisig.status == 'MULTISIG' && (multisig.selfSigned || multisig.info.m + 1 < multisig.info.n))"
           color="secondary">
-          <ion-icon name="send"></ion-icon>
-          {{"CONFIRM.SIGN_AND_SEND" | translate}}
+          <ion-icon slot="start" name="send"></ion-icon>
+          <span translate="CONFIRM.SIGN_AND_SEND"></span>
         </ion-button>
         <ion-button *ngIf="status == 'SIGNED'" type="submit" expand="full" (click)="broadcast(decodedTx)"
           color="secondary">
-          <ion-icon name="send"></ion-icon>
-          {{"CONFIRM.BROADCAST" | translate}}
+          <ion-icon slot="start" name="send"></ion-icon>
+          <span translate="CONFIRM.BROADCAST"></span>
         </ion-button>
       </ion-col>
     </ion-row>
 
     <ion-row *ngIf="walletType == 'readOnly'">
       <ion-col>
-        <ion-button color="secondary" type="submit" expand="full" [ngxClipboard]="copyHexTx"
-          (click)="home($event)">
-          <ion-icon name="arrow-back"></ion-icon>
-          {{"RETURN_TO_HOME" | translate}}
+        <ion-button color="secondary" type="submit" expand="full" [ngxClipboard]="copyHexTx" (click)="home($event)">
+          <ion-icon slot="start" name="arrow-back"></ion-icon>
+          <span translate="RETURN_TO_HOME"></span>
         </ion-button>
       </ion-col>
       <ion-col>
         <ion-button *ngIf="status == 'SIGNED'" type="submit" expand="full" (click)="broadcast(decodedTx)"
           color="secondary">
-          <ion-icon name="send"></ion-icon>
-          {{"CONFIRM_TX.BROADCAST" | translate}}
+          <ion-icon slot="start" name="send"></ion-icon>
+          <span translate="CONFIRM_TX.BROADCAST"></span>
         </ion-button>
-        <ion-button *ngIf="status !== 'SIGNED'" type="submit" expand="full"
-          [ngxClipboard]="copyHexTx">
-          <ion-icon name="copy"></ion-icon>
-          {{'CONFIRM.COPY'|translate}}
+        <ion-button *ngIf="status !== 'SIGNED'" type="submit" expand="full" [ngxClipboard]="copyHexTx">
+          <ion-icon slot="start" name="copy"></ion-icon>
+          <span translate="CONFIRM.COPY"></span>
         </ion-button>
       </ion-col>
     </ion-row>

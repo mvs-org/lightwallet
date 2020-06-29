@@ -4,19 +4,25 @@
             <ion-col>
                 <ion-item class="grid-info">
                     <ion-avatar item-start>
-                        <img *ngIf="icon" class="coinlogo coinlogosquare img" [src]="icon" (error)="errorImg($event)" [ngClass]="{'default-logo': icon == 'default_mst'}">
+                        <img *ngIf="icon" class="coinlogo coinlogosquare img" [src]="icon" (error)="errorImg($event)"
+                            [ngClass]="{'default-logo': icon == 'default_mst'}">
                     </ion-avatar>
                     <h1 class="symbol overflow">
                         {{symbol}}
-                        <button *ngIf="swap" ion-button clear color="danger" icon-left (click)="gotoSwap()" class="swap-buton">
-                            <ion-icon name="swap"></ion-icon>{{"SWAP"|translate}}
+                        <button *ngIf="swap" ion-button clear color="danger" icon-left (click)="gotoSwap()"
+                            class="swap-buton">
+                            <ion-icon slot="start" name="swap"></ion-icon>
+                            <span translate="SWAP"></span>
                         </button>
-                        <button *ngIf="symbol == 'DNA'" ion-button clear color="danger" icon-left (click)="gotoVote()" class="swap-buton">
-                            <ion-icon name="ribbon"></ion-icon>{{"VOTE"|translate}}
+                        <button *ngIf="symbol == 'DNA'" ion-button clear color="danger" icon-left (click)="gotoVote()"
+                            class="swap-buton">
+                            <ion-icon slot="start" name="ribbon"></ion-icon>
+                            <span translate="VOTE"></span>
                         </button>
                     </h1>
                     <h2 class="balances balance-text">
-                            <div [ngClass]="{'balance-field-fiat': tickers && tickers[base], 'balance-field': !tickers || !tickers[base]}">
+                        <div
+                            [ngClass]="{'balance-field-fiat': tickers && tickers[base], 'balance-field': !tickers || !tickers[base]}">
                             {{"ACCOUNT.TOTAL"|translate}}
                         </div>
                         <div class="balance-field">
@@ -27,10 +33,14 @@
                         </div>
                     </h2>
                     <h2 class="balances">
-                        <div [ngClass]="{'balance-field-fiat': tickers && tickers[base], 'balance-field': !tickers || !tickers[base]}">
-                            <div>{{balance.available + (balance.unconfirmed ? balance.unconfirmed : 0) + balance.frozen | format : balance.decimals}}</div>
+                        <div
+                            [ngClass]="{'balance-field-fiat': tickers && tickers[base], 'balance-field': !tickers || !tickers[base]}">
+                            <div>
+                                {{balance.available + (balance.unconfirmed ? balance.unconfirmed : 0) + balance.frozen | format : balance.decimals}}
+                            </div>
                             <div *ngIf="tickers && tickers[base]" class="fiat">
-                                ≈{{base}} {{(balance.available + (balance.unconfirmed ? balance.unconfirmed : 0) + balance.frozen)*tickers[base].price | decimals : balance.decimals | number : '1.0-2'}}
+                                ≈{{base}}
+                                {{(balance.available + (balance.unconfirmed ? balance.unconfirmed : 0) + balance.frozen)*tickers[base].price | decimals : balance.decimals | number : '1.0-2'}}
                             </div>
                         </div>
                         <div class="balance-field">
@@ -47,16 +57,24 @@
         </ion-row>
         <ion-row col-12 class="row-buttons">
             <ion-col col-4>
-                <ion-button expand="full" fill="clear" color="secondary" icon-left [routerLink]="'/account/addresses/'+symbol">
-                    <ion-icon name="download"></ion-icon>{{"ACCOUNT.BUTTON.RECEIVE" | translate}}</ion-button>
+                <ion-button expand="full" fill="clear" color="secondary" icon-left
+                    [routerLink]="'/account/addresses/'+symbol">
+                    <ion-icon slot="start" name="download"></ion-icon>
+                    <span translate="ACCOUNT.BUTTON.RECEIVE"></span>
+                </ion-button>
             </ion-col>
             <ion-col col-4>
                 <ion-button expand="full" fill="clear" color="danger" icon-left [routerLink]="'/account/send/'+symbol">
-                    <ion-icon name="send"></ion-icon>{{ "ACCOUNT.BUTTON.SEND" | translate }}</ion-button>
+                    <ion-icon slot="start" name="send"></ion-icon>
+                    <span translate="ACCOUNT.BUTTON.SEND"></span>
+                </ion-button>
             </ion-col>
             <ion-col col-4>
-                <ion-button expand="full" fill="clear" color="primary" icon-left [routerLink]="'/account/history/'+symbol">
-                    <ion-icon name="time"></ion-icon>{{ "ACCOUNT.BUTTON.HISTORY" | translate }}</ion-button>
+                <ion-button expand="full" fill="clear" color="primary" icon-left
+                    [routerLink]="'/account/history/'+symbol">
+                    <ion-icon slot="start" name="time"></ion-icon>
+                    <span translate="ACCOUNT.BUTTON.HISTORY"></span>
+                </ion-button>
             </ion-col>
         </ion-row>
     </ion-grid>

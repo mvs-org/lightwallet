@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core'
+import { TranslateService } from '@ngx-translate/core'
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-bitident',
@@ -49,7 +49,7 @@ export class BitidentPage implements OnInit {
 
   isUrl = (url) => (!/[^A-Za-z0-9@_.-]/g.test(url))
 
-  validAuthToken = (token: string) => (token) ? /(\w+)$/i.test(token) : false;
+  validAuthToken = (token: string) => (token) ? /(\w+)$/i.test(token) : false
 
   gotoAuthConfirm = (token) => this.router.navigate(['account', 'bitident', 'confirm'], { state: { data: { token } } })
 
