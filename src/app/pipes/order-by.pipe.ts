@@ -20,7 +20,6 @@ export class OrderByPipe implements PipeTransform {
                 return 0
             }
         })
-        console.log(array)
         return array
     }
 }
