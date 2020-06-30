@@ -24,11 +24,7 @@
                         <ion-spinner *ngIf="isSyncing()"></ion-spinner>
                     </ion-button>
                 </ion-buttons>
-                <ion-item-divider>
-                    <ion-label>
-                        <ion-note>THE NEW REALITY</ion-note>
-                    </ion-label>
-                </ion-item-divider>
+                <ion-item-divider></ion-item-divider>
                 <ion-menu-toggle auto-hide="false" *ngFor="let p of mainItems; let i = index">
                     <ion-item [routerLink]="[p.url]" lines="none" detail="false" >
                         <ion-icon [color]="p.selected ? 'primary' : 'none'" slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
