@@ -4,7 +4,7 @@
             <ion-col size-md="12" size-lg="6" offset-lg="3">
                 <ion-row class="top-message">
                     <ion-col>
-                        <h1>{{"LOADING.TITLE" | translate}}</h1>
+                        <h1 translate="LOADING.TITLE"></h1>
                     </ion-col>
                 </ion-row>
 
@@ -19,22 +19,23 @@
                 {{progress$|async}}%
                 <ion-progress-bar color="primary" [value]="(progress$|async)/100"></ion-progress-bar>
 
-                <h4 *ngIf="progress != 100" [translate]="'LOADING.CURRENT_HEIGHT'" [translateParams]="{height: metaverseService.lastTxHeight$|async}"></h4>
-                <h4 class="valid-input" *ngIf="progress == 100" [translate]="'LOADING.COMPLETE'"></h4>
+                <h4 *ngIf="(progress$|async) != 100" translate="LOADING.CURRENT_HEIGHT"
+                    [translateParams]="{height: metaverseService.lastTxHeight$|async}"></h4>
+                <h4 class="valid-input" *ngIf="(progress$|async) == 100" translate="LOADING.COMPLETE"></h4>
 
-                <p class="wrong-input" *ngIf="showRestartOption" [translate]="'LOADING.STOPPED'"></p>
+                <p class="wrong-input" *ngIf="showRestartOption" translate="LOADING.STOPPED"></p>
                 <ion-row *ngIf="showRestartOption" class="padding-bottom">
                     <ion-col>
-                        <button type="submit" ion-button full icon-left (click)="updateBalances()" color="primary">
-                <ion-icon slot="start" name="retry"></ion-icon>
-                {{"LOADING.RETRY" | translate}}
-            </button>
+                        <ion-button color="danger" (click)="cancel()">
+                            <ion-icon slot="start" name="close"></ion-icon>
+                            <span translate="LOADING.TO_LOGIN"></span>
+                        </ion-button>
                     </ion-col>
                     <ion-col>
-                        <button ion-button color="danger" full item-right icon-left (click)="cancel()">
-                <ion-icon slot="start" name="close"></ion-icon>
-                {{'LOADING.TO_LOGIN'|translate}}
-            </button>
+                        <ion-button type="submit" (click)="updateBalances()" color="primary">
+                            <ion-icon slot="start" name="retry"></ion-icon>
+                            <span translate="LOADING.RETRY"></span>
+                        </ion-button>
                     </ion-col>
                 </ion-row>
             </ion-col>

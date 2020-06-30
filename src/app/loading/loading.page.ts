@@ -54,7 +54,7 @@ export class LoadingPage implements OnInit, OnDestroy {
         }
     }
 
-    private async updateBalances() {
+    async updateBalances() {
         console.log('update balances')
         this.showRestartOption = false
         try {
