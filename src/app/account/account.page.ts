@@ -23,6 +23,18 @@ export class AccountPage implements OnInit, OnDestroy {
     offline = false
     hasSeed: boolean
     public selectedIndex = 0
+    public apps = [
+        {
+            title: 'BITIDENT.MENU_ENTRY',
+            url: '/account/bitident',
+            icon: 'finger-print'
+        },
+        {
+            title: 'SWFT.MENU_ENTRY',
+            url: '/account/swft',
+            icon: 'swap-horizontal'
+        },
+    ]
     public appPages = [
         {
             title: 'Portfolio',
@@ -30,14 +42,9 @@ export class AccountPage implements OnInit, OnDestroy {
             icon: 'home'
         },
         {
-            title: 'AVATAR.MENU_ENTRY',
-            url: '/account/avatar',
+            title: 'IDENTITIES.MENU_ENTRY',
+            url: '/account/identities/ETP',
             icon: 'person'
-        },
-        {
-            title: 'Addresses',
-            url: '/account/addresses/ETP',
-            icon: 'swap-horizontal'
         },
         {
             title: 'MST.MENU_ENTRY',
@@ -53,16 +60,6 @@ export class AccountPage implements OnInit, OnDestroy {
             title: 'CERTIFICATES.MENU_ENTRY',
             url: '/account/certificates',
             icon: 'receipt'
-        },
-        {
-            title: 'BITIDENT.MENU_ENTRY',
-            url: '/account/bitident',
-            icon: 'finger-print'
-        },
-        {
-            title: 'SWFT.MENU_ENTRY',
-            url: '/account/swft',
-            icon: 'swap-horizontal'
         },
         {
             title: 'SETTINGS.MENU_ENTRY',

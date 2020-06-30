@@ -13,8 +13,8 @@ const routes: Routes = [
                 loadChildren: () => import('./history/history.module').then(m => m.HistoryPageModule)
             },
             {
-                path: 'addresses',
-                loadChildren: () => import('./addresses/addresses.module').then(m => m.AddressesPageModule)
+                path: 'identities',
+                loadChildren: () => import('./identities/identities.module').then(m => m.IdentitiesPageModule)
             },
             {
                 path: 'send',

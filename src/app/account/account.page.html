@@ -36,6 +36,18 @@
                         <ion-label>{{ p.title | translate }}</ion-label>
                     </ion-item>
                 </ion-menu-toggle>
+                <ion-item-divider>
+                    <ion-label>
+                        <ion-note>Apps</ion-note>
+                    </ion-label>
+                </ion-item-divider>
+                <ion-menu-toggle auto-hide="false" *ngFor="let p of apps; let i = index">
+                    <ion-item [routerLink]="[p.url]" lines="none"
+                        detail="false">
+                        <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
+                        <ion-label>{{ p.title | translate }}</ion-label>
+                    </ion-item>
+                </ion-menu-toggle>
             </ion-list>
         </ion-content>
     </ion-menu>

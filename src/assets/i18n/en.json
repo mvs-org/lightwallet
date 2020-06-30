@@ -202,8 +202,9 @@
         "III_INFO": "Should you have any question regarding the privacy policies above, please contact us using the following email address: info@mvs.org",
         "FOOTER": "The Metaverse Team reserves the right to interpret and change the aforementioned clauses at any time, in our sole discretion. MyETPWallet is distributed under the protection of the MIT open source protocol."
     },
-    "ADDRESSES": {
-        "TITLE": "Addresses",
+    "IDENTITIES": {
+        "TITLE": "Identities",
+        "MENU_ENTRY": "Identities",
         "AVAILABLE": "Available",
         "FROZEN": "Frozen",
         "UNCONFIRMED": "Unconfirmed",
