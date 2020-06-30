@@ -1,17 +1,16 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { HistoryPage } from './history.page';
+import { SwftPage } from './swft.page';
 
 const routes: Routes = [
   {
     path: '',
-    pathMatch: 'full',
-    redirectTo: 'ETP'
+    component: SwftPage
   },
   {
-    path: ':symbol',
-    component: HistoryPage
+    path: 'order',
+    loadChildren: () => import('./order-detail/order-detail.module').then( m => m.OrderDetailPageModule)
   }
 ];
 
@@ -19,4 +18,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class HistoryPageRoutingModule {}
+export class SwftPageRoutingModule {}

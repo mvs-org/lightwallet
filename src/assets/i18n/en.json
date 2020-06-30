@@ -60,7 +60,7 @@
     },
     "MIT": {
         "TITLE": "MIT - Metaverse Identifiable Token",
-        "MENU_ENTRY": "Identifiable Token",
+        "MENU_ENTRY": "Identifiable Tokens",
         "NO_MIT": "You don't have any MIT yet. In order to create MIT you first have to create an avatar.",
         "BUTTON": {
             "CREATE_MIT": "Create MIT"
@@ -68,7 +68,7 @@
     },
     "MST": {
         "TITLE": "MST - Metaverse Smart Token",
-        "MENU_ENTRY": "Smart Token"
+        "MENU_ENTRY": "Smart Tokens"
     },
     "CREATE_MST": {
         "TITLE": "Create MST",
@@ -203,8 +203,9 @@
         "III_INFO": "Should you have any question regarding the privacy policies above, please contact us using the following email address: info@mvs.org",
         "FOOTER": "The Metaverse Team reserves the right to interpret and change the aforementioned clauses at any time, in our sole discretion. MyETPWallet is distributed under the protection of the MIT open source protocol."
     },
-    "ADDRESSES": {
-        "TITLE": "Addresses",
+    "IDENTITIES": {
+        "TITLE": "Identities",
+        "MENU_ENTRY": "Identities",
         "AVAILABLE": "Available",
         "FROZEN": "Frozen",
         "UNCONFIRMED": "Unconfirmed",
@@ -315,6 +316,7 @@
     },
     "HISTORY": {
         "TITLE": "Transaction history",
+        "MENU_ENTRY": "History",
         "TRANSACTIONS": "Transactions",
         "LOCKS": "Locks",
         "ASSETS_LIST": "Asset",
@@ -722,5 +724,72 @@
             "EXPIRED": "Authentication token expired. Please get a new token.",
             "DIFFERENT_NETWORK": "You are not using the network matching this request. Please switch to the following network:"
         }
+    },
+    "SWFT": {
+        "MENU_ENTRY": "SWFT",
+        "TITLE": "SWFT - Token Swap",
+        "RECIPIENT_ADDRESS": "Recipient address",
+        "FROM_ASSET": "Send",
+        "AMOUNT_SEND": "Amount",
+        "TO_ASSET": "Receive",
+        "AMOUNT_RECEIVE": "Amount",
+        "MIN_MAX_DEPOSIT": "Min-max deposit range: {{min}}-{{max}} {{symbol}}, deposit fee: {{fee}}%",
+        "RATE_INFO": "Rate: {{rate}}",
+        "RECEIVE_COIN_FEE": "Receive coin fee: {{fee}} {{symbol}}",
+        "DEPOSIT_ADDRESS": "{{symbol}} deposit address",
+        "REFUND_ADDRESS": "{{symbol}} refund address",
+        "RECEIVE_ADDRESS": "{{symbol}} receive address",
+        "REFUND_TX": "{{symbol}} refund transaction",
+        "RECEIVE_TX": "{{symbol}} receive transaction",
+        "HISTORY_TITLE": "History",
+        "HISTORY_DESCRIPTION": "This history is only saved locally. An order will only appear on the device used to generate it and till you logout. If you need a record, please save the order ID.",
+        "ETP_BRIDGE_DETAILS": "Order details",
+        "MESSAGE": {
+            "CREATE_SWFT_ORDER_ERROR": "Error while creating the order. Please check your inputs and try again.",
+            "UNABLE_CONNECT_SWFT": "Unable to connect to SWFT. Please check your internet connection or try again later.",
+            "SUCCESS_CREATE_SWFT_TITLE": "Order created!",
+            "SUCCESS_CREATE_SWFT_BODY": "Your order has been created. The next step is to do the deposit.",
+            "SUCCESS_IMPORT_SWFT_TITLE": "Order imported!",
+            "SUCCESS_IMPORT_SWFT_BODY": "Order imported successfully"
+        },
+        "STATUS": {
+            "wait_deposit_send": "Waiting for deposit",
+            "wait_exchange_push": "Exchanging...",
+            "wait_exchange_return": "Exchanging...",
+            "wait_refund_send": "Exchange failure, preparing refund",
+            "wait_refund_confirm": "Tokens returned, awaiting blockchain confirmation",
+            "wait_refund_complete": "Order failed, token successfully returned",
+            "wait_receive_send": "Sending tokens",
+            "wait_receive_confirm": "Tokens sent, awaiting blockchain confirmation",
+            "receive_complete": "Order completed",
+            "timeout": "Order timeout",
+            "fail": "Order failed"
+        },
+        "STATUS_DESCRIPTION": {
+            "wait_deposit_send": "The order has been created. Please deposit your tokens to the address specified below. If you already did the deposit, please wait.",
+            "wait_exchange_push": "Your tokens are have been received and are being exchanged at the current rate.",
+            "wait_exchange_return": "Your tokens are have been received and are being exchanged at the current rate.",
+            "wait_refund_send": "The exchange has failed. Your deposit will be sent back to your refund address.",
+            "wait_refund_confirm": "The order has failed. The refund has been sent back to your refund address, waiting for the blockchain confirmation",
+            "wait_refund_complete": "The order has failed, your deposit has been successfully returned to your refund address",
+            "wait_receive_send": "Your deposit and the exchange have been successfully completed, your tokens are being sent.",
+            "wait_receive_confirm": "Exchange successful, your tokens have been sent, waiting for blockchain confirmation.",
+            "receive_complete": "The order is completed, your tokens have been sent and confirmed.",
+            "timeout": "The deposit has not been done on time, the order is now timeout",
+            "fail": "The order has failed"
+        },
+        "DEPOSIT_ADDRESS_ADVICE": "Please deposit {{amount}} {{symbol}} to this address",
+        "REFUND_ADDRESS_ADVICE": "This is your refund address. In case of problem, your deposit will be sent back to this address.",
+        "RECEIVE_ADDRESS_ADVICE": "You will receive the {{symbol}} on this address",
+        "IMPORT_ORDER": "Import existing order",
+        "CREATE_ORDER": "Create a new order",
+        "CREATE_ORDER_DESCRIPTION": "Create an order to buy or sell ETP from or to many other coins. After creating the order, don't forget to do the Deposit.",
+        "ORDER_ID": "Order ID",
+        "IMPORT_ORDER_BUTTON": "Import order",
+        "SEE_DETAILS_BUTTON": "See details",
+        "INFORMATION": "This service is provided by SWFT. In case of issue, please contact SWFT support on ",
+        "IMPORT_ORDER_DESCRIPTION": "If you created an order from another device or directly from SWFT website, you can import it with the order ID to follow its status.",
+        "INFORMATION_WARNING": "The SWFT telegram support will never ask a user to send any funds to addresses other than the deposit address of the order details. Details about the order should not be necessary. The order id should be enough information for the support to find the order.",
+        "INFORMATION_LINK": "Telegram"
     }
 }

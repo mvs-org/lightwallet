@@ -168,6 +168,9 @@ ion-item span {
     overflow: visible;
 }
 
-.content {
-    padding: 20px;
+ion-content{
+    --padding-start: 20px;
+    --padding-top: 20px;
+    --padding-bottom: 20px;
+    --padding-end: 20px;
 }

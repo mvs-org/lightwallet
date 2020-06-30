@@ -1,4 +1,10 @@
 .logo{
     max-width: 256px;
     margin: 14px;
+    pointer-events: none;
+}
+
+ion-split-pane{
+    --side-max-width: 320px;
+    user-select: none;
 }

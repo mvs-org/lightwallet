@@ -74,7 +74,7 @@ export class ConfirmPage {
 
   async check(token) {
 
-    if (!this.token || !isString(this.token) || this.token.trim().length === 0) {
+    if (this.token === undefined || !isString(this.token) || this.token.trim().length === 0) {
       this.location.back()
       return this.alert.showError('BITIDENT.MESSAGE.TOKEN_MISSING', '')
     }

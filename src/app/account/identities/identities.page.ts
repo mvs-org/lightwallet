@@ -7,11 +7,11 @@ import { QrComponent } from 'src/app/qr/qr.component'
 import { TranslateService } from '@ngx-translate/core'
 
 @Component({
-    selector: 'app-addresses',
-    templateUrl: './addresses.page.html',
-    styleUrls: ['./addresses.page.scss'],
+    selector: 'app-identities',
+    templateUrl: './identities.page.html',
+    styleUrls: ['./identities.page.scss'],
 })
-export class AddressesPage implements OnInit {
+export class IdentitiesPage implements OnInit {
 
     selectedAsset: any
     addressbalances: any

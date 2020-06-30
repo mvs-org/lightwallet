@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms'
 
 import { IonicModule } from '@ionic/angular'
 
-import { AddressesPageRoutingModule } from './addresses-routing.module'
+import { IdentitiesPageRoutingModule } from './identities-routing.module'
 import { ClipboardModule } from 'ngx-clipboard'
-import { AddressesPage } from './addresses.page'
+import { IdentitiesPage } from './identities.page'
 import { TranslateModule } from '@ngx-translate/core'
 import { QrModule } from 'src/app/qr/qr.module'
 
@@ -18,8 +18,8 @@ import { QrModule } from 'src/app/qr/qr.module'
     IonicModule,
     ClipboardModule,
     QrModule,
-    AddressesPageRoutingModule,
+    IdentitiesPageRoutingModule,
   ],
-  declarations: [AddressesPage]
+  declarations: [IdentitiesPage]
 })
-export class AddressesPageModule {}
+export class IdentitiesPageModule {}

@@ -24,20 +24,34 @@
                         <ion-spinner *ngIf="isSyncing()"></ion-spinner>
                     </ion-button>
                 </ion-buttons>
+                <ion-item-divider></ion-item-divider>
+                <ion-menu-toggle auto-hide="false" *ngFor="let p of mainItems; let i = index">
+                    <ion-item [routerLink]="[p.url]" lines="none" detail="false" >
+                        <ion-icon [color]="p.selected ? 'primary' : 'none'" slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
+                        <ion-label>{{ p.title | translate }}</ion-label>
+                    </ion-item>
+                </ion-menu-toggle>
                 <ion-item-divider>
                     <ion-label>
-                        <ion-note>THE NEW REALITY</ion-note>
+                        <ion-note>Apps</ion-note>
                     </ion-label>
                 </ion-item-divider>
-                <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
-                    <ion-item (click)="selectedIndex = i" [routerLink]="[p.url]" lines="none"
-                        detail="false" [class.selected]="selectedIndex == i">
-                        <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
+                <ion-menu-toggle auto-hide="false" *ngFor="let p of appItems">
+                    <ion-item [routerLink]="[p.url]" lines="none" detail="false">
+                        <ion-icon [color]="p.selected ? 'primary' : 'none'" slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
                         <ion-label>{{ p.title | translate }}</ion-label>
                     </ion-item>
                 </ion-menu-toggle>
             </ion-list>
         </ion-content>
+        <ion-footer>
+                <ion-menu-toggle auto-hide="false" *ngFor="let p of footerItems">
+                    <ion-item [routerLink]="[p.url]" lines="none" detail="false">
+                        <ion-icon [color]="p.selected ? 'primary' : 'none'" slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
+                        <ion-label>{{ p.title | translate }}</ion-label>
+                    </ion-item>
+                </ion-menu-toggle>
+        </ion-footer>
     </ion-menu>
     <ion-router-outlet id="main-content"></ion-router-outlet>
 </ion-split-pane>

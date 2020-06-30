@@ -1,12 +1,18 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
 import { MetaverseService } from '../services/metaverse.service'
-import { Router } from '@angular/router'
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router'
 import { Platform } from '@ionic/angular'
 import { WalletService } from '../services/wallet.service'
 import { LogoutService } from '../services/logout.service'
 import { filter } from 'rxjs/operators'
 import { Subscription } from 'rxjs'
 
+interface MenuItem {
+    title: string
+    url: string
+    icon?: string
+    selected?: boolean
+}
 @Component({
     selector: 'app-account',
     templateUrl: './account.page.html',
@@ -23,21 +29,37 @@ export class AccountPage implements OnInit, OnDestroy {
     offline = false
     hasSeed: boolean
     public selectedIndex = 0
-    public appPages = [
+
+    public appItems: MenuItem[] = [
+        {
+            title: 'BITIDENT.MENU_ENTRY',
+            url: '/account/bitident',
+            icon: 'finger-print'
+        },
+        {
+            title: 'SWFT.MENU_ENTRY',
+            url: '/account/swft',
+            icon: 'swap-horizontal'
+        },
+    ]
+    public footerItems: MenuItem[] = [
+        {
+            title: 'SETTINGS.MENU_ENTRY',
+            url: '/account/settings',
+            icon: 'cog'
+        },
+    ]
+    public mainItems: MenuItem[] = [
         {
             title: 'Portfolio',
             url: '/account/portfolio',
-            icon: 'home'
+            icon: 'home',
+            selected: false
         },
         {
-            title: 'AVATAR.MENU_ENTRY',
-            url: '/account/avatar',
+            title: 'IDENTITIES.MENU_ENTRY',
+            url: '/account/identities/ETP',
             icon: 'person'
-        },
-        {
-            title: 'Addresses',
-            url: '/account/addresses/ETP',
-            icon: 'swap-horizontal'
         },
         {
             title: 'MST.MENU_ENTRY',
@@ -55,18 +77,16 @@ export class AccountPage implements OnInit, OnDestroy {
             icon: 'receipt'
         },
         {
-        title: 'BITIDENT.MENU_ENTRY',
-            url: '/account/bitident',
-            icon: 'finger-print'
-        },
-        {
-            title: 'SETTINGS.MENU_ENTRY',
-            url: '/account/settings',
-            icon: 'cog'
+            title: 'HISTORY.MENU_ENTRY',
+            url: '/account/history',
+            icon: 'time'
         },
     ]
 
-    private readySubscription: Subscription
+
+
+    private readySubscription$: Subscription
+    private routerSubscription$: Subscription
 
     constructor(
         private metaverseService: MetaverseService,
@@ -75,7 +95,35 @@ export class AccountPage implements OnInit, OnDestroy {
         private router: Router,
         private logoutService: LogoutService,
     ) {
-        this.readySubscription = this.metaverseService.ready$
+        this.routerSubscription$ = this.router.events
+            .pipe(
+                filter((e): e is NavigationEnd => e instanceof NavigationEnd),
+            )
+            .subscribe((change) => {
+                this.appItems.forEach(item => {
+                    if (change.url.startsWith(item.url)) {
+                        item.selected = true
+                    } else {
+                        item.selected = false
+                    }
+                })
+                this.mainItems.forEach(item => {
+                    if (change.url.startsWith(item.url)) {
+                        item.selected = true
+                    } else {
+                        item.selected = false
+                    }
+                })
+                this.footerItems.forEach(item => {
+                    if (change.url.startsWith(item.url)) {
+                        item.selected = true
+                    } else {
+                        item.selected = false
+                    }
+                })
+            })
+
+        this.readySubscription$ = this.metaverseService.ready$
             .pipe(filter(ready => ready))
             .subscribe(() => {
                 const lastupdate = new Date()
@@ -102,13 +150,16 @@ export class AccountPage implements OnInit, OnDestroy {
 
     ionViewWillLeave() {
         console.log('leave account')
-        if (this.readySubscription) {
-            this.readySubscription.unsubscribe()
+        if (this.readySubscription$) {
+            this.readySubscription$.unsubscribe()
         }
         clearInterval(this.syncinterval)
     }
 
     ngOnDestroy() {
+        if (this.routerSubscription$) {
+            this.routerSubscription$.unsubscribe()
+        }
     }
 
     private update = async () => {
