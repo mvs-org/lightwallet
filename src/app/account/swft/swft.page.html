@@ -25,7 +25,7 @@
   <h3>{{"SWFT.CREATE_ORDER" | translate}}</h3>
   <p>{{"SWFT.CREATE_ORDER_DESCRIPTION" | translate}}</p>
 
-  <div class="mini-loader" *ngIf="loadingPair"></div>
+  <ion-spinner name="dots" *ngIf="loadingPair"></ion-spinner>
 
   <h4 *ngIf="!loadingPair && !bridgePairs" class="wrong-input center">{{"SWFT.UNABLE_CONNECT_SWFT" | translate}}
   </h4>
@@ -40,6 +40,7 @@
         <ion-icon id="swapIcon" name="swap" (click)="switch()"></ion-icon>
         <div *ngIf="bridgeRate" id="rate" no-lines [translate]="'SWFT.RATE_INFO'"
           [translateParams]="{rate: bridgeRate.instantRate}"></div>
+        <ion-spinner *ngIf="loadingRate" name="dots"></ion-spinner>
       </div>
 
 

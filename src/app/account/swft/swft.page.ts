@@ -20,6 +20,7 @@ export class SwftPage implements OnInit {
   bridgeRate: any
   bridgePairs: any
   loadingPair = true
+  loadingRate = false
   depositSymbolList: Array<string> = []
 
   orders: OrderDetails[] = []
@@ -46,59 +47,67 @@ export class SwftPage implements OnInit {
     public modalCtrl: ModalController,
     private router: Router,
   ) {
-  this.getRate()
-  this.loadOrders()
 
-  this.etpBridgeService.getBridgePairs().toPromise()
-    .then(pairs => {
-      this.loadingPair = false
-      this.bridgePairs = pairs
-      this.depositSymbolList = Object.keys(this.bridgePairs)
-    })
-    .catch((error) => {
-      this.loadingPair = false
-      console.error(error)
-    })
-
-  // Load addresses and balances
-  Promise.all([this.mvs.getBalances(), this.mvs.getAddresses(), this.mvs.getAddressBalances()])
-    .then(([balances, addresses, addressbalances]) => {
-      this.etpBalance = balances.ETP.available
-      this.addresses = addresses
-
-      const addrblncs = []
-      Object.keys(addresses).forEach((index) => {
-        const address = addresses[index]
-        if (addressbalances[address]) {
-          addrblncs.push({
-            address,
-            avatar: addressbalances[address].AVATAR ? addressbalances[address].AVATAR : '',
-            identifier: addressbalances[address].AVATAR ? addressbalances[address].AVATAR : address,
-            balance: addressbalances[address].ETP.available,
-          })
-        } else {
-          addrblncs.push({
-            address,
-            avatar: '',
-            identifier: address,
-            balance: 0,
-          })
-        }
+    this.etpBridgeService.getBridgePairs().toPromise()
+      .then(pairs => {
+        this.loadingPair = false
+        this.bridgePairs = pairs
+        this.depositSymbolList = Object.keys(this.bridgePairs)
       })
-      this.addressbalances = addrblncs
-    })
+      .catch((error) => {
+        this.loadingPair = false
+        console.error(error)
+      })
+
+    // Load addresses and balances
+    Promise.all([this.mvs.getBalances(), this.mvs.getAddresses(), this.mvs.getAddressBalances()])
+      .then(([balances, addresses, addressbalances]) => {
+        this.etpBalance = balances.ETP.available
+        this.addresses = addresses
+
+        const addrblncs = []
+        Object.keys(addresses).forEach((index) => {
+          const address = addresses[index]
+          if (addressbalances[address]) {
+            addrblncs.push({
+              address,
+              avatar: addressbalances[address].AVATAR ? addressbalances[address].AVATAR : '',
+              identifier: addressbalances[address].AVATAR ? addressbalances[address].AVATAR : address,
+              balance: addressbalances[address].ETP.available,
+            })
+          } else {
+            addrblncs.push({
+              address,
+              avatar: '',
+              identifier: address,
+              balance: 0,
+            })
+          }
+        })
+        this.addressbalances = addrblncs
+      })
   }
 
   ngOnInit() {
 
   }
 
+  ionViewWillEnter() {
+    this.getRate()
+    this.loadOrders()
+  }
+
   getRate() {
+    this.loadingRate = true
     this.bridgeRate = undefined
-    this.etpBridgeService.getBridgeRate(this.createOrderParameters.depositSymbol, this.createOrderParameters.receiveSymbol).toPromise().then(rate => {
-      this.bridgeRate = rate
-      this.updateReceiveAmount()
-    })
+    this.etpBridgeService.getBridgeRate(this.createOrderParameters.depositSymbol, this.createOrderParameters.receiveSymbol).toPromise()
+      .then(rate => {
+        this.bridgeRate = rate
+        this.updateReceiveAmount()
+      })
+      .finally(() => {
+        this.loadingRate = false
+      })
   }
 
   async loadOrders() {
