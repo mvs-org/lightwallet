@@ -55,9 +55,14 @@ export class AccountPage implements OnInit, OnDestroy {
             icon: 'receipt'
         },
         {
-        title: 'BITIDENT.MENU_ENTRY',
+            title: 'BITIDENT.MENU_ENTRY',
             url: '/account/bitident',
             icon: 'finger-print'
+        },
+        {
+            title: 'SWFT.MENU_ENTRY',
+            url: '/account/swft',
+            icon: 'swap-horizontal'
         },
         {
             title: 'SETTINGS.MENU_ENTRY',

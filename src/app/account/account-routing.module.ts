@@ -56,6 +56,10 @@ const routes: Routes = [
                 path: 'bitident',
                 loadChildren: () => import('./bitident/bitident.module').then(m => m.BitidentPageModule)
             },
+            {
+                path: 'swft',
+                loadChildren: () => import('./swft/swft.module').then(m => m.SwftPageModule)
+            },
         ]
     },
 ]
