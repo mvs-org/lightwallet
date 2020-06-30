@@ -9,12 +9,17 @@ import { MetaverseService } from 'src/app/services/metaverse.service';
 export class CertificatesPage implements OnInit {
 
   certificates: any[]
+  noCert = false
+
   constructor(
     private metaverseService: MetaverseService,
   ) { }
 
   async ngOnInit() {
     this.certificates = await this.metaverseService.listCerts()
+    if (this.certificates.length === 0) {
+      this.noCert = true
+    }
   }
 
 }

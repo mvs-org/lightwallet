@@ -8,15 +8,29 @@
 </ion-header>
 
 <ion-content>
+  <div class="content">
+    <ion-row>
+      <ion-col>
+        <p align="center" translate="CERTIFICATES.INFORMATION"></p>
+      </ion-col>
+    </ion-row>
+    <div *ngIf="certificates else loading">
+      <div class="noCert" *ngIf="noCert" translate="CERTIFICATES.NO_CERTIFICATE"></div>
 
-  <ion-list *ngIf="certificates">
-    <ion-item *ngFor="let certificate of certificates">
-      <ion-label>
-        <b>{{certificate.attachment.symbol}}</b>
-        <div>{{certificate.attachment.owner}}</div>
-        <div>{{certificate.attachment.cert}}</div>
-      </ion-label>
-    </ion-item>
-  </ion-list>
+      <ion-list *ngIf="certificates">
+        <ion-item *ngFor="let certificate of certificates">
+          <ion-label>
+            <b>{{certificate.attachment.symbol}}</b>
+            <div>{{certificate.attachment.owner}}</div>
+            <div>{{certificate.attachment.cert}}</div>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+
+  <ng-template #loading>
+    <ion-spinner></ion-spinner>
+  </ng-template>
 
 </ion-content>

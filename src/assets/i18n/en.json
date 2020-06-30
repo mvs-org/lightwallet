@@ -55,6 +55,7 @@
     "CERTIFICATES": {
         "TITLE": "Certificates",
         "MENU_ENTRY": "Certificates",
+        "INFORMATION": "Certificates provides special rights to their owners",
         "NO_CERTIFICATE": "You don't have any certificates yet."
     },
     "MIT": {
