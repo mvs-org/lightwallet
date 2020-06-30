@@ -59,7 +59,7 @@
     },
     "MIT": {
         "TITLE": "MIT - Metaverse Identifiable Token",
-        "MENU_ENTRY": "Identifiable Token",
+        "MENU_ENTRY": "Identifiable Tokens",
         "NO_MIT": "You don't have any MIT yet. In order to create MIT you first have to create an avatar.",
         "BUTTON": {
             "CREATE_MIT": "Create MIT"
@@ -67,7 +67,7 @@
     },
     "MST": {
         "TITLE": "MST - Metaverse Smart Token",
-        "MENU_ENTRY": "Smart Token"
+        "MENU_ENTRY": "Smart Tokens"
     },
     "CREATE_MST": {
         "TITLE": "Create MST",
