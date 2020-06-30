@@ -68,7 +68,8 @@
     },
     "MST": {
         "TITLE": "MST - Metaverse Smart Token",
-        "MENU_ENTRY": "Smart Tokens"
+        "MENU_ENTRY": "Smart Tokens",
+        "GRID_TITLE": "My MSTs"
     },
     "CREATE_MST": {
         "TITLE": "Create MST",

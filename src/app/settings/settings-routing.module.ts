@@ -16,6 +16,10 @@ const routes: Routes = [
     path: 'export-mobile',
     loadChildren: () => import('./export-mobile/export-mobile.module').then( m => m.ExportMobilePageModule)
   },
+  {
+    path: 'export-xpub',
+    loadChildren: () => import('./export-mobile/export-mobile.module').then( m => m.ExportMobilePageModule)
+  },
 ]
 
 @NgModule({

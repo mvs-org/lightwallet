@@ -61,7 +61,7 @@
         </ion-col>
         <ion-col col-md-6 col-sm-12 col-12>
           <ion-item
-            [ngClass]="{'error-border': !validQuantity(period.quanity), 'valid-border': validQuantity(period.quantity)}">
+            [ngClass]="{'error-border': !validQuantity(period.quantity), 'valid-border': validQuantity(period.quantity)}">
             <ion-label [translate]="'ASSET_LOCK.AMOUNT_CUSTOM_PERIOD'" [translateParams]="{period_nbr: i+1}"
               color="primary" position="floating"></ion-label>
             <ion-input type="number" min="0" [(ngModel)]="period.quantity" (ngModelChange)="inputChange($event)"
