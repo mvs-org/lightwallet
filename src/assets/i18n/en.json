@@ -315,6 +315,7 @@
     },
     "HISTORY": {
         "TITLE": "Transaction history",
+        "MENU_ENTRY": "History",
         "TRANSACTIONS": "Transactions",
         "LOCKS": "Locks",
         "ASSETS_LIST": "Asset",

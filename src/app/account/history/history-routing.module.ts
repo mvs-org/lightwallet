@@ -5,6 +5,11 @@ import { HistoryPage } from './history.page';
 
 const routes: Routes = [
   {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'ETP'
+  },
+  {
     path: ':symbol',
     component: HistoryPage
   }
