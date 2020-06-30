@@ -30,8 +30,8 @@
                     </ion-label>
                 </ion-item-divider>
                 <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
-                    <ion-item (click)="selectedIndex = i" [routerLink]="[p.url]" lines="none"
-                        detail="false" [class.selected]="selectedIndex == i">
+                    <ion-item (click)="selectedIndex = i" [routerLink]="[p.url]" lines="none" detail="false"
+                        [class.selected]="selectedIndex == i">
                         <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
                         <ion-label>{{ p.title | translate }}</ion-label>
                     </ion-item>
@@ -42,14 +42,19 @@
                     </ion-label>
                 </ion-item-divider>
                 <ion-menu-toggle auto-hide="false" *ngFor="let p of apps; let i = index">
-                    <ion-item [routerLink]="[p.url]" lines="none"
-                        detail="false">
+                    <ion-item [routerLink]="[p.url]" lines="none" detail="false">
                         <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
                         <ion-label>{{ p.title | translate }}</ion-label>
                     </ion-item>
                 </ion-menu-toggle>
             </ion-list>
         </ion-content>
+        <ion-footer>
+            <ion-item routerLink="/account/settings" lines="none" detail="false">
+                <ion-icon slot="start" [ios]="'cog-outline'" [md]="'cog-sharp'"></ion-icon>
+                <ion-label translate="SETTINGS.MENU_ENTRY"></ion-label>
+            </ion-item>
+        </ion-footer>
     </ion-menu>
     <ion-router-outlet id="main-content"></ion-router-outlet>
 </ion-split-pane>

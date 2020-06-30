@@ -61,11 +61,6 @@ export class AccountPage implements OnInit, OnDestroy {
             url: '/account/certificates',
             icon: 'receipt'
         },
-        {
-            title: 'SETTINGS.MENU_ENTRY',
-            url: '/account/settings',
-            icon: 'cog'
-        },
     ]
 
     private readySubscription: Subscription
