@@ -8,7 +8,6 @@ import { MstPageRoutingModule } from './mst-routing.module'
 
 import { MstPage } from './mst.page'
 
-import { MSTCardComponent } from '../components/mst-card/mst-card.component'
 import { PipesModule } from 'src/app/pipes/pipes.module'
 import { TranslateModule } from '@ngx-translate/core'
 
@@ -21,6 +20,8 @@ import { TranslateModule } from '@ngx-translate/core'
     TranslateModule.forChild(),
     MstPageRoutingModule
   ],
-  declarations: [MstPage, MSTCardComponent]
+  declarations: [
+    MstPage,
+  ]
 })
 export class MstPageModule {}
