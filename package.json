@@ -29,6 +29,7 @@
     "@ionic/storage": "^2.2.0",
     "@ngx-translate/core": "^12.1.2",
     "@ngx-translate/http-loader": "^4.0.0",
+    "angular2-qrscanner": "^1.0.7",
     "bitident": "^0.1.11",
     "crypto-js": "^4.0.0",
     "lodash": "^4.17.15",

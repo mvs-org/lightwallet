@@ -27,6 +27,10 @@ const routes: Routes = [
         canActivateChild: [AccountGuard],
         loadChildren: () => import('./loading/loading.module').then(m => m.LoadingPageModule)
     },
+  {
+    path: 'scan',
+    loadChildren: () => import('./scan/scan.module').then( m => m.ScanPageModule)
+  },
 ]
 
 @NgModule({
