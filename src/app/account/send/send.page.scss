@@ -11,8 +11,8 @@
 }
 
 .right-buttons {
-    float: right;
-    height: 34px;
+    text-align: right;
+    width: 100%;
 }
 
 .list-md .item-input:last-child {
@@ -21,18 +21,17 @@
     box-shadow: inset 0 0 0 0 !important;
 }
 
-.inline {
+.total-amount {
     display: inline;
 }
 
-.recipient-title {
-    margin-bottom: 0;
-    padding-left: 16px;
-    padding-top: 10px;
+.fiat {
+    color: rgb(148, 148, 148) !important;
 }
 
-.recipient-title .label-md {
-    margin: 0;
+.recipient-title {
+    padding-left: 16px;
+    padding-top: 0;
 }
 
 .card-block {
@@ -80,7 +79,7 @@
 
 .inputfile:focus + label,
 .inputfile + label:hover {
-    background-color: #4af47d;
+    opacity: 0.9;
 }
 
 .inputfile + label {

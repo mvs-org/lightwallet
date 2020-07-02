@@ -445,7 +445,6 @@
         "RECIPIENT_AVATAR": "Recipient avatar",
         "RECIPIENT_ADDRESS": "Recipient address",
         "AMOUNT": "Amount",
-        "SEND_ALL_BUTTON": "Send All",
         "SEND_FROM": "Select source address (optional)",
         "SEND_FROM_AUTO": "Automatic",
         "FROM_ADDRESS_NO_ETP": "This address doesn't have any ETP. Please add ETP to this address or use the Automatic option.",
@@ -466,8 +465,11 @@
         "CHANGE_ADDRESS_AUTO": "Automatic",
         "GENERATING_TX_TEXT": "Generating transaction...",
         "SENDING_TX_TEXT": "Sending transaction...",
-        "SEND_BUTTON": "Send",
-        "CANCEL_BUTTON": "Cancel",
+        "BUTTON": {
+            "SEND_ALL": "Send All",
+            "NEXT": "Next",
+            "CANCEL": "Cancel"
+        },
         "UNKNOWN_ERROR": {
             "TITLE": "Something went wrong",
             "BUTTON": {
@@ -476,7 +478,31 @@
         }
     },
     "SEND_MORE": {
-        "FEE": "Fee"
+        "FEE": "Fee",
+        "TO_AVATAR": "Send to avatars",
+        "RECIPIENT_TITLE": "Recipient {{index}}",
+        "RECIPIENT_ADDRESS": "Recipient address {{index}}",
+        "RECIPIENT_AVATAR": "Recipient avatar {{index}}",
+        "AMOUNT": "Amount {{index}}",
+        "TOTAL_TO_SEND": "Total to send:",
+        "SEND_FROM": "Select source address (optional)",
+        "SEND_FROM_AUTO": "Automatic",
+        "SHOW_ADVANCED": "Show advanced options",
+        "MESSAGE": "Public message (optional)",
+        "MESSAGE_TOO_LONG": "Too long message. Please use a shorter message",
+        "CHANGE_ADDRESS": "Specify change address (optional)",
+        "CHANGE_ADDRESS_AUTO": "Automatic",
+        "HELP": {
+            "MESSAGE": "This message will be clearly and publicly displayed in your transaction. Do not enter any personal data!"
+        },
+        "BUTTON": {
+            "IMPORT_FROM_CSV": "Import from CSV",
+            "EXPORT_CSV": "Export to CSV",
+            "DOWNLOAD_CSV_EXAMPLE": "Download CSV example",
+            "ADD_RECIPIENT": "Add recipient",
+            "NEXT": "Next",
+            "CANCEL": "Cancel"
+        }
     },
     "ASSET_LOCK": {
         "TITLE": "I want to lock this asset",
