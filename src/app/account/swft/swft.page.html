@@ -13,22 +13,19 @@
   <ion-row class="swft-info">
     <ion-col>
       <p align="center">
-        {{"SWFT.INFORMATION" | translate}}
-        <a href="https://t.me/SWFTBlockchain" target="_blank">{{"SWFT.INFORMATION_LINK" | translate}}</a>
+        <span translate="SWFT.INFORMATION"></span>
+        <a href="https://t.me/SWFTBlockchain" target="_blank" translate="SWFT.INFORMATION_LINK"></a>
       </p>
-      <p align="center" class="wrong-input">
-        {{"SWFT.INFORMATION_WARNING" | translate}}
-      </p>
+      <p align="center" class="wrong-input" translate="SWFT.INFORMATION_WARNING"></p>
     </ion-col>
   </ion-row>
 
-  <h3>{{"SWFT.CREATE_ORDER" | translate}}</h3>
-  <p>{{"SWFT.CREATE_ORDER_DESCRIPTION" | translate}}</p>
+  <h3 translate="SWFT.CREATE_ORDER"></h3>
+  <p translate="SWFT.CREATE_ORDER_DESCRIPTION"></p>
 
   <ion-spinner name="dots" *ngIf="loadingPair"></ion-spinner>
 
-  <h4 *ngIf="!loadingPair && !bridgePairs" class="wrong-input center">{{"SWFT.UNABLE_CONNECT_SWFT" | translate}}
-  </h4>
+  <h4 *ngIf="!loadingPair && !bridgePairs" class="wrong-input center" translate="SWFT.UNABLE_CONNECT_SWFT"></h4>
 
   <form #swapForm="ngForm" *ngIf="!loadingPair && bridgePairs">
 
@@ -38,7 +35,7 @@
       <!-- rate info -->
       <div class="ion-text-center">
         <ion-icon id="swapIcon" name="swap" (click)="switch()"></ion-icon>
-        <div *ngIf="bridgeRate" id="rate" no-lines [translate]="'SWFT.RATE_INFO'"
+        <div *ngIf="bridgeRate" id="rate" no-lines translate="SWFT.RATE_INFO"
           [translateParams]="{rate: bridgeRate.instantRate}"></div>
         <ion-spinner *ngIf="loadingRate" name="dots"></ion-spinner>
       </div>
@@ -48,9 +45,9 @@
       <ion-row>
 
         <!-- send asset selection -->
-        <ion-col col-md-6 col-sm-12 col-12>
+        <ion-col size="6">
           <ion-item [ngClass]="{'valid-border': true}">
-            <ion-label color="primary" floating>{{"SWFT.FROM_ASSET" | translate}}</ion-label>
+            <ion-label color="primary">{{"SWFT.FROM_ASSET" | translate}}</ion-label>
             <ion-select [ngModel]="createOrderParameters.depositSymbol" name="depositSymbol" okText="{{'OK'|translate}}"
               cancelText="{{'CANCEL'|translate}}" (ngModelChange)="changeDepositSymbol($event)">
               <ion-select-option *ngFor="let asset of depositSymbolList" value="{{asset}}">{{asset}}</ion-select-option>
@@ -58,18 +55,18 @@
           </ion-item>
 
           <ion-item
-            [ngClass]="{'error-border': !validDepositAmount(depositAmount), 'valid-border': validDepositAmount(depositAmount)}">
-            <ion-label color="primary" floating>{{"SWFT.AMOUNT_SEND" | translate}}</ion-label>
+            [ngClass]="{'error-border': !validDepositAmount(createOrderParameters.depositAmount), 'valid-border': validDepositAmount(createOrderParameters.depositAmount)}">
+            <ion-label color="primary" position="floating" translate="SWFT.AMOUNT_SEND"></ion-label>
             <ion-input [(ngModel)]="createOrderParameters.depositAmount" name="depositAmount" type="number"
               (ngModelChange)="updateReceiveAmount()"></ion-input>
           </ion-item>
-          <div *ngIf="bridgeRate" no-lines class="advice" [translate]="'SWFT.MIN_MAX_DEPOSIT'"
+          <div *ngIf="bridgeRate" no-lines class="advice" translate="SWFT.MIN_MAX_DEPOSIT"
             [translateParams]="{min: bridgeRate.depositMin, max: bridgeRate.depositMax, symbol: createOrderParameters.depositSymbol, fee: bridgeRate.depositCoinFeeRate*100}">
           </div>
 
           <ion-item *ngIf="etpBridgeService.isMetaverseSymbol(createOrderParameters.depositSymbol)"
             [ngClass]="{'error-border': !validRefundAddress()}">
-            <ion-label color="primary" floating [translate]="'SWFT.REFUND_ADDRESS'"
+            <ion-label color="primary" translate="SWFT.REFUND_ADDRESS"
               [translateParams]="{symbol: createOrderParameters.depositSymbol}"></ion-label>
             <ion-select [(ngModel)]="createOrderParameters.refundAddress" name="refundAddress" multiple="false"
               okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}">
@@ -80,7 +77,7 @@
 
           <ion-item *ngIf="!etpBridgeService.isMetaverseSymbol(createOrderParameters.depositSymbol)"
             [ngClass]="{'error-border': !validRefundAddress()}">
-            <ion-label color="primary" floating [translate]="'SWFT.REFUND_ADDRESS'"
+            <ion-label color="primary" position="floating" translate="SWFT.REFUND_ADDRESS"
               [translateParams]="{symbol: createOrderParameters.depositSymbol}"></ion-label>
             <ion-input [(ngModel)]="createOrderParameters.refundAddress" name="refundAddress" type="text"></ion-input>
           </ion-item>
@@ -88,10 +85,10 @@
         </ion-col>
 
         <!-- receive asset selection -->
-        <ion-col col-md-6 col-sm-12 col-12>
+        <ion-col size="6">
 
           <ion-item [ngClass]="{'valid-border': true}">
-            <ion-label color="primary" floating>{{"SWFT.TO_ASSET" | translate}}</ion-label>
+            <ion-label color="primary" translate="SWFT.TO_ASSET"></ion-label>
             <ion-select [ngModel]="createOrderParameters.receiveSymbol" name="receiveSymbol" okText="{{'OK'|translate}}"
               cancelText="{{'CANCEL'|translate}}" (ngModelChange)="changeReceiveSymbol($event)">
               <ion-select-option value="ETP">ETP</ion-select-option>
@@ -101,16 +98,16 @@
           </ion-item>
 
           <ion-item [ngClass]="{'valid-border': true}">
-            <ion-label color="primary" floating>{{"SWFT.AMOUNT_RECEIVE" | translate}}</ion-label>
+            <ion-label color="primary" position="floating" translate="SWFT.AMOUNT_RECEIVE"></ion-label>
             <ion-input [(ngModel)]="createOrderParameters.receiveAmount" name="receiveAmount" type="number" disabled>
             </ion-input>
           </ion-item>
-          <div *ngIf="bridgeRate" no-lines class="advice" [translate]="'SWFT.RECEIVE_COIN_FEE'"
+          <div *ngIf="bridgeRate" lines="none" class="advice" translate="SWFT.RECEIVE_COIN_FEE"
             [translateParams]="{fee: bridgeRate.receiveCoinFee, symbol: createOrderParameters.receiveSymbol}"></div>
 
           <ion-item *ngIf="etpBridgeService.isMetaverseSymbol(createOrderParameters.receiveSymbol)"
             [ngClass]="{'error-border': !validRecipientAddress()}">
-            <ion-label color="primary" floating [translate]="'SWFT.RECEIVE_ADDRESS'"
+            <ion-label color="primary" translate="SWFT.RECEIVE_ADDRESS"
               [translateParams]="{symbol: createOrderParameters.receiveSymbol}"></ion-label>
             <ion-select [(ngModel)]="createOrderParameters.receiveAddress" name="receiveAddress" multiple="false"
               okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}">
@@ -121,7 +118,7 @@
 
           <ion-item *ngIf="!etpBridgeService.isMetaverseSymbol(createOrderParameters.receiveSymbol)"
             [ngClass]="{'error-border': !validRecipientAddress()}">
-            <ion-label color="primary" floating [translate]="'SWFT.RECEIVE_ADDRESS'"
+            <ion-label color="primary" position="floating" translate="SWFT.RECEIVE_ADDRESS"
               [translateParams]="{symbol: createOrderParameters.receiveSymbol}"></ion-label>
             <ion-input [(ngModel)]="createOrderParameters.receiveAddress" name="receiveAddress" type="text"></ion-input>
           </ion-item>
@@ -132,15 +129,15 @@
       <ion-row class="buttons-row">
         <ion-col>
           <ion-button type="submit" expand="full" icon-left (click)="createOrder()" color="secondary"
-            [disabled]="!swapForm.form.valid||!validDepositAmount(depositAmount)||!validRefundAddress()||!validRecipientAddress()">
-            <ion-icon disabled="checked" name="send"></ion-icon>
-            {{"SWAP" | translate}}
+            [disabled]="!swapForm.form.valid||!validDepositAmount(createOrderParameters.depositAmount)||!validRefundAddress()||!validRecipientAddress()">
+            <ion-icon slot="start" disabled="checked" name="send"></ion-icon>
+            <span translate="SWFT.BUTTON.NEXT"></span>
           </ion-button>
         </ion-col>
         <ion-col>
-          <ion-button color="danger" expand="full" item-right icon-left (click)="cancel($event)">
-            <ion-icon name="close"></ion-icon>
-            {{'CANCEL'|translate}}
+          <ion-button color="danger" expand="full" (click)="cancel($event)">
+            <ion-icon slot="start" name="close"></ion-icon>
+            <span translate="SWFT.BUTTON.CANCEL"></span>
           </ion-button>
         </ion-col>
       </ion-row>
@@ -148,14 +145,14 @@
 
   </form>
 
-  <h3>{{"SWFT.HISTORY_TITLE" | translate}}</h3>
-  <p>{{"SWFT.HISTORY_DESCRIPTION" | translate}}</p>
+  <h3 translate="SWFT.HISTORY_TITLE"></h3>
+  <p translate="SWFT.HISTORY_DESCRIPTION"></p>
 
   <ion-card class="card-order-history" *ngFor="let order of orders | orderBy: ['created', '1']">
     <ion-row>
-      <ion-col col-md-12 col-sm-12 col-12>
+      <ion-col>
         <ion-row>
-          <ion-col col-md-12 col-sm-12 col-12>
+          <ion-col>
             <h2>{{order.id}}</h2>
           </ion-col>
         </ion-row>
@@ -163,16 +160,16 @@
     </ion-row>
 
     <ion-row>
-      <ion-col col-md-6 col-sm-12 col-12>
+      <ion-col size="12" size-md="6">
         <ion-row>
-          <ion-col col-sm-6 col-12>{{'SWFT.FROM_ASSET'|translate}}</ion-col>
-          <ion-col col-sm-6 col-12 class="right">{{order.deposit.amount}} {{order.deposit.symbol}}</ion-col>
+          <ion-col size="12" size-sm="6" translate="SWFT.FROM_ASSET"></ion-col>
+          <ion-col size="12" size-sm="6" class="right">{{order.deposit.amount}} {{order.deposit.symbol}}</ion-col>
         </ion-row>
         <ion-row>
-          <ion-col col-sm-6 col-12>
-            <div [translate]="'SWFT.DEPOSIT_ADDRESS'" [translateParams]="{symbol: order.deposit.symbol}"></div>
+          <ion-col size="12" size-sm="6">
+            <div translate="SWFT.DEPOSIT_ADDRESS" [translateParams]="{symbol: order.deposit.symbol}"></div>
           </ion-col>
-          <ion-col col-sm-6 col-12>
+          <ion-col size="12" size-sm="6">
             <h4 class="break-words">
               <a *ngIf="etpBridgeService.isMetaverseSymbol(order.deposit.symbol)"
                 href="{{explorerURL('adr', order.deposit.address)}}" target="_blank"
@@ -183,10 +180,10 @@
           </ion-col>
         </ion-row>
         <ion-row>
-          <ion-col col-sm-6 col-12>
-            <div [translate]="'SWFT.REFUND_ADDRESS'" [translateParams]="{symbol: order.deposit.symbol}"></div>
+          <ion-col size="12" size-sm="6">
+            <div translate="SWFT.REFUND_ADDRESS" [translateParams]="{symbol: order.deposit.symbol}"></div>
           </ion-col>
-          <ion-col col-sm-6 col-12>
+          <ion-col size="12" size-sm="6">
             <h4 class="break-words">
               <a *ngIf="etpBridgeService.isMetaverseSymbol(order.deposit.symbol)"
                 href="{{explorerURL('adr', order.refund.address)}}" target="_blank"
@@ -197,10 +194,10 @@
           </ion-col>
         </ion-row>
         <ion-row *ngIf="order.refund.txid">
-          <ion-col col-sm-6 col-12>
-            <div [translate]="'SWFT.REFUND_TX'" [translateParams]="{symbol: order.deposit.symbol}"></div>
+          <ion-col size="12" size-sm="6">
+            <div translate="SWFT.REFUND_TX" [translateParams]="{symbol: order.deposit.symbol}"></div>
           </ion-col>
-          <ion-col col-sm-6 col-12>
+          <ion-col size="12" size-sm="6">
             <h4 class="break-words">
               <a *ngIf="etpBridgeService.isMetaverseSymbol(order.deposit.symbol)"
                 href="{{explorerURL('tx', order.refund.txid)}}" target="_blank" class="right">{{order.refund.txid}}</a>
@@ -210,16 +207,16 @@
           </ion-col>
         </ion-row>
       </ion-col>
-      <ion-col col-md-6 col-sm-12 col-12>
+      <ion-col size="12" size-md="6">
         <ion-row>
-          <ion-col col-sm-6 col-12>{{'SWFT.TO_ASSET'|translate}}</ion-col>
-          <ion-col col-sm-6 col-12 class="right">{{order.receive.amount}} {{order.receive.symbol}}</ion-col>
+          <ion-col size="12" size-sm="6" translate="SWFT.TO_ASSET"></ion-col>
+          <ion-col size="12" size-sm="6" class="right">{{order.receive.amount}} {{order.receive.symbol}}</ion-col>
         </ion-row>
         <ion-row>
-          <ion-col col-sm-6 col-12>
-            <div [translate]="'SWFT.RECEIVE_ADDRESS'" [translateParams]="{symbol: order.receive.symbol}"></div>
+          <ion-col size="12" size-sm="6">
+            <div translate="SWFT.RECEIVE_ADDRESS" [translateParams]="{symbol: order.receive.symbol}"></div>
           </ion-col>
-          <ion-col col-sm-6 col-12>
+          <ion-col size="12" size-sm="6">
             <h4 class="break-words">
               <a *ngIf="etpBridgeService.isMetaverseSymbol(order.receive.symbol)"
                 href="{{explorerURL('adr', order.receive.address)}}" target="_blank"
@@ -230,10 +227,10 @@
           </ion-col>
         </ion-row>
         <ion-row *ngIf="order.receive.txid">
-          <ion-col col-sm-6 col-12>
-            <div [translate]="'SWFT.RECEIVE_TX'" [translateParams]="{symbol: order.receive.symbol}"></div>
+          <ion-col size="12" size-sm="6">
+            <div translate="SWFT.RECEIVE_TX" [translateParams]="{symbol: order.receive.symbol}"></div>
           </ion-col>
-          <ion-col col-sm-6 col-12>
+          <ion-col size="12" size-sm="6">
             <h4 class="break-words">
               <a *ngIf="etpBridgeService.isMetaverseSymbol(order.receive.symbol)"
                 href="{{explorerURL('tx', order.receive.txid)}}" target="_blank"
@@ -246,31 +243,31 @@
       </ion-col>
     </ion-row>
     <ion-row class="right">
-      <ion-button class="right" color="primary" item-right icon-left (click)="gotoDetails(order.id)">
-        <ion-icon name="send"></ion-icon>
-        {{'SWFT.SEE_DETAILS_BUTTON'|translate}}
+      <ion-button class="right" color="primary" (click)="gotoDetails(order.id)">
+        <ion-icon slot="start" name="send"></ion-icon>
+        <span translate="SWFT.SEE_DETAILS_BUTTON"></span>
       </ion-button>
     </ion-row>
 
   </ion-card>
 
-  <h3>{{"SWFT.IMPORT_ORDER" | translate}}</h3>
-  <p>{{"SWFT.IMPORT_ORDER_DESCRIPTION" | translate}}</p>
+  <h3 translate="SWFT.IMPORT_ORDER"></h3>
+  <p translate="SWFT.IMPORT_ORDER_DESCRIPTION"></p>
 
   <ion-card class="card-block">
     <ion-item [ngClass]="{'error-border':!validId(importFromId), 'valid-border':validId(importFromId)}">
-      <ion-label color="primary" floating>{{"SWFT.ORDER_ID"|translate}}</ion-label>
+      <ion-label color="primary" position="floating" translate="SWFT.ORDER_ID"></ion-label>
       <ion-input name="importFromId" [(ngModel)]="importFromId"></ion-input>
-      <button id="scanButton" *ngIf="isApp" ion-button item-right (click)="scan()">
-        <ion-icon name="qr-scanner"></ion-icon>
-      </button>
+      <ion-button id="scanButton" *ngIf="isApp" (click)="scan()">
+        <ion-icon slot="icon-only" name="qr-scanner"></ion-icon>
+      </ion-button>
     </ion-item>
 
     <ion-row class="buttons-row right">
-      <ion-button class="right" color="primary" item-right icon-left (click)="importOrder($event)"
+      <ion-button class="right" color="primary" (click)="importOrder($event)"
         [disabled]="!validId(importFromId)">
-        <ion-icon name="add"></ion-icon>
-        {{'SWFT.IMPORT_ORDER_BUTTON'|translate}}
+        <ion-icon slot="start" name="add"></ion-icon>
+        <span translate="SWFT.IMPORT_ORDER_BUTTON"></span>
       </ion-button>
     </ion-row>
   </ion-card>
