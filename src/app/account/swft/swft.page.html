@@ -128,16 +128,16 @@
 
       <ion-row class="buttons-row">
         <ion-col>
+          <ion-button color="danger" expand="full" (click)="cancel($event)">
+            <ion-icon slot="start" name="close"></ion-icon>
+            <span translate="SWFT.BUTTON.CANCEL"></span>
+          </ion-button>
+        </ion-col>
+        <ion-col>
           <ion-button type="submit" expand="full" icon-left (click)="createOrder()" color="secondary"
             [disabled]="!swapForm.form.valid||!validDepositAmount(createOrderParameters.depositAmount)||!validRefundAddress()||!validRecipientAddress()">
             <ion-icon slot="start" disabled="checked" name="send"></ion-icon>
             <span translate="SWFT.BUTTON.NEXT"></span>
-          </ion-button>
-        </ion-col>
-        <ion-col>
-          <ion-button color="danger" expand="full" (click)="cancel($event)">
-            <ion-icon slot="start" name="close"></ion-icon>
-            <span translate="SWFT.BUTTON.CANCEL"></span>
           </ion-button>
         </ion-col>
       </ion-row>
@@ -187,7 +187,7 @@
             <h4 class="break-words">
               <a *ngIf="etpBridgeService.isMetaverseSymbol(order.deposit.symbol)"
                 href="{{explorerURL('adr', order.refund.address)}}" target="_blank"
-                class="right">{{order.receive.address}}</a>
+                class="right">{{order.refund.address}}</a>
               <a *ngIf="!etpBridgeService.isMetaverseSymbol(order.deposit.symbol)" (click)="show(order.refund.address)"
                 class="right">{{order.refund.address}}</a>
             </h4>
