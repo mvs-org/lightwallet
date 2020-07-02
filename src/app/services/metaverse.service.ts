@@ -41,9 +41,9 @@ export class MetaverseService {
   DEFAULT_BALANCES = {
     ETP: { frozen: 0, available: 0, decimals: 8 },
     MST: {
-      'DNA': { frozen: 0, available: 0, decimals: 4 },
-      'APO': { frozen: 0, available: 0, decimals: 4 },
-      'SDG': { frozen: 0, available: 0, decimals: 8 },
+      DNA: { frozen: 0, available: 0, decimals: 4 },
+      APO: { frozen: 0, available: 0, decimals: 4 },
+      SDG: { frozen: 0, available: 0, decimals: 8 },
     },
     MIT: []
   }
@@ -56,13 +56,22 @@ export class MetaverseService {
     this.appService.network$
       .pipe(filter(n => !!n))
       .subscribe(network => {
-        console.info('setup metaverse service for network', network)
+        console.log('setup metaverse service for network', network)
         this.blockchain = Blockchain({ url: network === 'testnet' ? 'https://testnet-api.myetpwallet.com/api/' : 'https://mainnet-api.myetpwallet.com/api/' })
         this.ready$.next(true)
       })
   }
 
-  createSendTx(asset: string, recipient_address: string, recipient_avatar: string, quantity: number, from_address: string, change_address: string, fee: number, messages: Array<string>) {
+  createSendTx(
+    asset: string,
+    recipient_address: string,
+    recipient_avatar: string,
+    quantity: number,
+    from_address: string,
+    change_address: string,
+    fee: number,
+    messages: Array<string>,
+  ) {
     const target = {}
     target[asset] = quantity
     return this.getUtxoFrom(from_address)

@@ -39,8 +39,7 @@
     <div *ngIf="showAdvanced || multisig.status == 'MULTISIG'">
       <ion-row>
         <ion-col *ngIf="status != 'SIGNED'">
-          <ion-button full icon-left
-            [disabled]="!signTxForm.form.valid||!validPassword(passphrase)||(multisig.status == 'MULTISIG' && multisig.selfSigned)"
+          <ion-button [disabled]="!signTxForm.form.valid||!validPassword(passphrase)||(multisig.status == 'MULTISIG' && multisig.selfSigned)"
             (click)="preview()" color="primary">
             <ion-icon slot="start" name="create"></ion-icon>
             <span translate="CONFIRM.SIGN_ONLY"></span>
@@ -87,7 +86,7 @@
           <ion-icon slot="start" name="send"></ion-icon>
           <span translate="CONFIRM.SIGN_AND_SEND"></span>
         </ion-button>
-        <ion-button *ngIf="status == 'SIGNED'" type="submit" expand="full" (click)="broadcast(decodedTx)"
+        <ion-button *ngIf="status == 'SIGNED'" type="submit" expand="full" (click)="broadcastOnly(decodedTx)"
           color="secondary">
           <ion-icon slot="start" name="send"></ion-icon>
           <span translate="CONFIRM.BROADCAST"></span>
@@ -103,7 +102,7 @@
         </ion-button>
       </ion-col>
       <ion-col>
-        <ion-button *ngIf="status == 'SIGNED'" type="submit" expand="full" (click)="broadcast(decodedTx)"
+        <ion-button *ngIf="status == 'SIGNED'" type="submit" expand="full" (click)="broadcastOnly(decodedTx)"
           color="secondary">
           <ion-icon slot="start" name="send"></ion-icon>
           <span translate="CONFIRM_TX.BROADCAST"></span>

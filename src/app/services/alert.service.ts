@@ -32,7 +32,7 @@ export class AlertService {
   }
 
   showSendAll(action) {
-    this.translate.get(['SEND_ALL_TITLE', 'SEND_ALL_MESSAGE', 'OK', 'CANCEL']).subscribe(async translations => {
+    this.translate.get(['SEND_ALL_TITLE', 'SEND_ALL_MESSAGE', 'MESSAGE.OK', 'CANCEL']).subscribe(async translations => {
       const alert = await this.alertCtrl.create({
         header: translations.SEND_ALL_TITLE,
         message: translations.SEND_ALL_MESSAGE,
@@ -43,21 +43,6 @@ export class AlertService {
           {
             text: translations.OK,
             handler: action
-          }
-        ]
-      })
-      alert.present()
-    })
-  }
-
-  showSent(message_key, hash) {
-    this.translate.get(['MESSAGE.SUCCESS', 'OK', message_key]).subscribe(async (translations: any) => {
-      const alert = await this.alertCtrl.create({
-        header: translations['MESSAGE.SUCCESS'],
-        subHeader: translations[message_key] + hash,
-        buttons: [
-          {
-            text: translations.OK,
           }
         ]
       })
@@ -180,14 +165,14 @@ export class AlertService {
     })
   }
 
-  showMessage(title, subtitle, message) {
-    this.translate.get([title, subtitle, message, 'OK']).subscribe(async (translations: any) => {
+  showMessage(title, subtitle, message, ok?) {
+    this.translate.get([title, subtitle, message, ok || 'OK']).subscribe(async (translations: any) => {
       const alert = await this.alertCtrl.create({
         header: translations[title],
-        subHeader: translations[subtitle],
-        message: translations[message],
+        subHeader: translations[subtitle] || subtitle,
+        message: translations[message] || message,
         buttons: [{
-          text: translations.OK
+          text: translations[ok]
         }]
       })
       alert.present()

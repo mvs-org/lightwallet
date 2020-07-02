@@ -99,6 +99,8 @@ export class SendPage implements OnInit {
       .then(([balances, addresses, addressbalancesObject]) => {
         const balance = (this.selectedAsset === 'ETP') ? balances.ETP : balances.MST[this.selectedAsset]
         this.balance = (balance && balance.available) ? balance.available : 0
+        console.log(balances)
+        console.log(this.selectedAsset)
         this.decimals = balance.decimals
         this.etpBalance = balances.ETP.available
         this.showBalance = this.balance

@@ -15,7 +15,7 @@
         </ion-segment>
     </ion-item>
 
-
+    <br>
     <p align="center" *ngIf="etpBalance<fee/100000000" class="wrong-input" translate="SEND.NOTICE_TRANSACTION_FEE_UNCOVERED"></p>
     <ion-row>
         <ion-col>
@@ -23,9 +23,9 @@
                 format : decimals}} {{selectedAsset}}</p>
         </ion-col>
         <ion-col>
-            <p *ngIf="transfer_type == 'one'" class="right">{{"SEND.FEE"|translate}}:<br *ngIf="platform.is('mobile')">
+            <p *ngIf="transfer_type == 'one'" class="right">{{"SEND_SINGLE.FEE"|translate}}:<br *ngIf="platform.is('mobile')">
                 {{fee | format : 8}} ETP</p>
-            <p *ngIf="transfer_type == 'more'" class="right">{{"SEND.FEE"|translate}}:<br *ngIf="platform.is('mobile')">
+            <p *ngIf="transfer_type == 'more'" class="right">{{"SEND_MORE.FEE"|translate}}:<br *ngIf="platform.is('mobile')">
                 {{10000*recipients.length | format : 8}} ETP</p>
         </ion-col>
     </ion-row>
