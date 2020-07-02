@@ -60,12 +60,12 @@
                 <ion-label color="primary" position="floating" translate="SEND_SINGLE.AMOUNT"></ion-label>
                 <ion-input #quantityInput name="quantity" type="number" min="0" [(ngModel)]="quantity"
                     [disabled]="disableParams && params['amount']" required></ion-input>
-                <ion-button type="button" *ngIf="etpBalance>10000 && !(disableParams && params['amount'])" id="sendAll"
+                <ion-button slot="end" type="button" *ngIf="etpBalance>10000 && !(disableParams && params['amount'])" id="sendAll"
                     (click)="sendAll()" translate="SEND_SINGLE.SEND_ALL_BUTTON"></ion-button>
             </ion-item>
-            <ion-item *ngIf="tickers && tickers[selectedAsset] && tickers[selectedAsset][base]" lines="none" class="fiat">
+            <div *ngIf="tickers && tickers[selectedAsset] && tickers[selectedAsset][base]" class="advice">
                 ≈{{base}} {{quantity*tickers[selectedAsset][base].price | number : '1.0-2'}}
-            </ion-item>
+            </div>
             <ion-item *ngIf="countDecimals(quantity) > decimals" lines="none" class="wrong-input" translate="SEND.TOO_MANY_DECIMALS"></ion-item>
             <br>
             <ion-item [ngClass]="{'error-border':!validFromAddress(sendFrom)}">
@@ -104,7 +104,7 @@
                     <ion-input name="message" [(ngModel)]="message" [disabled]="disableParams && params['message']">
                     </ion-input>
                 </ion-item>
-                <div lines="none" class="advice" translate="SEND_SINGLE.HELP.MESSAGE"></div>
+                <div class="advice" translate="SEND_SINGLE.HELP.MESSAGE"></div>
                 <ion-item *ngIf="!validMessageLength(message)" lines="none" class="wrong-input" translate="SEND_SINGLE.MESSAGE_TOO_LONG"></ion-item>
                 <br>
                 <ion-item>
@@ -216,7 +216,6 @@
                     </ion-col>
                 </ion-row>
             </ion-card>
-
 
             <button *ngIf="!platform.is('mobile')" type="button" class="right-buttons" ion-button icon-left
                 color="secondary" (click)="download()">
