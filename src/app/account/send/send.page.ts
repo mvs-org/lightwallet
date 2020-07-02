@@ -204,11 +204,6 @@ export class SendPage implements OnInit {
     return 0
   }
 
-  updateRange() {
-    // TODO: What is this code doing?
-    this.zone.run(() => { })
-  }
-
   cancel(e) {
     e.preventDefault()
     this.location.back()
@@ -278,53 +273,48 @@ export class SendPage implements OnInit {
       .catch((error) => {
         console.error(error.message)
         this.alertService.stopLoading()
-        switch (error.message) {
-          case 'ERR_DECRYPT_WALLET':
-            this.alertService.showError('MESSAGE.PASSWORD_WRONG', '')
-            throw Error('ERR_CREATE_TX')
-          case 'ERR_INSUFFICIENT_BALANCE':
-            this.alertService.showError('MESSAGE.INSUFFICIENT_BALANCE', '')
-            throw Error('ERR_CREATE_TX')
-          case 'ERR_TOO_MANY_INPUTS':
-            this.alertService.showErrorTranslated('ERROR_TOO_MANY_INPUTS', 'ERROR_TOO_MANY_INPUTS_TEXT')
-            throw Error('ERR_CREATE_TX')
-          default:
-            this.alertService.showError('MESSAGE.CREATE_TRANSACTION', error.message)
-            throw Error('ERR_CREATE_TX')
-        }
+        throw Error(error)
       })
   }
 
-  send() {
-    this.create()
-      .then((result) => {
-        this.router.navigate(['account', 'confirm'], { queryParams: { tx: result.encode().toString('hex') } })
-        this.alertService.stopLoading()
-      })
-      .catch((error) => {
+  async send() {
+    try {
+      const result = await this.create()
+      this.router.navigate(['account', 'confirm'], { queryParams: { tx: result.encode().toString('hex') } })
+      this.alertService.stopLoading()
+    } catch (error) {
         console.error(error)
         this.alertService.stopLoading()
         switch (error.message) {
-          case 'ERR_CONNECTION':
-            this.alertService.showError('ERROR_SEND_TEXT', '')
+          case 'ERR_INSUFFICIENT_BALANCE':
+            this.alertService.showError('SEND_ONE.INSUFFICIENT_BALANCE', '')
             break
-          case 'ERR_CREATE_TX':
-            // already handle in create function
+          case 'ERR_TOO_MANY_INPUTS':
+            this.alertService.showErrorTranslated('SEND_ONE.ERROR_TOO_MANY_INPUTS', 'SEND_ONE.ERROR_TOO_MANY_INPUTS_TEXT')
             break
           default:
-            this.alertService.showError('MESSAGE.BROADCAST_ERROR', error.message)
+            this.alertService.showError('SEND_ONE.CREATE_TRANSACTION', error.message)
+            break
         }
-      })
+      }
   }
 
-  sendAll = () => this.alertService.showSendAll(() => {
-    if (this.selectedAsset === 'ETP') {
-      this.quantity = parseFloat(((this.showBalance / 100000000 - this.fee / 100000000).toFixed(this.decimals)) + '') + ''
-    } else {
-      this.quantity = parseFloat((this.showBalance / Math.pow(10, this.decimals)).toFixed(this.decimals) + '') + ''
+  async sendAll() {
+    const confirm = await this.alertService.alertConfirm(
+      'SEND_SINGLE.ALL.TITLE',
+      'SEND_SINGLE.ALL.SUBTITLE',
+      'SEND_SINGLE.ALL.CANCEL',
+      'SEND_SINGLE.ALL.OK'
+    )
+    if (confirm) {
+      if (this.selectedAsset === 'ETP') {
+        this.quantity = parseFloat(((this.showBalance / 100000000 - this.fee / 100000000).toFixed(this.decimals)) + '') + ''
+      } else {
+        this.quantity = parseFloat((this.showBalance / Math.pow(10, this.decimals)).toFixed(this.decimals) + '') + ''
+      }
+      this.quantityInput.setFocus()
     }
-    this.quantityInput.setFocus()
-  })
+  }
 
   validAvatar = (input: string) => /[A-Za-z0-9.-]/.test(input) && this.recipient_avatar_valid
 
