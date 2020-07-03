@@ -57,14 +57,9 @@
           <span translate="LOGIN.BUTTON.OPEN_WALLET_VIEW_ONLY"></span>
         </ion-button>
 
-        <ion-button *ngIf="isApp" expand="full" icon-left color="secondary" routerLink="/login/scan">
+        <ion-button expand="full" icon-left color="secondary" routerLink="/login/open-qr">
           <ion-icon slot="start" name="qr-scanner"></ion-icon>
           <span translate="LOGIN.BUTTON.OPEN_FROM_QRCODE"></span>
-        </ion-button>
-
-        <ion-button *ngIf="isApp" expand="full" icon-left color="primary" routerLink="/login/how-to-import">
-          <ion-icon slot="start" name="information-circle"></ion-icon>
-          <span translate="LOGIN.BUTTON.HOW_TO_IMPORT_WALLET_MOBILE"></span>
         </ion-button>
 
         <p *ngIf="!platform.is('mobile')" translate="LOGIN.INFO_TEXT_BROWSER"></p>

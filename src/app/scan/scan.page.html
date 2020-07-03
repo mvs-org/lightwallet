@@ -1,5 +1,10 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button (click)="cancel()">X</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 <ion-content>
-  <qr-scanner [debug]="false" facing="environment" [stopAfterScan]="true" [updateTime]="1000" [canvasWidth]="320"
-    [canvasHeight]="480">
-  </qr-scanner>
+  <zxing-scanner (scanComplete)="scanComplete($event)" (camerasFound)="onCamerasFound($event)"></zxing-scanner>
 </ion-content>

@@ -6,9 +6,20 @@
             "CREATE_NEW_WALLET": "Create new wallet",
             "CREATE_FROM_BACKUP_WORDS": "Create file from backup words",
             "OPEN_WALLET_FILE": "Open wallet from file",
-            "OPEN_WALLET_VIEW_ONLY": "Open view only"
+            "OPEN_WALLET_VIEW_ONLY": "Open view only",
+            "OPEN_FROM_QRCODE": "Open from QR Code"
         },
         "INFO_TEXT_BROWSER": "Notice for existing MVS wallet users: On your first login to myetpwallet.com, please create a wallet file from your backup words and then open the wallet from the file."
+    },
+    "IMPORT_QR": {
+        "TITLE": "Import QR Code",
+        "HOW_IT_WORKS": "How it works:",
+        "HOW_TO_IMPORT_WALLET_MOBILE_STEP1": "Step 1",
+        "HOW_TO_IMPORT_WALLET_MOBILE_STEP1_TEXT": "Open the web lightwallet, go to Settings, and then Connect phone",
+        "HOW_TO_IMPORT_WALLET_MOBILE_STEP2": "Step 2",
+        "HOW_TO_IMPORT_WALLET_MOBILE_STEP2_TEXT": "Scan the QR Code",
+        "HOW_TO_IMPORT_WALLET_MOBILE_STEP3": "Step 3",
+        "HOW_TO_IMPORT_WALLET_MOBILE_STEP3_TEXT": "Enjoy your wallet on your phone!"
     },
     "NEWS": {
         "MENU_ENTRY": "News",

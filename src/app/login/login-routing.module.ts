@@ -32,6 +32,10 @@ const routes: Routes = [
     path: 'xpub',
     loadChildren: () => import('./login-xpub/login-xpub.module').then( m => m.LoginXpubPageModule)
   },
+  {
+    path: 'open-qr',
+    loadChildren: () => import('./open-qr/open-qr.module').then( m => m.OpenQrPageModule)
+  },
 ]
 
 @NgModule({

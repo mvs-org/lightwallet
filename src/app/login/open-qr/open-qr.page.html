@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons>
+     <ion-back-button defaultHref="/login"></ion-back-button>
+    </ion-buttons>
+    <ion-title translate="IMPORT_QR.TITLE"></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <h2 translate="IMPORT_QR.HOW_IT_WORKS"></h2>
+  <ion-card *ngFor="let i of [1,2,3]">
+    <ion-card-header>
+      <ion-card-title [translate]="'IMPORT_QR.HOW_TO_IMPORT_WALLET_MOBILE_STEP'+i"></ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p [translate]="'IMPORT_QR.HOW_TO_IMPORT_WALLET_MOBILE_STEP'+i+'_TEXT'"></p>
+      <img [src]="'/assets/images/mobile_import_'+i+'.jpeg'" alt="">
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+
+<ion-footer>
+  <ion-button expand="full" (click)="scan()">
+    <ion-icon name="qr-scanner"></ion-icon>
+    Start Scan
+  </ion-button>
+</ion-footer>
