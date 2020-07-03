@@ -147,7 +147,7 @@ export class ConfirmPage {
       this.verifiedToken.sourceSignature = this.sourceSignature
       await this.bitident.confirm(this.verifiedToken.callback, this.verifiedToken.encode('hex'))
       this.alert.stopLoading()
-      this.router.navigate(['account'])
+      this.router.navigate(['account', 'portfolio'])
       this.alert.showMessage('BITIDENT.MESSAGE.SIGNIN_SUCCESSFUL_TITLE', 'BITIDENT.MESSAGE.SIGNIN_SUCCESSFUL_BODY', '')
     } catch (error) {
       this.alert.stopLoading()

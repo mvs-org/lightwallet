@@ -93,7 +93,7 @@ export class CreatePage implements OnInit {
     this.addresses = await this.metaverseService.getAddresses()
 
     if (!(this.selectedAsset && this.selectedAsset.length)) {
-      this.router.navigate(['account'])
+      this.router.navigate(['account', 'portfolio'])
     }
 
     // Load balances

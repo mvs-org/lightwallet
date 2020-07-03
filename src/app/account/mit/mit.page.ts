@@ -20,15 +20,14 @@ export class MitPage implements OnInit {
     this.showBalances()
   }
 
-  private showBalances() {
-    return this.metaverseService.getBalances()
-      .then((_) => {
-        this.balances = _
-      })
-      .catch((e) => {
+  private async showBalances() {
+    try {
+      this.balances = await this.metaverseService.getBalances()
+      console.log(this.balances)
+    } catch (e) {
         console.error(e)
         console.log('Can\'t load balances')
-      })
+    }
   }
 
   reorder = () => this.router.navigate(['/account', 'mst', 'reorder'])

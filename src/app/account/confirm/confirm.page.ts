@@ -38,7 +38,7 @@ export class ConfirmPage implements OnInit {
 
   async ionViewDidEnter() {
     if (this.activatedRoute.snapshot.queryParams.tx === undefined) {
-      this.router.navigate(['account'])
+      this.router.navigate(['account', 'portfolio'])
     } else {
       this.decodeAndOrganize(this.hexTx)
     }
@@ -59,11 +59,11 @@ export class ConfirmPage implements OnInit {
 
   cancel(e) {
     e.preventDefault()
-    this.router.navigate(['account'])
+    this.router.navigate(['account', 'portfolio'])
   }
 
   home(e) {
-    this.router.navigate(['account'])
+    this.router.navigate(['account', 'portfolio'])
   }
 
   async preview() {
@@ -109,12 +109,12 @@ export class ConfirmPage implements OnInit {
     try {
       const result = await this.mvs.send(tx)
       this.alertService.stopLoading()
+      this.router.navigate(['account', 'portfolio'])
       this.alertService.showMessage(
         'CONFIRM.CONFIRM_ALERT.TITLE',
         'CONFIRM.CONFIRM_ALERT.SUBTITLE',
         result.hash,
         'CONFIRM.CONFIRM_ALERT.OK')
-      this.router.navigate(['account'])
     } catch (error) {
       this.alertService.stopLoading()
       console.error(error.message)
@@ -137,6 +137,7 @@ export class ConfirmPage implements OnInit {
       return this.walletService.signMultisigTx(this.decodedTx.inputs[0].address, this.decodedTx, this.passphrase)
         .catch((error) => {
           console.error(error.message)
+          this.alertService.stopLoading()
           switch (error.message) {
             case 'ERR_DECRYPT_WALLET':
               this.alertService.showError('CONFIRM.MESSAGE.PASSWORD_WRONG', '')
@@ -162,6 +163,7 @@ export class ConfirmPage implements OnInit {
       return this.mvs.sign(this.decodedTx, this.passphrase, this.allMyInputs)
         .catch((error) => {
           console.error(error.message)
+          this.alertService.stopLoading()
           switch (error.message) {
             case 'ERR_DECRYPT_WALLET':
               this.alertService.showError('CONFIRM.MESSAGE.PASSWORD_WRONG', '')

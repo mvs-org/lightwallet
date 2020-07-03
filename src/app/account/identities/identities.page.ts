@@ -4,7 +4,6 @@ import { MetaverseService } from 'src/app/services/metaverse.service'
 import { WalletService } from 'src/app/services/wallet.service'
 import { ActivatedRoute, Router } from '@angular/router'
 import { QrComponent } from 'src/app/qr/qr.component'
-import { TranslateService } from '@ngx-translate/core'
 
 @Component({
     selector: 'app-identities',
@@ -29,11 +28,10 @@ export class IdentitiesPage implements OnInit {
         private activatedRoute: ActivatedRoute,
         private router: Router,
         public modalController: ModalController,
-        private translate: TranslateService,
     ) {
         this.addressbalances = {}
         this.selectedAsset = this.activatedRoute.snapshot.params.symbol
-        this.displayType = this.selectedAsset == 'ETP' ? 'ETP' : 'asset'
+        this.displayType = this.selectedAsset === 'ETP' ? 'ETP' : 'asset'
 
         this.metaverseService.getAddresses()
             .then((addresses) => {

@@ -1,0 +1,58 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/account/mit"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{symbol}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-grid>
+      <ion-row>
+        <ion-col class="asset-container">
+          <ion-card class="card-block">
+            <ion-item lines="none">
+              <ion-avatar item-start>
+                <img class="coinlogo" [src]="'assets/icon/default_mit.png'">
+              </ion-avatar>
+              <div>
+                <h1>{{symbol}}</h1>
+                <ion-button id="explorerTxButton" fill="clear" (click)="checkTx('mit', symbol)">
+                  <ion-icon slot="icon-only" name="open"></ion-icon>
+                </ion-button>
+                <p translate="MIT_DETAILS.OWNER" [translateParams]="{name: owner}"></p>
+                <p translate="MIT_DETAILS.CREATOR" [translateParams]="{name: creator}"></p>
+              </div>
+            </ion-item>
+          </ion-card>
+        </ion-col>
+        <ion-col class="asset-container">
+          <ion-card class="card-block">
+            <ion-item lines="none">
+              <div>
+                <h1 translate="MIT_DETAILS.CONTENT"></h1>
+                <p text-wrap class="mit-content">{{content}}</p>
+              </div>
+            </ion-item>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-list>
+
+  <br>
+  <h2 translate="MIT_DETAILS.HISTORY"></h2>
+  <ion-list>
+    <div *ngFor="let step of history">
+      <h2 translate="MIT_DETAILS.RECIPIENT_AVATAR" [translateParams]="{name: step.to_did}"></h2>
+      <div class="history-info" translate="MIT_DETAILS.STATUS" [translateParams]="{status: step.status}"></div>
+      <div class="align-small-button history-info" translate="MIT_DETAILS.DATE" [translateParams]="{date: step.confirmed_at*1000|date : 'medium'}">
+        <ion-button fill="clear" color="primary" (click)="checkTx('tx', step.tx)">
+          <ion-icon slot="icon-only" name="open"></ion-icon>
+        </ion-button>
+      </div>
+    </div>
+  </ion-list>
+</ion-content>

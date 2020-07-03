@@ -37,11 +37,9 @@ export class CreatePage implements OnInit {
   constructor(
     private alertService: AlertService,
     private router: Router,
-    private walletService: WalletService,
     public mvs: MetaverseService,
     public platform: Platform,
     private translate: TranslateService,
-    private alertCtrl: AlertController,
   ) {
     Promise.all([this.mvs.getAddresses(), this.mvs.getAddressBalances()])
       .then(([addresses, addressbalances]) => {

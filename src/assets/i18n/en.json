@@ -81,6 +81,15 @@
             "CREATE_MIT": "Create MIT"
         }
     },
+    "MIT_DETAILS": {
+        "OWNER": "Owner: {{name}}",
+        "CREATOR": "Creator: {{name}}",
+        "CONTENT": "Content",
+        "HISTORY": "History",
+        "RECIPIENT_AVATAR": "Recipient Avatar: {{name}}",
+        "STATUS": "Status: {{status}}",
+        "DATE": "Date: {{date}}"
+    },
     "MST": {
         "TITLE": "MST - Metaverse Smart Token",
         "MENU_ENTRY": "Smart Tokens",
@@ -583,7 +592,8 @@
             "COPY": "Copy",
             "SIGN_ONLY": "Sign only",
             "SIGN_AND_SEND": "Sign and send",
-            "BROADCAST": "Broadcast"
+            "BROADCAST": "Broadcast",
+            "RETURN_HOME": "Return to home"
         },
         "MESSAGE": {
             "PASSWORD_WRONG": "Incorrect password",

@@ -4,21 +4,19 @@ import { FormsModule } from '@angular/forms'
 
 import { IonicModule } from '@ionic/angular'
 
-import { CreatePageRoutingModule } from './create-routing.module'
+import { DetailsPageRoutingModule } from './details-routing.module'
 
-import { CreatePage } from './create.page'
 import { TranslateModule } from '@ngx-translate/core'
-import { PipesModule } from 'src/app/pipes/pipes.module'
+import { DetailsPage } from './details.page'
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    TranslateModule.forChild(),
-    PipesModule,
-    CreatePageRoutingModule,
+    TranslateModule,
+    DetailsPageRoutingModule,
   ],
-  declarations: [CreatePage]
+  declarations: [DetailsPage]
 })
-export class CreatePageModule {}
+export class DetailsPageModule {}

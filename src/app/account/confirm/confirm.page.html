@@ -1,5 +1,8 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/account"></ion-back-button>
+    </ion-buttons>
     <ion-title translate="CONFIRM.TITLE"></ion-title>
   </ion-toolbar>
 </ion-header>
@@ -11,7 +14,7 @@
     <h3 translate="CONFIRM.PAGE_TITLE"></h3>
 
     <ion-item>
-      <ion-label>{{"TX.SELECT_MODE"|translate}}</ion-label>
+      <ion-label translate="TX.SELECT_MODE"></ion-label>
       <ion-select [(ngModel)]="mode" name="mode" multiple="false" okText="{{'OK'|translate}}"
         cancelText="{{'CANCEL'|translate}}">
         <ion-select-option selected="true" value="default">{{"TX.MODE.DEFAULT"| translate}}</ion-select-option>
@@ -96,9 +99,9 @@
 
     <ion-row *ngIf="walletType == 'readOnly'">
       <ion-col>
-        <ion-button color="secondary" type="submit" expand="full" [ngxClipboard]="copyHexTx" (click)="home($event)">
+        <ion-button color="secondary" type="submit" expand="full" (click)="home($event)">
           <ion-icon slot="start" name="arrow-back"></ion-icon>
-          <span translate="RETURN_TO_HOME"></span>
+          <span translate="CONFIRM.BUTTON.RETURN_HOME"></span>
         </ion-button>
       </ion-col>
       <ion-col>
