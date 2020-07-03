@@ -81,7 +81,7 @@
 }
 
 .advice {
-    font-size: 0.8rem !important;
+    font-size: 0.9rem !important;
     color: rgb(148, 148, 148);
     padding-left: 16px;
     margin-top: 10px;
@@ -92,6 +92,7 @@
     -moz-user-select: text;
     -ms-user-select: text;
     user-select: text;
+    line-height: inherit !important;
 }
 
 .rawtx {

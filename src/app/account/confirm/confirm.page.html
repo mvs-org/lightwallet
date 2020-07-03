@@ -8,7 +8,7 @@
 
   <form #signTxForm="ngForm" class="padding-bottom">
 
-    <h3>{{"CONFIRM.PAGE_TITLE" | translate}}</h3>
+    <h3 translate="CONFIRM.PAGE_TITLE"></h3>
 
     <ion-item>
       <ion-label>{{"TX.SELECT_MODE"|translate}}</ion-label>
@@ -27,20 +27,19 @@
 
     <ion-item *ngIf="status != 'SIGNED' && walletType == 'hasSeed'"
       [ngClass]="{'error-border': !validPassword(passphrase)}">
-      <ion-label color="primary" position="floating">{{"CONFIRM.PASSWORD" | translate}}</ion-label>
+      <ion-label color="primary" position="floating" translate="CONFIRM.PASSWORD"></ion-label>
       <ion-input name="passphrase" type="password" [(ngModel)]="passphrase" required></ion-input>
     </ion-item>
     <br>
     <ion-item class="toggle-input" *ngIf="multisig.status != 'MULTISIG' && walletType !== 'readOnly'">
-      <ion-label>{{"CONFIRM.SHOW_ADVANCED"|translate}}</ion-label>
+      <ion-label translate="CONFIRM.SHOW_ADVANCED"></ion-label>
       <ion-toggle [(ngModel)]="showAdvanced" name="showAdvanced" checked="false"></ion-toggle>
     </ion-item>
 
     <div *ngIf="showAdvanced || multisig.status == 'MULTISIG'">
       <ion-row>
         <ion-col *ngIf="status != 'SIGNED'">
-          <ion-button full icon-left
-            [disabled]="!signTxForm.form.valid||!validPassword(passphrase)||(multisig.status == 'MULTISIG' && multisig.selfSigned)"
+          <ion-button [disabled]="!signTxForm.form.valid||!validPassword(passphrase)||(multisig.status == 'MULTISIG' && multisig.selfSigned)"
             (click)="preview()" color="primary">
             <ion-icon slot="start" name="create"></ion-icon>
             <span translate="CONFIRM.SIGN_ONLY"></span>
@@ -77,7 +76,7 @@
       <ion-col>
         <ion-button color="danger" expand="full" (click)="cancel($event)">
           <ion-icon slot="start" name="close"></ion-icon>
-          <span translate="CONFIRM.CANCEL"></span>
+          <span translate="CONFIRM.BUTTON.CANCEL"></span>
         </ion-button>
       </ion-col>
       <ion-col>
@@ -85,12 +84,12 @@
           [disabled]="!signTxForm.form.valid||!validPassword(passphrase)||(multisig.status == 'MULTISIG' && (multisig.selfSigned || multisig.info.m + 1 < multisig.info.n))"
           color="secondary">
           <ion-icon slot="start" name="send"></ion-icon>
-          <span translate="CONFIRM.SIGN_AND_SEND"></span>
+          <span translate="CONFIRM.BUTTON.SIGN_AND_SEND"></span>
         </ion-button>
-        <ion-button *ngIf="status == 'SIGNED'" type="submit" expand="full" (click)="broadcast(decodedTx)"
+        <ion-button *ngIf="status == 'SIGNED'" type="submit" expand="full" (click)="broadcastOnly(decodedTx)"
           color="secondary">
           <ion-icon slot="start" name="send"></ion-icon>
-          <span translate="CONFIRM.BROADCAST"></span>
+          <span translate="CONFIRM.BUTTON.BROADCAST"></span>
         </ion-button>
       </ion-col>
     </ion-row>
@@ -103,14 +102,14 @@
         </ion-button>
       </ion-col>
       <ion-col>
-        <ion-button *ngIf="status == 'SIGNED'" type="submit" expand="full" (click)="broadcast(decodedTx)"
+        <ion-button *ngIf="status == 'SIGNED'" type="submit" expand="full" (click)="broadcastOnly(decodedTx)"
           color="secondary">
           <ion-icon slot="start" name="send"></ion-icon>
-          <span translate="CONFIRM_TX.BROADCAST"></span>
+          <span translate="CONFIRM.BUTTON.BROADCAST"></span>
         </ion-button>
         <ion-button *ngIf="status !== 'SIGNED'" type="submit" expand="full" [ngxClipboard]="copyHexTx">
           <ion-icon slot="start" name="copy"></ion-icon>
-          <span translate="CONFIRM.COPY"></span>
+          <span translate="CONFIRM.BUTTON.COPY"></span>
         </ion-button>
       </ion-col>
     </ion-row>

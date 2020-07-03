@@ -90,35 +90,46 @@ export class ConfirmPage implements OnInit {
     this.checkTxSignStatus(this.displayedTx)
   }
 
-  send() {
-    this.sign()
-      .then(tx => this.broadcast(tx))
-      .catch((error) => { })
+  async send() {
+    try {
+      await this.alertService.showLoading()
+      const tx = await this.sign()
+      await this.broadcast(tx)
+    } catch (error) { }
   }
 
-  broadcast(tx) {
-    this.alertService.showLoading()
-      .then(() => this.mvs.send(tx))
-      .then((result) => {
-        this.alertService.stopLoading()
-        this.alertService.showSent('SUCCESS_SEND_TEXT', result.hash)
-        this.router.navigate(['account'])
-      })
-      .catch((error) => {
-        this.alertService.stopLoading()
-        console.error(error.message)
-        switch (error.message) {
-          case 'ERR_CONNECTION':
-            this.alertService.showError('ERROR_SEND_TEXT', '')
-            break
-          case 'ERR_SIGN_TX':
-            // already handle in create function
-            break
-          default:
-            this.alertService.showError('MESSAGE.BROADCAST_TRANSACTION', error.message)
-            throw Error('ERR_BROADCAST_TX')
-        }
-      })
+  async broadcastOnly(tx) {
+    try {
+      await this.alertService.showLoading()
+      await this.broadcast(tx)
+    } catch (error) { }
+  }
+
+  async broadcast(tx) {
+    try {
+      const result = await this.mvs.send(tx)
+      this.alertService.stopLoading()
+      this.alertService.showMessage(
+        'CONFIRM.CONFIRM_ALERT.TITLE',
+        'CONFIRM.CONFIRM_ALERT.SUBTITLE',
+        result.hash,
+        'CONFIRM.CONFIRM_ALERT.OK')
+      this.router.navigate(['account'])
+    } catch (error) {
+      this.alertService.stopLoading()
+      console.error(error.message)
+      switch (error.message) {
+        case 'ERR_CONNECTION':
+          this.alertService.showError('CONFIRM.MESSAGE.ERROR_SEND_TEXT', '')
+          break
+        case 'ERR_SIGN_TX':
+          // already handle in create function
+          break
+        default:
+          this.alertService.showError('CONFIRM.MESSAGE.BROADCAST_TRANSACTION', error.message)
+          throw Error('ERR_BROADCAST_TX')
+      }
+    }
   }
 
   sign() {
@@ -128,22 +139,22 @@ export class ConfirmPage implements OnInit {
           console.error(error.message)
           switch (error.message) {
             case 'ERR_DECRYPT_WALLET':
-              this.alertService.showError('MESSAGE.PASSWORD_WRONG', '')
+              this.alertService.showError('CONFIRM.MESSAGE.PASSWORD_WRONG', '')
               throw Error('ERR_SIGN_TX')
             case 'ERR_DECRYPT_WALLET_FROM_SEED':
-              this.alertService.showError('MESSAGE.PASSWORD_WRONG', '')
+              this.alertService.showError('CONFIRM.MESSAGE.PASSWORD_WRONG', '')
               throw Error('ERR_SIGN_TX')
             case 'ERR_INSUFFICIENT_BALANCE':
-              this.alertService.showError('MESSAGE.INSUFFICIENT_BALANCE', '')
+              this.alertService.showError('CONFIRM.MESSAGE.INSUFFICIENT_BALANCE', '')
               throw Error('ERR_SIGN_TX')
             case 'ERR_TOO_MANY_INPUTS':
-              this.alertService.showErrorTranslated('ERROR_TOO_MANY_INPUTS', 'ERROR_TOO_MANY_INPUTS_TEXT')
+              this.alertService.showErrorTranslated('CONFIRM.MESSAGE.ERROR_TOO_MANY_INPUTS', 'CONFIRM.MESSAGE.ERROR_TOO_MANY_INPUTS_TEXT')
               throw Error('ERR_SIGN_TX')
             case 'SIGN_ALREADY_INCL':
-              this.alertService.showError('MESSAGE.ALREADY_SIGN_TRANSACTION', '')
+              this.alertService.showError('CONFIRM.MESSAGE.ALREADY_SIGN_TRANSACTION', '')
               throw Error('ERR_SIGN_TX')
             default:
-              this.alertService.showError('MESSAGE.SIGN_TRANSACTION', error.message)
+              this.alertService.showError('CONFIRM.MESSAGE.SIGN_TRANSACTION', error.message)
               throw Error('ERR_SIGN_TX')
           }
         })
@@ -153,19 +164,19 @@ export class ConfirmPage implements OnInit {
           console.error(error.message)
           switch (error.message) {
             case 'ERR_DECRYPT_WALLET':
-              this.alertService.showError('MESSAGE.PASSWORD_WRONG', '')
+              this.alertService.showError('CONFIRM.MESSAGE.PASSWORD_WRONG', '')
               throw Error('ERR_SIGN_TX')
             case 'ERR_DECRYPT_WALLET_FROM_SEED':
-              this.alertService.showError('MESSAGE.PASSWORD_WRONG', '')
+              this.alertService.showError('CONFIRM.MESSAGE.PASSWORD_WRONG', '')
               throw Error('ERR_SIGN_TX')
             case 'ERR_INSUFFICIENT_BALANCE':
-              this.alertService.showError('MESSAGE.INSUFFICIENT_BALANCE', '')
+              this.alertService.showError('CONFIRM.MESSAGE.INSUFFICIENT_BALANCE', '')
               throw Error('ERR_SIGN_TX')
             case 'ERR_TOO_MANY_INPUTS':
-              this.alertService.showErrorTranslated('ERROR_TOO_MANY_INPUTS', 'ERROR_TOO_MANY_INPUTS_TEXT')
+              this.alertService.showErrorTranslated('CONFIRM.MESSAGE.ERROR_TOO_MANY_INPUTS', 'CONFIRM.MESSAGE.ERROR_TOO_MANY_INPUTS_TEXT')
               throw Error('ERR_SIGN_TX')
             default:
-              this.alertService.showError('MESSAGE.SIGN_TRANSACTION', error.message)
+              this.alertService.showError('CONFIRM.MESSAGE.SIGN_TRANSACTION', error.message)
               throw Error('ERR_SIGN_TX')
           }
         })

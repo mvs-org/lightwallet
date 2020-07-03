@@ -435,7 +435,14 @@
         "SEND_SINGLE": "Send to one",
         "SEND_MANY": "Send to many",
         "NOTICE_TRANSACTION_FEE_UNCOVERED": "Please make sure that you have enough ETP to cover the transaction fee.",
-        "AVAILABLE_BALANCE": "Available balance"
+        "AVAILABLE_BALANCE": "Available balance",
+        "MESSAGE": {
+            "INSUFFICIENT_BALANCE": "You need at least 10 ETP to create a MST.",
+            "ERROR_TOO_MANY_INPUTS": "Too many inputs",
+            "ERROR_TOO_MANY_INPUTS_TEXT": "This transaction contains too many inputs. Please try a smaller amount",
+            "CREATE_TRANSACTION": "Unable to create transaction.",
+            "ERROR_SEND_TEXT": "Could not create the transaction. Please check your input and try again."
+        }
     },
     "ERROR": {
         "PASSWORD": {
@@ -449,7 +456,6 @@
         "RECIPIENT_AVATAR": "Recipient avatar",
         "RECIPIENT_ADDRESS": "Recipient address",
         "AMOUNT": "Amount",
-        "SEND_ALL_BUTTON": "Send All",
         "SEND_FROM": "Select source address (optional)",
         "SEND_FROM_AUTO": "Automatic",
         "FROM_ADDRESS_NO_ETP": "This address doesn't have any ETP. Please add ETP to this address or use the Automatic option.",
@@ -459,18 +465,54 @@
         "HELP": {
             "MESSAGE": "This message will be clearly and publicly displayed in your transaction. Do not enter any personal data!"
         },
+        "ALL": {
+            "TITLE": "Send all?",
+            "SUBTITLE": "Do you really want to send all your available balance?",
+            "OK": "Ok",
+            "CANCEL": "Cancel"
+        },
         "MESSAGE_TOO_LONG": "Too long message. Please use a shorter message",
         "CHANGE_ADDRESS": "Specify change address (optional)",
         "CHANGE_ADDRESS_AUTO": "Automatic",
         "GENERATING_TX_TEXT": "Generating transaction...",
         "SENDING_TX_TEXT": "Sending transaction...",
-        "SEND_BUTTON": "Send",
-        "CANCEL_BUTTON": "Cancel",
+        "BUTTON": {
+            "SEND_ALL": "Send All",
+            "NEXT": "Next",
+            "CANCEL": "Cancel"
+        },
         "UNKNOWN_ERROR": {
             "TITLE": "Something went wrong",
             "BUTTON": {
                 "OK": "Ok"
             }
+        }
+    },
+    "SEND_MORE": {
+        "FEE": "Fee",
+        "TO_AVATAR": "Send to avatars",
+        "RECIPIENT_TITLE": "Recipient {{index}}",
+        "RECIPIENT_ADDRESS": "Recipient address {{index}}",
+        "RECIPIENT_AVATAR": "Recipient avatar {{index}}",
+        "AMOUNT": "Amount {{index}}",
+        "TOTAL_TO_SEND": "Total to send:",
+        "SEND_FROM": "Select source address (optional)",
+        "SEND_FROM_AUTO": "Automatic",
+        "SHOW_ADVANCED": "Show advanced options",
+        "MESSAGE": "Public message (optional)",
+        "MESSAGE_TOO_LONG": "Too long message. Please use a shorter message",
+        "CHANGE_ADDRESS": "Specify change address (optional)",
+        "CHANGE_ADDRESS_AUTO": "Automatic",
+        "HELP": {
+            "MESSAGE": "This message will be clearly and publicly displayed in your transaction. Do not enter any personal data!"
+        },
+        "BUTTON": {
+            "IMPORT_FROM_CSV": "Import from CSV",
+            "EXPORT_CSV": "Export to CSV",
+            "DOWNLOAD_CSV_EXAMPLE": "Download CSV example",
+            "ADD_RECIPIENT": "Add recipient",
+            "NEXT": "Next",
+            "CANCEL": "Cancel"
         }
     },
     "ASSET_LOCK": {
@@ -524,14 +566,31 @@
         "PAGE_TITLE": "Review, sign and send the transaction",
         "PASSWORD": "Password",
         "SHOW_ADVANCED": "Show advanced options",
-        "SIGN_ONLY": "Sign only",
-        "SIGN_AND_SEND": "Sign and send",
-        "BROADCAST": "Broadcast",
         "PREVIEW_TX": "Your encoded transaction will be:",
         "PREVIEW_SIGNED_TX": "Your signed encoded transaction is:",
         "PREVIEW_UNSIGNED_TX": "Your unsigned encoded transaction is:",
-        "CANCEL": "Cancel",
-        "COPY": "Copy"
+        "CONFIRM_ALERT": {
+            "TITLE": "Awesome!",
+            "SUBTITLE": "Your transaction has been sent successfully",
+            "OK": "Ok"
+        },
+        "BUTTON": {
+            "CANCEL": "Cancel",
+            "COPY": "Copy",
+            "SIGN_ONLY": "Sign only",
+            "SIGN_AND_SEND": "Sign and send",
+            "BROADCAST": "Broadcast"
+        },
+        "MESSAGE": {
+            "PASSWORD_WRONG": "Incorrect password",
+            "INSUFFICIENT_BALANCE": "Insufficient balance. Please double check your available balance.",
+            "ERROR_TOO_MANY_INPUTS": "Too many inputs",
+            "ERROR_TOO_MANY_INPUTS_TEXT": "This transaction contains too many inputs. Please try a smaller amount",
+            "ALREADY_SIGN_TRANSACTION": "You have already signed this transaction, no need to sign it again!",
+            "SIGN_TRANSACTION": "Unable to sign this transaction",
+            "BROADCAST_TRANSACTION": "Unable to broadcast the transaction.",
+            "ERROR_SEND_TEXT": "Could not create the transaction. Please check your input and try again."
+        }
     },
     "TX": {
         "INPUTS": "Inputs:",
@@ -802,6 +861,15 @@
         "INFORMATION": "This service is provided by SWFT. In case of issue, please contact SWFT support on ",
         "IMPORT_ORDER_DESCRIPTION": "If you created an order from another device or directly from SWFT website, you can import it with the order ID to follow its status.",
         "INFORMATION_WARNING": "The SWFT telegram support will never ask a user to send any funds to addresses other than the deposit address of the order details. Details about the order should not be necessary. The order id should be enough information for the support to find the order.",
-        "INFORMATION_LINK": "Telegram"
+        "INFORMATION_LINK": "Telegram",
+        "BUTTON": {
+            "NEXT": "Swap",
+            "CANCEL": "Cancel"
+        }
+    },
+    "MESSAGE": {
+        "LOADING": "Loading...",
+        "ERROR_TITLE": "Oops...",
+        "OK": "Ok"
     }
 }

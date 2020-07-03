@@ -26,6 +26,8 @@ export class SwftPage implements OnInit {
   orders: OrderDetails[] = []
   importFromId: string
 
+  isApp = !document.URL.startsWith('http') || document.URL.startsWith('http://localhost:8080')
+
   createOrderParameters: CreateOrderParameters = {
     depositSymbol: 'ETP',
     receiveSymbol: 'BTC',
@@ -40,7 +42,7 @@ export class SwftPage implements OnInit {
   constructor(
     public platform: Platform,
     private mvs: MetaverseService,
-    private etpBridgeService: SwftService,
+    public etpBridgeService: SwftService,
     private alert: AlertService,
     private globals: AppService,
     private translate: TranslateService,

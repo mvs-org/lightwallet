@@ -41,9 +41,9 @@ export class MetaverseService {
   DEFAULT_BALANCES = {
     ETP: { frozen: 0, available: 0, decimals: 8 },
     MST: {
-      'DNA': { frozen: 0, available: 0, decimals: 4 },
-      'APO': { frozen: 0, available: 0, decimals: 4 },
-      'SDG': { frozen: 0, available: 0, decimals: 8 },
+      DNA: { frozen: 0, available: 0, decimals: 4 },
+      APO: { frozen: 0, available: 0, decimals: 4 },
+      SDG: { frozen: 0, available: 0, decimals: 8 },
     },
     MIT: []
   }
@@ -56,13 +56,22 @@ export class MetaverseService {
     this.appService.network$
       .pipe(filter(n => !!n))
       .subscribe(network => {
-        console.info('setup metaverse service for network', network)
+        console.log('setup metaverse service for network', network)
         this.blockchain = Blockchain({ url: network === 'testnet' ? 'https://testnet-api.myetpwallet.com/api/' : 'https://mainnet-api.myetpwallet.com/api/' })
         this.ready$.next(true)
       })
   }
 
-  createSendTx(asset: string, recipient_address: string, recipient_avatar: string, quantity: number, from_address: string, change_address: string, fee: number, messages: Array<string>) {
+  createSendTx(
+    asset: string,
+    recipient_address: string,
+    recipient_avatar: string,
+    quantity: number,
+    from_address: string,
+    change_address: string,
+    fee: number,
+    messages: Array<string>,
+  ) {
     const target = {}
     target[asset] = quantity
     return this.getUtxoFrom(from_address)
@@ -148,7 +157,7 @@ export class MetaverseService {
           }
           // Set change address to first utxo's address
           if (change_address == undefined) {
-            change_address = result.utxo[0].address;
+            change_address = result.utxo[0].address
           }
           return Metaverse.transaction_builder.send(result.utxo, recipient_address, recipient_avatar, target, change_address, result.change, undefined, fee, messages)
         })
@@ -165,7 +174,7 @@ export class MetaverseService {
       .then((result) => {
         // Set change address to first utxo's address
         if (change_address == undefined) {
-          change_address = result.utxo[0].address;
+          change_address = result.utxo[0].address
         }
         return Metaverse.transaction_builder.sendMore(result.utxo, recipients, change_address, result.change, undefined, Metaverse.constants.FEE.DEFAULT * recipients.length, messages)
       })
@@ -186,7 +195,7 @@ export class MetaverseService {
         }
         // Set change address to first utxo's address
         if (change_address == undefined) {
-          change_address = result.utxo[0].address;
+          change_address = result.utxo[0].address
         }
         return Metaverse.transaction_builder.sendSwap(result.utxo, recipient_address, recipient_avatar, target, change_address, result.change, undefined, fee, this.appService.network, messages, swap_fee)
       })
@@ -206,10 +215,10 @@ export class MetaverseService {
         }
         // Set change address to first utxo's address
         if (change_address == undefined) {
-          change_address = result.utxo[0].address;
+          change_address = result.utxo[0].address
         }
         if (recipient_address == undefined) {
-          recipient_address = result.utxo[0].address;
+          recipient_address = result.utxo[0].address
         }
         return Metaverse.transaction_builder.sendLockedAsset(result.utxo, recipient_address, recipient_avatar, symbol, quantity, attenuation_model, change_address, result.change, undefined, fee, messages)
       })
@@ -239,10 +248,10 @@ export class MetaverseService {
         }
         // Set change address to first utxo's address
         if (change_address == undefined) {
-          change_address = result.utxo[0].address;
+          change_address = result.utxo[0].address
         }
         if (recipient_address == undefined) {
-          recipient_address = result.utxo[0].address;
+          recipient_address = result.utxo[0].address
         }
         return Metaverse.transaction_builder.sendLockedAsset(
           result.utxo,
@@ -270,7 +279,7 @@ export class MetaverseService {
       .then((result) => {
         // Set change address to first utxo's address
         if (change_address == undefined) {
-          change_address = result.utxo[0].address;
+          change_address = result.utxo[0].address
         }
         return Metaverse.transaction_builder.issueDid(result.utxo, avatar_address, symbol, change_address, result.change, bounty_fee, this.appService.network, messages)
       })
@@ -286,7 +295,7 @@ export class MetaverseService {
       .then((result) => {
         // Set change address to first utxo's address
         if (change_address == undefined) {
-          change_address = result.utxo[0].address;
+          change_address = result.utxo[0].address
         }
         return Metaverse.transaction_builder.registerMIT(result.utxo, recipient_address, recipient_avatar, symbol, content, change_address, result.change, fee)
       })
@@ -307,7 +316,7 @@ export class MetaverseService {
         }
         // Set change address to first utxo's address
         if (change_address == undefined) {
-          change_address = fee_utxo.utxo[0].address;
+          change_address = fee_utxo.utxo[0].address
         }
         return Metaverse.transaction_builder.transferMIT(fee_utxo.utxo.concat(mit_utxo), sender_avatar, recipient_address, recipient_avatar, symbol, change_address, fee_utxo.change, fee)
       })
@@ -323,7 +332,7 @@ export class MetaverseService {
         .then((result) => {
           // Set change address to first utxo's address
           if (change_address == undefined) {
-            change_address = result.utxo[0].address;
+            change_address = result.utxo[0].address
           }
           const certs = utxo.filter(output => {
             if (use_naming_cert) {
@@ -333,10 +342,10 @@ export class MetaverseService {
               return false
             } else {
               if (!use_naming_cert && output.attachment.type == 'asset-cert' && output.attachment.symbol == symbol.split('.')[0] && output.attachment.cert == 'domain') {
-                return true;
+                return true
               }
               else if (output.attachment.type == 'asset-cert' && output.attachment.symbol == symbol && ['naming', 'issue'].indexOf(output.attachment.cert) !== -1) {
-                return true;
+                return true
               }
               return false
             }
@@ -419,11 +428,11 @@ export class MetaverseService {
         const b = JSON.parse(JSON.stringify(this.DEFAULT_BALANCES))
         if (balances) {
           if (balances.ETP) {
-            b.ETP = balances.ETP;
+            b.ETP = balances.ETP
           }
           if (balances.MST) {
             Object.keys(balances.MST).forEach((symbol) => {
-              b.MST[symbol] = balances.MST[symbol];
+              b.MST[symbol] = balances.MST[symbol]
             })
           }
           if (balances.MIT) {
@@ -458,7 +467,7 @@ export class MetaverseService {
         Object.keys(newBalances).forEach((asset) => {
           nb[asset] = newBalances[asset]
         })
-        if (JSON.stringify(balances) != JSON.stringify(nb)) {
+        if (JSON.stringify(balances) !== JSON.stringify(nb)) {
           return this.storage.set('balances', newBalances)
         }
       })
@@ -490,7 +499,7 @@ export class MetaverseService {
 
   async calculateBalances() {
     const [height, addresses, multisigAddresses, transactions] = await Promise.all([
-      this.getUtxo(),
+      this.getHeight(),
       this.getAddresses(),
       this.wallet.getMultisigAddresses(),
       this.getTxs(),
