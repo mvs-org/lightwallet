@@ -14,6 +14,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader'
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core'
 import { HttpClient, HttpClientModule } from '@angular/common/http'
 import { IonicStorageModule } from '@ionic/storage'
+import { pageTransition } from '../animations'
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json')
@@ -24,7 +25,9 @@ export function createTranslateLoader(http: HttpClient) {
   entryComponents: [],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(),
+    IonicModule.forRoot({
+      navAnimation: pageTransition
+    }),
     AppRoutingModule,
     HttpClientModule,
     IonicStorageModule.forRoot({
