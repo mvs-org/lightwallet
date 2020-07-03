@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
-import { AppComponent } from '../app.component'
 import { AccountPage } from './account.page'
 
 const routes: Routes = [
@@ -55,6 +54,10 @@ const routes: Routes = [
             {
                 path: 'swft',
                 loadChildren: () => import('./swft/swft.module').then(m => m.SwftPageModule)
+            },
+            {
+                path: 'multisig',
+                loadChildren: () => import('./multisig/multisig.module').then(m => m.MultisigPageModule)
             },
         ]
     },
