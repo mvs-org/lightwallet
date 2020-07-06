@@ -82,13 +82,13 @@
         }
     },
     "MIT_DETAILS": {
-        "OWNER": "Owner: {{name}}",
-        "CREATOR": "Creator: {{name}}",
+        "OWNER": "Owner",
+        "CREATOR": "Creator",
         "CONTENT": "Content",
         "HISTORY": "History",
-        "RECIPIENT_AVATAR": "Recipient Avatar: {{name}}",
-        "STATUS": "Status: {{status}}",
-        "DATE": "Date: {{date}}"
+        "RECIPIENT_AVATAR": "Recipient Avatar",
+        "STATUS": "Status",
+        "DATE": "Date"
     },
     "MST": {
         "TITLE": "MST - Metaverse Smart Token",

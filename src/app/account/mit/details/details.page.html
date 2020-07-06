@@ -11,24 +11,38 @@
   <ion-list>
     <ion-grid>
       <ion-row>
-        <ion-col class="asset-container">
+        <ion-col size="12" size-md="6">
           <ion-card class="card-block">
             <ion-item lines="none">
-              <ion-avatar item-start>
+              <ion-avatar slot="start">
                 <img class="coinlogo" [src]="'assets/icon/default_mit.png'">
               </ion-avatar>
-              <div>
-                <h1>{{symbol}}</h1>
+              <ion-label>
+                <h1>
+                  <ion-col>
+                    {{symbol}}
+                  </ion-col>
+                </h1>
                 <ion-button id="explorerTxButton" fill="clear" (click)="checkTx('mit', symbol)">
                   <ion-icon slot="icon-only" name="open"></ion-icon>
                 </ion-button>
-                <p translate="MIT_DETAILS.OWNER" [translateParams]="{name: owner}"></p>
-                <p translate="MIT_DETAILS.CREATOR" [translateParams]="{name: creator}"></p>
-              </div>
+                <ion-row>
+                  <ion-col>
+                    <div translate="MIT_DETAILS.OWNER"></div>
+                  </ion-col>
+                  <ion-col class="right">{{owner}}</ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <div translate="MIT_DETAILS.CREATOR"></div>
+                  </ion-col>
+                  <ion-col class="right">{{creator}}</ion-col>
+                </ion-row>
+              </ion-label>
             </ion-item>
           </ion-card>
         </ion-col>
-        <ion-col class="asset-container">
+        <ion-col size="12" size-md="6">
           <ion-card class="card-block">
             <ion-item lines="none">
               <div>
@@ -45,14 +59,21 @@
   <br>
   <h2 translate="MIT_DETAILS.HISTORY"></h2>
   <ion-list>
-    <div *ngFor="let step of history">
-      <h2 translate="MIT_DETAILS.RECIPIENT_AVATAR" [translateParams]="{name: step.to_did}"></h2>
-      <div class="history-info" translate="MIT_DETAILS.STATUS" [translateParams]="{status: step.status}"></div>
-      <div class="align-small-button history-info" translate="MIT_DETAILS.DATE" [translateParams]="{date: step.confirmed_at*1000|date : 'medium'}">
+    <ion-card *ngFor="let step of history">
+      <ion-item lines="none">
+        <h2 translate="MIT_DETAILS.RECIPIENT_AVATAR">
+          <span>: {{step.to_did}}</span>
+        </h2>
+      </ion-item>
+      <ion-item lines="none" translate="MIT_DETAILS.STATUS">
+        <span>: {{step.status}}</span>
+      </ion-item>
+      <ion-item lines="none" class="" translate="MIT_DETAILS.DATE">
+        <span>: {{step.confirmed_at*1000|date : 'medium'}}</span>
         <ion-button fill="clear" color="primary" (click)="checkTx('tx', step.tx)">
           <ion-icon slot="icon-only" name="open"></ion-icon>
         </ion-button>
-      </div>
-    </div>
+      </ion-item>
+    </ion-card>
   </ion-list>
 </ion-content>
