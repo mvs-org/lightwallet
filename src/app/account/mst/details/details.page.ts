@@ -46,6 +46,10 @@ export class DetailsPage implements OnInit {
 
   symbol: string
   icon: string
+  balance: any
+
+  loadingBalance = true
+
   asset: MstInfo
   miningModel: MiningModel
   showSecondaryHistory = false
@@ -63,11 +67,15 @@ export class DetailsPage implements OnInit {
 
   async ngOnInit() {
     this.symbol = this.activatedRoute.snapshot.params.symbol
+
+    this.balance = (await this.metaverseService.getBalances()).MST[this.symbol]
+    this.loadingBalance = false
+    console.log(this.balance)
+
     const icons = await this.metaverseService.getDefaultIcon()
     this.icon = icons.MST[this.symbol] || 'assets/icon/default_mst.png'
 
     this.asset = await this.metaverseService.getMst(this.symbol)
-    console.log(this.asset)
 
     if (this.asset.mining_model) {
       const miningModel = this.asset.mining_model.match(/^initial:(.+),interval:(.+),base:(.+)$/)
