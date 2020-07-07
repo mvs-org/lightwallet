@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
 import { MetaverseService } from 'src/app/services/metaverse.service'
-import { Router } from '@angular/router'
 import { Subscription } from 'rxjs'
 
 @Component({
@@ -18,13 +17,13 @@ export class MstPage implements OnInit, OnDestroy {
   base: string
   msts = []
   reorderingMsts = []
+  loading = true
 
   heightSubscription: Subscription
   status = 'default'
 
   constructor(
     private metaverseService: MetaverseService,
-    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -46,40 +45,32 @@ export class MstPage implements OnInit, OnDestroy {
 
   private async showBalances() {
     try {
-      this.balances = await this.metaverseService.getBalances()
-      console.log(this.balances.MST)
-      await this.metaverseService.addAssetsToAssetOrder(Object.keys(this.balances.MST))
-      const order = await this.metaverseService.assetOrder()
-      console.log(order)
-      const hidden = await this.metaverseService.getHiddenMst()
-      console.log(hidden)
-      /*const order = []
-      all.forEach(symbol => {
-        if (hidden.indexOf(symbol) === -1) {
-          order.push(symbol)
-        }
-      })*/
-      // this.balancesKeys = order
+      if (this.status === 'default') {
+        this.balances = await this.metaverseService.getBalances()
+        await this.metaverseService.addAssetsToAssetOrder(Object.keys(this.balances.MST))
+        const order = await this.metaverseService.assetOrder()
+        const hidden = await this.metaverseService.getHiddenMst()
 
-      this.icons = await this.metaverseService.getDefaultIcon()
+        this.icons = await this.metaverseService.getDefaultIcon()
 
-      this.msts = [
-        /*{
-          symbol: 'ETP',
-          icon: 'assets/icon/ETP.png',
-          balance: this.balances.ETP
-        }*/
-      ]
-      Object.keys(this.balances.MST).forEach(symbol => {
-        this.msts.push({
-          symbol,
-          icon: this.icons.MST[symbol] || 'assets/icon/default_mst.png',
-          balance: this.balances.MST[symbol],
-          hidden: hidden.indexOf(symbol) !== -1,
-          order: order.indexOf(symbol)
+        this.msts = [
+          /*{
+            symbol: 'ETP',
+            icon: 'assets/icon/ETP.png',
+            balance: this.balances.ETP
+          }*/
+        ]
+        Object.keys(this.balances.MST).forEach(symbol => {
+          this.msts.push({
+            symbol,
+            icon: this.icons.MST[symbol] || 'assets/icon/default_mst.png',
+            balance: this.balances.MST[symbol],
+            hidden: hidden.indexOf(symbol) !== -1,
+            order: order.indexOf(symbol)
+          })
         })
-      })
-      console.log(this.msts)
+        this.loading = false
+      }
     } catch (e) {
       console.error(e)
       console.log('Can\'t load balances')

@@ -1090,4 +1090,9 @@ export class MetaverseService {
     return this.blockchain.block.get(height)
   }
 
+  getMst(mst) {
+    console.log(mst)
+    return this.blockchain.MST.get(mst)
+  }
+
 }

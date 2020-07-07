@@ -54,11 +54,15 @@
       <ion-col>Available</ion-col>
       <ion-col>Unconfirmed</ion-col>
       <ion-col>Frozen</ion-col>
-      <div class="empty-space-header" *ngIf="status == 'edit'"></div>
+      <div class="empty-space-header-edit" *ngIf="status == 'edit'"></div>
+      <div class="empty-space-header-default" *ngIf="status == 'default'"></div>
     </ion-item>
-    <ion-reorder-group *ngIf="msts?.length; else noMst" (ionItemReorder)="reorder($event)" id="reorder">
+
+    <ion-spinner name="dots" *ngIf="loading"></ion-spinner>
+
+    <ion-reorder-group *ngIf="msts?.length" (ionItemReorder)="reorder($event)" id="reorder">
       <div *ngFor="let mst of msts | orderBy: ['order', '-1']; let i = index">
-        <ion-item *ngIf="status == 'edit' || !mst.hidden">
+        <ion-item *ngIf="status == 'edit' || !mst.hidden" button [routerLink]="'/account/mst/'+mst.symbol" detail>
           <img class="coinlogo" [src]="mst.icon" (error)="errorImg($event)"
             [ngClass]="{'default-logo': mst.icon == 'default_mst'}">
           <ion-label class="symbol">{{mst.symbol}}</ion-label>
@@ -74,16 +78,29 @@
               <ion-icon color="black" slot="icon-only" name="eye-off"></ion-icon>
             </ion-button>
           </ion-buttons>
-
           <ion-reorder slot="end"></ion-reorder>
         </ion-item>
       </div>
     </ion-reorder-group>
 
-    <ng-template #noMst>
+    <ng-template *ngIf="!loading && msts && msts.length == 0">
       <p translate="NO_MST"></p>
     </ng-template>
   </ion-card>
+
+
+  <!--  <ion-list *ngIf="balances!=undefined">
+    <ion-item *ngFor="let mit of balances.MIT" button [routerLink]="'/account/mit/'+mit.symbol" detail>
+      <ion-label>
+        <b>{{mit.symbol}}</b>
+        <p>{{mit.owner}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+  <ion-button color="primary" routerLink="/account/mit/create">
+    <ion-icon slot="start" name="add"></ion-icon>
+    <span translate="MIT.BUTTON.CREATE_MIT"></span>
+  </ion-button>-->
 
   <!--MST-->
   <!--ion-reorder-group *ngIf="balancesKeys?.length; else noMst" (ionItemReorder)="reorderMst($event)" id="reorderMst">
