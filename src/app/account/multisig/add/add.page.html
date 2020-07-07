@@ -95,7 +95,7 @@
           <ion-col class="cosigner-publickey">
             <ion-item
               [ngClass]="{'error-border':!validPublicKey(cosigners[i], i), 'valid-border':validPublicKey(cosigners[i])}">
-              <ion-label color="primary" floating>{{"COSIGNER_PUBLIC_KEY"|translate}} {{i+1}}</ion-label>
+              <ion-label color="primary" floating>{{"MULTISIG.ADD.COSIGNER_PUBLIC_KEY"|translate}} {{i+1}}</ion-label>
               <ion-input [(ngModel)]="cosigners[i]" [name]="cosigner + '_' + i" (ngModelChange)="checkPublicKeys()"
                 required></ion-input>
             </ion-item>

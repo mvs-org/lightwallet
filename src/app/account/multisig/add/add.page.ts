@@ -92,7 +92,7 @@ export class AddPage {
             this.alert.showError('MESSAGE.PASSWORD_WRONG', '')
             break
           default:
-            this.alert.showError('GET_PUBLIC_KEY.ERROR', error.message)
+            this.alert.showError('MULTISIG.MESSAGE.ERROR_GET_PUBLIC_KEY', error.message)
             break
         }
       })
@@ -100,9 +100,9 @@ export class AddPage {
 
   getAddress(cosigners, nbrSigReq, myPublicKey, passphrase) {
     if (!this.myPublicKey) {
-      this.alert.showError('MULTISIG_MISSING_MY_PUBLIC_KEY.ERROR', '')
+      this.alert.showError('MULTISIG.MESSAGE.ERROR_MISSING_MY_PUBLIC_KEY', '')
     } else if (!this.validPublicKeys) {
-      this.alert.showError('MULTISIG_WRONG_PUBLIC_KEYS.ERROR', '')
+      this.alert.showError('MULTISIG.MESSAGE.ERROR_MULTISIG_WRONG_PUBLIC_KEYS', '')
     } else {
       try {
         this.alert.showLoading()
@@ -137,7 +137,7 @@ export class AddPage {
             .then((newMultisig) => {
               if (!newMultisig) {
                 this.alert.stopLoading()
-                this.alert.showError('IMPORT_ADDRESS_UNKNOW.ERROR', '')
+                this.alert.showError('MULTISIG.MESSAGE.ERROR_IMPORT_ADDRESS_UNKNOW', '')
               } else {
                 Promise.all([this.mvs.getAddresses(), this.wallet.getWallet(passphrase)])
                   .then((result) => {
@@ -170,7 +170,7 @@ export class AddPage {
                           this.addMultisigAddress(newMultisig, false, passphrase)
                         } else {
                           this.alert.stopLoading()
-                          this.alert.showError('MULTISIG_ADDRESS_NOT_THIS_WALLET.ERROR', '')
+                          this.alert.showError('MULTISIG.MESSAGE.ERROR_ADDRESS_NOT_THIS_WALLET', '')
                         }
                       })
                   })
@@ -182,7 +182,7 @@ export class AddPage {
                         this.alert.showError('MESSAGE.PASSWORD_WRONG', '')
                         break
                       default:
-                        this.alert.showError('GET_PUBLIC_KEY.ERROR', error.message)
+                        this.alert.showError('MULTISIG.MESSAGE.ERROR_GET_PUBLIC_KEY', error.message)
                         break
                     }
                   })
@@ -212,8 +212,8 @@ export class AddPage {
           this.wallet.addMultisig(newMultisig)
             .then(() => this.wallet.saveSessionAccount(passphrase))
             .then(() => this.alert.stopLoading())
-            // .then(() => this.alert.showSent(newAddress ? 'SUCCESS_CREATE_MULTISIG' : 'SUCCESS_IMPORT_MULTISIG', newMultisig.a))
-            .then(() => this.router.navigate(['account', 'loading'], { queryParams: { reset: true}}))
+            .then(() => this.alert.showMessage(newAddress ? 'MULTISIG.MESSAGE.SUCCESS_CREATE_MULTISIG' : 'MULTISIG.MESSAGE.SUCCESS_IMPORT_MULTISIG', '', newMultisig.a))
+            .then(() => this.router.navigate(['loading'], { queryParams: { reset: true } }))
             .catch(error => {
               console.error(error)
               this.alert.stopLoading()

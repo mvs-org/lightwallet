@@ -1,0 +1,175 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/account/multisig"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ "MULTISIG.TRANSFER.HEADLINE" | translate}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding style="padding-bottom: 0;">
+
+  <ion-item no-lines>
+    <ion-segment [(ngModel)]="type" color="primary">
+      <ion-segment-button value="create">
+        {{ "MULTISIG.TRANSFER.CREATE" | translate}}
+      </ion-segment-button>
+      <ion-segment-button value="sign">
+        {{ "MULTISIG.TRANSFER.BROADCAST" | translate}}
+      </ion-segment-button>
+    </ion-segment>
+  </ion-item>
+
+
+  <div *ngIf="type == 'create'">
+    <div class="ion-text-center">
+      <ion-text color="danger" translate="MULTISIG.TRANSFER.NOTICE_TRANSACTION_FEE_UNCOVERED">
+      </ion-text>
+    </div>
+    <ion-row>
+      <ion-col>
+        <p>{{"MULTISIG.TRANSFER.AVAILABLE_BALANCE" | translate}}: <br *ngIf="platform.is('mobile')">{{showBalance | format :
+              decimals}} {{selectedAsset}}</p>
+      </ion-col>
+      <ion-col>
+        <p class="right">{{"GLOBAL.FEE"|translate}}:<br *ngIf="platform.is('mobile')"> {{fee | format : 8}} ETP</p>
+      </ion-col>
+    </ion-row>
+
+    <form #sendForm="ngForm" class="padding-bottom">
+      <ion-list style="padding-bottom: 0;">
+
+        <ion-item class="toggle-input">
+          <ion-label>{{"MULTISIG.TRANSFER.TO_AVATAR"|translate}}</ion-label>
+          <ion-toggle [(ngModel)]="sendToAvatar" name="sendToAvatar" checked="false"></ion-toggle>
+        </ion-item>
+        <ion-item *ngIf="sendToAvatar" [ngClass]="{'error-border':!validAvatar(recipient_avatar)}">
+          <ion-label color="primary" floating>{{"MULTISIG.TRANSFER.RECIPIENT_AVATAR"|translate}}</ion-label>
+          <ion-input #recipientAvatarInput name="recipient_avatar" [(ngModel)]="recipient_avatar"
+            (ngModelChange)="recipientAvatarChanged($event)" required></ion-input>
+        </ion-item>
+        <ion-item
+          [ngClass]="{'error-border':!validrecipient(recipient_address), 'valid-border':validrecipient(recipient_address)}">
+          <ion-label color="primary" floating>{{"MULTISIG.TRANSFER.RECIPIENT_ADDRESS"|translate}}</ion-label>
+          <ion-input #recipientAddressInput name="recipient_address" [(ngModel)]="recipient_address"
+            (ngModelChange)="recipientChanged($event)" [disabled]="sendToAvatar" required></ion-input>
+          <button id="scanButton" *ngIf="isApp" ion-button item-right (click)="scan()">
+            <ion-icon name="qr-scanner"></ion-icon>
+          </button>
+        </ion-item>
+        <ion-item [ngClass]="{'error-border':!validQuantity(quantity)}">
+          <ion-label color="primary" floating>{{"MULTISIG.TRANSFER.AMOUNT" | translate}}</ion-label>
+          <ion-input #quantityInput name="quantity" type="number" min="0" [(ngModel)]="quantity" required></ion-input>
+          <ion-button type="button" *ngIf="etpBalance>10000" id="sendAll" (click)="sendAll()">
+            {{"MULTISIG.TRANSFER.SEND_ALL"|translate}}
+          </ion-button>
+        </ion-item>
+        <ion-item *ngIf="countDecimals(quantity) > decimals" no-lines class="wrong-input">
+          {{"SEND.TOO_MANY_DECIMALS" | translate}}</ion-item>
+        <ion-item [ngClass]="{'error-border': !validPassword(passphrase)}">
+          <ion-label color="primary" floating>{{"GLOBAL.PASSWORD" | translate}}</ion-label>
+          <ion-input name="passphrase" type="password" [(ngModel)]="passphrase" required></ion-input>
+        </ion-item>
+        <br>
+        <ion-item>
+          <ion-label>{{"MULTISIG.TRANSFER.FROM_ADDRESS"|translate}}</ion-label>
+          <ion-select [(ngModel)]="sendFrom" name="sendfrom" disabled>
+            <ion-select-option *ngFor="let addressbalance of addressbalances" value="{{addressbalance.address}}">
+              {{addressbalance.identifier}}
+              - {{addressbalance.balance | format : decimals}} {{selectedAsset}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <br>
+        <ion-item class="toggle-input">
+          <ion-label>{{"GLOBAL.SHOW_ADVANCED"|translate}}</ion-label>
+          <ion-toggle [(ngModel)]="showAdvanced" name="showAdvanced" checked="false"></ion-toggle>
+        </ion-item>
+        <div *ngIf="showAdvanced">
+          <ion-item no-lines>
+            <ion-label color="primary">{{"GLOBAL.FEE" | translate}}</ion-label>
+            <ion-badge item-end color="primary">{{fee | format : 8}} ETP</ion-badge>
+          </ion-item>
+          <ion-item>
+            <ion-range min="10000" max="10000000" step="10000" color="primary" [(ngModel)]="fee" name="fee"
+              (ionChange)="updateRange()">
+              <ion-label range-left>{{10000 | format : 8}}</ion-label>
+              <ion-label range-right>{{10000000 | format : 8}}</ion-label>
+            </ion-range>
+          </ion-item>
+          <ion-item
+            [ngClass]="{'error-border':!validMessageLength(message), 'valid-border': message.length > 0 && validMessageLength(message)}">
+            <ion-label floating>{{"MULTISIG.TRANSFER.MESSAGE" | translate}}</ion-label>
+            <ion-input name="message" [(ngModel)]="message"></ion-input>
+          </ion-item>
+          <div no-lines class="advice">{{"MULTISIG.TRANSFER.MESSAGE_TEXT" | translate}}</div>
+          <ion-item *ngIf="!validMessageLength(message)" no-lines class="wrong-input">{{"MESSAGE_TOO_LONG" |
+                  translate}}</ion-item>
+          <br>
+          <ion-item>
+            <ion-label>{{"MULTISIG.TRANSFER.CHANGE_ADDRESS"|translate}}</ion-label>
+            <ion-select [(ngModel)]="changeAddress" name="changeaddress" okText="{{'OK'|translate}}"
+              cancelText="{{'CANCEL'|translate}}">
+              <ion-select-option selected="true" value="auto">{{"AUTO"| translate}}</ion-select-option>
+              <ion-select-option *ngFor="let address of addresses" value="{{address}}">{{address}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </div>
+      </ion-list>
+      <ion-row class="padding-bottom">
+        <ion-col col-12 col-sm-6>
+          <ion-button type="submit" expand="full"
+            [disabled]="!sendForm.form.valid||!validrecipient(recipient_address)||!validQuantity(quantity)||!validPassword(passphrase)||!validMessageLength(message)"
+            (click)="preview()" color="secondary">
+            <ion-icon disabled="checked" name="settings"></ion-icon>
+            {{"MULTISIG.TRANSFER.GENERATE" | translate}}
+          </ion-button>
+        </ion-col>
+        <ion-col col-12 col-sm-6>
+          <ion-button color="danger" expand="full" (click)="cancel($event)">
+            <ion-icon name="close"></ion-icon>
+            {{'CANCEL'|translate}}
+          </ion-button>
+        </ion-col>
+      </ion-row>
+
+      <ion-card-content *ngIf="rawtx">
+        <h4>{{"MULTISIG.TRANSFER.CREATED_TX"|translate}}:</h4>
+        <div no-lines class="advice">{{"MULTISIG.TRANSFER.CREATED_TX_DESCRIPTION"|translate}}</div>
+        <textarea fz-elastic ion-input full type="text" #copyCreatedTx value="{{rawtx}}" readonly>{{rawtx}}</textarea>
+        <button col-sm-12 col-md-6 col-lg-3 ion-button full item-right icon-left [ngxClipboard]="copyCreatedTx">
+          <ion-icon name="copy"></ion-icon>
+          {{'GLOBAL.COPY'|translate}}
+        </button>
+      </ion-card-content>
+    </form>
+
+  </div>
+
+
+
+
+  <form *ngIf="type == 'sign'" #sendForm="ngForm" class="padding-bottom">
+
+    <ion-list>
+      <ion-card-content>
+        <h4>{{"MULTISIG.TRANSFER.TX_TO_SIGN"|translate}}:</h4>
+        <ion-textarea fz-elastic [(ngModel)]="input" name="input" placeholder="{{'MULTISIG.TRANSFER.HEX_ENCODED_TRANSACTION_TEXT'|translate}}"></ion-textarea>
+      </ion-card-content>
+    </ion-list>
+    <ion-row>
+      <ion-col>
+        <ion-button type="submit" expand="full" (click)="decode(input)" [disabled]="!input" color="secondary">
+          <ion-icon disabled="checked" name="cog"></ion-icon>
+          {{"MULTISIG.TRANSFER.DECODE" | translate}}
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button color="danger" expand="full" (click)="cancel($event)">
+          <ion-icon name="close"></ion-icon>
+          {{'GLOBAL.CANCEL'|translate}}
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+  </form>
+</ion-content>
