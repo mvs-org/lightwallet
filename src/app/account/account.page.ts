@@ -84,7 +84,7 @@ export class AccountPage implements OnInit, OnDestroy {
         {
             title: 'MULTISIG.MENU_ENTRY',
             url: '/account/multisig',
-            icon: 'time'
+            icon: 'people'
         },
     ]
 
