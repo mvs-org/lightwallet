@@ -1091,8 +1091,11 @@ export class MetaverseService {
   }
 
   getMst(mst) {
-    console.log(mst)
     return this.blockchain.MST.get(mst)
+  }
+
+  getStake(mst, options = {}) {
+    return this.blockchain.MST.stake(mst, options)
   }
 
 }

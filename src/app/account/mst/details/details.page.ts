@@ -58,6 +58,10 @@ export class DetailsPage implements OnInit {
   currentEtpMiningRewardPos = 0
   loadingMstInfo = true
 
+  stakelist: Array<any> = []
+  loadingStakelist = true
+  stakelistFullyLoaded = false
+
   constructor(
     private activatedRoute: ActivatedRoute,
     public walletService: WalletService,
@@ -68,13 +72,14 @@ export class DetailsPage implements OnInit {
   async ngOnInit() {
     this.symbol = this.activatedRoute.snapshot.params.symbol
 
+    /* Load balances */
     this.balance = (await this.metaverseService.getBalances()).MST[this.symbol]
     this.loadingBalance = false
-    console.log(this.balance)
 
     const icons = await this.metaverseService.getDefaultIcon()
     this.icon = icons.MST[this.symbol] || 'assets/icon/default_mst.png'
 
+    /* Load MST info */
     this.asset = await this.metaverseService.getMst(this.symbol)
 
     if (this.asset.mining_model) {
@@ -85,6 +90,27 @@ export class DetailsPage implements OnInit {
       this.miningModel.basePercent = Math.round((1 - this.miningModel.base) * 100)
     }
     this.loadingMstInfo = false
+
+    /* Load stakelist */
+    this.getStakelist()
+
+  }
+
+  async getStakelist() {
+    if (!this.loadingStakelist || this.stakelist.length === 0) {
+      this.loadingStakelist = true
+      const options = {
+        limit: 20,
+        lastAddress: this.stakelist.length === 0 ? undefined : this.stakelist[this.stakelist.length - 1].a
+      }
+      const result = await this.metaverseService.getStake(this.symbol, options)
+      this.stakelist = this.stakelist.concat(result)
+      if (result && result.length < options.limit) {
+        this.stakelistFullyLoaded = true
+      }
+      this.loadingStakelist = false
+      console.log(this.stakelist)
+    }
   }
 
   checkTx = (type, data) => this.walletService.openLink(this.explorerURL(type, data))
