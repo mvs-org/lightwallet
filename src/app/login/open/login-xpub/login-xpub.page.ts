@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { MetaverseService } from 'src/app/services/metaverse.service'
 import { Router } from '@angular/router'
-import { AlertService } from '../../services/alert.service'
+import { AlertService } from '../../../services/alert.service'
 import { WalletService } from 'src/app/services/wallet.service'
 
 @Component({

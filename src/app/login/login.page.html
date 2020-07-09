@@ -9,14 +9,15 @@
 
 <ion-content>
   <ion-grid>
+
+    <ion-row class="logo-row">
+      <ion-col class="logo" size="4" offset="4">
+        <img src="/assets/logo.png" alt="">
+      </ion-col>
+    </ion-row>
+
     <ion-row>
       <ion-col size-md="12" size-lg="6" offset-lg="3">
-
-        <ion-row class="logo-row">
-          <ion-col class="logo">
-            <div class="banner"></div>
-          </ion-col>
-        </ion-row>
 
         <div class="info-text">
           <div class="center">{{appService.version}}
@@ -26,45 +27,65 @@
         </div>
 
         <ion-segment [(ngModel)]="network" (ionChange)="setNetwork($event)" color="primary" id="network-switch">
-          <ion-segment-button id="network-switch-option-mainnet" value="mainnet" translate="MAINNET"></ion-segment-button>
-          <ion-segment-button id="network-switch-option-testnet" value="testnet" translate="TESTNET"></ion-segment-button>
+          <ion-segment-button id="network-switch-option-mainnet" value="mainnet" translate="MAINNET">
+          </ion-segment-button>
+          <ion-segment-button id="network-switch-option-testnet" value="testnet" translate="TESTNET">
+          </ion-segment-button>
         </ion-segment>
 
-        <ng-container *ngFor="let account of saved_accounts">
-          <ion-button expand="full" class="account-btn" *ngIf="account.network == network" (click)="loginViaAccount(account)">
-            <ion-icon slot="start" name="contact"></ion-icon>
-            {{account.name}}
-          </ion-button>
-        </ng-container>
-
-        <ion-button expand="full" routerLink="/login/create" icon-left>
-          <ion-icon slot="start" name="add"></ion-icon>
-          <span translate="LOGIN.BUTTON.CREATE_NEW_WALLET"></span>
-        </ion-button>
-
-        <ion-button routerLink="/login/import-backup" expand="full" icon-left>
-          <ion-icon slot="start" name="download"></ion-icon>
-          <span [translate]="!platform.is('mobile') ? 'LOGIN.BUTTON.CREATE_FROM_BACKUP_WORDS' : 'OPEN_FROM_BACKUP_WORDS'"></span>
-        </ion-button>
-
-        <ion-button *ngIf="!platform.is('mobile')" routerLink="/login/open-file" expand="full" icon-left color="secondary">
-          <ion-icon slot="start" name="download"></ion-icon>
-          <span translate="LOGIN.BUTTON.OPEN_WALLET_FILE"></span>
-        </ion-button>
-
-        <ion-button routerLink="/login/xpub" expand="full" icon-left color="secondary">
-          <ion-icon slot="start" name="eye"></ion-icon>
-          <span translate="LOGIN.BUTTON.OPEN_WALLET_VIEW_ONLY"></span>
-        </ion-button>
-
-        <ion-button expand="full" icon-left color="secondary" routerLink="/login/open-qr">
-          <ion-icon slot="start" name="qr-scanner"></ion-icon>
-          <span translate="LOGIN.BUTTON.OPEN_FROM_QRCODE"></span>
-        </ion-button>
-
-        <p *ngIf="!platform.is('mobile')" translate="LOGIN.INFO_TEXT_BROWSER"></p>
+        <ion-row class="logo-row">
+          <ion-col class="logo">
+            <div class="banner"></div>
+          </ion-col>
+        </ion-row>
 
       </ion-col>
     </ion-row>
+
+    <ion-row>
+      <ion-col size-sm="12" size-md="3" offset-md="3">
+        <ion-card routerLink="/login/create">
+          <ion-grid>
+            <ion-row>
+              <ion-col class="vhcenter" size="2">
+                <ion-icon name="add-outline" class="icon"></ion-icon>
+              </ion-col>
+              <ion-col size="10">
+                <ion-card-header>
+                  <ion-card-title>
+                    Create New
+                  </ion-card-title>
+                </ion-card-header>
+                <ion-card-content>
+                  Enter the new reality by creating your own Metaverse Blockchain wallet.
+                </ion-card-content>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card>
+      </ion-col>
+      <ion-col size-sm="12" size-md="3">
+        <ion-card routerLink="/login/open">
+          <ion-grid>
+            <ion-row>
+              <ion-col class="vhcenter" size="2">
+                <ion-icon name="log-in-outline" class="icon"></ion-icon>
+              </ion-col>
+              <ion-col size="10">
+                <ion-card-header>
+                  <ion-card-title>
+                    Open Existing
+                  </ion-card-title>
+                </ion-card-header>
+                <ion-card-content>
+                  If you already have a Metaverse wallet you can access it here
+                </ion-card-content>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    
   </ion-grid>
 </ion-content>

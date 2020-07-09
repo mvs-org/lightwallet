@@ -17,24 +17,12 @@ const routes: Routes = [
     loadChildren: () => import('./passphrase/passphrase.module').then( m => m.PassphrasePageModule)
   },
   {
-    path: 'open-file',
-    loadChildren: () => import('./open-file/open-file.module').then( m => m.OpenFilePageModule)
-  },
-  {
-    path: 'import-backup',
-    loadChildren: () => import('./import-backup/import-backup.module').then( m => m.ImportBackupPageModule)
-  },
-  {
     path: 'account',
     loadChildren: () => import('./login-account/login-account.module').then( m => m.LoginAccountPageModule)
   },
   {
-    path: 'xpub',
-    loadChildren: () => import('./login-xpub/login-xpub.module').then( m => m.LoginXpubPageModule)
-  },
-  {
-    path: 'open-qr',
-    loadChildren: () => import('./open-qr/open-qr.module').then( m => m.OpenQrPageModule)
+    path: 'open',
+    loadChildren: () => import('./open/open.module').then( m => m.OpenPageModule)
   },
 ]
 

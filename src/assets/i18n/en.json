@@ -9,12 +9,17 @@
     "LOGIN": {
         "MENU_ENTRY": "Login",
         "TITLE": "MyETPWallet - THE NEW REALITY",
-        "BUTTON": {
-            "CREATE_NEW_WALLET": "Create new wallet",
-            "CREATE_FROM_BACKUP_WORDS": "Create file from backup words",
-            "OPEN_WALLET_FILE": "Open wallet from file",
-            "OPEN_WALLET_VIEW_ONLY": "Open view only",
-            "OPEN_FROM_QRCODE": "Open from QR Code"
+        "OPEN": {
+            "LOCAL_ACCOUNT": "Open from an existing local account",
+            "OR": "You can also open another wallet using on of the following methods",
+            "BACKUP_WORDS": "Backup Words",
+            "BACKUP_WORDS_TEXT": "Open an existing wallet from previously generated backup words.",
+            "FILE": "File",
+            "FILE_TEXT": "Open a wallet from a JSON keystore file wallet.",
+            "QR_CODE": "QR Code",
+            "QR_CODE_TEXT": "Enter a wallet from a QR code.",
+            "PUBLIC_KEY": "Public Key",
+            "PUBLIC_KEY_TEXT": "An extended public key (xpub) allows you to open a view only wallet."
         },
         "INFO_TEXT_BROWSER": "Notice for existing MVS wallet users: On your first login to myetpwallet.com, please create a wallet file from your backup words and then open the wallet from the file."
     },

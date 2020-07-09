@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { ModalController } from '@ionic/angular'
-import { ScanPage } from '../../scan/scan.page'
+import { ScanPage } from '../../../scan/scan.page'
 
 @Component({
   selector: 'app-open-qr',
