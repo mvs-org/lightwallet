@@ -16,7 +16,7 @@
     <ion-label text-wrap translate="DISCLAIMER.READ_AND_AGREE"></ion-label>
     <ion-checkbox [(ngModel)]="disclaimerAgreed"></ion-checkbox>
   </ion-item>
-  <form *ngIf="disclaimerAgreed" #importForm="ngForm" no-lines>
+  <form *ngIf="disclaimerAgreed" #importForm="ngForm" lines="none">
     <br>
     <ion-row offset-md-1 col-md-10 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6>
       <ion-col>

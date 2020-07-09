@@ -25,7 +25,7 @@
     <p translate="MULTISIG.ADD.STEP1_EXPLAIN"></p>
     <ion-list>
       <ion-item [ngClass]="{'error-border': !validAddress(address)}">
-        <ion-label translate="MULTISIG.ADD.SELECT_AVATAR_OR_ADDRESS"></ion-label>
+        <ion-label color="primary" translate="MULTISIG.ADD.SELECT_AVATAR_OR_ADDRESS"></ion-label>
         <ion-select [(ngModel)]="address" [disabled]="myPublicKey != ''" name="address" multiple="false"
           (ngModelChange)="onAddressChange($event)" okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}">
           <ion-select-option *ngFor="let addressbalance of addressbalances" value="{{addressbalance.address}}">
@@ -34,7 +34,7 @@
         </ion-select>
       </ion-item>
       <ion-item *ngIf="!myPublicKey" [ngClass]="{'error-border': !validPassword(passphrase)}">
-        <ion-label color="primary" position="floating" transkate="GLOBAL.PASSWORD"></ion-label>
+        <ion-label color="primary" position="floating" translate="GLOBAL.PASSWORD"></ion-label>
         <ion-input name="passphrase" type="password" [(ngModel)]="passphrase" required></ion-input>
       </ion-item>
       <br>
@@ -64,7 +64,7 @@
         <ion-col size="12" size-sm="6">
           <ion-button type="submit" expand="full" [ngxClipboard]="copyMyPublicKey">
             <ion-icon slot="start" name="copy"></ion-icon>
-            <span translate="MULTISIG.ADD.COPY"></span>
+            <span translate="GLOBAL.COPY"></span>
           </ion-button>
         </ion-col>
         <ion-col size="12" size-sm="6">

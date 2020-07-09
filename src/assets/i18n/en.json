@@ -985,8 +985,7 @@
             "ADDRESS_ALREADY_EXISTS": "This multisignature address has already been added to your wallet: ",
             "ERROR": "Error while adding the multisignature address",
             "SELECT_AVATAR_OR_ADDRESS": "Select Avatar or address",
-            "ADD_COSIGNER": "Add co-signer",
-            "COPY": "Copy"
+            "ADD_COSIGNER": "Add co-signer"
         },
         "MESSAGE": {
             "SUCCESS_CREATE_MULTISIG": "Your multisignature address has been created! You can now share it with the co-signers. Your address is: ",
@@ -1020,7 +1019,8 @@
             "CHANGE_ADDRESS": "Specify change address (optional)",
             "CREATED_TX_DESCRIPTION": "This is your raw transaction. It has already been signed with your private key, you can now share it with the other co-signers.",
             "CREATED_TX": "Raw transaction",
-            "HEX_ENCODED_TRANSACTION_TEXT": "Paste hex encoded transaction here"
+            "HEX_ENCODED_TRANSACTION_TEXT": "Paste hex encoded transaction here",
+            "AUTO": "Automatic"
         }
     }
 }

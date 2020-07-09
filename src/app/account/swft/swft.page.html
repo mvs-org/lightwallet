@@ -35,7 +35,7 @@
       <!-- rate info -->
       <div class="ion-text-center">
         <ion-icon id="swapIcon" name="swap" (click)="switch()"></ion-icon>
-        <div *ngIf="bridgeRate" id="rate" no-lines translate="SWFT.RATE_INFO"
+        <div *ngIf="bridgeRate" id="rate" lines="none" translate="SWFT.RATE_INFO"
           [translateParams]="{rate: bridgeRate.instantRate}"></div>
         <ion-spinner *ngIf="loadingRate" name="dots"></ion-spinner>
       </div>
@@ -60,7 +60,7 @@
             <ion-input [(ngModel)]="createOrderParameters.depositAmount" name="depositAmount" type="number"
               (ngModelChange)="updateReceiveAmount()"></ion-input>
           </ion-item>
-          <div *ngIf="bridgeRate" no-lines class="advice" translate="SWFT.MIN_MAX_DEPOSIT"
+          <div *ngIf="bridgeRate" lines="none" class="advice" translate="SWFT.MIN_MAX_DEPOSIT"
             [translateParams]="{min: bridgeRate.depositMin, max: bridgeRate.depositMax, symbol: createOrderParameters.depositSymbol, fee: bridgeRate.depositCoinFeeRate*100}">
           </div>
 
