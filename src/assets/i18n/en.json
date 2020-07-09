@@ -957,7 +957,7 @@
         "NBR_PERSON": "Number of co-signers",
         "SIGN_REQ": "Signatures required",
         "SEND_ETP": "Send ETP",
-        "SEND": "Send",
+        "SEND": "Send {{symbol}}",
         "CURRENT_NBR_SIGN": "Current number of signatures",
         "NEW_NBR_SIGN": "New number of signatures",
         "ADD": {
@@ -980,12 +980,13 @@
             "STEP5_EXPLAIN": "Your multisignature address has now been created, your co-signers can add it to their wallet by going on this page, in the tab 'Existing address'",
             "NBR_SIGN_REQ": "Number of signatures required",
             "GET_PUBLICKEY": "Get public key",
-            "COSIGNER": "Co-signer",
+            "COSIGNER": "Co-signer {{index}}",
             "COSIGNER_PUBLIC_KEY": "Co-signer public key",
             "ADDRESS_ALREADY_EXISTS": "This multisignature address has already been added to your wallet: ",
             "ERROR": "Error while adding the multisignature address",
             "SELECT_AVATAR_OR_ADDRESS": "Select Avatar or address",
-            "ADD_COSIGNER": "Add co-signer"
+            "ADD_COSIGNER": "Add co-signer",
+            "COPY": "Copy"
         },
         "MESSAGE": {
             "SUCCESS_CREATE_MULTISIG": "Your multisignature address has been created! You can now share it with the co-signers. Your address is: ",

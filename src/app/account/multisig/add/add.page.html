@@ -1,35 +1,31 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>{{ "MULTISIG.ADD.HEADLINE" | translate}}</ion-title>
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
+    <ion-title translate="MULTISIG.ADD.HEADLINE"></ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-  <ion-item no-lines>
+  <ion-item lines="none">
     <ion-segment [(ngModel)]="creation_type" color="primary">
-      <ion-segment-button value="new">
-        {{ "MULTISIG.ADD.NEW" | translate}}
-      </ion-segment-button>
-      <ion-segment-button value="existing">
-        {{ "MULTISIG.ADD.EXISTING" | translate}}
-      </ion-segment-button>
+      <ion-segment-button value="new" translate="MULTISIG.ADD.NEW"></ion-segment-button>
+      <ion-segment-button value="existing" translate="MULTISIG.ADD.EXISTING"></ion-segment-button>
     </ion-segment>
   </ion-item>
 
   <form *ngIf="creation_type == 'new'" #newAddressForm="ngForm" class="padding-bottom">
     <ion-row>
       <ion-col>
-        <p align="center">{{"MULTISIG.ADD.INFORMATION" | translate}}</p>
+        <p align="center" translate="MULTISIG.ADD.INFORMATION"></p>
       </ion-col>
     </ion-row>
     <h2 translate="MULTISIG.ADD.STEP1_TITLE"></h2>
     <p translate="MULTISIG.ADD.STEP1_EXPLAIN"></p>
     <ion-list>
       <ion-item [ngClass]="{'error-border': !validAddress(address)}">
-        <ion-label>{{"MULTISIG.ADD.SELECT_AVATAR_OR_ADDRESS"|translate}}</ion-label>
+        <ion-label translate="MULTISIG.ADD.SELECT_AVATAR_OR_ADDRESS"></ion-label>
         <ion-select [(ngModel)]="address" [disabled]="myPublicKey != ''" name="address" multiple="false"
           (ngModelChange)="onAddressChange($event)" okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}">
           <ion-select-option *ngFor="let addressbalance of addressbalances" value="{{addressbalance.address}}">
@@ -38,55 +34,55 @@
         </ion-select>
       </ion-item>
       <ion-item *ngIf="!myPublicKey" [ngClass]="{'error-border': !validPassword(passphrase)}">
-        <ion-label color="primary" floating>{{"GLOBAL.PASSWORD" | translate}}</ion-label>
+        <ion-label color="primary" position="floating" transkate="GLOBAL.PASSWORD"></ion-label>
         <ion-input name="passphrase" type="password" [(ngModel)]="passphrase" required></ion-input>
       </ion-item>
       <br>
     </ion-list>
     <ion-row *ngIf="!myPublicKey">
-      <ion-col col-12 col-sm-6>
+      <ion-col size="12" size-sm="6">
         <ion-button type="submit" expand="full" (click)="getPublicKey(address)"
           [disabled]="!validPassword(passphrase)||!validAddress(address)" color="secondary">
-          <ion-icon disabled="checked" name="send"></ion-icon>
-          {{"MULTISIG.ADD.GET_PUBLICKEY" | translate}}
+          <ion-icon slot="start" disabled="checked" name="send"></ion-icon>
+          <span translate="MULTISIG.ADD.GET_PUBLICKEY"></span>
         </ion-button>
       </ion-col>
-      <ion-col col-12 col-sm-6>
+      <ion-col size="12" size-sm="6">
         <ion-button color="danger" expand="full" (click)="cancel($event)">
-          <ion-icon name="close"></ion-icon>
-          {{'CANCEL'|translate}}
+          <ion-icon slot="start" name="close"></ion-icon>
+          <span translate="GLOBAL.CANCEL"></span>
         </ion-button>
       </ion-col>
     </ion-row>
     <div *ngIf="myPublicKey">
       <ion-card-content>
-        <h4>{{"MULTISIG.ADD.PUBLICKEY"|translate}}:</h4>
+        <h4 translate="MULTISIG.ADD.PUBLICKEY"></h4>
         <textarea fz-elastic ion-input full type="text" #copyMyPublicKey value="{{myPublicKey}}" style=""
           readonly>{{myPublicKey}}</textarea>
       </ion-card-content>
       <ion-row>
-        <ion-col col-12 col-sm-6>
+        <ion-col size="12" size-sm="6">
           <ion-button type="submit" expand="full" [ngxClipboard]="copyMyPublicKey">
-            <ion-icon name="copy"></ion-icon>
-            {{"COPY" | translate}}
+            <ion-icon slot="start" name="copy"></ion-icon>
+            <span translate="MULTISIG.ADD.COPY"></span>
           </ion-button>
         </ion-col>
-        <ion-col col-12 col-sm-6>
+        <ion-col size="12" size-sm="6">
           <ion-button color="danger" expand="full" (click)="myPublicKey = ''">
-            <ion-icon name="refresh"></ion-icon>
-            {{"MULTISIG.ADD.UPDATE_MY_ADDRESS"|translate}}
+            <ion-icon slot="start" name="refresh"></ion-icon>
+            <span translate="MULTISIG.ADD.UPDATE_MY_ADDRESS"></span>
           </ion-button>
         </ion-col>
       </ion-row>
-      <h2>{{"MULTISIG.ADD.STEP2_TITLE" | translate}}</h2>
-      <p>{{"MULTISIG.ADD.STEP2_EXPLAIN" | translate}}</p>
+      <h2 translate="MULTISIG.ADD.STEP2_TITLE"></h2>
+      <p translate="MULTISIG.ADD.STEP2_EXPLAIN"></p>
       <ion-card class="card-block" *ngFor="let cosigner of cosigners; let i = index; trackBy:customTrackBy"
         [attr.data-index]="i">
         <ion-row>
-          <ion-col col-6>
-            <h2 class="cosigner-title">{{"COSIGNER"|translate}} {{i+1}}</h2>
+          <ion-col size="6">
+            <h2 class="cosigner-title" translate="MULTISIG.ADD.COSIGNER" [translateParams]="{index: i+1}"></h2>
           </ion-col>
-          <ion-col col-6>
+          <ion-col size="6">
             <ion-button tabIndex="-1" class="remove-button" fill="clear" color="primary"
               (click)="removeCosigner(i)">
               X
@@ -99,22 +95,19 @@
               <ion-input [(ngModel)]="cosigners[i]" [name]="cosigner + '_' + i" (ngModelChange)="checkPublicKeys()"
                 required></ion-input>
             </ion-item>
-            <ion-item *ngIf="!validNotMyKey(cosigners[i])" no-lines class="wrong-input">
-              {{"MULTISIG.ADD.OWN_PUBLICKEY_ALREADY_ADDED" | translate}}</ion-item>
-            <ion-item *ngIf="!validUsedOnceKey(cosigners[i], i)" no-lines class="wrong-input">
-              {{"MULTISIG.ADD.PUBLIC_KEY_TWICE" | translate}}</ion-item>
+            <ion-item *ngIf="!validNotMyKey(cosigners[i])" lines="none" class="wrong-input" translate="MULTISIG.ADD.OWN_PUBLICKEY_ALREADY_ADDED"></ion-item>
+            <ion-item *ngIf="!validUsedOnceKey(cosigners[i], i)" lines="none" class="wrong-input" translate="MULTISIG.ADD.PUBLIC_KEY_TWICE"></ion-item>
           </ion-col>
         </ion-row>
       </ion-card>
-      <ion-button *ngIf="cosigners.length < cosignersLimit" type="button" class="right-buttons" icon-left
-        color="primary" (click)="addCosigner()">
+      <ion-button *ngIf="cosigners.length < cosignersLimit" class="right-buttons" color="primary" (click)="addCosigner()">
         <ion-icon name="add"></ion-icon>
-        {{"MULTISIG.ADD.ADD_COSIGNER" | translate}}
+        <span translate="MULTISIG.ADD.ADD_COSIGNER"></span>
       </ion-button>
-      <h2>{{"MULTISIG.ADD.STEP3_TITLE" | translate}}</h2>
+      <h2 translate="MULTISIG.ADD.STEP3_TITLE"></h2>
       <ion-list>
         <ion-item [ngClass]="{'error-border': !validnbrSigReq(nbrSigReq)}">
-          <ion-label>{{"MULTISIG.ADD.NBR_SIGN_REQ"|translate}}</ion-label>
+          <ion-label translate="MULTISIG.ADD.NBR_SIGN_REQ"></ion-label>
           <ion-select [(ngModel)]="nbrSigReq" name="nbrSigReq" multiple="false" okText="{{'OK'|translate}}"
             cancelText="{{'CANCEL'|translate}}">
             <ion-select-option *ngFor="let nbrSigReq of nbrSigReqOptions" value="{{nbrSigReq}}">{{nbrSigReq}}</ion-select-option>
@@ -122,26 +115,25 @@
         </ion-item>
         <br>
       </ion-list>
-      <h2>{{"MULTISIG.ADD.STEP4_TITLE" | translate}}</h2>
-      <p>{{"MULTISIG.ADD.STEP4_EXPLAIN" | translate}}</p>
+      <h2 translate="MULTISIG.ADD.STEP4_TITLE"></h2>
+      <p translate="MULTISIG.ADD.STEP4_EXPLAIN"></p>
       <ion-row>
         <ion-col>
-          <ion-button type="submit" expand="full" icon-left
-            (click)="getAddress(cosigners, nbrSigReq, myPublicKey, passphrase)" [disabled]="!nbrSigReq"
+          <ion-button type="submit" expand="full" (click)="getAddress(cosigners, nbrSigReq, myPublicKey, passphrase)" [disabled]="!nbrSigReq"
             color="secondary">
-            <ion-icon disabled="checked" name="send"></ion-icon>
-            {{"MULTISIG.ADD.GET_ADDRESS" | translate}}
+            <ion-icon slot="start" disabled="checked" name="send"></ion-icon>
+            <span translate="MULTISIG.ADD.GET_ADDRESS"></span>
           </ion-button>
         </ion-col>
         <ion-col>
           <ion-button color="danger" expand="full" (click)="cancel($event)">
-            <ion-icon name="close"></ion-icon>
-            {{'CANCEL'|translate}}
+            <ion-icon slot="start" name="close"></ion-icon>
+            <span translate="GLOBAL.CANCEL"></span>
           </ion-button>
         </ion-col>
       </ion-row>
-      <h2>{{"MULTISIG.ADD.STEP5_TITLE" | translate}}</h2>
-      <p>{{"MULTISIG.ADD.STEP5_EXPLAIN" | translate}}</p>
+      <h2 translate="MULTISIG.ADD.STEP5_TITLE"></h2>
+      <p translate="MULTISIG.ADD.STEP5_EXPLAIN"></p>
     </div>
   </form>
 
@@ -150,28 +142,28 @@
       <ion-item [ngClass]="{'error-border':!validAddress(import_address), 'valid-border':validAddress(import_address)}">
         <ion-label color="primary" floating>{{"MULTISIG.ADD.IMPORT_MULTISIG_ADDRESS"|translate}}</ion-label>
         <ion-input #importAddressInput name="import_address" [(ngModel)]="import_address" required></ion-input>
-        <button id="scanButton" *ngIf="isApp" ion-button item-right (click)="scan()">
+        <button id="scanButton" *ngIf="isApp" (click)="scan()">
           <ion-icon name="qr-scanner"></ion-icon>
         </button>
       </ion-item>
       <ion-item [ngClass]="{'error-border': !validPassword(passphrase_import)}">
-        <ion-label color="primary" floating>{{"GLOBAL.PASSWORD" | translate}}</ion-label>
+        <ion-label color="primary" position="floating" translate="GLOBAL.PASSWORD"></ion-label>
         <ion-input name="passphrase_import" type="password" [(ngModel)]="passphrase_import" required></ion-input>
       </ion-item>
       <br>
     </ion-list>
     <ion-row>
       <ion-col>
-        <ion-button type="submit" expand="full" icon-left (click)="importAddress(import_address, passphrase_import)"
+        <ion-button type="submit" expand="full" (click)="importAddress(import_address, passphrase_import)"
           [disabled]="!validAddress(import_address) || !validPassword(passphrase_import)" color="secondary">
-          <ion-icon disabled="checked" name="send"></ion-icon>
-          {{"MULTISIG.ADD.IMPORT_ADDRESS" | translate}}
+          <ion-icon slot="start" disabled="checked" name="send"></ion-icon>
+          <span translate="MULTISIG.ADD.IMPORT_ADDRESS"></span>
         </ion-button>
       </ion-col>
       <ion-col>
-        <ion-button color="danger" expand="full" icon-left (click)="cancel($event)">
-          <ion-icon name="close"></ion-icon>
-          {{'GLOBAL.CANCEL'|translate}}
+        <ion-button color="danger" expand="full" (click)="cancel($event)">
+          <ion-icon slot="start" name="close"></ion-icon>
+          <span translate="GLOBAL.CANCEL"></span>
         </ion-button>
       </ion-col>
     </ion-row>
