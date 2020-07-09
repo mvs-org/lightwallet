@@ -52,19 +52,19 @@
                         </ion-button>
                     </ion-col>
                     <ion-col class="summaryAmount">
-                        <ion-item lines="none" class="right" *ngIf="txType == 'ETP' || txType == 'COINSTAKE'">
-                            <span *ngIf="totalPersonalInputs.ETP && totalPersonalInputs.ETP - totalPersonalOutputs.ETP - txFee > 0"
+                        <div class="right" *ngIf="txType == 'ETP' || txType == 'COINSTAKE'">
+                            <ion-item lines="none" *ngIf="totalPersonalInputs.ETP && totalPersonalInputs.ETP - totalPersonalOutputs.ETP - txFee > 0"
                                 class="sendAmount">
                                 -{{totalPersonalInputs.ETP - totalPersonalOutputs.ETP | format : 8}} ETP
-                            </span>
-                            <span *ngIf="!totalPersonalInputs.ETP || totalPersonalInputs.ETP - totalPersonalOutputs.ETP - txFee < 0"
+                            </ion-item>
+                            <ion-item lines="none" *ngIf="!totalPersonalInputs.ETP || totalPersonalInputs.ETP - totalPersonalOutputs.ETP - txFee < 0"
                                 class="receiveAmount">
                                 +{{totalPersonalOutputs.ETP | format : 8}} ETP
-                            </span>
-                            <span *ngIf="totalPersonalInputs.ETP - totalPersonalOutputs.ETP - txFee == 0">
+                            </ion-item>
+                            <ion-item lines="none" *ngIf="totalPersonalInputs.ETP - totalPersonalOutputs.ETP - txFee == 0">
                                 {{'TX.INTRAWALLET' | translate}}
-                            </span>
-                        </ion-item>
+                            </ion-item>
+                        </div>
                         <ion-item lines="none" *ngIf="txType == 'ASSET' || txType == 'ISSUE' || txType == 'MST_MINING'">
                             <div *ngIf="totalPersonalInputs.MST[txTypeValue] && totalPersonalInputs.MST[txTypeValue] - totalPersonalOutputs.MST[txTypeValue] > 0"
                                 class="sendAmount">
