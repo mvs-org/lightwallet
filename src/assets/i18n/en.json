@@ -974,6 +974,8 @@
             "INFORMATION": "Here you can create a new multisignature for you and your co-signers. If the address has already been created by you or a cosigner via MyETPWallet, you can import it in the tab 'Existing address'",
             "STEP1_TITLE": "Step 1: Select your address and get your public key",
             "STEP1_EXPLAIN": "First, choose the Avatar or address that you want to use, and get its public key. Then you will have to share your public key with the other co-signers.",
+            "YOUR_PUBLICKEY": "Your public key:",
+            "UPDATE_MY_ADDRESS": "Update my address",
             "STEP2_TITLE": "Step 2: Enter your co-signers public keys",
             "STEP2_EXPLAIN": "The second step consist in entering the public key of all the co-signers involved in this multisignature address.",
             "STEP3_TITLE": "Step 3: Choose the number of signatures required",

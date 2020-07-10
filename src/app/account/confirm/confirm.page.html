@@ -42,10 +42,10 @@
     <div *ngIf="showAdvanced || multisig.status == 'MULTISIG'">
       <ion-row>
         <ion-col *ngIf="status != 'SIGNED'">
-          <ion-button [disabled]="!signTxForm.form.valid||!validPassword(passphrase)||(multisig.status == 'MULTISIG' && multisig.selfSigned)"
+          <ion-button expand="full" [disabled]="!signTxForm.form.valid||!validPassword(passphrase)||(multisig.status == 'MULTISIG' && multisig.selfSigned)"
             (click)="preview()" color="primary">
             <ion-icon slot="start" name="create"></ion-icon>
-            <span translate="CONFIRM.SIGN_ONLY"></span>
+            <span translate="CONFIRM.BUTTON.SIGN_ONLY"></span>
           </ion-button>
           <ion-item *ngIf="multisig.status == 'MULTISIG' && multisig.selfSigned" lines="none" class="wrong-input">
             <span translate="MULTISIG_ALREADY_SIGNED"></span>
@@ -56,9 +56,8 @@
         <ion-col *ngIf="signedTx">
           <br>
           <h4 translate="CONFIRM.PREVIEW_SIGNED_TX"></h4>
-          <ion-textarea fz-elastic full class="rawtx" type="text" #copySignedTx value="{{signedTx}}" readonly>
-            {{signedTx}}</ion-textarea>
-          <ion-button expand="full" [ngxClipboard]="copySignedTx">
+          <ion-item class="manual-copy breakwords">{{signedTx}}</ion-item>
+          <ion-button expand="full" ngxClipboard [cbContent]="signedTx">
             <ion-icon slot="start" name="copy"></ion-icon>
             <span translate="COPY"></span>
           </ion-button>
@@ -70,8 +69,7 @@
       <ion-row>
         <ion-col>
           <h4 translate="CONFIRM.PREVIEW_UNSIGNED_TX"></h4>
-          <ion-textarea fz-elastic full class="rawtx" type="text" #copyHexTx value="{{hexTx}}" readonly>{{hexTx}}
-          </ion-textarea>
+          <ion-item class="manual-copy breakwords">{{hexTx}}</ion-item>
         </ion-col>
       </ion-row>
     </div>
@@ -110,7 +108,7 @@
           <ion-icon slot="start" name="send"></ion-icon>
           <span translate="CONFIRM.BUTTON.BROADCAST"></span>
         </ion-button>
-        <ion-button *ngIf="status !== 'SIGNED'" type="submit" expand="full" [ngxClipboard]="copyHexTx">
+        <ion-button *ngIf="status !== 'SIGNED'" type="submit" expand="full" ngxClipboard [cbContent]="hexTx">
           <ion-icon slot="start" name="copy"></ion-icon>
           <span translate="CONFIRM.BUTTON.COPY"></span>
         </ion-button>

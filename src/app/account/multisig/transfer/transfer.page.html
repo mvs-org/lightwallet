@@ -7,7 +7,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
 
   <ion-item lines="none">
     <ion-segment [(ngModel)]="type" color="primary">
@@ -126,8 +126,8 @@
       <ion-card-content *ngIf="rawtx">
         <h4 translate="MULTISIG.TRANSFER.CREATED_TX"></h4>
         <div lines="none" class="advice" translate="MULTISIG.TRANSFER.CREATED_TX_DESCRIPTION"></div>
-        <textarea fz-elastic ion-input full type="text" #copyCreatedTx value="{{rawtx}}" readonly>{{rawtx}}</textarea>
-        <ion-button [ngxClipboard]="copyCreatedTx">
+        <ion-item class="manual-copy breakwords">{{rawtx}}</ion-item>
+        <ion-button expand="full" ngxClipboard [cbContent]="rawtx">
           <ion-icon name="copy"></ion-icon>
           <span translate="GLOBAL.COPY"></span>
         </ion-button>

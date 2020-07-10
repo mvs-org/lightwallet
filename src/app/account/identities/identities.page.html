@@ -35,12 +35,9 @@
             </h2>
 
             <ion-toolbar>
-              <h3 class="address">
-                <textarea class="address-text" rows="1" cols="34" ion-input full type="text" #copy
-                readonly>{{address}}</textarea>
-              </h3>
+              <h3 class="address">{{address}}</h3>
               <ion-buttons slot="end">
-                <ion-button color="primary" class="copy-btn" id="copybtn" [ngxClipboard]="copy">
+                <ion-button color="primary" class="copy-btn" id="copybtn" ngxClipboard [cbContent]="address">
                   <ion-icon slot="icon-only" name="copy" size="small"></ion-icon>
                 </ion-button>
                 <ion-button color="primary" class="qrcode-btn" id="qrcode" (click)="show(address)">

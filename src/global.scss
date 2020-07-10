@@ -95,13 +95,6 @@
     line-height: inherit !important;
 }
 
-.rawtx {
-    -webkit-user-select: text;
-    -moz-user-select: text;
-    -ms-user-select: text;
-    user-select: text;
-}
-
 .manual-copy {
     -webkit-user-select: text;
     -moz-user-select: text;
@@ -167,6 +160,10 @@ textarea:focus {
 
 ion-item span {
     overflow: visible;
+}
+
+.breakwords {
+    word-break: break-all;
 }
 
 ion-content{

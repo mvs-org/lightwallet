@@ -18,7 +18,7 @@ const routes: Routes = [
   },
   {
     path: 'export-xpub',
-    loadChildren: () => import('./export-mobile/export-mobile.module').then( m => m.ExportMobilePageModule)
+    loadChildren: () => import('./export-xpub/export-xpub.module').then( m => m.ExportXpubPageModule)
   },
 ]
 
