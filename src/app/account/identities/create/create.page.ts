@@ -112,7 +112,8 @@ export class CreatePage implements OnInit {
   send() {
     this.create()
       .then((result) => {
-        this.router.navigate(['account', 'confirm'], { queryParams: { tx: result.encode().toString('hex') } })
+        const tx = result.encode().toString('hex')
+        this.router.navigate(['account', 'confirm'], { state: { data: { tx } } })
         this.alertService.stopLoading()
       })
   }

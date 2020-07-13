@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { WalletService } from 'src/app/services/wallet.service'
 import { MetaverseService } from 'src/app/services/metaverse.service'
-import { ActivatedRoute, Router } from '@angular/router'
+import { Router } from '@angular/router'
 import { AlertService } from 'src/app/services/alert.service'
 
 @Component({
@@ -11,7 +11,7 @@ import { AlertService } from 'src/app/services/alert.service'
 })
 export class ConfirmPage implements OnInit {
 
-  hexTx: any = this.activatedRoute.snapshot.queryParams.tx
+  hexTx: any
   decodedTx: any
   displayedTx: any
   passphrase = ''
@@ -29,7 +29,6 @@ export class ConfirmPage implements OnInit {
     public mvs: MetaverseService,
     private router: Router,
     private walletService: WalletService,
-    private activatedRoute: ActivatedRoute,
     private alertService: AlertService,
   ) { }
 
@@ -37,7 +36,8 @@ export class ConfirmPage implements OnInit {
   }
 
   async ionViewDidEnter() {
-    if (this.activatedRoute.snapshot.queryParams.tx === undefined) {
+    this.hexTx = history.state.data ? history.state.data.tx : undefined
+    if (this.hexTx === undefined) {
       this.router.navigate(['account', 'portfolio'])
     } else {
       this.decodeAndOrganize(this.hexTx)

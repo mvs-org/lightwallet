@@ -295,7 +295,7 @@ export class TransferPage implements OnInit {
 
   decode(tx) {
     this.mvs.decodeTx(tx)       // Try if the transaction can be decoded, if not, shows an error
-      .then(() => this.router.navigate(['account', 'confirm'], { queryParams: { tx } }))
+      .then(() => this.router.navigate(['account', 'confirm'], { state: { data: { tx } } }))
       .catch((error) => {
         console.error(error)
         this.alertService.showErrorTranslated('MULTISIG.MESSAGE.ERROR_DECODE_MULTISIG_SUBTITLE', 'MULTISIG.MESSAGE.ERROR_DECODE_MULTISIG_BODY')

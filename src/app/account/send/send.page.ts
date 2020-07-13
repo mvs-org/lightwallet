@@ -280,7 +280,8 @@ export class SendPage implements OnInit {
   async send() {
     try {
       const result = await this.create()
-      this.router.navigate(['account', 'confirm'], { queryParams: { tx: result.encode().toString('hex') } })
+      const tx = result.encode().toString('hex')
+      this.router.navigate(['account', 'confirm'], { state: { data: { tx } } })
       this.alertService.stopLoading()
     } catch (error) {
         console.error(error)
