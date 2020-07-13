@@ -36,10 +36,6 @@ const routes: Routes = [
                 loadChildren: () => import('./confirm/confirm.module').then(m => m.ConfirmPageModule)
             },
             {
-                path: 'avatar',
-                loadChildren: () => import('./avatar/avatar.module').then(m => m.AvatarPageModule)
-            },
-            {
                 path: 'settings',
                 loadChildren: () => import('../settings/settings.module').then(m => m.SettingsPageModule)
             },

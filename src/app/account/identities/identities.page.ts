@@ -98,4 +98,12 @@ export class IdentitiesPage implements OnInit {
         await qrcodeModal.present()
     }
 
+    createAsset(avatarName: string, avatarAddress: string) {
+        this.router.navigate(['account', 'mst', 'create'])
+    }
+
+    registerMIT(avatarName: string, avatarAddress: string) {
+        this.router.navigate(['account', 'mit', 'create'])
+    }
+
 }
