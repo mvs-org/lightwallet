@@ -56,12 +56,7 @@ export class ImportBackupPage implements OnInit {
       mnemonic += String(this.words[index]).toLowerCase() + ' '
     })
     mnemonic = mnemonic.trim()
-    // this.nav.push('PassphrasePage', { mnemonic })
-    this.router.navigate(['login', 'passphrase'],
-      {
-        skipLocationChange: true,
-        queryParams: { mnemonic },
-      })
+    this.router.navigate(['login', 'passphrase'], { state: { data: { mnemonic } } })
   }
 
   onChange() {

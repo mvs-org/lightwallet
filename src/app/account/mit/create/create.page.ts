@@ -13,10 +13,9 @@ import { Platform } from '@ionic/angular'
 export class CreatePage implements OnInit {
 
   symbol = ''
-  recipient_address = this.activatedRoute.snapshot.queryParams.avatar_address || ''
-  recipient_avatar = this.activatedRoute.snapshot.queryParams.avatar_name || ''
+  recipient_address = history.state.data && history.state.data.avatar_address ? history.state.data.avatar_address : ''
+  recipient_avatar = history.state.data && history.state.data.avatar_name ? history.state.data.avatar_name : ''
   content = ''
-  //loading: Loading
   addressbalances: Array<any>
   avatars: Array<any>
   no_avatar = false

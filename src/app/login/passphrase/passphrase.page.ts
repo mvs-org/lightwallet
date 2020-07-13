@@ -17,7 +17,7 @@ export class PassphrasePage implements OnInit {
 
   form: FormGroup
 
-  mnemonic: string = this.activatedRoute.snapshot.queryParams.mnemonic
+  mnemonic: string = history.state.data && history.state.data.mnemonic ? history.state.data.mnemonic : ''
   loading: boolean
 
   isApp = false

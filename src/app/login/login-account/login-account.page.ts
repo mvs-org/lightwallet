@@ -14,7 +14,7 @@ import { AlertService } from '../../services/alert.service'
 export class LoginAccountPage implements OnInit {
 
   //loading: Loading
-  account: any = this.activatedRoute.snapshot.queryParams
+  account: any = history.state.data && history.state.data.account ? history.state.data.account : ''
   password = ''
 
   constructor(
@@ -26,9 +26,7 @@ export class LoginAccountPage implements OnInit {
     private alertCtrl: AlertController,
     private activatedRoute: ActivatedRoute,
     private alertService: AlertService,
-  ) {
-    console.log(this.activatedRoute.snapshot.queryParams)
-  }
+  ) { }
 
   ngOnInit() {
   }

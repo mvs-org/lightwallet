@@ -28,11 +28,7 @@ export class OpenPage implements OnInit {
 
 
   loginViaAccount(account) {
-    this.router.navigate(['login', 'account'],
-      {
-        skipLocationChange: true,
-        queryParams: account,
-      })
+    this.router.navigate(['login', 'account'], { state: { data: { account } } })
   }
 
 }

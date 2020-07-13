@@ -47,7 +47,7 @@ export class HistoryPage implements OnInit {
     private walletService: WalletService,
     private activatedRoute: ActivatedRoute,
   ) {
-    this.addresses = this.activatedRoute.snapshot.queryParams.addresses
+    this.addresses = history.state.data ? history.state.data.addresses : ''
     this.asset = this.activatedRoute.snapshot.params.symbol
     this.loading = true
     this.current_time = Date.now()
