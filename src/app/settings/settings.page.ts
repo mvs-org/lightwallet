@@ -31,13 +31,12 @@ export class SettingsPage implements OnInit {
         console.log('Settings page loaded')
         const addresses = await this.metaverseService.getAddresses()
         if (!Array.isArray(addresses) || !addresses.length) {
-            this.router.navigate(['/loading'])
+            this.router.navigate(['login'])
         }
     }
 
     async reset() {
-        await this.metaverseService.dataReset()
-        this.router.navigate(['/loading'])
+        this.router.navigate(['/loading'], { state: { data: { reset: true } } })
     }
 
     // BaseCurrencyPage = () => this.nav.push("BaseCurrencyPage")

@@ -1,7 +1,6 @@
-import { Component, ViewChild, NgZone, OnInit } from '@angular/core'
+import { Component, ViewChild, OnInit } from '@angular/core'
 import { Platform } from '@ionic/angular'
 import { MetaverseService } from 'src/app/services/metaverse.service'
-import { TranslateService } from '@ngx-translate/core'
 import { AppService } from 'src/app/services/app.service'
 import { ActivatedRoute, Router } from '@angular/router'
 import { Location } from '@angular/common'
@@ -72,10 +71,6 @@ export class SendPage implements OnInit {
     private metaverseService: MetaverseService,
     public platform: Platform,
     private alertService: AlertService,
-    // private barcodeScanner: BarcodeScanner,
-    // private keyboard: Keyboard,
-    private translate: TranslateService,
-    private zone: NgZone,
     private appService: AppService,
     private activatedRoute: ActivatedRoute,
     private location: Location,
@@ -99,8 +94,6 @@ export class SendPage implements OnInit {
       .then(([balances, addresses, addressbalancesObject]) => {
         const balance = (this.selectedAsset === 'ETP') ? balances.ETP : balances.MST[this.selectedAsset]
         this.balance = (balance && balance.available) ? balance.available : 0
-        console.log(balances)
-        console.log(this.selectedAsset)
         this.decimals = balance.decimals
         this.etpBalance = balances.ETP.available
         this.showBalance = this.balance
@@ -162,14 +155,13 @@ export class SendPage implements OnInit {
   }
 
 
-  ionViewDidEnter() {
-    this.metaverseService.getAddresses()
-      .then((addresses) => {
-        if (!Array.isArray(addresses) || !addresses.length) {
-          // this.navCtrl.setRoot("LoginPage")
-        }
-      })
-    this.loadTickers()
+  async ionViewDidEnter() {
+    const addresses = await this.metaverseService.getAddresses()
+    if (!Array.isArray(addresses) || !addresses.length) {
+      this.router.navigate(['login'])
+    } else {
+      this.loadTickers()
+    }
   }
 
   private async loadTickers() {
@@ -284,20 +276,20 @@ export class SendPage implements OnInit {
       this.router.navigate(['account', 'confirm'], { state: { data: { tx } } })
       this.alertService.stopLoading()
     } catch (error) {
-        console.error(error)
-        this.alertService.stopLoading()
-        switch (error.message) {
-          case 'ERR_INSUFFICIENT_BALANCE':
-            this.alertService.showError('SEND_ONE.INSUFFICIENT_BALANCE', '')
-            break
-          case 'ERR_TOO_MANY_INPUTS':
-            this.alertService.showErrorTranslated('SEND_ONE.ERROR_TOO_MANY_INPUTS', 'SEND_ONE.ERROR_TOO_MANY_INPUTS_TEXT')
-            break
-          default:
-            this.alertService.showError('SEND_ONE.CREATE_TRANSACTION', error.message)
-            break
-        }
+      console.error(error)
+      this.alertService.stopLoading()
+      switch (error.message) {
+        case 'ERR_INSUFFICIENT_BALANCE':
+          this.alertService.showError('SEND_ONE.INSUFFICIENT_BALANCE', '')
+          break
+        case 'ERR_TOO_MANY_INPUTS':
+          this.alertService.showErrorTranslated('SEND_ONE.ERROR_TOO_MANY_INPUTS', 'SEND_ONE.ERROR_TOO_MANY_INPUTS_TEXT')
+          break
+        default:
+          this.alertService.showError('SEND_ONE.CREATE_TRANSACTION', error.message)
+          break
       }
+    }
   }
 
   async sendAll() {

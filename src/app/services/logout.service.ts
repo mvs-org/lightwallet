@@ -60,7 +60,7 @@ export class LogoutService {
     const accountName = await this.walletService.getAccountName()
     await this.walletService.deleteAccount(accountName)
     await this.metaverseService.hardReset()
-    this.router.navigate(['/loading'])
+    this.router.navigate(['login'])
   }
 
   async saveAccount() {
@@ -87,7 +87,7 @@ export class LogoutService {
     try {
       await this.walletService.saveAccount(username)
       await this.metaverseService.hardReset()
-      await this.router.navigate(['/loading'])
+      await this.router.navigate(['login'])
     } catch (error) {
       this.alertService.showError('ERROR.SAVE_ACCOUNT', error.message)
     }
@@ -102,7 +102,7 @@ export class LogoutService {
     )
     if (confirm) {
       await this.metaverseService.hardReset()
-      this.router.navigate(['/loading'])
+      this.router.navigate(['login'])
     }
   }
 

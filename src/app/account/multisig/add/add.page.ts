@@ -214,7 +214,7 @@ export class AddPage {
             .then(() => this.wallet.saveSessionAccount(passphrase))
             .then(() => this.alert.stopLoading())
             .then(() => this.alert.showMessage(newAddress ? 'MULTISIG.MESSAGE.SUCCESS_CREATE_MULTISIG' : 'MULTISIG.MESSAGE.SUCCESS_IMPORT_MULTISIG', '', newMultisig.a))
-            .then(() => this.router.navigate(['loading'], { state: { data: { reset: true } } }))
+            .then(() => this.router.navigate(['/loading'], { state: { data: { reset: true } } }))
             .catch(error => {
               console.error(error)
               this.alert.stopLoading()

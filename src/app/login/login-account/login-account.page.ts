@@ -53,8 +53,7 @@ export class LoginAccountPage implements OnInit {
       await this.walletService.setXpub(xpub)
       await this.walletService.saveSessionAccount(password)
       this.alertService.stopLoading()
-      this.router.navigate(['/loading'])
-      //.then(() => this.nav.setRoot('LoadingPage', { reset: true }))
+      this.router.navigate(['/loading'], { state: { data: { reset: true } } })
     } catch (error) {
       console.error(error.message)
       this.alertService.stopLoading()

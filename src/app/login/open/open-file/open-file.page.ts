@@ -46,8 +46,9 @@ export class OpenFilePage implements OnInit {
         });
       }
     };
-    if (file[0])
-      reader.readAsText(file[0]);
+    if (file[0]) {
+      reader.readAsText(file[0])
+    }
   }
 
 
@@ -61,8 +62,7 @@ export class OpenFilePage implements OnInit {
       .then(([wallet, index]) => this.wallet.generateAddresses(wallet, 0, index))
       .then((addresses) => this.mvs.setAddresses(addresses))
       .then(() => this.wallet.saveSessionAccount(password))
-      .then(() => this.router.navigate(['/loading']))
-      //.then(() => this.nav.setRoot("LoadingPage", { reset: true }))
+      .then(() => this.router.navigate(['/loading'], { state: { data: { reset: true } } }))
       .catch((e) => {
         console.error(e);
         //this.alert.showError('MESSAGE.PASSWORD_WRONG', '');

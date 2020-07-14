@@ -147,7 +147,7 @@ export class AccountPage implements OnInit, OnDestroy {
         this.metaverseService.getDbUpdateNeeded()
             .then((target: any) => {
                 if (target) {
-                    this.router.navigate(['/loading'])
+                    this.router.navigate(['/loading'], { state: { data: { reset: false } } })
                 }
             })
             .then(() => this.update())
