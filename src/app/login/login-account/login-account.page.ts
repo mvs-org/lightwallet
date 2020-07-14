@@ -54,7 +54,7 @@ export class LoginAccountPage implements OnInit {
       await this.walletService.saveSessionAccount(password)
       this.alertService.stopLoading()
       this.router.navigate(['/loading'])
-        //.then(() => this.nav.setRoot('LoadingPage', { reset: true }))
+      //.then(() => this.nav.setRoot('LoadingPage', { reset: true }))
     } catch (error) {
       console.error(error.message)
       this.alertService.stopLoading()
@@ -72,37 +72,17 @@ export class LoginAccountPage implements OnInit {
     }
   }
 
-  deleteAccount(account_name) {
-    /*this.translate.get('DELETE_ACCOUNT_TITLE').subscribe(title => {
-      this.translate.get(this.platform.is('mobile') ? 'RESET_MESSAGE_MOBILE_SAVE_ACCOUNT' : 'DELETE_ACCOUNT_BODY').subscribe(message => {
-        this.translate.get('DELETE').subscribe(no => {
-          this.translate.get('BACK').subscribe(back => {
-            const confirm = this.alertCtrl.create({
-              title,
-              message,
-              buttons: [
-                {
-                  text: back,
-                  handler: () => {
-                    console.log('Disagree clicked')
-                  }
-                },
-                {
-                  text: no,
-                  handler: () => {
-                    this.wallet.deleteAccount(account_name).then(() => {
-                      this.nav.setRoot('LoginPage')
-                    })
-                  }
-                },
-
-              ]
-            })
-            confirm.present()
-          })
-        })
-      })
-    })*/
+  async deleteAccount(accountName) {
+    const confirm = await this.alertService.alertConfirm(
+      'LOGIN_ACCOUNT.FORGET.TITLE',
+      'LOGIN_ACCOUNT.FORGET.SUBTITLE',
+      'LOGIN_ACCOUNT.FORGET.BUTTON.BACK',
+      'LOGIN_ACCOUNT.FORGET.BUTTON.FORGET'
+    )
+    if (confirm) {
+      await this.walletService.deleteAccount(accountName)
+      this.router.navigate(['login'])
+    }
   }
 
   passwordValid = (password) => (password) ? password.length > 3 : false
