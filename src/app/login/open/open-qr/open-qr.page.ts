@@ -25,7 +25,6 @@ export class OpenQrPage implements OnInit {
     modal.onWillDismiss().then(data => {
       console.log({ data })
       modal.remove()
-      
     })
     await modal.present()
 

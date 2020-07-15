@@ -74,10 +74,20 @@
     "SELECT_PASSPHRASE": {
         "TITLE": "Select passphrase",
         "TEXT": "We advise you to use a strong password for your own security.",
+        "PASSWORD": "Choose password",
+        "CONFIRM_PASSWORD": "Confirm password",
+        "BUTTON": {
+            "DOWNLOAD_FILE": "Download file",
+            "ENTER": "Enter wallet"
+        },
         "ERROR": {
             "MINLENGTH": "Passphrase must have a minimum length of {{requiredLength}}.",
             "REQUIRED": "This field is mandatory.",
             "NOTSAME": "Entered values don't match."
+        },
+        "MESSAGE": {
+            "ERROR_MNEMONIC": "Invalid mnemonic. Please try to re-import your account or create a new one.",
+            "ERROR": "Unknown error. Please try again."
         }
     },
     "CERTIFICATES": {

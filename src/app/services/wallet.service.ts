@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Storage } from '@ionic/storage';
-import Metaverse from 'metaversejs/dist/metaverse.min.js';
-import { CryptoService } from './crypto.service';
-import { Platform } from '@ionic/angular';
-import { AppService } from './app.service';
+import { Injectable } from '@angular/core'
+import { HttpClient } from '@angular/common/http'
+import { Storage } from '@ionic/storage'
+import Metaverse from 'metaversejs/dist/metaverse.min.js'
+import { CryptoService } from './crypto.service'
+import { Platform } from '@ionic/angular'
+import { AppService } from './app.service'
 @Injectable({
   providedIn: 'root'
 })
@@ -30,15 +30,15 @@ export class WalletService {
     }
 
     dataToKeystoreJson(mnemonic) {
-        let tmp = { version: this.appService.version, algo: this.appService.algo, index: this.appService.index, mnemonic: mnemonic };
-        return tmp;
+        let tmp = { version: this.appService.version, algo: this.appService.algo, index: this.appService.index, mnemonic: mnemonic }
+        return tmp
     }
 
     getIcons() {
         let result = {
             MST: ['MVS.ZGC', 'MVS.ZDC', 'CSD.CSD', 'PARCELX.GPX', 'PARCELX.TEST', 'SDG', 'META', 'MVS.HUG', 'RIGHTBTC.RT', 'TIPLR.TPC', 'PANDO', 'VALOTY', 'KOALA.KT', 'DNA', 'GKC', 'DAY', 'APO', 'JKB', 'DIA'],
         }
-        return result;
+        return result
     }
 
     exportMemonic() {
@@ -74,18 +74,18 @@ export class WalletService {
     }
 
     createWallet() {
-        let wallet: any = {};
+        let wallet: any = {}
         return Metaverse.wallet.generateMnemonic()
             .then((mnemonic) => {
-                wallet.mnemonic = mnemonic;
-                return Metaverse.wallet.mnemonicToSeed(mnemonic, Metaverse.networks[this.appService.network]);
+                wallet.mnemonic = mnemonic
+                return Metaverse.wallet.mnemonicToSeed(mnemonic, Metaverse.networks[this.appService.network])
             })
             .then((seed) => {
-                wallet.seed = seed.toString('hex');
-                return wallet;
+                wallet.seed = seed.toString('hex')
+                return wallet
             })
             .catch((error) => {
-                return Error(error.message);
+                return Error(error.message)
             })
     }
 
@@ -95,6 +95,10 @@ export class WalletService {
 
     verifyMessage(message, address, signature) {
         return Metaverse.message.verify(message, address, Buffer.from(signature, 'hex'))
+    }
+
+    validateMnemonic(mnemonic) {
+        return Metaverse.wallet.validateMnemonic(mnemonic)
     }
 
     getHDNodeFromSeed(seed) {
@@ -161,23 +165,23 @@ export class WalletService {
     }
 
     generateNewAddress(wallet: any, index: number) {
-        return wallet.getAddress(index);
+        return wallet.getAddress(index)
     }
 
     generateAddresses(wallet: any, from_index: number, to_index: number) {
-        var addresses = [];
+        var addresses = []
         for (let i = from_index; i < to_index; i++) {
-            addresses.push(this.generateNewAddress(wallet, i));
+            addresses.push(this.generateNewAddress(wallet, i))
         }
-        return addresses;
+        return addresses
     }
 
     getPublicKeyByAddress(wallet: any, address: string) {
-        return wallet.findPublicKeyByAddess(address, 200);
+        return wallet.findPublicKeyByAddess(address, 200)
     }
 
     getNewMultisigAddress(nbrSigReq, publicKeys) {
-        return Metaverse.multisig.generate(nbrSigReq, publicKeys);
+        return Metaverse.multisig.generate(nbrSigReq, publicKeys)
     }
 
     addMultisig(newMultisig) {
@@ -203,8 +207,8 @@ export class WalletService {
 
     findMultisigWallet(address, wallets) {
         if (wallets.length == 0)
-            throw 'wallet not found';
-        return (wallets[0].a == address) ? wallets[0] : this.findMultisigWallet(address, wallets.slice(1));
+            throw 'wallet not found'
+        return (wallets[0].a == address) ? wallets[0] : this.findMultisigWallet(address, wallets.slice(1))
     }
 
 
@@ -282,9 +286,9 @@ export class WalletService {
                     accounts.find((o, i) => {
                         if (o && o.name === account_name) {
                             accounts.splice(i, 1)
-                            return true; // stop searching
+                            return true // stop searching
                         }
-                    });
+                    })
                     return this.storage.set('saved_accounts', accounts)
                 }
             })
@@ -334,14 +338,14 @@ export class WalletService {
     saveAccount(account_name) {
         return Promise.all([this.getSavedAccounts(), this.getSessionAccountInfo(), this.getAccountParams(), this.getViewOnlySessionAccount()])
             .then(([saved_accounts, content, params, view_only_content]) => {
-                let old_account_index = -1;
+                let old_account_index = -1
                 if (saved_accounts) {
                     saved_accounts.find((o, i) => {
                         if (o && o.name === account_name) {
-                            old_account_index = i;
-                            return true; // stop searching
+                            old_account_index = i
+                            return true // stop searching
                         }
-                    });
+                    })
                 }
                 let new_account = {
                     "name": account_name,
@@ -351,7 +355,7 @@ export class WalletService {
                     "view_only_content": content ? undefined : view_only_content,
                     "type": "AES"
                 }
-                old_account_index > -1 ? saved_accounts[old_account_index] = new_account : saved_accounts.push(new_account);
+                old_account_index > -1 ? saved_accounts[old_account_index] = new_account : saved_accounts.push(new_account)
                 return this.storage.set('saved_accounts', saved_accounts)
             })
             .catch((error) => {
@@ -434,7 +438,7 @@ export class WalletService {
     }
 
     getNewNews(lang, limit) {
-        return this.http.get("https://explorer.mvs.org/api/content/news?lang=" + lang + "&limit=" + limit);
+        return this.http.get("https://explorer.mvs.org/api/content/news?lang=" + lang + "&limit=" + limit)
     }
 
     getNews(lang = 'en-us') {
@@ -454,20 +458,20 @@ export class WalletService {
     }
 
     extractData(res: Response) {
-        let body = res.json();
-        return body || {};
+        let body = res.json()
+        return body || {}
     }
 
     handleErrorPromise(error: Response | any) {
-        console.error(error.message || error);
-        return Promise.reject(error.message || error);
+        console.error(error.message || error)
+        return Promise.reject(error.message || error)
     }
 
     openLink(url) {
         if (this.platform.is('mobile') && this.platform.is('ios'))
-            window.open(url, '_self');
+            window.open(url, '_self')
         else
-            window.open(url, '_blank');
+            window.open(url, '_blank')
     }
 
     getElectionRewards(txs) {

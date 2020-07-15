@@ -34,7 +34,7 @@ export class CreatePage implements OnInit {
   }
 
   enterPassphrase() {
-    this.router.navigate(['login', 'passphrase'], { state: { data: { mnemonic: this.wallet } } })
+    this.router.navigate(['login', 'passphrase'], { state: { data: { mnemonic: this.wallet.mnemonic } } })
   }
 
   async confirmBackup() {
