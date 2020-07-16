@@ -20,11 +20,10 @@ install:
 - npm i
 - npm install -g cordova ionic
 - node scripts/patch-webpack.js
-- npm run e2e-update
 script:
 # - npm run e2e
-- npm run test
-- ionic cordova build browser --release --prod
+#- npm run test
+- ionic build --engine=browser --prod
 notifications:
   pushover:
     api_key:
