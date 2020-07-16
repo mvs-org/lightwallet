@@ -30,8 +30,8 @@ class MstInfo {
 
 class MiningModel {
   constructor(
-    public initial: string,
-    public interval: string,
+    public initial: number,
+    public interval: number,
     public base: number,
     public basePercent: number,
   ) { }
@@ -84,8 +84,8 @@ export class DetailsPage implements OnInit {
 
     if (this.asset.mining_model) {
       const miningModel = this.asset.mining_model.match(/^initial:(.+),interval:(.+),base:(.+)$/)
-      this.miningModel.initial = miningModel[1]
-      this.miningModel.interval = miningModel[2]
+      this.miningModel.initial = parseInt(miningModel[1], 10)
+      this.miningModel.interval = parseInt(miningModel[2], 10)
       this.miningModel.base = parseInt(miningModel[3], 10)
       this.miningModel.basePercent = Math.round((1 - this.miningModel.base) * 100)
     }

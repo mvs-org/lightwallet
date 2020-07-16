@@ -189,6 +189,8 @@ export class SendPage implements OnInit {
       this.showBalance >= (Math.round(parseFloat(quantity) * Math.pow(10, this.decimals)) + this.fee)) ||
       (this.selectedAsset !== 'ETP' && this.showBalance >= parseFloat(quantity) * Math.pow(10, this.decimals)))
 
+  fiatValue = (quantity: string) => (parseFloat(quantity) * this.tickers[this.selectedAsset][this.base].price) || 0
+
   countDecimals(value) {
     if (Math.floor(value) !== value && value.toString().split('.').length > 1) {
       return value.toString().split('.')[1].length || 0
@@ -196,8 +198,7 @@ export class SendPage implements OnInit {
     return 0
   }
 
-  cancel(e) {
-    e.preventDefault()
+  cancel() {
     this.location.back()
   }
 

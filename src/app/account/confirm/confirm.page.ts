@@ -57,8 +57,7 @@ export class ConfirmPage implements OnInit {
       })
   }
 
-  cancel(e) {
-    e.preventDefault()
+  cancel() {
     this.router.navigate(['account', 'portfolio'])
   }
 

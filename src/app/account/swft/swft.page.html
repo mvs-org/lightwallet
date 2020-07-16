@@ -128,7 +128,7 @@
 
       <ion-row class="buttons-row">
         <ion-col>
-          <ion-button color="danger" expand="full" (click)="cancel($event)">
+          <ion-button color="danger" expand="full" (click)="cancel()">
             <ion-icon slot="start" name="close"></ion-icon>
             <span translate="SWFT.BUTTON.CANCEL"></span>
           </ion-button>
@@ -264,7 +264,7 @@
     </ion-item>
 
     <ion-row class="buttons-row right">
-      <ion-button class="right" color="primary" (click)="importOrder($event)"
+      <ion-button class="right" color="primary" (click)="importOrder()"
         [disabled]="!validId(importFromId)">
         <ion-icon slot="start" name="add"></ion-icon>
         <span translate="SWFT.IMPORT_ORDER_BUTTON"></span>

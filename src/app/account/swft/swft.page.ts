@@ -154,8 +154,7 @@ export class SwftPage implements OnInit {
       })
   }
 
-  cancel(e) {
-    e.preventDefault()
+  cancel() {
     this.createOrderParameters = {
       depositSymbol: 'ETP',
       receiveSymbol: 'BTC',
@@ -167,7 +166,8 @@ export class SwftPage implements OnInit {
   }
 
   changeDepositSymbol(newSymbol: string) {
-    if (!this.etpBridgeService.isMetaverseSymbol(newSymbol) && !this.etpBridgeService.isMetaverseSymbol(this.createOrderParameters.receiveSymbol)) {
+    if (!this.etpBridgeService.isMetaverseSymbol(newSymbol)
+      && !this.etpBridgeService.isMetaverseSymbol(this.createOrderParameters.receiveSymbol)) {
       this.createOrderParameters.receiveSymbol = 'ETP'
     } else if (newSymbol === this.createOrderParameters.receiveSymbol) {
       this.createOrderParameters.receiveSymbol = this.createOrderParameters.depositSymbol
@@ -177,7 +177,8 @@ export class SwftPage implements OnInit {
   }
 
   changeReceiveSymbol(newSymbol: string) {
-    if (!this.etpBridgeService.isMetaverseSymbol(newSymbol) && !this.etpBridgeService.isMetaverseSymbol(this.createOrderParameters.depositSymbol)) {
+    if (!this.etpBridgeService.isMetaverseSymbol(newSymbol)
+      && !this.etpBridgeService.isMetaverseSymbol(this.createOrderParameters.depositSymbol)) {
       this.createOrderParameters.depositSymbol = 'ETP'
     } else if (newSymbol === this.createOrderParameters.depositSymbol) {
       this.createOrderParameters.depositSymbol = this.createOrderParameters.receiveSymbol
@@ -187,7 +188,8 @@ export class SwftPage implements OnInit {
   }
 
   updateReceiveAmount() {
-    const amount = this.bridgeRate ? this.createOrderParameters.depositAmount * this.bridgeRate.instantRate * (1 - this.bridgeRate.depositCoinFeeRate) : 0
+    const amount = this.bridgeRate ?
+      this.createOrderParameters.depositAmount * this.bridgeRate.instantRate * (1 - this.bridgeRate.depositCoinFeeRate) : 0
     const stringAmount = amount.toString().split('.')
     stringAmount[1] = stringAmount[1] ? stringAmount[1].substring(0, 6) : '0'
     this.createOrderParameters.receiveAmount = parseFloat(stringAmount[0] + '.' + stringAmount[1])
@@ -235,7 +237,8 @@ export class SwftPage implements OnInit {
     // profileModal.present();
   }
 
-  validDepositAmount = () => this.bridgeRate && this.createOrderParameters.depositAmount >= this.bridgeRate.depositMin && this.createOrderParameters.depositAmount <= this.bridgeRate.depositMax
+  validDepositAmount = (amount) =>
+    this.bridgeRate && amount >= this.bridgeRate.depositMin && amount <= this.bridgeRate.depositMax
 
   validAddress = (address, symbol) => {
     if (address === undefined || address === '') { return false }
@@ -249,9 +252,9 @@ export class SwftPage implements OnInit {
 
   validRecipientAddress = () => this.validAddress(this.createOrderParameters.receiveAddress, this.createOrderParameters.receiveSymbol)
 
-  validId = () => this.importFromId
+  validId = (id) => id
 
-  explorerURL = (type, data) => (this.globals.network == 'mainnet') ? 'https://explorer.mvs.org/' + type + '/' + data : 'https://explorer-testnet.mvs.org/' + type + '/' + data
+  explorerURL = (type, data) => (this.globals.network === 'mainnet') ? 'https://explorer.mvs.org/' + type + '/' + data : 'https://explorer-testnet.mvs.org/' + type + '/' + data
 
   gotoDetails = (id) => this.router.navigate(['account', 'swft', 'order', id])
 

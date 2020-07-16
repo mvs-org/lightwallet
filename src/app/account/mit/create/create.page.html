@@ -20,7 +20,7 @@
     <ion-list>
       <ion-item [ngClass]="{'error-border':!validSymbol(symbol)}">
         <ion-label color="primary" position="floating" translate="CREATE_MIT.SYMBOL"></ion-label>
-        <ion-input name="symbol" [(ngModel)]="symbol" maxlength="63" (ngModelChange)="symbolChanged($event)" required>
+        <ion-input name="symbol" [(ngModel)]="symbol" maxlength="63" (ngModelChange)="symbolChanged()" required>
         </ion-input>
       </ion-item>
       <ion-item *ngIf="symbol.length >= 3 && !symbol_available" lines="none" class="wrong-input">{{"CREATE_MIT.MIT_ALREADY_EXIST"
@@ -35,7 +35,7 @@
       <ion-item [ngClass]="{'error-border':!validName(recipient_avatar)}">
         <ion-label color="primary" position="floating" translate="CREATE_MIT.AVATAR_NAME"></ion-label>
         <ion-select *ngIf="!no_avatar" [(ngModel)]="recipient_avatar" name="recipient_avatar" multiple="false"
-          okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}" (ngModelChange)="avatarChanged($event)">
+          okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}" (ngModelChange)="avatarChanged()">
           <ion-select-option *ngFor="let avatar of avatars" value="{{avatar.symbol}}">{{avatar.symbol}}</ion-select-option>
         </ion-select>
         <ion-input name="no_avatar" *ngIf="no_avatar" [(ngModel)]="no_avatar_placeholder" disabled></ion-input>

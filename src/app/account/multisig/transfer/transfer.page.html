@@ -41,13 +41,13 @@
         <ion-item *ngIf="sendToAvatar" [ngClass]="{'error-border':!validAvatar(recipient_avatar)}">
           <ion-label color="primary" posiiton="floating" translate="MULTISIG.TRANSFER.RECIPIENT_AVATAR"></ion-label>
           <ion-input #recipientAvatarInput name="recipient_avatar" [(ngModel)]="recipient_avatar"
-            (ngModelChange)="recipientAvatarChanged($event)" required></ion-input>
+            (ngModelChange)="recipientAvatarChanged()" required></ion-input>
         </ion-item>
         <ion-item
           [ngClass]="{'error-border':!validrecipient(recipient_address), 'valid-border':validrecipient(recipient_address)}">
           <ion-label color="primary" posiiton="floating" translate="MULTISIG.TRANSFER.RECIPIENT_ADDRESS"></ion-label>
           <ion-input #recipientAddressInput name="recipient_address" [(ngModel)]="recipient_address"
-            (ngModelChange)="recipientChanged($event)" [disabled]="sendToAvatar" required></ion-input>
+            (ngModelChange)="recipientChanged()" [disabled]="sendToAvatar" required></ion-input>
           <button id="scanButton" *ngIf="isApp" ion-button item-right (click)="scan()">
             <ion-icon slot="start" name="qr-scanner"></ion-icon>
           </button>
@@ -116,7 +116,7 @@
           </ion-button>
         </ion-col>
         <ion-col size="12" size-sm="6">
-          <ion-button color="danger" expand="full" (click)="cancel($event)">
+          <ion-button color="danger" expand="full" (click)="cancel()">
             <ion-icon slot="start" name="close"></ion-icon>
             <span translate="GLOBAL.CANCEL"></span>
           </ion-button>
@@ -155,7 +155,7 @@
         </ion-button>
       </ion-col>
       <ion-col>
-        <ion-button color="danger" expand="full" (click)="cancel($event)">
+        <ion-button color="danger" expand="full" (click)="cancel()">
           <ion-icon slot="start" name="close"></ion-icon>
           <span translate="GLOBAL.CANCEL"></span>
         </ion-button>

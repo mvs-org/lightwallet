@@ -31,8 +31,7 @@ export class LoginAccountPage implements OnInit {
   ngOnInit() {
   }
 
-  cancel(e) {
-    e.preventDefault()
+  cancel() {
     this.router.navigate(['login'])
   }
 

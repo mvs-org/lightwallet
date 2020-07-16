@@ -73,11 +73,6 @@ export class MultisigPage implements OnInit {
       })
   }
 
-  cancel(e) {
-    e.preventDefault()
-    // this.navCtrl.pop()
-  }
-
   addAddress() {
     this.router.navigate(['account', 'multisig', 'add'])
   }

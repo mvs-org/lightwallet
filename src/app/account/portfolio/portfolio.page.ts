@@ -17,7 +17,7 @@ export class PortfolioPage implements OnInit, OnDestroy {
   balancesKeys: any
   theme: string
   icons: any = { MST: [], MIT: [] }
-  tickers = {}
+  tickers: any
   base: string
   whitelist: any = []
 

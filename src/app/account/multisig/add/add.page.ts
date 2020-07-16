@@ -67,9 +67,8 @@ export class AddPage {
 
   }
 
-  cancel(e) {
-    e.preventDefault()
-    // this.navCtrl.pop()
+  cancel() {
+    this.router.navigate(['account', 'multisig'])
   }
 
   onAddressChange(event) {
