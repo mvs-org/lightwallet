@@ -1,5 +1,7 @@
 {
   "name": "lightwallet-ion5",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }
