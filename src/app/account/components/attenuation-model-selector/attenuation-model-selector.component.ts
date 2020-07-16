@@ -139,9 +139,12 @@ export class AttenuationModelSelectorComponent {
 
   validNbrPeriod = (nbrPeriod) => nbrPeriod && nbrPeriod > 0 && nbrPeriod <= 1000 && this.countDecimals(nbrPeriod) == 0
 
-  validQuantity = (quantity) => quantity != undefined
+  validQuantity = (quantity) => quantity !== undefined
     && this.countDecimals(quantity) <= this.decimals
     && (quantity > 0)
+
+  validTotalQuantity = () => this.quantity !== undefined
+    && this.total_quantity <= parseFloat(this.quantity)
 
   countDecimals(value) {
     if (Math.floor(value) !== value && value.toString().split('.').length > 1) {

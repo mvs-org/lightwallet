@@ -9,7 +9,7 @@ import { CreatePageRoutingModule } from './create-routing.module'
 import { CreatePage } from './create.page'
 import { TranslateModule } from '@ngx-translate/core'
 import { PipesModule } from 'src/app/pipes/pipes.module'
-import { AttenuationModelSelectorComponent } from '../../components/attenuation-model-selector/attenuation-model-selector.component'
+import { AttenuationModelSelectorModule } from './../../components/attenuation-model-selector/attenuation-model-selector.module'
 import { MiningModelSelectorComponent } from './mining-model-selector/mining-model-selector.component'
 
 @NgModule({
@@ -18,11 +18,11 @@ import { MiningModelSelectorComponent } from './mining-model-selector/mining-mod
     FormsModule,
     IonicModule,
     PipesModule,
+    AttenuationModelSelectorModule,
     TranslateModule.forChild(),
     CreatePageRoutingModule,
   ],
   declarations: [
-    AttenuationModelSelectorComponent,
     MiningModelSelectorComponent,
     CreatePage,
   ]

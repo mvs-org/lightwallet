@@ -154,9 +154,8 @@ export class TransferPage implements OnInit {
     return 0
   }
 
-  cancel(e) {
-    e.preventDefault()
-    // this.navCtrl.pop()
+  cancel() {
+    this.router.navigate(['account', 'multisig'])
   }
 
   preview() {

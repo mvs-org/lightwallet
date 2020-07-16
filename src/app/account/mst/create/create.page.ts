@@ -355,8 +355,7 @@ export class CreatePage implements OnInit {
     })
   }
 
-  cancel(e) {
-    e.preventDefault()
+  cancel() {
     this.location.back()
   }
 

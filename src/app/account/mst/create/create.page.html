@@ -38,7 +38,7 @@
       <ion-item
         [ngClass]="{'error-border': !validSymbol(symbol) || symbol_check == 'exist' || symbol_check == 'not_domain_owner' || symbol_check == 'other_avatar_domain_owner', 'warning-border': error_loading_msts || error_loading_certs || symbol_check == 'cant_check_domain'}">
         <ion-label color="primary" position="floating" translate="CREATE_MST.SYMBOL.LABEL"></ion-label>
-        <ion-input class="uppercase" name="symbol" [(ngModel)]="symbol" (ngModelChange)="symbolChanged($event)"
+        <ion-input class="uppercase" name="symbol" [(ngModel)]="symbol" (ngModelChange)="symbolChanged()"
           maxlength="63" required></ion-input>
       </ion-item>
       <ion-item *ngIf="symbol_check == 'available'" lines="none" class="valid-input" translate="CREATE_MST.SYMBOL.AVAILABLE"></ion-item>
@@ -53,7 +53,7 @@
       <ion-item [ngClass]="{'error-border':!validMaxSupply(max_supply, asset_decimals)}">
         <ion-label color="primary" position="floating" translate="CREATE_MST.MAX_SUPPLY.LABEL"></ion-label>
         <ion-select [(ngModel)]="max_supply" name="max_supply" multiple="false"
-          (ngModelChange)="maxSupplyChanged($event)" okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}"
+          (ngModelChange)="maxSupplyChanged()" okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}"
           required>
           <ion-select-option value="1000000" translate="CREATE_MST.MAX_SUPPLY.ONE_MILLION" [translateParams]="{number: 1000000 | number}"></ion-select-option>
           <ion-select-option value="10000000" translate="CREATE_MST.MAX_SUPPLY.TEN_MILLION" [translateParams]="{number: 10000000 | number}"></ion-select-option>
@@ -67,7 +67,7 @@
         [ngClass]="{'error-border':!validMaxSupplyCustom(custom_max_supply, asset_decimals)}">
         <ion-label color="primary" position="floating" translate="CREATE_MST.CUSTOM_MAX_SUPPLY.LABEL"></ion-label>
         <ion-input name="custom_max_supply" type="tel" min="0" [(ngModel)]="custom_max_supply"
-          (ngModelChange)="maxSupplyChanged($event)"></ion-input>
+          (ngModelChange)="maxSupplyChanged()"></ion-input>
       </ion-item>
       <ion-item *ngIf="error_too_high_max_supply" lines="none" class="wrong-input" translate="CREATE_MST.CUSTOM_MAX_SUPPLY.TOO_HIGH"></ion-item>
       <br>
@@ -77,7 +77,7 @@
       </ion-item>
       <ion-item>
         <ion-range min="0" max="8" step="1" pin="true" snaps="true" color="primary" [(ngModel)]="asset_decimals"
-          name="asset_decimals" (ngModelChange)="maxSupplyChanged($event)">
+          name="asset_decimals" (ngModelChange)="maxSupplyChanged()">
           <ion-label range-left>0</ion-label>
           <ion-label range-right>8</ion-label>
         </ion-range>
@@ -113,7 +113,7 @@
         [ngClass]="{'error-border':!validName(issuer_name) || !addressbalances || !addressbalances[issue_address] || !addressbalances[issue_address][selectedAsset] || addressbalances[issue_address][selectedAsset].available<1000000000}">
         <ion-label color="primary" position="floating" translate="CREATE_MST.ISSUER.LABEL"></ion-label>
         <ion-select *ngIf="!no_avatar" [(ngModel)]="issuer_name" name="issuer_name" multiple="false"
-          okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}" (ngModelChange)="issuerChanged($event)">
+          okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}" (ngModelChange)="issuerChanged()">
           <ion-select-option *ngFor="let avatar of avatars" value="{{avatar.symbol}}">{{avatar.symbol}}</ion-select-option>
         </ion-select>
         <ion-input name="no_avatar" *ngIf="no_avatar" [(ngModel)]="no_avatar_placeholder" disabled></ion-input>
@@ -167,7 +167,7 @@
 
     <ion-row>
       <ion-col>
-        <ion-button color="danger" expand="full" (click)="cancel($event)">
+        <ion-button color="danger" expand="full" (click)="cancel()">
           <ion-icon slot="start" name="close"></ion-icon>
           <span translate="CREATE_MST.BUTTON.CANCEL"></span>
         </ion-button>
