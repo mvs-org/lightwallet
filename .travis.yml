@@ -14,8 +14,8 @@ cache:
 before_script:
 - export DISPLAY=:99.0
 - export PATH=$PATH:/usr/lib/chromium-browser/
-- "./node_modules/ionic/bin/ionic serve --no-open &"
-- sleep 30
+#- "./node_modules/ionic/bin/ionic serve --no-open &"
+#- sleep 30
 install:
 - npm i
 - npm install -g cordova ionic
