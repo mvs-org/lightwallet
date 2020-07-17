@@ -12,7 +12,7 @@ import { WalletService } from 'src/app/services/wallet.service'
 export class CreatePage implements OnInit {
 
   wallet: any
-  isApp = false
+  isApp = !document.URL.startsWith('http') || document.URL.startsWith('http://localhost:8080')
 
   constructor(
     private walletService: WalletService,

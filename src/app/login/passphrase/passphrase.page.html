@@ -14,20 +14,22 @@
         <p class="center-info" translate="SELECT_PASSPHRASE.TEXT"></p>
         <form *ngIf="form" [formGroup]="form" (ngSubmit)="downloadAndReturnLogin()">
           <ion-item>
-            <ion-label *ngIf="!getError(form.controls.passphrase)" position="floating" translate="SELECT_PASSPHRASE.PASSWORD" color="primary"></ion-label>
+            <ion-label *ngIf="!getError(form.controls.passphrase)" position="floating"
+              translate="SELECT_PASSPHRASE.PASSWORD" color="primary"></ion-label>
             <ion-label *ngIf="getError(form.controls.passphrase)" position="floating" color="danger">
               {{ 'SELECT_PASSPHRASE.ERROR.' + getError(form.controls.passphrase)[0] | uppercase | translate : getError(form.controls.passphrase)[1]}}
             </ion-label>
             <ion-input formControlName="passphrase" type="password" clearOnEdit="false"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label *ngIf="!getError(form.controls.repeat, form)" position="floating" translate="SELECT_PASSPHRASE.CONFIRM_PASSWORD" color="primary"></ion-label>
+            <ion-label *ngIf="!getError(form.controls.repeat, form)" position="floating"
+              translate="SELECT_PASSPHRASE.CONFIRM_PASSWORD" color="primary"></ion-label>
             <ion-label *ngIf="getError(form.controls.repeat, form)" position="floating" color="danger">
               {{ 'SELECT_PASSPHRASE.ERROR.' + getError(form.controls.repeat, form)[0] | uppercase | translate}}
             </ion-label>
             <ion-input formControlName="repeat" type="password" clearOnEdit="false"></ion-input>
           </ion-item>
-          <ion-button *ngIf="!isApp" [disabled]="!form.valid" type="submit" expand="full">
+          <ion-button *ngIf="!isMobile" [disabled]="!form.valid" type="submit" expand="full">
             <ion-icon slot="start" name="download"></ion-icon>
             <span translate="SELECT_PASSPHRASE.BUTTON.DOWNLOAD_FILE"></span>
           </ion-button>
@@ -37,10 +39,19 @@
   </ion-grid>
 </ion-content>
 
-<!--ion-footer *ngIf="isApp"-->
-<ion-footer *ngIf="isApp">
-  <ion-button [disabled]="!form.valid" (click)="encrypt()" type="submit" expand="full">
-    <ion-icon slot="start" name="arrow-forward"></ion-icon>
-    <span translate="SELECT_PASSPHRASE.BUTTON.ENTER"></span>
-  </ion-button>
+<ion-footer *ngIf="isMobile">
+  <ion-row>
+    <ion-col size="6">
+      <ion-button color="secondary" [disabled]="!form.valid" (click)="download()" type="submit" expand="full">
+        <ion-icon slot="start" name="download"></ion-icon>
+        <span translate="SELECT_PASSPHRASE.BUTTON.DOWNLOAD_FILE"></span>
+      </ion-button>
+    </ion-col>
+    <ion-col size="6">
+      <ion-button [disabled]="!form.valid" (click)="encrypt()" type="submit" expand="full">
+        <ion-icon slot="start" name="arrow-forward"></ion-icon>
+        <span translate="SELECT_PASSPHRASE.BUTTON.ENTER"></span>
+      </ion-button>
+    </ion-col>
+  </ion-row>
 </ion-footer>

@@ -11,6 +11,7 @@ import { WalletService } from '../../services/wallet.service'
 export class OpenPage implements OnInit {
 
   saved_accounts: Array<any> = []
+  isApp: boolean
 
   constructor(
     public platform: Platform,
@@ -19,6 +20,7 @@ export class OpenPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.isApp = this.walletService.isApp()
   }
 
   ionViewWillEnter() {

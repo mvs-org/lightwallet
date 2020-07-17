@@ -21,7 +21,7 @@ export class PassphrasePage implements OnInit {
   mnemonic: string = history.state.data && history.state.data.mnemonic ? history.state.data.mnemonic : ''
   loading: boolean
 
-  isApp = false
+  isMobile: boolean
 
   constructor(
     private globals: AppService,
@@ -38,6 +38,7 @@ export class PassphrasePage implements OnInit {
 
 
   ngOnInit() {
+    this.isMobile = this.wallet.isMobile()
     const passphrase = new FormControl('', [Validators.required, Validators.minLength(8)])
     const repeat = new FormControl('', [Validators.required])
     this.form = this.formBuilder.group({
@@ -65,16 +66,16 @@ export class PassphrasePage implements OnInit {
     return
   }
 
-  downloadAndReturnLogin() {
-    const password = this.form.value.passphrase
-    this.download(password)
+  async downloadAndReturnLogin() {
+    await this.download()
     this.router.navigate(['/'])
   }
 
   /* encypts mnemonic with authentication provider encypt function
    * then writes the data to the json file and downloads the file
    */
-  async download(password) {
+  async download() {
+    const password = this.form.value.passphrase
     try {
       const res = await this.crypto.encrypt(this.mnemonic, password)
       const encrypted = await this.dataToKeystoreJson(res)

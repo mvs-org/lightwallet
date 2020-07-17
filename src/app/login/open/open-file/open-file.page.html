@@ -30,7 +30,7 @@
                     <ion-item class="center-text" lines="none">
                         <h1 translate="OPEN_FILE.IMPORT_FILE"></h1>
                     </ion-item>
-                    <ion-row *ngIf="!fileLoaded">
+                    <ion-row *ngIf="!fileLoaded && !isMobile">
                         <input type="file" name="file" id="file" class="inputfile" accept=".json"
                             (change)="open($event)" />
                         <label for="file">
@@ -49,10 +49,10 @@
                             </ion-input>
                         </ion-item>
                         <br>
-                        <ion-row>
-                            <ion-button type="submit" id="submit-button" expand="full"
-                                [disabled]="!importForm.form.valid||!fileLoaded" color="primary"
-                                translate="OPEN_FILE.IMPORT_BUTTON">
+                        <ion-row *ngIf="!isMobile">
+                            <ion-button type="submit" id="submit-button" expand="full" [disabled]="!importForm.form.valid" color="primary">
+                                <ion-icon slot="start" name="arrow-forward"></ion-icon>
+                                <span translate="OPEN_FILE.IMPORT_BUTTON"></span>
                             </ion-button>
                         </ion-row>
                     </div>
@@ -65,3 +65,21 @@
         </ion-row>
     </ion-grid>
 </ion-content>
+
+<ion-footer *ngIf="isMobile && disclaimer_agreed">
+
+    <div *ngIf="!fileLoaded" class="footer-inputfile">
+        <input type="file" name="file" id="file" class="inputfile" accept=".json" (change)="open($event)" />
+        <label for="file">
+            <ion-icon slot="start" name="download"></ion-icon>
+            <span translate="OPEN_FILE.CHOOSE_A_FILE"></span>
+        </label>
+    </div>
+
+    <ion-button *ngIf="fileLoaded" color="primary" [disabled]="!password" (click)="decrypt(password)"
+        type="submit" expand="full">
+        <ion-icon slot="start" name="arrow-forward"></ion-icon>
+        <span translate="OPEN_FILE.IMPORT_BUTTON"></span>
+    </ion-button>
+
+</ion-footer>

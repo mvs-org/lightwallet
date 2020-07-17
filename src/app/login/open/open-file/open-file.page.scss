@@ -45,6 +45,17 @@
     cursor: pointer;
 }
 
+ion-footer .inputfile + label {
+    margin-top: 0;
+    height: 100%;
+    padding-top: 12px;
+}
+
+.footer-inputfile {
+    text-align: center;
+    height: 100%;
+}
+
 .inputfile:focus + label,
 .inputfile + label:hover {
     opacity: 0.9;

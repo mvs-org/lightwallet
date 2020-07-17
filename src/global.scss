@@ -176,3 +176,20 @@ ion-content{
 ion-spinner {
     width: 100%;
 }
+
+ion-footer {
+    height: 48px;
+}
+
+ion-footer ion-row {
+    height: 100%;
+}
+
+ion-footer ion-col {
+    padding: 0
+}
+
+ion-footer ion-button {
+    margin: 0;
+    height: 100%;
+}

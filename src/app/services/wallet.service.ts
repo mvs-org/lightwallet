@@ -6,7 +6,7 @@ import { CryptoService } from './crypto.service'
 import { Platform } from '@ionic/angular'
 import { AppService } from './app.service'
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class WalletService {
 
@@ -498,6 +498,14 @@ export class WalletService {
     hasSeed() {
         return this.storage.get('seed')
             .then((seed) => seed !== null && seed !== undefined)
+    }
+
+    isApp() {
+        return this.platform.is('mobile')
+    }
+
+    isMobile() {
+        return this.platform.is('mobile') || this.platform.is('mobileweb')
     }
 
 }

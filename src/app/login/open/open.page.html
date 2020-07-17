@@ -12,7 +12,7 @@
 
   <ion-grid>
     <ion-row *ngIf="saved_accounts" class="ion-text-center">
-      <ion-col size-sm="12" size-md="4" offset-md="4">
+      <ion-col size="12" size-md="4" offset-md="4">
         <div class="option" translate="LOGIN.OPEN.LOCAL_ACCOUNT"></div>
         <ion-button expand="full" class="account-btn" (click)="loginViaAccount(account)"
           *ngFor="let account of saved_accounts">
@@ -22,7 +22,7 @@
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col size-sm="12" size-md="3" size-lg="2" offset-lg="2">
+      <ion-col size="12" size-md="3" size-lg="2" offset-lg="2">
         <ion-card routerLink="/login/open/backup-words">
           <ion-card-header class="ion-text-center">
             <ion-icon name="receipt-outline" class="icon"></ion-icon>
@@ -32,7 +32,7 @@
         </ion-card>
       </ion-col>
 
-      <ion-col size-sm="12" size-md="3" size-lg="2">
+      <ion-col size="12" size-md="3" size-lg="2" *ngIf="!isApp">
         <ion-card routerLink="/login/open/file">
           <ion-card-header class="ion-text-center">
             <ion-icon name="document-outline" class="icon"></ion-icon>
@@ -42,7 +42,7 @@
         </ion-card>
       </ion-col>
 
-      <ion-col size-sm="12" size-md="3" size-lg="2">
+      <ion-col size="12" size-md="3" size-lg="2">
         <ion-card routerLink="/login/open/qr">
           <ion-card-header class="ion-text-center">
             <ion-icon name="qr-code-outline" class="icon"></ion-icon>
@@ -52,7 +52,7 @@
         </ion-card>
       </ion-col>
 
-      <ion-col size-sm="12" size-md="3" size-lg="2">
+      <ion-col size="12" size-md="3" size-lg="2">
         <ion-card routerLink="/login/open/xpub">
           <ion-card-header class="ion-text-center">
             <ion-icon name="eye-outline" class="icon"></ion-icon>
