@@ -48,7 +48,7 @@
           <ion-label color="primary" posiiton="floating" translate="MULTISIG.TRANSFER.RECIPIENT_ADDRESS"></ion-label>
           <ion-input #recipientAddressInput name="recipient_address" [(ngModel)]="recipient_address"
             (ngModelChange)="recipientChanged()" [disabled]="sendToAvatar" required></ion-input>
-          <ion-button id="scanButton" *ngIf="isMobile" (click)="scan()">
+          <ion-button id="scanButton" slot="end" *ngIf="isMobile" (click)="scan()">
             <ion-icon slot="icon-only" name="qr-code"></ion-icon>
           </ion-button>
         </ion-item>
@@ -82,8 +82,7 @@
             <ion-badge slot="end" color="primary">{{fee | format : 8}} ETP</ion-badge>
           </ion-item>
           <ion-item>
-            <ion-range min="10000" max="10000000" step="10000" color="primary" [(ngModel)]="fee" name="fee"
-              (ionChange)="updateRange()">
+            <ion-range min="10000" max="10000000" step="10000" color="primary" [(ngModel)]="fee" name="fee">
               <ion-label range-left>{{10000 | format : 8}}</ion-label>
               <ion-label range-right>{{10000000 | format : 8}}</ion-label>
             </ion-range>
