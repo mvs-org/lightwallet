@@ -1,9 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core'
+import { Component, ViewChild } from '@angular/core'
 import { MetaverseService } from '../../../services/metaverse.service'
 import { Platform } from '@ionic/angular'
 import { AlertService } from '../../../services/alert.service'
 import { WalletService } from '../../../services/wallet.service'
-import { TranslateService } from '@ngx-translate/core'
 import { Router } from '@angular/router'
 
 @Component({
@@ -28,7 +27,7 @@ export class AddPage {
   @ViewChild('importAddressInput') importAddressInput
   passphrase_import: string = ""
   validPublicKeys: boolean = false
-  isApp: boolean
+  isMobile: boolean
 
   customTrackBy(index: number, obj: any): any {
     return index
@@ -39,14 +38,13 @@ export class AddPage {
     public platform: Platform,
     private alert: AlertService,
     private wallet: WalletService,
-    // private keyboard: Keyboard,
-    private translate: TranslateService,
     private router: Router,
+    private walletService: WalletService,
   ) {
 
     this.cosigners.push('')
 
-    this.isApp = (!document.URL.startsWith('http') || document.URL.startsWith('http://localhost:8080'))
+    this.isMobile = this.walletService.isMobile()
 
     //Load addresses and balances
     Promise.all([this.mvs.getAddresses(), this.mvs.getAddressBalances()])

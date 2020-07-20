@@ -1037,5 +1037,11 @@
             "HEX_ENCODED_TRANSACTION_TEXT": "Paste hex encoded transaction here",
             "AUTO": "Automatic"
         }
+    },
+    "SCAN": {
+        "INVALID_ADDRESS": {
+            "TITLE": "Wrong address",
+            "SUBTITLE": "This is not a correct ETP address. Please scan an ETP address."
+        }
     }
 }

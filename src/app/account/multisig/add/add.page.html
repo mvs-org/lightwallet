@@ -141,9 +141,9 @@
       <ion-item [ngClass]="{'error-border':!validAddress(import_address), 'valid-border':validAddress(import_address)}">
         <ion-label color="primary" position="floating">{{"MULTISIG.ADD.IMPORT_MULTISIG_ADDRESS"|translate}}</ion-label>
         <ion-input #importAddressInput name="import_address" [(ngModel)]="import_address" required></ion-input>
-        <button id="scanButton" *ngIf="isApp" (click)="scan()">
-          <ion-icon name="qr-scanner"></ion-icon>
-        </button>
+        <ion-button id="scanButton" *ngIf="isMobile" (click)="scan()">
+          <ion-icon slot="icon-only" name="qr-code"></ion-icon>
+        </ion-button>
       </ion-item>
       <ion-item [ngClass]="{'error-border': !validPassword(passphrase_import)}">
         <ion-label color="primary" position="floating" translate="GLOBAL.PASSWORD"></ion-label>

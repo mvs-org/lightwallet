@@ -4,7 +4,6 @@ import { Platform } from '@ionic/angular'
 import { AlertService } from '../../../services/alert.service'
 import { WalletService } from '../../../services/wallet.service'
 import { AppService } from '../../../services/app.service'
-import { TranslateService } from '@ngx-translate/core'
 import { ActivatedRoute, Router } from '@angular/router'
 
 @Component({
@@ -19,18 +18,18 @@ export class TransferPage implements OnInit {
     public platform: Platform,
     private alertService: AlertService,
     private wallet: WalletService,
-    private translate: TranslateService,
     private zone: NgZone,
     private globals: AppService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
+    private walletService: WalletService,
   ) {
 
     this.selectedAsset = this.activatedRoute.snapshot.params.asset
     this.sendFrom = this.activatedRoute.snapshot.params.address
     this.total_to_send[this.selectedAsset] = 0
     this.total = 0
-    this.isApp = (!document.URL.startsWith('http') || document.URL.startsWith('http://localhost:8080'))
+    this.isMobile = this.walletService.isMobile()
 
     // Load addresses
     mvs.getAddresses()
@@ -109,7 +108,7 @@ export class TransferPage implements OnInit {
   signedTx: string
   address_info: any
   sendToAvatar: string  = null
-  isApp: boolean
+  isMobile: boolean
   showAdvanced = false
 
   async sendAll() {

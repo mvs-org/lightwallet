@@ -1,10 +1,12 @@
 import { Component, ViewChild, OnInit } from '@angular/core'
-import { Platform } from '@ionic/angular'
+import { Platform, ModalController } from '@ionic/angular'
 import { MetaverseService } from 'src/app/services/metaverse.service'
 import { AppService } from 'src/app/services/app.service'
 import { ActivatedRoute, Router } from '@angular/router'
 import { Location } from '@angular/common'
 import { AlertService } from 'src/app/services/alert.service'
+import { WalletService } from 'src/app/services/wallet.service'
+import { ScanPage } from 'src/app/scan/scan.page'
 
 class RecipientSendMore {
   constructor(
@@ -52,7 +54,7 @@ export class SendPage implements OnInit {
   sendMoreValidEachAvatar: Array<boolean> = []
   attenuation_model: string
   lock = false
-  isApp: boolean
+  isMobile: boolean
   showAdvanced = false
   locktime: number
   addressbalancesObject: any = {}
@@ -75,6 +77,8 @@ export class SendPage implements OnInit {
     private activatedRoute: ActivatedRoute,
     private location: Location,
     private router: Router,
+    private walletService: WalletService,
+    private modalCtrl: ModalController,
   ) {
 
     this.selectedAsset = this.activatedRoute.snapshot.params.symbol
@@ -87,7 +91,7 @@ export class SendPage implements OnInit {
     }
     this.total_to_send[this.selectedAsset] = 0
     this.total = 0
-    this.isApp = (!document.URL.startsWith('http') || document.URL.startsWith('http://localhost:8080'))
+    this.isMobile = this.walletService.isMobile()
 
     // Load addresses and balances
     Promise.all([this.metaverseService.getBalances(), this.metaverseService.getAddresses(), this.metaverseService.getAddressBalances()])
@@ -425,38 +429,32 @@ export class SendPage implements OnInit {
 
   validMessageLength = (message) => this.metaverseService.verifyMessageSize(message) < 253
 
-  scan() {
-    // this.translate.get(['SCANNING.MESSAGE_ADDRESS']).subscribe((translations: any) => {
-    //   this.barcodeScanner.scan(
-    //     {
-    //       preferFrontCamera: false,
-    //       showFlipCameraButton: false,
-    //       showTorchButton: false,
-    //       torchOn: false,
-    //       prompt: translations['SCANNING.MESSAGE_ADDRESS'],
-    //       resultDisplayDuration: 0,
-    //       formats: "QR_CODE",
-    //     }).then((result) => {
-    //       if (!result.cancelled) {
-    //         const codeContent = result.text.toString();
-    //         if (deeplinkRegex.test(codeContent)) {
-    //           const asset = codeContent.match(deeplinkRegex)[1]
-    //           const params = new URLSearchParams(codeContent.match(deeplinkRegex)[2])
-    //           this.initializeParameters(asset, params)
-    //         } else {
-    //           let content = result.text.toString().split('&')
-    //           if (this.metaverseService.validAddress(content[0]) == true) {
-    //             this.recipient_address = content[0]
-    //             this.recipientAddressInput.setFocus();
-    //             // TODO: Still needed to manually close the keyboard?
-    //             // this.keyboard.close()
-    //           } else {
-    //             this.alertService.showWrongAddress()
-    //           }
-    //         }
-    //       }
-    //     })
-    // })
+  async scan() {
+    const modal = await this.modalCtrl.create({
+      component: ScanPage,
+      showBackdrop: false,
+      backdropDismiss: false,
+    })
+    modal.onWillDismiss().then(result => {
+      if (result.data && result.data.text) {
+        const codeContent = result.data.text.toString()
+        if (deeplinkRegex.test(codeContent)) {
+          const asset = codeContent.match(deeplinkRegex)[1]
+          const params = new URLSearchParams(codeContent.match(deeplinkRegex)[2])
+          this.initializeParameters(asset, params)
+        } else {
+          const content = codeContent.toString().split('&')
+          if (this.metaverseService.validAddress(content[0])) {
+            this.recipient_address = content[0]
+            this.recipientAddressInput.setFocus()
+          } else {
+            this.alertService.showMessage('SCAN.INVALID_ADDRESS.TITLE', 'SCAN.INVALID_ADDRESS.SUBTITLE', '')
+          }
+        }
+      }
+      modal.remove()
+    })
+    await modal.present()
   }
 
   addRecipient() {

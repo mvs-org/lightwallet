@@ -27,7 +27,6 @@ export class OpenQrPage implements OnInit {
       modal.remove()
     })
     await modal.present()
-
   }
 
 }

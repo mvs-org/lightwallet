@@ -34,7 +34,6 @@ export class OpenFilePage implements OnInit {
 
 
   open(e) {
-    console.log("In open function")
     let file = e.target.files
     let reader = new FileReader()
     reader.onload = (e: any) => {

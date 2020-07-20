@@ -48,9 +48,9 @@
           <ion-label color="primary" posiiton="floating" translate="MULTISIG.TRANSFER.RECIPIENT_ADDRESS"></ion-label>
           <ion-input #recipientAddressInput name="recipient_address" [(ngModel)]="recipient_address"
             (ngModelChange)="recipientChanged()" [disabled]="sendToAvatar" required></ion-input>
-          <button id="scanButton" *ngIf="isApp" ion-button item-right (click)="scan()">
-            <ion-icon slot="start" name="qr-scanner"></ion-icon>
-          </button>
+          <ion-button id="scanButton" *ngIf="isMobile" (click)="scan()">
+            <ion-icon slot="icon-only" name="qr-code"></ion-icon>
+          </ion-button>
         </ion-item>
         <ion-item [ngClass]="{'error-border':!validQuantity(quantity)}">
           <ion-label color="primary" position="floating" translate="MULTISIG.TRANSFER.AMOUNT"></ion-label>
