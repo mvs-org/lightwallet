@@ -1,9 +1,10 @@
 import { Component, ViewChild } from '@angular/core'
 import { MetaverseService } from '../../../services/metaverse.service'
-import { Platform } from '@ionic/angular'
+import { Platform, ModalController } from '@ionic/angular'
 import { AlertService } from '../../../services/alert.service'
 import { WalletService } from '../../../services/wallet.service'
 import { Router } from '@angular/router'
+import { ScanPage } from 'src/app/scan/scan.page'
 
 @Component({
   selector: 'app-add',
@@ -12,21 +13,21 @@ import { Router } from '@angular/router'
 })
 export class AddPage {
 
-  creation_type: string = "new"
+  creation_type = 'new'
   addressbalances: Array<any>
   addresses: Array<string>
-  passphrase: string = ""
-  address: string = ""
-  myPublicKey: string = ""
-  cosignersLimit: number = 20
+  passphrase = ''
+  address = ''
+  myPublicKey = ''
+  cosignersLimit = 20
 
   cosigners: Array<string> = []
   nbrSigReq: number
   nbrSigReqOptions: Array<number> = [1, 2]
-  import_address: string = ""
+  import_address = ''
   @ViewChild('importAddressInput') importAddressInput
-  passphrase_import: string = ""
-  validPublicKeys: boolean = false
+  passphrase_import = ''
+  validPublicKeys = false
   isMobile: boolean
 
   customTrackBy(index: number, obj: any): any {
@@ -34,30 +35,40 @@ export class AddPage {
   }
 
   constructor(
-    private mvs: MetaverseService,
+    private metaverseService: MetaverseService,
     public platform: Platform,
-    private alert: AlertService,
-    private wallet: WalletService,
+    private alertService: AlertService,
     private router: Router,
     private walletService: WalletService,
+    private modalCtrl: ModalController,
   ) {
 
     this.cosigners.push('')
 
     this.isMobile = this.walletService.isMobile()
 
-    //Load addresses and balances
-    Promise.all([this.mvs.getAddresses(), this.mvs.getAddressBalances()])
+    // Load addresses and balances
+    Promise.all([this.metaverseService.getAddresses(), this.metaverseService.getAddressBalances()])
       .then((balances) => {
-        let addresses = balances[0]
-        let addressbalances = balances[1]
-        let addrblncs = []
+        const addresses = balances[0]
+        const addressbalances = balances[1]
+        const addrblncs = []
         Object.keys(addresses).forEach((index) => {
-          let address = addresses[index]
+          const address = addresses[index]
           if (addressbalances[address]) {
-            addrblncs.push({ "address": address, "avatar": addressbalances[address].AVATAR ? addressbalances[address].AVATAR : "", "identifier": addressbalances[address].AVATAR ? addressbalances[address].AVATAR : address, "balance": addressbalances[address].ETP.available })
+            addrblncs.push({
+              address,
+              avatar: addressbalances[address].AVATAR ? addressbalances[address].AVATAR : '',
+              identifier: addressbalances[address].AVATAR ? addressbalances[address].AVATAR : address,
+              balance: addressbalances[address].ETP.available
+            })
           } else {
-            addrblncs.push({ "address": address, "avatar": "", "identifier": address, "balance": 0 })
+            addrblncs.push({
+              address,
+              avatar: '',
+              identifier: address,
+              balance: 0
+            })
           }
         })
         this.addressbalances = addrblncs
@@ -70,26 +81,26 @@ export class AddPage {
   }
 
   onAddressChange(event) {
-    this.myPublicKey = ""
+    this.myPublicKey = ''
   }
 
   getPublicKey(address) {
-    this.alert.showLoading()
-      .then(() => this.wallet.getWallet(this.passphrase))
-      .then(wallet => this.wallet.getPublicKeyByAddress(wallet, address))
+    this.alertService.showLoading()
+      .then(() => this.walletService.getWallet(this.passphrase))
+      .then(wallet => this.walletService.getPublicKeyByAddress(wallet, address))
       .then(publicKey => {
-        this.alert.stopLoading()
+        this.alertService.stopLoading()
         this.myPublicKey = publicKey
       })
       .catch(error => {
         console.error(error)
-        this.alert.stopLoading()
+        this.alertService.stopLoading()
         switch (error.message) {
-          case "ERR_DECRYPT_WALLET":
-            this.alert.showError('MESSAGE.PASSWORD_WRONG', '')
+          case 'ERR_DECRYPT_WALLET':
+            this.alertService.showError('MESSAGE.PASSWORD_WRONG', '')
             break
           default:
-            this.alert.showError('MULTISIG.MESSAGE.ERROR_GET_PUBLIC_KEY', error.message)
+            this.alertService.showError('MULTISIG.MESSAGE.ERROR_GET_PUBLIC_KEY', error.message)
             break
         }
       })
@@ -97,61 +108,61 @@ export class AddPage {
 
   getAddress(cosigners, nbrSigReq, myPublicKey, passphrase) {
     if (!this.myPublicKey) {
-      this.alert.showError('MULTISIG.MESSAGE.ERROR_MISSING_MY_PUBLIC_KEY', '')
+      this.alertService.showError('MULTISIG.MESSAGE.ERROR_MISSING_MY_PUBLIC_KEY', '')
     } else if (!this.validPublicKeys) {
-      this.alert.showError('MULTISIG.MESSAGE.ERROR_MULTISIG_WRONG_PUBLIC_KEYS', '')
+      this.alertService.showError('MULTISIG.MESSAGE.ERROR_MULTISIG_WRONG_PUBLIC_KEYS', '')
     } else {
       try {
-        this.alert.showLoading()
+        this.alertService.showLoading()
           .then(() => {
-            let nbrSigns = parseInt(nbrSigReq)
-            let publicKeys = cosigners.concat(myPublicKey)
-            let multisig = this.wallet.getNewMultisigAddress(nbrSigns, publicKeys)
-            let newMultisig = {
-              "d": "",
-              "k": publicKeys,
-              "m": nbrSigns,
-              "n": publicKeys.length,
-              "s": myPublicKey,
-              "a": multisig.address,
-              "r": multisig.script
+            const nbrSigns = parseInt(nbrSigReq, 10)
+            const publicKeys = cosigners.concat(myPublicKey)
+            const multisig = this.walletService.getNewMultisigAddress(nbrSigns, publicKeys)
+            const newMultisig = {
+              d: '',
+              k: publicKeys,
+              m: nbrSigns,
+              n: publicKeys.length,
+              s: myPublicKey,
+              a: multisig.address,
+              r: multisig.script
             }
             this.addMultisigAddress(newMultisig, true, passphrase)
           })
       } catch (e) {
         console.error(e)
-        this.alert.stopLoading()
-        this.alert.showError('MULTISIG.ADD.ERROR', e.message)
+        this.alertService.stopLoading()
+        this.alertService.showError('MULTISIG.ADD.ERROR', e.message)
       }
     }
   }
 
   importAddress(address, passphrase) {
-    this.alert.showLoading()
+    this.alertService.showLoading()
       .then(() => {
         try {
-          this.mvs.getMultisigWallet(address.trim())
+          this.metaverseService.getMultisigWallet(address.trim())
             .then((newMultisig) => {
               if (!newMultisig) {
-                this.alert.stopLoading()
-                this.alert.showError('MULTISIG.MESSAGE.ERROR_IMPORT_ADDRESS_UNKNOW', '')
+                this.alertService.stopLoading()
+                this.alertService.showError('MULTISIG.MESSAGE.ERROR_IMPORT_ADDRESS_UNKNOW', '')
               } else {
-                Promise.all([this.mvs.getAddresses(), this.wallet.getWallet(passphrase)])
+                Promise.all([this.metaverseService.getAddresses(), this.walletService.getWallet(passphrase)])
                   .then((result) => {
-                    let addresses = result[0]
-                    let wallet = result[1]
-                    let myPublicKey = undefined
+                    const addresses = result[0]
+                    const wallet = result[1]
+                    let myPublicKey
                     Promise.all(newMultisig.k.map((publicKey) => {
-                      this.wallet.findDeriveNodeByPublic(wallet, publicKey, addresses ? addresses.length : undefined)
+                      this.walletService.findDeriveNodeByPublic(wallet, publicKey, addresses ? addresses.length : undefined)
                         .then(myMultisigWallet => {
-                          //console.log("Found it!")
+                          // console.log("Found it!")
                           myPublicKey = publicKey
                         })
                         .catch(error => {
-                          this.alert.stopLoading()
+                          this.alertService.stopLoading()
                           switch (error.message) {
-                            case "ERR_NO_HDNODE_FOR_PUBLICKEY":
-                              //not user's public key
+                            case 'ERR_NO_HDNODE_FOR_PUBLICKEY':
+                              // not user's public key
                               break
                             default:
                               console.error(error)
@@ -162,24 +173,24 @@ export class AddPage {
                       .then(() => {
                         if (myPublicKey) {
                           newMultisig.s = myPublicKey
-                          let multisig = this.wallet.getNewMultisigAddress(newMultisig.m, newMultisig.k)
+                          const multisig = this.walletService.getNewMultisigAddress(newMultisig.m, newMultisig.k)
                           newMultisig.r = multisig.r
                           this.addMultisigAddress(newMultisig, false, passphrase)
                         } else {
-                          this.alert.stopLoading()
-                          this.alert.showError('MULTISIG.MESSAGE.ERROR_ADDRESS_NOT_THIS_WALLET', '')
+                          this.alertService.stopLoading()
+                          this.alertService.showError('MULTISIG.MESSAGE.ERROR_ADDRESS_NOT_THIS_WALLET', '')
                         }
                       })
                   })
                   .catch(error => {
                     console.error(error)
-                    this.alert.stopLoading()
+                    this.alertService.stopLoading()
                     switch (error.message) {
-                      case "ERR_DECRYPT_WALLET":
-                        this.alert.showError('MESSAGE.PASSWORD_WRONG', '')
+                      case 'ERR_DECRYPT_WALLET':
+                        this.alertService.showError('MULTISIG.MESSAGE.ERROR_WRONG_PASSWORD', '')
                         break
                       default:
-                        this.alert.showError('MULTISIG.MESSAGE.ERROR_GET_PUBLIC_KEY', error.message)
+                        this.alertService.showError('MULTISIG.MESSAGE.ERROR_GET_PUBLIC_KEY', error.message)
                         break
                     }
                   })
@@ -187,64 +198,60 @@ export class AddPage {
             })
         } catch (e) {
           console.error(e)
-          this.alert.stopLoading()
-          this.alert.showError('IMPORT_ADDRESS.ERROR', e.message)
+          this.alertService.stopLoading()
+          this.alertService.showError('IMPORT_ADDRESS.ERROR', e.message)
         }
       })
   }
 
   addMultisigAddress(newMultisig, newAddress: boolean, passphrase) {
-    this.wallet.getMultisigAddresses()
+    this.walletService.getMultisigAddresses()
       .then((multisigAddresses) => {
         if (multisigAddresses.indexOf(newMultisig.a) !== -1) {
-          this.alert.stopLoading()
-          this.alert.showError('MULTISIG.ADD.ADDRESS_ALREADY_EXISTS', newMultisig.a)
+          this.alertService.stopLoading()
+          this.alertService.showError('MULTISIG.ADD.ADDRESS_ALREADY_EXISTS', newMultisig.a)
         } else {
           try {
             if (newAddress) {
-              this.mvs.addMultisigWallet(newMultisig)
+              this.metaverseService.addMultisigWallet(newMultisig)
             }
           } catch (error) {
             console.error(error)
           }
-          this.wallet.addMultisig(newMultisig)
-            .then(() => this.wallet.saveSessionAccount(passphrase))
-            .then(() => this.alert.stopLoading())
-            .then(() => this.alert.showMessage(newAddress ? 'MULTISIG.MESSAGE.SUCCESS_CREATE_MULTISIG' : 'MULTISIG.MESSAGE.SUCCESS_IMPORT_MULTISIG', '', newMultisig.a))
+          this.walletService.addMultisig(newMultisig)
+            .then(() => this.walletService.saveSessionAccount(passphrase))
+            .then(() => this.alertService.stopLoading())
+            .then(() => this.alertService.showMessage(newAddress ? 'MULTISIG.MESSAGE.SUCCESS_CREATE_MULTISIG' : 'MULTISIG.MESSAGE.SUCCESS_IMPORT_MULTISIG', '', newMultisig.a))
             .then(() => this.router.navigate(['/loading'], { state: { data: { reset: true } } }))
             .catch(error => {
               console.error(error)
-              this.alert.stopLoading()
-              this.alert.showError('MULTISIG.ADD.ERROR', error.message)
+              this.alertService.stopLoading()
+              this.alertService.showError('MULTISIG.ADD.ERROR', error.message)
             })
         }
       })
   }
 
-  scan() {
-    // this.translate.get(['SCANNING.MESSAGE_ADDRESS']).subscribe((translations: any) => {
-    //     this.barcodeScanner.scan(
-    //         {
-    //             preferFrontCamera: false,
-    //             showFlipCameraButton: false,
-    //             showTorchButton: false,
-    //             torchOn: false,
-    //             prompt: translations['SCANNING.MESSAGE_ADDRESS'],
-    //             resultDisplayDuration: 0,
-    //             formats: "QR_CODE",
-    //         }).then((result) => {
-    //             if (!result.cancelled) {
-    //                 let content = result.text.toString().split('&')
-    //                 if (this.mvs.validAddress(content[0]) == true) {
-    //                     this.import_address = content[0]
-    //                     this.importAddressInput.setFocus();
-    //                     this.keyboard.close()
-    //                 } else {
-    //                     this.alert.showWrongAddress()
-    //                 }
-    //             }
-    //         })
-    // })
+  async scan() {
+    const modal = await this.modalCtrl.create({
+      component: ScanPage,
+      showBackdrop: false,
+      backdropDismiss: false,
+    })
+    modal.onWillDismiss().then(result => {
+      if (result.data && result.data.text) {
+        const codeContent = result.data.text.toString()
+        const content = codeContent.toString().split('&')
+        if (this.metaverseService.validAddress(content[0])) {
+          this.import_address = content[0]
+          this.importAddressInput.setFocus();
+        } else {
+          this.alertService.showMessage('SCAN.INVALID_ADDRESS.TITLE', 'SCAN.INVALID_ADDRESS.SUBTITLE', '')
+        }
+      }
+      modal.remove()
+    })
+    await modal.present()
   }
 
   addCosigner() {
@@ -261,7 +268,7 @@ export class AddPage {
 
   validPassword = (password) => (password) ? password.length > 0 : false;
 
-  validAddress = this.mvs.validAddress
+  validAddress = this.metaverseService.validAddress
 
   validPublicKey = (publicKey, i) => (publicKey) ? publicKey.length == 66 && this.validNotMyKey(publicKey) && this.validUsedOnceKey(publicKey, i) : false;
 

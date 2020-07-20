@@ -133,19 +133,6 @@ export class AlertService {
     })
   }
 
-  showWrongAddress() {
-    this.translate.get(['MESSAGE.NOT_ETP_ADDRESS_TITLE', 'MESSAGE.NOT_ETP_ADDRESS_TEXT', 'OK']).subscribe(async (translations: any) => {
-      const alert = await this.alertCtrl.create({
-        header: translations['MESSAGE.NOT_ETP_ADDRESS_TITLE'],
-        message: translations['MESSAGE.NOT_ETP_ADDRESS_TEXT'],
-        buttons: [{
-          text: translations.OK
-        }]
-      })
-      alert.present()
-    })
-  }
-
   showMessage(title, subtitle, message, ok?) {
     this.translate.get([title, subtitle, message, ok || 'OK']).subscribe(async (translations: any) => {
       const alert = await this.alertCtrl.create({

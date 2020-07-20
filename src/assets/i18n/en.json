@@ -1010,7 +1010,8 @@
             "ERROR_MULTISIG_WRONG_PUBLIC_KEYS": "Please make sure all the public keys in Step 2 are correct",
             "ERROR_IMPORT_ADDRESS_UNKNOW": "This multisignature address is unknown. Please make sure the address is correct and has been registered at least once via MyETPWallet. To register an address, go to the tab 'New address' on top of this page.",
             "ERROR_DECODE_MULTISIG_SUBTITLE": "Cannot decode this raw transaction",
-            "ERROR_DECODE_MULTISIG_BODY": "This raw transaction cannot be decoded. Please make sure this raw transaction is correct and has been created from the selected multisignature address"
+            "ERROR_DECODE_MULTISIG_BODY": "This raw transaction cannot be decoded. Please make sure this raw transaction is correct and has been created from the selected multisignature address",
+            "ERROR_WRONG_PASSWORD": "Wrong password"
         },
         "TRANSFER": {
             "HEADLINE": "Multisignature transfer",

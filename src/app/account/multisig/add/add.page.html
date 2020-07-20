@@ -139,9 +139,9 @@
   <form *ngIf="creation_type == 'existing'" #importAddressForm="ngForm" class="padding-bottom">
     <ion-list>
       <ion-item [ngClass]="{'error-border':!validAddress(import_address), 'valid-border':validAddress(import_address)}">
-        <ion-label color="primary" position="floating">{{"MULTISIG.ADD.IMPORT_MULTISIG_ADDRESS"|translate}}</ion-label>
+        <ion-label color="primary" position="floating" translate="MULTISIG.ADD.IMPORT_MULTISIG_ADDRESS"></ion-label>
         <ion-input #importAddressInput name="import_address" [(ngModel)]="import_address" required></ion-input>
-        <ion-button id="scanButton" *ngIf="isMobile" (click)="scan()">
+        <ion-button slot="end" id="scanButton" *ngIf="isMobile" (click)="scan()">
           <ion-icon slot="icon-only" name="qr-code"></ion-icon>
         </ion-button>
       </ion-item>
