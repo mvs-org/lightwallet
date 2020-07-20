@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { Storage } from '@ionic/storage'
-import Metaverse from 'metaversejs/dist/metaverse.min.js'
+// import Metaverse from 'metaversejs/dist/metaverse.min.js'
 import { CryptoService } from './crypto.service'
 import { Platform } from '@ionic/angular'
 import { AppService } from './app.service'
+
+declare const Metaverse: any
+
 @Injectable({
     providedIn: 'root'
 })

@@ -2,11 +2,13 @@ import { Injectable } from '@angular/core'
 import { AppService } from './app.service'
 import { Storage } from '@ionic/storage'
 import { WalletService } from './wallet.service'
-import Metaverse from 'metaversejs/index.js'
+// import Metaverse from 'metaversejs/index.js'
 import Blockchain from 'mvs-blockchain'
 import { keyBy } from 'lodash'
 import { Subject, BehaviorSubject } from 'rxjs'
 import { filter } from 'rxjs/operators'
+
+declare const Metaverse: any
 
 class Ticker {
   market_cap: number

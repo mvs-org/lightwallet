@@ -30,6 +30,11 @@
                 "input": "node_modules/ionicons/dist/ionicons/svg",
                 "output": "./svg"
               },
+              {
+                "glob": "**/*.min.js",
+                "input": "node_modules/metaversejs/dist",
+                "output": "./metaversejs"
+              },
               "src/manifest.webmanifest"
             ],
             "styles": [
