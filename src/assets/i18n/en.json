@@ -831,13 +831,17 @@
         "DESCRIPTION_PICTURE": "Using the MyETPWallet mobile app, you can directly scan the QR Code from the requester. Alternatively, you can also manually enter the request code into the field below.",
         "GET_ON_MOBILE": "Get the mobile app",
         "CHECK": "Check",
-        "HOW_TO_AUTH": "How to authenticate",
         "TOKEN_INPUT_LABEL": "Request code",
         "HOWTO": {
             "TITLE": "How to use bitident",
             "STEP1": "Open the website where you want to authenticate using your Metaverse Avatar",
             "STEP2": "Using MyETPWallet, scan the provided QR Code",
             "STEP3": "Access the website with your Avatar!"
+        },
+        "BUTTON": {
+            "SCAN_QRCODE": "Scan QR Code",
+            "ENTER_MANUALLY": "Enter request code manually",
+            "HOW_TO_AUTH": "How to authenticate"
         },
         "CONFIRM": {
             "INFORMATION": "You can use your Metaverse Avatar to authenticate to various websites or applications. After verifying the provider of the request, it will sign a message using your private key and send the signed message to the requester in order to prove ownership of this Avatar. These steps will neither create any transaction on the blockchain nor reveal your private key to the requester.",
@@ -1043,6 +1047,10 @@
         "INVALID_ADDRESS": {
             "TITLE": "Wrong address",
             "SUBTITLE": "This is not a correct ETP address. Please scan an ETP address."
+        },
+        "INVALID_BITIDENT": {
+            "TITLE": "Invalid Bitident QRCode",
+            "SUBTITLE": "This is not a valid Bitident QRCode. Please double check the code and verify that you are using the latest version of MyETPWallet."
         }
     }
 }

@@ -49,7 +49,7 @@ export class ConfirmPage {
     this.token = history.state.data ? history.state.data.token : ''
 
     this.loadAvatars()
-      .then(() => this.check(this.token))
+
   }
 
   cancel() {
@@ -62,10 +62,11 @@ export class ConfirmPage {
         if (avatars.length === 0) {
           this.alert.showMessage('BITIDENT.MESSAGE.NO_AVATAR_TITLE', '', 'BITIDENT.MESSAGE.NO_AVATAR_TITLE_BODY')
         } else {
-          return avatars.forEach(avatar => {
+          avatars.forEach(avatar => {
             this.avatarsAddress[avatar.symbol] = avatar.address
             this.avatars.push(avatar.symbol)
           })
+          this.check(this.token)
         }
       })
   }
@@ -92,7 +93,7 @@ export class ConfirmPage {
       } else if (signedToken.network !== this.appService.network) {
         this.location.back()
         this.alert.showError('BITIDENT.MESSAGE.DIFFERENT_NETWORK', signedToken.network)
-      } else if (signedToken.type != 'auth') {
+      } else if (signedToken.type !== 'auth') {
         this.location.back()
         this.alert.showError('BITIDENT.MESSAGE.TYPE_NOT_SUPPORTED', signedToken.type)
       } else if ((signedToken.time + signedToken.timeout) * 1000 < Date.now()) {
@@ -110,7 +111,8 @@ export class ConfirmPage {
 
         const sourceAddress = sourceAvatar.address
 
-        if (this.sourceSignature && !Message.verify(encodedUnsignedToken, sourceAddress, Buffer.from(this.sourceSignature, 'hex'), signedToken.source)) {
+        if (this.sourceSignature
+          && !Message.verify(encodedUnsignedToken, sourceAddress, Buffer.from(this.sourceSignature, 'hex'), signedToken.source)) {
           this.location.back()
           this.alert.showError('BITIDENT.MESSAGE.WRONG_SIGNATURE', signedToken.source)
         } else {

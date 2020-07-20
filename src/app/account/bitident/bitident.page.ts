@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core'
-import { TranslateService } from '@ngx-translate/core'
 import { Router } from '@angular/router'
+import { ScanPage } from 'src/app/scan/scan.page'
+import { ModalController } from '@ionic/angular'
+import { AlertService } from 'src/app/services/alert.service'
+import { WalletService } from 'src/app/services/wallet.service'
 
 @Component({
   selector: 'app-bitident',
@@ -9,42 +12,45 @@ import { Router } from '@angular/router'
 })
 export class BitidentPage implements OnInit {
 
-  isApp = !document.URL.startsWith('http') || document.URL.startsWith('http://localhost:8080')
+  isMobile: boolean
   manualEnterMobile: boolean
   token: string
   leftTime = 0
 
   constructor(
-    private translate: TranslateService,
     private router: Router,
+    private modalCtrl: ModalController,
+    private alertService: AlertService,
+    private walletService: WalletService,
   ) {
+    this.isMobile = this.walletService.isMobile()
   }
 
   ngOnInit() {
   }
 
-  scan() {
-    this.translate.get(['SCANNING.AUTH_MESSAGE']).subscribe((translations: any) => {
-      // this.barcodeScanner.scan(
-      //     {
-      //         preferFrontCamera: false, // iOS and Android
-      //         showFlipCameraButton: false, // iOS and Android
-      //         showTorchButton: false, // iOS and Android
-      //         torchOn: false, // Android, launch with the torch switched on (if available)
-      //         prompt: translations['SCANNING.AUTH_MESSAGE'], // Android
-      //         resultDisplayDuration: 0, // Android, display scanned text for X ms. 0 suppresses it entirely, default 1500
-      //         formats: "QR_CODE", // default: all but PDF_417 and RSS_EXPANDED
-      //     }).then((result) => {
-      //         if (!result.cancelled) {
-      //             this.getLastElement(result.text.toString())
-      //         }
-      //     })
+  async scan() {
+    const modal = await this.modalCtrl.create({
+      component: ScanPage,
+      showBackdrop: false,
+      backdropDismiss: false,
     })
+    modal.onWillDismiss().then(result => {
+      if (result.data && result.data.text) {
+        this.getLastElement(result.data.text.toString())
+      }
+      modal.remove()
+    })
+    await modal.present()
   }
 
   getLastElement(token) {
     const target = /(\w+)$/i.test(token) ? /(\w+)$/i.exec(token)[0] : ''
-    this.gotoAuthConfirm(target.trim())
+    if (target) {
+      this.gotoAuthConfirm(target.trim())
+    } else {
+      this.alertService.showMessage('SCAN.INVALID_BITIDENT.TITLE', 'SCAN.INVALID_BITIDENT.SUBTITLE', '')
+    }
   }
 
   isUrl = (url) => (!/[^A-Za-z0-9@_.-]/g.test(url))
