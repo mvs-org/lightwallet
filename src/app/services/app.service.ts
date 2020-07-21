@@ -7,7 +7,7 @@ import { Subject, BehaviorSubject } from 'rxjs'
 })
 export class AppService {
 
-  readonly version: string = '0.9.3'
+  readonly version: string = '0.9.5b2'
   readonly db_version = 6
   readonly name: string = 'Pillars of Creation'
   readonly algo: string = 'aes'
