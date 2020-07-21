@@ -53,7 +53,7 @@
                 <ion-input #recipientAddressInput name="recipient_address" [(ngModel)]="recipient_address"
                     (ngModelChange)="recipientChanged()"
                     [disabled]="sendToAvatar || (disableParams && params['recipient_address'])" required></ion-input>
-                <ion-button slot="end" id="scanButton"
+                <ion-button slot="end" class="scanButton"
                     *ngIf="isMobile && !sendToAvatar && !(disableParams && params['recipient_address'])" (click)="scan()">
                     <ion-icon slot="icon-only" name="qr-code"></ion-icon>
                 </ion-button>

@@ -4,8 +4,10 @@ import { Platform, ModalController } from '@ionic/angular'
 import { MetaverseService } from 'src/app/services/metaverse.service'
 import { AlertService } from 'src/app/services/alert.service'
 import { AppService } from 'src/app/services/app.service'
-import { TranslateService } from '@ngx-translate/core'
 import { Router } from '@angular/router'
+import { WalletService } from 'src/app/services/wallet.service'
+import { ScanPage } from 'src/app/scan/scan.page'
+import { QrComponent } from 'src/app/qr/qr.component'
 
 @Component({
   selector: 'app-swft',
@@ -26,7 +28,7 @@ export class SwftPage implements OnInit {
   orders: OrderDetails[] = []
   importFromId: string
 
-  isApp = !document.URL.startsWith('http') || document.URL.startsWith('http://localhost:8080')
+  isMobile: boolean
 
   createOrderParameters: CreateOrderParameters = {
     depositSymbol: 'ETP',
@@ -41,14 +43,16 @@ export class SwftPage implements OnInit {
 
   constructor(
     public platform: Platform,
-    private mvs: MetaverseService,
+    private metaverseService: MetaverseService,
     public etpBridgeService: SwftService,
-    private alert: AlertService,
+    private alertService: AlertService,
     private globals: AppService,
-    private translate: TranslateService,
     public modalCtrl: ModalController,
     private router: Router,
+    private walletService: WalletService,
   ) {
+
+    this.isMobile = this.walletService.isMobile()
 
     this.etpBridgeService.getBridgePairs().toPromise()
       .then(pairs => {
@@ -62,7 +66,7 @@ export class SwftPage implements OnInit {
       })
 
     // Load addresses and balances
-    Promise.all([this.mvs.getBalances(), this.mvs.getAddresses(), this.mvs.getAddressBalances()])
+    Promise.all([this.metaverseService.getBalances(), this.metaverseService.getAddresses(), this.metaverseService.getAddressBalances()])
       .then(([balances, addresses, addressbalances]) => {
         this.etpBalance = balances.ETP.available
         this.addresses = addresses
@@ -119,7 +123,7 @@ export class SwftPage implements OnInit {
 
   createOrder() {
     let newOrder
-    return this.alert.showLoading()
+    return this.alertService.showLoading()
       .then(() => this.etpBridgeService.createOrder(this.createOrderParameters).toPromise())
       .then((order: OrderDetails) => {
         newOrder = order
@@ -127,30 +131,30 @@ export class SwftPage implements OnInit {
       })
       .then(() => this.loadOrders())
       .then(() => {
-        this.alert.stopLoading()
-        this.alert.showMessage('SWFT.MESSAGE.SUCCESS_CREATE_SWFT_TITLE', 'SWFT.MESSAGE.SUCCESS_CREATE_SWFT_BODY', '')
+        this.alertService.stopLoading()
+        this.alertService.showMessage('SWFT.MESSAGE.SUCCESS_CREATE_SWFT_TITLE', 'SWFT.MESSAGE.SUCCESS_CREATE_SWFT_BODY', '')
         this.gotoDetails(newOrder.id)
       })
       .catch((error) => {
         console.error(error)
-        this.alert.stopLoading()
-        this.alert.showError('SWFT.MESSAGE.CREATE_SWFT_ORDER_ERROR', error._body)
+        this.alertService.stopLoading()
+        this.alertService.showError('SWFT.MESSAGE.CREATE_SWFT_ORDER_ERROR', error._body)
       })
   }
 
   importOrder() {
-    return this.alert.showLoading()
+    return this.alertService.showLoading()
       .then(() => this.etpBridgeService.getOrder(this.importFromId).toPromise())
       .then((order: OrderDetails) => this.etpBridgeService.saveOrder(order))
       .then(() => this.loadOrders())
       .then(() => {
-        this.alert.stopLoading()
-        this.alert.showMessage('SWFT.MESSAGE.SUCCESS_IMPORT_SWFT_TITLE', 'SWFT.MESSAGE.SUCCESS_IMPORT_SWFT_BODY', '')
+        this.alertService.stopLoading()
+        this.alertService.showMessage('SWFT.MESSAGE.SUCCESS_IMPORT_SWFT_TITLE', 'SWFT.MESSAGE.SUCCESS_IMPORT_SWFT_BODY', '')
       })
       .catch((error) => {
         console.error(error)
-        this.alert.stopLoading()
-        this.alert.showError('SWFT.MESSAGE.CREATE_SWFT_ORDER_ERROR', error.message)
+        this.alertService.stopLoading()
+        this.alertService.showError('SWFT.MESSAGE.CREATE_SWFT_ORDER_ERROR', error.message)
       })
   }
 
@@ -208,34 +212,39 @@ export class SwftPage implements OnInit {
     this.getRate()
   }
 
-  scan() {
-    this.translate.get(['SCANNING.MESSAGE_ADDRESS']).subscribe((translations: any) => {
-      // this.barcodeScanner.scan(
-      //     {
-      //         preferFrontCamera: false,
-      //         showFlipCameraButton: false,
-      //         showTorchButton: false,
-      //         torchOn: false,
-      //         prompt: translations['SCANNING.MESSAGE_ADDRESS'],
-      //         resultDisplayDuration: 0,
-      //         formats: "QR_CODE",
-      //     }).then((result) => {
-      //         if (!result.cancelled) {
-      //             let content = result.text.toString().split('&')
-      //             if (this.mvs.validAddress(content[0]) == true) {
-      //                 this.importFromId = content[0]
-      //             } else {
-      //                 this.alert.showWrongAddress()
-      //             }
-      //         }
-      //     })
+  async scan() {
+    const modal = await this.modalCtrl.create({
+      component: ScanPage,
+      showBackdrop: false,
+      backdropDismiss: false,
     })
+    modal.onWillDismiss().then(result => {
+      if (result.data && result.data.text) {
+        const content = result.data.text.toString().split('&')
+        if (this.metaverseService.validAddress(content[0])) {
+          this.importFromId = content[0]
+        } else {
+          this.alertService.showMessage('SCAN.INVALID_ADDRESS.TITLE', 'SCAN.INVALID_ADDRESS.SUBTITLE', '')
+        }
+      }
+      modal.remove()
+    })
+    await modal.present()
   }
 
-  show(address) {
-    // let profileModal = this.modalCtrl.create('QRCodePage', { value: address });
-    // profileModal.present();
-  }
+  async show(address) {
+    const content = address
+    const title = address
+
+    const qrcodeModal = await this.modalCtrl.create({
+        component: QrComponent,
+        componentProps: {
+            title,
+            content,
+        }
+    })
+    await qrcodeModal.present()
+}
 
   validDepositAmount = (amount) =>
     this.bridgeRate && amount >= this.bridgeRate.depositMin && amount <= this.bridgeRate.depositMax
@@ -243,7 +252,7 @@ export class SwftPage implements OnInit {
   validAddress = (address, symbol) => {
     if (address === undefined || address === '') { return false }
     if (this.etpBridgeService.isMetaverseSymbol(symbol)) {
-      return this.mvs.validAddress(address)
+      return this.metaverseService.validAddress(address)
     }
     return true
   }

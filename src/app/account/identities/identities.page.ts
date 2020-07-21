@@ -27,7 +27,6 @@ export class IdentitiesPage implements OnInit {
         public walletService: WalletService,
         private activatedRoute: ActivatedRoute,
         private router: Router,
-        public modalController: ModalController,
     ) {
         this.addressbalances = {}
         this.selectedAsset = this.activatedRoute.snapshot.params.symbol
@@ -88,7 +87,7 @@ export class IdentitiesPage implements OnInit {
         const content = address
         const title = address
 
-        const qrcodeModal = await this.modalController.create({
+        const qrcodeModal = await this.modalCtrl.create({
             component: QrComponent,
             componentProps: {
                 title,

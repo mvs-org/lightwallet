@@ -87,7 +87,7 @@ export class SwftService {
       .then(orders => {
         let update = false
         orders = orders.map(o => {
-          if (o.id == order.id) {
+          if (o.id === order.id) {
             update = true
             return order
           }
