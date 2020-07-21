@@ -4,6 +4,7 @@ import { Platform } from '@ionic/angular'
 import { SplashScreen } from '@ionic-native/splash-screen/ngx'
 import { StatusBar } from '@ionic-native/status-bar/ngx'
 import { LanguageService } from './services/language.service'
+import { SwService } from './services/sw.service'
 
 @Component({
   selector: 'app-root',
@@ -18,8 +19,10 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private language: LanguageService,
+    serviceWorker: SwService,
   ) {
     this.initializeApp()
+    console.log(serviceWorker.appRef.viewCount)
   }
 
   initializeApp() {

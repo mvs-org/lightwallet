@@ -20,6 +20,7 @@
       "updateMode": "prefetch",
       "resources": {
         "files": [
+          "/metaversejs/**.min.js",
           "/assets/**",
           "/*.(eot|svg|cur|jpg|png|webp|gif|otf|ttf|woff|woff2|ani)"
         ]
