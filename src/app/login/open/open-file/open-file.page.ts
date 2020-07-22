@@ -19,17 +19,17 @@ export class OpenFilePage implements OnInit {
   isMobile: boolean
 
   constructor(
-    public mvs: MetaverseService,
-    public wallet: WalletService,
+    public metaverseService: MetaverseService,
+    public walletService: WalletService,
     public translate: TranslateService,
     private router: Router,
-    private alert: AlertService,
+    private alertService: AlertService,
   ) {
     this.fileLoaded = false
   }
 
   ngOnInit() {
-    this.isMobile = this.wallet.isMobile()
+    this.isMobile = this.walletService.isMobile()
   }
 
 
@@ -40,10 +40,10 @@ export class OpenFilePage implements OnInit {
       let content = e.target.result
       try {
         this.data = JSON.parse(content)
-        this.wallet.setWallet(this.data).then(() => this.fileLoaded = true)
+        this.walletService.setWallet(this.data).then(() => this.fileLoaded = true)
       } catch (e) {
         console.error(e)
-        this.alert.showMessage('OPEN_FILE.WRONG_FILE.TITLE', 'OPEN_FILE.WRONG_FILE.SUBTITLE', '')
+        this.alertService.showMessage('OPEN_FILE.WRONG_FILE.TITLE', 'OPEN_FILE.WRONG_FILE.SUBTITLE', '')
       }
     }
     if (file[0]) {
@@ -54,22 +54,22 @@ export class OpenFilePage implements OnInit {
 
   async decrypt(password) {
     try {
-      await this.alert.showLoading()
-      await this.mvs.dataReset()
-      await this.wallet.setSeed(password)
-      const xpub = await this.wallet.getMasterPublicKey(password)
-      await this.wallet.setXpub(xpub)
-      const wallet = await this.wallet.getWallet(password)
-      const index = await this.wallet.getAddressIndexFromWallet()
-      const addresses = await this.wallet.generateAddresses(wallet, 0, index)
-      await this.mvs.setAddresses(addresses)
-      await this.wallet.saveSessionAccount(password)
+      await this.alertService.showLoading()
+      await this.metaverseService.dataReset()
+      await this.walletService.setSeed(password)
+      const xpub = await this.walletService.getMasterPublicKey(password)
+      await this.walletService.setXpub(xpub)
+      const wallet = await this.walletService.getWallet(password)
+      const index = await this.walletService.getAddressIndexFromWallet()
+      const addresses = await this.walletService.generateAddresses(wallet, 0, index)
+      await this.metaverseService.setAddresses(addresses)
+      await this.walletService.saveSessionAccount(password)
       await this.router.navigate(['/loading'], { state: { data: { reset: true } } })
-      await this.alert.stopLoading()
+      await this.alertService.stopLoading()
     } catch (e) {
       console.error(e)
-      await this.alert.stopLoading()
-      this.alert.showError('OPEN_FILE.WRONG_PASSWORD', '')
+      await this.alertService.stopLoading()
+      this.alertService.showError('OPEN_FILE.WRONG_PASSWORD', '')
     }
   }
 

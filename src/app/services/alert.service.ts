@@ -7,7 +7,7 @@ import { TranslateService } from '@ngx-translate/core'
 })
 export class AlertService {
 
-  loading: HTMLIonLoadingElement
+  loading
 
   constructor(
     private alertCtrl: AlertController,
@@ -17,15 +17,15 @@ export class AlertService {
   }
 
   stopLoading() {
-    // this.loadingCtrl.create()
     if (this.loading){
-    this.loading.dismiss()
+      this.loading.dismiss()
     }
   }
 
-  async showLoading() {
+  async showLoading(text?, spinner?) {
     this.loading = await this.loadingCtrl.create({
-      message: await this.translate.get('MESSAGE.LOADING').toPromise(),
+      spinner: spinner || 'circular',
+      message: await this.translate.get(text || 'MESSAGE.LOADING').toPromise(),
     })
     await this.loading.present()
     return this.loading

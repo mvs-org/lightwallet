@@ -8,8 +8,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-grid>
-
+  <ion-grid *ngIf="!qrCodeLoaded">
     <ion-row>
       <ion-col size-md="12" size-lg="6" offset-lg="3">
         <h2 translate="IMPORT_QR.HOW_IT_WORKS"></h2>
@@ -22,14 +21,38 @@
             <img [src]="'/assets/images/mobile_import_'+i+'.jpeg'" alt="">
           </ion-card-content>
         </ion-card>
+        <ion-button *ngIf="!isMobile && !qrCodeLoaded" expand="full" (click)="scan()">
+          <ion-icon slot="start" name="qr-code"></ion-icon>
+          <span translate="IMPORT_QR.BUTTON.SCAN"></span>
+        </ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>
+
+  <div *ngIf="qrCodeLoaded">
+    <ion-row>
+      <ion-icon name="checkmark-circle" class="verifiedQRCode"></ion-icon>
+    </ion-row>
+    <ion-item>
+      <ion-label color="primary" position="floating" translate="GLOBAL.PASSWORD"></ion-label>
+      <ion-input name="password" type="password" [(ngModel)]="password" required></ion-input>
+    </ion-item>
+    <ion-button *ngIf="!isMobile" expand="full" [disabled]="!passwordValid(password)" (click)="decrypt(password,seed)"
+      color="primary">
+      <ion-icon slot="start" name="arrow-forward"></ion-icon>
+      <span translate="IMPORT_QR.BUTTON.IMPORT_WALLET"></span>
+    </ion-button>
+  </div>
 </ion-content>
 
-<ion-footer>
-  <ion-button expand="full" (click)="scan()">
+<ion-footer *ngIf="isMobile">
+  <ion-button *ngIf="!qrCodeLoaded" expand="full" (click)="scan()">
     <ion-icon slot="start" name="qr-code"></ion-icon>
     <span translate="IMPORT_QR.BUTTON.SCAN"></span>
+  </ion-button>
+
+  <ion-button *ngIf="qrCodeLoaded" expand="full" [disabled]="!passwordValid(password)" (click)="decrypt(password,seed)">
+    <ion-icon slot="start" name="qr-code"></ion-icon>
+    <span translate="IMPORT_QR.BUTTON.IMPORT_WALLET"></span>
   </ion-button>
 </ion-footer>

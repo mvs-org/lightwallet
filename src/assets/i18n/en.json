@@ -33,11 +33,13 @@
         "HOW_TO_IMPORT_WALLET_MOBILE_STEP3": "Step 3",
         "HOW_TO_IMPORT_WALLET_MOBILE_STEP3_TEXT": "Enjoy your wallet on your phone!",
         "BUTTON": {
-            "SCAN": "Start scan"
+            "SCAN": "Start scan",
+            "IMPORT_WALLET": "Import wallet"
         },
         "MESSAGE" : {
             "ERROR_QRCODE": "Invalid QR Code format. Please use the QR code in app.myetpwallet.com, in Settings, then Connect phone",
-            "ERROR_NETWORK_MISMATCH": "Network does not match"
+            "ERROR_NETWORK_MISMATCH": "Network does not match",
+            "PASSWORD_WRONG": "Incorrect password"
         }
     },
     "NEWS": {
