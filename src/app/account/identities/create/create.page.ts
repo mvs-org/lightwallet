@@ -185,8 +185,4 @@ export class CreatePage implements OnInit {
     }
   }
 
-  updateRange() {
-    //this.zone.run(() => { })
-  }
-
 }

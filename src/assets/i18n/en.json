@@ -31,7 +31,14 @@
         "HOW_TO_IMPORT_WALLET_MOBILE_STEP2": "Step 2",
         "HOW_TO_IMPORT_WALLET_MOBILE_STEP2_TEXT": "Scan the QR Code",
         "HOW_TO_IMPORT_WALLET_MOBILE_STEP3": "Step 3",
-        "HOW_TO_IMPORT_WALLET_MOBILE_STEP3_TEXT": "Enjoy your wallet on your phone!"
+        "HOW_TO_IMPORT_WALLET_MOBILE_STEP3_TEXT": "Enjoy your wallet on your phone!",
+        "BUTTON": {
+            "SCAN": "Start scan"
+        },
+        "MESSAGE" : {
+            "ERROR_QRCODE": "Invalid QR Code format. Please use the QR code in app.myetpwallet.com, in Settings, then Connect phone",
+            "ERROR_NETWORK_MISMATCH": "Network does not match"
+        }
     },
     "NEWS": {
         "MENU_ENTRY": "News",
@@ -614,6 +621,9 @@
         "HELP": {
             "NBR_PERIOD": "This is the total number of periods that will be used.",
             "TOTAL_DURATION": "This is the total number of blocks until the last period terminates."
+        },
+        "BUTTON": {
+            "IMPORT_FROM_CSV": "Import from CSV"
         }
     },
     "TOAST": {

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { MetaverseService } from 'src/app/services/metaverse.service'
 import { AlertService } from 'src/app/services/alert.service'
-import { ActivatedRoute, Router } from '@angular/router'
+import { Router } from '@angular/router'
 import { TranslateService } from '@ngx-translate/core'
 import { Platform } from '@ionic/angular'
 
@@ -30,8 +30,7 @@ export class CreatePage implements OnInit {
     public platform: Platform,
     private router: Router,
     private translate: TranslateService,
-    private mvs: MetaverseService,
-    private activatedRoute: ActivatedRoute,
+    private metaverseService: MetaverseService,
   ) {
 
     if (!this.recipient_address) {
@@ -43,7 +42,7 @@ export class CreatePage implements OnInit {
       this.no_avatar_placeholder = message
     })
 
-    Promise.all([this.mvs.getAddressBalances(), this.mvs.listAvatars()])
+    Promise.all([this.metaverseService.getAddressBalances(), this.metaverseService.listAvatars()])
       .then((results) => {
         console.log(results)
         this.avatars = results[1]
@@ -69,7 +68,7 @@ export class CreatePage implements OnInit {
 
     // this.fee = this.globals.default_fees.mitIssue
     this.defaultFee = this.fee
-    this.mvs.getFees()
+    this.metaverseService.getFees()
       .then(fees => {
         this.fee = fees.mitIssue
         this.defaultFee = this.fee
@@ -89,7 +88,7 @@ export class CreatePage implements OnInit {
 
   create() {
     return this.alertService.showLoading()
-      .then(() => this.mvs.createRegisterMITTx(
+      .then(() => this.metaverseService.createRegisterMITTx(
         this.recipient_address,
         this.recipient_avatar,
         this.symbol,
@@ -140,7 +139,7 @@ export class CreatePage implements OnInit {
   symbolChanged = () => {
     if (this.symbol && this.symbol.length >= 3) {
       this.symbol = this.symbol.trim()
-      Promise.all([this.mvs.suggestMIT(this.symbol), this.symbol])
+      Promise.all([this.metaverseService.suggestMIT(this.symbol), this.symbol])
         .then(result => {
           if (this.symbol != result[1]) {
             throw ''
@@ -154,10 +153,6 @@ export class CreatePage implements OnInit {
           this.symbol_available = false
         })
     }
-  }
-
-  updateRange() {
-    // this.zone.run(() => { })
   }
 
 }

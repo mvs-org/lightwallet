@@ -72,7 +72,7 @@
         </ion-item>
         <ion-item>
           <ion-range class="bountyFeeRange" min="0" max="80" step="10" snaps="true" color="primary"
-            [(ngModel)]="bounty_fee" name="bounty_fee" (ionChange)="updateRange()">
+            [(ngModel)]="bounty_fee" name="bounty_fee">
             <ion-label range-left>{{(100-bounty_fee)/100}} ETP</ion-label>
             <ion-label range-right class="right">{{bounty_fee/100}} ETP</ion-label>
           </ion-range>
