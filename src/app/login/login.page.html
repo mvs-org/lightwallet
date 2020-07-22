@@ -76,9 +76,9 @@
   </ion-grid>
 </ion-content>
 <ion-footer>
-  <div class="info-text center">
+  <p class="info-text center">
     <span> version: {{appService.version}} </span>
-    <span *ngIf="appService.ci_number"> build: <a [href]="appService.ci_link">{{appService.ci_number}}</a></span>
+    <span *ngIf="appService.ci_number"> build: <a target="_blank" [href]="appService.ci_link">{{appService.ci_number}}</a></span>
     <span> network: {{network}}</span>
-  </div>
+  </p>
 </ion-footer>
