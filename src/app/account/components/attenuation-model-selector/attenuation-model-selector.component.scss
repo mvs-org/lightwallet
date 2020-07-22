@@ -1,0 +1,58 @@
+.right-buttons {
+    text-align: right;
+    width: 100%;
+}
+
+.period-title {
+    padding-left: 16px;
+    padding-top: 0;
+}
+
+.remove-button {
+    float: right;
+    margin: 0;
+}
+
+.card-block {
+    padding: 10px;
+}
+
+
+.inputfile {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.inputfile + label {
+    font-weight: 500;
+    color: white;
+    background-color: var(--ion-color-secondary);
+    margin: auto;
+    margin-right: 0px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    border-radius: 2.5px;
+    display: block;
+    color: #fff;
+    font-size: 1em;
+    transition: all .4s;
+    cursor: pointer;
+    text-transform: uppercase;
+    -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+}
+
+.inputfile:focus + label,
+.inputfile + label:hover {
+    opacity: 0.9;
+}
+
+.inputfile + label span {
+    margin-left: 8px;
+}

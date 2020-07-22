@@ -82,8 +82,8 @@
     opacity: 0.9;
 }
 
-.inputfile + label {
-    cursor: pointer; /* "hand" cursor */
+.inputfile + label span {
+    margin-left: 8px;
 }
 
 .available {

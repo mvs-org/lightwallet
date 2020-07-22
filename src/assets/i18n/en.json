@@ -613,8 +613,9 @@
         "RECURRENT": "Recurrent unlock",
         "CUSTOM": "Custom unlock",
         "NBR_PERIOD": "Number of periods",
-        "TOTAL_QUANTITY": "Total locked quantity",
-        "TOTAL_DURATION": "Total locked duration (in blocks)",
+        "DURATION": "Locked duration (in blocks)",
+        "TOTAL_QUANTITY": "Total locked quantity: {{quantity}} {{asset}}",
+        "TOTAL_DURATION": "Total locked duration: {{number}} blocks",
         "PERIOD_NBR": "Period {{period_nbr}}",
         "DURATION_CUSTOM_PERIOD": "Duration of period {{period_nbr}} (in blocks)",
         "AMOUNT_CUSTOM_PERIOD": "Amount unlocked at the end of period {{period_nbr}}",
@@ -625,7 +626,10 @@
             "TOTAL_DURATION": "This is the total number of blocks until the last period terminates."
         },
         "BUTTON": {
-            "IMPORT_FROM_CSV": "Import from CSV"
+            "IMPORT_FROM_CSV": "Import from CSV",
+            "EXPORT_CSV": "Export to CSV",
+            "DOWNLOAD_CSV_EXAMPLE": "Download CSV example",
+            "ADD_PERIOD": "Add period"
         }
     },
     "TOAST": {
