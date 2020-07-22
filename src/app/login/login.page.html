@@ -12,12 +12,6 @@
     <ion-row>
       <ion-col size-md="12" size-lg="6" offset-lg="3">
 
-        <div class="info-text">
-          <div class="center">{{appService.version}}
-            <span id="label-network" value="mainnet" *ngIf="network=='mainnet'" translate="MAINNET"></span>
-            <span id="label-network" value="testnet" *ngIf="network=='testnet'" translate="TESTNET"></span>
-          </div>
-        </div>
 
         <ion-segment [(ngModel)]="network" (ionChange)="setNetwork($event)" color="primary" id="network-switch">
           <ion-segment-button id="network-switch-option-mainnet" value="mainnet" translate="MAINNET">
@@ -79,6 +73,14 @@
         </ion-card>
       </ion-col>
     </ion-row>
-    
   </ion-grid>
 </ion-content>
+<ion-footer>
+  <div class="info-text center">
+    <span> version: {{appService.version}} </span>
+    <span *ngIf="appService.build"> build: <a
+        href="https://travis-ci.org/github/mvs-org/lightwallet/builds/{{appService.build}}">{{appService.build}}</a>
+    </span>
+    <span> network: {{network}}</span>
+  </div>
+</ion-footer>
