@@ -3,6 +3,7 @@ import { Router } from '@angular/router'
 import { LoadingController, AlertController } from '@ionic/angular'
 import { TranslateService } from '@ngx-translate/core'
 import { WalletService } from 'src/app/services/wallet.service'
+import { AlertService } from 'src/app/services/alert.service'
 
 @Component({
   selector: 'app-create',
@@ -20,17 +21,13 @@ export class CreatePage implements OnInit {
     private translate: TranslateService,
     private alertCtrl: AlertController,
     private router: Router,
+    private alertService: AlertService,
   ) { }
 
   async ngOnInit() {
-    const loader = await this.loadingCtrl.create({
-      animated: true,
-      spinner: 'crescent',
-      message: await this.translate.get('CREATE_WALLET.GENERATING_TEXT').toPromise(),
-    })
-    await loader.present()
+    await this.alertService.showLoading('CREATE_WALLET.GENERATING_TEXT')
     this.wallet = await this.walletService.createWallet()
-    await loader.dismiss()
+    this.alertService.stopLoading()
   }
 
   enterPassphrase() {
