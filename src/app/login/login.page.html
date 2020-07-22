@@ -78,8 +78,8 @@
 <ion-footer>
   <div class="info-text center">
     <span> version: {{appService.version}} </span>
-    <span *ngIf="appService.build"> build: <a
-        href="https://travis-ci.org/github/mvs-org/lightwallet/builds/{{appService.build}}">{{appService.build}}</a>
+    <span *ngIf="appService.ci_number"> build: <a
+        href="https://travis-ci.org/github/mvs-org/lightwallet/builds/{{appService.ci_link}}">{{appService.ci_number}}</a>
     </span>
     <span> network: {{network}}</span>
   </div>

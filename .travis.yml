@@ -20,10 +20,10 @@ install:
 - npm i
 - npm install -g cordova ionic
 - node scripts/patch-webpack.js
-- node scripts/ci-set-build-number.js
 script:
 # - npm run e2e
 #- npm run test
+- node scripts/ci-set-build-number.js
 - ionic build --engine=browser --prod
 notifications:
   pushover:
