@@ -25,7 +25,7 @@
     },
     "IMPORT_QR": {
         "TITLE": "Import QR Code",
-        "HOW_IT_WORKS": "How it works:",
+        "HOW_IT_WORKS": "How it works",
         "HOW_TO_IMPORT_WALLET_MOBILE_STEP1": "Step 1",
         "HOW_TO_IMPORT_WALLET_MOBILE_STEP1_TEXT": "Open the web lightwallet, go to Settings, and then Connect phone",
         "HOW_TO_IMPORT_WALLET_MOBILE_STEP2": "Step 2",
