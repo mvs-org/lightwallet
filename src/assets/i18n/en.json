@@ -125,7 +125,14 @@
     "MST": {
         "TITLE": "MST - Metaverse Smart Token",
         "MENU_ENTRY": "Smart Tokens",
-        "GRID_TITLE": "My MSTs"
+        "GRID": {
+            "TITLE": "My MSTs",
+            "SYMBOL": "Symbol",
+            "TOTAL": "Total",
+            "AVAILABLE": "Available",
+            "UNCONFIRMED": "Unconfirmed",
+            "FROZEN": "Frozen"
+        }
     },
     "MST_DETAILS": {
         "BALANCE": {

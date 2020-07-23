@@ -1,27 +1,50 @@
-
 <ion-header>
     <ion-toolbar>
         <ion-buttons slot="start">
-          <ion-menu-button></ion-menu-button>
+            <ion-menu-button></ion-menu-button>
         </ion-buttons>
         <ion-title>
-            {{'ACCOUNT.TITLE'|translate}} 
+            {{'ACCOUNT.TITLE'|translate}}
         </ion-title>
     </ion-toolbar>
 </ion-header>
 
 
 
-<ion-content class="center spread-out">
-    <ion-list lines="none" *ngIf="balances != undefined">
-        <ion-grid>
-            <ion-row>
-                <ng-container class="asset-container">
-                    <ion-col class="asset-container">
-                        <etp-card *ngIf="balances!=undefined" [balance]="balances.ETP" [icon]="'assets/icon/ETP.png'" [tickers]="tickers.ETP" [base]="base"></etp-card>
-                    </ion-col>
-                </ng-container>
-            </ion-row>
-        </ion-grid>
-    </ion-list>
+<ion-content>
+
+    <ion-card>
+        <ion-item>
+            <img class="coinlogo" [src]="'assets/icon/default_mst.png'" (error)="errorImg($event)">
+            <ion-label class="symbol" translate="MST.GRID.SYMBOL"></ion-label>
+            <ion-col translate="MST.GRID.TOTAL"></ion-col>
+            <ion-col translate="MST.GRID.UNCONFIRMED"></ion-col>
+            <ion-col translate="MST.GRID.FROZEN"></ion-col>
+        </ion-item>
+        <ion-spinner name="dots" *ngIf="loading"></ion-spinner>
+
+        <div *ngIf="!loading">
+
+            <ion-item button [routerLink]="'/account/send/ETP'" detail>
+                <img class="coinlogo" [src]="'assets/icon/ETP.png'" (error)="errorImg($event)">
+                <ion-label class="symbol">ETP</ion-label>
+                <ion-col>{{balances.ETP.total || 0 | format : 8}}</ion-col>
+                <ion-col>{{balances.ETP.unconfirmed || 0 | format : 8}}</ion-col>
+                <ion-col>{{balances.ETP.frozen || 0 | format : 8}}</ion-col>
+            </ion-item>
+
+            <div *ngFor="let mst of msts | orderBy: ['order', '-1']; let i = index">
+                <ion-item *ngIf="!mst.hidden && mst.balance.total && mst.balance.total !== 0" button [routerLink]="'/account/send/' + mst.symbol" detail>
+                    <img class="coinlogo" [src]="mst.icon" (error)="errorImg($event)"
+                        [ngClass]="{'default-logo': mst.icon == 'default_mst'}">
+                    <ion-label class="symbol">{{mst.symbol}}</ion-label>
+                    <ion-col>{{mst.balance.total || 0 | format : mst.balance.decimals}}</ion-col>
+                    <ion-col>{{mst.balance.unconfirmed || 0 | format : mst.balance.decimals}}</ion-col>
+                    <ion-col>{{mst.balance.frozen || 0 | format : mst.balance.decimals}}</ion-col>
+                </ion-item>
+            </div>
+        </div>
+    </ion-card>
+
+
 </ion-content>

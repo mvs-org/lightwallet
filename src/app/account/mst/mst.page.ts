@@ -53,18 +53,21 @@ export class MstPage implements OnInit, OnDestroy {
 
         this.icons = await this.metaverseService.getDefaultIcon()
 
-        this.msts = [
-          /*{
-            symbol: 'ETP',
-            icon: 'assets/icon/ETP.png',
-            balance: this.balances.ETP
-          }*/
-        ]
+        this.msts = []
         Object.keys(this.balances.MST).forEach(symbol => {
+          const balance = {
+            decimals: this.balances.MST[symbol].decimals,
+            available: this.balances.MST[symbol].available || 0,
+            unconfirmed: this.balances.MST[symbol].unconfirmed || 0,
+            frozen: this.balances.MST[symbol].frozen || 0,
+            total: 0,
+          }
+          balance.total = balance.available + balance.unconfirmed + balance.frozen
+
           this.msts.push({
             symbol,
+            balance,
             icon: this.icons.MST[symbol] || 'assets/icon/default_mst.png',
-            balance: this.balances.MST[symbol],
             hidden: hidden.indexOf(symbol) !== -1,
             order: order.indexOf(symbol)
           })

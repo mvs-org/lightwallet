@@ -27,7 +27,7 @@
 <ion-content>
   <!--ion-toolbar>
     <ion-item>
-      <h2 translate="MST.GRID_TITLE"></h2>
+      <h2 translate="MST.GRID.TITLE"></h2>
     </ion-item>
     <ion-buttons slot="end" *ngIf="status == 'default'">
       <ion-button>
@@ -50,10 +50,10 @@
   <ion-card>
     <ion-item>
       <img class="coinlogo" [src]="'assets/icon/default_mst.png'" (error)="errorImg($event)">
-      <ion-label class="symbol">Symbol</ion-label>
-      <ion-col>Available</ion-col>
-      <ion-col>Unconfirmed</ion-col>
-      <ion-col>Frozen</ion-col>
+      <ion-label class="symbol" translate="MST.GRID.SYMBOL"></ion-label>
+      <ion-col translate="MST.GRID.TOTAL"></ion-col>
+      <ion-col translate="MST.GRID.UNCONFIRMED"></ion-col>
+      <ion-col translate="MST.GRID.FROZEN"></ion-col>
       <div class="empty-space-header-edit" *ngIf="status == 'edit'"></div>
       <div class="empty-space-header-default" *ngIf="status == 'default'"></div>
     </ion-item>
@@ -66,7 +66,7 @@
           <img class="coinlogo" [src]="mst.icon" (error)="errorImg($event)"
             [ngClass]="{'default-logo': mst.icon == 'default_mst'}">
           <ion-label class="symbol">{{mst.symbol}}</ion-label>
-          <ion-col>{{mst.balance.available || 0 | format : mst.balance.decimals}}</ion-col>
+          <ion-col>{{mst.balance.total || 0 | format : mst.balance.decimals}}</ion-col>
           <ion-col>{{mst.balance.unconfirmed || 0 | format : mst.balance.decimals}}</ion-col>
           <ion-col>{{mst.balance.frozen || 0 | format : mst.balance.decimals}}</ion-col>
 

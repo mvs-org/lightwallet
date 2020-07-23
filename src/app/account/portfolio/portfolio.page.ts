@@ -20,7 +20,9 @@ export class PortfolioPage implements OnInit, OnDestroy {
   tickers: any
   base: string
   whitelist: any = []
-
+  msts = []
+  loading = true
+  etp: any
 
   heightSubscription: Subscription
 
@@ -33,7 +35,7 @@ export class PortfolioPage implements OnInit, OnDestroy {
   ) { }
 
   ionViewDidEnter() {
-    this.initialize()
+
   }
 
   async ngOnInit() {
@@ -54,34 +56,46 @@ export class PortfolioPage implements OnInit, OnDestroy {
     [this.base, this.tickers] = await this.metaverseService.getBaseAndTickers()
   }
 
-  private initialize = () => {
+  private async showBalances() {
+    try {
+      this.balances = await this.metaverseService.getBalances()
+      await this.metaverseService.addAssetsToAssetOrder(Object.keys(this.balances.MST))
+      const order = await this.metaverseService.assetOrder()
+      const hidden = await this.metaverseService.getHiddenMst()
 
-    this.showBalances()
-    this.metaverseService.getDefaultIcon()
-      .then((icons) => this.icons = icons)
-  }
+      this.icons = await this.metaverseService.getDefaultIcon()
 
-  private showBalances() {
-    return this.metaverseService.getBalances()
-      .then((_) => {
-        this.balances = _
-        return this.metaverseService.addAssetsToAssetOrder(Object.keys(_.MST))
-      })
-      .then(() => Promise.all([this.metaverseService.assetOrder(), this.metaverseService.getHiddenMst()]))
-      .then(([all, hidden]) => {
-        const order = []
-        all.forEach(symbol => {
-          if (hidden.indexOf(symbol) === -1) {
-            order.push(symbol)
-          }
+      this.balances.ETP.available = this.balances.ETP.available || 0
+      this.balances.ETP.unconfirmed = this.balances.ETP.unconfirmed || 0
+      this.balances.ETP.frozen = this.balances.ETP.frozen || 0
+      this.balances.ETP.total = this.balances.ETP.available + this.balances.ETP.unconfirmed + this.balances.ETP.frozen
+
+      this.msts = []
+      Object.keys(this.balances.MST).forEach(symbol => {
+        const balance = {
+          decimals: this.balances.MST[symbol].decimals,
+          available: this.balances.MST[symbol].available || 0,
+          unconfirmed: this.balances.MST[symbol].unconfirmed || 0,
+          frozen: this.balances.MST[symbol].frozen || 0,
+          total: 0,
+        }
+
+        balance.total = balance.available + balance.unconfirmed + balance.frozen
+        this.msts.push({
+          symbol,
+          balance,
+          icon: this.icons.MST[symbol] || 'assets/icon/default_mst.png',
+          hidden: hidden.indexOf(symbol) !== -1,
+          order: order.indexOf(symbol)
         })
-        this.balancesKeys = order
-        return order
       })
-      .catch((e) => {
-        console.error(e)
-        console.log('Can\'t load balances')
-      })
+      this.loading = false
+    } catch (e) {
+      console.error(e)
+      console.log('Can\'t load balances')
+    }
   }
+
+  errorImg = (e) => e.target.remove()
 
 }
