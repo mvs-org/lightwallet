@@ -22,7 +22,7 @@ export class PortfolioPage implements OnInit, OnDestroy {
   whitelist: any = []
   msts = []
   loading = true
-  etp: any
+  etpBalance: any
 
   heightSubscription: Subscription
 
@@ -65,6 +65,15 @@ export class PortfolioPage implements OnInit, OnDestroy {
 
       this.icons = await this.metaverseService.getDefaultIcon()
 
+      this.etpBalance = {
+        decimals: 8,
+        available: this.balances.ETP.available || 0,
+        unconfirmed: this.balances.ETP.unconfirmed || 0,
+        frozen: this.balances.ETP.frozen || 0,
+        total: 0,
+      }
+      this.etpBalance.total = this.etpBalance.available + this.etpBalance.unconfirmed + this.etpBalance.frozen
+
       this.balances.ETP.available = this.balances.ETP.available || 0
       this.balances.ETP.unconfirmed = this.balances.ETP.unconfirmed || 0
       this.balances.ETP.frozen = this.balances.ETP.frozen || 0
@@ -79,8 +88,8 @@ export class PortfolioPage implements OnInit, OnDestroy {
           frozen: this.balances.MST[symbol].frozen || 0,
           total: 0,
         }
-
         balance.total = balance.available + balance.unconfirmed + balance.frozen
+
         this.msts.push({
           symbol,
           balance,
