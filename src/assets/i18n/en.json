@@ -9,7 +9,12 @@
     "LOGIN": {
         "MENU_ENTRY": "Login",
         "TITLE": "MyETPWallet - THE NEW REALITY",
+        "CREATE_WALLET_TITLE": "Create new wallet",
+        "CREATE_WALLET_TEXT": "Enter the new reality by creating your own Metaverse Blockchain wallet.",
+        "OPEN_WALLET_TITLE": "Open wallet",
+        "OPEN_WALLET_TEXT": "Enter the new reality by importing your existing Metaverse Blockchain wallet.",
         "OPEN": {
+            "TITLE": "Open existing wallet",
             "LOCAL_ACCOUNT": "Open from an existing local account",
             "OR": "You can also open another wallet using on of the following methods",
             "BACKUP_WORDS": "Backup Words",
