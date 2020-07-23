@@ -133,7 +133,8 @@
             "TOTAL": "Total",
             "AVAILABLE": "Available",
             "CONFIRMING": "Confirming",
-            "FROZEN": "Frozen"
+            "FROZEN": "Frozen",
+            "SEND": "Send"
         },
         "INFO": {
             "MAX_SUPPLY": "Max supply",

@@ -14,7 +14,7 @@
     </ion-col>
   </ion-row>
   <div *ngIf="certificates else loading">
-    <div class="noCert" *ngIf="noCert" translate="CERTIFICATES.NO_CERTIFICATE"></div>
+    <h2 class="noCert" *ngIf="noCert" translate="CERTIFICATES.NO_CERTIFICATE"></h2>
 
     <ion-list *ngIf="certificates">
       <ion-item *ngFor="let certificate of certificates">
