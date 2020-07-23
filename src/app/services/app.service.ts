@@ -10,6 +10,7 @@ export class AppService {
   readonly version: string = '0.9.5b3'
   readonly ci_number = ''
   readonly ci_link = ''
+  readonly ci_commit = ''
   readonly db_version = 6
   readonly name: string = 'Pillars of Creation'
   readonly algo: string = 'aes'
