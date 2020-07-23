@@ -6,6 +6,8 @@
     <ion-row class="ion-justify-content-center">
       <ion-col class="logo" size="10" size-md="4">
         <img src="/assets/logo.png" alt="">
+        <h1 class="ion-text-center">MyETPWallet</h1>
+        <p class="ion-text-center">v{{appService.version}}</p>
       </ion-col>
     </ion-row>
 
@@ -66,11 +68,3 @@
     </ion-row>
   </ion-grid>
 </ion-content>
-<ion-footer>
-  <p class="ion-text-center">
-    <span> version: {{appService.version}} </span>
-    <span *ngIf="appService.ci_number"> build: <a target="_blank" rel="noopener"
-        [href]="'https://github.com/mvs-org/lightwallet/tree/'+appService.ci_commit">{{appService.ci_number}}</a></span>
-    <span> network: {{network}}</span>
-  </p>
-</ion-footer>
