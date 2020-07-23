@@ -8,7 +8,7 @@ fs.readFile(appServiceFile, 'utf8', function (err, data) {
     }
     var result = data.replace(/readonly ci_number = ''/g, `readonly ci_number = '${process.env.TRAVIS_BUILD_NUMBER}'`)
     result = result.replace(/readonly ci_link = ''/g, `readonly ci_link = '${process.env.TRAVIS_BUILD_WEB_URL}'`)
-    result = result.replace(/readonly ci_commit = ''/g, `readonly ci_link = '${process.env.TRAVIS_COMMIT}'`)
+    result = result.replace(/readonly ci_commit = ''/g, `readonly ci_commit = '${process.env.TRAVIS_COMMIT}'`)
 
     fs.writeFile(appServiceFile, result, 'utf8', function (err) {
         if (err) return console.log(err)
