@@ -11,7 +11,7 @@
 
 
   <ion-grid>
-    <ion-row *ngIf="saved_accounts" class="ion-text-center">
+    <ion-row *ngIf="saved_accounts && saved_accounts.length" class="ion-text-center">
       <ion-col size="12" size-md="4" offset-md="4">
         <div class="option" translate="LOGIN.OPEN.LOCAL_ACCOUNT"></div>
         <ion-button expand="full" class="account-btn" (click)="loginViaAccount(account)"
