@@ -29,7 +29,11 @@ const routes: Routes = [
     },
     {
         path: 'scan',
-        loadChildren: () => import('./scan/scan.module').then( m => m.ScanPageModule)
+        loadChildren: () => import('./scan/scan.module').then(m => m.ScanPageModule)
+    },
+    {
+        path: 'info',
+        loadChildren: () => import('./info/info.module').then(m => m.InfoPageModule)
     },
 ]
 

@@ -1,0 +1,81 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title translate="INFO.TITLE"></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ion-col class="logo" size="10" size-md="4">
+        <img src="/assets/logo.png" alt="">
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="10" size-md="4">
+        <p>
+          Metaverse is a Blockchain with hybrid consensus (PoW+PoS) that is specialized for asset digitization and
+          digital identity.
+        </p>
+        <table>
+          <tr>
+            <td>
+              MyETPWallet
+            </td>
+          </tr>
+          <tr>
+            <td>Version</td>
+            <td>{{appService.version}}</td>
+          </tr>
+          <tr *ngIf="appService.ci_number">
+            <td>Build</td>
+            <td>{{appService.ci_number}}</td>
+          </tr>
+          <tr *ngIf="appService.ci_commit">
+            <td>Commit</td>
+            <td><a target="_blank" rel="noopener"
+                [href]="'https://github.com/mvs-org/lightwallet/tree/'+appService.ci_commit">{{appService.ci_number}}</a>
+            </td>
+          </tr>
+          <tr>
+            <td>Network</td>
+            <td>{{appService.network$ | async}}</td>
+          </tr>
+        </table>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="10" size-md="4">
+        <ion-button expand="full" routerLink="/info/legal" translate="LEGAL_DISCLAIMER.TITLE"></ion-button>
+        <ion-button expand="full" routerLink="/info/license" translate="LICENSE.TITLE"></ion-button>
+        <ion-button expand="full" href="https://github.com/mvs-org/lightwallet">
+          <ion-icon name="logo-github" class="icon"></ion-icon>
+          {{'INFO.SOURCE_CODE'|translate}}
+        </ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="10" size-md="4" style="font-family: monospace;">
+        <p>
+          This program is free software: you can redistribute it and/or modify
+          it under the terms of the GNU Affero General Public License as
+          published by the Free Software Foundation, either version 3 of the
+          License, or (at your option) any later version.
+        </p>
+        <p>
+
+          This program is distributed in the hope that it will be useful,
+          but WITHOUT ANY WARRANTY; without even the implied warranty of
+          MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+          GNU Affero General Public License for more details.
+        </p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+</ion-content>
