@@ -36,7 +36,7 @@ export class LoginAccountPage implements OnInit {
   }
 
   async importAccount(account, password) {
-    this.alertService.showLoading()
+    await this.alertService.showLoading()
     try {
       const decryptedAccount = await this.walletService.decryptAccount(account.content, password)
       await Promise.all([
@@ -61,10 +61,10 @@ export class LoginAccountPage implements OnInit {
           this.alertService.showError('MESSAGE.PASSWORD_WRONG', '')
           break
         case 'ERR_ACCOUNT_NAME_UNKNOWN':
-          this.alertService.showError('MESSAGE.ERR_ACCOUNT_NAME_UNKNOWN', '')
+          this.alertService.showError('LOGIN_ACCOUNT.MESSAGE.ERR_ACCOUNT_NAME_UNKNOWN', '')
           break
         default:
-          this.alertService.showError('MESSAGE.ERR_IMPORT_ACCOUNT', error.message)
+          this.alertService.showError('LOGIN_ACCOUNT.MESSAGE.ERR_IMPORT_ACCOUNT', error.message)
           break
       }
     }

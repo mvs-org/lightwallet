@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
-    <ion-title>Open Wallet</ion-title>
+    <ion-title translate="LOGIN.OPEN.TITLE"></ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -16,6 +16,8 @@
         <div class="option" translate="LOGIN.OPEN.LOCAL_ACCOUNT"></div>
         <ion-button expand="full" class="account-btn" (click)="loginViaAccount(account)"
           *ngFor="let account of saved_accounts">
+          <ion-icon slot="start" *ngIf="account.content" name="person"></ion-icon>
+          <ion-icon slot="start" *ngIf="!account.content && account.view_only_content" name="eye"></ion-icon>
           {{account.name}}
         </ion-button>
         <div class="option" translate="LOGIN.OPEN.OR"></div>

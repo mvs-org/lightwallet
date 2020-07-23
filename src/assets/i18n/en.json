@@ -654,7 +654,7 @@
         "TITLE": "Login from public key",
         "INFORMATION": "Use your public key to import an account in View only mode. You will be able to receive assets and see your addresses, balances and history, but you will not be able to send assets.",
         "PUBLIC_KEY": "Public key",
-        "VALID_XPUB": "Ready to open account starting with addresses {{address}}",
+        "VALID_XPUB": "Ready to open account starting with address {{address}}",
         "INVALID_XPUB": "Invalid public key. please make sure you are using the right format (starting with 'xpub')",
         "BUTTON": {
             "NEXT": "Next"
@@ -981,7 +981,8 @@
     "MESSAGE": {
         "LOADING": "Loading...",
         "ERROR_TITLE": "Oops...",
-        "OK": "Ok"
+        "OK": "Ok",
+        "PASSWORD_WRONG": "Wrong password, please try again"
     },
     "MULTISIG": {
         "MENU_ENTRY": "Multisignature",
@@ -1081,21 +1082,6 @@
         "TITLE": "Information",
         "SUBTITLE": "Get more information on MyETPWallet and read the open source license.",
         "SOURCE_CODE": "Source Code"
-    },
-    "LEGAL_DISCLAIMER": {
-        "TITLE": "Legal Disclaimer",
-        "BRIEF_EXPLAIN": "MyETPWallet.com makes it easy for you to create, save, and access your information and assets and interact with the Metaverse blockchain. You are solely responsible for managing your funds and for maintaining the security of your private Key and any mnemonic passphrase (‘backup words’) associated with your wallet.",
-        "WARNING": "Before using this wallet, please be aware that there are important risks associated with cryptocurrency and blockchain-based open-source software such as large exchange rate fluctuations and software bugs. By registering an account through MyETPWallet.com or MVSD, you agree that you have read, understood and accept all of the terms and conditions contained in this disclaimer.",
-        "I_TITLE": "I. Accessing and Controlling wallet Information",
-        "I_INFO": "1.1 When you create a wallet account, it generates a mnemonic passphrase (‘backup words’) consisting of 24 English words and a public and private keypair used to send and receive digital currency. You must backup your mnemonic passphrase and private key information and keep it secure; failure to do so may result in the loss of control of the assets within your wallet.",
-        "I_INFO_2": "1.2 The wallet does not collect or store any of our users’ private information, including your password and private keys. This information is stored locally on the user’s own device. Hence, we cannot assist you with wallet retrieval. The Development Team is only responsible for guaranteeing wallet access and fixing software bugs, and is unable to restore encrypted private keys or otherwise recover private keys. If you use MyETPWallet.com, you acknowledge that Metaverse is not responsible for safeguarding or maintaining private keys associated with the wallet. We strongly advise you to back up your wallet files to best protect your property rights.",
-        "II_TITLE": "II. Wallet Security",
-        "II_INFO_1": "2.1 The Metaverse Team will implement appropriate security measures to protect users against data loss, inappropriate use, unauthorized access and/or disclosure. For example, we implement high-standard encryption techniques such as SSL to protect your personal information. Please be advised that we cannot guarantee the absolute security of any data you disclose online, due to technical limitations and unforeseeable hostile actions against the platform. By using our service, the user acknowledges the possibility that the system and telecommunication network they use to access our service can be compromised, which is out of our control. For instance, the software the user has downloaded or websites visited may contain viruses or malwares that threaten the security of the wallet information. Therefore, it is imperative that users ensure the security of their personal information and data. You accept the inherent security risks of providing information and dealing online over the internet and will not hold us responsible for any breach of security unless this is due to our negligence. The development team recommends that users pay special attention to backing up password and private keys offline (e.g. writing them on a piece of paper).",
-        "II_INFO_2": "2.2 Under no circumstances should users trust information originating from non-official sources. Any wallet operation should only take place after the user has completed due diligence and assessed the counterparty’s identity.",
-        "II_INFO_3": "2.3 It is the sole responsibility of the user to protect their wallet security. The developers from the Metaverse Team will take appropriate technical measures in accordance with industry standards to protect data security on the user’s device but are not legally responsible of any data or funds loss. In those circumstances, the user acknowledges and agrees that the Metaverse Team does not guarantee the complete safety of the wallet funds.",
-        "III_TITLE": "III. Contact Us",
-        "III_INFO": "Should you have any question regarding the privacy policies above, please contact us using the following email address: info@mvs.org",
-        "FOOTER": "The Metaverse Foundation reserves the right to interpret and change the aforementioned clauses at any time, in our sole discretion. MyETPWallet is distributed under the GNU Affero General Public License."
     },
     "LICENSE": {
         "TITLE": "License"
