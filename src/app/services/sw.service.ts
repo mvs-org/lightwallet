@@ -1,5 +1,5 @@
 import { Injectable, ApplicationRef } from '@angular/core'
-import { SwUpdate } from '@angular/service-worker'
+import { SwUpdate, SwRegistrationOptions } from '@angular/service-worker'
 import { first, } from 'rxjs/operators'
 import { interval, concat } from 'rxjs'
 
@@ -8,7 +8,8 @@ import { interval, concat } from 'rxjs'
 })
 export class SwService {
 
-  constructor(public appRef: ApplicationRef, updates: SwUpdate) {
+  constructor(public appRef: ApplicationRef, updates: SwUpdate, options: SwRegistrationOptions) {
+
     // Allow the app to stabilize first, before starting polling for updates with `interval()`.
     const appIsStable$ = appRef.isStable.pipe(first(isStable => isStable === true))
     const everySixHours$ = interval(6 * 60 * 60 * 1000)
@@ -16,8 +17,8 @@ export class SwService {
 
     everySixHoursOnceAppIsStable$.subscribe(() => updates.checkForUpdate())
 
-    updates.activated.subscribe(event=>{
-        console.log(`update activated. updated from ${event.previous} to ${event.current}`)
+    updates.activated.subscribe(event => {
+      console.log(`update activated. updated from ${event.previous} to ${event.current}`)
     })
 
     updates.available.subscribe(event => {
@@ -27,6 +28,13 @@ export class SwService {
         updates.activateUpdate().then(() => document.location.reload())
       }
     })
+  }
+
+  async unregister() {
+    const registrations = await navigator.serviceWorker.getRegistrations()
+    for (const registration of registrations) {
+      registration.unregister()
+    }
   }
 
 
