@@ -511,4 +511,12 @@ export class WalletService {
         return this.platform.is('mobile') || this.platform.is('mobileweb')
     }
 
+    async getTheme() {
+        return this.storage.get('theme')
+    }
+
+    async setTheme(theme: string) {
+        return this.storage.set('theme', theme)
+    }
+
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
-import { LoadingController, AlertController } from '@ionic/angular'
+import { AlertController } from '@ionic/angular'
 import { TranslateService } from '@ngx-translate/core'
 import { WalletService } from 'src/app/services/wallet.service'
 import { AlertService } from 'src/app/services/alert.service'
@@ -17,7 +17,6 @@ export class CreatePage implements OnInit {
 
   constructor(
     private walletService: WalletService,
-    private loadingCtrl: LoadingController,
     private translate: TranslateService,
     private alertCtrl: AlertController,
     private router: Router,

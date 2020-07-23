@@ -4,6 +4,7 @@ import { Platform } from '@ionic/angular'
 import { LogoutService } from 'src/app/services/logout.service'
 import { AppService } from 'src/app/services/app.service'
 import { Router } from '@angular/router'
+import { WalletService } from 'src/app/services/wallet.service'
 
 @Component({
     selector: 'app-settings',
@@ -14,7 +15,7 @@ export class SettingsPage implements OnInit {
 
     connectcode: any
     network: string
-    darkTheme = false
+    darkTheme = document.body.classList.contains('dark')
 
     constructor(
         private metaverseService: MetaverseService,
@@ -22,9 +23,8 @@ export class SettingsPage implements OnInit {
         private logoutService: LogoutService,
         private appService: AppService,
         private router: Router,
-    ) {
-
-    }
+        private walletService: WalletService,
+    ) { }
 
     async ngOnInit() {
         this.network = await this.appService.getNetwork()
@@ -51,7 +51,13 @@ export class SettingsPage implements OnInit {
 
     updateTheme() {
         this.darkTheme = !this.darkTheme
-        document.body.classList.toggle('dark')
+        if (this.darkTheme) {
+            document.body.classList.add('dark')
+            this.walletService.setTheme('dark')
+        } else {
+            document.body.classList.remove('dark')
+            this.walletService.setTheme('light')
+        }
     }
 
 }
