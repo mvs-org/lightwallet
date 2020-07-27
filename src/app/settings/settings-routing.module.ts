@@ -20,6 +20,10 @@ const routes: Routes = [
     path: 'export-xpub',
     loadChildren: () => import('./export-xpub/export-xpub.module').then( m => m.ExportXpubPageModule)
   },
+  {
+    path: 'base-currency',
+    loadChildren: () => import('./base-currency/base-currency.module').then( m => m.BaseCurrencyPageModule)
+  },
 ]
 
 @NgModule({

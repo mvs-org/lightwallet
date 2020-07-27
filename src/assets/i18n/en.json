@@ -360,6 +360,10 @@
             "TITLE": "Export Master Public Key",
             "SUBTITLE": "The Master Public Key allows to generate all addresses of the wallet but cannot send funds."
         },
+        "BASE_CURRENCY": {
+            "TITLE": "Base currency",
+            "SUBTITLE": "Choose your base currency that is used for value estimation"
+        },
         "LOGOUT": {
             "TITLE": "Logout",
             "SUBTITLE": "Log out of the wallet."
@@ -413,6 +417,9 @@
         "SHOW_VIEW_ONLY": {
             "TITLE": "Export view only wallet"
         }
+    },
+    "BASE_CURRENCY": {
+        "TITLE": "Base currency"
     },
     "IMPORT_WALLET_MNEMONIC": {
         "TITLE": "Import from words",
