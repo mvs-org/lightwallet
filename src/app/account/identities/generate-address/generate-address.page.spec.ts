@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { EtpCardComponent } from './etp-card.component';
+import { GenerateAddressPage } from './generate-address.page';
 
-describe('EtpCardComponent', () => {
-  let component: EtpCardComponent;
-  let fixture: ComponentFixture<EtpCardComponent>;
+describe('GenerateAddressPage', () => {
+  let component: GenerateAddressPage;
+  let fixture: ComponentFixture<GenerateAddressPage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EtpCardComponent ],
+      declarations: [ GenerateAddressPage ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(EtpCardComponent);
+    fixture = TestBed.createComponent(GenerateAddressPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

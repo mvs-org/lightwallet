@@ -4,23 +4,18 @@ import { FormsModule } from '@angular/forms'
 
 import { IonicModule } from '@ionic/angular'
 
-import { PortfolioPageRoutingModule } from './portfolio-routing.module'
-
-import { PortfolioPage } from './portfolio.page'
+import { GenerateAddressPageRoutingModule } from './generate-address-routing.module'
 import { TranslateModule } from '@ngx-translate/core'
-import { PipesModule } from 'src/app/pipes/pipes.module'
+import { GenerateAddressPage } from './generate-address.page'
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    PipesModule,
     TranslateModule.forChild(),
-    PortfolioPageRoutingModule,
+    GenerateAddressPageRoutingModule,
   ],
-  declarations: [
-    PortfolioPage,
-  ]
+  declarations: [GenerateAddressPage]
 })
-export class PortfolioPageModule {}
+export class GenerateAddressPageModule {}

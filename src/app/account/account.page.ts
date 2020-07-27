@@ -58,7 +58,7 @@ export class AccountPage implements OnInit, OnDestroy {
         },
         {
             title: 'IDENTITIES.MENU_ENTRY',
-            url: '/account/identities/ETP',
+            url: '/account/identities',
             icon: 'person'
         },
         {

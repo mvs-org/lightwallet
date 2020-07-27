@@ -1097,5 +1097,21 @@
     },
     "LICENSE": {
         "TITLE": "License"
+    },
+    "GENERATE_ADDRESS": {
+        "TITLE": "Update number of addresses",
+        "EXPLANATION": "MyETPWallet uses a HD Wallet (Hierarchical Deterministic) to generate multiple addresses from your seed. Because your addresses are generated in a deterministic way it means that if you reduce the number of your addresses, you can add them back later by increasing your number of addresses. It will always regenerate the same addresses.",
+        "TOTAL_NUMBER_OF_ADDRESSES": "Number of addresses in my wallet",
+        "HELP": {
+            "NUMBER": "In order to keep your wallet smooth, it is recommended to keep the number low. The default value is 10 addresses, maximum {{max_addresses}} addresses"
+        },
+        "ERROR": {
+            "TOO_MANY_ADDRESSES": "The number of addresses is limited to {{max_addresses}} in the Lightwallet. If you need more addresses, please download the Desktop wallet.",
+            "UNKOWN_ERROR": "Error while generating new addresses"
+        },
+        "BUTTON": {
+            "CHANGE_ADDRESS_NUMBER": "Update number of addresses",
+            "CANCEL": "Cancel"
+        }
     }
 }

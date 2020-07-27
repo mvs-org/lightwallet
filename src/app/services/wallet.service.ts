@@ -156,8 +156,10 @@ export class WalletService {
     getAddressIndex() {
         return this.storage.get('mvs_addresses')
             .then((addresses) => {
-                if(addresses) {
+                if (addresses) {
                     return addresses.length
+                } else {
+                    return undefined
                 }
             })
     }

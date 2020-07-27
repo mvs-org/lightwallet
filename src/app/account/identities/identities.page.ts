@@ -29,7 +29,7 @@ export class IdentitiesPage implements OnInit {
         private router: Router,
     ) {
         this.addressbalances = {}
-        this.selectedAsset = this.activatedRoute.snapshot.params.symbol
+        this.selectedAsset = 'ETP'
         this.displayType = this.selectedAsset === 'ETP' ? 'ETP' : 'asset'
 
         this.metaverseService.getAddresses()
@@ -76,8 +76,6 @@ export class IdentitiesPage implements OnInit {
     }
 
     canAddAddress = () => this.platform.is('mobile') && !this.platform.is('mobileweb')
-
-    addAddresses = () => console.log('go to add address page')
 
     history = (asset, address) => this.router.navigate(['account', 'history', asset], { state: { data: { addresses: [address] } } })
 
