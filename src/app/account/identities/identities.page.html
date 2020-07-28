@@ -9,7 +9,7 @@
 
 <ion-content>
 
-  <ion-item lines="none">
+  <!--ion-item lines="none">
     <ion-segment [(ngModel)]="displayType" color="primary">
       <ion-segment-button value="ETP">
         ETP
@@ -21,96 +21,74 @@
         MST
       </ion-segment-button>
     </ion-segment>
-  </ion-item>
+  </ion-item-->
 
-  <ion-grid>
-    <ion-row>
-      <ion-col>
-        <ion-card *ngFor="let address of addresses" class="font-mono">
-          <ion-card-content>
+  <ion-card *ngFor="let address of addresses">
 
-            <h2 *ngIf="addressBalancesObject[address] && addressBalancesObject[address].AVATAR">
-              <img class="avatar-logo" [src]="'assets/icon/default_avatar.png'">
-              <span>{{addressBalancesObject[address].AVATAR}}</span>
-            </h2>
+    <ion-card-header>
+      <ion-toolbar>
+        <!--If has Avatar-->
+        <div *ngIf="addressBalancesObject[address] && addressBalancesObject[address].AVATAR">
+          <ion-card-title>
+            <img class="avatar-logo" [src]="'assets/icon/default_avatar.png'">
+            {{addressBalancesObject[address].AVATAR}}
+          </ion-card-title>
+          <ion-card-subtitle>{{address}}</ion-card-subtitle>
+        </div>
+        <!--If no Avatar-->
+        <div *ngIf="!addressBalancesObject[address] || !addressBalancesObject[address].AVATAR">
+          <ion-card-title>{{address}}</ion-card-title>
+          <ion-card-subtitle> </ion-card-subtitle>
+        </div>
+        <ion-buttons slot="end">
+          <ion-button color="primary" class="copy-btn" id="copybtn" ngxClipboard [cbContent]="address">
+            <ion-icon slot="icon-only" name="copy" size="small"></ion-icon>
+          </ion-button>
+          <ion-button color="primary" class="qrcode-btn" id="qrcode" (click)="show(address)">
+            <ion-icon slot="icon-only" name="qr-code" size="small"></ion-icon>
+          </ion-button>
+          <ion-button color="primary" class="time-btn" id="time" routerLink="/account/history/ETP">
+            <ion-icon slot="icon-only" name="time" size="small"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
 
-            <ion-toolbar>
-              <h3 class="address">{{address}}</h3>
-              <ion-buttons slot="end">
-                <ion-button color="primary" class="copy-btn" id="copybtn" ngxClipboard [cbContent]="address">
-                  <ion-icon slot="icon-only" name="copy" size="small"></ion-icon>
-                </ion-button>
-                <ion-button color="primary" class="qrcode-btn" id="qrcode" (click)="show(address)">
-                  <ion-icon slot="icon-only" name="qr-code" size="small"></ion-icon>
-                </ion-button>
-              </ion-buttons>
-            </ion-toolbar>
+    </ion-card-header>
 
-            <div *ngIf="displayType == 'ETP'">
-              <div>
-                <b>{{'IDENTITIES.AVAILABLE'|translate}}:
-                </b>{{(addressBalancesObject[address] &&
-                                addressBalancesObject[address].ETP
-                                )?format(addressBalancesObject[address].ETP.available,addressBalancesObject[address].ETP.decimals):0}}
-                <span class="right">
-                  <b>{{'IDENTITIES.FROZEN'|translate}}: </b>{{(addressBalancesObject[address] &&
-                                    addressBalancesObject[address].ETP
-                                    )?format(addressBalancesObject[address].ETP.frozen,
-                                    addressBalancesObject[address].ETP.decimals):0}}
-                </span>
-              </div>
-              <div>
-                <b>{{'IDENTITIES.UNCONFIRMED'|translate}}:
-                </b>{{(addressBalancesObject[address] &&
-                                addressBalancesObject[address].ETP && addressBalancesObject[address].ETP.unconfirmed
-                                )?format(addressBalancesObject[address].ETP.unconfirmed,addressBalancesObject[address].ETP.decimals):0}}
-              </div>
-            </div>
 
-            <div *ngIf="displayType == 'asset'">
-              <div>
-                <b>{{'IDENTITIES.AVAILABLE'|translate}}: </b>{{(addressBalancesObject[address] &&
-                                addressBalancesObject[address]['MST'] &&
-                                addressBalancesObject[address]['MST'][selectedAsset])?format(addressBalancesObject[address]['MST'][selectedAsset].available,
-                                addressBalancesObject[address]['MST'][selectedAsset].decimals):0}}
-                <span class="right">
-                  <b>{{'IDENTITIES.FROZEN'|translate}}: </b>{{(addressBalancesObject[address] &&
-                                    addressBalancesObject[address]['MST'] &&
-                                    addressBalancesObject[address]['MST'][selectedAsset] &&
-                                    addressBalancesObject[address]['MST'][selectedAsset].frozen
-                                    )?format(addressBalancesObject[address]['MST'][selectedAsset].frozen,
-                                    addressBalancesObject[address]['MST'][selectedAsset].decimals):0}}
-                </span>
-              </div>
-              <div>
-                <b>{{'IDENTITIES.UNCONFIRMED'|translate}}: </b>{{(addressBalancesObject[address] &&
-                                addressBalancesObject[address]['MST'] &&
-                                addressBalancesObject[address]['MST'][selectedAsset] &&
-                                addressBalancesObject[address]['MST'][selectedAsset].unconfirmed
-                                )?format(addressBalancesObject[address]['MST'][selectedAsset].unconfirmed, 
-                                addressBalancesObject[address]['MST'][selectedAsset].decimals):0}}
-              </div>
-            </div>
+    <ion-card-content>
+      <div>
+        <b>{{'IDENTITIES.AVAILABLE'|translate}}: </b>
+        <div>
+          {{(addressBalancesObject[address] && addressBalancesObject[address].ETP)?format(addressBalancesObject[address].ETP.available,addressBalancesObject[address].ETP.decimals):0}} ETP
+        </div>
+        <div *ngFor="let balance of addressbalances[address]">
+          {{format(balance.available + balance.unconfirmed + balance.frozen, balance.decimals)}} {{balance.name}}
+        </div>
+      </div>
+      <div>
+        <b>{{'IDENTITIES.UNCONFIRMED'|translate}}: </b>
+        <div>
+          {{(addressBalancesObject[address] &&addressBalancesObject[address].ETP && addressBalancesObject[address].ETP.unconfirmed)?format(addressBalancesObject[address].ETP.unconfirmed,addressBalancesObject[address].ETP.decimals):0}} ETP
+        </div>
+        <div *ngFor="let balance of addressbalances[address]">
+          <span *ngIf="balance.unconfirmed">{{format(balance.unconfirmed, balance.decimals)}}  {{balance.name}}</span>
+        </div>
+      </div>
+      <div>
+        <b>{{'IDENTITIES.FROZEN'|translate}}: </b>
+        <div>
+          {{(addressBalancesObject[address] &&addressBalancesObject[address].ETP)?format(addressBalancesObject[address].ETP.frozen, addressBalancesObject[address].ETP.decimals):0}} ETP
+        </div>
+        <div *ngFor="let balance of addressbalances[address]">
+          <span *ngIf="balance.unconfirmed">{{format(balance.frozen, balance.decimals)}}  {{balance.name}}</span>
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
 
-            <div *ngIf="displayType == 'MST'">
-              <p *ngFor="let balance of addressbalances[address]">
-                <b>{{balance.name}}: </b>
-                {{format(balance.available + balance.unconfirmed + balance.frozen, balance.decimals)}}
-              </p>
-              <p
-                *ngIf="!addressbalances[address] || (addressbalances[address] && addressbalances[address].length == 0)">
-                {{'IDENTITIES.ADDRESS_NO_MST'|translate}}</p>
-            </div>
-            <div class="right">
-              <ion-button id="history-btn" (click)="history((displayType == 'asset' ? selectedAsset : 'ETP'), address)"
-                translate="IDENTITIES.BUTTON.HISTORY"></ion-button>
-            </div>
-          </ion-card-content>
-        </ion-card>
-        <ion-row class="right">
-          <ion-button routerLink="/account/identities/generate-address" translate="IDENTITIES.BUTTON.CHANGE_ADDRESS_NUMBER"></ion-button>
-        </ion-row>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  <ion-row class="right">
+    <ion-button routerLink="/account/identities/generate-address" translate="IDENTITIES.BUTTON.CHANGE_ADDRESS_NUMBER"></ion-button>
+  </ion-row>
+
 </ion-content>

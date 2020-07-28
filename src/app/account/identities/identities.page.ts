@@ -12,13 +12,12 @@ import { QrComponent } from 'src/app/qr/qr.component'
 })
 export class IdentitiesPage implements OnInit {
 
-    selectedAsset: any
     addressbalances: any
     addressBalancesObject: any = {}
     addresses: Array<string>
-    displayType: string
     base: string
     tickers = {}
+    isMobile: boolean
 
     constructor(
         private platform: Platform,
@@ -29,8 +28,8 @@ export class IdentitiesPage implements OnInit {
         private router: Router,
     ) {
         this.addressbalances = {}
-        this.selectedAsset = 'ETP'
-        this.displayType = this.selectedAsset === 'ETP' ? 'ETP' : 'asset'
+
+        this.isMobile = this.walletService.isMobile()
 
         this.metaverseService.getAddresses()
             .then((addresses) => {
