@@ -67,15 +67,6 @@
         </div>
       </div>
       <div>
-        <b>{{'IDENTITIES.UNCONFIRMED'|translate}}: </b>
-        <div>
-          {{(addressBalancesObject[address] &&addressBalancesObject[address].ETP && addressBalancesObject[address].ETP.unconfirmed)?format(addressBalancesObject[address].ETP.unconfirmed,addressBalancesObject[address].ETP.decimals):0}} ETP
-        </div>
-        <div *ngFor="let balance of addressbalances[address]">
-          <span *ngIf="balance.unconfirmed">{{format(balance.unconfirmed, balance.decimals)}}  {{balance.name}}</span>
-        </div>
-      </div>
-      <div>
         <b>{{'IDENTITIES.FROZEN'|translate}}: </b>
         <div>
           {{(addressBalancesObject[address] &&addressBalancesObject[address].ETP)?format(addressBalancesObject[address].ETP.frozen, addressBalancesObject[address].ETP.decimals):0}} ETP

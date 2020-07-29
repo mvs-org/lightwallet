@@ -46,7 +46,7 @@ export class TransactionItemComponent {
         public translate: TranslateService,
     ) {
         this.devAvatar = this.appService.dev_avatar
-        if(!this.multisig) {
+        if (!this.multisig) {
             this.multisig = {}
         }
     }
@@ -92,16 +92,26 @@ export class TransactionItemComponent {
         const TX_TYPE_UNKNOWN = 'UNKNOWN'
 
         this.tx.inputs.forEach((input) => {
-            if (input.previous_output.attachment && (input.previous_output.attachment.type == 'asset-issue' || input.previous_output.attachment.type == 'asset-transfer')) {
-                this.totalInputs.MST[input.previous_output.attachment.symbol] = this.totalInputs.MST[input.previous_output.attachment.symbol] && input.previous_output.attachment.quantity ? this.totalInputs.MST[input.previous_output.attachment.symbol] + input.previous_output.attachment.quantity : input.previous_output.attachment.quantity
+            if (input.previous_output.attachment
+                && (input.previous_output.attachment.type === 'asset-issue'
+                    || input.previous_output.attachment.type === 'asset-transfer')) {
+                this.totalInputs.MST[input.previous_output.attachment.symbol] =
+                    this.totalInputs.MST[input.previous_output.attachment.symbol] && input.previous_output.attachment.quantity ?
+                    this.totalInputs.MST[input.previous_output.attachment.symbol] + input.previous_output.attachment.quantity :
+                    input.previous_output.attachment.quantity
             }
             if (input.previous_output.value) {
                 this.totalInputs.ETP += input.previous_output.value
             }
             if (this.countable(input)) {
                 this.totalPersonalInputs.ETP += input.previous_output.value
-                if (input.previous_output.attachment && (input.previous_output.attachment.type == 'asset-issue' || input.previous_output.attachment.type == 'asset-transfer')) {
-                    this.totalPersonalInputs.MST[input.previous_output.attachment.symbol] = this.totalPersonalInputs.MST[input.previous_output.attachment.symbol] ? this.totalPersonalInputs.MST[input.previous_output.attachment.symbol] + input.previous_output.attachment.quantity : input.previous_output.attachment.quantity
+                if (input.previous_output.attachment &&
+                    (input.previous_output.attachment.type === 'asset-issue'
+                        || input.previous_output.attachment.type === 'asset-transfer')) {
+                    this.totalPersonalInputs.MST[input.previous_output.attachment.symbol] =
+                        this.totalPersonalInputs.MST[input.previous_output.attachment.symbol] ?
+                        this.totalPersonalInputs.MST[input.previous_output.attachment.symbol] + input.previous_output.attachment.quantity :
+                        input.previous_output.attachment.quantity
 
                     // If there is no change output for the MST, we put the personal output to 0
                     if (!this.totalPersonalOutputs.MST[input.previous_output.attachment.symbol]) {
@@ -116,18 +126,24 @@ export class TransactionItemComponent {
         this.tx.outputs.forEach(output => {
             switch (output.attachment.type) {
                 case 'asset-issue':
-                    this.decimalsMst[output.attachment.symbol] = output.attachment.precision ? output.attachment.precision : output.attachment.decimals
-                    output.attachment.quantity = output.attachment.max_supply ? output.attachment.max_supply : output.attachment.original_quantity
+                    this.decimalsMst[output.attachment.symbol] = output.attachment.precision ?
+                        output.attachment.precision : output.attachment.decimals
+
+                    output.attachment.quantity = output.attachment.max_supply ?
+                        output.attachment.max_supply : output.attachment.original_quantity
                     this.totalInputs.MST[output.attachment.symbol] = this.totalInputs.MST[output.attachment.symbol] || 0
                     this.totalPersonalInputs.MST[output.attachment.symbol] = this.totalPersonalInputs.MST[output.attachment.symbol] || 0
                     this.txType = TX_TYPE_ISSUE
                     this.txTypeValue = output.attachment.symbol
                     break
                 case 'asset-transfer':
-                    if (this.txType != TX_TYPE_ISSUE && this.txType != TX_TYPE_BURN_MST) {
+                    if (this.txType !== TX_TYPE_ISSUE && this.txType !== TX_TYPE_BURN_MST) {
                         this.decimalsMst[output.attachment.symbol] = output.attachment.decimals
                         this.txTypeValue = output.attachment.symbol
-                        if (this.tx.inputs != undefined && Array.isArray(this.tx.inputs) && this.tx.inputs[0] && this.tx.inputs[0].previous_output.hash == '0000000000000000000000000000000000000000000000000000000000000000') {
+                        if (this.tx.inputs !== undefined
+                            && Array.isArray(this.tx.inputs)
+                            && this.tx.inputs[0]
+                            && this.tx.inputs[0].previous_output.hash == '0000000000000000000000000000000000000000000000000000000000000000') {
                             this.txType = TX_TYPE_MINING_REWARD
                         } else if (output.script === 'OP_RETURN') {
                             this.txType = TX_TYPE_BURN_MST
@@ -135,6 +151,7 @@ export class TransactionItemComponent {
                                 output.address = translations['TX.TYPE.BURN']
                             })
                         } else if (output.attenuation_model_param) {
+                            console.log(output.attenuation_model_param.lock_quantity)
                             this.tx.locked_until = this.tx.height + output.attenuation_model_param.lock_period
                             this.tx.locked_quantity = output.attenuation_model_param.lock_quantity
                             if (this.txType !== TX_TYPE_DNA_VOTE) {
@@ -197,17 +214,23 @@ export class TransactionItemComponent {
                     break
             }
 
+            console.log(this.tx)
+
             this.totalOutputs.ETP += output.value
             if (output.attachment && (output.attachment.type === 'asset-issue' || output.attachment.type == 'asset-transfer')) {
-                this.totalOutputs.MST[output.attachment.symbol] = this.totalOutputs.MST[output.attachment.symbol] ? this.totalOutputs.MST[output.attachment.symbol] + output.attachment.quantity : output.attachment.quantity
+                this.totalOutputs.MST[output.attachment.symbol] = this.totalOutputs.MST[output.attachment.symbol]
+                    ? this.totalOutputs.MST[output.attachment.symbol] + output.attachment.quantity
+                    : output.attachment.quantity
             }
 
             if (this.addresses.indexOf(output.address) > -1) {
                 if (output.value) {
                     this.totalPersonalOutputs.ETP += output.value
                 }
-                if (output.attachment && (output.attachment.type === 'asset-issue' || output.attachment.type == 'asset-transfer')) {
-                    this.totalPersonalOutputs.MST[output.attachment.symbol] = this.totalPersonalOutputs.MST[output.attachment.symbol] ? this.totalPersonalOutputs.MST[output.attachment.symbol] + output.attachment.quantity : output.attachment.quantity
+                if (output.attachment && (output.attachment.type === 'asset-issue' || output.attachment.type === 'asset-transfer')) {
+                    this.totalPersonalOutputs.MST[output.attachment.symbol] = this.totalPersonalOutputs.MST[output.attachment.symbol]
+                        ? this.totalPersonalOutputs.MST[output.attachment.symbol] + output.attachment.quantity
+                        : output.attachment.quantity
                 }
                 output.personal = true
             }

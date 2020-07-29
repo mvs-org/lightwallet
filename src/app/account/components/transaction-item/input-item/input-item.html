@@ -86,7 +86,7 @@
     </ion-row>
     <ion-row *ngIf="mode == 'satoshi' && input.previous_output.script">
         <ion-col>
-            <ion-item lines="none">
+            <ion-item class="script" lines="none">
                 <span>{{input.previous_output.script}}</span>
             </ion-item>
         </ion-col>
