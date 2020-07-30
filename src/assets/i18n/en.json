@@ -322,6 +322,7 @@
     "IDENTITIES": {
         "TITLE": "Identities",
         "MENU_ENTRY": "Identities",
+        "TOTAL": "Total",
         "AVAILABLE": "Available",
         "FROZEN": "Frozen",
         "UNCONFIRMED": "Unconfirmed",

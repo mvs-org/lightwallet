@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { Platform, ModalController } from '@ionic/angular'
 import { MetaverseService } from 'src/app/services/metaverse.service'
 import { WalletService } from 'src/app/services/wallet.service'
-import { ActivatedRoute, Router } from '@angular/router'
+import { Router } from '@angular/router'
 import { QrComponent } from 'src/app/qr/qr.component'
 
 @Component({
@@ -12,22 +12,21 @@ import { QrComponent } from 'src/app/qr/qr.component'
 })
 export class IdentitiesPage implements OnInit {
 
-    addressbalances: any
     addressBalancesObject: any = {}
-    addresses: Array<string>
+    addresses: string[]
     base: string
     tickers = {}
     isMobile: boolean
+    loading = true
+    msts = []
 
     constructor(
         private platform: Platform,
         private metaverseService: MetaverseService,
         public modalCtrl: ModalController,
         public walletService: WalletService,
-        private activatedRoute: ActivatedRoute,
         private router: Router,
     ) {
-        this.addressbalances = {}
 
         this.isMobile = this.walletService.isMobile()
 
@@ -48,26 +47,24 @@ export class IdentitiesPage implements OnInit {
         this.loadTickers()
     }
 
-    showBalances() {
-        return this.metaverseService.getAddresses()
-            .then((_: string[]) => {
-                this.addresses = _
-                return this.metaverseService.getAddressBalances()
-                    .then((addressbalances) => {
-                        this.addressBalancesObject = addressbalances
-                        Object.keys(addressbalances).map((address) => {
-                            if (this.addressbalances[address] === undefined) {
-                                this.addressbalances[address] = []
-                            }
-                            Object.keys(addressbalances[address].MST).map((asset) => {
-                                const balance = addressbalances[address].MST[asset]
-                                balance.name = asset
-                                this.addressbalances[address].push(balance)
-                            })
-                        })
-                    })
+    async showBalances() {
+        const addresses = await this.metaverseService.getAddresses()
+        this.addresses = addresses
+        this.addressBalancesObject = await this.metaverseService.getAddressBalances()
 
+        const order = await this.metaverseService.assetOrder()
+        const hidden = await this.metaverseService.getHiddenMst()
+        const icons = await this.metaverseService.getDefaultIcon()
+
+        order.forEach((symbol) => {
+            this.msts.push({
+                symbol,
+                icon: icons.MST[symbol] || 'assets/icon/default_mst.png',
+                hidden: hidden.indexOf(symbol) !== -1,
+                order: order.indexOf(symbol)
             })
+        })
+        this.loading = false
     }
 
     private async loadTickers() {
@@ -101,5 +98,7 @@ export class IdentitiesPage implements OnInit {
     registerMIT(avatarName: string, avatarAddress: string) {
         this.router.navigate(['account', 'mit', 'create'])
     }
+
+    errorImg = (e) => e.target.remove()
 
 }

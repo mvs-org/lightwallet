@@ -1,5 +1,7 @@
-.icon {
-    max-width: 30px;
+.coinlogo {
+    width: 28px;
+    margin-right: 20px;
+    margin-top: 4px;
 }
 
 ion-card-content {
@@ -29,4 +31,8 @@ ion-card-content {
 
 .address {
     margin: 0;
+}
+
+.symbol {
+    display: inline-block;
 }
