@@ -67,8 +67,8 @@
           </ion-col>
         </ion-item>
 
-        <div *ngFor="let mstInfo of msts; let i = index">
-          <ion-item *ngIf="addressBalancesObject[address] && addressBalancesObject[address].MST && addressBalancesObject[address].MST[mstInfo.symbol]">
+        <div *ngFor="let mstInfo of msts | orderBy: ['order', '-1']; let i = index">
+          <ion-item *ngIf="!mstInfo.hidden && addressBalancesObject[address] && addressBalancesObject[address].MST && addressBalancesObject[address].MST[mstInfo.symbol]">
             <ion-col>
               <img class="coinlogo" [src]="mstInfo.icon" (error)="errorImg($event)" [ngClass]="{'default-logo': mstInfo.icon == 'default_mst'}">
               <ion-label class="symbol">{{mstInfo.symbol}}</ion-label>

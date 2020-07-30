@@ -9,6 +9,7 @@ import { ClipboardModule } from 'ngx-clipboard'
 import { IdentitiesPage } from './identities.page'
 import { TranslateModule } from '@ngx-translate/core'
 import { QrModule } from 'src/app/qr/qr.module'
+import { PipesModule } from 'src/app/pipes/pipes.module'
 
 @NgModule({
   imports: [
@@ -18,6 +19,7 @@ import { QrModule } from 'src/app/qr/qr.module'
     IonicModule,
     ClipboardModule,
     QrModule,
+    PipesModule,
     IdentitiesPageRoutingModule,
   ],
   declarations: [IdentitiesPage]
