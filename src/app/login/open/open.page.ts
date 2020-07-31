@@ -22,7 +22,7 @@ export class OpenPage implements OnInit {
     private walletService: WalletService,
     private alertService: AlertService,
     private metaverseService: MetaverseService,
-    private globals: AppService,
+    public globals: AppService,
   ) { }
 
   ngOnInit() {

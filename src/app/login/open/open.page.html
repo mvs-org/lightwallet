@@ -14,12 +14,14 @@
     <ion-row *ngIf="saved_accounts && saved_accounts.length" class="ion-text-center">
       <ion-col size="12" size-md="4" offset-md="4">
         <div class="option" translate="LOGIN.OPEN.LOCAL_ACCOUNT"></div>
-        <ion-button expand="full" class="account-btn" (click)="loginViaAccount(account)"
-          *ngFor="let account of saved_accounts">
+        <div *ngFor="let account of saved_accounts">
+          <ion-button expand="full" class="account-btn" (click)="loginViaAccount(account)"
+          *ngIf="account.network == globals.network || (!account.network && globals.network=='mainnet')">
           <ion-icon slot="start" *ngIf="account.content" name="person"></ion-icon>
           <ion-icon slot="start" *ngIf="!account.content && account.view_only_content" name="eye"></ion-icon>
           {{account.name}}
         </ion-button>
+        </div>
         <div class="option" translate="LOGIN.OPEN.OR"></div>
       </ion-col>
     </ion-row>
