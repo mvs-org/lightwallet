@@ -26,15 +26,20 @@
           <ion-card-title>{{address}}</ion-card-title>
           <ion-card-subtitle> </ion-card-subtitle>
         </div>
-        <ion-buttons slot="end">
-          <ion-button color="primary" class="copy-btn" id="copybtn" ngxClipboard [cbContent]="address">
+        <ion-buttons slot="end" class="ion-hide-sm-down">
+          <ion-button color="primary" class="copy-btn" id="copybtn" (click)="copyAddress(address)">
             <ion-icon slot="icon-only" name="copy" size="small"></ion-icon>
           </ion-button>
           <ion-button color="primary" class="qrcode-btn" id="qrcode" (click)="show(address)">
             <ion-icon slot="icon-only" name="qr-code" size="small"></ion-icon>
           </ion-button>
-          <ion-button color="primary" class="time-btn" id="time" routerLink="/account/history/ETP">
+          <ion-button color="primary" class="time-btn" id="time" (click)="history(address)">
             <ion-icon slot="icon-only" name="time" size="small"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-buttons slot="end" class="ion-hide-sm-up">
+          <ion-button color="primary" id="morebtn" (click)="presentPopover(address)">
+            <ion-icon slot="icon-only" name="ellipsis-horizontal" size="small"></ion-icon>
           </ion-button>
         </ion-buttons>
       </ion-toolbar>

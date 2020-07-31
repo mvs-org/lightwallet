@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core'
-import { Platform, ModalController } from '@ionic/angular'
+import { Platform, ModalController, PopoverController } from '@ionic/angular'
 import { MetaverseService } from 'src/app/services/metaverse.service'
 import { WalletService } from 'src/app/services/wallet.service'
 import { Router } from '@angular/router'
 import { QrComponent } from 'src/app/qr/qr.component'
+import { PopoverComponent } from '../components/popover/popover.component'
+import { ClipboardService } from 'ngx-clipboard'
+import { ToastService } from 'src/app/services/toast.service'
 
 @Component({
     selector: 'app-identities',
@@ -26,6 +29,9 @@ export class IdentitiesPage implements OnInit {
         public modalCtrl: ModalController,
         public walletService: WalletService,
         private router: Router,
+        public popoverController: PopoverController,
+        private clipboardService: ClipboardService,
+        private toastService: ToastService,
     ) {
 
         this.isMobile = this.walletService.isMobile()
@@ -71,9 +77,7 @@ export class IdentitiesPage implements OnInit {
         [this.base, this.tickers] = await this.metaverseService.getBaseAndTickers()
     }
 
-    canAddAddress = () => this.platform.is('mobile') && !this.platform.is('mobileweb')
-
-    history = (asset, address) => this.router.navigate(['account', 'history', asset], { state: { data: { addresses: [address] } } })
+    history = (address) => this.router.navigate(['account', 'history', 'ETP'], { state: { data: { addresses: [address] } } })
 
     format = (quantity, decimals) => quantity / Math.pow(10, decimals)
 
@@ -101,4 +105,61 @@ export class IdentitiesPage implements OnInit {
 
     errorImg = (e) => e.target.remove()
 
+    async presentPopover(address) {
+        const buttons = [
+            {
+                icon: 'copy',
+                text: 'IDENTITIES.BUTTON.COPY',
+                action: 'copy',
+            },
+            {
+                icon: 'qr-code',
+                text: 'IDENTITIES.BUTTON.QRCODE',
+                action: 'qrcode',
+            },
+            {
+                icon: 'time',
+                text: 'IDENTITIES.BUTTON.HISTORY',
+                action: 'history',
+            },
+        ]
+        const popover = await this.popoverController.create({
+            component: PopoverComponent,
+            componentProps: {
+                buttons
+            },
+            translucent: true
+        })
+        popover.onWillDismiss().then(result => {
+            console.log(result)
+            if (result.data && result.data.action) {
+                console.log(result.data.action)
+                switch (result.data.action) {
+                    case 'copy':
+                        this.copyAddress(address)
+                        break
+                    case 'qrcode':
+                        this.show(address)
+                        break
+                    case 'history':
+                        this.history(address)
+                        break
+                    default:
+                        // action cancelled
+                }
+                //this.getLastElement(result.data.text.toString())
+            }
+            popover.remove()
+        })
+        await popover.present()
+    }
+
+    async copyAddress(address) {
+        try {
+            await this.clipboardService.copyFromContent(address)
+            this.toastService.simpleToast('IDENTITIES.TOAST.ADDRESS_COPIED')
+        } catch (error) {
+            console.log('Error while copying the address')
+        }
+    }
 }

@@ -166,6 +166,10 @@ ion-item span {
     word-break: break-all;
 }
 
+ion-header {
+    z-index: 999;
+}
+
 ion-content{
     // --padding-start: 20px;
     --padding-top: 20px;

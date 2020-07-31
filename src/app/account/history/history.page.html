@@ -114,7 +114,7 @@
                         </ion-avatar>
                         <h1>{{asset}}</h1>
                         <p *ngFor="let transaction of output.transactions">{{'TRANSACTION'|translate}}: <a
-                                href="{{explorerURL(transaction)}}" target="_blank">{{transaction}}</a></p>
+                                href="{{explorerURL(transaction)}}" target="_blank" rel="noopener">{{transaction}}</a></p>
                         <p>{{'AMOUNT'|translate}}:
                             <span *ngIf="asset == 'ETP'">{{output.value | format : output.attachment.decimals}}</span>
                             <span *ngIf="asset != 'ETP'">{{output.attenuation_model_param.lock_quantity | format :
@@ -150,7 +150,7 @@
                     </ion-avatar>
                     <h1>{{asset}}</h1>
                     <div *ngFor="let transaction of output.transactions">{{'HISTORY.LOCKED_TRANSACTION'|translate}}: <a
-                            href="{{explorerURL(transaction)}}" target="_blank">{{transaction}}</a></div>
+                            href="{{explorerURL(transaction)}}" target="_blank" rel="noopener">{{transaction}}</a></div>
                     <div translate="HISTORY.LOCKED_AMOUNT"
                         [translateParams]="{asset: asset, number: asset == 'ETP' ? (output.value | format : output.attachment.decimals) : output.attenuation_model_param.lock_quantity | format : output.attachment.decimals}">
                     </div>

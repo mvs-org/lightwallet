@@ -9,7 +9,7 @@
 
 <ion-content>
 
-  <a class="swft-logo" href="https://www.swft.pro" target="_blank">
+  <a class="swft-logo" href="https://www.swft.pro" target="_blank" rel="noopener">
     <img [src]="'assets/images/swft-logo.png'">
   </a>
 
@@ -17,7 +17,7 @@
     <ion-col>
       <p align="center">
         <span translate="SWFT.INFORMATION"></span>
-        <a href="https://t.me/SWFTBlockchain" target="_blank" translate="SWFT.INFORMATION_LINK"></a>
+        <a href="https://t.me/SWFTBlockchain" target="_blank" rel="noopener" translate="SWFT.INFORMATION_LINK"></a>
       </p>
       <p align="center" class="wrong-input" translate="SWFT.INFORMATION_WARNING"></p>
     </ion-col>
@@ -175,7 +175,7 @@
           <ion-col size="12" size-sm="6">
             <h4 class="break-words">
               <a *ngIf="etpBridgeService.isMetaverseSymbol(order.deposit.symbol)"
-                href="{{explorerURL('adr', order.deposit.address)}}" target="_blank"
+                href="{{explorerURL('adr', order.deposit.address)}}" target="_blank" rel="noopener"
                 class="right">{{order.deposit.address}}</a>
               <a *ngIf="!etpBridgeService.isMetaverseSymbol(order.deposit.symbol)" (click)="show(order.deposit.address)"
                 class="right">{{order.deposit.address}}</a>
@@ -189,7 +189,7 @@
           <ion-col size="12" size-sm="6">
             <h4 class="break-words">
               <a *ngIf="etpBridgeService.isMetaverseSymbol(order.deposit.symbol)"
-                href="{{explorerURL('adr', order.refund.address)}}" target="_blank"
+                href="{{explorerURL('adr', order.refund.address)}}" target="_blank" rel="noopener"
                 class="right">{{order.refund.address}}</a>
               <a *ngIf="!etpBridgeService.isMetaverseSymbol(order.deposit.symbol)" (click)="show(order.refund.address)"
                 class="right">{{order.refund.address}}</a>
@@ -203,7 +203,7 @@
           <ion-col size="12" size-sm="6">
             <h4 class="break-words">
               <a *ngIf="etpBridgeService.isMetaverseSymbol(order.deposit.symbol)"
-                href="{{explorerURL('tx', order.refund.txid)}}" target="_blank" class="right">{{order.refund.txid}}</a>
+                href="{{explorerURL('tx', order.refund.txid)}}" target="_blank" rel="noopener" class="right">{{order.refund.txid}}</a>
               <a *ngIf="!etpBridgeService.isMetaverseSymbol(order.deposit.symbol)" (click)="show(order.refund.txid)"
                 class="right">{{order.refund.txid}}</a>
             </h4>
@@ -222,7 +222,7 @@
           <ion-col size="12" size-sm="6">
             <h4 class="break-words">
               <a *ngIf="etpBridgeService.isMetaverseSymbol(order.receive.symbol)"
-                href="{{explorerURL('adr', order.receive.address)}}" target="_blank"
+                href="{{explorerURL('adr', order.receive.address)}}" target="_blank" rel="noopener"
                 class="right">{{order.receive.address}}</a>
               <a *ngIf="!etpBridgeService.isMetaverseSymbol(order.receive.symbol)" (click)="show(order.receive.address)"
                 class="right">{{order.receive.address}}</a>
@@ -236,7 +236,7 @@
           <ion-col size="12" size-sm="6">
             <h4 class="break-words">
               <a *ngIf="etpBridgeService.isMetaverseSymbol(order.receive.symbol)"
-                href="{{explorerURL('tx', order.receive.txid)}}" target="_blank"
+                href="{{explorerURL('tx', order.receive.txid)}}" target="_blank" rel="noopener"
                 class="right">{{order.receive.txid}}</a>
               <a *ngIf="!etpBridgeService.isMetaverseSymbol(order.receive.symbol)" (click)="show(order.receive.txid)"
                 class="right">{{order.receive.txid}}</a>

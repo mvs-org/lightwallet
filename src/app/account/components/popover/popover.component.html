@@ -1,0 +1,6 @@
+<ion-list>
+  <ion-item button *ngFor="let button of buttons" (click)="action(button.action)">
+    <ion-icon slot="start" name="{{button.icon}}" size="small"></ion-icon>
+    <span translate="{{button.text}}"></span>
+  </ion-item>
+</ion-list>

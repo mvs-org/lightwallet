@@ -330,7 +330,12 @@
         "CHANGE_ADDRESS_NUMBER": "Change number of addresses",
         "BUTTON": {
             "CHANGE_ADDRESS_NUMBER": "Change number of addresses",
+            "COPY": "Copy address",
+            "QRCODE": "Show QR Code",
             "HISTORY": "History"
+        },
+        "TOAST": {
+            "ADDRESS_COPIED": "Address copied!"
         }
     },
     "QR_ADDRESS": {
@@ -491,8 +496,7 @@
             "ETP_LOCK_REWARD": "ETP lock reward",
             "MST_LOCK": "MST lock"
         },
-        "NO_DEPOSIT_YET": "No deposit yet",
-        "NO_DEPOSIT_YET_TEXT": "Freeze your ETP to earn interests!",
+        "NO_LOCK_YET": "No lock transaction yet",
         "ORDER_BY": "Order by",
         "ORDER_BY_HEIGHT": "Locking time",
         "ORDER_BY_UNLOCK_HEIGHT": "Unlocking time",
