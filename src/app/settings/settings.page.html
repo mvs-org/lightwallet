@@ -36,7 +36,7 @@
         <h1 translate="SETTINGS.THEME.TITLE"></h1>
         <p translate="SETTINGS.THEME.SUBTITLE"></p>
       </ion-label>
-      <ion-toggle id="themeToggle" slot="end" [(ngModel)]="darkTheme"></ion-toggle>
+      <ion-toggle id="themeToggle" slot="end" [(ngModel)]="darkTheme" (click)="updateTheme()"></ion-toggle>
     </ion-item>
     <ion-item routerLink="export-xpub" button>
       <ion-icon name="pricetag"></ion-icon>
