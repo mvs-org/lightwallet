@@ -37,7 +37,6 @@ export class GenerateAddressPage implements OnInit {
     if (xpub) {
       this.walletFromXpub = await this.walletService.getWalletFromMasterPublicKey(xpub)
     }
-    console.log("Here")
     this.loading = false
   }
 

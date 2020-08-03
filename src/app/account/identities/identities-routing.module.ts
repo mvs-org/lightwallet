@@ -9,7 +9,7 @@ const routes: Routes = [
     component: IdentitiesPage
   },
   {
-    path: 'create',
+    path: 'create/:address',
     loadChildren: () => import('./create/create.module').then( m => m.CreatePageModule)
   },
   {

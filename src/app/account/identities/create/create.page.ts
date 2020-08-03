@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core'
 import { MetaverseService } from 'src/app/services/metaverse.service'
-import { Router } from '@angular/router'
+import { Router, ActivatedRoute } from '@angular/router'
 import { Platform } from '@ionic/angular'
 import { TranslateService } from '@ngx-translate/core'
-import { WalletService } from 'src/app/services/wallet.service'
 import { AlertService } from 'src/app/services/alert.service'
-import { AlertController } from '@ionic/angular'
 
 class AddressBalance {
   constructor(
@@ -37,11 +35,17 @@ export class CreatePage implements OnInit {
   constructor(
     private alertService: AlertService,
     private router: Router,
-    public mvs: MetaverseService,
+    public metaverseService: MetaverseService,
     public platform: Platform,
     private translate: TranslateService,
+    private activatedRoute: ActivatedRoute,
   ) {
-    Promise.all([this.mvs.getAddresses(), this.mvs.getAddressBalances()])
+
+    this.avatar_address = this.activatedRoute.snapshot.params.address
+
+    console.log(this.avatar_address)
+
+    Promise.all([this.metaverseService.getAddresses(), this.metaverseService.getAddressBalances()])
       .then(([addresses, addressbalances]) => {
         addresses.forEach((address) => {
           if (addressbalances[address] && addressbalances[address].ETP && addressbalances[address].ETP.available >= 100000000 && addressbalances[address].AVATAR === '') {
@@ -53,7 +57,7 @@ export class CreatePage implements OnInit {
     this.bounty_fee = 80      // this.globals.default_fees.bountyShare
     this.default_bounty_fee = this.bounty_fee
     this.total_fee = 100000000      // this.globals.default_fees.avatar
-    this.mvs.getFees()
+    this.metaverseService.getFees()
       .then(fees => {
         this.bounty_fee = fees.bountyShare
         this.default_bounty_fee = this.bounty_fee
@@ -76,7 +80,7 @@ export class CreatePage implements OnInit {
         if (this.message) {
           messages.push(this.message)
         }
-        return this.mvs.createAvatarTx(
+        return this.metaverseService.createAvatarTx(
           this.avatar_address,
           this.symbol,
           undefined,
@@ -118,37 +122,6 @@ export class CreatePage implements OnInit {
       })
   }
 
-  /*
-  confirm() {
-    this.translate.get('CREATE_AVATAR.CONFIRMATION.TITLE').subscribe((txt_title: string) => {
-      this.translate.get('CREATE_AVATAR.CONFIRMATION.SUBTITLE').subscribe((txt_subtitle: string) => {
-        this.translate.get('CREATE_AVATAR.CONFIRMATION.OK').subscribe((txt_create: string) => {
-          this.translate.get('CREATE_AVATAR.CONFIRMATION.CANCEL').subscribe((txt_cancel: string) => {
-            const alert = this.alertCtrl.create({
-              title: txt_title,
-              subTitle: txt_subtitle,
-              buttons: [
-                {
-                  text: txt_create,
-                  handler: data => {
-                    // need error handling
-                    this.send()
-                  }
-                },
-                {
-                  text: txt_cancel,
-                  role: 'cancel'
-                }
-              ]
-            })
-            alert.present()
-          })
-        })
-      })
-    })
-  }
-  */
-
   async confirm() {
     const confirm = await this.alertService.alertConfirm(
       'CREATE_AVATAR.CONFIRMATION.TITLE',
@@ -165,13 +138,13 @@ export class CreatePage implements OnInit {
 
   validSymbol = (symbol) => (symbol.length > 2) && (symbol.length < 64) && (!/[^A-Za-z0-9@_.-]/g.test(symbol)) && this.available_symbol
 
-  validMessageLength = (message) => this.mvs.verifyMessageSize(message) < 253
+  validMessageLength = (message) => this.metaverseService.verifyMessageSize(message) < 253
 
   symbolChanged = (symbol) => {
     symbol = symbol.trim()
     this.symbol = symbol
     if (symbol && symbol.length >= 3) {
-      this.mvs.getAvatarAvailable(symbol)
+      this.metaverseService.getAvatarAvailable(symbol)
         .then(available => {
           if (this.symbol != symbol) {
             return

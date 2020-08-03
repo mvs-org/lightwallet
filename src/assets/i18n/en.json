@@ -332,7 +332,8 @@
             "CHANGE_ADDRESS_NUMBER": "Change number of addresses",
             "COPY": "Copy address",
             "QRCODE": "Show QR Code",
-            "HISTORY": "History"
+            "HISTORY": "History",
+            "CREATE_AVATAR": "Create Avatar"
         },
         "TOAST": {
             "ADDRESS_COPIED": "Address copied!"

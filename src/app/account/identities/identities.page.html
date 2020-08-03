@@ -23,8 +23,13 @@
         </div>
         <!--If no Avatar-->
         <div *ngIf="!addressBalancesObject[address] || !addressBalancesObject[address].AVATAR">
-          <ion-card-title>{{address}}</ion-card-title>
-          <ion-card-subtitle> </ion-card-subtitle>
+          <ion-card-title>
+            <ion-button color="primary" fill="clear" class="create-avatar-btn" routerLink="./create/{{address}}">
+              <ion-icon slot="start" name="person-add" size="small"></ion-icon>
+              <span translate="IDENTITIES.BUTTON.CREATE_AVATAR"></span>
+            </ion-button>
+          </ion-card-title>
+          <ion-card-subtitle>{{address}}</ion-card-subtitle>
         </div>
         <ion-buttons slot="end" class="ion-hide-sm-down">
           <ion-button color="primary" class="copy-btn" id="copybtn" (click)="copyAddress(address)">
@@ -93,7 +98,7 @@
   </ion-card>
 
   <ion-row class="right">
-    <ion-button routerLink="/account/identities/generate-address" translate="IDENTITIES.BUTTON.CHANGE_ADDRESS_NUMBER">
+    <ion-button routerLink="./generate-address" translate="IDENTITIES.BUTTON.CHANGE_ADDRESS_NUMBER">
     </ion-button>
   </ion-row>
 

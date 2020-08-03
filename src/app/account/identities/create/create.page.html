@@ -32,7 +32,7 @@
         {{"CREATE_AVATAR.AVATAR_ALREADY_EXIST" | translate}}</ion-item>
 
       <ion-item [ngClass]="{'error-border': !validAddress(avatar_address)}">
-        <ion-label color="primary" position="floating">{{"CREATE_AVATAR.ADDRESS"|translate}}</ion-label>
+        <ion-label color="primary" position="floating" translate="CREATE_AVATAR.ADDRESS"></ion-label>
         <ion-select *ngIf="addressbalances.length != 0" [(ngModel)]="avatar_address" name="avatar_address"
           multiple="false" okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}"
           [interfaceOptions]="addressSelectOptions">
@@ -41,9 +41,8 @@
         </ion-select>
         <ion-input *ngIf="addressbalances.length == 0" disabled></ion-input>
       </ion-item>
-      <div class="advice">{{"CREATE_AVATAR.HELP.ADDRESS" | translate}}</div>
-      <ion-item *ngIf="addressbalances.length == 0" lines="none" class="wrong-input">
-        {{"CREATE_AVATAR.NO_ADDRESS_1ETP" | translate}}</ion-item>
+      <div class="advice" translate="CREATE_AVATAR.HELP.ADDRESS"></div>
+      <ion-item *ngIf="addressbalances.length == 0" lines="none" class="wrong-input" translate="CREATE_AVATAR.NO_ADDRESS_1ETP"></ion-item>
 
       <ion-item
         [ngClass]="{'error-border':!validMessageLength(message), 'valid-border': message.length > 0 && validMessageLength(message)}">
@@ -83,7 +82,7 @@
       <ion-col>
         <ion-button color="danger" expand="full" routerLink="/avatar">
           <ion-icon slot="start" name="close"></ion-icon>
-          {{'CREATE_AVATAR.BUTTON.CANCEL'|translate}}
+          <span translate="CREATE_AVATAR.BUTTON.CANCEL"></span>
         </ion-button>
       </ion-col>
       <ion-col>
@@ -91,7 +90,7 @@
           [disabled]="!sendForm.form.valid||!validSymbol(symbol)||!validAddress(avatar_address)||!validMessageLength(message)"
           (click)="confirm()" color="secondary">
           <ion-icon slot="start" disabled="checked" name="cog"></ion-icon>
-          {{'CREATE_AVATAR.BUTTON.NEXT'|translate}}
+          <span translate="CREATE_AVATAR.BUTTON.NEXT"></span>
         </ion-button>
       </ion-col>
     </ion-row>
