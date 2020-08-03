@@ -12,10 +12,10 @@
                         <span translate="LOGOUT.BUTTON"></span>
                     </ion-button>
                     <ion-button ion-button icon-left (click)="sync()">
-                        <span *ngIf="platform.is('mobile')&&platform.is('ios')&&!isSyncing()"
+                        <span *ngIf="platform.is('mobile') && platform.is('ios') && !isSyncing()"
                             class="block-iPhone">{{height}}
                             <ion-icon slot="start" name="cube"></ion-icon></span>
-                        <span *ngIf="!(platform.is('mobile')&&platform.is('ios'))">
+                        <span *ngIf="!(platform.is('mobile') && platform.is('ios'))">
                             <span translate="HEIGHT"></span>: {{height}}</span>
                     </ion-button>
                     <ion-button *ngIf="!platform.is('mobile')" class="refresh-btn" ion-button (click)="sync()"
@@ -26,31 +26,34 @@
                 </ion-buttons>
                 <ion-item-divider></ion-item-divider>
                 <ion-menu-toggle auto-hide="false" *ngFor="let p of mainItems; let i = index">
-                    <ion-item [routerLink]="[p.url]" lines="none" detail="false" >
-                        <ion-icon [color]="p.selected ? 'primary' : 'none'" slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
+                    <ion-item [routerLink]="[p.url]" lines="none" detail="false">
+                        <ion-icon [color]="p.selected ? 'primary' : 'none'" slot="start" [ios]="p.icon + '-outline'"
+                            [md]="p.icon + '-sharp'"></ion-icon>
                         <ion-label>{{ p.title | translate }}</ion-label>
                     </ion-item>
                 </ion-menu-toggle>
                 <ion-item-divider>
                     <ion-label>
-                        <ion-note>Apps</ion-note>
+                        <ion-note translate="MAIN_MENU.APPS"></ion-note>
                     </ion-label>
                 </ion-item-divider>
                 <ion-menu-toggle auto-hide="false" *ngFor="let p of appItems">
                     <ion-item [routerLink]="[p.url]" lines="none" detail="false">
-                        <ion-icon [color]="p.selected ? 'primary' : 'none'" slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
+                        <ion-icon [color]="p.selected ? 'primary' : 'none'" slot="start" [ios]="p.icon + '-outline'"
+                            [md]="p.icon + '-sharp'"></ion-icon>
                         <ion-label>{{ p.title | translate }}</ion-label>
                     </ion-item>
                 </ion-menu-toggle>
             </ion-list>
         </ion-content>
         <ion-footer>
-                <ion-menu-toggle auto-hide="false" *ngFor="let p of footerItems">
-                    <ion-item [routerLink]="[p.url]" lines="none" detail="false">
-                        <ion-icon [color]="p.selected ? 'primary' : 'none'" slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
-                        <ion-label>{{ p.title | translate }}</ion-label>
-                    </ion-item>
-                </ion-menu-toggle>
+            <ion-menu-toggle auto-hide="false" *ngFor="let p of footerItems">
+                <ion-item [routerLink]="[p.url]" lines="none" detail="false">
+                    <ion-icon [color]="p.selected ? 'primary' : 'none'" slot="start" [ios]="p.icon + '-outline'"
+                        [md]="p.icon + '-sharp'"></ion-icon>
+                    <ion-label>{{ p.title | translate }}</ion-label>
+                </ion-item>
+            </ion-menu-toggle>
         </ion-footer>
     </ion-menu>
     <ion-router-outlet id="main-content"></ion-router-outlet>

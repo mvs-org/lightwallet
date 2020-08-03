@@ -267,6 +267,7 @@
         }
     },
     "ACCOUNT": {
+        "MENU_ENTRY": "Portfolio",
         "TITLE": "Portfolio",
         "FROZEN": "Frozen",
         "AVAILABLE": "Available",
@@ -277,6 +278,9 @@
             "RECEIVE": "Receive",
             "HISTORY": "History"
         }
+    },
+    "MAIN_MENU": {
+        "APPS": "Apps"
     },
     "OPEN_FILE": {
         "TITLE": "Enter wallet",
@@ -1099,7 +1103,15 @@
     "INFO": {
         "TITLE": "Information",
         "SUBTITLE": "Get more information on MyETPWallet and read the open source license.",
-        "SOURCE_CODE": "Source Code"
+        "INTRODUCTION": "Metaverse is a Blockchain with hybrid consensus (PoW+PoS) that is specialized for asset digitization and digital identity.",
+        "NAME": "MyETPWallet",
+        "VERSION": "Version",
+        "BUILD": "Build",
+        "COMMIT": "Commit",
+        "NETWORK": "Network",
+        "SOURCE_CODE": "Source Code",
+        "FREE_SOFTWARE": "This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.",
+        "NO_WARRANTY": "This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more details."
     },
     "LICENSE": {
         "TITLE": "License"

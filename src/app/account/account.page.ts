@@ -51,7 +51,7 @@ export class AccountPage implements OnInit, OnDestroy {
     ]
     public mainItems: MenuItem[] = [
         {
-            title: 'Portfolio',
+            title: 'ACCOUNT.MENU_ENTRY',
             url: '/account/portfolio',
             icon: 'home',
             selected: false

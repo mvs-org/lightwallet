@@ -10,7 +10,7 @@
 <ion-content>
   <ion-row>
     <ion-col>
-      <p align="center">{{"CREATE_MIT.INFORMATION" | translate}}</p>
+      <p align="center" translate="CREATE_MIT.INFORMATION"></p>
     </ion-col>
   </ion-row>
   <ion-row>
@@ -23,10 +23,8 @@
         <ion-input name="symbol" [(ngModel)]="symbol" maxlength="63" (ngModelChange)="symbolChanged()" required>
         </ion-input>
       </ion-item>
-      <ion-item *ngIf="symbol.length >= 3 && !symbol_available" lines="none" class="wrong-input">{{"CREATE_MIT.MIT_ALREADY_EXIST"
-            | translate}}</ion-item>
-      <ion-item *ngIf="symbol.length > 0 && symbol.length < 3" lines="none" class="wrong-input">{{"CREATE_MIT.MIT_SYMBOL_TOO_SHORT"
-            | translate}}</ion-item>
+      <ion-item *ngIf="symbol.length >= 3 && !symbol_available" lines="none" class="wrong-input" translate="CREATE_MIT.MIT_ALREADY_EXIST"></ion-item>
+      <ion-item *ngIf="symbol.length > 0 && symbol.length < 3" lines="none" class="wrong-input" translate="CREATE_MIT.MIT_SYMBOL_TOO_SHORT"></ion-item>
 
       <ion-item [ngClass]="{'error-border':!validContent(content)}">
         <ion-label color="primary" position="floating" translate="CREATE_MIT.CONTENT"></ion-label>

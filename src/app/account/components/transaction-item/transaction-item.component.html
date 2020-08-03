@@ -122,25 +122,19 @@
                 <ion-col size="12" size-md="6">
                     <ion-item>
                         <ion-row *ngIf="multisig.info">
-                            <ion-col>
-                                {{"MULTISIGNATURE.NBR_PERSON" | translate}}
-                            </ion-col>
+                            <ion-col translate="MULTISIGNATURE.NBR_PERSON"></ion-col>
                             <ion-col class="right">
                                 {{multisig.info.n}}
                             </ion-col>
                         </ion-row>
                         <ion-row *ngIf="multisig.info">
-                            <ion-col>
-                                {{"MULTISIGNATURE.SIGN_REQ" | translate}}
-                            </ion-col>
+                            <ion-col translate="MULTISIGNATURE.SIGN_REQ"></ion-col>
                             <ion-col class="right">
                                 {{multisig.info.m}}
                             </ion-col>
                         </ion-row>
                         <ion-row *ngIf="multisig.current_nbr_sign">
-                            <ion-col>
-                                {{"MULTISIGNATURE.CURRENT_NBR_SIGN" | translate}}
-                            </ion-col>
+                            <ion-col translate="MULTISIGNATURE.CURRENT_NBR_SIGN"></ion-col>
                             <ion-col class="right">
                                 {{multisig.current_nbr_sign}}
                             </ion-col>

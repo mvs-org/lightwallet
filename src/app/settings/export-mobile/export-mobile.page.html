@@ -22,13 +22,13 @@
       <ion-col>
         <ion-button *ngIf="hasSeed" id="open-wallet-button" color="danger" expand="full" (click)="exportWallet()">
           <ion-icon slot="start" name="person"></ion-icon>
-          {{"EXPORT_MOBILE.BUTTON.SHOW_FULL_WALLET"|translate}}
+          <span translate="EXPORT_MOBILE.BUTTON.SHOW_FULL_WALLET"></span>
         </ion-button>
       </ion-col>
       <ion-col>
         <ion-button *ngIf="hasXpub" id="open-view-only-wallet-button" expand="full" (click)="exportViewOnlyWallet()">
           <ion-icon slot="start" name="eye"></ion-icon>
-          {{"EXPORT_MOBILE.BUTTON.SHOW_VIEW_ONLY"|translate}}
+          <span translate="EXPORT_MOBILE.BUTTON.SHOW_VIEW_ONLY"></span>
         </ion-button>
       </ion-col>
     </ion-row>

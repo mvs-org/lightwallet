@@ -26,10 +26,8 @@
         </ion-input>
       </ion-item>
       <div class="advice" translate="CREATE_AVATAR.HELP.NAME"></div>
-      <ion-item *ngIf="symbol.length > 0 && symbol.length < 3" lines="none" class="wrong-input">
-        {{"CREATE_AVATAR.NAME_TOO_SHORT" | translate}}</ion-item>
-      <ion-item *ngIf="symbol.length >= 3 && !available_symbol" lines="none" class="wrong-input">
-        {{"CREATE_AVATAR.AVATAR_ALREADY_EXIST" | translate}}</ion-item>
+      <ion-item *ngIf="symbol.length > 0 && symbol.length < 3" lines="none" class="wrong-input" translate="CREATE_AVATAR.NAME_TOO_SHORT"></ion-item>
+      <ion-item *ngIf="symbol.length >= 3 && !available_symbol" lines="none" class="wrong-input" translate="CREATE_AVATAR.AVATAR_ALREADY_EXIST"></ion-item>
 
       <ion-item [ngClass]="{'error-border': !validAddress(avatar_address)}">
         <ion-label color="primary" position="floating" translate="CREATE_AVATAR.ADDRESS"></ion-label>
