@@ -51,7 +51,12 @@ export class DetailsPage implements OnInit {
   loadingBalance = true
 
   asset: MstInfo
-  miningModel: MiningModel
+  miningModel: MiningModel = {
+    initial: undefined,
+    interval: undefined,
+    base: undefined,
+    basePercent: undefined,
+  }
   showSecondaryHistory = false
   currentMstMiningReward = 0
   currentEtpMiningRewardPow = 0
@@ -84,10 +89,12 @@ export class DetailsPage implements OnInit {
 
     if (this.asset.mining_model) {
       const miningModel = this.asset.mining_model.match(/^initial:(.+),interval:(.+),base:(.+)$/)
-      this.miningModel.initial = parseInt(miningModel[1], 10)
-      this.miningModel.interval = parseInt(miningModel[2], 10)
-      this.miningModel.base = parseInt(miningModel[3], 10)
-      this.miningModel.basePercent = Math.round((1 - this.miningModel.base) * 100)
+      this.miningModel = {
+        initial: parseInt(miningModel[1], 10),
+        interval: parseInt(miningModel[2], 10),
+        base: parseInt(miningModel[3], 10),
+        basePercent: Math.round((1 - parseInt(miningModel[3], 10)) * 100)
+      }
     }
     this.loadingMstInfo = false
 
