@@ -207,3 +207,17 @@ ion-footer ion-button {
 .loading-spinner {
     width: 33px;
 }
+
+.ngx-pagination a {
+    color: var(--ion-color-dark) !important;
+    background-color: transparent !important;
+}
+
+.ngx-pagination a:hover {
+    color: white !important;
+    background-color: var(--ion-color-primary) !important;
+}
+
+.ngx-pagination .current {
+    background-color: var(--ion-color-primary) !important;
+}

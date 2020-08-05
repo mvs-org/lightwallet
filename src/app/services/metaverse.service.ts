@@ -676,7 +676,7 @@ export class MetaverseService {
     newtxs = newtxs.sort((a: any, b: any) => a.height - b.height)
     newtxs.forEach((newtx) => {
       const found = this.findTxIndexByHash(txs, newtx.hash)
-      if (found == -1) {
+      if (found === -1) {
         txs = [newtx].concat(txs)
       } else {
         txs[found] = newtx

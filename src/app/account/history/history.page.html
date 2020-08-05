@@ -71,9 +71,8 @@
                 </ion-row>
 
                 <ion-card-content>
-                    <ion-card-title class="center" [translate]="'HISTORY.NO_TXS_YET'"></ion-card-title>
-                    <p class="center" [translate]="'HISTORY.NO_TXS_YET_TEXT'">
-                    </p>
+                    <ion-card-title class="center" translate="HISTORY.NO_TXS_YET"></ion-card-title>
+                    <p class="center" translate="HISTORY.NO_TXS_YET_TEXT"></p>
                 </ion-card-content>
             </div>
         </div>
@@ -85,10 +84,8 @@
                     <ion-item class="no-padding no-color-border">
                         <ion-label translate="HISTORY.ORDER_BY"></ion-label>
                         <ion-select [(ngModel)]="order_by">
-                            <ion-select-option value="locked_until">{{"HISTORY.ORDER_BY_UNLOCK_HEIGHT"|translate}}
-                            </ion-select-option>
-                            <ion-select-option value="height">{{"HISTORY.ORDER_BY_HEIGHT"|translate}}
-                            </ion-select-option>
+                            <ion-select-option value="locked_until" translate="HISTORY.ORDER_BY_UNLOCK_HEIGHT"></ion-select-option>
+                            <ion-select-option value="height" translate="HISTORY.ORDER_BY_HEIGHT"></ion-select-option>
                         </ion-select>
                     </ion-item>
                 </ion-col>
@@ -96,10 +93,8 @@
                     <ion-item class="no-padding no-color-border">
                         <ion-label translate="HISTORY.DIRECTION"></ion-label>
                         <ion-select [(ngModel)]="direction">
-                            <ion-select-option value="0">{{"HISTORY.DIRECTION_EARLIEST_TOP"|translate}}
-                            </ion-select-option>
-                            <ion-select-option value="1">{{"HISTORY.DIRECTION_LATEST_TOP"|translate}}
-                            </ion-select-option>
+                            <ion-select-option value="0" translate="HISTORY.DIRECTION_EARLIEST_TOP"></ion-select-option>
+                            <ion-select-option value="1" translate="HISTORY.DIRECTION_LATEST_TOP"></ion-select-option>
                         </ion-select>
                     </ion-item>
                 </ion-col>
@@ -145,7 +140,7 @@
                 <h2 class="center" translate="HISTORY.UNFROZEN_TX"></h2>
                 <div
                     *ngFor="let output of frozen_outputs_unlocked | orderBy: [order_by, direction] | paginate: { itemsPerPage: items_per_page, currentPage: page_deposit_unlocked }">
-                    <ion-avatar item-start>
+                    <ion-avatar slot="start">
                         <img class="coinlogo" [src]="icon" onerror="this.src='assets/icon/default_mst.png'">
                     </ion-avatar>
                     <h1>{{asset}}</h1>

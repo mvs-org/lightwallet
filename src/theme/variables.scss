@@ -181,7 +181,7 @@ body.dark {
 
   --ion-toolbar-background: #0d0d0d;
 
-  --ion-item-background: #000000;
+  --ion-item-background: #0d0d0d;
 }
 
 
@@ -222,4 +222,10 @@ body.dark {
   --ion-toolbar-background: #1f1f1f;
 
   --ion-tab-bar-background: #1f1f1f;
+  --ion-item-background: transparent;
+
+  ion-card {
+    --background: #1f1f1f !important;
+  }
+
 }
