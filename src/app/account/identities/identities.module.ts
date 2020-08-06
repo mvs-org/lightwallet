@@ -10,7 +10,6 @@ import { IdentitiesPage } from './identities.page'
 import { TranslateModule } from '@ngx-translate/core'
 import { QrModule } from 'src/app/qr/qr.module'
 import { PipesModule } from 'src/app/pipes/pipes.module'
-import { PopoverModule } from '../components/popover/popover.module'
 
 @NgModule({
   imports: [
@@ -21,7 +20,6 @@ import { PopoverModule } from '../components/popover/popover.module'
     ClipboardModule,
     QrModule,
     PipesModule,
-    PopoverModule,
     IdentitiesPageRoutingModule,
   ],
   declarations: [IdentitiesPage]

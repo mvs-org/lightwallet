@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { PopoverComponent } from './popover.component'
+import { ActionSheetComponent } from './action-sheet.component'
 import { IonicModule } from '@ionic/angular'
 import { TranslateModule } from '@ngx-translate/core'
 
 @NgModule({
-  declarations: [PopoverComponent],
+  declarations: [ActionSheetComponent],
   imports: [
     CommonModule,
     IonicModule,
     TranslateModule.forChild(),
   ],
-  exports: [PopoverComponent]
+  exports: [ActionSheetComponent]
 })
-export class PopoverModule { }
+export class ActionSheetModule { }

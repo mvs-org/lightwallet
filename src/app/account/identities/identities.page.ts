@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core'
-import { Platform, ModalController, PopoverController } from '@ionic/angular'
-import { MetaverseService } from 'src/app/services/metaverse.service'
-import { WalletService } from 'src/app/services/wallet.service'
+import { ModalController } from '@ionic/angular'
+import { MetaverseService } from '../../services/metaverse.service'
+import { WalletService } from '../../services/wallet.service'
 import { Router } from '@angular/router'
-import { QrComponent } from 'src/app/qr/qr.component'
-import { PopoverComponent } from '../components/popover/popover.component'
+import { QrComponent } from '../../qr/qr.component'
 import { ClipboardService } from 'ngx-clipboard'
-import { ToastService } from 'src/app/services/toast.service'
+import { ToastService } from '../../services/toast.service'
+import { ActionSheetService } from '../../services/action-sheet.service'
 
 @Component({
     selector: 'app-identities',
@@ -24,12 +24,11 @@ export class IdentitiesPage implements OnInit {
     msts = []
 
     constructor(
-        private platform: Platform,
         private metaverseService: MetaverseService,
         public modalCtrl: ModalController,
         public walletService: WalletService,
         private router: Router,
-        public popoverController: PopoverController,
+        private actionSheetService: ActionSheetService,
         private clipboardService: ClipboardService,
         private toastService: ToastService,
     ) {
@@ -105,7 +104,7 @@ export class IdentitiesPage implements OnInit {
 
     errorImg = (e) => e.target.remove()
 
-    async presentPopover(address) {
+    async mobileMenu(address) {
         const buttons = [
             {
                 icon: 'copy',
@@ -123,35 +122,20 @@ export class IdentitiesPage implements OnInit {
                 action: 'history',
             },
         ]
-        const popover = await this.popoverController.create({
-            component: PopoverComponent,
-            componentProps: {
-                buttons
-            },
-            translucent: true
-        })
-        popover.onWillDismiss().then(result => {
-            console.log(result)
-            if (result.data && result.data.action) {
-                console.log(result.data.action)
-                switch (result.data.action) {
-                    case 'copy':
-                        this.copyAddress(address)
-                        break
-                    case 'qrcode':
-                        this.show(address)
-                        break
-                    case 'history':
-                        this.history(address)
-                        break
-                    default:
-                        // action cancelled
-                }
-                //this.getLastElement(result.data.text.toString())
-            }
-            popover.remove()
-        })
-        await popover.present()
+        const result = await this.actionSheetService.default('', '', buttons)
+        switch (result) {
+            case 'copy':
+                this.copyAddress(address)
+                break
+            case 'qrcode':
+                this.show(address)
+                break
+            case 'history':
+                this.history(address)
+                break
+            default:
+            // action cancelled
+        }
     }
 
     async copyAddress(address) {
