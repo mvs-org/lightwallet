@@ -340,7 +340,9 @@
             "CREATE_AVATAR": "Create Avatar"
         },
         "TOAST": {
-            "ADDRESS_COPIED": "Address copied!"
+            "ADDRESS_COPIED": "Address copied!",
+            "AVATAR_COPIED": "Avatar name copied!",
+            "COPIED": "Copied!"
         }
     },
     "QR_ADDRESS": {

@@ -107,11 +107,6 @@ export class IdentitiesPage implements OnInit {
     async mobileMenu(address) {
         const buttons = [
             {
-                icon: 'copy',
-                text: 'IDENTITIES.BUTTON.COPY',
-                action: 'copy',
-            },
-            {
                 icon: 'qr-code',
                 text: 'IDENTITIES.BUTTON.QRCODE',
                 action: 'qrcode',
@@ -124,9 +119,6 @@ export class IdentitiesPage implements OnInit {
         ]
         const result = await this.actionSheetService.default('', '', buttons)
         switch (result) {
-            case 'copy':
-                this.copyAddress(address)
-                break
             case 'qrcode':
                 this.show(address)
                 break
@@ -138,10 +130,19 @@ export class IdentitiesPage implements OnInit {
         }
     }
 
-    async copyAddress(address) {
+    async copy(textToCopy, type) {
         try {
-            await this.clipboardService.copyFromContent(address)
-            this.toastService.simpleToast('IDENTITIES.TOAST.ADDRESS_COPIED')
+            await this.clipboardService.copyFromContent(textToCopy)
+            switch (type) {
+                case 'address':
+                    this.toastService.simpleToast('IDENTITIES.TOAST.ADDRESS_COPIED')
+                    break
+                case 'avatar':
+                    this.toastService.simpleToast('IDENTITIES.TOAST.AVATAR_COPIED')
+                    break
+                default:
+                    this.toastService.simpleToast('IDENTITIES.TOAST.COPIED')
+            }
         } catch (error) {
             console.log('Error while copying the address')
         }

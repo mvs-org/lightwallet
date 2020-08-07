@@ -25,7 +25,12 @@ ion-card-content {
     margin-right: 10px;
 }
 
-.copy-btn, .qrcode-btn {
+.copy-btn {
+    top: -12px;
+    position: absolute;
+}
+
+.qrcode-btn {
     height: 30px;
 }
 

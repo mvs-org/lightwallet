@@ -15,11 +15,19 @@
       <ion-toolbar>
         <!--If has Avatar-->
         <div *ngIf="addressBalancesObject[address] && addressBalancesObject[address].AVATAR">
-          <ion-card-title>
+          <ion-card-title (click)="copy(addressBalancesObject[address].AVATAR, 'avatar')">
             <img class="avatar-logo" [src]="'assets/icon/default_avatar.png'">
             {{addressBalancesObject[address].AVATAR}}
+            <ion-button fill="clear" class="copy-btn" color="dark">  
+              <ion-icon slot="icon-only" name="copy" size="small"></ion-icon>
+            </ion-button>
           </ion-card-title>
-          <ion-card-subtitle>{{address}}</ion-card-subtitle>
+          <ion-card-subtitle (click)="copy(address, 'address')">
+            {{address}}
+            <ion-button fill="clear" class="copy-btn" color="medium">  
+              <ion-icon slot="icon-only" name="copy" size="small"></ion-icon>
+            </ion-button>
+          </ion-card-subtitle>
         </div>
         <!--If no Avatar-->
         <div *ngIf="!addressBalancesObject[address] || !addressBalancesObject[address].AVATAR">
@@ -29,12 +37,14 @@
               <span translate="IDENTITIES.BUTTON.CREATE_AVATAR"></span>
             </ion-button>
           </ion-card-title>
-          <ion-card-subtitle>{{address}}</ion-card-subtitle>
+          <ion-card-subtitle (click)="copy(address, 'address')">
+            {{address}}
+            <ion-button fill="clear" class="copy-btn" color="medium">  
+              <ion-icon slot="icon-only" name="copy" size="small"></ion-icon>
+            </ion-button>
+          </ion-card-subtitle>
         </div>
         <ion-buttons slot="end" class="ion-hide-sm-down">
-          <ion-button color="primary" class="copy-btn" id="copybtn" (click)="copyAddress(address)">
-            <ion-icon slot="icon-only" name="copy" size="small"></ion-icon>
-          </ion-button>
           <ion-button color="primary" class="qrcode-btn" id="qrcode" (click)="show(address)">
             <ion-icon slot="icon-only" name="qr-code" size="small"></ion-icon>
           </ion-button>
