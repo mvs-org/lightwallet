@@ -280,6 +280,7 @@
         }
     },
     "MAIN_MENU": {
+        "HEIGHT": "Height: {{height}}",
         "APPS": "Apps"
     },
     "OPEN_FILE": {

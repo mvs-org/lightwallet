@@ -2,29 +2,20 @@
     <ion-menu contentId="main-content" type="overlay">
         <ion-content>
             <img src="/assets/logo.png" class="logo" alt="Metaverse">
+            <div class="center">
+                v{{globals.version}}
+            </div>
             <ion-list id="inbox-list">
                 <ion-buttons slot="end">
-                    <ion-spinner *ngIf="isSyncing() && platform.is('mobile')"></ion-spinner>
                     <ion-icon slot="start" *ngIf="!hasSeed" name="eye"></ion-icon>
                     <ion-icon slot="start" *ngIf="isOffline()" name="flash" class="offlineIcon"></ion-icon>
-                    <ion-button *ngIf="!platform.is('mobile')" ion-button icon-left (click)="logout()">
-                        <ion-icon name="log-out"></ion-icon>
-                        <span translate="LOGOUT.BUTTON"></span>
-                    </ion-button>
-                    <ion-button ion-button icon-left (click)="sync()">
-                        <span *ngIf="platform.is('mobile') && platform.is('ios') && !isSyncing()"
-                            class="block-iPhone">{{height}}
-                            <ion-icon slot="start" name="cube"></ion-icon></span>
-                        <span *ngIf="!(platform.is('mobile') && platform.is('ios'))">
-                            <span translate="HEIGHT"></span>: {{height}}</span>
-                    </ion-button>
-                    <ion-button *ngIf="!platform.is('mobile')" class="refresh-btn" ion-button (click)="sync()"
-                        icon-left>
-                        <ion-icon slot="start" *ngIf="!isSyncing()" name="refresh"></ion-icon>
-                        <ion-spinner *ngIf="isSyncing()"></ion-spinner>
+                    <ion-button class="center" (click)="sync()">
+                        <span *ngIf="height" translate="MAIN_MENU.HEIGHT" [translateParams]="{height: height}"></span>
                     </ion-button>
                 </ion-buttons>
-                <ion-item-divider></ion-item-divider>
+                <ion-item-divider class="noPadding">
+                    <ion-progress-bar class="sync-bar" *ngIf="isSyncing() || !height" type="indeterminate"></ion-progress-bar>
+                </ion-item-divider>
                 <ion-menu-toggle auto-hide="false" *ngFor="let p of mainItems; let i = index">
                     <ion-item [routerLink]="[p.url]" lines="none" detail="false">
                         <ion-icon [color]="p.selected ? 'primary' : 'none'" slot="start" [ios]="p.icon + '-outline'"

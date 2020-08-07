@@ -6,6 +6,7 @@ import { WalletService } from '../services/wallet.service'
 import { LogoutService } from '../services/logout.service'
 import { filter } from 'rxjs/operators'
 import { Subscription } from 'rxjs'
+import { AppService } from '../services/app.service'
 
 interface MenuItem {
     title: string
@@ -88,8 +89,6 @@ export class AccountPage implements OnInit, OnDestroy {
         },
     ]
 
-
-
     private readySubscription$: Subscription
     private routerSubscription$: Subscription
 
@@ -99,6 +98,7 @@ export class AccountPage implements OnInit, OnDestroy {
         private walletService: WalletService,
         private router: Router,
         private logoutService: LogoutService,
+        public globals: AppService,
     ) {
         this.routerSubscription$ = this.router.events
             .pipe(

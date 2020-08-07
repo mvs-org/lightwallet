@@ -145,7 +145,7 @@
 }
 
 .center {
-    margin: auto;
+    margin: auto !important;
     text-align: center;
 }
 
@@ -220,4 +220,8 @@ ion-footer ion-button {
 
 .ngx-pagination .current {
     background-color: var(--ion-color-primary) !important;
+}
+
+.noPadding {
+    padding: 0;
 }
