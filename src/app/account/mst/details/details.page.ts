@@ -107,7 +107,7 @@ export class DetailsPage implements OnInit {
     if (!this.loadingStakelist || this.stakelist.length === 0) {
       this.loadingStakelist = true
       const options = {
-        limit: 20,
+        limit: 5,
         lastAddress: this.stakelist.length === 0 ? undefined : this.stakelist[this.stakelist.length - 1].a
       }
       const result = await this.metaverseService.getStake(this.symbol, options)
