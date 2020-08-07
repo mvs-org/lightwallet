@@ -455,6 +455,8 @@
         "TITLE": "Transaction history",
         "MENU_ENTRY": "History",
         "TRANSACTIONS": "Transactions",
+        "NO_TXS_YET": "No transactions yet",
+        "NO_TXS_YET_TEXT": "Start using your wallet today!",
         "LOCKS": "Locks",
         "ASSETS_LIST": "Asset",
         "ADDRESSES_LIST": "Addresses",

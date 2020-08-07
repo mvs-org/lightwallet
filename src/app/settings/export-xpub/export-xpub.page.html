@@ -27,7 +27,7 @@
     <ion-list *ngIf="xpub">
       <h4 translate="EXPORT_MASTER_PUBLIC_KEY.YOUR_KEY"></h4>
       <ion-item class="manual-copy breakwords">{{xpub}}</ion-item>
-      <ion-button icon-left expand="full" ngxClipboard [cbContent]="xpub">
+      <ion-button expand="full" ngxClipboard [cbContent]="xpub">
         <ion-icon slot="start" name="copy"></ion-icon>
         <span translate="COPY"></span>
       </ion-button>

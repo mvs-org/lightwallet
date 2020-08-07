@@ -133,7 +133,7 @@
           </ion-button>
         </ion-col>
         <ion-col>
-          <ion-button type="submit" expand="full" icon-left (click)="createOrder()" color="secondary"
+          <ion-button type="submit" expand="full" (click)="createOrder()" color="secondary"
             [disabled]="!swapForm.form.valid||!validDepositAmount(createOrderParameters.depositAmount)||!validRefundAddress()||!validRecipientAddress()">
             <ion-icon slot="start" disabled="checked" name="send"></ion-icon>
             <span translate="SWFT.BUTTON.NEXT"></span>

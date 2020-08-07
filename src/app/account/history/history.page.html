@@ -23,7 +23,7 @@
         <div *ngIf="displaySegment=='transactions'">
 
             <ion-row class="order-selectors">
-                <ion-col size="6">
+                <ion-col size="12" size-sm="6">
                     <ion-item class="no-padding no-color-border">
                         <ion-label translate="HISTORY.ASSETS_LIST"></ion-label>
                         <ion-select [(ngModel)]="asset" (ionChange)="updateFilters(asset, addresses)">
@@ -32,7 +32,7 @@
                         </ion-select>
                     </ion-item>
                 </ion-col>
-                <ion-col size="6">
+                <ion-col size="12" size-sm="6">
                     <ion-item class="no-padding no-color-border">
                         <ion-label translate="HISTORY.ADDRESSES_LIST"></ion-label>
                         <ion-select [(ngModel)]="addresses" multiple="true" (ngModelChange)="onChange($event)"
