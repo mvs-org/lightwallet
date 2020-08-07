@@ -31,13 +31,13 @@ export class LogoutService {
   async logout() {
     const accountInfo = await this.walletService.getSessionAccountInfo()
     if (accountInfo || !this.hasSeed) {
-      this.showLogout()
+      this.saveAccount()
     } else {
       this.showLogoutNoAccount()
     }
   }
 
-  async showLogout() {
+  /*async showLogout() {
     const choice = await this.alertService.alertTripleChoice(
       'LOGOUT.CONFIRMATION.TITLE',
       'LOGOUT.CONFIRMATION.SUBTITLE',
@@ -54,14 +54,14 @@ export class LogoutService {
       default:
         break
     }
-  }
+  }*/
 
-  async forgetAccount() {
+  /*async forgetAccount() {
     const accountName = await this.walletService.getAccountName()
     await this.walletService.deleteAccount(accountName)
     await this.metaverseService.hardReset()
     this.router.navigate(['login'])
-  }
+  }*/
 
   async saveAccount() {
     const currentUsername = await this.walletService.getAccountName()
