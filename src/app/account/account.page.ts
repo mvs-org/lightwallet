@@ -154,7 +154,6 @@ export class AccountPage implements OnInit, OnDestroy {
     }
 
     ionViewWillLeave() {
-        console.log('leave account')
         if (this.readySubscription$) {
             this.readySubscription$.unsubscribe()
         }

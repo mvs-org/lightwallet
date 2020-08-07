@@ -23,7 +23,6 @@ export class MitPage implements OnInit {
   private async showBalances() {
     try {
       this.balances = await this.metaverseService.getBalances()
-      console.log(this.balances)
     } catch (e) {
         console.error(e)
         console.log('Can\'t load balances')

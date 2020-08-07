@@ -151,7 +151,6 @@ export class TransactionItemComponent {
                                 output.address = translations['TX.TYPE.BURN']
                             })
                         } else if (output.attenuation_model_param) {
-                            console.log(output.attenuation_model_param.lock_quantity)
                             this.tx.locked_until = this.tx.height + output.attenuation_model_param.lock_period
                             this.tx.locked_quantity = output.attenuation_model_param.lock_quantity
                             if (this.txType !== TX_TYPE_DNA_VOTE) {
@@ -213,8 +212,6 @@ export class TransactionItemComponent {
                 default:
                     break
             }
-
-            console.log(this.tx)
 
             this.totalOutputs.ETP += output.value
             if (output.attachment && (output.attachment.type === 'asset-issue' || output.attachment.type == 'asset-transfer')) {

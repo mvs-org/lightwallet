@@ -43,8 +43,6 @@ export class CreatePage implements OnInit {
 
     this.avatar_address = this.activatedRoute.snapshot.params.address
 
-    console.log(this.avatar_address)
-
     Promise.all([this.metaverseService.getAddresses(), this.metaverseService.getAddressBalances()])
       .then(([addresses, addressbalances]) => {
         addresses.forEach((address) => {

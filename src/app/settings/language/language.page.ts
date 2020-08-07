@@ -25,13 +25,11 @@ export class LanguagePage implements OnInit {
     const langObj = await this.language.getLanguages()
 
     Object.keys(langObj).forEach(key => {
-      console.log(key)
       this.languages.push({
         key,
         label: langObj[key].name
       })
     })
-    console.log(this.languages)
   }
 
   select(key) {

@@ -116,7 +116,6 @@ export class DetailsPage implements OnInit {
         this.stakelistFullyLoaded = true
       }
       this.loadingStakelist = false
-      console.log(this.stakelist)
     }
   }
 

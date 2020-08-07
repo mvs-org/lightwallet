@@ -44,7 +44,6 @@ export class CreatePage implements OnInit {
 
     Promise.all([this.metaverseService.getAddressBalances(), this.metaverseService.listAvatars()])
       .then((results) => {
-        console.log(results)
         this.avatars = results[1]
         if (this.avatars.length === 0) {
           this.no_avatar = true
