@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
 import { MetaverseService } from 'src/app/services/metaverse.service'
 import { Subscription } from 'rxjs'
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-mst',
@@ -24,6 +25,7 @@ export class MstPage implements OnInit, OnDestroy {
 
   constructor(
     private metaverseService: MetaverseService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -117,5 +119,11 @@ export class MstPage implements OnInit, OnDestroy {
   }
 
   errorImg = (e) => e.target.remove()
+
+  clickMst(symbol) {
+    if (this.status === 'default') {
+      this.router.navigate(['/account', 'mst', symbol])
+    }
+  }
 
 }
