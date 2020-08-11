@@ -95,6 +95,7 @@ export class DetailsPage implements OnInit {
         base: parseInt(miningModel[3], 10),
         basePercent: Math.round((1 - parseInt(miningModel[3], 10)) * 100)
       }
+      console.log(this.miningModel)
     }
     this.loadingMstInfo = false
 

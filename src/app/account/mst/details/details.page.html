@@ -64,12 +64,7 @@
   <ion-card class="card-block">
     <ion-item lines="none">
       <ion-label>
-        <h1 class="center">
-          <ion-col>
-            <img class="coinLogoTitleDetails" [src]="icon">
-            {{symbol}}
-          </ion-col>
-        </h1>
+        <h1 class="center" translate="MST_DETAILS.INFO.TITLE"></h1>
         <ion-button id="explorerTxButton" fill="clear" (click)="checkTx('asset', symbol)">
           <ion-icon slot="icon-only" name="open"></ion-icon>
         </ion-button>
@@ -138,37 +133,37 @@
               </ion-col>
               <ion-col class="right">{{asset.minedQuantity | format : asset.decimals}}</ion-col>
             </ion-row>
-            <ion-row *ngIf="miningModel">
+            <ion-row *ngIf="miningModel && miningModel.initial">
               <ion-col>
                 <div translate="MST_DETAILS.INFO.MINING_MODEL_INITIAL"></div>
               </ion-col>
               <ion-col class="right">{{miningModel.initial | format : asset.decimals}}</ion-col>
             </ion-row>
-            <ion-row *ngIf="miningModel">
+            <ion-row *ngIf="miningModel && miningModel.initial">
               <ion-col>
                 <div translate="MST_DETAILS.INFO.MINING_CURRENT_REWARD"></div>
               </ion-col>
               <ion-col class="right">{{currentMstMiningReward | format : asset.decimals}}</ion-col>
             </ion-row>
-            <ion-row *ngIf="miningModel && asset.symbol == 'ETP'">
+            <ion-row *ngIf="currentEtpMiningRewardPow && asset.symbol == 'ETP'">
               <ion-col>
                 <div translate="MST_DETAILS.INFO.MINING_CURRENT_REWARD_POW"></div>
               </ion-col>
               <ion-col class="right">{{currentEtpMiningRewardPow | format : asset.decimals}}</ion-col>
             </ion-row>
-            <ion-row *ngIf="miningModel && asset.symbol == 'ETP'">
+            <ion-row *ngIf="currentEtpMiningRewardPos && asset.symbol == 'ETP'">
               <ion-col>
                 <div translate="MST_DETAILS.INFO.MINING_CURRENT_REWARD_POS"></div>
               </ion-col>
               <ion-col class="right">{{currentEtpMiningRewardPos | format : asset.decimals}}</ion-col>
             </ion-row>
-            <ion-row *ngIf="miningModel">
+            <ion-row *ngIf="miningModel && miningModel.initial">
               <ion-col>
                 <div translate="MST_DETAILS.INFO.MINING_MODEL_INTERVAL"></div>
               </ion-col>
               <ion-col class="right">{{miningModel.interval | format : asset.decimals}}</ion-col>
             </ion-row>
-            <ion-row *ngIf="miningModel">
+            <ion-row *ngIf="miningModel && miningModel.initial">
               <ion-col>
                 <div translate="MST_DETAILS.INFO.MINING_MODEL_BASE"></div>
               </ion-col>

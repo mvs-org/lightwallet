@@ -149,6 +149,7 @@
             "SEND": "Send"
         },
         "INFO": {
+            "TITLE": "General information",
             "MAX_SUPPLY": "Max supply",
             "TOTAL_SUPPLY": "Total supply",
             "BURNED_QUANTITY": "Burned quantity",
