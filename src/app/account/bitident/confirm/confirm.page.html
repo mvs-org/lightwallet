@@ -22,7 +22,7 @@
         </ion-select>
     </ion-item>
 
-    <form #signForm="ngForm" *ngIf="verifiedToken && verifiedToken.target" lines="none">
+    <form #signForm="ngForm" *ngIf="verifiedToken && verifiedToken.target" lines="none" (ngSubmit)="signAndSend(passphrase)" >
 
         <ion-card size="12" size-lg="6">
             <ion-grid>
@@ -124,7 +124,7 @@
             <ion-col>
                 <ion-button type="submit" ion-button expand="full"
                     [disabled]="!signForm.form.valid||!validPassword(passphrase)||(sourceSignature == '' && !noSigAgreed)"
-                    (click)="signAndSend(passphrase)" color="secondary">
+                    color="secondary">
                     <ion-icon slot="start" name="send"></ion-icon>
                     <span translate="BITIDENT.CONFIRM.BUTTON.NEXT"></span>
                 </ion-button>

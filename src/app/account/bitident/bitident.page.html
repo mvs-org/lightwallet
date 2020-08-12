@@ -14,7 +14,7 @@
     </ion-col>
   </ion-row>
 
-  <form #connectForm="ngForm">
+  <form #connectForm="ngForm" (ngSubmit)="getLastElement(token)" >
 
     <ion-row *ngIf="isMobile">
       <ion-col>
@@ -56,7 +56,7 @@
       </ion-col>
       <ion-col size="12" size-sm="6">
         <ion-button type="submit" expand="full" [disabled]="!connectForm.form.valid||!validAuthToken(token)"
-          (click)="getLastElement(token)" color="primary">
+          color="primary">
           <ion-icon slot="start" name="cog"></ion-icon>
           <span translate="BITIDENT.CHECK"></span>
         </ion-button>

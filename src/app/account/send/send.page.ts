@@ -275,24 +275,26 @@ export class SendPage implements OnInit {
   }
 
   async send() {
-    try {
-      const result = await this.create()
-      const tx = result.encode().toString('hex')
-      this.router.navigate(['account', 'confirm'], { state: { data: { tx } } })
-      this.alertService.stopLoading()
-    } catch (error) {
-      console.error(error)
-      this.alertService.stopLoading()
-      switch (error.message) {
-        case 'ERR_INSUFFICIENT_BALANCE':
-          this.alertService.showError('SEND_ONE.INSUFFICIENT_BALANCE', '')
-          break
-        case 'ERR_TOO_MANY_INPUTS':
-          this.alertService.showErrorTranslated('SEND_ONE.ERROR_TOO_MANY_INPUTS', 'SEND_ONE.ERROR_TOO_MANY_INPUTS_TEXT')
-          break
-        default:
-          this.alertService.showError('SEND_ONE.CREATE_TRANSACTION', error.message)
-          break
+    if (this.validForm()) {
+      try {
+        const result = await this.create()
+        const tx = result.encode().toString('hex')
+        this.router.navigate(['account', 'confirm'], { state: { data: { tx } } })
+        this.alertService.stopLoading()
+      } catch (error) {
+        console.error(error)
+        this.alertService.stopLoading()
+        switch (error.message) {
+          case 'ERR_INSUFFICIENT_BALANCE':
+            this.alertService.showError('SEND_ONE.INSUFFICIENT_BALANCE', '')
+            break
+          case 'ERR_TOO_MANY_INPUTS':
+            this.alertService.showErrorTranslated('SEND_ONE.ERROR_TOO_MANY_INPUTS', 'SEND_ONE.ERROR_TOO_MANY_INPUTS_TEXT')
+            break
+          default:
+            this.alertService.showError('SEND_ONE.CREATE_TRANSACTION', error.message)
+            break
+        }
       }
     }
   }
@@ -320,6 +322,20 @@ export class SendPage implements OnInit {
     address === 'auto' || (this.addressbalancesObject[address] && this.addressbalancesObject[address].ETP.available !== 0)
 
   validSendMoreAvatar = (input: string, index: number) => /[A-Za-z0-9.-]/.test(input) && this.sendMoreValidEachAvatar[index]
+
+  validForm = () =>
+    (this.transfer_type === 'one'
+      && this.validaddress(this.recipient_address)
+      && this.validQuantity(this.quantity)
+      && this.validMessageLength(this.message)
+      && (!this.lock || this.attenuation_model)
+      && this.validFromAddress(this.sendFrom))
+    || (this.transfer_type === 'more'
+      && this.sendMoreValidQuantity
+      && this.sendMoreValidAddress
+      && this.total > this.showBalance
+      && this.validMessageLength(this.message)
+      && this.validFromAddress(this.sendFrom))
 
   recipientChanged = () => {
     if (this.recipient_address) {
