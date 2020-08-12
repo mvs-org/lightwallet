@@ -39,7 +39,7 @@
       <ion-col size="12" size-sm="6">
         <ion-button expand="full" type="submit"
           [disabled]="!sendForm.form.valid||!validIndex(index)||(!walletFromXpub && !validPassword(passphrase))"
-          (click)="setIndex()" color="secondary">
+          color="secondary">
           <ion-icon slot="start" name="send"></ion-icon>
           <span translate="GENERATE_ADDRESS.BUTTON.CHANGE_ADDRESS_NUMBER"></span>
         </ion-button>

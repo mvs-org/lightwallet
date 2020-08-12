@@ -22,7 +22,7 @@ export class GenerateAddressPage implements OnInit {
     public walletService: WalletService,
     private router: Router,
     public appService: AppService,
-    private alert: AlertService,
+    private alertService: AlertService,
   ) {
   }
 
@@ -54,23 +54,23 @@ export class GenerateAddressPage implements OnInit {
 
   async setIndexFromWallet() {
     try {
-      await this.alert.showLoading()
+      await this.alertService.showLoading()
       const wallet = await this.walletService.getWallet(this.passphrase)
       const addresses = await this.walletService.generateAddresses(wallet, 0, this.index)
       await this.metaverseService.setAddresses(addresses)
       const xpub = await this.walletService.getMasterPublicKey(this.passphrase)
       await this.walletService.setXpub(xpub)
-      this.alert.stopLoading()
+      this.alertService.stopLoading()
       this.router.navigate(['/loading'], { state: { data: { reset: false } } })
     } catch (error) {
       console.error(error)
-      this.alert.stopLoading()
+      this.alertService.stopLoading()
       switch (error.message) {
         case 'ERR_DECRYPT_WALLET':
-          this.alert.showError('MESSAGE.PASSWORD_WRONG', '')
+          this.alertService.showError('MESSAGE.PASSWORD_WRONG', '')
           break
         default:
-          this.alert.showError('GENERATE_ADDRESSES.ERROR', error.message)
+          this.alertService.showError('GENERATE_ADDRESSES.ERROR', error.message)
           break
       }
     }
@@ -78,20 +78,20 @@ export class GenerateAddressPage implements OnInit {
 
   async setIndexFromXpub() {
     try {
-      await this.alert.showLoading()
+      await this.alertService.showLoading()
       const addresses = await this.walletService.generateAddresses(this.walletFromXpub, 0, this.index)
       await this.metaverseService.setAddresses(addresses)
-      await this.alert.stopLoading()
+      this.alertService.stopLoading()
       this.router.navigate(['/loading'], { state: { data: { reset: false } } })
     } catch (error) {
       console.error(error)
-      this.alert.stopLoading()
+      this.alertService.stopLoading()
       switch (error.message) {
         case 'ERR_DECRYPT_WALLET':
-          this.alert.showError('MESSAGE.PASSWORD_WRONG', '')
+          this.alertService.showError('MESSAGE.PASSWORD_WRONG', '')
           break
         default:
-          this.alert.showError('GENERATE_ADDRESSES.ERROR.UNKOWN_ERROR', error.message)
+          this.alertService.showError('GENERATE_ADDRESSES.ERROR.UNKOWN_ERROR', error.message)
           break
       }
     }
