@@ -237,7 +237,7 @@ export class AlertService {
     return choice
   }
 
-  async alertTripleChoice(title, message, cancel, option1, option2) {
+  async alertTripleChoice(title, message, cancel, option1, option2, ) {
     let choice
     const translations = await this.translate.get([title, message, cancel, option1, option2]).toPromise()
     const alert = await this.alertCtrl.create({
@@ -273,6 +273,52 @@ export class AlertService {
       choice = data.data
     })
     return choice
+  }
+
+  async alertTripleChoiceAndInput(title, message, cancel = 'GLOBAL.CANCEL', option1, option2, inputPlaceholder, inputType) {
+    let result
+    const translations = await this.translate.get([title, message, cancel, option1, option2, inputPlaceholder]).toPromise()
+    const alert = await this.alertCtrl.create({
+      cssClass: 'my-custom-class',
+      header: translations[title],
+      message: translations[message],
+      inputs: [
+        { name: 'info', placeholder: translations[inputPlaceholder], type: inputType }
+      ],
+      buttons: [
+        {
+          text: translations[cancel],
+          cssClass: 'secondary',
+          handler: data => {
+            alert.dismiss(['cancel', data.info])
+            return false
+          }
+        }, {
+          text: translations[option1],
+          handler: data => {
+            alert.dismiss(['option1', data.info])
+            return false
+          }
+        }, {
+          text: translations[option2],
+          handler: data => {
+            alert.dismiss(['option2', data.info])
+            return false
+          }
+        }
+      ]
+    })
+
+    await alert.present()
+    await alert.onDidDismiss().then((data) => {
+      if (data && data.data) {
+        result = {
+          choice: data.data[0],
+          input: data.data[1],
+        }
+      }
+    })
+    return result
   }
 
 }

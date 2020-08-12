@@ -56,12 +56,12 @@ export class LogoutService {
     }
   }*/
 
-  /*async forgetAccount() {
+  async forgetAccount() {
     const accountName = await this.walletService.getAccountName()
     await this.walletService.deleteAccount(accountName)
     await this.metaverseService.hardReset()
     this.router.navigate(['login'])
-  }*/
+  }
 
   async saveAccount() {
     const currentUsername = await this.walletService.getAccountName()
@@ -73,13 +73,25 @@ export class LogoutService {
   }
 
   async newUsername(title, message, placeholder) {
-    const username = await this.askUsername(title, message, placeholder)
-    if (!username) {
-      this.newUsername('LOGOUT.SAVE_ACCOUNT_NO_NAME.TITLE', 'LOGOUT.SAVE_ACCOUNT_NO_NAME.SUBTITLE', placeholder)
-    } else if (this.savedAccountsName.indexOf(username) !== -1) {
-      this.newUsername('LOGOUT.SAVE_ACCOUNT_ALREADY_EXIST.TITLE', 'LOGOUT.SAVE_ACCOUNT_ALREADY_EXIST.SUBTITLE', placeholder)
-    } else {
-      this.save(username)
+    const result = await this.alertService.alertTripleChoiceAndInput(title, message, 'LOGOUT.CONFIRMATION.CANCEL', 'LOGOUT.CONFIRMATION.FORGET', 'LOGOUT.CONFIRMATION.SAVE', placeholder, 'text')
+    if (result) {
+      switch (result.choice) {
+        case 'option1':
+          this.forgetAccount()
+          break
+        case 'option2':
+          const username = result.input
+          if (!username) {
+            this.newUsername('LOGOUT.SAVE_ACCOUNT_NO_NAME.TITLE', 'LOGOUT.SAVE_ACCOUNT_NO_NAME.SUBTITLE', placeholder)
+          } else if (this.savedAccountsName.indexOf(username) !== -1) {
+            this.newUsername('LOGOUT.SAVE_ACCOUNT_ALREADY_EXIST.TITLE', 'LOGOUT.SAVE_ACCOUNT_ALREADY_EXIST.SUBTITLE', placeholder)
+          } else {
+            this.save(username)
+          }
+          break
+        default:
+          return
+      }
     }
   }
 
@@ -106,13 +118,4 @@ export class LogoutService {
     }
   }
 
-  askUsername(title, message, placeholder) {
-    return new Promise((resolve, reject) => {
-      this.translate.get([title, message, placeholder]).subscribe((translations: any) => {
-        this.alertService.askInfo(translations[title], translations[message], translations[placeholder], 'text', (info) => {
-          resolve(info)
-        })
-      })
-    })
-  }
 }
