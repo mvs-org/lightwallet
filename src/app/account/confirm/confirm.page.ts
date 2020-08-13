@@ -3,6 +3,7 @@ import { WalletService } from 'src/app/services/wallet.service'
 import { MetaverseService } from 'src/app/services/metaverse.service'
 import { Router } from '@angular/router'
 import { AlertService } from 'src/app/services/alert.service'
+import { ClipboardService } from 'ngx-clipboard'
 
 @Component({
   selector: 'app-confirm',
@@ -30,6 +31,7 @@ export class ConfirmPage implements OnInit {
     private router: Router,
     private walletService: WalletService,
     private alertService: AlertService,
+    private clipboardService: ClipboardService,
   ) { }
 
   ngOnInit() {
@@ -263,5 +265,17 @@ export class ConfirmPage implements OnInit {
   }
 
   validPassword = (passphrase) => (passphrase.length > 0)
+
+  submit() {
+    if (status === 'SIGNED') {
+      this.broadcastOnly(this.decodedTx)
+    } else {
+      if (this.walletType === 'hasSeed') {
+        this.send()
+      } else if (this.walletType === 'readOnly') {
+        this.clipboardService.copyFromContent(this.hexTx)
+      }
+    }
+  }
 
 }

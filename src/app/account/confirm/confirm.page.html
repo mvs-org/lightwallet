@@ -9,7 +9,7 @@
 
 <ion-content>
 
-  <form #signTxForm="ngForm">
+  <form #signTxForm="ngForm" (ngSubmit)="submit()">
 
     <h2 translate="CONFIRM.PAGE_TITLE"></h2>
 
@@ -81,14 +81,13 @@
         </ion-button>
       </ion-col>
       <ion-col>
-        <ion-button *ngIf="status != 'SIGNED'" type="submit" expand="full" (click)="send()"
+        <ion-button *ngIf="status != 'SIGNED'" type="submit" expand="full"
           [disabled]="!signTxForm.form.valid||!validPassword(passphrase)||(multisig.status == 'MULTISIG' && (multisig.selfSigned || multisig.info.m + 1 < multisig.info.n))"
           color="secondary">
           <ion-icon slot="start" name="send"></ion-icon>
           <span translate="CONFIRM.BUTTON.SIGN_AND_SEND"></span>
         </ion-button>
-        <ion-button *ngIf="status == 'SIGNED'" type="submit" expand="full" (click)="broadcastOnly(decodedTx)"
-          color="secondary">
+        <ion-button *ngIf="status == 'SIGNED'" type="submit" expand="full" color="secondary">
           <ion-icon slot="start" name="send"></ion-icon>
           <span translate="CONFIRM.BUTTON.BROADCAST"></span>
         </ion-button>
@@ -97,14 +96,13 @@
 
     <ion-row *ngIf="walletType == 'readOnly'">
       <ion-col>
-        <ion-button color="secondary" type="submit" expand="full" (click)="home($event)">
+        <ion-button color="secondary" expand="full" (click)="home($event)">
           <ion-icon slot="start" name="arrow-back"></ion-icon>
           <span translate="CONFIRM.BUTTON.RETURN_HOME"></span>
         </ion-button>
       </ion-col>
       <ion-col>
-        <ion-button *ngIf="status == 'SIGNED'" type="submit" expand="full" (click)="broadcastOnly(decodedTx)"
-          color="secondary">
+        <ion-button *ngIf="status == 'SIGNED'" type="submit" expand="full" color="secondary">
           <ion-icon slot="start" name="send"></ion-icon>
           <span translate="CONFIRM.BUTTON.BROADCAST"></span>
         </ion-button>
