@@ -30,7 +30,7 @@
 
   <h4 *ngIf="!loadingPair && !bridgePairs" class="wrong-input center" translate="SWFT.UNABLE_CONNECT_SWFT"></h4>
 
-  <form #swapForm="ngForm" *ngIf="!loadingPair && bridgePairs">
+  <form #swapForm="ngForm" *ngIf="!loadingPair && bridgePairs" (ngSubmit)="createOrder()">
 
     <ion-card class="card-block">
 
@@ -133,7 +133,7 @@
           </ion-button>
         </ion-col>
         <ion-col>
-          <ion-button type="submit" expand="full" (click)="createOrder()" color="secondary"
+          <ion-button type="submit" expand="full" color="secondary"
             [disabled]="!swapForm.form.valid||!validDepositAmount(createOrderParameters.depositAmount)||!validRefundAddress()||!validRecipientAddress()">
             <ion-icon slot="start" disabled="checked" name="send"></ion-icon>
             <span translate="SWFT.BUTTON.NEXT"></span>

@@ -15,7 +15,7 @@
     </ion-segment>
   </ion-item>
 
-  <form *ngIf="creation_type == 'new'" #newAddressForm="ngForm" class="padding-bottom">
+  <form *ngIf="creation_type == 'new'" #newAddressForm="ngForm" class="padding-bottom" (ngSubmit)="getAddress(cosigners, nbrSigReq, myPublicKey, passphrase)">
     <ion-row>
       <ion-col>
         <p align="center" translate="MULTISIG.ADD.INFORMATION"></p>
@@ -124,7 +124,7 @@
           </ion-button>
         </ion-col>
         <ion-col>
-          <ion-button type="submit" expand="full" (click)="getAddress(cosigners, nbrSigReq, myPublicKey, passphrase)" [disabled]="!nbrSigReq"
+          <ion-button type="submit" expand="full" [disabled]="!nbrSigReq"
             color="secondary">
             <ion-icon slot="start" disabled="checked" name="send"></ion-icon>
             <span translate="MULTISIG.ADD.GET_ADDRESS"></span>
@@ -136,7 +136,7 @@
     </div>
   </form>
 
-  <form *ngIf="creation_type == 'existing'" #importAddressForm="ngForm" class="padding-bottom">
+  <form *ngIf="creation_type == 'existing'" #importAddressForm="ngForm" class="padding-bottom" (ngSubmit)="importAddress(import_address, passphrase_import)">
     <ion-list>
       <ion-item [ngClass]="{'error-border':!validAddress(import_address), 'valid-border':validAddress(import_address)}">
         <ion-label color="primary" position="floating" translate="MULTISIG.ADD.IMPORT_MULTISIG_ADDRESS"></ion-label>
@@ -159,7 +159,7 @@
         </ion-button>
       </ion-col>
       <ion-col>
-        <ion-button type="submit" expand="full" (click)="importAddress(import_address, passphrase_import)"
+        <ion-button type="submit" expand="full"
           [disabled]="!validAddress(import_address) || !validPassword(passphrase_import)" color="secondary">
           <ion-icon slot="start" disabled="checked" name="send"></ion-icon>
           <span translate="MULTISIG.ADD.IMPORT_ADDRESS"></span>

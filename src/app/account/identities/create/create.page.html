@@ -18,7 +18,7 @@
       <p class="right">{{"FEE"|translate}}:<br *ngIf="platform.is('mobile')"> 1 ETP</p>
     </ion-col>
   </ion-row>
-  <form #sendForm="ngForm" style="padding-bottom: 0;">
+  <form #sendForm="ngForm" style="padding-bottom: 0;" (ngSubmit)="confirm()">
     <ion-list style="padding-bottom: 0;">
       <ion-item [ngClass]="{'error-border':!validSymbol(symbol)}">
         <ion-label color="primary" position="floating" translate="CREATE_AVATAR.NAME"></ion-label>
@@ -84,9 +84,8 @@
         </ion-button>
       </ion-col>
       <ion-col>
-        <ion-button expand="full"
-          [disabled]="!sendForm.form.valid||!validSymbol(symbol)||!validAddress(avatar_address)||!validMessageLength(message)"
-          (click)="confirm()" color="secondary">
+        <ion-button expand="full" type="submit"
+          [disabled]="!sendForm.form.valid||!validSymbol(symbol)||!validAddress(avatar_address)||!validMessageLength(message)" color="secondary">
           <ion-icon slot="start" disabled="checked" name="cog"></ion-icon>
           <span translate="CREATE_AVATAR.BUTTON.NEXT"></span>
         </ion-button>
