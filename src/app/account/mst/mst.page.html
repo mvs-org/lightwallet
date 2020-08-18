@@ -66,4 +66,35 @@
     </ng-template>
   </ion-card>
 
+  <ion-card>
+    <ion-item>
+      <img class="coinlogo" [src]="'assets/icon/default_mst.png'" (error)="errorImg($event)">
+      <ion-label class="symbol" translate="MST.ALL.SYMBOL"></ion-label>
+      <ion-col translate="MST.ALL.DESCRIPTION"></ion-col>
+      <div class="empty-space-header-all"></div>
+    </ion-item>
+
+    <ion-item *ngFor="let mst of allMsts">
+      <img class="coinlogo" [src]="this.icons.MST[mst.symbol] || 'assets/icon/default_mst.png'" (error)="errorImg($event)">
+      <ion-label class="symbol">{{mst.symbol}}</ion-label>
+      <ion-col>{{mst.description}}</ion-col>
+
+      <ion-buttons slot="end">
+        <ion-button (click)="addMst(mst)" [disabled]="order.indexOf(mst.symbol) !== -1">
+          <ion-icon color="black" slot="icon-only" name="add"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
+
+    <ion-spinner name="dots" *ngIf="loadingMoreMsts"></ion-spinner>
+
+  </ion-card>
+
+  <div class="center">
+    <ion-button color="primary" (click)="getMoreMsts()" [disabled]="loadingMoreMsts">
+      <ion-icon slot="start" name="add"></ion-icon>
+      <span translate="MST.ALL.LOAD_MORE"></span>
+    </ion-button>
+  </div>
+
 </ion-content>

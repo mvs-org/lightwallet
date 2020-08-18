@@ -18,7 +18,10 @@ export class MstPage implements OnInit, OnDestroy {
   base: string
   msts = []
   reorderingMsts = []
+  allMsts = []
   loading = true
+  loadingMoreMsts = true
+  order = []
 
   heightSubscription: Subscription
   status = 'default'
@@ -33,6 +36,7 @@ export class MstPage implements OnInit, OnDestroy {
     this.heightSubscription = this.metaverseService.height$.subscribe(() => {
       this.showBalances()
     })
+    this.initGetMsts()
   }
 
   ngOnDestroy() {
@@ -50,7 +54,7 @@ export class MstPage implements OnInit, OnDestroy {
       if (this.status === 'default') {
         this.balances = await this.metaverseService.getBalances()
         await this.metaverseService.addAssetsToAssetOrder(Object.keys(this.balances.MST))
-        const order = await this.metaverseService.assetOrder()
+        this.order = await this.metaverseService.assetOrder()
         const hidden = await this.metaverseService.getHiddenMst()
 
         this.icons = await this.metaverseService.getDefaultIcon()
@@ -71,7 +75,7 @@ export class MstPage implements OnInit, OnDestroy {
             balance,
             icon: this.icons.MST[symbol] || 'assets/icon/default_mst.png',
             hidden: hidden.indexOf(symbol) !== -1,
-            order: order.indexOf(symbol)
+            order: this.order.indexOf(symbol)
           })
         })
         this.loading = false
@@ -124,6 +128,53 @@ export class MstPage implements OnInit, OnDestroy {
     if (this.status === 'default') {
       this.router.navigate(['/account', 'mst', symbol])
     }
+  }
+
+  async initGetMsts() {
+    this.allMsts = []
+    this.loadingMoreMsts = true
+    const [special, msts] = await Promise.all([this.metaverseService.listSpecialMsts(), this.metaverseService.listMsts()])
+    this.allMsts = special.concat(msts)
+    this.loadingMoreMsts = false
+  }
+
+  async getMoreMsts() {
+    this.loadingMoreMsts = true
+    const lastSymbol = this.allMsts[this.allMsts.length - 1] ? this.allMsts[this.allMsts.length - 1].symbol : undefined
+    const msts = await this.metaverseService.listMsts(lastSymbol)
+    this.allMsts = this.allMsts.concat(msts)
+    this.loadingMoreMsts = false
+  }
+
+  async addMst(mst) {
+    // Add MST to current page
+    const balance = {
+      decimals: mst.decimals,
+      available: 0,
+      unconfirmed: 0,
+      frozen: 0,
+      total: 0,
+    }
+    this.msts.push({
+      symbol: mst.symbol,
+      balance,
+      icon: this.icons.MST[mst.symbol] || 'assets/icon/default_mst.png',
+      hidden: false,
+      order: this.msts.length
+    })
+
+    // Add MST to order
+    this.order.push(mst.symbol)
+    await this.metaverseService.addAssetsToAssetOrder([mst.symbol])
+
+    // Add MST to balances
+    this.balances.MST[mst.symbol] = {
+      decimals: mst.decimals,
+      available: 0,
+      unconfirmed: 0,
+      frozen: 0,
+    }
+    await this.metaverseService.setBalances(this.balances)
   }
 
 }

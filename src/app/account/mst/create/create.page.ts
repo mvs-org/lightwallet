@@ -30,7 +30,7 @@ export class CreatePage implements OnInit {
   symbol: string
   max_supply: string
   custom_max_supply: string
-  asset_decimals: number = 4
+  asset_decimals = 4
   issuer_name: string
   description: string
   issue_address: string
@@ -41,21 +41,21 @@ export class CreatePage implements OnInit {
   msts: Array<any>
   list_msts: Array<any> = []
   symbol_check: string
-  error_loading_msts: boolean = false
-  error_loading_certs: boolean = false
-  error_too_high_max_supply: boolean = false
+  error_loading_msts = false
+  error_loading_certs = false
+  error_too_high_max_supply = false
   avatars: Array<any>
-  no_avatar: boolean = false
+  no_avatar = false
   no_avatar_placeholder: string
   bounty_fee: number
   default_bounty_fee: number
   total_fee: number
   attenuation_model: string
   blocktime: number
-  lock: boolean = false
-  mining: boolean = false
+  lock = false
+  mining = false
   mstMiningModel: any
-  showAdvanced: boolean = false
+  showAdvanced = false
 
   constructor(
     private metaverseService: MetaverseService,
@@ -139,17 +139,22 @@ export class CreatePage implements OnInit {
       .catch(console.error)
   }
 
-  validMaxSupply = (max_supply, asset_decimals) => max_supply === 'custom' || (max_supply > 0 && ((asset_decimals === undefined) || (Math.floor(parseFloat(max_supply) * Math.pow(10, asset_decimals))) <= 10000000000000000))
+  validMaxSupply = (maxSupply, assetDecimals) =>
+    maxSupply === 'custom'
+      || (maxSupply > 0
+        && ((assetDecimals === undefined) || (Math.floor(parseFloat(maxSupply) * Math.pow(10, assetDecimals))) <= 10000000000000000))
 
-  validMaxSupplyCustom = (custom_max_supply, asset_decimals) => custom_max_supply > 0 && ((asset_decimals == undefined) || (Math.floor(parseFloat(custom_max_supply) * Math.pow(10, asset_decimals))) <= 10000000000000000)
+  validMaxSupplyCustom = (custom_max_supply, asset_decimals) =>
+    custom_max_supply > 0
+      && ((asset_decimals === undefined) || (Math.floor(parseFloat(custom_max_supply) * Math.pow(10, asset_decimals))) <= 10000000000000000)
 
-  validDecimals = (asset_decimals) => asset_decimals >= 0 && asset_decimals <= 8
+  validDecimals = (assetDecimals) => assetDecimals >= 0 && assetDecimals <= 8
 
   validSymbol = (symbol) => (symbol.length > 2) && (symbol.length < 64) && (!/[^A-Za-z0-9.]/g.test(symbol))
 
-  validName = (issuer_name) => (issuer_name !== undefined && issuer_name.length > 0)
+  validName = (issuerName) => (issuerName !== undefined && issuerName.length > 0)
 
-  validAddress = (issue_address) => (issue_address !== undefined && issue_address.length > 0)
+  validAddress = (issueAddress) => (issueAddress !== undefined && issueAddress.length > 0)
 
   validDescription = (description) => description && (description.length > 0) && (description.length < 64)
 
@@ -269,7 +274,7 @@ export class CreatePage implements OnInit {
   }
 
   loadMsts() {
-    return this.metaverseService.getListMst()
+    return this.metaverseService.listMsts()
       .then((msts) => {
         this.msts = msts
         msts.forEach(mst => {
@@ -305,6 +310,7 @@ export class CreatePage implements OnInit {
       const symbol = this.symbol.toUpperCase()
       const domain = symbol.split('.')[0]
       if (this.list_msts && this.list_msts.indexOf(symbol) !== -1) {
+        // Check to change!
         this.symbol_check = 'exist'
       } else if (this.list_my_naming_certs && this.list_my_naming_certs.indexOf(symbol) !== -1) {
         this.symbol_check = 'naming_owner'
@@ -315,7 +321,7 @@ export class CreatePage implements OnInit {
       } else {
         this.metaverseService.getCert(domain, 'domain')
           .then(response => {
-            if (domain != this.symbol.split('.')[0].toUpperCase()) {
+            if (domain !== this.symbol.split('.')[0].toUpperCase()) {
               return
             }
             if (!response || !response.result) {
@@ -336,8 +342,8 @@ export class CreatePage implements OnInit {
   }
 
   maxSupplyChanged = () => {
-    let max_supply = this.max_supply !== 'custom' ? this.max_supply : this.custom_max_supply
-    if (this.asset_decimals !== undefined && (Math.floor(parseFloat(max_supply) * Math.pow(10, this.asset_decimals))) > 10000000000000000) {
+    const maxSupply = this.max_supply !== 'custom' ? this.max_supply : this.custom_max_supply
+    if (this.asset_decimals !== undefined && (Math.floor(parseFloat(maxSupply) * Math.pow(10, this.asset_decimals))) > 10000000000000000) {
       this.error_too_high_max_supply = true
     } else {
       this.error_too_high_max_supply = false

@@ -420,9 +420,9 @@ export class MetaverseService {
 
   getGlobalMit = (symbol) => this.blockchain.MIT.get(symbol)
 
-  getListMst = () => this.blockchain.MST.list()
+  listMsts = (lastSymbol?) => this.blockchain.MST.list(lastSymbol)
 
-  getListMit = () => this.blockchain.MIT.list()
+  listSpecialMsts = () => this.blockchain.MST.special()
 
   getBalances() {
     return this.storage.get('balances')
@@ -1071,12 +1071,17 @@ export class MetaverseService {
     }
     const order = (await this.storage.get('asset_order')) || []
     const localIconsList = await this.wallet.getIcons()
+    // Add all the assets in the order list
     order.forEach((symbol: string) => {
       if (localIconsList.MST.indexOf(symbol) !== -1) {
         icons.MST[symbol] = 'assets/icon/' + symbol + '.png'
       } else {
         icons.MST[symbol] = 'assets/icon/default_mst.png'
       }
+    })
+    // Then add the assets with an icon but not in the order
+    localIconsList.MST.forEach((symbol: string) => {
+      icons.MST[symbol] = 'assets/icon/' + symbol + '.png'
     })
     return icons
   }

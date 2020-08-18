@@ -137,6 +137,11 @@
             "AVAILABLE": "Available",
             "UNCONFIRMED": "Unconfirmed",
             "FROZEN": "Frozen"
+        },
+        "ALL": {
+            "SYMBOL": "Symbol",
+            "DESCRIPTION": "Description",
+            "LOAD_MORE": "Load more"
         }
     },
     "MST_DETAILS": {
