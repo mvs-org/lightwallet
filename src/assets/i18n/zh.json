@@ -151,7 +151,7 @@
         "INFO": {
             "MAX_SUPPLY": "最大供应量",
             "TOTAL_SUPPLY": "总供给",
-            "BURNED_QUANTITY": "帐单数量",
+            "BURNED_QUANTITY": "销毁数量",
             "CIRCULATION_SUPPLY": "流通量",
             "INITIAL_MAX_SUPPLY": "初始供应",
             "ADDED_VIA_SECONDARY_ISSUE": "通过次要问题添加",
