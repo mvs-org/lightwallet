@@ -22,6 +22,7 @@ export class MstPage implements OnInit, OnDestroy {
   loading = true
   loadingMoreMsts = true
   order = []
+  mstsFullyLoaded = false
 
   heightSubscription: Subscription
   status = 'default'
@@ -77,6 +78,24 @@ export class MstPage implements OnInit, OnDestroy {
             hidden: hidden.indexOf(symbol) !== -1,
             order: this.order.indexOf(symbol)
           })
+        })
+        const emptyBalances = {
+          decimals: 0,
+          available: 0,
+          unconfirmed: 0,
+          frozen: 0,
+          total: 0,
+        }
+        this.order.forEach(symbol => {
+          if (!this.balances.MST[symbol]) {
+            this.msts.push({
+              symbol,
+              balance: emptyBalances,
+              icon: this.icons.MST[symbol] || 'assets/icon/default_mst.png',
+              hidden: hidden.indexOf(symbol) !== -1,
+              order: this.order.indexOf(symbol)
+            })
+          }
         })
         this.loading = false
       }
@@ -142,6 +161,9 @@ export class MstPage implements OnInit, OnDestroy {
     this.loadingMoreMsts = true
     const lastSymbol = this.allMsts[this.allMsts.length - 1] ? this.allMsts[this.allMsts.length - 1].symbol : undefined
     const msts = await this.metaverseService.listMsts(lastSymbol)
+    if (msts && msts.length < 20) {
+      this.mstsFullyLoaded = true
+    }
     this.allMsts = this.allMsts.concat(msts)
     this.loadingMoreMsts = false
   }
@@ -167,14 +189,6 @@ export class MstPage implements OnInit, OnDestroy {
     this.order.push(mst.symbol)
     await this.metaverseService.addAssetsToAssetOrder([mst.symbol])
 
-    // Add MST to balances
-    this.balances.MST[mst.symbol] = {
-      decimals: mst.decimals,
-      available: 0,
-      unconfirmed: 0,
-      frozen: 0,
-    }
-    await this.metaverseService.setBalances(this.balances)
   }
 
 }

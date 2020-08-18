@@ -317,8 +317,8 @@
 
       </ion-label>
     </ion-item>
-    <div class="center">
-      <ion-button color="primary" *ngIf="!stakelistFullyLoaded" (click)="getStakelist()" [disabled]="loadingStakelist">
+    <div class="center" *ngIf="!stakelistFullyLoaded">
+      <ion-button color="primary" (click)="getStakelist()" [disabled]="loadingStakelist">
         <ion-icon slot="start" name="add"></ion-icon>
         <span translate="MST_DETAILS.STAKELIST.LOAD_MORE"></span>
       </ion-button>
