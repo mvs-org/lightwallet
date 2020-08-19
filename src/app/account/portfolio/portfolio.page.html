@@ -34,7 +34,7 @@
             </ion-item>
 
             <div *ngFor="let mst of msts | orderBy: ['order', '-1']; let i = index">
-                <ion-item *ngIf="!mst.hidden && mst.balance.total && mst.balance.total !== 0" button [routerLink]="'/account/send/' + mst.symbol" detail>
+                <ion-item *ngIf="!mst.hidden && (mst.balance.total || mst.symbol == 'DNA')" button [routerLink]="'/account/send/' + mst.symbol" detail>
                     <img class="coinlogo" [src]="mst.icon" (error)="errorImg($event)"
                         [ngClass]="{'default-logo': mst.icon == 'default_mst'}">
                     <ion-label class="symbol">{{mst.symbol}}</ion-label>

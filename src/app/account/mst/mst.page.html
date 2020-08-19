@@ -49,6 +49,10 @@
           <ion-col>{{mst.balance.frozen || 0 | format : mst.balance.decimals}}</ion-col>
 
           <ion-buttons slot="end" *ngIf="status == 'edit'">
+            <ion-button *ngIf="mst.deletable" (click)="delete(mst.symbol)">
+              <ion-icon color="danger" slot="icon-only" name="trash"></ion-icon>
+            </ion-button>
+            <div class="empty-space-button" *ngIf="!mst.deletable"></div>
             <ion-button *ngIf="!mst.hidden" (click)="mst.hidden = true">
               <ion-icon color="black" slot="icon-only" name="eye"></ion-icon>
             </ion-button>

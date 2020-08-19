@@ -76,7 +76,8 @@ export class MstPage implements OnInit, OnDestroy {
             balance,
             icon: this.icons.MST[symbol] || 'assets/icon/default_mst.png',
             hidden: hidden.indexOf(symbol) !== -1,
-            order: this.order.indexOf(symbol)
+            order: this.order.indexOf(symbol),
+            deletable: false,
           })
         })
         const emptyBalances = {
@@ -93,7 +94,8 @@ export class MstPage implements OnInit, OnDestroy {
               balance: emptyBalances,
               icon: this.icons.MST[symbol] || 'assets/icon/default_mst.png',
               hidden: hidden.indexOf(symbol) !== -1,
-              order: this.order.indexOf(symbol)
+              order: this.order.indexOf(symbol),
+              deletable: true,
             })
           }
         })
@@ -188,7 +190,10 @@ export class MstPage implements OnInit, OnDestroy {
     // Add MST to order
     this.order.push(mst.symbol)
     await this.metaverseService.addAssetsToAssetOrder([mst.symbol])
+  }
 
+  delete(symbol) {
+    console.log("Delete " + symbol)
   }
 
 }

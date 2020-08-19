@@ -79,6 +79,12 @@ export class DetailsPage implements OnInit {
 
     /* Load balances */
     this.balance = (await this.metaverseService.getBalances()).MST[this.symbol]
+      || {
+        available: 0,
+        frozen: 0,
+        unconfirmed: 0,
+      }
+    console.log(this.balance)
     this.loadingBalance = false
 
     const icons = await this.metaverseService.getDefaultIcon()
@@ -95,7 +101,6 @@ export class DetailsPage implements OnInit {
         base: parseInt(miningModel[3], 10),
         basePercent: Math.round((1 - parseInt(miningModel[3], 10)) * 100)
       }
-      console.log(this.miningModel)
     }
     this.loadingMstInfo = false
 

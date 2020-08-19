@@ -30,25 +30,25 @@
               <div translate="MST_DETAILS.BALANCE.TOTAL"></div>
             </ion-col>
             <ion-col class="right">
-              {{(balance.available + balance.unconfirmed + balance.frozen) || 0 | format : balance.decimals}}</ion-col>
+              {{(balance.available + balance.unconfirmed + balance.frozen) || 0 | format : asset.decimals}}</ion-col>
           </ion-row>
           <ion-row>
             <ion-col>
               <div translate="MST_DETAILS.BALANCE.AVAILABLE"></div>
             </ion-col>
-            <ion-col class="right">{{balance.available || 0 | format : balance.decimals}}</ion-col>
+            <ion-col class="right">{{balance.available || 0 | format : asset.decimals}}</ion-col>
           </ion-row>
           <ion-row>
             <ion-col>
               <div translate="MST_DETAILS.BALANCE.CONFIRMING"></div>
             </ion-col>
-            <ion-col class="right">{{balance.unconfirmed || 0 | format : balance.decimals}}</ion-col>
+            <ion-col class="right">{{balance.unconfirmed || 0 | format : asset.decimals}}</ion-col>
           </ion-row>
           <ion-row>
             <ion-col>
               <div translate="MST_DETAILS.BALANCE.FROZEN"></div>
             </ion-col>
-            <ion-col class="right">{{balance.frozen || 0 | format : balance.decimals}}</ion-col>
+            <ion-col class="right">{{balance.frozen || 0 | format : asset.decimals}}</ion-col>
           </ion-row>
         </ng-template>
       </ion-label>
@@ -308,7 +308,7 @@
             <span>{{staker.a}}</span>
           </ion-col>
           <ion-col class="right">
-            {{staker.q | format : balance.decimals}}
+            {{staker.q | format : asset.decimals}}
           </ion-col>
 
         </ion-item>
