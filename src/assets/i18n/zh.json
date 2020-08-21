@@ -154,7 +154,7 @@
             "BURNED_QUANTITY": "销毁数量",
             "CIRCULATION_SUPPLY": "流通量",
             "INITIAL_MAX_SUPPLY": "初始供应",
-            "ADDED_VIA_SECONDARY_ISSUE": "通过次要问题添加",
+            "ADDED_VIA_SECONDARY_ISSUE": "通过二次增发",
             "MINED_SUPPLY": "通过采矿分配",
             "MINING_MODEL_INITIAL": "每块初始采矿奖励",
             "MINING_CURRENT_REWARD": "每块当前的采矿奖励",
@@ -172,9 +172,9 @@
             "SECONDARY_ISSUE_PAST_MODEL_BLOCKS": "{{number}}个区块",
             "SECONDARY_ISSUE_PAST_MODEL_QUANTITY_MODEL2": "在时期号{{number}}之后解锁的数量",
             "SECONDARY_ISSUE_PAST_MODEL_PERIOD_MODEL2": "期间编号{{number}}的持续时间",
-            "SECONDARY_ISSUE": "第二个问题模型",
-            "SECONDARY_ISSUE_DISABLED": "不可能再发行",
-            "SECONDARY_ISSUE_UNLIMITED": "无堆叠限制",
+            "SECONDARY_ISSUE": "二次增发模型",
+            "SECONDARY_ISSUE_DISABLED": "不可二次增发",
+            "SECONDARY_ISSUE_UNLIMITED": "无二次增发限制",
             "DECIMALS": "小数",
             "ISSUER": "发行人",
             "ADDRESS": "签发地址",
@@ -743,7 +743,7 @@
                 "mining": "采矿证书",
                 "witness": "见证人证书"
             },
-            "BURN": "用来被烧掉的"
+            "BURN": "被销毁的"
         },
         "PENDING_CONFIRMATION": "待确认",
         "CONFIRMING": "确认中",
@@ -773,8 +773,8 @@
             "ETP_LOCK_REWARD": "ETP锁定奖励",
             "MST_LOCK": "MST锁定",
             "MINING_REWARD": "采矿奖励",
-            "BURN_ETP": "燃烧ETP交易",
-            "BURN_MST": "燃烧MST交易",
+            "BURN_ETP": "销毁ETP",
+            "BURN_MST": "销毁MST",
             "DNA_VOTE": "DNA投票",
             "UNKNOWN": "未知的交易类型"
         },
@@ -828,7 +828,7 @@
         "NO_AVATARS": "您还没有任何Avatar。单击创建以创建您的第一个Avatar！",
         "CERT": {
             "TITLE": "我的证书: ",
-            "SECONDARY_ISSUE": "第二期",
+            "SECONDARY_ISSUE": "增发",
             "DOMAIN": "域",
             "NAMING": "命名"
         },
