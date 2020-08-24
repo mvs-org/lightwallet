@@ -22,7 +22,7 @@
           <ion-col translate="MST_DETAILS.BALANCE.TITLE"></ion-col>
         </h1>
 
-        <ion-spinner name="dots" *ngIf="loadingBalance; else Balances"></ion-spinner>
+        <ion-spinner name="dots" *ngIf="loadingBalance || !asset; else Balances"></ion-spinner>
 
         <ng-template #Balances>
           <ion-row>
@@ -69,7 +69,7 @@
           <ion-icon slot="icon-only" name="open"></ion-icon>
         </ion-button>
 
-        <ion-spinner name="dots" *ngIf="loadingMstInfo; else MstInfo"></ion-spinner>
+        <ion-spinner name="dots" *ngIf="loadingMstInfo || !asset; else MstInfo"></ion-spinner>
         <ng-template #MstInfo>
           <div *ngIf="asset; else NoMstInfo">
             <ion-row *ngIf="asset.symbol == 'ETP' || (!miningModel && asset.secondaryissue_threshold == 0)">

@@ -84,7 +84,6 @@ export class DetailsPage implements OnInit {
         frozen: 0,
         unconfirmed: 0,
       }
-    console.log(this.balance)
     this.loadingBalance = false
 
     const icons = await this.metaverseService.getDefaultIcon()
