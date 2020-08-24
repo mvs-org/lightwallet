@@ -142,6 +142,7 @@
             }
         },
         "ALL": {
+            "TITLE": "All MSTs",
             "SYMBOL": "Symbol",
             "DESCRIPTION": "Description",
             "LOAD_MORE": "Load more"
