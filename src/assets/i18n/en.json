@@ -136,7 +136,10 @@
             "TOTAL": "Total",
             "AVAILABLE": "Available",
             "UNCONFIRMED": "Unconfirmed",
-            "FROZEN": "Frozen"
+            "FROZEN": "Frozen",
+            "BUTTON": {
+                "SEND": "Send"
+            }
         },
         "ALL": {
             "SYMBOL": "Symbol",

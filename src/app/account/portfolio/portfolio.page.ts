@@ -105,6 +105,10 @@ export class PortfolioPage implements OnInit, OnDestroy {
     }
   }
 
+  goToMst(symbol) {
+    this.router.navigate(['/account', 'mst', symbol])
+  }
+
   errorImg = (e) => e.target.remove()
 
 }
