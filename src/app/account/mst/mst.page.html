@@ -30,8 +30,8 @@
       <img class="coinlogo" [src]="'assets/icon/default_mst.png'" (error)="errorImg($event)">
       <ion-label class="symbol" translate="MST.GRID.SYMBOL"></ion-label>
       <ion-col translate="MST.GRID.TOTAL"></ion-col>
-      <ion-col translate="MST.GRID.UNCONFIRMED"></ion-col>
-      <ion-col translate="MST.GRID.FROZEN"></ion-col>
+      <ion-col class="ion-hide-sm-down" translate="MST.GRID.UNCONFIRMED"></ion-col>
+      <ion-col class="ion-hide-sm-down" translate="MST.GRID.FROZEN"></ion-col>
       <div class="empty-space-header-edit" *ngIf="status == 'edit'"></div>
       <div class="empty-space-header-default" *ngIf="status == 'default'"></div>
     </ion-item>
@@ -45,8 +45,8 @@
             [ngClass]="{'default-logo': mst.icon == 'default_mst'}">
           <ion-label class="symbol">{{mst.symbol}}</ion-label>
           <ion-col>{{mst.balance.total || 0 | format : mst.balance.decimals}}</ion-col>
-          <ion-col>{{mst.balance.unconfirmed || 0 | format : mst.balance.decimals}}</ion-col>
-          <ion-col>{{mst.balance.frozen || 0 | format : mst.balance.decimals}}</ion-col>
+          <ion-col class="ion-hide-sm-down">{{mst.balance.unconfirmed || 0 | format : mst.balance.decimals}}</ion-col>
+          <ion-col class="ion-hide-sm-down">{{mst.balance.frozen || 0 | format : mst.balance.decimals}}</ion-col>
 
           <ion-buttons slot="end" *ngIf="status == 'edit'">
             <ion-button *ngIf="mst.deletable" (click)="delete(mst.symbol)">
