@@ -4,10 +4,10 @@
             <img src="/assets/logo.png" class="logo" alt="Metaverse">
             <div class="center">
                 v{{globals.version}}
+                <ion-icon slot="start" *ngIf="!hasSeed" name="eye"></ion-icon>
             </div>
             <ion-list id="inbox-list">
                 <ion-buttons slot="end">
-                    <ion-icon slot="start" *ngIf="!hasSeed" name="eye"></ion-icon>
                     <ion-icon slot="start" *ngIf="isOffline()" name="flash" class="offlineIcon"></ion-icon>
                     <ion-button class="center" (click)="sync()">
                         <span *ngIf="height" translate="MAIN_MENU.HEIGHT" [translateParams]="{height: height}"></span>
