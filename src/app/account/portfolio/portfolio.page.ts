@@ -1,9 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
 import { TranslateService } from '@ngx-translate/core'
-import { WalletService } from '../../services/wallet.service'
 import { MetaverseService } from '../../services/metaverse.service'
 import { Router } from '@angular/router'
-import { AlertService } from '../../services/alert.service'
 import { Subscription } from 'rxjs'
 
 @Component({
@@ -28,21 +26,19 @@ export class PortfolioPage implements OnInit, OnDestroy {
 
   constructor(
     public translate: TranslateService,
-    private walletService: WalletService,
     private metaverseService: MetaverseService,
     private router: Router,
-    private alertService: AlertService,
   ) { }
 
-  ionViewDidEnter() {
-
+  async ionViewWillEnter() {
+    this.loading = true
+    this.heightSubscription = this.metaverseService.height$.subscribe(() => {
+      this.showBalances()
+    })
   }
 
   async ngOnInit() {
     this.loadTickers()
-    this.heightSubscription = this.metaverseService.height$.subscribe(() => {
-      this.showBalances()
-    })
     this.whitelist = await this.metaverseService.getWhitelist()
   }
 
@@ -58,6 +54,7 @@ export class PortfolioPage implements OnInit, OnDestroy {
 
   private async showBalances() {
     try {
+      console.log("In show balances")
       this.balances = await this.metaverseService.getBalances()
       await this.metaverseService.addAssetsToAssetOrder(Object.keys(this.balances.MST))
       const order = await this.metaverseService.assetOrder()
