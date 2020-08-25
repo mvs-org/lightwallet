@@ -30,7 +30,6 @@ export class GenerateAddressPage implements OnInit {
   }
 
   async ionViewDidEnter() {
-    console.log('ionViewDidLoad GenerateAddressPage')
     this.index = await this.walletService.getAddressIndex() || 10
 
     const xpub = await this.walletService.getXpub()

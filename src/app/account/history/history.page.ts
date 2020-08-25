@@ -95,7 +95,6 @@ export class HistoryPage implements OnInit {
   }
 
   async updateFilters(symbol, addresses) {
-    console.log('Change')
     this.icon = this.iconsList.indexOf(this.asset) !== -1 ? this.asset : 'default_mst'
     this.txs = await this.filterTxs(this.txs_history, symbol, addresses)
   }
@@ -209,18 +208,15 @@ export class HistoryPage implements OnInit {
   }
 
   selectAll() {
-    console.log('Select All')
     this.allSelected = true
     this.addresses = this.allAddresses
     // this.selectAddresses.close().then(() => this.selectAddresses.open())
   }
 
   selectNone() {
-    console.log('Select None')
     this.allSelected = false
     this.addresses = []
     this.txs = []
-    console.log('remove selection')
     this.selectAddresses.open()
     // this.selectAddresses.
     // this.selectAddresses.close().then(() => this.selectAddresses.open())

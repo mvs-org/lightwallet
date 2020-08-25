@@ -78,12 +78,18 @@ export class DetailsPage implements OnInit {
     this.symbol = this.activatedRoute.snapshot.params.symbol
 
     /* Load balances */
-    this.balance = (await this.metaverseService.getBalances()).MST[this.symbol]
-      || {
+    const balances = await this.metaverseService.getBalances()
+    if (this.symbol === 'ETP') {
+      this.balance = balances.ETP
+    } else {
+      this.balance = balances.MST[this.symbol]
+        || {
         available: 0,
         frozen: 0,
         unconfirmed: 0,
+        decimals: 0,
       }
+    }
     this.loadingBalance = false
 
     const icons = await this.metaverseService.getDefaultIcon()
@@ -114,10 +120,10 @@ export class DetailsPage implements OnInit {
         updates: [],
       }
       //this.miningModel = {
-        //initial: 300000000,
-        //interval: 500000,
-        //base: 0.95,
-        //basePercent: 5,
+      //initial: 300000000,
+      //interval: 500000,
+      //base: 0.95,
+      //basePercent: 5,
       //}
     } else {
       this.asset = await this.metaverseService.getMst(this.symbol)
