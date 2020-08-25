@@ -35,9 +35,9 @@
                 <ion-item (click)="goToMst('ETP')" class="inside-line" lines="none">
                     <img class="coinlogo" [src]="'assets/icon/ETP.png'" (error)="errorImg($event)">
                     <ion-label class="symbol">ETP</ion-label>
-                    <ion-col>{{balances.ETP.total || 0 | format : 8}}</ion-col>
-                    <ion-col class="ion-hide-sm-down">{{balances.ETP.unconfirmed || 0 | format : 8}}</ion-col>
-                    <ion-col class="ion-hide-sm-down">{{balances.ETP.frozen || 0 | format : 8}}</ion-col>
+                    <ion-col>{{etpBalance.total || 0 | format : 8}}</ion-col>
+                    <ion-col class="ion-hide-sm-down">{{etpBalance.unconfirmed || 0 | format : 8}}</ion-col>
+                    <ion-col class="ion-hide-sm-down">{{etpBalance.frozen || 0 | format : 8}}</ion-col>
                 </ion-item>
                 <ion-buttons slot="end" class="right-buttons">
                     <ion-button color="danger" fill="outline" shape="round" [routerLink]="'/account/send/ETP'"
