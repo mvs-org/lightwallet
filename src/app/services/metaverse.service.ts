@@ -758,6 +758,15 @@ export class MetaverseService {
     return await this.setAssetOrder(order)
   }
 
+  async removeAssetsFromAssetOrder(names: string[]) {
+    const order = await this.assetOrder()
+    names.forEach(symbol => {
+      const index = order.indexOf(symbol)
+      order.splice(index, 1)
+    })
+    return await this.setAssetOrder(order)
+  }
+
   async sign(transaction: string, passphrase: string, throwWhenUnknown: boolean = true) {
     const wallet = await this.wallet.getWallet(passphrase)
     const signed = await wallet.sign(transaction, throwWhenUnknown)
