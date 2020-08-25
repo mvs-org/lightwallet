@@ -85,19 +85,19 @@
               <ion-col class="right">{{asset.quantity + asset.minedQuantity | format : asset.decimals}}</ion-col>
             </ion-row>
             <!--TODO-->
-            <ion-row *ngIf="asset.symbol == 'ETP'">
+            <!--ion-row *ngIf="asset.symbol == 'ETP'">
               <ion-col>
                 <div translate="MST_DETAILS.INFO.TOTAL_SUPPLY"></div>
               </ion-col>
-              <ion-col class="right">{{100000000 | format : asset.decimals}}</ion-col>
-            </ion-row>
+              <ion-col class="right">{{asset.quantity | format : asset.decimals}}</ion-col>
+            </ion-row-->
             <!--TODO-->
-            <ion-row *ngIf="asset.symbol == 'ETP'">
+            <!--ion-row *ngIf="asset.symbol == 'ETP'">
               <ion-col>
                 <div translate="MST_DETAILS.INFO.BURNED_QUANTITY"></div>
               </ion-col>
               <ion-col class="right">{{0 | format : 0}}</ion-col>
-            </ion-row>
+            </ion-row-->
             <ion-row *ngIf="asset.symbol !== 'ETP'">
               <ion-col>
                 <div translate="MST_DETAILS.INFO.BURNED_QUANTITY"></div>
@@ -105,12 +105,12 @@
               <ion-col class="right">{{asset.burnedQuantity | format : asset.decimals}}</ion-col>
             </ion-row>
             <!--TODO-->
-            <ion-row *ngIf="asset.symbol == 'ETP'">
+            <!--ion-row *ngIf="asset.symbol == 'ETP'">
               <ion-col>
                 <div translate="MST_DETAILS.INFO.CIRCULATION_SUPPLY"></div>
               </ion-col>
               <ion-col class="right">{{0 | format : 0}}</ion-col>
-            </ion-row>
+            </ion-row-->
             <!--TO REVIEW (DNA?)-->
             <ion-row *ngIf="asset.symbol !== 'ETP'">
               <ion-col>

@@ -90,17 +90,49 @@ export class DetailsPage implements OnInit {
     this.icon = icons.MST[this.symbol] || 'assets/icon/default_mst.png'
 
     /* Load MST info */
-    this.asset = await this.metaverseService.getMst(this.symbol)
+    if (this.symbol === 'ETP') {
+      this.icon = 'assets/icon/ETP.png'
+      this.asset = {
+        symbol: 'ETP',
+        original_quantity: 10000000000000000,
+        quantity: 10000000000000000,
+        secondaryissue_threshold: 0,
+        decimals: 8,
+        issuer: 'mvs.org',
+        address: 'MGqHvbaH9wzdr6oUDFz4S1HptjoKQcjRve',
+        issue_tx: '2a845dfa63a7c20d40dbc4b15c3e970ef36332b367500fd89307053cb4c1a2c1',
+        height: 0,
+        description: 'MVS Official Token',
+        minedQuantity: undefined,
+        burnedQuantity: undefined,
+        from_did: undefined,
+        is_secondaryissue: false,
+        to_did: undefined,
+        issue_index: undefined,
+        confirmed_at: undefined,
+        mining_model: undefined,
+        updates: [],
+      }
+      //this.miningModel = {
+        //initial: 300000000,
+        //interval: 500000,
+        //base: 0.95,
+        //basePercent: 5,
+      //}
+    } else {
+      this.asset = await this.metaverseService.getMst(this.symbol)
 
-    if (this.asset.mining_model) {
-      const miningModel = this.asset.mining_model.match(/^initial:(.+),interval:(.+),base:(.+)$/)
-      this.miningModel = {
-        initial: parseInt(miningModel[1], 10),
-        interval: parseInt(miningModel[2], 10),
-        base: parseInt(miningModel[3], 10),
-        basePercent: Math.round((1 - parseInt(miningModel[3], 10)) * 100)
+      if (this.asset.mining_model) {
+        const miningModel = this.asset.mining_model.match(/^initial:(.+),interval:(.+),base:(.+)$/)
+        this.miningModel = {
+          initial: parseInt(miningModel[1], 10),
+          interval: parseInt(miningModel[2], 10),
+          base: parseInt(miningModel[3], 10),
+          basePercent: Math.round((1 - parseInt(miningModel[3], 10)) * 100)
+        }
       }
     }
+
     this.loadingMstInfo = false
 
     /* Load stakelist */
