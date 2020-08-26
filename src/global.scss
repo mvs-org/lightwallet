@@ -170,11 +170,11 @@ ion-header {
     z-index: 999;
 }
 
-ion-content{
-    // --padding-start: 20px;
+ion-content:not(.main-menu) {
+    --padding-start: 20px;
     --padding-top: 20px;
     --padding-bottom: 20px;
-    // --padding-end: 20px;
+    --padding-end: 20px;
 }
 
 ion-spinner {

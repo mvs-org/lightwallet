@@ -33,9 +33,7 @@
     *ngIf="issuer_name && (!addressbalances || !addressbalances[issue_address] || !addressbalances[issue_address][selectedAsset] || addressbalances[issue_address][selectedAsset].available<1000000000)"
     translate="CREATE_MST.NOTICE_TRANSACTION_FEE_UNCOVERED"></h2>
   <form #sendForm="ngForm" (ngSubmit)="confirm()">
-    <ion-list style="padding-bottom: 0;">
-
-      {{symbol_check}}
+    <ion-list>
 
       <ion-item
         [ngClass]="{'error-border': !validSymbol(symbol) || symbol_check == 'exist' || symbol_check == 'not_domain_owner' || symbol_check == 'other_avatar_domain_owner', 'warning-border': error_loading_certs || symbol_check == 'cant_check_domain' || symbol_check == 'cant_check_available', 'valid-border': symbol_check == 'available' && validSymbol(symbol)}">
