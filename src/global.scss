@@ -55,7 +55,7 @@
     --border-color: #32db64 !important;
 }
 
-.item-input.ion-untouched {
+.item-input.ion-untouched:not(.error-border):not(.warning-border):not(.valid-border) {
     --highlight-background: #488aff !important;
     --border-color: #488aff !important;
 }
