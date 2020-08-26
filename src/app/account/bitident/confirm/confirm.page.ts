@@ -35,7 +35,7 @@ export class ConfirmPage {
   constructor(
     private router: Router,
     private appService: AppService,
-    private mvs: MetaverseService,
+    private metaverseService: MetaverseService,
     private location: Location,
     private wallet: WalletService,
     private bitident: BitidentService,
@@ -57,7 +57,7 @@ export class ConfirmPage {
   }
 
   loadAvatars() {
-    return this.mvs.listAvatars()
+    return this.metaverseService.listAvatars()
       .then((avatars) => {
         if (avatars.length === 0) {
           this.alertService.showMessage('BITIDENT.MESSAGE.NO_AVATAR_TITLE', '', 'BITIDENT.MESSAGE.NO_AVATAR_TITLE_BODY')
@@ -107,7 +107,7 @@ export class ConfirmPage {
         signedToken.sourceSignature = ''
         const encodedUnsignedToken = signedToken.encode('hex')
 
-        const sourceAvatar = await this.mvs.getGlobalAvatar(signedToken.source)
+        const sourceAvatar = await this.metaverseService.getGlobalAvatar(signedToken.source)
 
         const sourceAddress = sourceAvatar.address
 

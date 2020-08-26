@@ -36,27 +36,32 @@
     <ion-list style="padding-bottom: 0;">
 
       <ion-item
-        [ngClass]="{'error-border': !validSymbol(symbol) || symbol_check == 'exist' || symbol_check == 'not_domain_owner' || symbol_check == 'other_avatar_domain_owner', 'warning-border': error_loading_msts || error_loading_certs || symbol_check == 'cant_check_domain'}">
+        [ngClass]="{'error-border': !validSymbol(symbol) || symbol_check == 'exist' || symbol_check == 'not_domain_owner' || symbol_check == 'other_avatar_domain_owner', 'warning-border': error_loading_certs || symbol_check == 'cant_check_domain'}">
         <ion-label color="primary" position="floating" translate="CREATE_MST.SYMBOL.LABEL"></ion-label>
         <ion-input class="uppercase" name="symbol" [(ngModel)]="symbol" (ngModelChange)="symbolChanged()" maxlength="63"
           required></ion-input>
       </ion-item>
-      <ion-item *ngIf="symbol_check == 'available'" lines="none" class="valid-input"
-        translate="CREATE_MST.SYMBOL.AVAILABLE"></ion-item>
-      <ion-item *ngIf="symbol_check == 'domain_owner'" lines="none" class="valid-input"
-        translate="CREATE_MST.SYMBOL.DOMAIN_OWNER"></ion-item>
-      <ion-item *ngIf="symbol_check == 'naming_owner'" lines="none" class="valid-input"
-        translate="CREATE_MST.SYMBOL.NAMING_OWNER"></ion-item>
-      <ion-item *ngIf="symbol_check == 'exist'" lines="none" class="wrong-input"
-        translate="CREATE_MST.SYMBOL.ALREADY_EXIST"></ion-item>
-      <ion-item *ngIf="symbol_check == 'not_domain_owner'" lines="none" class="wrong-input"
-        translate="CREATE_MST.SYMBOL.NOT_CERT_OWNER"></ion-item>
-      <ion-item *ngIf="symbol_check == 'other_avatar_domain_owner'" lines="none" class="wrong-input"
-        translate="CREATE_MST.SYMBOL.DOMAIN_OWNER_OTHER_MY_AVATARS"></ion-item>
-      <ion-item *ngIf="error_loading_msts" lines="none" class="warning-input"
-        translate="CREATE_MST.SYMBOL.ERROR_LOADING_MSTS"></ion-item>
-      <ion-item *ngIf="error_loading_certs || symbol_check == 'cant_check_domain'" lines="none" class="warning-input"
-        translate="CREATE_MST.SYMBOL.ERROR_LOADING_CERTS"></ion-item>
+      <div *ngIf="checkSymbol">
+
+      </div>
+      <div *ngIf="!checkSymbol">
+        <ion-item *ngIf="symbol_check == 'available'" lines="none" class="valid-input"
+          translate="CREATE_MST.SYMBOL.AVAILABLE"></ion-item>
+        <ion-item *ngIf="symbol_check == 'domain_owner'" lines="none" class="valid-input"
+          translate="CREATE_MST.SYMBOL.DOMAIN_OWNER"></ion-item>
+        <ion-item *ngIf="symbol_check == 'naming_owner'" lines="none" class="valid-input"
+          translate="CREATE_MST.SYMBOL.NAMING_OWNER"></ion-item>
+        <ion-item *ngIf="symbol_check == 'exist'" lines="none" class="wrong-input"
+          translate="CREATE_MST.SYMBOL.ALREADY_EXIST"></ion-item>
+        <ion-item *ngIf="symbol_check == 'not_domain_owner'" lines="none" class="wrong-input"
+          translate="CREATE_MST.SYMBOL.NOT_CERT_OWNER"></ion-item>
+        <ion-item *ngIf="symbol_check == 'other_avatar_domain_owner'" lines="none" class="wrong-input"
+          translate="CREATE_MST.SYMBOL.DOMAIN_OWNER_OTHER_MY_AVATARS"></ion-item>
+        <ion-item *ngIf="symbol_check == 'cant_check_available'" lines="none" class="warning-input"
+          translate="CREATE_MST.SYMBOL.ERROR_LOADING_MSTS"></ion-item>
+        <ion-item *ngIf="error_loading_certs || symbol_check == 'cant_check_domain'" lines="none" class="warning-input"
+          translate="CREATE_MST.SYMBOL.ERROR_LOADING_CERTS"></ion-item>
+      </div>
 
       <ion-item [ngClass]="{'error-border':!validMaxSupply(max_supply, asset_decimals)}">
         <ion-label color="primary" position="floating" translate="CREATE_MST.MAX_SUPPLY.LABEL"></ion-label>

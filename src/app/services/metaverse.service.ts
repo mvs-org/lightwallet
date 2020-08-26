@@ -804,6 +804,10 @@ export class MetaverseService {
     return this.blockchain.suggest.address(prefix)
   }
 
+  suggestMST(prefix) {
+    return this.blockchain.suggest.mst(prefix)
+  }
+
   suggestMIT(prefix) {
     return this.blockchain.suggest.mit(prefix)
   }

@@ -79,11 +79,11 @@ export class CreatePage implements OnInit {
 
   validSymbol = (symbol) => /^[A-Za-z0-9._\-]{3,64}$/g.test(symbol) && this.symbol_available
 
-  validContent = (content) => content == undefined || content.length < 253
+  validContent = (content) => content === undefined || content.length < 253
 
-  validName = (recipient_avatar) => (recipient_avatar !== undefined && recipient_avatar.length > 0)
+  validName = (recipientAvatar) => (recipientAvatar !== undefined && recipientAvatar.length > 0)
 
-  validAddress = (recipient_address) => (recipient_address !== undefined && recipient_address.length > 0)
+  validAddress = (recipientAddress) => (recipientAddress !== undefined && recipientAddress.length > 0)
 
   create() {
     return this.alertService.showLoading()
@@ -140,7 +140,7 @@ export class CreatePage implements OnInit {
       this.symbol = this.symbol.trim()
       Promise.all([this.metaverseService.suggestMIT(this.symbol), this.symbol])
         .then(result => {
-          if (this.symbol != result[1]) {
+          if (this.symbol !== result[1]) {
             throw ''
           } else if (result[0][0] === this.symbol) {
             this.symbol_available = false

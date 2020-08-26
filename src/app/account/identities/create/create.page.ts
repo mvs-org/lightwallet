@@ -144,7 +144,7 @@ export class CreatePage implements OnInit {
     if (symbol && symbol.length >= 3) {
       this.metaverseService.getAvatarAvailable(symbol)
         .then(available => {
-          if (this.symbol != symbol) {
+          if (this.symbol !== symbol) {
             return
           } else {
             this.available_symbol = available

@@ -39,9 +39,7 @@ export class CreatePage implements OnInit {
   list_my_domain_certs: Array<any> = []  // domain certificates own by the avatar currently selected
   list_my_naming_certs: Array<any> = []
   msts: Array<any>
-  list_msts: Array<any> = []
   symbol_check: string
-  error_loading_msts = false
   error_loading_certs = false
   error_too_high_max_supply = false
   avatars: Array<any>
@@ -56,6 +54,7 @@ export class CreatePage implements OnInit {
   mining = false
   mstMiningModel: any
   showAdvanced = false
+  checkSymbol = false
 
   constructor(
     private metaverseService: MetaverseService,
@@ -134,19 +133,18 @@ export class CreatePage implements OnInit {
   init() {
     this.loadAvatars()
       .then(() => this.loadCerts())
-      .then(() => this.loadMsts())
       .then(() => this.symbolChanged())
       .catch(console.error)
   }
 
   validMaxSupply = (maxSupply, assetDecimals) =>
     maxSupply === 'custom'
-      || (maxSupply > 0
-        && ((assetDecimals === undefined) || (Math.floor(parseFloat(maxSupply) * Math.pow(10, assetDecimals))) <= 10000000000000000))
+    || (maxSupply > 0
+      && ((assetDecimals === undefined) || (Math.floor(parseFloat(maxSupply) * Math.pow(10, assetDecimals))) <= 10000000000000000))
 
   validMaxSupplyCustom = (custom_max_supply, asset_decimals) =>
     custom_max_supply > 0
-      && ((asset_decimals === undefined) || (Math.floor(parseFloat(custom_max_supply) * Math.pow(10, asset_decimals))) <= 10000000000000000)
+    && ((asset_decimals === undefined) || (Math.floor(parseFloat(custom_max_supply) * Math.pow(10, asset_decimals))) <= 10000000000000000)
 
   validDecimals = (assetDecimals) => assetDecimals >= 0 && assetDecimals <= 8
 
@@ -163,7 +161,7 @@ export class CreatePage implements OnInit {
   create() {
     return this.alertService.showLoading()
       .then(() => this.metaverseService.createIssueAssetTx(
-        this.toUpperCase(this.symbol),
+        this.symbol,
         Math.floor(parseFloat(this.max_supply === 'custom' ? this.custom_max_supply : this.max_supply) * Math.pow(10, this.asset_decimals)),
         this.asset_decimals,
         this.issuer_name,
@@ -235,14 +233,6 @@ export class CreatePage implements OnInit {
 
   round = (val: number) => Math.round(val * 100000000) / 100000000
 
-  toUpperCase(text) {
-    let textUpperCase = ''
-    for (let i = 0; i < text.length; i++) {
-      textUpperCase = textUpperCase + text.charAt(i).toUpperCase()
-    }
-    return textUpperCase
-  }
-
   loadCerts() {
     return this.metaverseService.listCerts()
       .then((certs) => {
@@ -273,20 +263,6 @@ export class CreatePage implements OnInit {
     this.symbolChanged()
   }
 
-  loadMsts() {
-    return this.metaverseService.listMsts()
-      .then((msts) => {
-        this.msts = msts
-        msts.forEach(mst => {
-          this.list_msts.push(mst.symbol)
-        })
-      })
-      .catch((error) => {
-        console.error(error)
-        this.error_loading_msts = true
-      })
-  }
-
   loadAvatars() {
     return this.metaverseService.listAvatars()
       .then((avatars) => {
@@ -305,22 +281,27 @@ export class CreatePage implements OnInit {
     this.mstMiningModel = model
   }
 
-  symbolChanged = () => {
+  async symbolChanged() {
+    this.checkSymbol = true
     if (this.symbol && this.symbol.length >= 3) {
-      const symbol = this.symbol.toUpperCase()
-      const domain = symbol.split('.')[0]
-      if (this.list_msts && this.list_msts.indexOf(symbol) !== -1) {
-        // Check to change!
-        this.symbol_check = 'exist'
-      } else if (this.list_my_naming_certs && this.list_my_naming_certs.indexOf(symbol) !== -1) {
-        this.symbol_check = 'naming_owner'
-      } else if (this.list_my_domain_certs && this.list_my_domain_certs.indexOf(domain) !== -1) {
-        this.symbol_check = 'domain_owner'
-      } else if (this.list_domain_certs && this.list_domain_certs.indexOf(domain) !== -1) {
-        this.symbol_check = 'other_avatar_domain_owner'
-      } else {
-        this.metaverseService.getCert(domain, 'domain')
-          .then(response => {
+      this.symbol = this.symbol.trim()
+      this.symbol = this.symbol.toUpperCase()
+      try {
+        const result = await Promise.all([this.metaverseService.suggestMST(this.symbol), this.symbol])
+        if (this.symbol !== result[1]) {
+          return
+        } else if (result[0].indexOf(this.symbol) !== -1) {
+          this.symbol_check = 'exist'
+        } else {
+          const domain = this.symbol.split('.')[0]
+          if (this.list_my_naming_certs && this.list_my_naming_certs.indexOf(this.symbol) !== -1) {
+            this.symbol_check = 'naming_owner'
+          } else if (this.list_my_domain_certs && this.list_my_domain_certs.indexOf(domain) !== -1) {
+            this.symbol_check = 'domain_owner'
+          } else if (this.list_domain_certs && this.list_domain_certs.indexOf(domain) !== -1) {
+            this.symbol_check = 'other_avatar_domain_owner'
+          } else {
+            const response = await this.metaverseService.getCert(domain, 'domain')
             if (domain !== this.symbol.split('.')[0].toUpperCase()) {
               return
             }
@@ -331,14 +312,15 @@ export class CreatePage implements OnInit {
             } else {
               this.symbol_check = 'available'
             }
-          })
-          .catch((e) => {
-            this.symbol_check = 'cant_check_domain'
-          })
+          }
+        }
+      } catch (e) {
+        this.symbol_check = 'cant_check_available'
       }
     } else {
       this.symbol_check = 'too_short'
     }
+    this.checkSymbol = false
   }
 
   maxSupplyChanged = () => {
