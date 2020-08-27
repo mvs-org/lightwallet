@@ -54,7 +54,6 @@ export class PortfolioPage implements OnInit, OnDestroy {
 
   private async showBalances() {
     try {
-      console.log("In show balances")
       this.balances = await this.metaverseService.getBalances()
       await this.metaverseService.addAssetsToAssetOrder(Object.keys(this.balances.MST))
       const order = await this.metaverseService.assetOrder()

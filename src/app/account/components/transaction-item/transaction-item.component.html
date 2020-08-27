@@ -26,7 +26,7 @@
                 </ion-buttons>
             </ion-toolbar>
         </ion-row>
-        <ion-row>
+        <ion-row (click)="showHideDetails()">
             <ion-col>
                 <ion-row>
                     <ion-col>
@@ -50,13 +50,6 @@
                                 ({{height - tx.height >= 0 ? height - tx.height : 0}}/{{appService.min_confirmations}})
                             </ion-item>
                         </div>
-                        <ion-button *ngIf="status == 'PENDING' || status == 'MINED'" class="ion-item show-more-btn"
-                            (click)="showHideDetails()">
-                            <ion-icon slot="start" *ngIf="mode == 'summary'" name="arrow-down"></ion-icon>
-                            <span *ngIf="mode == 'summary'" translate="TX.SHOW_DETAILS"></span>
-                            <ion-icon slot="start" *ngIf="mode !== 'summary'" name="arrow-up"></ion-icon>
-                            <span *ngIf="mode !== 'summary'" translate="TX.HIDE_DETAILS"></span>
-                        </ion-button>
                     </ion-col>
                     <ion-col class="summaryAmount">
                         <div class="right" *ngIf="txType == 'ETP' || txType == 'COINSTAKE'">
@@ -75,7 +68,8 @@
                                 {{'TX.INTRAWALLET' | translate}}
                             </ion-item>
                         </div>
-                        <ion-item lines="none" *ngIf="txType == 'ASSET' || txType == 'ISSUE' || txType == 'MST_MINING' || txType == 'MST_LOCK' || txType == 'DNA_VOTE'">
+                        <ion-item lines="none"
+                            *ngIf="txType == 'ASSET' || txType == 'ISSUE' || txType == 'MST_MINING' || txType == 'MST_LOCK' || txType == 'DNA_VOTE'">
                             <div *ngIf="totalPersonalInputs.MST[txTypeValue] && totalPersonalInputs.MST[txTypeValue] - totalPersonalOutputs.MST[txTypeValue] > 0"
                                 class="sendAmount">
                                 -{{totalPersonalInputs.MST[txTypeValue] - totalPersonalOutputs.MST[txTypeValue] |
@@ -115,6 +109,14 @@
                     </ion-col>
                 </ion-row>
             </ion-col>
+            <ion-toolbar>
+                <ion-buttons slot="end">
+                    <ion-button>
+                        <ion-icon slot="icon-only" *ngIf="mode == 'summary'" name="caret-down" size="small"></ion-icon>
+                        <ion-icon slot="icon-only" *ngIf="mode !== 'summary'" name="caret-up" size="small"></ion-icon>
+                    </ion-button>
+                </ion-buttons>
+            </ion-toolbar>
         </ion-row>
         <div [@expandCollapse]="this.mode !== 'summary'" *ngIf="this.mode !== 'summary'">
 

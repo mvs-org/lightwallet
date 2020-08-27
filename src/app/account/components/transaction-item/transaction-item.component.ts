@@ -10,9 +10,7 @@ import { WalletService } from 'src/app/services/wallet.service'
     templateUrl: 'transaction-item.component.html',
     animations: [
         trigger('expandCollapse', [
-            state('expandCollapseState', style({ height: '*' })),
             transition('* => void', [style({ height: '*' }), animate(500, style({ height: '0' }))]),
-            transition('void => *', [style({ height: '0' }), animate(500, style({ height: '*' }))])
         ])
     ],
     styleUrls: ['./transaction-item.component.scss'],

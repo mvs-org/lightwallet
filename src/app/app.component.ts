@@ -4,7 +4,6 @@ import { Platform } from '@ionic/angular'
 import { SplashScreen } from '@ionic-native/splash-screen/ngx'
 import { StatusBar } from '@ionic-native/status-bar/ngx'
 import { LanguageService } from './services/language.service'
-import { SwService } from './services/sw.service'
 import { WalletService } from './services/wallet.service'
 
 @Component({
@@ -20,11 +19,9 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private language: LanguageService,
-    serviceWorker: SwService,
     private walletService: WalletService,
   ) {
     this.initializeApp()
-    console.log(serviceWorker.appRef.viewCount)
   }
 
   initializeApp() {

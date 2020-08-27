@@ -33,7 +33,6 @@ export class LanguageService {
     if (this.languages[languageKey] !== undefined) {
       await this.translate.use(languageKey).toPromise()
       this.storage.set('language', languageKey)
-      console.log(`set language to ${languageKey}`)
     } else {
       console.log(`language ${languageKey} not available`)
     }

@@ -61,7 +61,6 @@ export class MultisigPage implements OnInit {
   }
 
   ionViewDidEnter() {
-    console.log('ionViewDidEnter Multisignature')
     this.mvs.getAddresses()
       .then((addresses) => {
         if (!Array.isArray(addresses) || !addresses.length) {

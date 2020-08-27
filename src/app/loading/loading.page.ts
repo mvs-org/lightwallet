@@ -40,28 +40,23 @@ export class LoadingPage implements OnInit, OnDestroy {
         )
 
     async ngOnInit() {
-        console.log('init loading page')
         if (this.reset || await this.metaverseService.getDbUpdateNeeded()) {
             await this.metaverseService.dataReset()
             await this.metaverseService.setDbVersion(this.appService.db_version)
         }
-        console.log('start sync')
         await this.updateBalances()
     }
 
     ngOnDestroy() {
-        console.log('leave loading')
         if (this.lastTxHeightSubscription) {
             this.lastTxHeightSubscription.unsubscribe()
         }
     }
 
     async updateBalances() {
-        console.log('update balances')
         this.showRestartOption = false
         try {
             this.maxHeight = await this.metaverseService.updateHeight()
-            console.log('current blockchain height:', this.maxHeight)
             await this.metaverseService.getData()
             await this.metaverseService.setUpdateTime()
             setTimeout(() => this.router.navigate(['/account', 'portfolio'], { replaceUrl: true }), 2000)
