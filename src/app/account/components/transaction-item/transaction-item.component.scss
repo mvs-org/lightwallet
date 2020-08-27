@@ -25,11 +25,11 @@
 }
 
 .sendAmount {
-    color: var(--ion-color-danger);
+    color: var(--ion-color-danger) !important;
 }
 
 .receiveAmount {
-    color: var(--ion-color-secondary);
+    color: #32db64 !important;
 }
 
 .hash {
