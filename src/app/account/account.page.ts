@@ -160,6 +160,10 @@ export class AccountPage implements OnInit, OnDestroy {
         clearInterval(this.syncinterval)
     }
 
+    async ionViewWillEnter() {
+        this.sync()
+    }
+
     ngOnDestroy() {
         if (this.routerSubscription$) {
             this.routerSubscription$.unsubscribe()
@@ -184,8 +188,8 @@ export class AccountPage implements OnInit, OnDestroy {
         } else {
             this.syncing = true
             this.syncingSmall = true
-            return Promise.all([this.metaverseService.updateHeight(), this.updateBalances()])
-                .then(([height, balances]) => {
+            return this.metaverseService.updateHeight()
+                .then((height) => {
                     this.height = height
                     this.syncing = false
                     this.syncingSmall = false
@@ -199,14 +203,6 @@ export class AccountPage implements OnInit, OnDestroy {
                     this.offline = true
                 })
         }
-    }
-
-    private updateBalances = async () => {
-        return this.metaverseService.getData()
-            .then(() => {
-                return this.metaverseService.setUpdateTime()
-            })
-            .catch((error) => console.error('Can\'t update balances: ' + error))
     }
 
     logout() {
