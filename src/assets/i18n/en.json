@@ -91,7 +91,7 @@
         "PASSWORD": "Choose password",
         "CONFIRM_PASSWORD": "Confirm password",
         "BUTTON": {
-            "DOWNLOAD_FILE": "Download file",
+            "DOWNLOAD_FILE": "Save file",
             "ENTER": "Enter wallet"
         },
         "ERROR": {
