@@ -5,6 +5,14 @@
 
 .right-buttons {
     margin-right: 10px;
+    margin-left: 20px;
+}
+
+@media screen and (max-width: 630px) {
+    .right-buttons {
+        margin-right: 0;
+        margin-left: 0;
+    }
 }
 
 .inside-line {
@@ -13,4 +21,8 @@
 
 .invisible {
     visibility: hidden;
+}
+
+ion-card {
+    margin: 0;
 }
