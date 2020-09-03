@@ -84,7 +84,8 @@
                     <ion-item class="no-padding no-color-border">
                         <ion-label translate="HISTORY.ORDER_BY"></ion-label>
                         <ion-select [(ngModel)]="order_by">
-                            <ion-select-option value="locked_until" translate="HISTORY.ORDER_BY_UNLOCK_HEIGHT"></ion-select-option>
+                            <ion-select-option value="locked_until" translate="HISTORY.ORDER_BY_UNLOCK_HEIGHT">
+                            </ion-select-option>
                             <ion-select-option value="height" translate="HISTORY.ORDER_BY_HEIGHT"></ion-select-option>
                         </ion-select>
                     </ion-item>
@@ -107,26 +108,29 @@
                         <ion-avatar item-start>
                             <img class="coinlogo" [src]="icon" onerror="this.src='assets/icon/default_mst.png'">
                         </ion-avatar>
-                        <h1>{{asset}}</h1>
-                        <p *ngFor="let transaction of output.transactions">{{'TRANSACTION'|translate}}: <a
-                                href="{{explorerURL(transaction)}}" target="_blank" rel="noopener">{{transaction}}</a></p>
-                        <p>{{'AMOUNT'|translate}}:
-                            <span *ngIf="asset == 'ETP'">{{output.value | format : output.attachment.decimals}}</span>
-                            <span *ngIf="asset != 'ETP'">{{output.attenuation_model_param.lock_quantity | format :
-                                output.attachment.decimals}}</span>
-                        </p>
-                        <p>{{'LOCKED_SINCE'|translate}}: {{output.height}} ({{output.confirmed_at*1000 | date :
-                            'medium'}})</p>
-                        <p>{{'LOCKED_UNTIL'|translate}}: {{output.locked_until}} (~{{((output.locked_until - height) *
-                            blocktime * 1000) + current_time | date : 'medium'}})*</p>
-                        <p>{{'LOCKED_FOR_BLOCKS'|translate}}: {{asset == 'ETP' ? output.locked_until-output.height :
-                            output.attenuation_model_param.lock_period}} {{'BLOCKS'|translate}}</p>
-                        <div *ngIf="output.height<= height">
-                            <ion-progress-bar color="primary"
-                                *ngIf="height<=output.locked_until && depositProgress(output.height, output.locked_until)>0"
-                                [value]="depositProgress(output.height, output.locked_until)"></ion-progress-bar>
-                        </div>
+                        <ion-label>
+                            <h1>{{asset}}</h1>
+                        </ion-label>
                     </ion-item>
+                    <p *ngFor="let transaction of output.transactions">{{'TRANSACTION'|translate}}: <a
+                            href="{{explorerURL(transaction)}}" target="_blank" rel="noopener">{{transaction}}</a>
+                    </p>
+                    <p>{{'AMOUNT'|translate}}:
+                        <span *ngIf="asset == 'ETP'">{{output.value | format : output.attachment.decimals}}</span>
+                        <span *ngIf="asset != 'ETP'">{{output.attenuation_model_param.lock_quantity | format :
+                                output.attachment.decimals}}</span>
+                    </p>
+                    <p>{{'LOCKED_SINCE'|translate}}: {{output.height}} ({{output.confirmed_at*1000 | date :
+                            'medium'}})</p>
+                    <p>{{'LOCKED_UNTIL'|translate}}: {{output.locked_until}} (~{{((output.locked_until - height) *
+                            blocktime * 1000) + current_time | date : 'medium'}})*</p>
+                    <p>{{'LOCKED_FOR_BLOCKS'|translate}}: {{asset == 'ETP' ? output.locked_until-output.height :
+                            output.attenuation_model_param.lock_period}} {{'BLOCKS'|translate}}</p>
+                    <div *ngIf="output.height<= height">
+                        <ion-progress-bar color="primary"
+                            *ngIf="height<=output.locked_until && depositProgress(output.height, output.locked_until)>0"
+                            [value]="depositProgress(output.height, output.locked_until)"></ion-progress-bar>
+                    </div>
                 </ion-item>
             </ion-list>
 
@@ -140,17 +144,23 @@
                 <h2 class="center" translate="HISTORY.UNFROZEN_TX"></h2>
                 <div
                     *ngFor="let output of frozen_outputs_unlocked | orderBy: [order_by, direction] | paginate: { itemsPerPage: items_per_page, currentPage: page_deposit_unlocked }">
-                    <ion-avatar slot="start">
-                        <img class="coinlogo" [src]="icon" onerror="this.src='assets/icon/default_mst.png'">
-                    </ion-avatar>
-                    <h1>{{asset}}</h1>
-                    <div *ngFor="let transaction of output.transactions">{{'HISTORY.LOCKED_TRANSACTION'|translate}}: <a
-                            href="{{explorerURL(transaction)}}" target="_blank" rel="noopener">{{transaction}}</a></div>
+                    <ion-item lines="none">
+                        <ion-avatar slot="start">
+                            <img class="coinlogo" [src]="icon" onerror="this.src='assets/icon/default_mst.png'">
+                        </ion-avatar>
+                        <ion-label>
+                            <h1>{{asset}}</h1>
+                        </ion-label>
+                    </ion-item>
+                    <div *ngFor="let transaction of output.transactions">{{'HISTORY.LOCKED_TRANSACTION'|translate}}:
+                        <a href="{{explorerURL(transaction)}}" target="_blank" rel="noopener">{{transaction}}</a>
+                    </div>
                     <div translate="HISTORY.LOCKED_AMOUNT"
                         [translateParams]="{asset: asset, number: asset == 'ETP' ? (output.value | format : output.attachment.decimals) : output.attenuation_model_param.lock_quantity | format : output.attachment.decimals}">
                     </div>
                     <div translate="HISTORY.LOCKED_SINCE_BLOCK"
-                        [translateParams]="{block: output.height, time: output.confirmed_at*1000|date:'medium'}"></div>
+                        [translateParams]="{block: output.height, time: output.confirmed_at*1000|date:'medium'}">
+                    </div>
                     <div translate="HISTORY.LOCKED_UNTIL_BLOCK_ONLY" [translateParams]="{block: output.locked_until}">
                     </div>
                     <div translate="HISTORY.LOCKED_FOR_BLOCKS"

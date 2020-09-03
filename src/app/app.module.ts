@@ -15,8 +15,9 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core'
 import { HttpClient, HttpClientModule } from '@angular/common/http'
 import { IonicStorageModule } from '@ionic/storage'
 // import { pageTransition } from '../animations';
-import { ServiceWorkerModule } from '@angular/service-worker';
+import { ServiceWorkerModule } from '@angular/service-worker'
 import { environment } from '../environments/environment'
+import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx'
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json')
@@ -49,6 +50,7 @@ export function createTranslateLoader(http: HttpClient) {
   providers: [
     StatusBar,
     SplashScreen,
+    BarcodeScanner,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

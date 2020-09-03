@@ -6,5 +6,5 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <zxing-scanner (scanComplete)="scanComplete($event)" (camerasFound)="onCamerasFound($event)"></zxing-scanner>
+  <zxing-scanner *ngIf="!isApp" (scanComplete)="scanComplete($event)" (camerasFound)="onCamerasFound($event)"></zxing-scanner>
 </ion-content>

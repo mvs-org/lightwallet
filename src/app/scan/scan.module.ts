@@ -18,6 +18,8 @@ import { ZXingScannerModule } from '@zxing/ngx-scanner'
     ScanPageRoutingModule,
     TranslateModule.forChild(),
   ],
-declarations: [ScanPage, ]
+  declarations: [
+    ScanPage,
+  ]
 })
 export class ScanPageModule { }

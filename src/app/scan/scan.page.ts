@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core'
 import { Subscription } from 'rxjs'
 import { ZXingScannerComponent } from '@zxing/ngx-scanner'
 import { ModalController } from '@ionic/angular'
+import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx'
+import { WalletService } from '../services/wallet.service'
 
 @Component({
   selector: 'app-scan',
@@ -12,10 +14,13 @@ export class ScanPage implements OnInit {
 
   @ViewChild('scanner', { static: false })
   scanner: ZXingScannerComponent
-
+  isApp: boolean
   scanSubscription: Subscription
+
   constructor(
     private modalCtrl: ModalController,
+    private barcodeScanner: BarcodeScanner,
+    private walletService: WalletService,
   ) { }
 
   scanComplete(e: any) {
@@ -30,6 +35,10 @@ export class ScanPage implements OnInit {
 
 
   ngOnInit() {
+    this.isApp = this.walletService.isApp()
+    if (this.isApp) {
+      this.scan()
+    }
   }
 
   /**
@@ -43,6 +52,14 @@ export class ScanPage implements OnInit {
         break
       }
     }
+  }
+
+  scan() {
+    this.barcodeScanner.scan().then(barcodeData => {
+      this.modalCtrl.dismiss(barcodeData)
+    }).catch(err => {
+      this.cancel()
+    })
   }
 
 }
