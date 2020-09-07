@@ -1,0 +1,106 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title translate="IDENTITIES.TITLE"></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-card *ngFor="let address of addresses">
+
+    <ion-card-header>
+      <ion-toolbar>
+        <!--If has Avatar-->
+        <div *ngIf="addressBalancesObject[address] && addressBalancesObject[address].AVATAR">
+          <ion-card-title class="pointer" (click)="copy(addressBalancesObject[address].AVATAR, 'avatar')">
+            <img class="avatar-logo" [src]="'assets/icon/default_avatar.png'">
+            {{addressBalancesObject[address].AVATAR}}
+          </ion-card-title>
+          <ion-card-subtitle class="pointer" (click)="copy(address, 'address')">
+            {{address}}
+          </ion-card-subtitle>
+        </div>
+        <!--If no Avatar-->
+        <div *ngIf="!addressBalancesObject[address] || !addressBalancesObject[address].AVATAR">
+          <ion-card-title>
+            <ion-button color="primary" fill="clear" class="create-avatar-btn" routerLink="./create/{{address}}">
+              <ion-icon slot="start" name="person-add" size="small"></ion-icon>
+              <span translate="IDENTITIES.BUTTON.CREATE_AVATAR"></span>
+            </ion-button>
+          </ion-card-title>
+          <ion-card-subtitle class="pointer" (click)="copy(address, 'address')">
+            {{address}}
+          </ion-card-subtitle>
+        </div>
+        <ion-buttons slot="end" class="ion-hide-sm-down">
+          <ion-button color="primary" class="qrcode-btn" id="qrcode" (click)="show(address)">
+            <ion-icon slot="icon-only" name="qr-code" size="small"></ion-icon>
+          </ion-button>
+          <ion-button color="primary" class="time-btn" id="time" (click)="history(address)">
+            <ion-icon slot="icon-only" name="time" size="small"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-buttons slot="end" class="ion-hide-sm-up">
+          <ion-button color="primary" id="morebtn" (click)="mobileMenu(address)">
+            <ion-icon slot="icon-only" name="ellipsis-horizontal" size="small"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+
+    </ion-card-header>
+
+
+    <ion-card-content>
+      <ion-item>
+        <ion-label class="symbol" translate="MST.GRID.SYMBOL"></ion-label>
+        <ion-col translate="IDENTITIES.TOTAL" class="right"></ion-col>
+        <ion-col translate="IDENTITIES.FROZEN" class="right"></ion-col>
+      </ion-item>
+      <ion-spinner name="dots" *ngIf="loading"></ion-spinner>
+
+      <div *ngIf="!loading">
+
+        <ion-item>
+          <ion-col>
+            <img class="coinlogo" [src]="'assets/icon/ETP.png'" (error)="errorImg($event)">
+            <ion-label class="symbol">ETP</ion-label>
+          </ion-col>
+          <ion-col class="right">
+            {{(addressBalancesObject[address] && addressBalancesObject[address].ETP) ? format(
+              addressBalancesObject[address].ETP.available + addressBalancesObject[address].ETP.unconfirmed + addressBalancesObject[address].ETP.frozen || 0,
+              addressBalancesObject[address].ETP.decimals) : 0}}
+          </ion-col>
+          <ion-col class="right">
+            {{(addressBalancesObject[address] && addressBalancesObject[address].ETP)?format(addressBalancesObject[address].ETP.frozen, addressBalancesObject[address].ETP.decimals):0}}
+          </ion-col>
+        </ion-item>
+
+        <div *ngFor="let mstInfo of msts | orderBy: ['order', '-1']; let i = index">
+          <ion-item *ngIf="!mstInfo.hidden && addressBalancesObject[address] && addressBalancesObject[address].MST && addressBalancesObject[address].MST[mstInfo.symbol]">
+            <ion-col>
+              <img class="coinlogo" [src]="mstInfo.icon" (error)="errorImg($event)" [ngClass]="{'default-logo': mstInfo.icon == 'default_mst'}">
+              <ion-label class="symbol">{{mstInfo.symbol}}</ion-label>
+            </ion-col>
+            <ion-col class="right">
+              {{format(
+                addressBalancesObject[address].MST[mstInfo.symbol].available + addressBalancesObject[address].MST[mstInfo.symbol].unconfirmed + addressBalancesObject[address].MST[mstInfo.symbol].frozen,
+                addressBalancesObject[address].MST[mstInfo.symbol].decimals) || 0}}
+            </ion-col>
+            <ion-col class="right">
+              {{format(addressBalancesObject[address].MST[mstInfo.symbol].frozen,addressBalancesObject[address].MST[mstInfo.symbol].decimals) || 0}}
+            </ion-col>
+          </ion-item>
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-row class="right">
+    <ion-button routerLink="./generate-address" translate="IDENTITIES.BUTTON.CHANGE_ADDRESS_NUMBER">
+    </ion-button>
+  </ion-row>
+
+</ion-content>

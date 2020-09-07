@@ -1,0 +1,80 @@
+<ion-header>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ion-col class="logo" size="10" size-md="4">
+        <img src="/assets/logo.png" alt="">
+        <h1 class="ion-text-center">MyETPWallet</h1>
+        <p class="ion-text-center">v{{appService.version}}</p>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size-md="12" size-lg="6" offset-lg="3">
+        <ion-segment [(ngModel)]="network" (ionChange)="setNetwork($event)" color="primary" id="network-switch">
+          <ion-segment-button id="network-switch-option-mainnet" value="mainnet" translate="MAINNET">
+          </ion-segment-button>
+          <ion-segment-button id="network-switch-option-testnet" value="testnet" translate="TESTNET">
+          </ion-segment-button>
+        </ion-segment>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="12" size-lg="4">
+        <ion-card routerLink="/login/create">
+          <ion-grid>
+            <ion-row>
+              <ion-col class="vhcenter" size="2">
+                <ion-icon name="add-outline" class="icon"></ion-icon>
+              </ion-col>
+              <ion-col size="10">
+                <ion-card-header>
+                  <ion-card-title translate="LOGIN.CREATE_WALLET_TITLE"></ion-card-title>
+                </ion-card-header>
+                <ion-card-content translate="LOGIN.CREATE_WALLET_TEXT">
+                </ion-card-content>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card>
+      </ion-col>
+      <ion-col size="12" size-lg="4">
+        <ion-card routerLink="/login/open">
+          <ion-grid>
+            <ion-row>
+              <ion-col class="vhcenter" size="2">
+                <ion-icon name="log-in-outline" class="icon"></ion-icon>
+              </ion-col>
+              <ion-col size="10">
+                <ion-card-header>
+                  <ion-card-title translate="LOGIN.OPEN_WALLET_TITLE"></ion-card-title>
+                </ion-card-header>
+                <ion-card-content translate="LOGIN.OPEN_WALLET_TEXT">
+                </ion-card-content>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="12" size-lg="4">
+        <br><br>
+        <ion-button expand="full" fill="clear" routerLink="/info">
+          <ion-icon slot="start" name="information" class="icon"></ion-icon>
+          <span translate="INFO.TITLE"></span>
+        </ion-button>
+      </ion-col>
+      <ion-col size="12" size-lg="4">
+        <br><br>
+        <ion-button expand="full" fill="clear" routerLink="/settings">
+          <ion-icon name="cog" class="icon"></ion-icon>
+          <span translate="SETTINGS.TITLE"></span>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

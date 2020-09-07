@@ -1,0 +1,58 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/login/open"></ion-back-button>
+    </ion-buttons>
+    <ion-title translate="IMPORT_QR.TITLE"></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <h2 class="ion-text-center" translate="IMPORT_QR.HOW_IT_WORKS"></h2>
+  <ion-grid *ngIf="!qrCodeLoaded">
+    <ion-row>
+      <ion-col size="12" size-md="4" *ngFor="let i of [1,2,3]">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title [translate]="'IMPORT_QR.HOW_TO_IMPORT_WALLET_MOBILE_STEP'+i"></ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <p [translate]="'IMPORT_QR.HOW_TO_IMPORT_WALLET_MOBILE_STEP'+i+'_TEXT'"></p>
+            <img [src]="'/assets/images/mobile_import_'+i+'.jpeg'" alt="">
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+              <!-- <ion-button *ngIf="!isMobile && !qrCodeLoaded" expand="full" (click)="scan()">
+                <ion-icon slot="start" name="qr-code"></ion-icon>
+                <span translate="IMPORT_QR.BUTTON.SCAN"></span>
+              </ion-button> -->
+
+  <div *ngIf="qrCodeLoaded">
+    <ion-row>
+      <ion-icon name="checkmark-circle" class="verifiedQRCode"></ion-icon>
+    </ion-row>
+    <ion-item>
+      <ion-label color="primary" position="floating" translate="GLOBAL.PASSWORD"></ion-label>
+      <ion-input name="password" type="password" [(ngModel)]="password" required></ion-input>
+    </ion-item>
+    <ion-button *ngIf="!isMobile" expand="full" [disabled]="!passwordValid(password)" (click)="decrypt(password,seed)"
+      color="primary">
+      <ion-icon slot="start" name="arrow-forward"></ion-icon>
+      <span translate="IMPORT_QR.BUTTON.IMPORT_WALLET"></span>
+    </ion-button>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-button *ngIf="!qrCodeLoaded" expand="full" (click)="scan()">
+    <ion-icon slot="start" name="qr-code"></ion-icon>
+    <span translate="IMPORT_QR.BUTTON.SCAN"></span>
+  </ion-button>
+
+  <ion-button *ngIf="qrCodeLoaded" expand="full" [disabled]="!passwordValid(password)" (click)="decrypt(password,seed)">
+    <ion-icon slot="start" name="qr-code"></ion-icon>
+    <span translate="IMPORT_QR.BUTTON.IMPORT_WALLET"></span>
+  </ion-button>
+</ion-footer>

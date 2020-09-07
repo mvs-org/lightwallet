@@ -1,0 +1,84 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/login/open"></ion-back-button>
+        </ion-buttons>
+        <ion-title translate="IMPORT_WALLET_MNEMONIC.TITLE"></ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-grid>
+        <ion-row>
+            <ion-col size-md="12" size-lg="6" offset-lg="3">
+                <ion-row>
+                    <h2 class="center-text info" translate="IMPORT_WALLET_MNEMONIC.TWO_WAYS_TITLE"></h2>
+                </ion-row>
+                <ion-row>
+                    <h2 class="center-text info" translate="IMPORT_WALLET_MNEMONIC.VIA_TEXTBOX"></h2>
+                </ion-row>
+                <ion-row>
+                    <ion-item class="textareaCard" [ngClass]="{'error-border': !validmnemonic}">
+                        <ion-textarea fz-elastic rows="3" type="text" class="textbox" [(ngModel)]="all_words" (ngModelChange)="onChange()" name="all_words"></ion-textarea>
+                    </ion-item>
+                </ion-row>
+
+                <ion-row>
+                    <h2 *ngIf="amount_words < 24" translate="IMPORT_WALLET_MNEMONIC.WORDS_REMAINING" [translateParams]="{nbr_words: 24 - amount_words}"></h2>
+                    <h2 *ngIf="validmnemonic" class="valid-input">
+                        <ion-icon name="checkmark"></ion-icon> {{'IMPORT_WALLET_MNEMONIC.WORDS_ALL_OK'|translate}}
+                    </h2>
+                    <h2 *ngIf="amount_words == 24 && (first_wrong == -1 || first_wrong >= 24) && !validmnemonic" class="wrong-input">
+                        <ion-icon name="close"></ion-icon> {{'IMPORT_WALLET_MNEMONIC.INCORRECT_MNEMONIC'|translate}}
+                    </h2>
+                    <h2 *ngIf="amount_words == 24 && first_wrong !== -1 && first_wrong < 24" class="wrong-input">
+                        <ion-icon name="close"></ion-icon> {{'IMPORT_WALLET_MNEMONIC.INCORRECT_WORD'|translate}}{{first_wrong + 1}}
+                    </h2>
+                    <h2 *ngIf="amount_words > 24" class="wrong-input">
+                        <ion-icon name="close"></ion-icon> {{'IMPORT_WALLET_MNEMONIC.WORDS_TOO_MANY'|translate}}
+                    </h2>
+                </ion-row>
+
+                <ion-row>
+                    <h2 class="center-text info">-{{"IMPORT_WALLET_MNEMONIC.OR"|translate}}-</h2>
+                </ion-row>
+
+                <ion-row>
+                    <h2 item-center class="center-text">{{"IMPORT_WALLET_MNEMONIC.WORD_BY_WORD"|translate}}</h2>
+                </ion-row>
+                <form (ngSubmit)="import()" #importForm="ngForm">
+                    <ion-row *ngFor="let i of [0,1,2,3,4,5,6,7,8,9,10,11]">
+                        <ion-col>
+                            <ion-item [ngClass]="{'error-border': !validword[i*2], 'valid-border': validword[i*2]}">
+                                <ion-input type="text" name="word{{2*i}}" placeholder="{{i*2+1}}" [(ngModel)]="words[i*2]" (ngModelChange)="onChangePerWord()" large required></ion-input>
+                            </ion-item>
+                        </ion-col>
+                        <ion-col>
+                            <ion-item [ngClass]="{'error-border': !validword[i*2+1], 'valid-border': validword[i*2+1]}">
+                                <ion-input type="text" name="word{{2*i+1}}" placeholder="{{i*2+2}}" [(ngModel)]="words[i*2+1]" (ngModelChange)="onChangePerWord()" large required></ion-input>
+                            </ion-item>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row class="buttons">
+                        <ion-col size="6">
+                            <ion-button color="secondary" expand="full" type="submit" [disabled]="!importForm.form.valid || !validmnemonic">
+                                <ion-icon slot="start" name="download"></ion-icon>
+                                <span translate="IMPORT_WALLET_MNEMONIC.IMPORT_BUTTON"></span>
+                            </ion-button>
+                        </ion-col>
+                        <ion-col size="6">
+                            <ion-button color="danger" expand="full" type="button" (click)="clear()">
+                                <ion-icon slot="start" name="trash"></ion-icon>
+                                <span translate="IMPORT_WALLET_MNEMONIC.RESET"></span>
+                            </ion-button>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <h4 *ngIf="!platform.is('mobile')" class="center-text wallet-create" translate="IMPORT_WALLET_MNEMONIC.BOTTOM_TEXT"></h4>
+                        <h4 *ngIf="platform.is('mobile')" class="center-text wallet-create" translate="IMPORT_WALLET_MNEMONIC.BOTTOM_TEXT_MOBILE"></h4>
+                    </ion-row>
+                </form>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>

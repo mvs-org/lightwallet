@@ -1,0 +1,21 @@
+.card-block {
+    min-height: 110px;
+    padding: 8px;
+}
+
+.check-explorer {
+    float: right;
+}
+
+.mit-content {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+}
+
+#explorerTxButton {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}

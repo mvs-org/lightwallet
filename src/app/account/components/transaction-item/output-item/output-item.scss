@@ -1,0 +1,26 @@
+.personal ion-item {
+    font-weight: bold;
+}
+
+.script {
+    color: #b6bcc3;
+    word-break: break-all;
+    font-weight: 400;
+}
+
+ion-col {
+    text-overflow: initial;
+    white-space: initial;
+}
+
+.txType {
+    font-style: oblique;
+}
+
+.txType span {
+    padding-right: 2px !important;
+}
+
+ion-item {
+    --min-height: 16px;
+}

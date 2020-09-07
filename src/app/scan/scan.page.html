@@ -1,0 +1,10 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button (click)="cancel()">X</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <zxing-scanner *ngIf="!isApp" (scanComplete)="scanComplete($event)" (camerasFound)="onCamerasFound($event)"></zxing-scanner>
+</ion-content>

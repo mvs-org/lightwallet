@@ -1,0 +1,330 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button></ion-back-button>
+        </ion-buttons>
+        <ion-title>{{selectedAsset}} {{ "SEND.TITLE" | translate}}</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-item lines="none">
+        <ion-segment [(ngModel)]="transfer_type" color="primary">
+            <ion-segment-button value="one" translate="SEND.SEND_SINGLE"></ion-segment-button>
+            <ion-segment-button value="more" translate="SEND.SEND_MANY"></ion-segment-button>
+        </ion-segment>
+    </ion-item>
+
+    <br>
+    <p align="center" *ngIf="etpBalance<fee/100000000" class="wrong-input"
+        translate="SEND.NOTICE_TRANSACTION_FEE_UNCOVERED"></p>
+    <ion-row>
+        <ion-col>
+            <p class="available">{{"SEND.AVAILABLE_BALANCE" | translate}}: <br *ngIf="platform.is('mobile')">{{showBalance |
+                format : decimals}} {{selectedAsset}}</p>
+        </ion-col>
+        <ion-col>
+            <p *ngIf="transfer_type == 'one'" class="right">{{"SEND_SINGLE.FEE"|translate}}:<br
+                    *ngIf="platform.is('mobile')">
+                {{fee | format : 8}} ETP</p>
+            <p *ngIf="transfer_type == 'more'" class="right">{{"SEND_MORE.FEE"|translate}}:<br
+                    *ngIf="platform.is('mobile')">
+                {{10000*recipients.length | format : 8}} ETP</p>
+        </ion-col>
+    </ion-row>
+
+    <form *ngIf="transfer_type == 'one'" #sendForm="ngForm" (ngSubmit)="send()" (keyup.enter)="send()">
+        <ion-list>
+
+            <ion-item class="toggle-input">
+                <ion-label translate="SEND_SINGLE.TO_AVATAR"></ion-label>
+                <ion-toggle [(ngModel)]="sendToAvatar" name="sendToAvatar"
+                    [disabled]="disableParams && params['recipient_avatar']"></ion-toggle>
+            </ion-item>
+            <ion-item *ngIf="sendToAvatar" [ngClass]="{'error-border':!validAvatar(recipient_avatar)}">
+                <ion-label color="primary" position="floating" translate="SEND_SINGLE.RECIPIENT_AVATAR"></ion-label>
+                <ion-input #recipientAvatarInput name="recipient_avatar" [(ngModel)]="recipient_avatar"
+                    [disabled]="disableParams && params['recipient_avatar']" (ngModelChange)="recipientAvatarChanged()"
+                    required></ion-input>
+            </ion-item>
+            <ion-item
+                [ngClass]="{'error-border':!validaddress(recipient_address), 'valid-border':validaddress(recipient_address)}">
+                <ion-label color="primary" position="floating" translate="SEND_SINGLE.RECIPIENT_ADDRESS"></ion-label>
+                <ion-input #recipientAddressInput name="recipient_address" [(ngModel)]="recipient_address"
+                    (ngModelChange)="recipientChanged()"
+                    [disabled]="sendToAvatar || (disableParams && params['recipient_address'])" required></ion-input>
+                <ion-button slot="end" class="scanButton"
+                    *ngIf="isMobile && !sendToAvatar && !(disableParams && params['recipient_address'])"
+                    (click)="scan()">
+                    <ion-icon slot="icon-only" name="qr-code"></ion-icon>
+                </ion-button>
+            </ion-item>
+            <ion-item [ngClass]="{'error-border':!validQuantity(quantity), 'valid-border':validQuantity(quantity)}">
+                <ion-label color="primary" position="floating" translate="SEND_SINGLE.AMOUNT"></ion-label>
+                <ion-input #quantityInput name="quantity" type="number" min="0" [(ngModel)]="quantity"
+                    [disabled]="disableParams && params['amount']" required></ion-input>
+                <ion-button slot="end" type="button" *ngIf="etpBalance>10000 && !(disableParams && params['amount'])"
+                    id="sendAll" (click)="sendAll()" translate="SEND_SINGLE.BUTTON.SEND_ALL"></ion-button>
+            </ion-item>
+            <div *ngIf="tickers && tickers[selectedAsset] && tickers[selectedAsset][base]" class="advice">
+                ≈{{base}} {{fiatValue(quantity) | number : '1.0-2'}}
+            </div>
+            <ion-item *ngIf="countDecimals(quantity) > decimals" lines="none" class="wrong-input"
+                translate="SEND.TOO_MANY_DECIMALS"></ion-item>
+            <br>
+            <ion-item [ngClass]="{'error-border':!validFromAddress(sendFrom)}">
+                <ion-label translate="SEND_SINGLE.SEND_FROM"></ion-label>
+                <ion-select [(ngModel)]="sendFrom" name="sendfrom" multiple="false"
+                    (ngModelChange)="onFromAddressChange($event)" okText="{{'OK'|translate}}"
+                    cancelText="{{'CANCEL'|translate}}">
+                    <ion-select-option selected="true" value="auto" translate="SEND_SINGLE.SEND_FROM_AUTO">
+                    </ion-select-option>
+                    <ng-container *ngFor="let addressbalance of addressbalances">
+                        <ion-select-option *ngIf="addressbalance.balance>0" value="{{addressbalance.address}}">
+                            {{addressbalance.identifier}}
+                            - {{addressbalance.balance | format : decimals}} {{selectedAsset}}</ion-select-option>
+                    </ng-container>
+                </ion-select>
+            </ion-item>
+            <ion-item *ngIf="!validFromAddress(sendFrom)" lines="none" class="wrong-input"
+                translate="SEND_SINGLE.FROM_ADDRESS_NO_ETP"></ion-item>
+            <br>
+            <ion-item class="toggle-input">
+                <ion-label translate="SEND_SINGLE.SHOW_ADVANCED"></ion-label>
+                <ion-toggle [(ngModel)]="showAdvanced" name="showAdvanced" checked="false"></ion-toggle>
+            </ion-item>
+            <div *ngIf="showAdvanced">
+                <ion-item lines="none">
+                    <ion-label color="primary" translate="SEND_SINGLE.FEE"></ion-label>
+                    <ion-badge item-end color="primary">{{fee | format : 8}} ETP</ion-badge>
+                </ion-item>
+                <ion-item>
+                    <ion-range min="10000" max="10000000" step="10000" color="primary" [(ngModel)]="fee" name="fee">
+                        <ion-label range-left>{{10000 | format : 8}}</ion-label>
+                        <ion-label range-right>{{10000000 | format : 8}}</ion-label>
+                    </ion-range>
+                </ion-item>
+                <ion-item
+                    [ngClass]="{'error-border':!validMessageLength(message), 'valid-border': message.length > 0 && validMessageLength(message)}">
+                    <ion-label position="floating" translate="SEND_SINGLE.MESSAGE"></ion-label>
+                    <ion-input name="message" [(ngModel)]="message" [disabled]="disableParams && params['message']">
+                    </ion-input>
+                </ion-item>
+                <div class="advice" translate="SEND_SINGLE.HELP.MESSAGE"></div>
+                <ion-item *ngIf="!validMessageLength(message)" lines="none" class="wrong-input"
+                    translate="SEND_SINGLE.MESSAGE_TOO_LONG"></ion-item>
+                <br>
+                <ion-item>
+                    <ion-label translate="SEND_SINGLE.CHANGE_ADDRESS"></ion-label>
+                    <ion-select [(ngModel)]="changeAddress" name="changeaddress" okText="{{'OK'|translate}}"
+                        cancelText="{{'CANCEL'|translate}}">
+                        <ion-select-option selected="true" value="auto" translate="SEND_SINGLE.CHANGE_ADDRESS_AUTO">
+                        </ion-select-option>
+                        <ion-select-option *ngFor="let addressbalance of addressbalances"
+                            value="{{addressbalance.address}}">
+                            {{addressbalance.identifier}}
+                            - {{addressbalance.balance | format : decimals}} {{selectedAsset}}</ion-select-option>
+                    </ion-select>
+                </ion-item>
+                <br>
+                <ion-item class="toggle-input" *ngIf="selectedAsset != 'ETP'">
+                    <ion-label translate="ASSET_LOCK.TITLE"></ion-label>
+                    <ion-toggle [(ngModel)]="lock" name="lock"></ion-toggle>
+                </ion-item>
+                <app-attenuation-model-selector *ngIf="lock" (modelChanged)="setAttenuationModel($event)"
+                    [quantity]="validQuantity(quantity) ? quantity : undefined" [decimals]="decimals"
+                    [asset]="selectedAsset"></app-attenuation-model-selector>
+            </div>
+        </ion-list>
+        <ion-row class="padding-bottom">
+            <ion-col>
+                <ion-button color="danger" expand="full" (click)="cancel()">
+                    <ion-icon slot="start" name="close"></ion-icon>
+                    <span translate="SEND_SINGLE.BUTTON.CANCEL"></span>
+                </ion-button>
+            </ion-col>
+            <ion-col>
+                <ion-button type="submit" expand="full" color="secondary" [disabled]="!validForm()">
+                    <ion-icon slot="start" disabled="checked" name="cog"></ion-icon>
+                    <span translate="SEND_SINGLE.BUTTON.NEXT"></span>
+                </ion-button>
+            </ion-col>
+        </ion-row>
+    </form>
+
+    <form *ngIf="transfer_type == 'more'" #sendForm="ngForm" style="padding-bottom: 0;" (ngSubmit)="send()" (keyup.enter)="send()">
+        <ion-list style="padding-bottom: 0;">
+            <ion-item class="toggle-input">
+                <ion-label translate="SEND_MORE.TO_AVATAR"></ion-label>
+                <ion-toggle [(ngModel)]="sendToAvatar" name="sendToAvatar" checked="false"></ion-toggle>
+            </ion-item>
+            <br>
+            <ion-row *ngIf="!platform.is('mobile')">
+                <input type="file" name="file" id="file" class="inputfile" accept=".csv" (change)="import($event)" />
+                <label for="file">
+                    <ion-icon slot="start" name="document"></ion-icon>
+                    <span translate="SEND_MORE.BUTTON.IMPORT_FROM_CSV"></span>
+                </label>
+            </ion-row>
+
+            <ion-card class="card-block" *ngFor="let recipient of recipients; let i = index" [attr.data-index]="i">
+                <ion-row>
+                    <ion-col size="6">
+                        <h3 class="recipient-title" translate="SEND_MORE.RECIPIENT_TITLE"
+                            [translateParams]="{index: i+1}"></h3>
+                    </ion-col>
+                    <ion-col size="6">
+                        <ion-button tabIndex="-1" class="remove-button" fill="clear" color="primary"
+                            (click)="removeRecipient(i)">
+                            X
+                        </ion-button>
+                    </ion-col>
+                    <ion-col size="12" size-md="6" *ngIf="sendToAvatar">
+                        <ion-item
+                            [ngClass]="{'error-border':!validSendMoreAvatar(recipient.avatar, i), 'valid-border': validSendMoreAvatar(recipient.avatar, i)}">
+                            <ion-label color="primary" position="floating" translate="SEND_MORE.RECIPIENT_AVATAR"
+                                [translateParams]="{index: i+1}"></ion-label>
+                            <ion-input [(ngModel)]="recipient.avatar"
+                                (ngModelChange)="sendMoreRecipientAvatarChanged(i)" [ngModelOptions]="{standalone:true}"
+                                required></ion-input>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col size="12" size-md="6" *ngIf="!sendToAvatar">
+                        <ion-item
+                            [ngClass]="{'error-border':!validaddress(recipient.address), 'valid-border': validaddress(recipient.address)}">
+                            <ion-label color="primary" position="floating" translate="SEND_MORE.RECIPIENT_ADDRESS"
+                                [translateParams]="{index: i+1}"></ion-label>
+                            <ion-input [(ngModel)]="recipient.address" (ngModelChange)="sendMoreAddressChanged(i)"
+                                [ngModelOptions]="{standalone:true}" required></ion-input>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col size="12" size-md="6">
+                        <ion-item *ngIf="selectedAsset == 'ETP'"
+                            [ngClass]="{'error-border':!validQuantity(recipient.target['ETP']), 'valid-border': validQuantity(recipient.target['ETP'])}">
+                            <ion-label color="primary" position="floating" translate="SEND_MORE.AMOUNT"
+                                [translateParams]="{index: i+1}"></ion-label>
+                            <ion-input type="number" min="0" [(ngModel)]="recipient.target['ETP']"
+                                [ngModelOptions]="{standalone:true}" (ngModelChange)="quantityETPChanged()" required>
+                            </ion-input>
+                        </ion-item>
+                        <ion-item
+                            *ngIf="tickers && tickers[selectedAsset] && tickers[selectedAsset][base] && selectedAsset == 'ETP'"
+                            lines="none" class="fiat">
+                            ≈{{base}} {{fiatValue(recipient.target['ETP']) | number : '1.0-2'}}
+                        </ion-item>
+                        <ion-item *ngIf="selectedAsset != 'ETP' && recipient.target['MST']"
+                            [ngClass]="{'error-border':!validQuantity(recipient.target['MST'][selectedAsset]), 'valid-border': validQuantity(recipient.target['MST'][selectedAsset])}">
+                            <ion-label color="primary" position="floating" translate="SEND_MORE.AMOUNT"
+                                [translateParams]="{index: i+1}"></ion-label>
+                            <ion-input type="number" min="0" [(ngModel)]="recipient.target['MST'][selectedAsset]"
+                                [ngModelOptions]="{standalone:true}" (ngModelChange)="quantityMSTChanged()" required>
+                            </ion-input>
+                        </ion-item>
+                        <ion-item
+                            *ngIf="tickers && tickers[selectedAsset] && tickers[selectedAsset][base] && selectedAsset != 'ETP' && recipient.target['MST']"
+                            lines="none" class="fiat">
+                            ≈{{base}}
+                            {{fiatValue(recipient.target['MST'][selectedAsset]) | number : '1.0-2'}}
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+            </ion-card>
+
+            <div class="right-buttons">
+                <ion-button *ngIf="recipients.length < sendMore_limit" fill="solid" color="primary"
+                    (click)="addRecipient()">
+                    <ion-icon slot="start" name="add"></ion-icon>
+                    <span translate="SEND_MORE.BUTTON.ADD_RECIPIENT"></span>
+                </ion-button>
+                <ion-button *ngIf="!platform.is('mobile')" fill="solid" color="secondary" (click)="download()">
+                    <ion-icon slot="start" name="download"></ion-icon>
+                    <span translate="SEND_MORE.BUTTON.EXPORT_CSV"></span>
+                </ion-button>
+                <ion-button *ngIf="!platform.is('mobile')" fill="solid" color="light" (click)="csvExample()">
+                    <ion-icon slot="start" name="download"></ion-icon>
+                    <span translate="SEND_MORE.BUTTON.DOWNLOAD_CSV_EXAMPLE"></span>
+                </ion-button>
+            </div>
+
+            <ion-item [ngClass]="{'error-border':total > showBalance}">
+                <ion-label color="primary">
+                    <span translate="SEND_MORE.TOTAL_TO_SEND"></span>
+                    <p class="total-amount">
+                        {{total_to_send[selectedAsset]}} {{selectedAsset}}
+                        <span class="fiat"
+                            *ngIf="tickers && tickers[selectedAsset] && tickers[selectedAsset][base] && total_to_send[selectedAsset]">
+                            ≈{{base}} {{fiatValue(total_to_send[selectedAsset]) | number : '1.0-2'}}
+                        </span>
+                    </p>
+                </ion-label>
+            </ion-item>
+            <ion-item *ngIf="total > showBalance" lines="none" class="wrong-input"
+                translate="SEND_MORE.TOTAL_MORE_AVAILABLE"></ion-item>
+            <br>
+            <ion-item [ngClass]="{'error-border':!validFromAddress(sendFrom)}">
+                <ion-label translate="SEND_MORE.SEND_FROM"></ion-label>
+                <ion-select [(ngModel)]="sendFrom" name="sendfrom" multiple="false"
+                    (ngModelChange)="onFromAddressChange($event)" okText="{{'OK'|translate}}"
+                    cancelText="{{'CANCEL'|translate}}">
+                    <ion-select-option selected="true" value="auto" translate="SEND_MORE.SEND_FROM_AUTO">
+                    </ion-select-option>
+                    <ng-container *ngFor="let addressbalance of addressbalances">
+                        <ion-select-option *ngIf="addressbalance.balance>0" value="{{addressbalance.address}}">
+                            {{addressbalance.identifier}}
+                            - {{addressbalance.balance | format : decimals}} {{selectedAsset}}</ion-select-option>
+                    </ng-container>
+                </ion-select>
+            </ion-item>
+
+            <ion-item class="toggle-input">
+                <ion-label translate="SEND_MORE.SHOW_ADVANCED"></ion-label>
+                <ion-toggle [(ngModel)]="showAdvanced" name="showAdvanced" checked="false"></ion-toggle>
+            </ion-item>
+            <div *ngIf="showAdvanced">
+                <ion-item
+                    [ngClass]="{'error-border':!validMessageLength(message), 'valid-border': message.length > 0 && validMessageLength(message)}">
+                    <ion-label position="floating" translate="SEND_MORE.MESSAGE"></ion-label>
+                    <ion-input name="message" [(ngModel)]="message" [disabled]="disableParams && params['message']">
+                    </ion-input>
+                </ion-item>
+                <div lines="none" class="advice" translate="SEND_MORE.HELP.MESSAGE"></div>
+                <ion-item *ngIf="!validMessageLength(message)" lines="none" class="wrong-input"
+                    translate="SEND_MORE.MESSAGE_TOO_LONG"></ion-item>
+                <br>
+                <ion-item>
+                    <ion-label translate="SEND_MORE.CHANGE_ADDRESS"></ion-label>
+                    <ion-select [(ngModel)]="changeAddress" name="changeaddress" okText="{{'OK'|translate}}"
+                        cancelText="{{'CANCEL'|translate}}">
+                        <ion-select-option selected="true" value="auto" translate="SEND_MORE.CHANGE_ADDRESS_AUTO">
+                        </ion-select-option>
+                        <ion-select-option *ngFor="let address of addresses" value="{{address}}">{{address}}
+                        </ion-select-option>
+                    </ion-select>
+                </ion-item>
+                <br>
+                <ion-item class="toggle-input" *ngIf="selectedAsset != 'ETP'">
+                    <ion-label translate="ASSET_LOCK.TITLE"></ion-label>
+                    <ion-toggle [(ngModel)]="lock" name="lock"></ion-toggle>
+                </ion-item>
+                <app-attenuation-model-selector *ngIf="lock" (modelChanged)="setAttenuationModel($event)"
+                    [quantity]="undefined" [decimals]="decimals" [asset]="selectedAsset" [toMany]="true">
+                </app-attenuation-model-selector>
+            </div>
+        </ion-list>
+        <ion-row class="padding-bottom">
+            <ion-col>
+                <ion-button color="danger" expand="full" (click)="cancel()">
+                    <ion-icon slot="start" name="close"></ion-icon>
+                    <span translate="SEND_MORE.BUTTON.CANCEL"></span>
+                </ion-button>
+            </ion-col>
+            <ion-col>
+                <ion-button type="submit" expand="full" color="secondary" [disabled]="!validForm()">
+                    <ion-icon slot="start" disabled="checked" name="cog"></ion-icon>
+                    <span translate="SEND_MORE.BUTTON.NEXT"></span>
+                </ion-button>
+            </ion-col>
+        </ion-row>
+    </form>
+
+</ion-content>

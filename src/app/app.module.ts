@@ -1,74 +1,58 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { ErrorHandler, NgModule } from '@angular/core';
-import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
-import { HttpModule, Http } from '@angular/http';
-import { IonicStorageModule } from '@ionic/storage';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { MyETPWallet } from './app.component';
-import { AppGlobals } from './app.global';
-import { MvsServiceProvider } from '../providers/mvs-service/mvs-service';
-import { WalletServiceProvider } from '../providers/wallet-service/wallet-service';
-import { CryptoServiceProvider } from '../providers/crypto-service/crypto-service';
-import { SplashScreen } from '@ionic-native/splash-screen';
-import { StatusBar } from '@ionic-native/status-bar';
-import { Keyboard } from '@ionic-native/keyboard';
-import { PluginProvider } from '../providers/plugin/plugin';
-import { EtpBridgeServiceProvider } from '../providers/etp-bridge-service/etp-bridge-service';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { Deeplinks } from '@ionic-native/deeplinks';
-import { LedgerProvider } from '../providers/ledger/ledger';
-import { IonicSelectableModule } from 'ionic-selectable';
+import { NgModule } from '@angular/core'
+import { BrowserModule } from '@angular/platform-browser'
+import { RouteReuseStrategy } from '@angular/router'
 
+import { IonicModule, IonicRouteStrategy } from '@ionic/angular'
+import { SplashScreen } from '@ionic-native/splash-screen/ngx'
+import { StatusBar } from '@ionic-native/status-bar/ngx'
 
-var pckg = require('../../package.json');
+import { AppComponent } from './app.component'
+import { AppRoutingModule } from './app-routing.module'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
-export function HttpLoaderFactory(http: Http) {
-    return new TranslateHttpLoader(http, './assets/i18n/', '.json?v=' + pckg.version);
+import { TranslateHttpLoader } from '@ngx-translate/http-loader'
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core'
+import { HttpClient, HttpClientModule } from '@angular/common/http'
+import { IonicStorageModule } from '@ionic/storage'
+// import { pageTransition } from '../animations';
+import { ServiceWorkerModule } from '@angular/service-worker'
+import { environment } from '../environments/environment'
+import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx'
+
+export function createTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json')
 }
 
 @NgModule({
-    declarations: [
-        MyETPWallet
-    ],
-    imports: [
-        BrowserModule,
-        HttpModule,
-        IonicModule.forRoot(MyETPWallet, { scrollAssist: false }),
-        TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: (HttpLoaderFactory),
-                deps: [Http]
-            }
-        }),
-        IonicStorageModule.forRoot({
-            name: '__myetpwallet',
-            driverOrder: ['indexeddb', 'localstorage']
-        }),
-        BrowserAnimationsModule,
-        IonicSelectableModule,
-    ],
-    bootstrap: [IonicApp],
-    entryComponents: [
-        MyETPWallet
-    ],
-    providers: [
-        AppGlobals,
-        { provide: ErrorHandler, useClass: IonicErrorHandler },
-        MvsServiceProvider,
-        SplashScreen,
-        WalletServiceProvider,
-        CryptoServiceProvider,
-        StatusBar,
-        Keyboard,
-        Deeplinks,
-        PluginProvider,
-        EtpBridgeServiceProvider,
-        LedgerProvider,
-    ]
+  declarations: [AppComponent],
+  entryComponents: [],
+  imports: [
+    BrowserModule,
+    IonicModule.forRoot({
+      // navAnimation: pageTransition
+    }),
+    AppRoutingModule,
+    HttpClientModule,
+    IonicStorageModule.forRoot({
+      name: '__myetpwallet',
+      driverOrder: ['indexeddb', 'sqlite', 'websql', 'localstorage']
+    }),
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (createTranslateLoader),
+        deps: [HttpClient]
+      }
+    }),
+    BrowserAnimationsModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+  ],
+  providers: [
+    StatusBar,
+    SplashScreen,
+    BarcodeScanner,
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+  ],
+  bootstrap: [AppComponent]
 })
-export class AppModule {
-    constructor() {
-    }
-}
+export class AppModule { }

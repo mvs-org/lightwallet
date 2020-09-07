@@ -1,0 +1,9 @@
+{
+    "appId": "app.myetpwallet.com",
+    "version": "10000",
+    "appName": "MyETPWallet",
+    "bundledWebRuntime": false,
+    "npmClient": "npm",
+    "webDir": "www",
+    "cordova": {}
+}

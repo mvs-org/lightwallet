@@ -1,0 +1,16 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title>{{title}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cancel()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="container">
+    <ngx-qrcode [elementType]="'url'" [value]="content" margin="1" errorCorrectionLevel="L"></ngx-qrcode>
+  </div>
+</ion-content>

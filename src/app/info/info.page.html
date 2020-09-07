@@ -1,0 +1,65 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title translate="INFO.TITLE"></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ion-col class="logo" size="10" size-md="4">
+        <img src="/assets/logo.png" alt="">
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="8" >
+        <p class="ion-text-center" translate="INFO.INTRODUCTION"></p>
+        <table style="margin-left: auto; margin-right: auto;">
+          <tr class="center">
+            <td translate="INFO.NAME"></td>
+          </tr>
+          <tr>
+            <td translate="INFO.VERSION"></td>
+            <td>{{appService.version}}</td>
+          </tr>
+          <tr *ngIf="appService.ci_number">
+            <td translate="INFO.BUILD"></td>
+            <td>{{appService.ci_number}}</td>
+          </tr>
+          <tr *ngIf="appService.ci_commit">
+            <td translate="INFO.COMMIT"></td>
+            <td><a target="_blank" rel="noopener"
+                [href]="'https://github.com/mvs-org/lightwallet/tree/'+appService.ci_commit">{{appService.ci_commit}}</a>
+            </td>
+          </tr>
+          <tr>
+            <td translate="INFO.NETWORK"></td>
+            <td>{{appService.network$ | async}}</td>
+          </tr>
+        </table>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="10" size-md="4">
+        <ion-button expand="full" routerLink="/info/legal" translate="LEGAL_DISCLAIMER.TITLE"></ion-button>
+        <ion-button expand="full" routerLink="/info/license" translate="LICENSE.TITLE"></ion-button>
+        <ion-button expand="full" href="https://github.com/mvs-org/lightwallet">
+          <ion-icon slot="start" name="logo-github" class="icon"></ion-icon>
+          <span translate="INFO.SOURCE_CODE"></span>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="8" style="font-family: monospace;">
+        <ion-item lines="none" translate="INFO.FREE_SOFTWARE"></ion-item>
+        <ion-item lines="none" translate="INFO.NO_WARRANTY"></ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+</ion-content>

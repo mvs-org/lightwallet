@@ -1,0 +1,101 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title translate="MULTISIG.HEADLINE"></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <h3 translate="MULTISIG.WARNING_MULTISIG_TITLE"></h3>
+  <p translate="MULTISIG.WARNING_MULTISIG_MESSAGE"></p>
+
+  <p translate="MULTISIG.INFORMATION"></p>
+  <p translate="MULTISIG.INFORMATION2"></p>
+
+  <ion-card class="avatar-card" *ngFor="let multisig of multisigs">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-grid>
+              <ion-row>
+                <ion-col>
+                  <h1 class="address display-overflow">
+                    <span class="address-text">{{multisig.a}}</span>
+                    <ion-button class="qrcode-btn" id="qrcode" (click)="show(multisig.a)">
+                      <img src="/assets/images/qrcode.png">
+                    </ion-button>
+                  </h1>
+                </ion-col>
+              </ion-row>
+              <ion-row class="asset-balance">
+                <ion-col>
+                  <div class="asset-balance-text">
+                    <span translate="ACCOUNT.AVAILABLE"></span>:
+                    <span *ngIf="addressBalancesObject[multisig.a] && addressBalancesObject[multisig.a].ETP">{{addressBalancesObject[multisig.a].ETP.available
+                                      | format : addressBalancesObject[multisig.a].ETP.decimals}} ETP</span>
+                    <span *ngIf="!addressBalancesObject[multisig.a] || !addressBalancesObject[multisig.a].ETP">0
+                      ETP</span>
+                  </div>
+                </ion-col>
+                <ion-col>
+                  <ion-button class="right-buttons" fill="clear" color="danger"
+                    (click)="gotoMultisigTransfer('ETP', multisig.a)">
+                    <ion-icon slot="start" name="send"></ion-icon>
+                    <span translate="MULTISIG.SEND_ETP"></span>
+                  </ion-button>
+                </ion-col>
+              </ion-row>
+              <div *ngIf="addressbalances[multisig.a]">
+                <ion-row class="asset-balance" *ngFor="let mst of addressbalances[multisig.a]">
+                  <ion-col>
+                    <div class="asset-balance-text">{{mst.available | format : mst.decimals}}
+                      {{mst.name}}</div>
+                  </ion-col>
+                  <ion-col>
+                    <ion-button class="right-buttons" fill="clear" color="danger"
+                      (click)="gotoMultisigTransfer(mst.name, multisig.a)">
+                      <ion-icon slot="start" name="send"></ion-icon>
+                      <span translate="MULTISIG.SEND" [translateParams]="{symbol: mst.name}"></span>
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+              </div>
+            </ion-grid>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-item>
+          <ion-grid>
+            <ion-row>
+              <h2 translate="MULTISIG.DETAILS"></h2>
+            </ion-row>
+            <ion-row>
+              <ion-col translate="MULTISIG.NBR_PERSON"></ion-col>
+              <ion-col>{{multisig.n}}</ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col translate="MULTISIG.SIGN_REQ"></ion-col>
+              <ion-col>{{multisig.m}}</ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col translate="MULTISIG.PUBLIC_KEYS"></ion-col>
+              <ion-col>
+                <div *ngFor="let publicKey of multisig.k" class="public-key manual-copy display-overflow"
+                  [ngClass]="{'self-publickey': publicKey == multisig.s}">{{publicKey}}</div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+  <ion-button color="primary" (click)="addAddress()" class="add-multisig-btn">
+    <ion-icon slot="start" name="add"></ion-icon>
+    <span translate="MULTISIG.ADD_ADDRESS"></span>
+  </ion-button>
+</ion-content>

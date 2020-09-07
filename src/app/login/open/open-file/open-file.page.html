@@ -1,0 +1,85 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/login/open"></ion-back-button>
+        </ion-buttons>
+        <ion-title translate="OPEN_FILE.TITLE"></ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-grid>
+        <ion-row>
+            <ion-col size-md="12" size-lg="6" offset-lg="3">
+                <h2 class="pageHeadline" translate="DISCLAIMER.HEADLINE"></h2>
+                <p translate="DISCLAIMER.INTRODUCTION"></p>
+                <p translate="DISCLAIMER.LIST_INTRODUCTION"></p>
+                <ol>
+                    <li translate="DISCLAIMER.LIST_ITEM_1"></li>
+                    <li translate="DISCLAIMER.LIST_ITEM_2"></li>
+                    <li translate="DISCLAIMER.LIST_ITEM_3"></li>
+                    <li translate="DISCLAIMER.LIST_ITEM_4"></li>
+                </ol>
+                <ion-item>
+                    <ion-label id="disclaimer-agree-label" text-wrap translate="DISCLAIMER.READ_AND_AGREE">
+                    </ion-label>
+                    <ion-checkbox [(ngModel)]="disclaimer_agreed" id="disclaimer-agree"></ion-checkbox>
+                </ion-item>
+                <form *ngIf="disclaimer_agreed" offset-md-3 col-md-6 (ngSubmit)="decrypt(password)" #importForm="ngForm"
+                    lines="none" class="buttons-container">
+                    <ion-item class="center-text" lines="none">
+                        <h1 translate="OPEN_FILE.IMPORT_FILE"></h1>
+                    </ion-item>
+                    <ion-row *ngIf="!fileLoaded && !isMobile">
+                        <input type="file" name="file" id="file" class="inputfile" accept=".json"
+                            (change)="open($event)" />
+                        <label for="file">
+                            <ion-icon slot="start" name="download"></ion-icon>
+                            <span translate="OPEN_FILE.CHOOSE_A_FILE"></span>
+                        </label>
+                    </ion-row>
+                    <div *ngIf="fileLoaded">
+                        <ion-row>
+                            <ion-icon name="md-checkmark-circle" class="verifiedFile"></ion-icon>
+                        </ion-row>
+                        <ion-item>
+                            <ion-label color="primary" position="floating" translate="OPEN_FILE.PASSWORD"></ion-label>
+                            <ion-input name="password" id="password-input" type="password" [(ngModel)]="password"
+                                required>
+                            </ion-input>
+                        </ion-item>
+                        <br>
+                        <ion-row *ngIf="!isMobile">
+                            <ion-button type="submit" id="submit-button" expand="full" [disabled]="!importForm.form.valid" color="primary">
+                                <ion-icon slot="start" name="arrow-forward"></ion-icon>
+                                <span translate="OPEN_FILE.IMPORT_BUTTON"></span>
+                            </ion-button>
+                        </ion-row>
+                    </div>
+                </form>
+                <ion-row *ngIf="!disclaimer_agreed" class="buttons-container">
+                </ion-row>
+                <br>
+                <br>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
+
+<ion-footer *ngIf="isMobile && disclaimer_agreed">
+
+    <div *ngIf="!fileLoaded" class="footer-inputfile">
+        <input type="file" name="file" id="file" class="inputfile" accept=".json" (change)="open($event)" />
+        <label for="file">
+            <ion-icon slot="start" name="download"></ion-icon>
+            <span translate="OPEN_FILE.CHOOSE_A_FILE"></span>
+        </label>
+    </div>
+
+    <ion-button *ngIf="fileLoaded" color="primary" [disabled]="!password" (click)="decrypt(password)"
+        type="submit" expand="full">
+        <ion-icon slot="start" name="arrow-forward"></ion-icon>
+        <span translate="OPEN_FILE.IMPORT_BUTTON"></span>
+    </ion-button>
+
+</ion-footer>
