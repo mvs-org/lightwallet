@@ -10,7 +10,8 @@
     "prepare": "node scripts/patch-webpack.js",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "resources": "capacitor-resources -p android,ios && node scripts/resources.js"
   },
   "private": true,
   "dependencies": {
