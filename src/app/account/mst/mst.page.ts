@@ -193,6 +193,7 @@ export class MstPage implements OnInit, OnDestroy {
     await this.metaverseService.addAssetsToAssetOrder([mst.symbol])
   }
 
+  /*
   async delete(symbol) {
     await this.metaverseService.removeAssetsFromAssetOrder([symbol])
     this.msts.forEach((mst, index) => {
@@ -201,5 +202,6 @@ export class MstPage implements OnInit, OnDestroy {
       }
     })
   }
+  */
 
 }
