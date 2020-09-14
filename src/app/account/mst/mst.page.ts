@@ -137,12 +137,6 @@ export class MstPage implements OnInit, OnDestroy {
     await this.metaverseService.setHiddenMst(hidden)
   }
 
-  cancelReordering() {
-    const reorderGroup = document.getElementById('reorder') as HTMLInputElement
-    reorderGroup.disabled = true
-    this.status = 'default'
-  }
-
   errorImg = (e) => e.target.remove()
 
   clickMst(symbol) {
