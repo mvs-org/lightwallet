@@ -29,7 +29,7 @@ export function createTranslateLoader(http: HttpClient) {
   imports: [
     BrowserModule,
     IonicModule.forRoot({
-      // navAnimation: pageTransition
+      animated: false,
     }),
     AppRoutingModule,
     HttpClientModule,
