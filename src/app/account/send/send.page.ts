@@ -81,7 +81,78 @@ export class SendPage implements OnInit {
     private modalCtrl: ModalController,
   ) {
 
+  }
+
+  ngOnInit() {
+
+  }
+
+  initializeParameters(asset: string, params: { get(param: string): any }) {
+    if (this.selectedAsset !== asset) {
+      this.alertService.showErrorTranslated('ERROR_SCAN_ASSET_NOT_MATCH_TITLE', 'ERROR_SCAN_ASSET_NOT_MATCH_MESSAGE')
+    } else {
+      this.quantity = params.get('q') || params.get('quantity') || params.get('amount') || ''
+      this.recipient_address = params.get('r') || params.get('recipient') || ''
+      this.recipient_avatar = params.get('a') || params.get('avatar') || ''
+      this.message = params.get('m') || params.get('message') || ''
+      this.disableParams = params.get('d') === 'true' || params.get('disableParams') === 'true'
+
+      if (this.recipient_avatar !== '') {
+        this.sendToAvatar = true
+        this.recipientAvatarChanged()
+      }
+      this.params.amount = this.quantity !== ''
+      this.params.recipient_address = this.recipient_address !== ''
+      this.params.recipient_avatar = this.recipient_avatar !== ''
+      this.params.message = this.message !== ''
+    }
+  }
+
+  ionViewWillEnter() {
+
     this.selectedAsset = this.activatedRoute.snapshot.params.symbol
+    this.addresses = undefined
+    this.balance = undefined
+    this.decimals = undefined
+    this.showBalance = undefined
+    this.recipient_address = undefined
+    this.recipient_avatar = undefined
+    this.recipient_avatar_valid = undefined
+    this.quantity = ''
+    this.addressbalances = []
+    this.sendFrom = 'auto'
+    this.changeAddress = undefined
+    this.feeAddress = 'auto'
+    this.etpBalance = undefined
+    this.transfer_type = 'one'
+    this.recipients = []
+    this.total_to_send = {}
+    this.total_to_send[this.selectedAsset] = 0
+    this.sendMoreValidQuantity = false
+    this.sendMoreValidAddress = false
+    this.sendMore_limit = 1000
+    this.total = 0
+    this.message = ''
+    this.fee = undefined
+    this.defaultFee = undefined
+    this.sendMoreValidEachAvatar = []
+    this.attenuation_model = undefined
+    this.lock = false
+    this.isMobile = this.walletService.isMobile()
+    this.showAdvanced = false
+    this.locktime = undefined
+    this.addressbalancesObject = {}
+    this.base = undefined
+    this.tickers = {}
+    this.disableParams = false
+    this.params = {
+      amount: false,
+      recipient_address: false,
+      recipient_avatar: false,
+      message: false,
+    }
+    this.sendToAvatar = false
+
     this.initializeParameters(this.selectedAsset, this.activatedRoute.snapshot.paramMap)
 
     if (this.selectedAsset === 'ETP') {
@@ -89,9 +160,6 @@ export class SendPage implements OnInit {
     } else {
       this.recipients.push(new RecipientSendMore('', '', { MST: { [this.selectedAsset]: undefined } }, undefined))
     }
-    this.total_to_send[this.selectedAsset] = 0
-    this.total = 0
-    this.isMobile = this.walletService.isMobile()
 
     // Load addresses and balances
     Promise.all([this.metaverseService.getBalances(), this.metaverseService.getAddresses(), this.metaverseService.getAddressBalances()])
@@ -122,6 +190,17 @@ export class SendPage implements OnInit {
           }
         })
         this.addressbalances = addrblncs
+
+        if (history.state.data && history.state.data.sender) {
+          this.addressbalances.forEach((addressbalance) => {
+            if (addressbalance.address === history.state.data.sender) {
+              if (addressbalance.balance !== 0) {
+                this.sendFrom = history.state.data.sender
+                this.onFromAddressChange()
+              }
+            }
+          })
+        }
       })
 
     this.fee = this.appService.default_fees.default
@@ -131,31 +210,8 @@ export class SendPage implements OnInit {
         this.fee = fees.default
         this.defaultFee = this.fee
       })
-  }
 
-  ngOnInit() {
 
-  }
-
-  initializeParameters(asset: string, params: { get(param: string): any }) {
-    if (this.selectedAsset !== asset) {
-      this.alertService.showErrorTranslated('ERROR_SCAN_ASSET_NOT_MATCH_TITLE', 'ERROR_SCAN_ASSET_NOT_MATCH_MESSAGE')
-    } else {
-      this.quantity = params.get('q') || params.get('quantity') || params.get('amount') || ''
-      this.recipient_address = params.get('r') || params.get('recipient') || ''
-      this.recipient_avatar = params.get('a') || params.get('avatar') || ''
-      this.message = params.get('m') || params.get('message') || ''
-      this.disableParams = params.get('d') === 'true' || params.get('disableParams') === 'true'
-
-      if (this.recipient_avatar !== '') {
-        this.sendToAvatar = true
-        this.recipientAvatarChanged()
-      }
-      this.params.amount = this.quantity !== ''
-      this.params.recipient_address = this.recipient_address !== ''
-      this.params.recipient_avatar = this.recipient_avatar !== ''
-      this.params.message = this.message !== ''
-    }
   }
 
 
@@ -172,7 +228,7 @@ export class SendPage implements OnInit {
     [this.base, this.tickers] = await this.metaverseService.getBaseAndTickers()
   }
 
-  onFromAddressChange(event) {
+  onFromAddressChange() {
     if (this.sendFrom === 'auto') {
       this.showBalance = this.balance
     } else {

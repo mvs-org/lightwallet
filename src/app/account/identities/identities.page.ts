@@ -80,6 +80,8 @@ export class IdentitiesPage implements OnInit {
 
     format = (quantity, decimals) => quantity / Math.pow(10, decimals)
 
+    send = (asset, sender) => this.router.navigate(['account', 'send', asset], { state: { data: { sender } } })
+
     async show(address) {
         const content = address
         const title = address

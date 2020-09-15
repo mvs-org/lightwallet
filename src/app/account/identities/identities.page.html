@@ -62,7 +62,7 @@
           <ion-col translate="IDENTITIES.FROZEN" class="ion-hide-sm-down right"></ion-col>
         </ion-item>
         <ion-buttons slot="end" class="right-buttons">
-          <ion-button class="invisible" color="danger" fill="outline" shape="round" [routerLink]="'/account/send/ETP'"
+          <ion-button class="invisible" color="danger" fill="outline" shape="round" (click)="send('ETP', address)"
             translate="MST.GRID.BUTTON.SEND"></ion-button>
         </ion-buttons>
       </ion-item>
@@ -83,7 +83,7 @@
             </ion-col>
           </ion-item>
           <ion-buttons slot="end" class="right-buttons">
-            <ion-button color="danger" fill="outline" shape="round" [routerLink]="'/account/send/ETP'">
+            <ion-button color="danger" fill="outline" shape="round" (click)="send('ETP', address)">
               <span translate="MST.GRID.BUTTON.SEND"></span>
             </ion-button>
           </ion-buttons>
@@ -104,7 +104,7 @@
               </ion-col>
             </ion-item>
             <ion-buttons slot="end" class="right-buttons">
-              <ion-button color="danger" fill="outline" shape="round" [routerLink]="'/account/send/' + mstInfo.symbol">
+              <ion-button color="danger" fill="outline" shape="round" (click)="send(mstInfo.symbol, address)">
                 <span translate="MST.GRID.BUTTON.SEND"></span>
               </ion-button>
             </ion-buttons>
