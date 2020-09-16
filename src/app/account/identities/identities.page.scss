@@ -8,11 +8,6 @@ ion-card-content {
     text-align: left;
 }
 
-.card-ios {
-    margin-left: 0;
-    margin-right: 0;
-}
-
 .avatar-logo {
     width: 18px;
     display: inline-block;
@@ -42,20 +37,10 @@ ion-card-content {
     display: inline-block;
 }
 
-ion-card-content {
-    padding-left: 0;
-    padding-right: 0;
-}
-
 .create-avatar-btn {
     left: -12px;
     position: relative;
     height: 24px;
-}
-
-ion-card {
-    margin-left: 0;
-    margin-right: 0;
 }
 
 .inside-line {

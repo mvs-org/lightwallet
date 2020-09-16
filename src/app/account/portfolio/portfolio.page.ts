@@ -107,4 +107,8 @@ export class PortfolioPage implements OnInit, OnDestroy {
 
   errorImg = (e) => e.target.remove()
 
+  ignoreEvent($event){
+    $event.preventDefault()
+  }
+
 }

@@ -8,70 +8,73 @@
 </ion-header>
 
 <ion-content>
-  <ion-row>
-    <ion-col>
-      <p align="center" translate="BITIDENT.INFORMATION"></p>
-    </ion-col>
-  </ion-row>
-
-  <form #connectForm="ngForm" (ngSubmit)="getLastElement(token)">
-
-    <ion-row *ngIf="isMobile">
+  <ion-grid>
+    <ion-row>
       <ion-col>
-        <ion-button expand="full" id="open-wallet-button" color="primary" (click)="scan()">
-          <ion-icon slot="start" name="qr-code"></ion-icon>
-          <span translate="BITIDENT.BUTTON.SCAN_QRCODE"></span>
-        </ion-button>
+        <p align="center" translate="BITIDENT.INFORMATION"></p>
       </ion-col>
     </ion-row>
 
-    <ion-row *ngIf="isMobile">
-      <ion-col>
-        <ion-button expand="full" id="manual-enter-mobile-button" color="medium"
-          (click)="manualEnterMobile = !manualEnterMobile">
-          <ion-icon slot="start" name="copy"></ion-icon>
-          <span translate="BITIDENT.BUTTON.ENTER_MANUALLY"></span>
-        </ion-button>
-      </ion-col>
-    </ion-row>
+    <form #connectForm="ngForm" (ngSubmit)="getLastElement(token)">
 
-    <div *ngIf="!isMobile" align="center">
-      <p class="pic-description2 mobile-import-image"></p>
-      <p translate="BITIDENT.DESCRIPTION_PICTURE"></p>
-      <a href="https://myetpwallet.com/#download" target="_blank" rel="noopener" translate="BITIDENT.GET_ON_MOBILE"></a>
-    </div>
+      <ion-row *ngIf="isMobile">
+        <ion-col>
+          <ion-button expand="full" id="open-wallet-button" color="primary" (click)="scan()">
+            <ion-icon slot="start" name="qr-code"></ion-icon>
+            <span translate="BITIDENT.BUTTON.SCAN_QRCODE"></span>
+          </ion-button>
+        </ion-col>
+      </ion-row>
 
-    <ion-item *ngIf="!isMobile || manualEnterMobile"
-      [ngClass]="{'error-border':!validAuthToken(token), 'valid-border': validAuthToken(token)}">
-      <ion-label position="floating" translate="BITIDENT.TOKEN_INPUT_LABEL"></ion-label>
-      <ion-textarea fz-elastic rows="3" type="text" class="textbox" [(ngModel)]="token" name="token"></ion-textarea>
-    </ion-item>
+      <ion-row *ngIf="isMobile">
+        <ion-col>
+          <ion-button expand="full" id="manual-enter-mobile-button" color="medium"
+            (click)="manualEnterMobile = !manualEnterMobile">
+            <ion-icon slot="start" name="copy"></ion-icon>
+            <span translate="BITIDENT.BUTTON.ENTER_MANUALLY"></span>
+          </ion-button>
+        </ion-col>
+      </ion-row>
 
-    <ion-row *ngIf="!isMobile || manualEnterMobile">
-      <ion-col size="12" size-sm="6">
-        <ion-button expand="full" id="open-how-to-auth" color="secondary" (click)="howToAuth()">
-          <ion-icon slot="start" name="information-circle"></ion-icon>
-          <span translate="BITIDENT.BUTTON.HOW_TO_AUTH"></span>
-        </ion-button>
-      </ion-col>
-      <ion-col size="12" size-sm="6">
-        <ion-button type="submit" expand="full" [disabled]="!connectForm.form.valid||!validAuthToken(token)"
-          color="primary">
-          <ion-icon slot="start" name="cog"></ion-icon>
-          <span translate="BITIDENT.CHECK"></span>
-        </ion-button>
-      </ion-col>
-    </ion-row>
+      <div *ngIf="!isMobile" align="center">
+        <p class="pic-description2 mobile-import-image"></p>
+        <p translate="BITIDENT.DESCRIPTION_PICTURE"></p>
+        <a href="https://myetpwallet.com/#download" target="_blank" rel="noopener"
+          translate="BITIDENT.GET_ON_MOBILE"></a>
+      </div>
 
-    <ion-row *ngIf="isMobile && !manualEnterMobile">
-      <ion-col>
-        <ion-button expand="full" id="open-how-to-auth" color="secondary" (click)="howToAuth()">
-          <ion-icon slot="start" name="information-circle"></ion-icon>
-          <span translate="BITIDENT.BUTTON.HOW_TO_AUTH"></span>
-        </ion-button>
-      </ion-col>
-    </ion-row>
+      <ion-item *ngIf="!isMobile || manualEnterMobile"
+        [ngClass]="{'error-border':!validAuthToken(token), 'valid-border': validAuthToken(token)}">
+        <ion-label position="floating" translate="BITIDENT.TOKEN_INPUT_LABEL"></ion-label>
+        <ion-textarea fz-elastic rows="3" type="text" class="textbox" [(ngModel)]="token" name="token"></ion-textarea>
+      </ion-item>
 
-  </form>
+      <ion-row *ngIf="!isMobile || manualEnterMobile">
+        <ion-col size="12" size-sm="6">
+          <ion-button expand="full" id="open-how-to-auth" color="secondary" (click)="howToAuth()">
+            <ion-icon slot="start" name="information-circle"></ion-icon>
+            <span translate="BITIDENT.BUTTON.HOW_TO_AUTH"></span>
+          </ion-button>
+        </ion-col>
+        <ion-col size="12" size-sm="6">
+          <ion-button type="submit" expand="full" [disabled]="!connectForm.form.valid||!validAuthToken(token)"
+            color="primary">
+            <ion-icon slot="start" name="cog"></ion-icon>
+            <span translate="BITIDENT.CHECK"></span>
+          </ion-button>
+        </ion-col>
+      </ion-row>
 
+      <ion-row *ngIf="isMobile && !manualEnterMobile">
+        <ion-col>
+          <ion-button expand="full" id="open-how-to-auth" color="secondary" (click)="howToAuth()">
+            <ion-icon slot="start" name="information-circle"></ion-icon>
+            <span translate="BITIDENT.BUTTON.HOW_TO_AUTH"></span>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+
+    </form>
+
+  </ion-grid>
 </ion-content>

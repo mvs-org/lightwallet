@@ -72,7 +72,7 @@
   --ion-color-light-rgb: 244, 245, 248;
   --ion-color-light-contrast: #000000;
   --ion-color-light-contrast-rgb: 0, 0, 0;
-  --ion-color-light-shade: #d7d8da;
+  // --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
 }
 
@@ -195,6 +195,7 @@ body.dark {
   --ion-background-color-rgb: 18,18,18;
 
   --ion-text-color: #ffffff;
+  --ion-color: #ffffff;
   --ion-text-color-rgb: 255,255,255;
 
   --ion-border-color: #222222;
