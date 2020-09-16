@@ -151,7 +151,7 @@ export class SendPage implements OnInit {
       recipient_avatar: false,
       message: false,
     }
-    this.sendToAvatar = false
+    // this.sendToAvatar = false
 
     this.initializeParameters(this.selectedAsset, this.activatedRoute.snapshot.paramMap)
 

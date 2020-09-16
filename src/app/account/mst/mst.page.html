@@ -21,92 +21,97 @@
 </ion-header>
 
 <ion-content>
+  <ion-item lines="none">
+    <ion-segment [(ngModel)]="displaySegment" color="primary">
+      <ion-segment-button value="mine" translate="MST.GRID.TITLE"></ion-segment-button>
+      <ion-segment-button value="all" translate="MST.ALL.TITLE"></ion-segment-button>
+    </ion-segment>
+  </ion-item>
 
-  <h1 class="center">
-    <ion-col translate="MST.GRID.TITLE"></ion-col>
-  </h1>
+  <div *ngIf="displaySegment=='mine'">
 
-  <ion-card>
-    <ion-item>
-      <img class="coinlogo" [src]="'assets/icon/default_mst.png'" (error)="errorImg($event)">
-      <ion-label class="symbol" translate="MST.GRID.SYMBOL"></ion-label>
-      <ion-col *ngIf="status == 'default'" translate="MST.GRID.TOTAL"></ion-col>
-      <ion-col *ngIf="status == 'default'" class="ion-hide-sm-down" translate="MST.GRID.UNCONFIRMED"></ion-col>
-      <ion-col *ngIf="status == 'default'" class="ion-hide-sm-down" translate="MST.GRID.FROZEN"></ion-col>
-      <div class="empty-space-header-edit" *ngIf="status == 'edit'"></div>
-      <div class="empty-space-header-default" *ngIf="status == 'default'"></div>
-    </ion-item>
+    <ion-card>
+      <ion-item>
+        <img class="coinlogo" [src]="'assets/icon/default_mst.png'" (error)="errorImg($event)">
+        <ion-label class="symbol" translate="MST.GRID.SYMBOL"></ion-label>
+        <ion-col *ngIf="status == 'default'" translate="MST.GRID.TOTAL"></ion-col>
+        <ion-col *ngIf="status == 'default'" class="ion-hide-sm-down" translate="MST.GRID.UNCONFIRMED"></ion-col>
+        <ion-col *ngIf="status == 'default'" class="ion-hide-sm-down" translate="MST.GRID.FROZEN"></ion-col>
+        <div class="empty-space-header-edit" *ngIf="status == 'edit'"></div>
+        <div class="empty-space-header-default" *ngIf="status == 'default'"></div>
+      </ion-item>
 
-    <ion-spinner name="dots" *ngIf="loading"></ion-spinner>
+      <ion-spinner name="dots" *ngIf="loading"></ion-spinner>
 
-    <ion-reorder-group *ngIf="msts?.length" (ionItemReorder)="reorder($event)" id="reorder">
-      <div *ngFor="let mst of msts | orderBy: ['order', '-1']; let i = index">
-        <ion-item *ngIf="status == 'default' && !mst.hidden" button (click)="clickMst(mst.symbol)" detail>
-          <img class="coinlogo" [src]="mst.icon" (error)="errorImg($event)"
-            [ngClass]="{'default-logo': mst.icon == 'default_mst'}">
-          <ion-label class="symbol">{{mst.symbol}}</ion-label>
-          <ion-col >{{mst.balance.total || 0 | format : mst.balance.decimals}}</ion-col>
-          <ion-col class="ion-hide-sm-down">{{mst.balance.unconfirmed || 0 | format : mst.balance.decimals}}</ion-col>
-          <ion-col class="ion-hide-sm-down">{{mst.balance.frozen || 0 | format : mst.balance.decimals}}</ion-col>
-        </ion-item>
-        <ion-item *ngIf="status == 'edit'">
-          <img class="coinlogo" [src]="mst.icon" (error)="errorImg($event)"
-            [ngClass]="{'default-logo': mst.icon == 'default_mst'}">
-          <ion-label class="symbol">{{mst.symbol}}</ion-label>
+      <ion-reorder-group *ngIf="msts?.length" (ionItemReorder)="reorder($event)" id="reorder">
+        <div *ngFor="let mst of msts | orderBy: ['order', '-1']; let i = index">
+          <ion-item *ngIf="status == 'default' && !mst.hidden" button (click)="clickMst(mst.symbol)" detail>
+            <img class="coinlogo" [src]="mst.icon" (error)="errorImg($event)"
+              [ngClass]="{'default-logo': mst.icon == 'default_mst'}">
+            <ion-label class="symbol">{{mst.symbol}}</ion-label>
+            <ion-col>{{mst.balance.total || 0 | format : mst.balance.decimals}}</ion-col>
+            <ion-col class="ion-hide-sm-down">{{mst.balance.unconfirmed || 0 | format : mst.balance.decimals}}</ion-col>
+            <ion-col class="ion-hide-sm-down">{{mst.balance.frozen || 0 | format : mst.balance.decimals}}</ion-col>
+          </ion-item>
+          <ion-item *ngIf="status == 'edit'">
+            <img class="coinlogo" [src]="mst.icon" (error)="errorImg($event)"
+              [ngClass]="{'default-logo': mst.icon == 'default_mst'}">
+            <ion-label class="symbol">{{mst.symbol}}</ion-label>
 
-          <ion-buttons slot="end">
-            <div class="empty-space-button" *ngIf="!mst.deletable"></div>
-            <ion-button *ngIf="!mst.hidden" (click)="mst.hidden = true">
-              <ion-icon color="black" slot="icon-only" name="eye"></ion-icon>
-            </ion-button>
-            <ion-button *ngIf="mst.hidden" (click)="mst.hidden = false">
-              <ion-icon color="black" slot="icon-only" name="eye-off"></ion-icon>
-            </ion-button>
-          </ion-buttons>
-          <ion-reorder slot="end"></ion-reorder>
-        </ion-item>
-      </div>
-    </ion-reorder-group>
+            <ion-buttons slot="end">
+              <div class="empty-space-button" *ngIf="!mst.deletable"></div>
+              <ion-button *ngIf="!mst.hidden" (click)="mst.hidden = true">
+                <ion-icon color="black" slot="icon-only" name="eye"></ion-icon>
+              </ion-button>
+              <ion-button *ngIf="mst.hidden" (click)="mst.hidden = false">
+                <ion-icon color="black" slot="icon-only" name="eye-off"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+            <ion-reorder slot="end"></ion-reorder>
+          </ion-item>
+        </div>
+      </ion-reorder-group>
 
-    <ng-template *ngIf="!loading && msts && msts.length == 0">
-      <p translate="NO_MST"></p>
-    </ng-template>
-  </ion-card>
+      <ng-template *ngIf="!loading && msts && msts.length == 0">
+        <p translate="NO_MST"></p>
+      </ng-template>
+    </ion-card>
 
-  <h1 class="center">
-    <br>
-    <ion-col translate="MST.ALL.TITLE"></ion-col>
-  </h1>
+  </div>
+  <div *ngIf="displaySegment=='all'">
 
-  <ion-card>
-    <ion-item>
-      <img class="coinlogo" [src]="'assets/icon/default_mst.png'" (error)="errorImg($event)">
-      <ion-label class="symbol" translate="MST.ALL.SYMBOL"></ion-label>
-      <ion-col translate="MST.ALL.DESCRIPTION"></ion-col>
-      <div class="empty-space-header-all"></div>
-    </ion-item>
 
-    <ion-item *ngFor="let mst of allMsts">
-      <img class="coinlogo" [src]="this.icons.MST[mst.symbol] || 'assets/icon/default_mst.png'" (error)="errorImg($event)">
-      <ion-label class="symbol">{{mst.symbol}}</ion-label>
-      <ion-col>{{mst.description}}</ion-col>
+    <ion-card>
+      <ion-item>
+        <img class="coinlogo" [src]="'assets/icon/default_mst.png'" (error)="errorImg($event)">
+        <ion-label class="symbol" translate="MST.ALL.SYMBOL"></ion-label>
+        <ion-col translate="MST.ALL.DESCRIPTION"></ion-col>
+        <div class="empty-space-header-all"></div>
+      </ion-item>
 
-      <ion-buttons slot="end">
-        <ion-button (click)="addMst(mst)" [disabled]="order.indexOf(mst.symbol) !== -1">
-          <ion-icon color="black" slot="icon-only" name="add"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-    </ion-item>
+      <ion-item *ngFor="let mst of allMsts">
+        <img class="coinlogo" [src]="this.icons.MST[mst.symbol] || 'assets/icon/default_mst.png'"
+          (error)="errorImg($event)">
+        <ion-label class="symbol">{{mst.symbol}}</ion-label>
+        <ion-col>{{mst.description}}</ion-col>
 
-    <ion-spinner name="dots" *ngIf="loadingMoreMsts"></ion-spinner>
+        <ion-buttons slot="end">
+          <ion-button (click)="addMst(mst)" [disabled]="order.indexOf(mst.symbol) !== -1">
+            <ion-icon color="black" slot="icon-only" name="add"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-item>
 
-  </ion-card>
+      <ion-spinner name="dots" *ngIf="loadingMoreMsts"></ion-spinner>
 
-  <div class="center" *ngIf="!mstsFullyLoaded">
-    <ion-button color="primary" (click)="getMoreMsts()" [disabled]="loadingMoreMsts">
-      <ion-icon slot="start" name="add"></ion-icon>
-      <span translate="MST.ALL.LOAD_MORE"></span>
-    </ion-button>
+    </ion-card>
+
+    <div class="center" *ngIf="!mstsFullyLoaded">
+      <ion-button color="primary" (click)="getMoreMsts()" [disabled]="loadingMoreMsts">
+        <ion-icon slot="start" name="add"></ion-icon>
+        <span translate="MST.ALL.LOAD_MORE"></span>
+      </ion-button>
+    </div>
   </div>
 
 </ion-content>

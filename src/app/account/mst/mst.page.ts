@@ -23,6 +23,7 @@ export class MstPage implements OnInit, OnDestroy {
   loadingMoreMsts = true
   order = []
   mstsFullyLoaded = false
+  displaySegment = 'mine'
 
   heightSubscription: Subscription
   status = 'default'
