@@ -34,13 +34,14 @@ export class SwService {
       console.log(`new update available`)
       // TODO ask the user for confirmation
       const [txtUpdateAvailable, txtUpdateApply] = await transalte.get(['UPDATE.AVAILABLE_TEXT', 'UPDATE.APPLY']).toPromise()
-      toastService.toastController.create({
+      const toast = await toastService.toastController.create({
         message: txtUpdateAvailable, buttons: [{
           text: txtUpdateApply, handler: () => {
             updates.activateUpdate().then(() => document.location.reload())
           }
         }]
       })
+      toast.present()
     })
   }
 
