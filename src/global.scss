@@ -242,3 +242,14 @@ ion-footer ion-button {
 .invisible {
     visibility: hidden;
 }
+
+.qrcode img {
+    height: 250px;
+}
+
+@media screen and (max-width: 350px) {
+
+    .qrcode img {
+        height: 150px;
+    }
+}
