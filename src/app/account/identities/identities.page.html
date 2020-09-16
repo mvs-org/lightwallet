@@ -4,15 +4,19 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title translate="IDENTITIES.TITLE"></ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerLink="./generate-address">
+        <ion-icon slot="icon-only" name="add"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
   <ion-card *ngFor="let address of addresses">
-
     <ion-card-header>
-      <ion-toolbar>
+      <ion-toolbar style="background-color: transparent;">
         <!--If has Avatar-->
         <div *ngIf="addressBalancesObject[address] && addressBalancesObject[address].AVATAR">
           <ion-card-title class="pointer" (click)="copy(addressBalancesObject[address].AVATAR, 'avatar')">
@@ -113,10 +117,4 @@
       </div>
     </ion-card-content>
   </ion-card>
-
-  <ion-row class="right">
-    <ion-button routerLink="./generate-address" translate="IDENTITIES.BUTTON.CHANGE_ADDRESS_NUMBER">
-    </ion-button>
-  </ion-row>
-
 </ion-content>
