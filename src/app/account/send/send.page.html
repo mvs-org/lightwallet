@@ -75,7 +75,7 @@
             <ion-item [ngClass]="{'error-border':!validFromAddress(sendFrom)}">
                 <ion-label translate="SEND_SINGLE.SEND_FROM"></ion-label>
                 <ion-select [(ngModel)]="sendFrom" name="sendfrom" multiple="false"
-                    (ngModelChange)="onFromAddressChange($event)" okText="{{'OK'|translate}}"
+                    (ngModelChange)="onFromAddressChange()" okText="{{'OK'|translate}}"
                     cancelText="{{'CANCEL'|translate}}">
                     <ion-select-option selected="true" value="auto" translate="SEND_SINGLE.SEND_FROM_AUTO">
                     </ion-select-option>
