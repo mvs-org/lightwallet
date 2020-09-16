@@ -19,7 +19,7 @@ export class PublicGuard implements CanActivate, CanActivateChild {
         const addresses = await this.metaverseService.getAddresses()
         if (Array.isArray(addresses) && addresses.length) {
             console.log('existing account detected. redirect to loading')
-            this.router.navigate(['/loading'], { state: { data: { reset: true } } })
+            this.router.navigate(['/loading'])
             return false
         }
         return true
