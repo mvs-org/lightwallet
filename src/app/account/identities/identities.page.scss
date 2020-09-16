@@ -44,6 +44,7 @@ ion-card-content {
 
 ion-card-content {
     padding-left: 0;
+    padding-right: 0;
 }
 
 .create-avatar-btn {
@@ -59,4 +60,16 @@ ion-card {
 
 .inside-line {
     width: 100%;
+}
+
+.right-buttons {
+    margin-right: 10px;
+    margin-left: 20px;
+}
+
+@media screen and (max-width: 630px) {
+    .right-buttons {
+        margin-right: 0;
+        margin-left: 0;
+    }
 }
