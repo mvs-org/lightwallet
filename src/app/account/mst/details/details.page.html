@@ -298,9 +298,16 @@
             <ion-card-title class="ion-text-center" translate="MST_DETAILS.STAKELIST.TITLE"></ion-card-title>
           </ion-card-header>
           <ion-card-content>
+            <ion-row>
+              <ion-col>
+                <ngx-charts-pie-chart scheme="neons" [results]="stakelistChartData" [legend]="false" [labels]="false"
+                  [doughnut]="false" [view]="[300,300]" [explodeSlices]="false" [scheme]="colorScheme">
+                </ngx-charts-pie-chart>
+              </ion-col>
+            </ion-row>
             <ion-item *ngFor="let staker of stakelist; let index = index">
               <ion-label>
-                {{index + 1}}. <span>{{staker.a}}</span>
+                {{index + 1}}. <span>{{staker.name}}</span>
                 <p>
                   {{staker.q | format : asset.decimals}} {{symbol}}
                 </p>
