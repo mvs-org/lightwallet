@@ -17,7 +17,7 @@ class RecipientSendMore {
   ) { }
 }
 
-export const deeplinkRegex = /^.*app\.myetpwallet\.com\/send\/(.+)\?(.*)$/
+export const deeplinkRegex = /^.*app\.myetpwallet\.com\/account\/send\/(.+)\?(.*)$/
 @Component({
   selector: 'app-send',
   templateUrl: './send.page.html',
@@ -80,22 +80,22 @@ export class SendPage implements OnInit {
     private walletService: WalletService,
     private modalCtrl: ModalController,
   ) {
-
+    this.alertService.showErrorTranslated('SCAN.DIFFERENT_ASSET.TITLE', 'SCAN.DIFFERENT_ASSET.SUBTITLE')
   }
 
   ngOnInit() {
 
   }
 
-  initializeParameters(asset: string, params: { get(param: string): any }) {
+  initializeParameters(asset: string, params: any) {
     if (this.selectedAsset !== asset) {
-      this.alertService.showErrorTranslated('ERROR_SCAN_ASSET_NOT_MATCH_TITLE', 'ERROR_SCAN_ASSET_NOT_MATCH_MESSAGE')
+      this.alertService.showErrorTranslated('SCAN.DIFFERENT_ASSET.TITLE', 'SCAN.DIFFERENT_ASSET.SUBTITLE')
     } else {
-      this.quantity = params.get('q') || params.get('quantity') || params.get('amount') || ''
-      this.recipient_address = params.get('r') || params.get('recipient') || ''
-      this.recipient_avatar = params.get('a') || params.get('avatar') || ''
-      this.message = params.get('m') || params.get('message') || ''
-      this.disableParams = params.get('d') === 'true' || params.get('disableParams') === 'true'
+      this.quantity = params.q || params.quantity || params.amount || ''
+      this.recipient_address = params.r || params.recipient || ''
+      this.recipient_avatar = params.a || params.avatar || ''
+      this.message = params.m || params.message || ''
+      this.disableParams = params.d === 'true' || params.disableParams === 'true'
 
       if (this.recipient_avatar !== '') {
         this.sendToAvatar = true
@@ -111,19 +111,10 @@ export class SendPage implements OnInit {
   ionViewWillEnter() {
 
     this.selectedAsset = this.activatedRoute.snapshot.params.symbol
-    this.addresses = undefined
-    this.balance = undefined
-    this.decimals = undefined
-    this.showBalance = undefined
-    this.recipient_address = undefined
-    this.recipient_avatar = undefined
-    this.recipient_avatar_valid = undefined
     this.quantity = ''
     this.addressbalances = []
     this.sendFrom = 'auto'
-    this.changeAddress = undefined
     this.feeAddress = 'auto'
-    this.etpBalance = undefined
     this.transfer_type = 'one'
     this.recipients = []
     this.total_to_send = {}
@@ -133,16 +124,11 @@ export class SendPage implements OnInit {
     this.sendMore_limit = 1000
     this.total = 0
     this.message = ''
-    this.fee = undefined
-    this.defaultFee = undefined
     this.sendMoreValidEachAvatar = []
-    this.attenuation_model = undefined
     this.lock = false
     this.isMobile = this.walletService.isMobile()
     this.showAdvanced = false
-    this.locktime = undefined
     this.addressbalancesObject = {}
-    this.base = undefined
     this.tickers = {}
     this.disableParams = false
     this.params = {
@@ -151,9 +137,8 @@ export class SendPage implements OnInit {
       recipient_avatar: false,
       message: false,
     }
-    // this.sendToAvatar = false
 
-    this.initializeParameters(this.selectedAsset, this.activatedRoute.snapshot.paramMap)
+    this.initializeParameters(this.selectedAsset, this.activatedRoute.snapshot.queryParams)
 
     if (this.selectedAsset === 'ETP') {
       this.recipients.push(new RecipientSendMore('', '', { ETP: undefined }, undefined))
@@ -512,7 +497,12 @@ export class SendPage implements OnInit {
         const codeContent = result.data.text.toString()
         if (deeplinkRegex.test(codeContent)) {
           const asset = codeContent.match(deeplinkRegex)[1]
-          const params = new URLSearchParams(codeContent.match(deeplinkRegex)[2])
+          const paramsArray = codeContent.match(deeplinkRegex)[2].split('&')
+          const params = {}
+          paramsArray.forEach(param => {
+            const split = param.split('=')
+            params[split[0]] = split[1]
+          })
           this.initializeParameters(asset, params)
         } else {
           const content = codeContent.toString().split('&')

@@ -1113,6 +1113,10 @@
         "INVALID_BITIDENT": {
             "TITLE": "Invalid Bitident QRCode",
             "SUBTITLE": "This is not a valid Bitident QRCode. Please double check the code and verify that you are using the latest version of MyETPWallet."
+        },
+        "DIFFERENT_ASSET": {
+            "TITLE": "The asset currently selected is different from the one used in the QRCode",
+            "SUBTITLE": "Please make sure the other party and you are using the same asset"
         }
     },
     "INFO": {
