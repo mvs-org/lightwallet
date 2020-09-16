@@ -4,6 +4,11 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title translate="MULTISIG.HEADLINE"></ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="addAddress()">
+        <ion-icon slot="icon-only" name="add"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -95,9 +100,5 @@
         </ion-row>
       </ion-grid>
     </ion-card>
-    <ion-button color="primary" (click)="addAddress()" class="add-multisig-btn">
-      <ion-icon slot="start" name="add"></ion-icon>
-      <span translate="MULTISIG.ADD_ADDRESS"></span>
-    </ion-button>
   </ion-grid>
 </ion-content>
