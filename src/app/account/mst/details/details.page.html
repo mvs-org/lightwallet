@@ -301,24 +301,24 @@
             <ion-row>
               <ion-col>
                 <ngx-charts-pie-chart scheme="neons" [results]="stakelistChartData" [legend]="false" [labels]="false"
-                  [doughnut]="false" [view]="[300,300]" [explodeSlices]="false" [scheme]="colorScheme">
+                  [doughnut]="false" [view]=[400] [explodeSlices]="false" [scheme]="colorScheme" legendPosition="below">
                 </ngx-charts-pie-chart>
               </ion-col>
             </ion-row>
-            <ion-item *ngFor="let staker of stakelist; let index = index">
+            <!-- <ion-item *ngFor="let staker of stakelist; let index = index">
               <ion-label>
                 {{index + 1}}. <span>{{staker.name}}</span>
                 <p>
                   {{staker.q | format : asset.decimals}} {{symbol}}
                 </p>
               </ion-label>
-            </ion-item>
-            <ion-spinner name="dots" *ngIf="loadingStakelist"></ion-spinner>
+            </ion-item> -->
+            <!-- <ion-spinner name="dots" *ngIf="loadingStakelist"></ion-spinner>
             <ion-button color="primary" expand="full" (click)="getStakelist()" [disabled]="loadingStakelist"
               *ngIf="!stakelistFullyLoaded">
               <ion-icon slot="start" name="add"></ion-icon>
               <span translate="MST_DETAILS.STAKELIST.LOAD_MORE"></span>
-            </ion-button>
+            </ion-button> -->
           </ion-card-content>
         </ion-card>
       </ion-col>
