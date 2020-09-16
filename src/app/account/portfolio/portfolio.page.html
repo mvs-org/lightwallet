@@ -11,7 +11,6 @@
 
 <ion-content>
 
-    <ion-card>
         <ion-item class="ion-no-padding">
             <ion-item class="inside-line" lines="none">
                 <img class="coinlogo" [src]="'assets/icon/default_mst.png'" (error)="errorImg($event)">
@@ -29,7 +28,7 @@
 
         <div *ngIf="!loading">
 
-            <ion-item class="ion-no-padding">
+            <ion-item class="ion-no-padding" button>
                 <ion-item (click)="goToMst('ETP')" class="inside-line" lines="none">
                     <img class="coinlogo" [src]="'assets/icon/ETP.png'" (error)="errorImg($event)">
                     <ion-label class="symbol">ETP</ion-label>
@@ -44,7 +43,7 @@
             </ion-item>
 
             <div *ngFor="let mst of msts | orderBy: ['order', '-1']; let i = index">
-                <ion-item class="ion-no-padding" *ngIf="!mst.hidden && (mst.balance.total || mst.symbol == 'DNA')">
+                <ion-item class="ion-no-padding" *ngIf="!mst.hidden && (mst.balance.total || mst.symbol == 'DNA')" button>
                     <ion-item (click)="goToMst(mst.symbol)" class="inside-line" lines="none">
                         <img class="coinlogo" [src]="mst.icon" (error)="errorImg($event)"
                             [ngClass]="{'default-logo': mst.icon == 'default_mst'}">
@@ -61,7 +60,6 @@
                 </ion-item>
             </div>
         </div>
-    </ion-card>
 
 
 </ion-content>
