@@ -17,7 +17,7 @@
                     <ion-progress-bar class="sync-bar" *ngIf="isSyncing() || !height" type="indeterminate"></ion-progress-bar>
                 </ion-item-divider>
                 <ion-menu-toggle auto-hide="false" *ngFor="let p of mainItems; let i = index">
-                    <ion-item [routerLink]="[p.url]" lines="none" detail="false">
+                    <ion-item [routerLink]="[p.url]" lines="none" detail="false" routerDirection="root">
                         <ion-icon [color]="p.selected ? 'primary' : 'none'" slot="start" [ios]="p.icon + '-outline'"
                             [md]="p.icon + '-sharp'"></ion-icon>
                         <ion-label>{{ p.title | translate }}</ion-label>
@@ -29,7 +29,7 @@
                     </ion-label>
                 </ion-item-divider>
                 <ion-menu-toggle auto-hide="false" *ngFor="let p of appItems">
-                    <ion-item [routerLink]="[p.url]" lines="none" detail="false">
+                    <ion-item [routerLink]="[p.url]" lines="none" detail="false" routerDirection="root">
                         <ion-icon [color]="p.selected ? 'primary' : 'none'" slot="start" [ios]="p.icon + '-outline'"
                             [md]="p.icon + '-sharp'"></ion-icon>
                         <ion-label>{{ p.title | translate }}</ion-label>
@@ -39,7 +39,7 @@
         </ion-content>
         <ion-footer>
             <ion-menu-toggle auto-hide="false" *ngFor="let p of footerItems">
-                <ion-item [routerLink]="[p.url]" lines="none" detail="false">
+                <ion-item [routerLink]="[p.url]" lines="none" detail="false" routerDirection="root">
                     <ion-icon [color]="p.selected ? 'primary' : 'none'" slot="start" [ios]="p.icon + '-outline'"
                         [md]="p.icon + '-sharp'"></ion-icon>
                     <ion-label>{{ p.title | translate }}</ion-label>
