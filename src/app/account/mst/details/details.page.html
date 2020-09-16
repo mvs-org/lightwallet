@@ -27,7 +27,7 @@
             <ion-spinner name="dots" *ngIf="loadingBalance || !balance; else Balances"></ion-spinner>
             <ng-template #Balances>
                   <ngx-charts-advanced-pie-chart [scheme]="balanceColorScheme"
-                    [results]="[{name: 'Confirmed', value: format(balance.available)}, {name: 'Frozen', value: format(balance.frozen)}, {name: 'Confirming', value: format(balance.unconfirmed)}]">
+                    [results]="[{name: 'Confirmed', value: format(balance.available||0)}, {name: 'Frozen', value: format(balance.frozen||0)}, {name: 'Confirming', value: format(balance.unconfirmed||0)}]">
                   </ngx-charts-advanced-pie-chart>
             </ng-template>
             </ion-row>
