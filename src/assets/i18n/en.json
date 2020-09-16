@@ -1150,5 +1150,9 @@
             "CHANGE_ADDRESS_NUMBER": "Update number of addresses",
             "CANCEL": "Cancel"
         }
+    },
+    "UPDATE": {
+        "AVAILABLE_TEXT": "A new version is available",
+        "APPLY": "Apply Now"
     }
 }
