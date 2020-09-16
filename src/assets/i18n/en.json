@@ -150,7 +150,7 @@
     },
     "MST_DETAILS": {
         "BALANCE": {
-            "TITLE": "My balances",
+            "TITLE": "My balance",
             "TOTAL": "Total",
             "AVAILABLE": "Available",
             "CONFIRMING": "Confirming",

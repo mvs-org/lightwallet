@@ -17,41 +17,26 @@
 
   <ion-grid>
     <ion-row>
-      <ion-col>
+      <ion-col size>
         <ion-card>
           <ion-card-header>
             <ion-card-title class="ion-text-center" translate="MST_DETAILS.BALANCE.TITLE"></ion-card-title>
           </ion-card-header>
           <ion-card-content>
+            <ion-row>
             <ion-spinner name="dots" *ngIf="loadingBalance || !balance; else Balances"></ion-spinner>
             <ng-template #Balances>
-              <ion-row>
-                <ion-col translate="MST_DETAILS.BALANCE.TOTAL"></ion-col>
-                <ion-col class="right">
-                  {{(balance.available + balance.unconfirmed + balance.frozen) || 0 | format : balance.decimals}}
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col>
-                  <ion-label translate="MST_DETAILS.BALANCE.AVAILABLE"></ion-label>
-                </ion-col>
-                <ion-col class="right">{{balance.available || 0 | format : balance.decimals}}</ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col translate="MST_DETAILS.BALANCE.CONFIRMING"></ion-col>
-                <ion-col class="right">{{balance.unconfirmed || 0 | format : balance.decimals}}</ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col translate="MST_DETAILS.BALANCE.FROZEN"></ion-col>
-                <ion-col class="right">{{balance.frozen || 0 | format : balance.decimals}}</ion-col>
-              </ion-row>
+                  <ngx-charts-advanced-pie-chart [scheme]="balanceColorScheme"
+                    [results]="[{name: 'Confirmed', value: format(balance.available)}, {name: 'Frozen', value: format(balance.frozen)}, {name: 'Confirming', value: format(balance.unconfirmed)}]">
+                  </ngx-charts-advanced-pie-chart>
             </ng-template>
-            <div class="center">
+            </ion-row>
+            <!-- <div class="center">
               <ion-button color="danger" fill="outline" [routerLink]="'/account/send/' + symbol">
                 <ion-icon slot="start" name="arrow-forward"></ion-icon>
                 <span translate="MST_DETAILS.BALANCE.SEND"></span>
               </ion-button>
-            </div>
+            </div> -->
           </ion-card-content>
         </ion-card>
 
@@ -292,7 +277,7 @@
           </ion-card-content>
         </ion-card>
       </ion-col>
-      <ion-col size="auto">
+      <ion-col size>
         <ion-card>
           <ion-card-header>
             <ion-card-title class="ion-text-center" translate="MST_DETAILS.STAKELIST.TITLE"></ion-card-title>

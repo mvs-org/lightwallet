@@ -78,6 +78,15 @@ export class DetailsPage implements OnInit {
     ]
   }
 
+  balanceColorScheme = {
+    domain: [
+      '#008800', //green
+      '#be0000', // red
+      '#0099CB', // blue
+      // '#ffd21c', // yellow
+    ]
+  }
+
   constructor(
     private activatedRoute: ActivatedRoute,
     public walletService: WalletService,
@@ -186,5 +195,9 @@ export class DetailsPage implements OnInit {
   checkTx = (type, data) => this.walletService.openLink(this.explorerURL(type, data))
 
   explorerURL = (type, data) => (this.appService.network === 'mainnet') ? 'https://explorer.mvs.org/' + type + '/' + data : 'https://explorer-testnet.mvs.org/' + type + '/' + data
+
+  format(value){
+    return value / Math.pow(10, this.asset?.decimals)
+  }
 
 }
