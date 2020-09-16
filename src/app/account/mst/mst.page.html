@@ -21,16 +21,18 @@
 </ion-header>
 
 <ion-content>
+  
   <ion-item lines="none">
-    <ion-segment [(ngModel)]="displaySegment" color="primary">
-      <ion-segment-button value="mine" translate="MST.GRID.TITLE"></ion-segment-button>
-      <ion-segment-button value="all" translate="MST.ALL.TITLE"></ion-segment-button>
+    <!-- <ion-toolbar> -->
+
+    <ion-segment [(ngModel)]="segment" color="primary" (ionChange)="slides.slideTo(segment)">
+      <ion-segment-button value="0" translate="MST.GRID.TITLE"></ion-segment-button>
+      <ion-segment-button value="1" translate="MST.ALL.TITLE"></ion-segment-button>
     </ion-segment>
+    <!-- </ion-toolbar> -->
   </ion-item>
-
-  <div *ngIf="displaySegment=='mine'">
-
-    <ion-card>
+  <ion-slides pager="false" #slides [options]="" (ionSlideWillChange)="setSegment()">
+    <ion-slide>
       <ion-item>
         <img class="coinlogo" [src]="'assets/icon/default_mst.png'" (error)="errorImg($event)">
         <ion-label class="symbol" translate="MST.GRID.SYMBOL"></ion-label>
@@ -75,13 +77,8 @@
       <ng-template *ngIf="!loading && msts && msts.length == 0">
         <p translate="NO_MST"></p>
       </ng-template>
-    </ion-card>
-
-  </div>
-  <div *ngIf="displaySegment=='all'">
-
-
-    <ion-card>
+    </ion-slide>
+    <ion-slide>
       <ion-item>
         <img class="coinlogo" [src]="'assets/icon/default_mst.png'" (error)="errorImg($event)">
         <ion-label class="symbol" translate="MST.ALL.SYMBOL"></ion-label>
@@ -104,7 +101,6 @@
 
       <ion-spinner name="dots" *ngIf="loadingMoreMsts"></ion-spinner>
 
-    </ion-card>
 
     <div class="center" *ngIf="!mstsFullyLoaded">
       <ion-button color="primary" (click)="getMoreMsts()" [disabled]="loadingMoreMsts">
@@ -112,6 +108,8 @@
         <span translate="MST.ALL.LOAD_MORE"></span>
       </ion-button>
     </div>
-  </div>
+    </ion-slide>
+  </ion-slides>
+
 
 </ion-content>
