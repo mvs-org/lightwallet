@@ -22,6 +22,8 @@ export class SwService {
     const everySixHours$ = interval(6 * 60 * 60 * 1000)
     const everySixHoursOnceAppIsStable$ = concat(appIsStable$, everySixHours$)
 
+    updates.checkForUpdate()
+
     everySixHoursOnceAppIsStable$.subscribe(() => updates.checkForUpdate())
 
     updates.activated.subscribe(event => {
