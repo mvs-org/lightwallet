@@ -63,8 +63,9 @@
                 <ion-label color="primary" position="floating" translate="SEND_SINGLE.AMOUNT"></ion-label>
                 <ion-input #quantityInput name="quantity" type="number" min="0" [(ngModel)]="quantity"
                     [disabled]="disableParams && params['amount']" required></ion-input>
-                <ion-button slot="end" type="button" *ngIf="etpBalance>10000 && !(disableParams && params['amount'])"
-                    id="sendAll" (click)="sendAll()" translate="SEND_SINGLE.BUTTON.SEND_ALL"></ion-button>
+                <ion-button slot="end" type="button" fill="outline" shape="round"
+                    *ngIf="etpBalance>10000 && !(disableParams && params['amount'])" id="sendAll" (click)="sendAll()"
+                    translate="SEND_SINGLE.BUTTON.SEND_ALL"></ion-button>
             </ion-item>
             <div *ngIf="tickers && tickers[selectedAsset] && tickers[selectedAsset][base]" class="advice">
                 ≈{{base}} {{fiatValue(quantity) | number : '1.0-2'}}
@@ -152,20 +153,22 @@
         </ion-row>
     </form>
 
-    <form *ngIf="transfer_type == 'more'" #sendForm="ngForm" style="padding-bottom: 0;" (ngSubmit)="send()" (keyup.enter)="send()">
+    <form *ngIf="transfer_type == 'more'" #sendForm="ngForm" style="padding-bottom: 0;" (ngSubmit)="send()"
+        (keyup.enter)="send()">
         <ion-list style="padding-bottom: 0;">
             <ion-item class="toggle-input">
                 <ion-label translate="SEND_MORE.TO_AVATAR"></ion-label>
                 <ion-toggle [(ngModel)]="sendToAvatar" name="sendToAvatar" checked="false"></ion-toggle>
             </ion-item>
-            <br>
-            <ion-row *ngIf="!platform.is('mobile')">
-                <input type="file" name="file" id="file" class="inputfile" accept=".csv" (change)="import($event)" />
-                <label for="file">
+
+            <div class="right-buttons" *ngIf="!platform.is('mobile')">
+                <ion-button fill="outline" shape="round" (click)="f.click()">
                     <ion-icon slot="start" name="document"></ion-icon>
                     <span translate="SEND_MORE.BUTTON.IMPORT_FROM_CSV"></span>
-                </label>
-            </ion-row>
+                </ion-button>
+                <input class="ion-hide" #f name="file" type="file" (change)="import($event)" id="file"
+                    accept=".csv">
+            </div>
 
             <ion-card class="card-block" *ngFor="let recipient of recipients; let i = index" [attr.data-index]="i">
                 <ion-row>
@@ -231,16 +234,18 @@
             </ion-card>
 
             <div class="right-buttons">
-                <ion-button *ngIf="recipients.length < sendMore_limit" fill="solid" color="primary"
+                <ion-button fill="outline" shape="round" *ngIf="recipients.length < sendMore_limit" color="primary"
                     (click)="addRecipient()">
                     <ion-icon slot="start" name="add"></ion-icon>
                     <span translate="SEND_MORE.BUTTON.ADD_RECIPIENT"></span>
                 </ion-button>
-                <ion-button *ngIf="!platform.is('mobile')" fill="solid" color="secondary" (click)="download()">
+                <ion-button fill="outline" shape="round" *ngIf="!platform.is('mobile')" color="secondary"
+                    (click)="download()">
                     <ion-icon slot="start" name="download"></ion-icon>
                     <span translate="SEND_MORE.BUTTON.EXPORT_CSV"></span>
                 </ion-button>
-                <ion-button *ngIf="!platform.is('mobile')" fill="solid" color="light" (click)="csvExample()">
+                <ion-button fill="outline" shape="round" *ngIf="!platform.is('mobile')" color="success"
+                    (click)="csvExample()">
                     <ion-icon slot="start" name="download"></ion-icon>
                     <span translate="SEND_MORE.BUTTON.DOWNLOAD_CSV_EXAMPLE"></span>
                 </ion-button>

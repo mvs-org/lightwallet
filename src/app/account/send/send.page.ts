@@ -80,7 +80,6 @@ export class SendPage implements OnInit {
     private walletService: WalletService,
     private modalCtrl: ModalController,
   ) {
-    this.alertService.showErrorTranslated('SCAN.DIFFERENT_ASSET.TITLE', 'SCAN.DIFFERENT_ASSET.SUBTITLE')
   }
 
   ngOnInit() {
