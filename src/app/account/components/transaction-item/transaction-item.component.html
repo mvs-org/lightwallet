@@ -1,4 +1,5 @@
-<ion-item button class="manual-copy display-overflow" (click)="showHideDetails()">
+<ion-card>
+<ion-item button class="manual-copy display-overflow" (click)="showHideDetails()" lines="none">
     <ion-grid>
         <ion-row *ngIf="status == 'SIGNED' || status == 'UNSIGNED' || status == 'PARTIALLY'">
             <ion-col>
@@ -197,3 +198,4 @@
         </div>
     </ion-grid>
 </ion-item>
+</ion-card>
