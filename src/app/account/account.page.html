@@ -3,8 +3,9 @@
         <ion-content class="main-menu">
             <img src="/assets/logo.png" class="logo" alt="Metaverse">
             <div class="center">
-                v{{globals.version}}
+                v{{globals.version}} 
                 <ion-icon slot="start" *ngIf="!hasSeed" name="eye"></ion-icon>
+                <div>{{(globals.network$|async) === 'testnet' ? 'testnet' : ''}}</div>
             </div>
             <ion-list id="inbox-list">
                 <ion-buttons slot="end">
