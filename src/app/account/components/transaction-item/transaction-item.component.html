@@ -1,114 +1,108 @@
 <ion-card>
-<ion-item button class="manual-copy display-overflow" (click)="showHideDetails()" lines="none">
-    <ion-grid>
-        <ion-row *ngIf="status == 'SIGNED' || status == 'UNSIGNED' || status == 'PARTIALLY'">
-            <ion-col>
-                <h1 translate="TX.TX_SUMMARY"></h1>
-            </ion-col>
-        </ion-row>
-        <ion-row *ngIf="status == 'PENDING' || status == 'MINED'">
-            <ion-col>
-                <ion-item class="hash" lines="none">
-                    <span>{{tx.hash}}
-                        <ion-button class="tx-link-button" color="primary" fill="clear" (click)="checkTx()">
-                            <ion-icon slot="icon-only" name="open" size="small"></ion-icon>
-                        </ion-button>
-                    </span>
-                </ion-item>
-                <ion-item class="timestamp" lines="none">
-                    <p>{{tx.confirmed_at*1000 | date : 'medium'}}</p>
-                </ion-item>
-            </ion-col>
-        </ion-row>
-        <ion-row>
-            <ion-col>
-                <ion-row>
-                    <ion-col>
-                        <div class="summaryTxType">
-                            <ion-item lines="none">{{'TX.TX_TYPE.' + txType | translate}}</ion-item>
-                            <ion-item lines="none"
-                                *ngIf="multisig.status == 'NOT_MULTISIG' && (status == 'SIGNED' || status == 'UNSIGNED' || status == 'PARTIALLY')"
-                                class="unsigned">
-                                {{'TX.SIGN_STATUS.' + status | translate}}
-                            </ion-item>
-                            <ion-item lines="none" *ngIf="multisig.status == 'MULTISIG'" class="unsigned"
-                                translate="MULTISIG_STATUS.MULTISIG"></ion-item>
-                            <ion-item lines="none" *ngIf="multisig.status == 'PARTIALLY_MULTISIG'" class="wrong-input"
-                                translate="MULTISIG_STATUS.PARTIALLY_MULTISIG"></ion-item>
-                            <ion-item lines="none" *ngIf="status == 'PENDING'" class="warning-input"
-                                translate="TX.PENDING_CONFIRMATION"></ion-item>
-                            <ion-item lines="none"
-                                *ngIf="status == 'MINED' && tx.height + appService.min_confirmations > height"
-                                class="warning-input">
-                                {{'TX.CONFIRMING' | translate}}
-                                ({{height - tx.height >= 0 ? height - tx.height : 0}}/{{appService.min_confirmations}})
-                            </ion-item>
-                        </div>
-                    </ion-col>
-                    <ion-col class="summaryAmount">
-                        <div class="right" *ngIf="txType == 'ETP' || txType == 'COINSTAKE'">
-                            <ion-item lines="none"
-                                *ngIf="totalPersonalInputs.ETP && totalPersonalInputs.ETP - totalPersonalOutputs.ETP - txFee > 0"
-                                class="sendAmount">
-                                -{{totalPersonalInputs.ETP - totalPersonalOutputs.ETP | format : 8}} ETP
-                            </ion-item>
-                            <ion-item lines="none"
-                                *ngIf="!totalPersonalInputs.ETP || totalPersonalInputs.ETP - totalPersonalOutputs.ETP - txFee < 0"
-                                class="receiveAmount">
-                                +{{totalPersonalOutputs.ETP | format : 8}} ETP
-                            </ion-item>
-                            <ion-item lines="none"
-                                *ngIf="totalPersonalInputs.ETP - totalPersonalOutputs.ETP - txFee == 0">
-                                {{'TX.INTRAWALLET' | translate}}
-                            </ion-item>
-                        </div>
-                        <ion-item lines="none"
-                            *ngIf="txType == 'ASSET' || txType == 'ISSUE' || txType == 'MST_MINING' || txType == 'MST_LOCK' || txType == 'DNA_VOTE'">
-                            <div *ngIf="totalPersonalInputs.MST[txTypeValue] && totalPersonalInputs.MST[txTypeValue] - totalPersonalOutputs.MST[txTypeValue] > 0"
-                                class="sendAmount">
-                                -{{totalPersonalInputs.MST[txTypeValue] - totalPersonalOutputs.MST[txTypeValue] |
-                                format : decimalsMst[txTypeValue]}} {{txTypeValue}}
+    <ion-item button class="manual-copy display-overflow" (click)="showHideDetails()" lines="none">
+        <ion-grid>
+            <ion-row *ngIf="status == 'SIGNED' || status == 'UNSIGNED' || status == 'PARTIALLY'">
+                <ion-col>
+                    <h1 translate="TX.TX_SUMMARY"></h1>
+                </ion-col>
+            </ion-row>
+            <ion-row *ngIf="status == 'PENDING' || status == 'MINED'">
+                <ion-col>
+                    <div class="hash">
+                        <span>{{tx.hash}}
+                            <ion-button class="tx-link-button" color="primary" fill="clear" (click)="checkTx()">
+                                <ion-icon slot="icon-only" name="open" size="small"></ion-icon>
+                            </ion-button>
+                        </span>
+                    </div>
+                    <div class="timestamp" lines="none">
+                        <p>{{tx.confirmed_at*1000 | date : 'medium'}}</p>
+                    </div>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col>
+                    <ion-row>
+                        <ion-col>
+                            <div class="summaryTxType">
+                                <div>{{'TX.TX_TYPE.' + txType | translate}}</div>
+                                <div *ngIf="multisig.status == 'NOT_MULTISIG' && (status == 'SIGNED' || status == 'UNSIGNED' || status == 'PARTIALLY')"
+                                    class="unsigned">
+                                    {{'TX.SIGN_STATUS.' + status | translate}}
+                                </div>
+                                <div *ngIf="multisig.status == 'MULTISIG'" class="unsigned"
+                                    translate="MULTISIG_STATUS.MULTISIG"></div>
+                                <div *ngIf="multisig.status == 'PARTIALLY_MULTISIG'" class="wrong-input"
+                                    translate="MULTISIG_STATUS.PARTIALLY_MULTISIG"></div>
+                                <div *ngIf="status == 'PENDING'" class="warning-input"
+                                    translate="TX.PENDING_CONFIRMATION"></div>
+                                <div *ngIf="status == 'MINED' && tx.height + appService.min_confirmations > height"
+                                    class="warning-input">
+                                    {{'TX.CONFIRMING' | translate}}
+                                    ({{height - tx.height >= 0 ? height - tx.height : 0}}/{{appService.min_confirmations}})
+                                </div>
                             </div>
-                            <div *ngIf="!totalPersonalInputs.MST[txTypeValue] || totalPersonalInputs.MST[txTypeValue] - totalPersonalOutputs.MST[txTypeValue] < 0"
-                                class="receiveAmount">
-                                +{{totalPersonalOutputs.MST[txTypeValue] | format : decimalsMst[txTypeValue]}}
-                                {{txTypeValue}}
+                        </ion-col>
+                        <ion-col class="summaryAmount">
+                            <div class="right" *ngIf="txType == 'ETP' || txType == 'COINSTAKE'">
+                                <div *ngIf="totalPersonalInputs.ETP && totalPersonalInputs.ETP - totalPersonalOutputs.ETP - txFee > 0"
+                                    class="sendAmount">
+                                    -{{totalPersonalInputs.ETP - totalPersonalOutputs.ETP | format : 8}} ETP
+                                </div>
+                                <div *ngIf="!totalPersonalInputs.ETP || totalPersonalInputs.ETP - totalPersonalOutputs.ETP - txFee < 0"
+                                    class="receiveAmount">
+                                    +{{totalPersonalOutputs.ETP | format : 8}} ETP
+                                </div>
+                                <div *ngIf="totalPersonalInputs.ETP - totalPersonalOutputs.ETP - txFee == 0">
+                                    {{'TX.INTRAWALLET' | translate}}
+                                </div>
                             </div>
                             <div
-                                *ngIf="totalPersonalInputs.MST[txTypeValue] - totalPersonalOutputs.MST[txTypeValue] == 0">
-                                {{'TX.INTRAWALLET' | translate}}
+                                *ngIf="txType == 'ASSET' || txType == 'ISSUE' || txType == 'MST_MINING' || txType == 'MST_LOCK' || txType == 'DNA_VOTE'">
+                                <div *ngIf="totalPersonalInputs.MST[txTypeValue] && totalPersonalInputs.MST[txTypeValue] - totalPersonalOutputs.MST[txTypeValue] > 0"
+                                    class="sendAmount">
+                                    -{{totalPersonalInputs.MST[txTypeValue] - totalPersonalOutputs.MST[txTypeValue] |
+                                format : decimalsMst[txTypeValue]}} {{txTypeValue}}
+                                </div>
+                                <div *ngIf="!totalPersonalInputs.MST[txTypeValue] || totalPersonalInputs.MST[txTypeValue] - totalPersonalOutputs.MST[txTypeValue] < 0"
+                                    class="receiveAmount">
+                                    +{{totalPersonalOutputs.MST[txTypeValue] | format : decimalsMst[txTypeValue]}}
+                                    {{txTypeValue}}
+                                </div>
+                                <div
+                                    *ngIf="totalPersonalInputs.MST[txTypeValue] - totalPersonalOutputs.MST[txTypeValue] == 0">
+                                    {{'TX.INTRAWALLET' | translate}}
+                                </div>
                             </div>
-                        </ion-item>
-                        <ion-item lines="none" *ngIf="txType == 'CERT'">
-                            {{'TX.TX_TYPE.CERT_TYPE.' + txTypeCert | translate}} {{txTypeValue}}
-                        </ion-item>
-                        <ion-item lines="none"
-                            *ngIf="txType == 'MIT_REGISTERED' || txType == 'MIT_TRANSFERED' || txType == 'DID_REGISTER' || txType == 'DID_TRANSFER'">
-                            {{txTypeValue}}
-                        </ion-item>
-                        <ion-item lines="none" *ngIf="txType == 'ETP_LOCK' || txType == 'ETP_LOCK_REWARD'">
-                            {{tx.locked_quantity | format : 8}} ETP
-                        </ion-item>
-                        <ion-item lines="none" *ngIf="txType == 'MINING_REWARD'" class="receiveAmount">
-                            +{{totalPersonalOutputs.ETP | format : 8}} ETP
-                            <div *ngIf="txTypeValue !== 'ETP'" class="receiveAmount">
-                                +{{totalPersonalOutputs.MST[txTypeValue] | format : decimalsMst[txTypeValue]}}
+                            <div *ngIf="txType == 'CERT'">
+                                {{'TX.TX_TYPE.CERT_TYPE.' + txTypeCert | translate}} {{txTypeValue}}
+                            </div>
+                            <div
+                                *ngIf="txType == 'MIT_REGISTERED' || txType == 'MIT_TRANSFERED' || txType == 'DID_REGISTER' || txType == 'DID_TRANSFER'">
                                 {{txTypeValue}}
                             </div>
-                        </ion-item>
-                        <br>
-                        <ion-item class="fee" lines="none">
-                            {{'TX.TX_FEE' | translate}}: {{txFee | format : 8}} ETP
-                        </ion-item>
-                    </ion-col>
-                </ion-row>
-            </ion-col>
-        </ion-row>
-        <div [@expandCollapse]="this.mode !== 'summary'" *ngIf="this.mode !== 'summary'">
+                            <div *ngIf="txType == 'ETP_LOCK' || txType == 'ETP_LOCK_REWARD'">
+                                {{tx.locked_quantity | format : 8}} ETP
+                            </div>
+                            <div *ngIf="txType == 'MINING_REWARD'" class="receiveAmount">
+                                +{{totalPersonalOutputs.ETP | format : 8}} ETP
+                                <div *ngIf="txTypeValue !== 'ETP'" class="receiveAmount">
+                                    +{{totalPersonalOutputs.MST[txTypeValue] | format : decimalsMst[txTypeValue]}}
+                                    {{txTypeValue}}
+                                </div>
+                            </div>
+                            <br>
+                            <div class="fee right">
+                                {{'TX.TX_FEE' | translate}}: {{txFee | format : 8}} ETP
+                            </div>
+                        </ion-col>
+                    </ion-row>
+                </ion-col>
+            </ion-row>
+            <div [@expandCollapse]="this.mode !== 'summary'" *ngIf="this.mode !== 'summary'">
 
-            <ion-row *ngIf="multisig && multisig.status == 'MULTISIG' && (mode == 'default' || mode == 'satoshi')">
-                <ion-col size="12" size-md="6">
-                    <ion-item>
+                <ion-row *ngIf="multisig && multisig.status == 'MULTISIG' && (mode == 'default' || mode == 'satoshi')">
+                    <ion-col size="12" size-md="6">
                         <ion-row *ngIf="multisig.info">
                             <ion-col translate="MULTISIGNATURE.NBR_PERSON"></ion-col>
                             <ion-col class="right">
@@ -127,75 +121,70 @@
                                 {{multisig.current_nbr_sign}}
                             </ion-col>
                         </ion-row>
-                    </ion-item>
-                </ion-col>
-            </ion-row>
+                    </ion-col>
+                </ion-row>
 
-            <ion-row *ngIf="mode == 'default' || mode == 'satoshi'">
-                <ion-col size="12" size-sm="6">
-                    <ion-row>
-                        <ion-item lines="none">
+                <ion-row *ngIf="mode == 'default' || mode == 'satoshi'">
+                    <ion-col size="12" size-sm="6">
+                        <ion-row>
                             <ion-col translate="TX.INPUTS"></ion-col>
-                        </ion-item>
-                    </ion-row>
-                    <ion-row>
-                        <input-item lines="none" *ngFor="let input of tx.inputs; let i = index"
-                            (modelChanged)="inputLoad($event, i)" [input]="input" [decimalsMst]="decimalsMst"
-                            [mode]="mode"></input-item>
-                    </ion-row>
-                </ion-col>
-                <ion-col size="12" size-sm="6">
-                    <ion-row>
-                        <ion-item lines="none">
+                        </ion-row>
+                        <ion-row>
+                            <input-item lines="none" *ngFor="let input of tx.inputs; let i = index"
+                                (modelChanged)="inputLoad($event, i)" [input]="input" [decimalsMst]="decimalsMst"
+                                [mode]="mode"></input-item>
+                        </ion-row>
+                    </ion-col>
+                    <ion-col size="12" size-sm="6">
+                        <ion-row>
                             <ion-col translate="TX.OUTPUTS"></ion-col>
-                        </ion-item>
+                        </ion-row>
+                        <ion-row>
+                            <output-item *ngFor="let output of tx.outputs" [output]="output" [decimalsMst]="decimalsMst"
+                                [mode]="mode"></output-item>
+                        </ion-row>
+                    </ion-col>
+                </ion-row>
+                <ion-row *ngIf="totalInputs.ETP && (mode == 'default' || mode == 'satoshi')">
+                    <ion-col>
+                        <ion-row>
+                            <ion-col size="6" translate="TX.TOTAL_INPUTS"></ion-col>
+                            <ion-col size="6" class="right">
+                                {{totalInputs.ETP | format : 8}} ETP
+                                <div *ngFor="let mst of involvedMst">
+                                    {{totalInputs.MST[mst] | format : decimalsMst[mst]}} {{mst}}
+                                </div>
+                            </ion-col>
+                        </ion-row>
+                    </ion-col>
+                    <ion-col>
+                        <ion-row>
+                            <ion-col size="6" translate="TX.TOTAL_OUTPUTS"></ion-col>
+                            <ion-col size="6" class="right">
+                                {{totalOutputs.ETP | format : 8}} ETP
+                                <div *ngFor="let mst of involvedMst">
+                                    {{totalOutputs.MST[mst] | format : decimalsMst[mst]}} {{mst}}
+                                </div>
+                            </ion-col>
+                        </ion-row>
+                    </ion-col>
+                </ion-row>
+                <div *ngIf="mode == 'hex'">
+                    <ion-row>
+                        <ion-col>
+                            <div type="text">{{hexTx}}</div>
+                        </ion-col>
                     </ion-row>
                     <ion-row>
-                        <output-item *ngFor="let output of tx.outputs" [output]="output" [decimalsMst]="decimalsMst"
-                            [mode]="mode"></output-item>
+                        <ion-col>
+                            <ion-button expand="full" ngxClipboard [cbContent]="hexTx">
+                                <ion-icon slot="start" name="copy"></ion-icon>
+                                <span translate="COPY"></span>
+                            </ion-button>
+                        </ion-col>
                     </ion-row>
-                </ion-col>
-            </ion-row>
-            <ion-row *ngIf="totalInputs.ETP && (mode == 'default' || mode == 'satoshi')">
-                <ion-col>
-                    <ion-item lines="none">
-                        <ion-col size="6" translate="TX.TOTAL_INPUTS"></ion-col>
-                        <ion-col size="6" class="right">
-                            {{totalInputs.ETP | format : 8}} ETP
-                            <div *ngFor="let mst of involvedMst">
-                                {{totalInputs.MST[mst] | format : decimalsMst[mst]}} {{mst}}
-                            </div>
-                        </ion-col>
-                    </ion-item>
-                </ion-col>
-                <ion-col>
-                    <ion-item lines="none">
-                        <ion-col size="6" translate="TX.TOTAL_OUTPUTS"></ion-col>
-                        <ion-col size="6" class="right">
-                            {{totalOutputs.ETP | format : 8}} ETP
-                            <div *ngFor="let mst of involvedMst">
-                                {{totalOutputs.MST[mst] | format : decimalsMst[mst]}} {{mst}}
-                            </div>
-                        </ion-col>
-                    </ion-item>
-                </ion-col>
-            </ion-row>
-            <div *ngIf="mode == 'hex'">
-                <ion-row>
-                    <ion-col>
-                        <ion-item class="breakwords" type="text">{{hexTx}}</ion-item>
-                    </ion-col>
-                </ion-row>
-                <ion-row>
-                    <ion-col>
-                        <ion-button expand="full" ngxClipboard [cbContent]="hexTx">
-                            <ion-icon slot="start" name="copy"></ion-icon>
-                            <span translate="COPY"></span>
-                        </ion-button>
-                    </ion-col>
-                </ion-row>
+                </div>
             </div>
-        </div>
-    </ion-grid>
-</ion-item>
+        </ion-grid>
+    </ion-item>
 </ion-card>
