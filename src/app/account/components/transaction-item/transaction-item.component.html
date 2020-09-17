@@ -1,32 +1,25 @@
-<ion-card class="manual-copy display-overflow">
+<ion-item button class="manual-copy display-overflow" (click)="showHideDetails()">
     <ion-grid>
         <ion-row *ngIf="status == 'SIGNED' || status == 'UNSIGNED' || status == 'PARTIALLY'">
             <ion-col>
-                <ion-row>
-                    <ion-col>
-                        <ion-item>
-                            <h1 translate="TX.TX_SUMMARY"></h1>
-                        </ion-item>
-                    </ion-col>
-                </ion-row>
+                <h1 translate="TX.TX_SUMMARY"></h1>
             </ion-col>
         </ion-row>
         <ion-row *ngIf="status == 'PENDING' || status == 'MINED'">
-            <ion-toolbar>
+            <ion-col>
                 <ion-item class="hash" lines="none">
-                    <h2>{{tx.hash}}</h2>
+                    <span>{{tx.hash}}
+                        <ion-button class="tx-link-button" color="primary" fill="clear" (click)="checkTx()">
+                            <ion-icon slot="icon-only" name="open" size="small"></ion-icon>
+                        </ion-button>
+                    </span>
                 </ion-item>
                 <ion-item class="timestamp" lines="none">
                     <p>{{tx.confirmed_at*1000 | date : 'medium'}}</p>
                 </ion-item>
-                <ion-buttons slot="end">
-                    <ion-button color="primary" (click)="checkTx()">
-                        <ion-icon slot="icon-only" name="open" size="small"></ion-icon>
-                    </ion-button>
-                </ion-buttons>
-            </ion-toolbar>
+            </ion-col>
         </ion-row>
-        <ion-row (click)="showHideDetails()">
+        <ion-row>
             <ion-col>
                 <ion-row>
                     <ion-col>
@@ -109,14 +102,6 @@
                     </ion-col>
                 </ion-row>
             </ion-col>
-            <ion-toolbar>
-                <ion-buttons slot="end">
-                    <ion-button>
-                        <ion-icon slot="icon-only" *ngIf="mode == 'summary'" name="caret-down" size="small"></ion-icon>
-                        <ion-icon slot="icon-only" *ngIf="mode !== 'summary'" name="caret-up" size="small"></ion-icon>
-                    </ion-button>
-                </ion-buttons>
-            </ion-toolbar>
         </ion-row>
         <div [@expandCollapse]="this.mode !== 'summary'" *ngIf="this.mode !== 'summary'">
 
@@ -211,4 +196,4 @@
             </div>
         </div>
     </ion-grid>
-</ion-card>
+</ion-item>

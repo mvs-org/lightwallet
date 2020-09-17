@@ -1,16 +1,21 @@
 <div *ngIf="input.previous_output.value != 0 || input.previous_output.address == ''">
     <ion-row [ngClass]="{'personal': input.personal}">
         <!--Left column-->
-        <ion-col [ngClass]="{'align-small-button-container': input.previous_output.address === undefined && input.previous_output.hash !== '0000000000000000000000000000000000000000000000000000000000000000'}">
+        <ion-col
+            [ngClass]="{'align-small-button-container': input.previous_output.address === undefined && input.previous_output.hash !== '0000000000000000000000000000000000000000000000000000000000000000'}">
             <ion-item lines="none" *ngIf="input.previous_output.address !== ''">
                 <span>{{input.previous_output.address}}</span>
             </ion-item>
-            <ion-item lines="none" *ngIf="input.previous_output.hash === '0000000000000000000000000000000000000000000000000000000000000000'">
+            <ion-item lines="none"
+                *ngIf="input.previous_output.hash === '0000000000000000000000000000000000000000000000000000000000000000'">
                 <span translate="TX.INPUT_COINBASE"></span>
             </ion-item>
-            <ion-item lines="none" *ngIf="input.previous_output.address === undefined && input.previous_output.hash !== '0000000000000000000000000000000000000000000000000000000000000000'" class="align-small-button">
+            <ion-item lines="none"
+                *ngIf="input.previous_output.address === undefined && input.previous_output.hash !== '0000000000000000000000000000000000000000000000000000000000000000'"
+                class="align-small-button">
                 <span translate="TX.FOREIGN_INPUT"></span>
-                <ion-button fill="clear" color="primary" (click)="loadForeignInput()">
+                <ion-button fill="clear" color="primary" (click)="loadForeignInput()"
+                    (click)="$event.preventDefault();$event.stopPropagation()">
                     <ion-icon slot="icon-only" name="eye"></ion-icon>
                 </ion-button>
             </ion-item>
@@ -22,16 +27,21 @@
             </ion-item>
         </ion-col>
     </ion-row>
-    <ion-row *ngIf="mode == 'satoshi'" [ngClass]="{'align-small-button-container': input.previous_output.hash !== '0000000000000000000000000000000000000000000000000000000000000000'}">
+    <ion-row *ngIf="mode == 'satoshi'"
+        [ngClass]="{'align-small-button-container': input.previous_output.hash !== '0000000000000000000000000000000000000000000000000000000000000000'}">
         <ion-col>
             <ion-item lines="none" class="script">
                 <span>{{'TX.INPUT_HASH'|translate}}: {{input.previous_output.hash}}</span>
             </ion-item>
-            <ion-item lines="none" class="script align-small-button" *ngIf="input.previous_output.hash !== '0000000000000000000000000000000000000000000000000000000000000000'">
+            <ion-item lines="none" class="script align-small-button"
+                *ngIf="input.previous_output.hash !== '0000000000000000000000000000000000000000000000000000000000000000'">
                 <span>{{'TX.INPUT_INDEX'|translate}}: {{input.previous_output.index}}</span>
-                <ion-button fill="clear" color="primary" (click)="checkInput()">
-                    <ion-icon slot="icon-only" name="open"></ion-icon>
-                </ion-button>
+                <a (click)="$event.stopPropagation()" target="_blank"
+                    [href]="explorerURLWithIndex(input.previous_output.hash, input.previous_output.index)">
+                    <ion-button fill="clear" color="primary">
+                        <ion-icon slot="icon-only" name="open"></ion-icon>
+                    </ion-button>
+                </a>
             </ion-item>
         </ion-col>
     </ion-row>
@@ -44,7 +54,8 @@
     </ion-row>
 </div>
 
-<div *ngIf="input.previous_output.attachment && input.previous_output.attachment.symbol && input.previous_output.attachment.symbol != 'ETP'">
+<div
+    *ngIf="input.previous_output.attachment && input.previous_output.attachment.symbol && input.previous_output.attachment.symbol != 'ETP'">
     <ion-row [ngClass]="{'personal': input.personal}">
         <!--Left column-->
         <ion-col>
@@ -54,16 +65,21 @@
         </ion-col>
         <!--Right column-->
         <ion-col>
-            <ion-item class="right" lines="none" *ngIf="input.previous_output.attachment.type == 'did-register' || input.previous_output.attachment.type == 'did-transfer'">
-                <span class="txType">{{'TX.TYPE.' + input.previous_output.attachment.type | translate}}:</span>{{input.previous_output.attachment.symbol}}
+            <ion-item class="right" lines="none"
+                *ngIf="input.previous_output.attachment.type == 'did-register' || input.previous_output.attachment.type == 'did-transfer'">
+                <span
+                    class="txType">{{'TX.TYPE.' + input.previous_output.attachment.type | translate}}:</span>{{input.previous_output.attachment.symbol}}
             </ion-item>
             <ion-item class="right" lines="none" *ngIf="input.previous_output.attachment.type == 'mit'">
-                <span class="txType">{{'TX.TYPE.MIT.' + input.previous_output.attachment.status | translate}}:</span>{{input.previous_output.attachment.symbol}}
+                <span
+                    class="txType">{{'TX.TYPE.MIT.' + input.previous_output.attachment.status | translate}}:</span>{{input.previous_output.attachment.symbol}}
             </ion-item>
             <ion-item class="right" lines="none" *ngIf="input.previous_output.attachment.cert">
-                <span class="txType">{{'TX.TYPE.CERT.' + input.previous_output.attachment.cert | translate}}:</span>{{input.previous_output.attachment.symbol}}
+                <span
+                    class="txType">{{'TX.TYPE.CERT.' + input.previous_output.attachment.cert | translate}}:</span>{{input.previous_output.attachment.symbol}}
             </ion-item>
-            <ion-item class="right" lines="none" *ngIf="input.previous_output.attachment.type != 'did-register' && input.previous_output.attachment.type != 'did-transfer' && input.previous_output.attachment.type != 'mit' && !input.previous_output.attachment.cert">
+            <ion-item class="right" lines="none"
+                *ngIf="input.previous_output.attachment.type != 'did-register' && input.previous_output.attachment.type != 'did-transfer' && input.previous_output.attachment.type != 'mit' && !input.previous_output.attachment.cert">
                 <span>
                     {{input.previous_output.attachment.quantity | format : decimalsMst[input.previous_output.attachment.symbol]}}
                     {{input.previous_output.attachment.symbol}}
@@ -71,16 +87,21 @@
             </ion-item>
         </ion-col>
     </ion-row>
-    <ion-row *ngIf="mode == 'satoshi'" [ngClass]="{'align-small-button-container': input.previous_output.hash !== '0000000000000000000000000000000000000000000000000000000000000000'}">
+    <ion-row *ngIf="mode == 'satoshi'"
+        [ngClass]="{'align-small-button-container': input.previous_output.hash !== '0000000000000000000000000000000000000000000000000000000000000000'}">
         <ion-col>
             <ion-item lines="none" class="script">
-                <span>{{'TX.INPUT_HASH'|translate}}: {{input.previous_output.hash}}</span>   
+                <span>{{'TX.INPUT_HASH'|translate}}: {{input.previous_output.hash}}</span>
             </ion-item>
-            <ion-item lines="none" class="script align-small-button" *ngIf="input.previous_output.hash !== '0000000000000000000000000000000000000000000000000000000000000000'">
+            <ion-item lines="none" class="script align-small-button"
+                *ngIf="input.previous_output.hash !== '0000000000000000000000000000000000000000000000000000000000000000'">
                 <span>{{'TX.INPUT_INDEX'|translate}}: {{input.previous_output.index}}</span>
-                <ion-button fill="clear" color="primary" (click)="checkInput()">
-                    <ion-icon slot="icon-only" name="open"></ion-icon>
-                </ion-button>
+                <a (click)="$event.stopPropagation()" target="_blank"
+                    [href]="explorerURLWithIndex(input.previous_output.hash, input.previous_output.index)">
+                    <ion-button fill="clear" color="primary">
+                        <ion-icon slot="icon-only" name="open"></ion-icon>
+                    </ion-button>
+                </a>
             </ion-item>
         </ion-col>
     </ion-row>

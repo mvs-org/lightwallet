@@ -94,3 +94,9 @@ textarea{
 input-item, output-item {
     width: 100%;
 }
+
+.tx-link-button{
+    top: 40%;
+    -ms-transform: translateY(-40%);
+    transform: translateY(-40%);
+}
