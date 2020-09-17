@@ -150,7 +150,7 @@
     },
     "MST_DETAILS": {
         "BALANCE": {
-            "TITLE": "My balance",
+            "TITLE": "My Balance",
             "TOTAL": "Total",
             "AVAILABLE": "Available",
             "CONFIRMING": "Confirming",
@@ -158,7 +158,7 @@
             "SEND": "Send"
         },
         "INFO": {
-            "TITLE": "General information",
+            "TITLE": "General Information",
             "MAX_SUPPLY": "Max supply",
             "TOTAL_SUPPLY": "Total supply",
             "BURNED_QUANTITY": "Burned quantity",
