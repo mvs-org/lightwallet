@@ -80,7 +80,7 @@ export class DetailsPage implements OnInit {
 
   balanceColorScheme = {
     domain: [
-      '#008800', //green
+      '#00bb00', //green
       '#be0000', // red
       '#0099CB', // blue
       // '#ffd21c', // yellow
