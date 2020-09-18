@@ -2,7 +2,6 @@ import { Component, OnInit, } from '@angular/core'
 import { MetaverseService } from 'src/app/services/metaverse.service'
 import { WalletService } from 'src/app/services/wallet.service'
 import { AppService } from 'src/app/services/app.service'
-import { Router } from '@angular/router'
 import { AlertService } from 'src/app/services/alert.service'
 import { NavController } from '@ionic/angular'
 
