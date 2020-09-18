@@ -18,7 +18,6 @@ import { IonicStorageModule } from '@ionic/storage'
 import { ServiceWorkerModule } from '@angular/service-worker'
 import { environment } from '../environments/environment'
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx'
-import { Deeplinks } from '@ionic-native/deeplinks/ngx'
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json')
@@ -52,7 +51,6 @@ export function createTranslateLoader(http: HttpClient) {
     StatusBar,
     SplashScreen,
     BarcodeScanner,
-    Deeplinks,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

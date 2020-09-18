@@ -41,16 +41,16 @@ export class AppComponent {
       .then(() => {
         App.addListener('appUrlOpen', (data: any) => {
           this.zone.run(() => {
-              // Example url: https://beerswift.app/tabs/tab2
-              // slug = /tabs/tab2
-              const slug = data.url.split('.app').pop()
-              if (slug) {
-                  this.router.navigateByUrl(slug)
-              }
-              // If no match, do nothing - let regular routing
-              // logic take over
-          });
-      });
+            const slug = data.url.split('.com').pop()
+            if (slug) {
+              this.router.navigateByUrl(slug)
+              console.log('Slug detected')
+              console.log(slug)
+            }
+            // If no match, do nothing - let regular routing
+            // logic take over
+          })
+        })
       })
   }
 
