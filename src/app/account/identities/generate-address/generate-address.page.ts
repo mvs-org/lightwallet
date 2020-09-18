@@ -43,7 +43,7 @@ export class GenerateAddressPage implements OnInit {
   }
 
   cancel() {
-    this.router.navigate(['account', 'identities'])
+    this.navCtrl.navigateBack('/account/identities')
   }
 
   async setIndex() {
