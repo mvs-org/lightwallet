@@ -35,6 +35,7 @@
                 "input": "node_modules/metaversejs/dist",
                 "output": "./metaversejs"
               },
+              "src/.well-known",
               "src/manifest.webmanifest",
               "src/manifest.json"
             ],
