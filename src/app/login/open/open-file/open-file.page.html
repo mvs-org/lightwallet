@@ -25,18 +25,18 @@
                     </ion-label>
                     <ion-checkbox [(ngModel)]="disclaimer_agreed" id="disclaimer-agree"></ion-checkbox>
                 </ion-item>
-                <form *ngIf="disclaimer_agreed" offset-md-3 col-md-6 (ngSubmit)="decrypt(password)" #importForm="ngForm"
-                    lines="none" class="buttons-container">
+                <form *ngIf="disclaimer_agreed" (ngSubmit)="decrypt(password)" #importForm="ngForm" lines="none"
+                    class="buttons-container">
                     <ion-item class="center-text" lines="none">
                         <h1 translate="OPEN_FILE.IMPORT_FILE"></h1>
                     </ion-item>
                     <ion-row *ngIf="!fileLoaded && !isMobile">
-                        <input type="file" name="file" id="file" class="inputfile" accept=".json"
-                            (change)="open($event)" />
-                        <label for="file">
+                        <ion-button fill="outline" shape="round" (click)="f.click()">
                             <ion-icon slot="start" name="download"></ion-icon>
                             <span translate="OPEN_FILE.CHOOSE_A_FILE"></span>
-                        </label>
+                        </ion-button>
+                        <input class="ion-hide" #f name="file" type="file" (change)="open($event)" id="file"
+                            accept=".json">
                     </ion-row>
                     <div *ngIf="fileLoaded">
                         <ion-row>
@@ -50,10 +50,13 @@
                         </ion-item>
                         <br>
                         <ion-row *ngIf="!isMobile">
-                            <ion-button type="submit" id="submit-button" expand="full" [disabled]="!importForm.form.valid" color="primary">
-                                <ion-icon slot="start" name="arrow-forward"></ion-icon>
-                                <span translate="OPEN_FILE.IMPORT_BUTTON"></span>
-                            </ion-button>
+                            <ion-col size="12" size-sm="6" offset-sm="3">
+                                <ion-button type="submit" expand="full" id="submit-button" expand="full"
+                                    [disabled]="!importForm.form.valid" color="primary">
+                                    <ion-icon slot="start" name="arrow-forward"></ion-icon>
+                                    <span translate="OPEN_FILE.IMPORT_BUTTON"></span>
+                                </ion-button>
+                            </ion-col>
                         </ion-row>
                     </div>
                 </form>
@@ -76,8 +79,8 @@
         </label>
     </div>
 
-    <ion-button *ngIf="fileLoaded" color="primary" [disabled]="!password" (click)="decrypt(password)"
-        type="submit" expand="full">
+    <ion-button *ngIf="fileLoaded" color="primary" [disabled]="!password" (click)="decrypt(password)" type="submit"
+        expand="full">
         <ion-icon slot="start" name="arrow-forward"></ion-icon>
         <span translate="OPEN_FILE.IMPORT_BUTTON"></span>
     </ion-button>

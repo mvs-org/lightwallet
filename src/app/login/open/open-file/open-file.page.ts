@@ -32,6 +32,13 @@ export class OpenFilePage implements OnInit {
     this.isMobile = this.walletService.isMobile()
   }
 
+  ionViewWillEnter() {
+    this.data = undefined
+    this.fileLoaded = false
+    this.disclaimer_agreed = false
+    this.password = ''
+  }
+
 
   open(e) {
     let file = e.target.files

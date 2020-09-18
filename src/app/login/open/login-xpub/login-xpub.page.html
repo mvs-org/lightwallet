@@ -17,21 +17,26 @@
                             <p align="center" translate="XPUB.INFORMATION"></p>
                         </ion-col>
                     </ion-row>
-                    <ion-item class="center-psw" [ngClass]="{'error-border':xpub && !validXpub, 'valid-border':validXpub}">
+                    <ion-item class="center-psw"
+                        [ngClass]="{'error-border':xpub && !validXpub, 'valid-border':validXpub}">
                         <ion-label color="primary" position="floating" translate="XPUB.PUBLIC_KEY"></ion-label>
                         <ion-input name="xpub" type="text" [(ngModel)]="xpub" (ngModelChange)="xpubValid(xpub)">
                         </ion-input>
                     </ion-item>
-                    <ion-item *ngIf="xpub && !validXpub" lines="none" class="wrong-input center-psw">{{"XPUB.INVALID_XPUB" | translate}}
+                    <ion-item *ngIf="xpub && !validXpub" lines="none" class="wrong-input center-psw">
+                        <span translate="XPUB.INVALID_XPUB"></span>
                     </ion-item>
-                    <ion-item *ngIf="xpub && validXpub" lines="none" class="valid-input center-psw" translate="XPUB.VALID_XPUB" [translateParams]="{address: addresses[0]}"></ion-item>
+                    <ion-item *ngIf="xpub && validXpub" lines="none" class="valid-input center-psw"
+                        translate="XPUB.VALID_XPUB" [translateParams]="{address: addresses[0]}"></ion-item>
 
-                    <div class="next-button more-top-padding">
-                        <ion-button expand="full" [disabled]="!validXpub" (click)="login(xpub)">
-                            <ion-icon slot="start" name="arrow-forward"></ion-icon>
-                            <span translate="XPUB.BUTTON.NEXT"></span>
-                        </ion-button>
-                    </div>
+                    <ion-row class="more-top-padding">
+                        <ion-col size="12" size-sm="6" offset-sm="3">
+                            <ion-button expand="full" [disabled]="!validXpub" (click)="login(xpub)">
+                                <ion-icon slot="start" name="arrow-forward"></ion-icon>
+                                <span translate="XPUB.BUTTON.NEXT"></span>
+                            </ion-button>
+                        </ion-col>
+                    </ion-row>
                 </form>
             </ion-col>
         </ion-row>
