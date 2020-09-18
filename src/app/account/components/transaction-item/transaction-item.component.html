@@ -8,13 +8,11 @@
             </ion-row>
             <ion-row *ngIf="status == 'PENDING' || status == 'MINED'">
                 <ion-col>
-                    <div class="hash">
-                        <span>{{tx.hash}}
+                    <!-- <p>{{tx.hash}}</p> -->
+                        <span class="hash">{{tx.hash}}</span>
                             <ion-button class="tx-link-button" color="primary" fill="clear" (click)="checkTx()">
                                 <ion-icon slot="icon-only" name="open" size="small"></ion-icon>
                             </ion-button>
-                        </span>
-                    </div>
                     <div class="timestamp" lines="none">
                         <p>{{tx.confirmed_at*1000 | date : 'medium'}}</p>
                     </div>
@@ -23,7 +21,7 @@
             <ion-row>
                 <ion-col>
                     <ion-row>
-                        <ion-col>
+                        <ion-col size-xs="12" size="6">
                             <div class="summaryTxType">
                                 <div>{{'TX.TX_TYPE.' + txType | translate}}</div>
                                 <div *ngIf="multisig.status == 'NOT_MULTISIG' && (status == 'SIGNED' || status == 'UNSIGNED' || status == 'PARTIALLY')"

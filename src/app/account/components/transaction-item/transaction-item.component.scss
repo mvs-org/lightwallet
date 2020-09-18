@@ -33,7 +33,12 @@
 }
 
 .hash {
-    font-size: 20px;
+    // font-size: 20px;
+    overflow: hidden;
+    // white-space: nowrap;
+    word-break:break-all;
+    text-overflow: ellipsis;
+    overflow-wrap: break-word;
 }
 
 .fee {
