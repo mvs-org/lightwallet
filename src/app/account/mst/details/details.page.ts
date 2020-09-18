@@ -196,8 +196,8 @@ export class DetailsPage implements OnInit {
 
   explorerURL = (type, data) => (this.appService.network === 'mainnet') ? 'https://explorer.mvs.org/' + type + '/' + data : 'https://explorer-testnet.mvs.org/' + type + '/' + data
 
-  format(value){
-    return value / Math.pow(10, this.asset?.decimals)
+  format(value, decimals = 0){
+    return value / Math.pow(10, decimals)
   }
 
 }
