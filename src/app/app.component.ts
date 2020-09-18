@@ -1,10 +1,14 @@
-import { Component } from '@angular/core'
+import { Component, NgZone } from '@angular/core'
 
 import { Platform } from '@ionic/angular'
 import { SplashScreen } from '@ionic-native/splash-screen/ngx'
 import { StatusBar } from '@ionic-native/status-bar/ngx'
 import { LanguageService } from './services/language.service'
 import { WalletService } from './services/wallet.service'
+import { Router } from '@angular/router'
+import { Plugins } from '@capacitor/core'
+
+const { App } = Plugins
 
 @Component({
   selector: 'app-root',
@@ -20,17 +24,34 @@ export class AppComponent {
     private statusBar: StatusBar,
     private language: LanguageService,
     private walletService: WalletService,
+    private router: Router,
+    private zone: NgZone,
   ) {
     this.initializeApp()
   }
 
   initializeApp() {
-    this.platform.ready().then(() => {
-      this.initializeLanguage()
-      this.initTheme()
-      this.statusBar.styleDefault()
-      this.splashScreen.hide()
-    })
+    this.platform.ready()
+      .then(() => {
+        this.initializeLanguage()
+        this.initTheme()
+        this.statusBar.styleDefault()
+        this.splashScreen.hide()
+      })
+      .then(() => {
+        App.addListener('appUrlOpen', (data: any) => {
+          this.zone.run(() => {
+              // Example url: https://beerswift.app/tabs/tab2
+              // slug = /tabs/tab2
+              const slug = data.url.split('.app').pop()
+              if (slug) {
+                  this.router.navigateByUrl(slug)
+              }
+              // If no match, do nothing - let regular routing
+              // logic take over
+          });
+      });
+      })
   }
 
   async initializeLanguage() {

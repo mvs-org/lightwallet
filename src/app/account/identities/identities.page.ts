@@ -83,6 +83,7 @@ export class IdentitiesPage implements OnInit {
     send = (asset, sender) => this.router.navigate(['account', 'send', asset], { state: { data: { sender } } })
 
     async show(address) {
+        address = 'https://app.myetpwallet.com/send/DNA?message=test&recipient=abc'
         const content = address
         const title = address
 
