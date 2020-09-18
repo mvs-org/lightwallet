@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, } from '@angular/core'
 import { MetaverseService } from 'src/app/services/metaverse.service'
 import { WalletService } from 'src/app/services/wallet.service'
 import { AppService } from 'src/app/services/app.service'
 import { Router } from '@angular/router'
 import { AlertService } from 'src/app/services/alert.service'
+import { NavController } from '@ionic/angular'
+
+
 
 @Component({
   selector: 'app-generate-address',
@@ -20,9 +23,9 @@ export class GenerateAddressPage implements OnInit {
   constructor(
     private metaverseService: MetaverseService,
     public walletService: WalletService,
-    private router: Router,
     public appService: AppService,
     private alertService: AlertService,
+    private navCtrl: NavController,
   ) {
   }
 
@@ -60,7 +63,7 @@ export class GenerateAddressPage implements OnInit {
       const xpub = await this.walletService.getMasterPublicKey(this.passphrase)
       await this.walletService.setXpub(xpub)
       this.alertService.stopLoading()
-      this.router.navigate(['/loading'], { state: { data: { reset: false } } })
+      this.navCtrl.navigateRoot('/loading', { state: { data: { reset: true } } })
     } catch (error) {
       console.error(error)
       this.alertService.stopLoading()
@@ -81,7 +84,7 @@ export class GenerateAddressPage implements OnInit {
       const addresses = await this.walletService.generateAddresses(this.walletFromXpub, 0, this.index)
       await this.metaverseService.setAddresses(addresses)
       this.alertService.stopLoading()
-      this.router.navigate(['/loading'], { state: { data: { reset: false } } })
+      this.navCtrl.navigateRoot('/loading', { state: { data: { reset: true } } })
     } catch (error) {
       console.error(error)
       this.alertService.stopLoading()
