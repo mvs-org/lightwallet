@@ -47,7 +47,7 @@ export class AccountPage implements OnInit, OnDestroy {
         {
             title: 'SETTINGS.MENU_ENTRY',
             url: '/account/settings',
-            icon: 'cog'
+            icon: 'options'
         },
     ]
     public mainItems: MenuItem[] = [

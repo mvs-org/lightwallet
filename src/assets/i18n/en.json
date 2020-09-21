@@ -573,6 +573,7 @@
         "SEND_MANY": "Send to many",
         "NOTICE_TRANSACTION_FEE_UNCOVERED": "Please make sure that you have enough ETP to cover the transaction fee.",
         "AVAILABLE_BALANCE": "Available balance",
+        "TOO_MANY_DECIMALS": "You have specified too many decimals",
         "MESSAGE": {
             "INSUFFICIENT_BALANCE": "You need at least 10 ETP to create a MST.",
             "ERROR_TOO_MANY_INPUTS": "Too many inputs",
@@ -1159,6 +1160,18 @@
         "APPLY": "Apply Now"
     },
     "ADVANCED": {
-        "TITLE": "Advanced"
+        "TITLE": "Advanced",
+        "MENU_ENTRY": "Advanced"
+    },
+    "BURN": {
+        "TITLE": "Burn",
+        "SUBTITLE": "Burn ETP or MST to permanently destroy them",
+        "SELECT_ASSET": "Asset to burn",
+        "CONFIRMATION": {
+            "TITLE": "These tokens will be permanently deleted!",
+            "SUBTITLE": "You are about to burn these tokens. They will be permanently destroyed, and there will be no way to get them back. Are you sure you want to destroy them?",
+            "CANCEL": "Maybe not...",
+            "OK": "Yes, burn them!"
+        }
     }
 }

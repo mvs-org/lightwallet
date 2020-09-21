@@ -16,6 +16,10 @@ const routes: Routes = [
     path: 'certificates',
     loadChildren: () => import('./certificates/certificates.module').then(m => m.CertificatesPageModule)
   },
+  {
+    path: 'burn',
+    loadChildren: () => import('./burn/burn.module').then( m => m.BurnPageModule)
+  },
 ]
 
 @NgModule({
