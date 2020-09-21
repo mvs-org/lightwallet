@@ -20,6 +20,10 @@ const routes: Routes = [
     path: 'burn',
     loadChildren: () => import('./burn/burn.module').then( m => m.BurnPageModule)
   },
+  {
+    path: 'decode',
+    loadChildren: () => import('./decode/decode.module').then( m => m.DecodePageModule)
+  },
 ]
 
 @NgModule({

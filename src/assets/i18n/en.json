@@ -1173,5 +1173,15 @@
             "CANCEL": "Maybe not...",
             "OK": "Yes, burn them!"
         }
+    },
+    "DECODE": {
+        "TITLE": "Sign transaction",
+        "SUBTITLE": "Decode and sign a raw transaction",
+        "TX_TO_SIGN": "Transaction to sign or broadcast",
+        "DESCRIPTION": "Please enter the raw transaction, in hexadecimal format. The transaction can be signed or unsigned.",
+        "ERROR_DECODE": {
+            "TITLE": "Cannot decode this raw transaction",
+            "SUBTITLE": "This raw transaction cannot be decoded. Please make sure this raw transaction is correct."
+        }
     }
 }
