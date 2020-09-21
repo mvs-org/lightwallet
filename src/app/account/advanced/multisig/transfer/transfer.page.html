@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/account/multisig"></ion-back-button>
+      <ion-back-button defaultHref="/account/advanced/multisig"></ion-back-button>
     </ion-buttons>
     <ion-title translate="MULTISIG.TRANSFER.HEADLINE"></ion-title>
   </ion-toolbar>
@@ -110,7 +110,7 @@
         </ion-list>
         <ion-row class="padding-bottom">
           <ion-col size="12" size-sm="6">
-            <ion-button color="danger" expand="full" (click)="cancel()">
+            <ion-button color="danger" expand="full" routerLink="/account/advanced/multisig" routerDirection="back">
               <ion-icon slot="start" name="close"></ion-icon>
               <span translate="GLOBAL.CANCEL"></span>
             </ion-button>
@@ -151,7 +151,7 @@
       </ion-list>
       <ion-row>
         <ion-col>
-          <ion-button color="danger" expand="full" (click)="cancel()">
+          <ion-button color="danger" expand="full" routerLink="/account/advanced/multisig" routerDirection="back">
             <ion-icon slot="start" name="close"></ion-icon>
             <span translate="GLOBAL.CANCEL"></span>
           </ion-button>

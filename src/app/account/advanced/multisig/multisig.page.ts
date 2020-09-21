@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core'
-import { WalletService } from '../../services/wallet.service'
-import { MetaverseService } from '../../services/metaverse.service'
 import { ModalController } from '@ionic/angular'
 import { Router } from '@angular/router'
+import { MetaverseService } from 'src/app/services/metaverse.service'
+import { WalletService } from 'src/app/services/wallet.service'
 
 @Component({
   selector: 'app-multisig',
@@ -72,12 +72,8 @@ export class MultisigPage implements OnInit {
       })
   }
 
-  addAddress() {
-    this.router.navigate(['account', 'multisig', 'add'])
-  }
-
   gotoMultisigTransfer(asset, address){
-    this.router.navigate(['account', 'multisig', 'transfer', address, asset])
+    this.router.navigate(['account', 'advanced', 'multisig', 'transfer', address, asset])
   }
 
   format = (quantity, decimals) => quantity / Math.pow(10, decimals)

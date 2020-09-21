@@ -105,8 +105,9 @@
         }
     },
     "CERTIFICATES": {
-        "TITLE": "Certificates",
         "MENU_ENTRY": "Certificates",
+        "TITLE": "Certificates",
+        "SUBTITLE": "Check your list of certificates",
         "INFORMATION": "Certificates provide special rights to their owners. They can grant permissions for the issuance of Smart Assets.",
         "NO_CERTIFICATE": "You don't have any certificates"
     },
@@ -1023,6 +1024,8 @@
     },
     "MULTISIG": {
         "MENU_ENTRY": "Multisignature",
+        "TITLE": "Multisignature",
+        "SUBTITLE": "Share a multisignature address with co-signers",
         "HEADLINE": "Multisignature",
         "WARNING_MULTISIG_TITLE": "Multisignature addresses and transactions via MyETPWallet are in Beta!",
         "WARNING_MULTISIG_MESSAGE": "Since v0.6.0, you can now use multisignature addresses in MyETPWallet. However, please use this new feature carefully and avoid sending important quantity of ETP or MST to your multisignature addresses. If you notice any bug, do not hesitate to report it via Report Bug in the main menu!",
@@ -1154,5 +1157,8 @@
     "UPDATE": {
         "AVAILABLE_TEXT": "A new version is available",
         "APPLY": "Apply Now"
+    },
+    "ADVANCED": {
+        "TITLE": "Advanced"
     }
 }

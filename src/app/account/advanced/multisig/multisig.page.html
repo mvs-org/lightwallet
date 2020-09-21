@@ -1,11 +1,11 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+      <ion-back-button defaultHref="/account/advanced"></ion-back-button>
     </ion-buttons>
     <ion-title translate="MULTISIG.HEADLINE"></ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="addAddress()">
+      <ion-button routerLink="./add">
         <ion-icon slot="icon-only" name="add"></ion-icon>
       </ion-button>
     </ion-buttons>

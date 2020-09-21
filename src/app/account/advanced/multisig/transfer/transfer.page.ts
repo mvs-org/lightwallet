@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
-import { MetaverseService } from '../../../services/metaverse.service'
 import { Platform, ModalController } from '@ionic/angular'
-import { AlertService } from '../../../services/alert.service'
-import { WalletService } from '../../../services/wallet.service'
-import { AppService } from '../../../services/app.service'
 import { ActivatedRoute, Router } from '@angular/router'
 import { ScanPage } from 'src/app/scan/scan.page'
+import { MetaverseService } from 'src/app/services/metaverse.service'
+import { AlertService } from 'src/app/services/alert.service'
+import { AppService } from 'src/app/services/app.service'
+import { WalletService } from 'src/app/services/wallet.service'
 
 @Component({
   selector: 'app-transfer',
@@ -168,10 +168,6 @@ export class TransferPage implements OnInit {
       return value.toString().split('.')[1].length || 0
     }
     return 0
-  }
-
-  cancel() {
-    this.router.navigate(['account', 'multisig'])
   }
 
   preview() {

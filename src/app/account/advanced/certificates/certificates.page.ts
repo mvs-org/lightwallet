@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { MetaverseService } from 'src/app/services/metaverse.service';
+import { Component, OnInit } from '@angular/core'
+import { MetaverseService } from 'src/app/services/metaverse.service'
 
 @Component({
   selector: 'app-certificates',

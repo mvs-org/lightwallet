@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-back-button defaultHref="/account/advanced/multisig"></ion-back-button>
     </ion-buttons>
     <ion-title translate="MULTISIG.ADD.HEADLINE"></ion-title>
   </ion-toolbar>
@@ -43,7 +43,7 @@
       </ion-list>
       <ion-row *ngIf="!myPublicKey">
         <ion-col size="12" size-sm="6">
-          <ion-button color="danger" expand="full" (click)="cancel()">
+          <ion-button color="danger" expand="full" routerLink="/account/advanced/multisig" routerDirection="back">
             <ion-icon slot="start" name="close"></ion-icon>
             <span translate="GLOBAL.CANCEL"></span>
           </ion-button>
@@ -124,7 +124,7 @@
         <p translate="MULTISIG.ADD.STEP4_EXPLAIN"></p>
         <ion-row>
           <ion-col>
-            <ion-button color="danger" expand="full" (click)="cancel()">
+            <ion-button color="danger" expand="full" routerLink="/account/advanced/multisig" routerDirection="back">
               <ion-icon slot="start" name="close"></ion-icon>
               <span translate="GLOBAL.CANCEL"></span>
             </ion-button>
@@ -160,7 +160,7 @@
       </ion-list>
       <ion-row>
         <ion-col>
-          <ion-button color="danger" expand="full" (click)="cancel()">
+          <ion-button color="danger" expand="full" routerLink="/account/advanced/multisig" routerDirection="back">
             <ion-icon slot="start" name="close"></ion-icon>
             <span translate="GLOBAL.CANCEL"></span>
           </ion-button>

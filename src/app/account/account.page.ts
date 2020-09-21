@@ -73,19 +73,14 @@ export class AccountPage implements OnInit, OnDestroy {
             icon: 'create'
         },
         {
-            title: 'CERTIFICATES.MENU_ENTRY',
-            url: '/account/certificates',
-            icon: 'receipt'
-        },
-        {
             title: 'HISTORY.MENU_ENTRY',
             url: '/account/history',
             icon: 'time'
         },
         {
-            title: 'MULTISIG.MENU_ENTRY',
-            url: '/account/multisig',
-            icon: 'people'
+            title: 'ADVANCED.MENU_ENTRY',
+            url: '/account/advanced',
+            icon: 'cog'
         },
     ]
 

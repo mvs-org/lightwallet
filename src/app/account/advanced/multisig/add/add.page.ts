@@ -1,10 +1,10 @@
 import { Component, ViewChild } from '@angular/core'
-import { MetaverseService } from '../../../services/metaverse.service'
 import { Platform, ModalController } from '@ionic/angular'
-import { AlertService } from '../../../services/alert.service'
-import { WalletService } from '../../../services/wallet.service'
 import { Router } from '@angular/router'
 import { ScanPage } from 'src/app/scan/scan.page'
+import { MetaverseService } from 'src/app/services/metaverse.service'
+import { AlertService } from 'src/app/services/alert.service'
+import { WalletService } from 'src/app/services/wallet.service'
 
 @Component({
   selector: 'app-add',
@@ -74,10 +74,6 @@ export class AddPage {
         this.addressbalances = addrblncs
       })
 
-  }
-
-  cancel() {
-    this.router.navigate(['account', 'multisig'])
   }
 
   onAddressChange(event) {
