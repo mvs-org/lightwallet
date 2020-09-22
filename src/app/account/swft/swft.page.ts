@@ -8,6 +8,8 @@ import { Router } from '@angular/router'
 import { WalletService } from 'src/app/services/wallet.service'
 import { ScanPage } from 'src/app/scan/scan.page'
 import { QrComponent } from 'src/app/qr/qr.component'
+import { ClipboardService } from 'ngx-clipboard'
+import { ToastService } from 'src/app/services/toast.service'
 
 @Component({
   selector: 'app-swft',
@@ -50,6 +52,8 @@ export class SwftPage implements OnInit {
     public modalCtrl: ModalController,
     private router: Router,
     private walletService: WalletService,
+    private clipboardService: ClipboardService,
+    private toastService: ToastService,
   ) {
 
     this.isMobile = this.walletService.isMobile()
@@ -210,6 +214,22 @@ export class SwftPage implements OnInit {
     this.createOrderParameters.receiveAddress = ''
 
     this.getRate()
+  }
+
+
+  async copy(textToCopy, type) {
+    try {
+      await this.clipboardService.copyFromContent(textToCopy)
+      switch (type) {
+        case 'id':
+          this.toastService.simpleToast('SWFT.TOAST.ID_COPIED')
+          break
+        default:
+          this.toastService.simpleToast('IDENTITIES.TOAST.COPIED')
+      }
+    } catch (error) {
+      console.log('Error while copying')
+    }
   }
 
   async scan() {

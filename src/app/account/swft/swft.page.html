@@ -156,7 +156,9 @@
         <ion-col>
           <ion-row>
             <ion-col>
-              <h2>{{order.id}}</h2>
+              <h2 (click)="copy(order.id, 'id')" class="pointer">
+                {{order.id}}
+              </h2>
             </ion-col>
           </ion-row>
         </ion-col>

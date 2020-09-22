@@ -1016,6 +1016,9 @@
         "IMPORT_ORDER_DESCRIPTION": "If you created an order from another device or directly from SWFT website, you can import it with the order ID to follow its status.",
         "INFORMATION_WARNING": "The SWFT telegram support will never ask a user to send any funds to addresses other than the deposit address of the order details. Details about the order should not be necessary. The order id should be enough information for the support to find the order.",
         "INFORMATION_LINK": "Telegram",
+        "TOAST": {
+            "ID_COPIED": "Order ID copied!"
+        },
         "BUTTON": {
             "NEXT": "Swap",
             "CANCEL": "Cancel"

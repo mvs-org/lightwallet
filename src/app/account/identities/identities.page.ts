@@ -147,7 +147,7 @@ export class IdentitiesPage implements OnInit {
                     this.toastService.simpleToast('IDENTITIES.TOAST.COPIED')
             }
         } catch (error) {
-            console.log('Error while copying the address')
+            console.log('Error while copying')
         }
     }
 }
