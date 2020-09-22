@@ -30,7 +30,7 @@
 
     <h4 *ngIf="!loadingPair && !bridgePairs" class="wrong-input center" translate="SWFT.UNABLE_CONNECT_SWFT"></h4>
 
-    <form #swapForm="ngForm" *ngIf="!loadingPair && bridgePairs" (ngSubmit)="createOrder()">
+    <form #swapForm="ngForm" *ngIf="!loadingPair && bridgePairs" (ngSubmit)="createOrder()" (keyup.enter)="createOrder()">
 
       <ion-card class="card-block">
 
