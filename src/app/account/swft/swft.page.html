@@ -36,11 +36,11 @@
 
         <!-- rate info -->
         <div class="ion-text-center">
-          <ion-icon id="swapIcon" name="swap" (click)="switch()"></ion-icon>
+          <ion-icon id="swapIcon" name="swap-horizontal" (click)="switch()"></ion-icon>
           <div *ngIf="bridgeRate" id="rate" lines="none" translate="SWFT.RATE_INFO"
             [translateParams]="{rate: bridgeRate.instantRate}"></div>
-          <ion-spinner *ngIf="loadingRate" name="dots"></ion-spinner>
         </div>
+        <ion-spinner *ngIf="loadingRate" name="dots"></ion-spinner>
 
         <ion-row>
           <!-- send asset selection -->
@@ -246,12 +246,12 @@
           </ion-row>
         </ion-col>
       </ion-row>
-      <ion-row class="right">
-        <ion-button class="right" color="primary" (click)="gotoDetails(order.id)">
-          <ion-icon slot="start" name="send"></ion-icon>
-          <span translate="SWFT.SEE_DETAILS_BUTTON"></span>
+      <div class="center">
+        <ion-button fill="outline" shape="round" (click)="gotoDetails(order.id)">
+            <ion-icon slot="start" name="arrow-forward"></ion-icon>
+            <span translate="SWFT.SEE_DETAILS_BUTTON"></span>
         </ion-button>
-      </ion-row>
+      </div>
 
     </ion-card>
 
@@ -267,12 +267,13 @@
         </ion-button>
       </ion-item>
 
-      <ion-row class="buttons-row right">
-        <ion-button class="right" color="primary" (click)="importOrder()" [disabled]="!validId(importFromId)">
-          <ion-icon slot="start" name="add"></ion-icon>
-          <span translate="SWFT.IMPORT_ORDER_BUTTON"></span>
+      <div class="center">
+        <ion-button fill="outline" shape="round" (click)="importOrder()" [disabled]="!validId(importFromId)">
+            <ion-icon slot="start" name="add"></ion-icon>
+            <span translate="SWFT.IMPORT_ORDER_BUTTON"></span>
         </ion-button>
-      </ion-row>
+      </div>
+
     </ion-card>
 
   </ion-grid>
