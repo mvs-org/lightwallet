@@ -641,6 +641,10 @@
         "MESSAGE_TOO_LONG": "Too long message. Please use a shorter message",
         "CHANGE_ADDRESS": "Specify change address (optional)",
         "CHANGE_ADDRESS_AUTO": "Automatic",
+        "IMPORT_CSV_TOO_MANY_RECIPIENT": {
+            "TITLE": "Too many recipient",
+            "MESSAGE": "This file contains too many recipients. The maximum number of recipients is limited to "
+        },
         "HELP": {
             "MESSAGE": "This message will be clearly and publicly displayed in your transaction. Do not enter any personal data!"
         },

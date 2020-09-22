@@ -133,8 +133,8 @@ export class AlertService {
     })
   }
 
-  showMessage(title, subtitle, message, ok?) {
-    this.translate.get([title, subtitle, message, ok || 'OK']).subscribe(async (translations: any) => {
+  showMessage(title, subtitle, message, ok = 'MESSAGE.OK') {
+    this.translate.get([title, subtitle, message, ok]).subscribe(async (translations: any) => {
       const alert = await this.alertCtrl.create({
         header: translations[title],
         subHeader: translations[subtitle] || subtitle,
@@ -148,12 +148,12 @@ export class AlertService {
   }
 
   showLimitReached(title, message, limit) {
-    this.translate.get([title, message, 'OK']).subscribe(async (translations: any) => {
+    this.translate.get([title, message, 'MESSAGE.OK']).subscribe(async (translations: any) => {
       const alert = await this.alertCtrl.create({
         header: translations[title],
         message: translations[message] + limit,
         buttons: [{
-          text: translations.OK
+          text: translations['MESSAGE.OK']
         }]
       })
       alert.present()
