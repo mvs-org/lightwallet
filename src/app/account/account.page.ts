@@ -183,8 +183,11 @@ export class AccountPage implements OnInit, OnDestroy {
         } else {
             this.syncing = true
             this.syncingSmall = true
-            return this.metaverseService.updateHeight()
-                .then((height) => {
+            return Promise.all([
+                this.metaverseService.getData(),
+                this.metaverseService.updateHeight(),
+            ])
+                .then(([balances, height]) => {
                     this.height = height
                     this.syncing = false
                     this.syncingSmall = false
