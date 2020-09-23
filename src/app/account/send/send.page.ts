@@ -96,6 +96,13 @@ export class SendPage implements OnInit {
       this.message = params.m || params.message || ''
       this.disableParams = params.d === 'true' || params.disableParams === 'true'
 
+      if (history.state.data) {
+        this.quantity = history.state.data.quantity || this.quantity
+        this.recipient_address = history.state.data.recipient || this.recipient_address
+        this.recipient_avatar = history.state.data.avatar || this.recipient_avatar
+        this.message = history.state.data.message || this.message
+      }
+
       if (this.recipient_avatar !== '') {
         this.sendToAvatar = true
         this.recipientAvatarChanged()

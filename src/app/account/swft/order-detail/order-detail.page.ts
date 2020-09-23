@@ -43,8 +43,8 @@ export class OrderDetailPage implements OnInit {
 
   explorerURL = (type, data) => (this.appService.network === 'mainnet') ? 'https://explorer.mvs.org/' + type + '/' + data : 'https://explorer-testnet.mvs.org/' + type + '/' + data
 
-  gotoAssetTransfer = (asset, recipient, amount) =>
-    this.router.navigate(['account', 'send', asset], { state: { data: { recipient, amount } } })
+  gotoAssetTransfer = (asset, recipient, quantity) =>
+    this.router.navigate(['account', 'send', asset], { state: { data: { recipient, quantity } } })
 
   async show(address) {
     const content = address
