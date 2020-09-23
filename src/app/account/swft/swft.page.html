@@ -175,7 +175,7 @@
               <div translate="SWFT.DEPOSIT_ADDRESS" [translateParams]="{symbol: order.deposit.symbol}"></div>
             </ion-col>
             <ion-col size="12" size-sm="6">
-              <h4 class="break-words">
+              <h4 class="breakwords">
                 <a *ngIf="etpBridgeService.isMetaverseSymbol(order.deposit.symbol)"
                   href="{{explorerURL('adr', order.deposit.address)}}" target="_blank" rel="noopener"
                   class="right">{{order.deposit.address}}</a>
@@ -189,7 +189,7 @@
               <div translate="SWFT.REFUND_ADDRESS" [translateParams]="{symbol: order.deposit.symbol}"></div>
             </ion-col>
             <ion-col size="12" size-sm="6">
-              <h4 class="break-words">
+              <h4 class="breakwords">
                 <a *ngIf="etpBridgeService.isMetaverseSymbol(order.deposit.symbol)"
                   href="{{explorerURL('adr', order.refund.address)}}" target="_blank" rel="noopener"
                   class="right">{{order.refund.address}}</a>
@@ -203,7 +203,7 @@
               <div translate="SWFT.REFUND_TX" [translateParams]="{symbol: order.deposit.symbol}"></div>
             </ion-col>
             <ion-col size="12" size-sm="6">
-              <h4 class="break-words">
+              <h4 class="breakwords">
                 <a *ngIf="etpBridgeService.isMetaverseSymbol(order.deposit.symbol)"
                   href="{{explorerURL('tx', order.refund.txid)}}" target="_blank" rel="noopener"
                   class="right">{{order.refund.txid}}</a>
@@ -223,7 +223,7 @@
               <div translate="SWFT.RECEIVE_ADDRESS" [translateParams]="{symbol: order.receive.symbol}"></div>
             </ion-col>
             <ion-col size="12" size-sm="6">
-              <h4 class="break-words">
+              <h4 class="breakwords">
                 <a *ngIf="etpBridgeService.isMetaverseSymbol(order.receive.symbol)"
                   href="{{explorerURL('adr', order.receive.address)}}" target="_blank" rel="noopener"
                   class="right">{{order.receive.address}}</a>
@@ -237,7 +237,7 @@
               <div translate="SWFT.RECEIVE_TX" [translateParams]="{symbol: order.receive.symbol}"></div>
             </ion-col>
             <ion-col size="12" size-sm="6">
-              <h4 class="break-words">
+              <h4 class="breakwords">
                 <a *ngIf="etpBridgeService.isMetaverseSymbol(order.receive.symbol)"
                   href="{{explorerURL('tx', order.receive.txid)}}" target="_blank" rel="noopener"
                   class="right">{{order.receive.txid}}</a>
