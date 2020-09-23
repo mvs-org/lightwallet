@@ -257,14 +257,14 @@ export class SwftPage implements OnInit {
     const title = address
 
     const qrcodeModal = await this.modalCtrl.create({
-        component: QrComponent,
-        componentProps: {
-            title,
-            content,
-        }
+      component: QrComponent,
+      componentProps: {
+        title,
+        content,
+      }
     })
     await qrcodeModal.present()
-}
+  }
 
   validDepositAmount = (amount) =>
     this.bridgeRate && amount >= this.bridgeRate.depositMin && amount <= this.bridgeRate.depositMax

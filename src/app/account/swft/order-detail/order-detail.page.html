@@ -52,7 +52,7 @@
                     <ion-col size="12" size-sm="6">
                         <h4 class="break-words">
                             <a *ngIf="etpBridgeService.isMetaverseSymbol(order.deposit.symbol)" href="{{explorerURL('adr', order.refund.address)}}" target="_blank" class="right">{{order.refund.address}}</a>
-                            <a *ngIf="!etpBridgeService.isMetaverseSymbol(order.deposit.symbol)" (click)="show(order.refund.address)" class="right">{{order.refund.address}}</a>
+                            <a *ngIf="!etpBridgeService.isMetaverseSymbol(order.deposit.symbol)" (click)="show(order.refund.address)" class="right pointer">{{order.refund.address}}</a>
                         </h4>
                     </ion-col>
                     <ion-col size="12" class="smallAdvice" [translate]="'SWFT.REFUND_ADDRESS_ADVICE'" [translateParams]="{symbol: order.deposit.symbol}"></ion-col>
@@ -64,7 +64,7 @@
                     <ion-col size="12" size-sm="6">
                         <h4 class="break-words">
                             <a *ngIf="etpBridgeService.isMetaverseSymbol(order.deposit.symbol)" href="{{explorerURL('tx', order.refund.txid)}}" target="_blank" class="right">{{order.refund.txid}}</a>
-                            <a *ngIf="!etpBridgeService.isMetaverseSymbol(order.deposit.symbol)" (click)="show(order.refund.txid)" class="right">{{order.refund.txid}}</a>
+                            <a *ngIf="!etpBridgeService.isMetaverseSymbol(order.deposit.symbol)" (click)="show(order.refund.txid)" class="right pointer">{{order.refund.txid}}</a>
                         </h4>
                     </ion-col>
                 </ion-row>
@@ -81,7 +81,7 @@
                     <ion-col size="12" size-sm="6">
                         <h4 class="break-words">
                             <a *ngIf="etpBridgeService.isMetaverseSymbol(order.receive.symbol)" href="{{explorerURL('adr', order.receive.address)}}" target="_blank" class="right">{{order.receive.address}}</a>
-                            <a *ngIf="!etpBridgeService.isMetaverseSymbol(order.receive.symbol)" (click)="show(order.receive.address)" class="right">{{order.receive.address}}</a>
+                            <a *ngIf="!etpBridgeService.isMetaverseSymbol(order.receive.symbol)" (click)="show(order.receive.address)" class="right pointer">{{order.receive.address}}</a>
                         </h4>
                     </ion-col>
                     <ion-col size="12" class="smallAdvice" [translate]="'SWFT.RECEIVE_ADDRESS_ADVICE'" [translateParams]="{symbol: order.receive.symbol}"></ion-col>
@@ -93,7 +93,7 @@
                     <ion-col size="12" size-sm="6">
                         <h4 class="break-words">
                             <a *ngIf="etpBridgeService.isMetaverseSymbol(order.receive.symbol)" href="{{explorerURL('tx', order.receive.txid)}}" target="_blank" class="right">{{order.receive.txid}}</a>
-                            <a *ngIf="!etpBridgeService.isMetaverseSymbol(order.receive.symbol)" (click)="show(order.receive.txid)" class="right">{{order.receive.txid}}</a>
+                            <a *ngIf="!etpBridgeService.isMetaverseSymbol(order.receive.symbol)" (click)="show(order.receive.txid)" class="right pointer">{{order.receive.txid}}</a>
                         </h4>
                     </ion-col>
                 </ion-row>

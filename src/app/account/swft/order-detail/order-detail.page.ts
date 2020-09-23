@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core'
 import { OrderDetails, SwftService } from '../swft.service'
 import { AppService } from 'src/app/services/app.service'
 import { Router, ActivatedRoute } from '@angular/router'
+import { ModalController } from '@ionic/angular'
+import { QrComponent } from 'src/app/qr/qr.component'
 
 @Component({
   selector: 'app-order-detail',
@@ -18,6 +20,7 @@ export class OrderDetailPage implements OnInit {
     public appService: AppService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
+    public modalCtrl: ModalController,
   ) {
 
   }
@@ -28,7 +31,6 @@ export class OrderDetailPage implements OnInit {
   }
 
   private async loadOrder(id: string) {
-    console.log(id)
     try {
       this.order = await this.etpBridgeService.getOrder(id).toPromise()
       if (this.order) {
@@ -44,9 +46,18 @@ export class OrderDetailPage implements OnInit {
   gotoAssetTransfer = (asset, recipient, amount) =>
     this.router.navigate(['account', 'send', asset], { state: { data: { recipient, amount } } })
 
-  show(address) {
-    // let profileModal = this.modalCtrl.create('QRCodePage', { value: address })
-    // profileModal.present()
+  async show(address) {
+    const content = address
+    const title = address
+
+    const qrcodeModal = await this.modalCtrl.create({
+      component: QrComponent,
+      componentProps: {
+        title,
+        content,
+      }
+    })
+    await qrcodeModal.present()
   }
 
 
