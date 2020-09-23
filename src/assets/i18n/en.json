@@ -1021,8 +1021,12 @@
         },
         "BUTTON": {
             "NEXT": "Swap",
-            "CANCEL": "Cancel"
+            "CANCEL": "Cancel",
+            "DEPOSIT": "Deposit"
         }
+    },
+    "SWFT_DETAILS": {
+        "HEADLINE": "Order details"
     },
     "MESSAGE": {
         "LOADING": "Loading...",

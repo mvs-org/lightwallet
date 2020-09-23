@@ -32,6 +32,7 @@ export interface OrderDetails {
     fee: number
     feeRate: number
     status: string
+    address: string
   }
   receive: {
     symbol: string
