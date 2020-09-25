@@ -40,6 +40,8 @@ export class MetaverseService {
 
   lastTxHeight$ = new BehaviorSubject<number>(0)
 
+  balanceUpdated$ = new BehaviorSubject<any>({})
+
   DEFAULT_BALANCES = {
     ETP: { frozen: 0, available: 0, decimals: 8 },
     MST: {
@@ -373,7 +375,7 @@ export class MetaverseService {
 
   async getUtxo(): Promise<any[]> {
     let transactions = await this.getTxs()
-    transactions = transactions.sort( (a, b) => b.height - a.height )
+    transactions = transactions.sort((a, b) => b.height - a.height)
     const addresses = await this.getAddresses()
     transactions = await this.removeOutputsForUnconfirmedTxs(transactions)
     return Metaverse.output.calculateUtxo(transactions, addresses)
@@ -398,7 +400,7 @@ export class MetaverseService {
 
   getUtxoFromMultisig(address: any) {
     return this.getTxs()
-      .then((txs: Array<any>) => txs.sort(function(a, b) {
+      .then((txs: Array<any>) => txs.sort(function (a, b) {
         return b.height - a.height
       }))
       .then((txs: Array<any>) => Metaverse.output.calculateUtxo(txs, [address]))
@@ -484,14 +486,19 @@ export class MetaverseService {
     const multisigAddresses = await this.wallet.getMultisigAddresses()
     addresses = addresses.concat(multisigAddresses)
     let newTxs = await this.getNewTxs(addresses, await this.getLastTxHeight())
+    const balanceUpdateNeeded = newTxs.length > 0
     while (this.syncing$.value && newTxs && newTxs.length) {
       const lastTxHeight = await this.getLastTxHeight()
       this.lastTxHeight$.next(lastTxHeight)
       newTxs = await this.getNewTxs(addresses, lastTxHeight)
     }
     await this.calculateBalances()
+    const balances = await this.getBalances()
+    if (balanceUpdateNeeded){
+      this.balanceUpdated$.next(balances)
+    }
     this.syncing$.next(false)
-    return await this.getBalances()
+    return balances
   }
 
   async getUpdateNeeded(update_interval = this.appService.update_interval) {
@@ -580,7 +587,7 @@ export class MetaverseService {
     return this.storage.set('mvs_last_tx_height', height)
   }
 
-  async getAddresses() : Promise<string[]> {
+  async getAddresses(): Promise<string[]> {
     return await this.storage.get('mvs_addresses') || []
   }
 
@@ -774,12 +781,14 @@ export class MetaverseService {
   }
 
   send = async (tx) => {
+    console.log(tx)
     tx.inputs.forEach((input) => {
       if (typeof input.script == 'string') {
         input.script = Metaverse.script.fromASM(input.script).chunks
       }
     })
     tx.hash = (await this.broadcast(tx.encode().toString('hex'))).hash
+    console.log(tx.hash)
     tx.height = await this.getHeight()
     tx.unconfirmed = true
     tx.outputs.forEach(output => {
@@ -793,6 +802,7 @@ export class MetaverseService {
   }
 
   broadcast(rawtx: string, max_fee: number = undefined) {
+    console.log(rawtx)
     return this.blockchain.transaction.broadcast(rawtx)
   }
 
@@ -896,7 +906,9 @@ export class MetaverseService {
   async decodeTx(rawtx) {
     const network = await this.appService.getNetwork()
     const tx = Metaverse.transaction.decode(rawtx, network)
-    return this.organizeInputs(tx, true)
+    // return this.organizeInputs(tx, true)
+    return tx 
+    // this.organizeInputs(tx, true)
   }
 
   async getTransactionMap() {

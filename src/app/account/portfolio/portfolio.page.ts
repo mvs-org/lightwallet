@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core'
 import { TranslateService } from '@ngx-translate/core'
 import { MetaverseService } from '../../services/metaverse.service'
 import { Router } from '@angular/router'
-import { Subscription } from 'rxjs'
+import { Subscription, combineLatest } from 'rxjs'
 
 @Component({
   selector: 'app-portfolio',
@@ -32,7 +32,8 @@ export class PortfolioPage implements OnInit, OnDestroy {
 
   async ionViewWillEnter() {
     this.loading = true
-    this.heightSubscription = this.metaverseService.height$.subscribe(() => {
+    this.heightSubscription = combineLatest([this.metaverseService.height$, this.metaverseService.balanceUpdated$])
+    .subscribe(() => {
       this.showBalances()
     })
   }
