@@ -54,10 +54,6 @@ export class LoginPage implements OnInit, OnDestroy {
     }
   }
 
-  switchTheme() {
-    console.trace('to be implemented')
-  }
-
   setNetwork(network) {
     this.appService.updateNetwork(network)
   }

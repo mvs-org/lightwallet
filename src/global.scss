@@ -260,7 +260,7 @@ ion-footer ion-button {
 {
     ion-label{
         p {
-           margin-bottom: 0px;
+            margin-bottom: 0px;
         }
     }
 }
@@ -271,4 +271,8 @@ ion-footer ion-button {
 
 ion-card{
     border-radius: 0px;
+}
+
+.testnet ion-header {
+    --ion-toolbar-background: #40d3ff;
 }

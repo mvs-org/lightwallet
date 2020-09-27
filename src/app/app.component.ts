@@ -7,6 +7,7 @@ import { LanguageService } from './services/language.service'
 import { WalletService } from './services/wallet.service'
 import { Router } from '@angular/router'
 import { Plugins } from '@capacitor/core'
+import { AppService } from './services/app.service'
 
 const { App } = Plugins
 
@@ -26,6 +27,7 @@ export class AppComponent {
     private walletService: WalletService,
     private router: Router,
     private zone: NgZone,
+    public appService: AppService,
   ) {
     this.initializeApp()
   }
@@ -83,6 +85,10 @@ export class AppComponent {
           document.body.classList.remove('dark')
           this.walletService.setTheme('light')
         }
+    }
+    const network = await this.appService.getNetwork()
+    if (network === 'testnet') {
+      document.body.classList.add('testnet')
     }
   }
 
