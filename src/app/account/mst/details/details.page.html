@@ -25,7 +25,7 @@
           <ion-card-content>
             <ion-row>
               <div id="balancesChart">
-              <ion-spinner name="dots" *ngIf="loadingBalance || !balance; else Balances"></ion-spinner>
+                <ion-spinner name="dots" *ngIf="loadingBalance || !balance || !asset; else Balances"></ion-spinner>
                 <ng-template #Balances>
                   <ngx-charts-advanced-pie-chart [scheme]="balanceColorScheme"
                     [results]="[{name: 'Available', value: format(balance.available||0, asset.decimals)}, {name: 'Frozen', value: format(balance.frozen||0, asset.decimals)}, {name: 'Confirming', value: format(balance.unconfirmed||0, asset.decimals)}]">
@@ -37,6 +37,11 @@
               <ion-button color="danger" shape="round" fill="outline" [routerLink]="'/account/send/' + symbol">
                 <ion-icon slot="start" name="arrow-forward"></ion-icon>
                 <span translate="MST_DETAILS.BALANCE.SEND"></span>
+              </ion-button>
+              <ion-button *ngIf="symbol == 'DNA'" color="primary" shape="round" fill="outline"
+                [routerLink]="'/account/vote/' + symbol">
+                <ion-icon slot="start" name="megaphone"></ion-icon>
+                <span translate="MST_DETAILS.BALANCE.VOTE"></span>
               </ion-button>
             </div>
           </ion-card-content>
@@ -286,9 +291,10 @@
           </ion-card-header>
           <ion-card-content class="center">
             <div id="distributionChart">
-                <ngx-charts-pie-chart scheme="neons" [results]="stakelistChartData" [legend]="false" [labels]="false"
-                  [doughnut]="false" [view]="[320, 320]" [explodeSlices]="false" [scheme]="colorScheme" legendPosition="below">
-                </ngx-charts-pie-chart>
+              <ngx-charts-pie-chart scheme="neons" [results]="stakelistChartData" [legend]="false" [labels]="false"
+                [doughnut]="false" [view]="[320, 320]" [explodeSlices]="false" [scheme]="colorScheme"
+                legendPosition="below">
+              </ngx-charts-pie-chart>
             </div>
             <!-- <ion-item *ngFor="let staker of stakelist; let index = index">
               <ion-label>

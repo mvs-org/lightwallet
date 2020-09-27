@@ -8,11 +8,10 @@
             </ion-row>
             <ion-row *ngIf="status == 'PENDING' || status == 'MINED'">
                 <ion-col>
-                    <!-- <p>{{tx.hash}}</p> -->
-                        <span class="hash">{{tx.hash}}</span>
-                            <ion-button class="tx-link-button" color="primary" fill="clear" (click)="checkTx()">
-                                <ion-icon slot="icon-only" name="open" size="small"></ion-icon>
-                            </ion-button>
+                    <span class="hash">{{tx.hash}}</span>
+                    <ion-button class="tx-link-button" color="primary" fill="clear" (click)="checkTx()">
+                        <ion-icon slot="icon-only" name="open" size="small"></ion-icon>
+                    </ion-button>
                     <div class="timestamp" lines="none">
                         <p>{{tx.confirmed_at*1000 | date : 'medium'}}</p>
                     </div>

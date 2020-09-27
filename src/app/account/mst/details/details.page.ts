@@ -174,12 +174,8 @@ export class DetailsPage implements OnInit {
         lastAddress: this.stakelist.length === 0 ? undefined : this.stakelist[this.stakelist.length - 1].name
       }
       const result = await this.metaverseService.getStake(this.symbol, options)
-      console.log({ result })
       this.stakelist = this.stakelist.concat(result.map(e => ({ name: e.a, value: e.q / Math.pow(10, this.asset.decimals), q: e.q })))
-      console.log({ l: this.stakelist })
       this.stakelistChartData = this.getStakelistData(this.stakelist)
-      console.log({ l: this.stakelist })
-      console.log({ l: this.stakelistChartData })
       if (result && result.length < options.limit) {
         this.stakelistFullyLoaded = true
       }

@@ -49,7 +49,11 @@ const routes: Routes = [
             },
             {
                 path: 'advanced',
-                loadChildren: () => import('./advanced/advanced.module').then( m => m.AdvancedPageModule)
+                loadChildren: () => import('./advanced/advanced.module').then(m => m.AdvancedPageModule)
+            },
+            {
+                path: 'vote',
+                loadChildren: () => import('./vote/vote.module').then(m => m.VotePageModule)
             },
         ]
     },

@@ -156,7 +156,8 @@
             "AVAILABLE": "Available",
             "CONFIRMING": "Confirming",
             "FROZEN": "Frozen",
-            "SEND": "Send"
+            "SEND": "Send",
+            "VOTE": "Vote"
         },
         "INFO": {
             "TITLE": "General Information",
@@ -1194,5 +1195,18 @@
             "TITLE": "Cannot decode this raw transaction",
             "SUBTITLE": "This raw transaction cannot be decoded. Please make sure this raw transaction is correct."
         }
+    },
+    "VOTE": {
+        "TITLE": "DNA election",
+        "INFORMATION": "Check the information of the current vote on ",
+        "INFORMATION_BAYVIEW": "Futur votes will take place on ",
+        "INFORMATION_DNA": "For further information about DNA, please check the official website ",
+        "UNLOCK_APPROXIMATION_INFORMATION": "*Please be aware that the 'Locked until' date is an approximation based on the number of block remaining and the average blocktime of the last 10000 blocks. It might vary based on block generation speed.",
+        "HISTORY_LOCKED": "Currently locked votes",
+        "HISTORY_UNLOCKED": "Unlocked votes",
+        "VOTE_FOR_DELEGATE": "Vote for delegate: {{delegate}}",
+        "REWARD": "Reward: {{amount}} DNA",
+        "LOCKED_SINCE_BLOCK": "Locked since block {{block}}",
+        "LOCKED_UNTIL_BLOCK": "Locked until block {{block}}"
     }
 }
