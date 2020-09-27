@@ -19,6 +19,10 @@ export class LoginPage implements OnInit, OnDestroy {
   networkSubscription: Subscription
   translateSubscription: Subscription
 
+  selectOptions: any = {
+    header: 'Network',
+  }
+
   constructor(
     public metaverse: MetaverseService,
     public appService: AppService,
@@ -36,6 +40,8 @@ export class LoginPage implements OnInit, OnDestroy {
     this.translateSubscription = this.translate.onLangChange.subscribe(async () => {
       const title = await this.translate.get('LOGIN.TITLE').toPromise() || 'MyETPWallet'
       this.title.setTitle(title)
+
+      this.selectOptions.header = await this.translate.get('LOGIN.NETWORK').toPromise()
     })
   }
 
@@ -52,8 +58,8 @@ export class LoginPage implements OnInit, OnDestroy {
     console.trace('to be implemented')
   }
 
-  setNetwork(event: CustomEvent) {
-    this.appService.updateNetwork(event.detail.value)
+  setNetwork(network) {
+    this.appService.updateNetwork(network)
   }
 
 

@@ -1,4 +1,6 @@
 {
+    "OK": "好",
+    "CANCEL": "取消",
     "GLOBAL": {
         "PASSWORD": "密码",
         "CANCEL": "取消",
@@ -7,6 +9,7 @@
         "SHOW_ADVANCED": "显示高级内容"
     },
     "LOGIN":  {
+        "NETWORK": "网络",
         "MENU_ENTRY": "登录",
         "TITLE": "MyETPWallet-新现实",
         "CREATE_WALLET_TITLE": "创建新钱包",

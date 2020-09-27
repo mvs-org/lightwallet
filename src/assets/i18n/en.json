@@ -1,4 +1,6 @@
 {
+    "OK": "Ok",
+    "CANCEL": "Cancel",
     "GLOBAL": {
         "PASSWORD": "Password",
         "CANCEL": "Cancel",
@@ -7,6 +9,7 @@
         "SHOW_ADVANCED": "Show advanced"
     },
     "LOGIN": {
+        "NETWORK": "Network",
         "MENU_ENTRY": "Login",
         "TITLE": "MyETPWallet - THE NEW REALITY",
         "CREATE_WALLET_TITLE": "Create new wallet",
