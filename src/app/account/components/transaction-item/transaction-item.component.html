@@ -89,7 +89,7 @@
                                 </div>
                             </div>
                             <br>
-                            <div class="fee right">
+                            <div *ngIf="txFee" class="fee right">
                                 {{'TX.TX_FEE' | translate}}: {{txFee | format : 8}} ETP
                             </div>
                         </ion-col>

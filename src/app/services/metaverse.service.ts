@@ -781,14 +781,12 @@ export class MetaverseService {
   }
 
   send = async (tx) => {
-    console.log(tx)
     tx.inputs.forEach((input) => {
       if (typeof input.script == 'string') {
         input.script = Metaverse.script.fromASM(input.script).chunks
       }
     })
     tx.hash = (await this.broadcast(tx.encode().toString('hex'))).hash
-    console.log(tx.hash)
     tx.height = await this.getHeight()
     tx.unconfirmed = true
     tx.outputs.forEach(output => {
@@ -802,7 +800,6 @@ export class MetaverseService {
   }
 
   broadcast(rawtx: string, max_fee: number = undefined) {
-    console.log(rawtx)
     return this.blockchain.transaction.broadcast(rawtx)
   }
 
@@ -906,9 +903,7 @@ export class MetaverseService {
   async decodeTx(rawtx) {
     const network = await this.appService.getNetwork()
     const tx = Metaverse.transaction.decode(rawtx, network)
-    // return this.organizeInputs(tx, true)
-    return tx 
-    // this.organizeInputs(tx, true)
+    return this.organizeInputs(tx, true)
   }
 
   async getTransactionMap() {
