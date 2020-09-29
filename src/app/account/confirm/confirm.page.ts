@@ -29,7 +29,7 @@ export class ConfirmPage implements OnInit {
   constructor(
     public mvs: MetaverseService,
     private router: Router,
-    private walletService: WalletService,
+    public walletService: WalletService,
     private alertService: AlertService,
     private clipboardService: ClipboardService,
   ) { }

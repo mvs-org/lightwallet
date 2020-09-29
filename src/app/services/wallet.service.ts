@@ -5,6 +5,8 @@ import { Storage } from '@ionic/storage'
 import { CryptoService } from './crypto.service'
 import { Platform } from '@ionic/angular'
 import { AppService } from './app.service'
+import { ClipboardService } from 'ngx-clipboard'
+import { ToastService } from './toast.service'
 
 declare const Metaverse: any
 
@@ -19,6 +21,8 @@ export class WalletService {
         private appService: AppService,
         private crypto: CryptoService,
         public platform: Platform,
+        private clipboardService: ClipboardService,
+        private toastService: ToastService,
     ) { }
 
     public export(passphrase) {
@@ -519,6 +523,24 @@ export class WalletService {
 
     async setTheme(theme: string) {
         return this.storage.set('theme', theme)
+    }
+
+    async copy(textToCopy, type) {
+        try {
+            await this.clipboardService.copyFromContent(textToCopy)
+            switch (type) {
+                case 'address':
+                    this.toastService.simpleToast('IDENTITIES.TOAST.ADDRESS_COPIED')
+                    break
+                case 'avatar':
+                    this.toastService.simpleToast('IDENTITIES.TOAST.AVATAR_COPIED')
+                    break
+                default:
+                    this.toastService.simpleToast('IDENTITIES.TOAST.COPIED')
+            }
+        } catch (error) {
+            console.log('Error while copying')
+        }
     }
 
 }

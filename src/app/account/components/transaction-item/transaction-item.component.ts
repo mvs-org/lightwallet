@@ -40,7 +40,7 @@ export class TransactionItemComponent {
     constructor(
         private metaverseService: MetaverseService,
         public appService: AppService,
-        private walletService: WalletService,
+        public walletService: WalletService,
         public translate: TranslateService,
     ) {
         this.devAvatar = this.appService.dev_avatar

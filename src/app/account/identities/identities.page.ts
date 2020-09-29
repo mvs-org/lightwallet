@@ -4,8 +4,6 @@ import { MetaverseService } from '../../services/metaverse.service'
 import { WalletService } from '../../services/wallet.service'
 import { Router } from '@angular/router'
 import { QrComponent } from '../../qr/qr.component'
-import { ClipboardService } from 'ngx-clipboard'
-import { ToastService } from '../../services/toast.service'
 import { ActionSheetService } from '../../services/action-sheet.service'
 
 @Component({
@@ -29,8 +27,6 @@ export class IdentitiesPage implements OnInit {
         public walletService: WalletService,
         private router: Router,
         private actionSheetService: ActionSheetService,
-        private clipboardService: ClipboardService,
-        private toastService: ToastService,
     ) {
 
         this.isMobile = this.walletService.isMobile()
@@ -133,21 +129,4 @@ export class IdentitiesPage implements OnInit {
         }
     }
 
-    async copy(textToCopy, type) {
-        try {
-            await this.clipboardService.copyFromContent(textToCopy)
-            switch (type) {
-                case 'address':
-                    this.toastService.simpleToast('IDENTITIES.TOAST.ADDRESS_COPIED')
-                    break
-                case 'avatar':
-                    this.toastService.simpleToast('IDENTITIES.TOAST.AVATAR_COPIED')
-                    break
-                default:
-                    this.toastService.simpleToast('IDENTITIES.TOAST.COPIED')
-            }
-        } catch (error) {
-            console.log('Error while copying')
-        }
-    }
 }

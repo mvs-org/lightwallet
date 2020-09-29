@@ -1,5 +1,5 @@
 <ion-card>
-    <ion-item button class="manual-copy display-overflow" (click)="showHideDetails()" lines="none">
+    <ion-item button class="manual-copy display-overflow" lines="none" (click)="showHideDetails()">
         <ion-grid>
             <ion-row *ngIf="status == 'SIGNED' || status == 'UNSIGNED' || status == 'PARTIALLY'">
                 <ion-col>
@@ -96,92 +96,93 @@
                     </ion-row>
                 </ion-col>
             </ion-row>
-            <div [@expandCollapse]="this.mode !== 'summary'" *ngIf="this.mode !== 'summary'">
-
-                <ion-row *ngIf="multisig && multisig.status == 'MULTISIG' && (mode == 'default' || mode == 'satoshi')">
-                    <ion-col size="12" size-md="6">
-                        <ion-row *ngIf="multisig.info">
-                            <ion-col translate="MULTISIGNATURE.NBR_PERSON"></ion-col>
-                            <ion-col class="right">
-                                {{multisig.info.n}}
-                            </ion-col>
-                        </ion-row>
-                        <ion-row *ngIf="multisig.info">
-                            <ion-col translate="MULTISIGNATURE.SIGN_REQ"></ion-col>
-                            <ion-col class="right">
-                                {{multisig.info.m}}
-                            </ion-col>
-                        </ion-row>
-                        <ion-row *ngIf="multisig.current_nbr_sign">
-                            <ion-col translate="MULTISIGNATURE.CURRENT_NBR_SIGN"></ion-col>
-                            <ion-col class="right">
-                                {{multisig.current_nbr_sign}}
-                            </ion-col>
-                        </ion-row>
-                    </ion-col>
-                </ion-row>
-
-                <ion-row *ngIf="mode == 'default' || mode == 'satoshi'">
-                    <ion-col size="12" size-sm="6">
-                        <ion-row>
-                            <ion-col translate="TX.INPUTS"></ion-col>
-                        </ion-row>
-                        <ion-row>
-                            <input-item lines="none" *ngFor="let input of tx.inputs; let i = index"
-                                (modelChanged)="inputLoad($event, i)" [input]="input" [decimalsMst]="decimalsMst"
-                                [mode]="mode"></input-item>
-                        </ion-row>
-                    </ion-col>
-                    <ion-col size="12" size-sm="6">
-                        <ion-row>
-                            <ion-col translate="TX.OUTPUTS"></ion-col>
-                        </ion-row>
-                        <ion-row>
-                            <output-item *ngFor="let output of tx.outputs" [output]="output" [decimalsMst]="decimalsMst"
-                                [mode]="mode"></output-item>
-                        </ion-row>
-                    </ion-col>
-                </ion-row>
-                <ion-row *ngIf="totalInputs.ETP && (mode == 'default' || mode == 'satoshi')">
-                    <ion-col>
-                        <ion-row>
-                            <ion-col size="6" translate="TX.TOTAL_INPUTS"></ion-col>
-                            <ion-col size="6" class="right">
-                                {{totalInputs.ETP | format : 8}} ETP
-                                <div *ngFor="let mst of involvedMst">
-                                    {{totalInputs.MST[mst] | format : decimalsMst[mst]}} {{mst}}
-                                </div>
-                            </ion-col>
-                        </ion-row>
-                    </ion-col>
-                    <ion-col>
-                        <ion-row>
-                            <ion-col size="6" translate="TX.TOTAL_OUTPUTS"></ion-col>
-                            <ion-col size="6" class="right">
-                                {{totalOutputs.ETP | format : 8}} ETP
-                                <div *ngFor="let mst of involvedMst">
-                                    {{totalOutputs.MST[mst] | format : decimalsMst[mst]}} {{mst}}
-                                </div>
-                            </ion-col>
-                        </ion-row>
-                    </ion-col>
-                </ion-row>
-                <div *ngIf="mode == 'hex'">
-                    <ion-row>
-                        <ion-col>
-                            <div type="text">{{hexTx}}</div>
+        </ion-grid>
+    </ion-item>
+    <ion-item class="manual-copy display-overflow" lines="none" [@expandCollapse]="this.mode !== 'summary'" *ngIf="this.mode !== 'summary'">
+        <ion-grid>
+            <ion-row *ngIf="multisig && multisig.status == 'MULTISIG' && (mode == 'default' || mode == 'satoshi')">
+                <ion-col size="12" size-md="6">
+                    <ion-row *ngIf="multisig.info">
+                        <ion-col translate="MULTISIGNATURE.NBR_PERSON"></ion-col>
+                        <ion-col class="right">
+                            {{multisig.info.n}}
                         </ion-col>
                     </ion-row>
-                    <ion-row>
-                        <ion-col>
-                            <ion-button expand="full" ngxClipboard [cbContent]="hexTx">
-                                <ion-icon slot="start" name="copy"></ion-icon>
-                                <span translate="COPY"></span>
-                            </ion-button>
+                    <ion-row *ngIf="multisig.info">
+                        <ion-col translate="MULTISIGNATURE.SIGN_REQ"></ion-col>
+                        <ion-col class="right">
+                            {{multisig.info.m}}
                         </ion-col>
                     </ion-row>
-                </div>
+                    <ion-row *ngIf="multisig.current_nbr_sign">
+                        <ion-col translate="MULTISIGNATURE.CURRENT_NBR_SIGN"></ion-col>
+                        <ion-col class="right">
+                            {{multisig.current_nbr_sign}}
+                        </ion-col>
+                    </ion-row>
+                </ion-col>
+            </ion-row>
+
+            <ion-row *ngIf="mode == 'default' || mode == 'satoshi'">
+                <ion-col size="12" size-sm="6">
+                    <ion-row>
+                        <ion-col translate="TX.INPUTS"></ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <input-item lines="none" *ngFor="let input of tx.inputs; let i = index"
+                            (modelChanged)="inputLoad($event, i)" [input]="input" [decimalsMst]="decimalsMst"
+                            [mode]="mode"></input-item>
+                    </ion-row>
+                </ion-col>
+                <ion-col size="12" size-sm="6">
+                    <ion-row>
+                        <ion-col translate="TX.OUTPUTS"></ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <output-item *ngFor="let output of tx.outputs" [output]="output" [decimalsMst]="decimalsMst"
+                            [mode]="mode"></output-item>
+                    </ion-row>
+                </ion-col>
+            </ion-row>
+            <ion-row *ngIf="totalInputs.ETP && (mode == 'default' || mode == 'satoshi')">
+                <ion-col>
+                    <ion-row>
+                        <ion-col size="6" translate="TX.TOTAL_INPUTS"></ion-col>
+                        <ion-col size="6" class="right">
+                            {{totalInputs.ETP | format : 8}} ETP
+                            <div *ngFor="let mst of involvedMst">
+                                {{totalInputs.MST[mst] | format : decimalsMst[mst]}} {{mst}}
+                            </div>
+                        </ion-col>
+                    </ion-row>
+                </ion-col>
+                <ion-col>
+                    <ion-row>
+                        <ion-col size="6" translate="TX.TOTAL_OUTPUTS"></ion-col>
+                        <ion-col size="6" class="right">
+                            {{totalOutputs.ETP | format : 8}} ETP
+                            <div *ngFor="let mst of involvedMst">
+                                {{totalOutputs.MST[mst] | format : decimalsMst[mst]}} {{mst}}
+                            </div>
+                        </ion-col>
+                    </ion-row>
+                </ion-col>
+            </ion-row>
+            <div *ngIf="mode == 'hex'">
+                <ion-row>
+                    <ion-col>
+                        <div type="text" class="breakwords">{{hexTx}}</div>
+                    </ion-col>
+                </ion-row>
             </div>
         </ion-grid>
     </ion-item>
+    <ion-row *ngIf="mode == 'hex'" class="ion-text-center">
+        <ion-col>
+            <ion-button expand="full" (click)="walletService.copy(hexTx, 'tx')">
+                <ion-icon slot="start" name="copy"></ion-icon>
+                <span translate="CONFIRM.BUTTON.COPY"></span>
+            </ion-button>
+        </ion-col>
+    </ion-row>
 </ion-card>

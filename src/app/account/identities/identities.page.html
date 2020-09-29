@@ -19,11 +19,11 @@
       <ion-toolbar style="background-color: transparent;">
         <!--If has Avatar-->
         <div *ngIf="addressBalancesObject[address] && addressBalancesObject[address].AVATAR">
-          <ion-card-title class="pointer" (click)="copy(addressBalancesObject[address].AVATAR, 'avatar')">
+          <ion-card-title class="pointer" (click)="walletService.copy(addressBalancesObject[address].AVATAR, 'avatar')">
             <img class="avatar-logo" [src]="'assets/icon/default_avatar.png'">
             {{addressBalancesObject[address].AVATAR}}
           </ion-card-title>
-          <ion-card-subtitle class="pointer" (click)="copy(address, 'address')">
+          <ion-card-subtitle class="pointer" (click)="walletService.copy(address, 'address')">
             {{address}}
           </ion-card-subtitle>
         </div>
@@ -35,7 +35,7 @@
               <span translate="IDENTITIES.BUTTON.CREATE_AVATAR"></span>
             </ion-button>
           </ion-card-title>
-          <ion-card-subtitle class="pointer" (click)="copy(address, 'address')">
+          <ion-card-subtitle class="pointer" (click)="walletService.copy(address, 'address')">
             {{address}}
           </ion-card-subtitle>
         </div>

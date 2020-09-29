@@ -57,7 +57,7 @@
           <br>
           <h4 translate="CONFIRM.PREVIEW_SIGNED_TX"></h4>
           <ion-item class="manual-copy breakwords">{{signedTx}}</ion-item>
-          <ion-button expand="full" ngxClipboard [cbContent]="signedTx">
+          <ion-button expand="full" (click)="walletService.copy(signedTx, 'tx')">
             <ion-icon slot="start" name="copy"></ion-icon>
             <span translate="COPY"></span>
           </ion-button>
@@ -106,7 +106,7 @@
           <ion-icon slot="start" name="send"></ion-icon>
           <span translate="CONFIRM.BUTTON.BROADCAST"></span>
         </ion-button>
-        <ion-button *ngIf="status !== 'SIGNED'" type="submit" expand="full" ngxClipboard [cbContent]="hexTx">
+        <ion-button *ngIf="status !== 'SIGNED'" type="submit" expand="full" (click)="walletService.copy(hexTx, 'tx')">
           <ion-icon slot="start" name="copy"></ion-icon>
           <span translate="CONFIRM.BUTTON.COPY"></span>
         </ion-button>

@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common'
 import { IonicModule } from '@ionic/angular'
 
 import { TranslateModule } from '@ngx-translate/core'
-import { ClipboardModule } from 'ngx-clipboard'
 import { PipesModule } from 'src/app/pipes/pipes.module'
 import { InputItemComponent } from './input-item/input-item'
 import { OutputItemComponent } from './output-item/output-item'
@@ -16,7 +15,6 @@ import { RouterModule } from '@angular/router'
     CommonModule,
     IonicModule,
     TranslateModule.forChild(),
-    ClipboardModule,
     RouterModule,
     PipesModule,
   ],
