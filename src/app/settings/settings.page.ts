@@ -27,20 +27,12 @@ export class SettingsPage implements OnInit {
 
     async ngOnInit() {
         this.network = await this.appService.getNetwork()
-        console.log('Settings page loaded')
-        console.log(this.router.url)
         this.loggedIn = this.router.url.split('/')[1] === 'account'
     }
 
     async reset() {
         this.router.navigate(['/loading'], { state: { data: { reset: true } } })
     }
-
-    // BaseCurrencyPage = () => this.nav.push("BaseCurrencyPage")
-
-    // ExportWalletPage = e => this.nav.push("ExportWalletPage")
-
-    // InformationPage = e => this.nav.push("InformationPage")
 
     logout() {
         this.logoutService.logout()

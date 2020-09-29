@@ -530,13 +530,19 @@ export class WalletService {
             await this.clipboardService.copyFromContent(textToCopy)
             switch (type) {
                 case 'address':
-                    this.toastService.simpleToast('IDENTITIES.TOAST.ADDRESS_COPIED')
+                    this.toastService.simpleToast('TOAST.COPY.ADDRESS')
                     break
                 case 'avatar':
-                    this.toastService.simpleToast('IDENTITIES.TOAST.AVATAR_COPIED')
+                    this.toastService.simpleToast('TOAST.COPY.AVATAR')
+                    break
+                case 'tx':
+                    this.toastService.simpleToast('TOAST.COPY.TX')
+                    break
+                case 'xpub':
+                    this.toastService.simpleToast('TOAST.COPY.XPUB')
                     break
                 default:
-                    this.toastService.simpleToast('IDENTITIES.TOAST.COPIED')
+                    this.toastService.simpleToast('TOAST.COPY.DEFAULT')
             }
         } catch (error) {
             console.log('Error while copying')

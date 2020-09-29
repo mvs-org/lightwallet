@@ -17,6 +17,10 @@ const routes: Routes = [
     loadChildren: () => import('./certificates/certificates.module').then(m => m.CertificatesPageModule)
   },
   {
+    path: 'export-xpub',
+    loadChildren: () => import('./export-xpub/export-xpub.module').then( m => m.ExportXpubPageModule)
+  },
+  {
     path: 'burn',
     loadChildren: () => import('./burn/burn.module').then( m => m.BurnPageModule)
   },

@@ -54,7 +54,7 @@ export class TransferPage implements OnInit {
     private globals: AppService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private walletService: WalletService,
+    public walletService: WalletService,
     private modalCtrl: ModalController,
   ) {
 

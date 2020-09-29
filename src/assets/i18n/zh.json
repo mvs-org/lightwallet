@@ -341,9 +341,6 @@
             "QRCODE": "显示二维码",
             "HISTORY": "历史",
             "CREATE_AVATAR": "创建Avatar"
-        },
-        "TOAST": {
-            "ADDRESS_COPIED": "地址已复制！"
         }
     },
     "QR_ADDRESS": {
@@ -669,7 +666,14 @@
         "WRONG_PASSWORD": "密码错误,请重试",
         "ERR_CONNECTION": "无法广播交易。请检查您的互联网连接或稍后再试。",
         "ERR_INSUFFICIENT_BALANCE": "余额不足。请仔细检查您的可用余额。",
-        "ERR_TOO_MANY_INPUTS": "此交易包含太多输入。请尝试较小的输入。"
+        "ERR_TOO_MANY_INPUTS": "此交易包含太多输入。请尝试较小的输入。",
+        "COPY": {
+            "ADDRESS": "地址已复制！",
+            "AVATAR": "Avatar name copied!",
+            "TX": "Transaction copied!",
+            "XPUB": "Public key copied!",
+            "DEFAULT": "Copied!"
+        }
     },
     "DEVELOPER": {
         "REMOVE_ACCOUNTS": "清除帐户",

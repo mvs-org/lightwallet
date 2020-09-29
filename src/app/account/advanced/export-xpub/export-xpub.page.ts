@@ -13,7 +13,7 @@ export class ExportXpubPage implements OnInit {
   passphrase = ''
 
   constructor(
-    private walletService: WalletService,
+    public walletService: WalletService,
     private alertService: AlertService,
   ) { }
 

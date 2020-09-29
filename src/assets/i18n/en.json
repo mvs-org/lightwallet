@@ -354,11 +354,6 @@
             "QRCODE": "Show QR Code",
             "HISTORY": "History",
             "CREATE_AVATAR": "Create Avatar"
-        },
-        "TOAST": {
-            "ADDRESS_COPIED": "Address copied!",
-            "AVATAR_COPIED": "Avatar name copied!",
-            "COPIED": "Copied!"
         }
     },
     "QR_ADDRESS": {
@@ -691,7 +686,14 @@
         "WRONG_PASSWORD": "Wrong password, please try again",
         "ERR_CONNECTION": "Unable to broadcast the transaction. Please check you internet connection or try again later.",
         "ERR_INSUFFICIENT_BALANCE": "Insufficient balance. Please double check your available balance.",
-        "ERR_TOO_MANY_INPUTS": "This transaction contains too many inputs. Please try a smaller amount."
+        "ERR_TOO_MANY_INPUTS": "This transaction contains too many inputs. Please try a smaller amount.",
+        "COPY": {
+            "ADDRESS": "Address copied!",
+            "AVATAR": "Avatar name copied!",
+            "TX": "Transaction copied!",
+            "XPUB": "Public key copied!",
+            "DEFAULT": "Copied!"
+        }
     },
     "DEVELOPER": {
         "REMOVE_ACCOUNTS": "Clear Accounts",

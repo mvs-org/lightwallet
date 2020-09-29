@@ -128,7 +128,7 @@
           <h4 translate="MULTISIG.TRANSFER.CREATED_TX"></h4>
           <div lines="none" class="advice" translate="MULTISIG.TRANSFER.CREATED_TX_DESCRIPTION"></div>
           <ion-item class="manual-copy breakwords">{{rawtx}}</ion-item>
-          <ion-button expand="full" ngxClipboard [cbContent]="rawtx">
+          <ion-button expand="full" (click)="walletService.copy(rawtx, 'tx')">
             <ion-icon name="copy"></ion-icon>
             <span translate="GLOBAL.COPY"></span>
           </ion-button>

@@ -39,7 +39,7 @@ export class AddPage {
     public platform: Platform,
     private alertService: AlertService,
     private router: Router,
-    private walletService: WalletService,
+    public walletService: WalletService,
     private modalCtrl: ModalController,
   ) {
 
