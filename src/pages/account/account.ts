@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, Platform, Events } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
 import { TranslateService } from '@ngx-translate/core';
 import { AlertProvider } from '../../providers/alert/alert';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
@@ -38,6 +39,7 @@ export class AccountPage {
         private alert: AlertProvider,
         public platform: Platform,
         private event: Events,
+        private storage: Storage,
     ) {
 
         this.loading = true;
@@ -62,7 +64,6 @@ export class AccountPage {
     isSyncing = () => this.syncingSmall
 
     async ionViewDidEnter() {
-
         if (await this.checkAccess()) {
             this.loadTickers()
             this.initialize()
@@ -86,7 +87,6 @@ export class AccountPage {
 
     private async loadTickers() {
         [this.base, this.tickers] = await this.mvs.getBaseAndTickers()
-
     }
 
     private loadFromCache() {
@@ -148,7 +148,23 @@ export class AccountPage {
 
     private forgetAccountHandler = () => {
         return this.wallet.getAccountName()
-            .then((account_name) => this.wallet.deleteAccount(account_name))
+            .then((account_name) => {
+                return this.wallet.deleteAccount(account_name)
+                // 删除 DNA 账户信息
+                    .then(() => this.storage.get('saved_dna_accounts'))
+                    .then((savedDnaAccounts) => {
+                        if (savedDnaAccounts && savedDnaAccounts.length > 0) {
+                            savedDnaAccounts.find((o, i) => {
+                                if (o.name === account_name) {
+                                    savedDnaAccounts.splice(i, 1);
+                                    return true;
+                                }
+                            });
+
+                            return this.storage.set('saved_dna_accounts', savedDnaAccounts);
+                        }
+                    });
+            })
             .then(() => this.mvs.hardReset())
             .then(() => this.nav.setRoot("LoginPage"))
     }
@@ -176,6 +192,42 @@ export class AccountPage {
 
     saveAccount(username) {
         this.wallet.saveAccount(username)
+            .then(() => this.storage.get('dnaUserInfo'))
+            .then((dnaUserInfo) => {
+                if (dnaUserInfo) {
+                    return this.storage.get('saved_dna_accounts')
+                        .then((savedDnaAccounts) => {
+                            if (!savedDnaAccounts) {
+                                savedDnaAccounts = [];
+                            }
+                            return this.storage.get('walletType').then((walletType) => {
+                                walletType = walletType === 'dna' ? 'dna' : 'etp';
+
+                                let index = -1;
+                                savedDnaAccounts.find((o, i) => {
+                                    if (o && o.name === username) {
+                                        index = i;
+                                        return true; // stop searching
+                                    }
+                                });
+
+                                let saved = {
+                                    name: username,
+                                    walletType: walletType,
+                                    dnaUserInfo: dnaUserInfo,
+                                }
+
+                                if (index >= 0) {
+                                    savedDnaAccounts[index] = saved;
+                                } else {
+                                    savedDnaAccounts.push(saved);
+                                }
+
+                                return this.storage.set('saved_dna_accounts', savedDnaAccounts);
+                            });
+                        });
+                }
+            })
             .then(() => this.mvs.hardReset())
             .then(() => this.nav.setRoot("LoginPage"))
             .catch((error) => {

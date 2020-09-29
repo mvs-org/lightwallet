@@ -1,0 +1,29 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>{{'RECEIVE'|translate}}</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content class="spread-out">
+    <div [ngClass]="['qrcode', platform.is('mobile') ? 'mobile' : '']">
+        <ion-card class="qrcode-card">
+            <ion-card-content class="qrcode-card-content">
+                <qr-code [value]="userInfo.name" [size]="480" [padding]="30" class="center"></qr-code>
+            </ion-card-content>
+        </ion-card>
+    </div>
+
+    <div [ngClass]="['username', !platform.is('mobile') ? 'pc' : '']">
+        <div>
+            <p>{{'DNA.DEPOSIT_ADDRESS'|translate}}</p>
+            <ion-card class="username-card">
+                <ion-card-content class="username-card-content">
+                    <div class="username-content">{{userInfo.name}}</div>
+                    <button ion-button class="username-copy" [ngxClipboard]="copy">{{'COPY'|translate}}</button>
+                </ion-card-content>
+            </ion-card>
+        </div>
+    </div>
+
+    <input ion-input #copy [value]="userInfo.name" readonly style="opacity: 0"/>
+</ion-content>

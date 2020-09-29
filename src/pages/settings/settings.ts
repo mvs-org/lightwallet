@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, Platform } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { TranslateService } from '@ngx-translate/core';
 import { AppGlobals } from '../../app/app.global';
@@ -17,6 +18,7 @@ export class SettingsPage {
     network: string
     saved_accounts_name: any = []
     hasSeed: boolean
+    walletType: string
 
     constructor(
         public nav: NavController,
@@ -25,7 +27,8 @@ export class SettingsPage {
         private globals: AppGlobals,
         public platform: Platform,
         private alert: AlertProvider,
-        private wallet: WalletServiceProvider
+        private wallet: WalletServiceProvider,
+        private storage: Storage,
     ) {
         this.network = this.globals.network
 
@@ -35,10 +38,12 @@ export class SettingsPage {
         this.wallet.hasSeed()
             .then((hasSeed) => this.hasSeed = hasSeed)
 
+        this.storage.get('walletType').then((walletType) => {
+            this.walletType = walletType === 'dna' ? 'dna' : 'etp';
+        });
     }
 
     ionViewDidEnter() {
-        console.log('Settings page loaded')
         this.mvs.getAddresses()
             .then((addresses) => {
                 if (!Array.isArray(addresses) || !addresses.length)
@@ -47,7 +52,11 @@ export class SettingsPage {
     }
 
     reset() {
-        this.nav.setRoot("LoadingPage", { reset: true })
+        if (this.walletType == 'dna') {
+            this.nav.setRoot("DnaLoadingPage", { reset: true })
+        } else {
+            this.nav.setRoot("LoadingPage", { reset: true })
+        }
     }
 
     BaseCurrencyPage = () => this.nav.push("BaseCurrencyPage")
@@ -90,7 +99,23 @@ export class SettingsPage {
 
     private forgetAccountHandler = () => {
         return this.wallet.getAccountName()
-            .then((account_name) => this.wallet.deleteAccount(account_name))
+            .then((account_name) => {
+                return this.wallet.deleteAccount(account_name)
+                    // 删除 DNA 账户信息
+                    .then(() => this.storage.get('saved_dna_accounts'))
+                    .then((savedDnaAccounts) => {
+                        if (savedDnaAccounts && savedDnaAccounts.length > 0) {
+                            savedDnaAccounts.find((o, i) => {
+                                if (o.name === account_name) {
+                                    savedDnaAccounts.splice(i, 1);
+                                    return true;
+                                }
+                            });
+
+                            return this.storage.set('saved_dna_accounts', savedDnaAccounts);
+                        }
+                    });
+            })
             .then(() => this.mvs.hardReset())
             .then(() => this.nav.setRoot("LoginPage"))
     }
@@ -118,6 +143,42 @@ export class SettingsPage {
 
     saveAccount(username) {
         this.wallet.saveAccount(username)
+            .then(() => this.storage.get('dnaUserInfo'))
+            .then((dnaUserInfo) => {
+                if (dnaUserInfo) {
+                    return this.storage.get('saved_dna_accounts')
+                        .then((savedDnaAccounts) => {
+                            if (!savedDnaAccounts) {
+                                savedDnaAccounts = [];
+                            }
+                            return this.storage.get('walletType').then((walletType) => {
+                                walletType = walletType === 'dna' ? 'dna' : 'etp';
+
+                                let index = -1;
+                                savedDnaAccounts.find((o, i) => {
+                                    if (o && o.name === username) {
+                                        index = i;
+                                        return true; // stop searching
+                                    }
+                                });
+
+                                let saved = {
+                                    name: username,
+                                    walletType: walletType,
+                                    dnaUserInfo: dnaUserInfo,
+                                }
+
+                                if (index >= 0) {
+                                    savedDnaAccounts[index] = saved;
+                                } else {
+                                    savedDnaAccounts.push(saved);
+                                }
+
+                                return this.storage.set('saved_dna_accounts', savedDnaAccounts);
+                            });
+                        });
+                }
+            })
             .then(() => this.mvs.hardReset())
             .then(() => this.nav.setRoot("LoginPage"))
             .catch((error) => {

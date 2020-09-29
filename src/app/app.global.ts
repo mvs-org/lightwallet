@@ -21,11 +21,15 @@ export class AppGlobals {
     readonly default_fees = {"avatar":100000000, "bountyShare":80, "default":10000, "minimum":10000, "mitIssue":100000, "mstIssue":1000000000}
     readonly max_addresses: number = 50
 
+
     // Interval in seconds that the app will try to resync on account page
     readonly update_interval = 29
     readonly show_loading_screen_after_unused_time = 60*60*24*7
 
     readonly DEFAULT_NETWORK = 'mainnet'
+
+    // 当前账号的DNA数据
+    dnaBlockHeight = 0;
 
     constructor(
         private event: Events,

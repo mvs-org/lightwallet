@@ -9,11 +9,20 @@
         <ion-row class="top-padding">
             <h2 class="center-info">{{"PASSWORD_WARNING"|translate}}</h2>
         </ion-row>
+        <ion-row *ngIf="newWallet || dnaNoAccount">
+            <ion-item class="center-psw" [ngClass]="{'error-border':!usernameValid(username)}">
+                <ion-label color="primary" floating>{{'USERNAME'| translate}}</ion-label>
+                <ion-input name="username" maxlength="12" type="text" placeholder="" [(ngModel)]="username"></ion-input>
+            </ion-item>
+            <ion-item class="center-psw wrong-input" *ngIf="username && !usernameValid(username)" no-lines>{{"PASSPHRASE.NOT_MATCH_USERNAME" | translate}}</ion-item>
+            <ion-item class="center-psw wrong-input" *ngIf="!username && dnaNoAccount" no-lines>{{"DNA.REG_ACCOUNT" | translate}}</ion-item>
+        </ion-row>
         <ion-row>
             <ion-item class="center-psw" [ngClass]="{'error-border':!passwordValid(password)}">
                 <ion-label color="primary" floating>{{'PASSWORD'| translate}}</ion-label>
                 <ion-input name="password" type="password" placeholder="" [(ngModel)]="password"></ion-input>
             </ion-item>
+            <ion-item class="center-psw wrong-input" *ngIf="password && !passwordValid(password)" no-lines>{{"PASSPHRASE.NOT_MATCH_PASSWORD" | translate}}</ion-item>
         </ion-row>
         <ion-row class="more-bottom-padding">
             <ion-item class="center-psw" [ngClass]="{'error-border':!passwordRepeatValid(password, password_repeat)}">
@@ -25,7 +34,7 @@
 
         <ion-row class="button more-bottom-padding" *ngIf="newWallet && !platform.is('mobile')">
             <ion-col>
-                <button ion-button full icon-left color="secondary" [disabled]="!complete(password, password_repeat)" (click)="downloadAndReturnLogin(password)">
+                <button ion-button full icon-left color="secondary" [disabled]="!completeNewWallet(username, password, password_repeat)" (click)="downloadAndReturnLogin(username, password)">
                     <ion-icon name="download"></ion-icon>
                     {{"PASSPHRASE.DOWNLOAD_FILE"|translate}}
                 </button>
@@ -34,13 +43,13 @@
 
         <ion-row class="more-bottom-padding" *ngIf="!newWallet && !platform.is('mobile')">
             <ion-col col-sm-6 offset-md-1 col-md-5 offset-lg-2 col-lg-4 offset-xl-3 col-xl-3>
-                <button ion-button full icon-left color="secondary" [disabled]="!complete(password, password_repeat)" (click)="download(password)">
+                <button ion-button full icon-left color="secondary" [disabled]="!complete(password, password_repeat)" (click)="download(password, username ? username : '')">
                     <ion-icon name="download"></ion-icon>
                     {{"PASSPHRASE.DOWNLOAD_FILE"|translate}}
                 </button>
             </ion-col>
             <ion-col col-sm-6 col-md-5 col-lg-4 col-xl-3>
-                <button type="submit" ion-button full icon-left [disabled]="!passwordValid(password) || !passwordRepeatValid(password, password_repeat)" (click)="encrypt(password)">
+                <button type="submit" ion-button full icon-left [disabled]="!passwordValid(password) || !passwordRepeatValid(password, password_repeat)" (click)="encrypt(password, username ? username : '')">
                     <ion-icon name="arrow-forward"></ion-icon>
                     {{"IMPORT_WALLET"|translate}}
                 </button>
@@ -49,7 +58,7 @@
 
         <ion-row class="more-bottom-padding" *ngIf="platform.is('mobile')">
             <ion-col>
-                <button type="submit" ion-button full icon-left [disabled]="!passwordValid(password) || !passwordRepeatValid(password, password_repeat)" (click)="encrypt(password)">
+                <button type="submit" ion-button full icon-left [disabled]="!passwordValid(password) || !passwordRepeatValid(password, password_repeat)" (click)="encrypt(password, username ? username : '')">
                     <ion-icon name="arrow-forward"></ion-icon>
                     {{"IMPORT_WALLET"|translate}}
                 </button>

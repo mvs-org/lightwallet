@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content padding>
-    <ion-list>
+    <ion-list *ngIf="loaded && walletType === 'etp'">
         <ion-row>
             <button ion-item (click)="PluginSettingsPage()">
                 <ion-icon name="cube" item-start></ion-icon>
@@ -35,6 +35,15 @@
                     <span class="beta-tag">New</span>
                 </h1>
                 <p [translate]="'MOVIE_TICKETS.TEXT'"></p>
+            </button>
+        </ion-row>
+    </ion-list>
+    <ion-list *ngIf="loaded && walletType === 'dna'">
+        <ion-row>
+            <button ion-item (click)="gotoDnaDapp('https://www.baidu.com')">
+                <ion-icon name="cube" item-start></ion-icon>
+                <h1>Dapp</h1>
+                <p>Dapp 测试</p>
             </button>
         </ion-row>
     </ion-list>

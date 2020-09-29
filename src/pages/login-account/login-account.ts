@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, AlertController, LoadingController, Loading } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
 import { AppGlobals } from '../../app/app.global';
 import { TranslateService } from '@ngx-translate/core';
 import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
@@ -20,6 +21,7 @@ export class LoginAccountPage {
 
     constructor(public nav: NavController,
         public navParams: NavParams,
+        private storage: Storage,
         public globals: AppGlobals,
         public translate: TranslateService,
         public platform: Platform,
@@ -39,6 +41,28 @@ export class LoginAccountPage {
 
     importAccount(account, password) {
         this.alert.showLoading()
+            // 初始化双链相关的标记
+            .then(() => this.storage.set('walletHasEtp', true))
+            .then(() => this.storage.set('walletHasDna', false))
+            .then(() => this.storage.set('walletType', 'etp'))
+            .then(() => this.storage.set('dnaUserInfo', null))
+            .then(() => this.storage.get('saved_dna_accounts'))
+            .then((savedDnaAccounts) => {
+                if (savedDnaAccounts && savedDnaAccounts.length > 0) {
+                    let index = -1;
+                    savedDnaAccounts.find((o, i) => {
+                        if (o.name === account.name) {
+                            index = i;
+                            return true;
+                        }
+                    });
+                    if (index >= 0) {
+                        return this.storage.set('walletHasDna', true)
+                            .then(() => this.storage.set('dnaUserInfo', savedDnaAccounts[index].dnaUserInfo))
+                            .then(() => this.storage.set('walletType', savedDnaAccounts[index].walletType));
+                    }
+                }
+            })
             .then(() => this.wallet.decryptAccount(account.content, password))
             .then((decryptedAccount) => Promise.all([this.wallet.setupAccount(account.name, decryptedAccount), this.wallet.setAccountParams(account.params)]))
             .then(() => Promise.all([this.wallet.getWallet(password), this.wallet.getAddressIndexFromWallet()]))
@@ -48,7 +72,9 @@ export class LoginAccountPage {
             .then((xpub) => this.wallet.setXpub(xpub))
             .then(() => this.wallet.saveSessionAccount(password))
             .then(() => this.alert.stopLoading())
-            .then(() => this.nav.setRoot("LoadingPage", { reset: true }))
+            // 获取默认展示 ETP 还是 DNA，并跳转至相应的 Loading 页面
+            .then(() => this.storage.get('walletType'))
+            .then((walletType) => this.nav.setRoot(walletType === 'dna' ? "DnaLoadingPage" : "LoadingPage", { reset: true }))
             .catch((error) => {
                 console.error(error.message)
                 this.alert.stopLoading()
@@ -84,9 +110,22 @@ export class LoginAccountPage {
                                 {
                                     text: no,
                                     handler: () => {
-                                        this.wallet.deleteAccount(account_name).then(() => {
-                                            this.nav.setRoot("LoginPage")
-                                        })
+                                        this.wallet.deleteAccount(account_name)
+                                            // 删除 DNA 账户信息
+                                            .then(() => this.storage.get('saved_dna_accounts'))
+                                            .then((savedDnaAccounts) => {
+                                                if (savedDnaAccounts && savedDnaAccounts.length > 0) {
+                                                    savedDnaAccounts.find((o, i) => {
+                                                        if (o.name === account_name) {
+                                                            savedDnaAccounts.splice(i, 1);
+                                                            return true;
+                                                        }
+                                                    });
+
+                                                    return this.storage.set('saved_dna_accounts', savedDnaAccounts);
+                                                }
+                                            })
+                                            .then(() => {this.nav.setRoot("LoginPage")})
                                     }
                                 },
 

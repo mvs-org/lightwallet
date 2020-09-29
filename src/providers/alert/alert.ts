@@ -176,6 +176,19 @@ export class AlertProvider {
         })
     }
 
+    showErrorWithoutSubTitle(message_key) {
+        this.translate.get(['MESSAGE.ERROR_TITLE', message_key, 'OK']).subscribe((translations: any) => {
+            let alert = this.alertCtrl.create({
+                title: translations['MESSAGE.ERROR_TITLE'],
+                message: translations[message_key],
+                buttons: [{
+                    text: translations['OK']
+                }]
+            });
+            alert.present(alert);
+        })
+    }
+
     showError(message_key, error) {
         this.translate.get(['MESSAGE.ERROR_TITLE', message_key, 'OK']).subscribe((translations: any) => {
             let alert = this.alertCtrl.create({

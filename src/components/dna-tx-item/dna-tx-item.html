@@ -1,0 +1,97 @@
+<ion-card class="manual-copy display-overflow">
+    <ion-grid>
+        <ion-row class="hash">
+            <ion-col>
+                <ion-row>
+                    <ion-col>
+                        <ion-item>
+                            <div class="tx-hash">
+                                <h2 class="font-mono overflow">
+                                    {{tx.id}} (todo: show hash)
+                                </h2>
+                            </div>
+                            <!--<button id="explorerTxButton" ion-button (click)="checkTx()">
+                                <ion-icon name="open"></ion-icon>
+                            </button>-->
+                        </ion-item>
+                    </ion-col>
+                    <ion-col>
+                        <ion-item class="right timestamp">
+                            <h2>(todo: show time)</h2>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <ion-row>
+                    <ion-col>
+                        <ion-item class="summaryTxType">
+                            {{'DNA.TX_TYPE_' + tx.op[0] | translate}}
+                            <div>
+                                <button class="ion-item" ion-button icon-left (click)="showHideDetails()">
+                                    <ion-icon *ngIf="mode == 'summary'" name="arrow-dropdown"></ion-icon>
+                                    <span *ngIf="mode == 'summary'">{{'SHOW_DETAILS'|translate}}</span>
+                                    <ion-icon *ngIf="mode !== 'summary'" name="arrow-dropup"></ion-icon>
+                                    <span *ngIf="mode !== 'summary'">{{'HIDE_DETAILS'|translate}}</span>
+                                </button>
+                            </div>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col>
+                        <ion-item class="right summaryAmount">
+                            <div *ngIf="users[tx.op[1].from] && users[tx.op[1].to]">
+                                <div *ngIf="users[tx.op[1].from] === userInfo.name"
+                                     class="sendAmount">
+                                    -{{formatTokenWithoutSymbol(tx.op[1].amount.amount)}} {{asset}}
+                                </div>
+                                <div *ngIf="users[tx.op[1].to] === userInfo.name"
+                                     class="receiveAmount">
+                                    +{{formatTokenWithoutSymbol(tx.op[1].amount.amount)}} {{asset}}
+                                </div>
+                            </div>
+                            <div *ngIf="!users[tx.op[1].from] || !users[tx.op[1].to]">-</div>
+                            <div class="default-color fee">{{'TX.TX_FEE' | translate}}: {{formatTokenWithoutSymbol(tx.op[1].fee.amount)}} {{asset}}</div>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+            </ion-col>
+        </ion-row>
+        <div [@expandCollapse]="this.mode !== 'summary'" *ngIf="this.mode !== 'summary'">
+
+            <ion-row style="padding-bottom: 15px;">
+                <ion-col col-12 col-md-6>
+                    <!--<ion-row>
+                        <ion-col>
+                            <ion-item>
+                                <ion-col>{{'TX.INPUTS'|translate}}:</ion-col>
+                            </ion-item>
+                        </ion-col>
+                    </ion-row>-->
+                    <ion-row>
+                        <p style="padding-left: 22px;">{{'DNA.FROM' | translate}}: {{users[tx.op[1].from] ? users[tx.op[1].from] : '-'}}</p>
+                    </ion-row>
+                    <ion-row>
+                        <p style="padding-left: 22px;">{{'DNA.BLOCK' | translate}}: {{tx.block_num}}</p>
+                    </ion-row>
+                </ion-col>
+                <ion-col col-12 col-md-6>
+                    <!--<ion-row>
+                        <ion-col>
+                            <ion-item>
+                                <ion-col>{{'TX.OUTPUTS'|translate}}:</ion-col>
+                            </ion-item>
+                        </ion-col>
+                    </ion-row>-->
+                    <ion-row>
+                        <p style="padding-left: 22px;">{{'DNA.TO' | translate}}: {{users[tx.op[1].to] ? users[tx.op[1].to] : '-'}}</p>
+                    </ion-row>
+                    <ion-row>
+                        <p>&nbsp;</p>
+                    </ion-row>
+                </ion-col>
+            </ion-row>
+        </div>
+    </ion-grid>
+</ion-card>

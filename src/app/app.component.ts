@@ -19,6 +19,15 @@ export class MyETPWallet {
     rootPage: any
     pages: Array<{ title: string, component: any }> = [];
 
+    // 钱包类型：etp or dna
+    public walletType: string;
+    // 是否具有 etp
+    public walletHasEtp: boolean = false;
+    // 是否具有 dna
+    public walletHasDna: boolean = false;
+    // 是否已登录
+    public isLogged:boolean;
+
     constructor(
         private splashScreen: SplashScreen,
         public platform: Platform,
@@ -40,11 +49,16 @@ export class MyETPWallet {
             .then(() => this.initializeApp())
             .then(() => this.storage.get('language'))
             .then((language) => this.initLanguage(language))
+            .then(() => this.initDobuleWallet())  // 初始化双链
             .then(() => this.isLoggedIn())
             .then(async (loggedin) => {
                 if (loggedin) {
-                    return this.mvs.getUpdateNeeded(this.globals.show_loading_screen_after_unused_time)
-                        .then(needUpdate => this.rootPage = needUpdate ? "LoadingPage" : "AccountPage")
+                    if (this.isDna() && this.walletHasDna) {
+                        this.rootPage = 'DnaAccountPage';
+                    } else {
+                        return this.mvs.getUpdateNeeded(this.globals.show_loading_screen_after_unused_time)
+                            .then(needUpdate => this.rootPage = needUpdate ? "LoadingPage" : "AccountPage")
+                    }
                 } else {
                     this.rootPage = "LoginPage"
                 }
@@ -83,6 +97,35 @@ export class MyETPWallet {
         });
     }
 
+    initDobuleWallet() {
+        return this.isLoggedIn()
+            .then((logged) => this.isLogged = !!logged)
+            .then(() => this.storage.get('walletType'))
+            .then((type) => {
+                this.walletType = (type === 'dna' ? 'dna' : 'etp')
+            })
+            .then(() => this.storage.get('walletHasEtp'))
+            .then((hasEtp) => {
+                this.walletHasEtp = !!hasEtp;
+                //if (this.walletType == 'etp' && !this.walletHasEtp) {
+                //    this.walletType = 'dna';
+                //}
+            })
+            .then(() => this.storage.get('walletHasDna'))
+            .then((hasDna) => {
+                this.walletHasDna = !!hasDna;
+                //if (this.walletType == 'dna' && !this.walletHasDna) {
+                //    this.walletType = 'etp';
+                //}
+            })
+            .then(() => {
+                console.log('app.isLogged:', this.isLogged)
+                console.log('app.walletType:', this.walletType)
+                console.log('app.walletHasEtp:', this.walletHasEtp)
+                console.log('app.walletHasDna:', this.walletHasDna)
+            });
+    }
+
     isLoggedIn(): any {
         return this.storage.get('mvs_addresses')
             .then((addresses) => (addresses != undefined && addresses != null && Array.isArray(addresses) && addresses.length))
@@ -91,6 +134,37 @@ export class MyETPWallet {
     hasSeed() {
         return this.storage.get('seed')
             .then((seed) => seed !== null)
+    }
+
+    // 是否为ETP钱包
+    isEtp() {
+        return this.walletType !== 'dna';
+    }
+
+    // 是否为DNA钱包
+    isDna() {
+        return this.walletType === 'dna';
+    }
+
+    setWalletType(type) {
+        this.walletType = (type === 'dna' ? 'dna' : 'etp');
+        this.storage.set('walletType', this.walletType)
+            .then(() => {
+                if (this.isDna()) {
+                    this.nav.setRoot("DnaLoadingPage", { reset: true })
+                } else {
+                    this.nav.setRoot("LoadingPage", { reset: true })
+                }
+            })
+            .then(() => {
+                setTimeout(() => {
+                    this.setMenu()
+                        .then((menu: any) => {
+                            this.pages = menu;
+                            return;
+                        });
+                }, 2 * 1000);
+            });
     }
 
     async getNetwork(networkQueryParam) {
@@ -107,15 +181,26 @@ export class MyETPWallet {
     }
 
     setMenu = () => {
-        return Promise.all([this.isLoggedIn(), this.hasSeed()])
-            .then(([loggedin, hasseed]) => {
-                if (loggedin && hasseed)
-                    return this.setPrivateMenu()
-                else if (loggedin && !hasseed)
-                    return this.setReadOnlyMenu()
-                else
-                    return this.setPublicMenu()
-            })
+        return this.initDobuleWallet()
+            .then(() => {
+                return Promise.all([this.isLoggedIn(), this.hasSeed(), this.isEtp()])
+                    .then(([loggedin, hasseed, isEtp]) => {
+                        if (loggedin && hasseed)
+                            if (isEtp) {
+                                return this.setPrivateMenu()
+                            } else {
+                                return this.setPrivateMenuDna();
+                            }
+                        else if (loggedin && !hasseed)
+                            if (isEtp) {
+                                return this.setReadOnlyMenu()
+                            } else {
+                                return this.setPrivateMenuDna();
+                            }
+                        else
+                            return this.setPublicMenu()
+                    });
+            });
     }
 
     setTheme() {
@@ -140,6 +225,8 @@ export class MyETPWallet {
 
 
     setPublicMenu() {
+        this.isLogged = false;
+
         return Promise.all([
             { title: 'LOGIN', component: "LoginPage", icon: 'log-in', root: true },
             { title: 'NEWS', component: "NewsPage", icon: 'paper' },
@@ -150,7 +237,7 @@ export class MyETPWallet {
 
     setReadOnlyMenu() {
         return Promise.all([
-            { title: 'ACCOUNT.TITLE', component: "AccountPage", icon: 'home', root: true },
+            { title: 'ACCOUNT.TITLE', component: this.isEtp() ? "AccountPage" : "DnaAccountPage", icon: 'home', root: true },
             { title: 'AVATARS', component: "AvatarsPage", icon: 'person' },
             { title: 'REGISTER_MST', component: "AssetIssuePage", icon: 'globe' },
             { title: 'REGISTER_MIT', component: "MITRegisterPage", icon: 'create' },
@@ -161,6 +248,7 @@ export class MyETPWallet {
         ].map((entry) => this.addToMenu(entry)))
     }
 
+    // 设置 ETP 钱包菜单
     setPrivateMenu() {
         return this.plugins.getPlugins()
             .then(plugins => {
@@ -174,11 +262,39 @@ export class MyETPWallet {
             })
             .then(plugins => {
                 return Promise.all([
-                    { title: 'ACCOUNT.TITLE', component: "AccountPage", icon: 'home', root: true },
+                    { title: 'ACCOUNT.TITLE', component: this.isEtp() ? "AccountPage" : "DnaAccountPage", icon: 'home', root: true },
                     { title: 'AVATARS', component: "AvatarsPage", icon: 'person' },
                     { title: 'AUTHENTICATION.TITLE', component: "AuthPage", icon: 'bitident', beta: true },
                     { title: 'REGISTER_MST', component: "AssetIssuePage", icon: 'globe' },
                     { title: 'REGISTER_MIT', component: "MITRegisterPage", icon: 'create' },
+                    { title: 'APPS', component: "AppsPage", icon: 'appstore', beta: true },
+                    { title: 'NEWS', component: "NewsPage", icon: 'paper' },
+                    { title: 'ADVANCED', component: "AdvancedPage", icon: 'settings' },
+                    { title: 'SETTINGS', component: "SettingsPage", icon: 'options' },
+                    { title: 'REPORT_BUG', component: "ReportPage", icon: 'bug' }
+                ].concat(plugins).map((entry) => this.addToMenu(entry)))
+            });
+    }
+
+    // 设置 DNA 钱包菜单
+    setPrivateMenuDna() {
+        return this.plugins.getPlugins()
+            .then(plugins => {
+                let p = []
+                plugins.forEach(plugin => {
+                    p.push({
+                        title: (plugin.translation[this.translate.currentLang]) ? plugin.translation[this.translate.currentLang].name : plugin.translation.default.name, component: "PluginStartPage", params: { name: plugin.name }, icon: 'cube', beta: true
+                    })
+                })
+                return p
+            })
+            .then(plugins => {
+                return Promise.all([
+                    { title: 'ACCOUNT.TITLE', component: this.isEtp() ? "AccountPage" : "DnaAccountPage", icon: 'home', root: true },
+                    //{ title: 'AVATARS', component: "AvatarsPage", icon: 'person' },
+                    //{ title: 'AUTHENTICATION.TITLE', component: "AuthPage", icon: 'bitident', beta: true },
+                    //{ title: 'REGISTER_MST', component: "AssetIssuePage", icon: 'globe' },
+                    //{ title: 'REGISTER_MIT', component: "MITRegisterPage", icon: 'create' },
                     { title: 'APPS', component: "AppsPage", icon: 'appstore', beta: true },
                     { title: 'NEWS', component: "NewsPage", icon: 'paper' },
                     { title: 'ADVANCED', component: "AdvancedPage", icon: 'settings' },

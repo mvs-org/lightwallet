@@ -15,6 +15,16 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 
+.menu-set-wallet {
+    position: absolute;
+    right: 15px;
+    height: 100%;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .alert-md .alert-wrapper, .alert-ios .alert-wrapper {
     max-width: 600px;
 }
