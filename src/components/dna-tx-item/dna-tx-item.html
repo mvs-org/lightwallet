@@ -10,9 +10,9 @@
                                     {{tx.id}} (todo: show hash)
                                 </h2>
                             </div>
-                            <!--<button id="explorerTxButton" ion-button (click)="checkTx()">
+                            <button id="explorerTxButton" ion-button>
                                 <ion-icon name="open"></ion-icon>
-                            </button>-->
+                            </button>
                         </ion-item>
                     </ion-col>
                     <ion-col>
@@ -59,36 +59,18 @@
             </ion-col>
         </ion-row>
         <div [@expandCollapse]="this.mode !== 'summary'" *ngIf="this.mode !== 'summary'">
-
             <ion-row style="padding-bottom: 15px;">
                 <ion-col col-12 col-md-6>
-                    <!--<ion-row>
-                        <ion-col>
-                            <ion-item>
-                                <ion-col>{{'TX.INPUTS'|translate}}:</ion-col>
-                            </ion-item>
-                        </ion-col>
-                    </ion-row>-->
                     <ion-row>
                         <p style="padding-left: 22px;">{{'DNA.FROM' | translate}}: {{users[tx.op[1].from] ? users[tx.op[1].from] : '-'}}</p>
                     </ion-row>
                     <ion-row>
-                        <p style="padding-left: 22px;">{{'DNA.BLOCK' | translate}}: {{tx.block_num}}</p>
+                        <p style="padding-left: 22px;">{{'DNA.TO' | translate}}: {{users[tx.op[1].to] ? users[tx.op[1].to] : '-'}}</p>
                     </ion-row>
                 </ion-col>
                 <ion-col col-12 col-md-6>
-                    <!--<ion-row>
-                        <ion-col>
-                            <ion-item>
-                                <ion-col>{{'TX.OUTPUTS'|translate}}:</ion-col>
-                            </ion-item>
-                        </ion-col>
-                    </ion-row>-->
                     <ion-row>
-                        <p style="padding-left: 22px;">{{'DNA.TO' | translate}}: {{users[tx.op[1].to] ? users[tx.op[1].to] : '-'}}</p>
-                    </ion-row>
-                    <ion-row>
-                        <p>&nbsp;</p>
+                        <p style="padding-left: 22px;">{{'DNA.BLOCK' | translate}}: {{tx.block_num}}</p>
                     </ion-row>
                 </ion-col>
             </ion-row>

@@ -58,7 +58,7 @@
 
         <ion-row class="more-bottom-padding" *ngIf="platform.is('mobile')">
             <ion-col>
-                <button type="submit" ion-button full icon-left [disabled]="!passwordValid(password) || !passwordRepeatValid(password, password_repeat)" (click)="encrypt(password, username ? username : '')">
+                <button type="submit" ion-button full icon-left [disabled]="!passwordValid(password) || !passwordRepeatValid(password, password_repeat)" (click)="encrypt(password, username ? username : '', true)">
                     <ion-icon name="arrow-forward"></ion-icon>
                     {{"IMPORT_WALLET"|translate}}
                 </button>

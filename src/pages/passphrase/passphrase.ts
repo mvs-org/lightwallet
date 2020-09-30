@@ -106,16 +106,16 @@ export class PassphrasePage {
         }
     }
 
-    encrypt(password, username = '') {
-        if (this.dnaNoAccount) {
-            this.alert.showLoading()
+    encrypt(password, username = '', isMobile = false) {
+        if (this.dnaNoAccount || (isMobile && username)) {
             if (this.usernameValid(username)) {
+                this.alert.showLoading();
                 this.usernameReg(username, (error) => {
                     if (error) {
                         this.alert.stopLoading();
                         this.alert.showErrorWithoutSubTitle('PASSPHRASE.NOT_MATCH_USERNAME_EXISTS')
                     } else {
-                        this.wallet.setSeedMobile(password, this.mnemonic)
+                        this.storage.set('walletHasEtp', true)
                             .then(() => this.storage.set('walletHasEtp', true))
                             .then(() => this.storage.set('walletHasDna', true))
                             .then(() => this.storage.set('walletType', 'etp'))
@@ -129,7 +129,7 @@ export class PassphrasePage {
                                     key: dnaKeyFile.key,
                                 });
                             })
-                            //.then(() => this.wallet.setSeedMobile(password, this.mnemonic))
+                            .then(() =>  this.wallet.setSeedMobile(password, this.mnemonic))
                             .then((seed) => this.wallet.setMobileWallet(seed))
                             .then(() => this.wallet.getWallet(password))
                             .then((wallet) => this.wallet.generateAddresses(wallet, 0, this.globals.index))

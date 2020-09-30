@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core'
 import { ops, TransactionHelper, Aes, TransactionBuilder } from "bitsharesjs";
+import { ChainConfig } from "bitsharesjs-ws"
 import { DnaUtilWsApiProvider } from "../dna-util-ws-api/dna-util-ws-api";
 import { DnaUtilUtilProvider } from "../dna-util-util/dna-util-util";
 
 let DATA  = require('../../data/data.js').default;
+
+ChainConfig.setPrefix('DNA')
 
 // 全部的网络请求
 @Injectable()
@@ -36,7 +39,9 @@ export class DnaReqTxProvider {
         };
 
         if (memo) {
+            //console.log('memo: ', memo);
             let nonce = TransactionHelper.unique_nonce_uint64();
+            //console.log('nonce: ', nonce);
             transferObj['memo'] = {
                 from: memoFromKey,
                 to: memoToKey,
@@ -49,6 +54,7 @@ export class DnaReqTxProvider {
                 )
             }
         }
+        //console.log('transferObj', transferObj);
         tr.add_type_operation("transfer", transferObj)
 
         await tr.set_required_fees();
