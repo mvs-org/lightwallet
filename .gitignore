@@ -6,3 +6,4 @@ plugins
 screenshots
 debug.png
 ./idea/*
+.idea
