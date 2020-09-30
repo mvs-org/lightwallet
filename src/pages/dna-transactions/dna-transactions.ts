@@ -52,6 +52,7 @@ export class DnaTransactionsPage {
 
             let txs  = [];
             let uids = [];
+            let blks = [];
             if (histories && histories.length > 0) {
                 for (let i = 0; i < histories.length; i ++) {
                     if (histories[i] && histories[i].op && histories[i].op.length > 0 && histories[i].op[1] && histories[i].op[1].amount) {
@@ -63,6 +64,9 @@ export class DnaTransactionsPage {
                         }
                         if (uids.indexOf(histories[i].op[1].to) <= -1) {
                             uids.push(histories[i].op[1].to);
+                        }
+                        if (blks.indexOf(histories[i].block_num) <= -1) {
+                            blks.push(histories[i].block_num);
                         }
                     }
                 }
@@ -78,8 +82,6 @@ export class DnaTransactionsPage {
                     }
                 });
             }
-
-            console.log('txs: ', this.txs, 'uids: ', uids);
         });
     }
 

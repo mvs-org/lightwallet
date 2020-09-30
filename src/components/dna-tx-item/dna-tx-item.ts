@@ -1,7 +1,8 @@
-import { Component, Input } from '@angular/core';
+import {Component, Input, SimpleChanges} from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { TranslateService } from '@ngx-translate/core';
-import {DnaUtilUtilProvider} from "../../providers/dna-util-util/dna-util-util";
+import { DnaUtilUtilProvider } from "../../providers/dna-util-util/dna-util-util";
+import { DnaReqWsSubscribeProvider } from '../../providers/dna-req-ws-subscribe/dna-req-ws-subscribe';
 
 @Component({
     selector: 'dna-tx-item',
@@ -22,10 +23,22 @@ export class DnaTxItemComponent {
     @Input() userInfo: any;
     @Input() asset: string;
 
+    blockNum: any;
+    block: any;
+
     constructor(
         public translate: TranslateService,
     ) {
 
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (!this.block || this.blockNum != this.tx.block_num) {
+            DnaReqWsSubscribeProvider.wsFetchBlock(this.tx.block_num).then((data) => {
+                this.blockNum = this.tx.block_num;
+                this.block    = data;
+            });
+        }
     }
 
     formatTokenWithoutSymbol(val) {

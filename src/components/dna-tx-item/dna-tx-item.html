@@ -17,7 +17,8 @@
                     </ion-col>
                     <ion-col>
                         <ion-item class="right timestamp">
-                            <h2>(todo: show time)</h2>
+                            <h2 *ngIf="block">{{block.timestamp | date : 'medium'}}</h2>
+                            <h2 *ngIf="!block">-</h2>
                         </ion-item>
                     </ion-col>
                 </ion-row>
