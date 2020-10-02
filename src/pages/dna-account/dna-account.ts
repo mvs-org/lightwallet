@@ -69,6 +69,8 @@ export class DnaAccountPage {
         this.event.subscribe("theme_changed", (theme) => {
             this.theme = ('theme-' + theme)
         });
+
+        this.initBalance(this.dnaAssetId);
     }
 
     isOffline = () => !this.syncingSmall && this.offline
