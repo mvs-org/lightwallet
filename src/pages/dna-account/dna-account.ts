@@ -70,13 +70,6 @@ export class DnaAccountPage {
         this.event.subscribe("theme_changed", (theme) => {
             this.theme = ('theme-' + theme)
         });
-
-        // 初始化 DNA 的金额显示
-        this.balances[this.dnaAssetId] = {
-            total: 0,
-            available: 0,
-            frozen: 0,
-        };
     }
 
     isOffline = () => !this.syncingSmall && this.offline

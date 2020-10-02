@@ -31,8 +31,7 @@ export class LoginPage {
         public mvs: MvsServiceProvider,
         private alert: AlertProvider,
     ) {
-        //this.isApp = (!document.URL.startsWith('http') || document.URL.startsWith('http://localhost:8080'));
-        this.isApp = (navigator.userAgent.toLowerCase().indexOf('android') >= 0 || navigator.userAgent.toLowerCase().indexOf('ios') >= 0);
+        this.isApp = (!document.URL.startsWith('http') || document.URL.startsWith('http://localhost'));
 
         this.wallet.getSavedAccounts()
             .then((accounts) => this.saved_accounts = accounts ? accounts : [])
@@ -40,6 +39,7 @@ export class LoginPage {
 
     ionViewDidEnter() {
         this.loadNetwork()
+        //this.alert.showMessage('document.URL', document.URL, '');
     }
 
     getLogoClasses() {

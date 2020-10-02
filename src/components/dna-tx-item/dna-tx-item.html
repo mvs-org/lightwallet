@@ -7,10 +7,10 @@
                         <ion-item>
                             <div class="tx-hash">
                                 <h2 class="font-mono overflow">
-                                    {{tx.id}} (todo: show hash)
+                                    {{hash ? hash : '-'}}
                                 </h2>
                             </div>
-                            <button id="explorerTxButton" ion-button>
+                            <button id="explorerTxButton" [disabled]="true" ion-button>
                                 <ion-icon name="open"></ion-icon>
                             </button>
                         </ion-item>

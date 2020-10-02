@@ -1,7 +1,7 @@
 import { Component/*, ViewChild, NgZone*/ } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
-//import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { AlertProvider } from '../../providers/alert/alert';
 //import { Keyboard } from '@ionic-native/keyboard';
 import {DnaUtilRegexProvider} from "../../providers/dna-util-regex/dna-util-regex";
@@ -36,7 +36,7 @@ export class DnaTransferPage {
         public navParams: NavParams,
         public platform: Platform,
         private alert: AlertProvider,
-        //private barcodeScanner: BarcodeScanner,
+        private barcodeScanner: BarcodeScanner,
         //private keyboard: Keyboard,
         private translate: TranslateService,
     ) {
@@ -170,7 +170,7 @@ export class DnaTransferPage {
             });
     }
 
-    /*scan() {
+    scan() {
         this.translate.get(['SCANNING.MESSAGE_ADDRESS']).subscribe((translations: any) => {
             this.barcodeScanner.scan(
                 {
@@ -184,23 +184,14 @@ export class DnaTransferPage {
                 }).then((result) => {
                     if (!result.cancelled) {
                         const codeContent = result.text.toString();
-                        if (deeplinkRegex.test(codeContent)) {
-                            const asset = codeContent.match(deeplinkRegex)[1]
-                            const params = new URLSearchParams(codeContent.match(deeplinkRegex)[2])
-                            this.initializeParameters(asset, params)
-                        } else {
-                            let content = result.text.toString().split('&')
-                            if (this.mvs.validAddress(content[0]) == true) {
-                                this.recipient_address = content[0]
-                                this.recipientAddressInput.setFocus();
-                                this.keyboard.close()
-                            } else {
-                                this.alert.showWrongAddress()
-                            }
+                        if (DnaUtilRegexProvider.isBtsNameLegal(codeContent)) {
+                            this.depositAddress = codeContent;
                         }
                     }
-                })
+                }).catch((e) => {
+                    console.log('Barcode scan error: ', e);
+                });
         })
-    }*/
+    }
 
 }

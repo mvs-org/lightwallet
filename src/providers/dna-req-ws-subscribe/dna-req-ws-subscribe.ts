@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ChainTypes } from 'bitsharesjs';
+import { ChainTypes, ops, hash } from 'bitsharesjs';
 import { DnaUtilWsApiProvider } from "../dna-util-ws-api/dna-util-ws-api";
 
 @Injectable()
@@ -211,6 +211,17 @@ export class DnaReqWsSubscribeProvider {
             blockList.push(blockData)
         }
         return blockList
+    }
+
+    static async wsGetTransactionHex(tran) {
+        let instance = await DnaUtilWsApiProvider.instance(false, false)
+        let tran1    = await instance.db_api().exec('get_transaction_hex', [tran]);
+        let tran2    = ops.transaction.fromHex(tran1);
+        let tran3    = ops.transaction.toBuffer(tran2);
+        let id       = hash.sha256(tran3).toString('hex').substring(0, 40);
+
+        return id;
+
     }
 
     // 根据公钥获取BTS账户ID

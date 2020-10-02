@@ -25,20 +25,20 @@
                     </h2>
                     <h2 class="balances">
                         <div class="balance-field-fiat">
-                            <div>{{formatTokenWithoutSymbol(balance.total)}}</div>
-                            <div *ngIf="balance.total <= 0" class="fiat">
+                            <div>{{formatTokenWithoutSymbol(balance ? balance.total : 0)}}</div>
+                            <div *ngIf="!balance || balance.total <= 0" class="fiat">
                                 ≈ -
                             </div>
-                            <div *ngIf="balance.total > 0" class="fiat">
+                            <div *ngIf="balance && balance.total > 0" class="fiat">
                                 ≈ {{language == 'zh' ? 'CNY' : 'USD'}} {{language == 'zh' ? balance.currency['CNY'] : balance.currency['USD']}}
                             </div>
                         </div>
                         <div class="balance-field">
-                            <div>{{formatTokenWithoutSymbol(balance.available)}}</div>
+                            <div>{{formatTokenWithoutSymbol(balance ? balance.available : 0)}}</div>
                         </div>
                         <div class="balance-field">
                             <div class="frozen-balance">
-                                {{formatTokenWithoutSymbol(balance.frozen)}}
+                                {{formatTokenWithoutSymbol(balance ? balance.frozen : 0)}}
                             </div>
                         </div>
                     </h2>

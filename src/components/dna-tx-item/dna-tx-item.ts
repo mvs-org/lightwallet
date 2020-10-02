@@ -25,6 +25,7 @@ export class DnaTxItemComponent {
 
     blockNum: any;
     block: any;
+    hash: string;
 
     constructor(
         public translate: TranslateService,
@@ -37,6 +38,12 @@ export class DnaTxItemComponent {
             DnaReqWsSubscribeProvider.wsFetchBlock(this.tx.block_num).then((data) => {
                 this.blockNum = this.tx.block_num;
                 this.block    = data;
+
+                if (this.block.transactions && this.block.transactions.length > 0) {
+                    DnaReqWsSubscribeProvider.wsGetTransactionHex(this.block.transactions[0]).then((hash) => {
+                        this.hash = hash;
+                    });
+                }
             });
         }
     }

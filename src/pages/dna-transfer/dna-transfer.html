@@ -4,6 +4,11 @@
             <ion-icon name="menu"></ion-icon>
         </button>
         <ion-title>{{ "TRANSFER" | translate}}</ion-title>
+        <ion-buttons end>
+            <button *ngIf="platform.is('mobile')" ion-button icon-left (click)="scan()">
+                <ion-icon name="qr-scanner"></ion-icon>
+            </button>
+        </ion-buttons>
     </ion-navbar>
 </ion-header>
 
