@@ -1,9 +1,13 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController } from 'ionic-angular';
+import { Storage } from "@ionic/storage";
 import { AppGlobals } from '../../app/app.global';
 import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { AlertProvider } from '../../providers/alert/alert';
+import {DnaUtilRegexProvider} from '../../providers/dna-util-regex/dna-util-regex';
+import {DnaReqWsSubscribeProvider} from '../../providers/dna-req-ws-subscribe/dna-req-ws-subscribe';
+import {DnaUtilUtilProvider} from '../../providers/dna-util-util/dna-util-util';
 
 
 @IonicPage()
@@ -15,18 +19,30 @@ export class LoginXpubPage {
 
     addresses: Array<string>
     validXpub: boolean = false
+    validUsername: boolean = false;
 
     constructor(public nav: NavController,
         public globals: AppGlobals,
         public mvs: MvsServiceProvider,
         private alert: AlertProvider,
         public wallet: WalletServiceProvider,
+        public storage: Storage,
     ) {
 
     }
 
-    login(xpub) {
+    login(xpub, username) {
         this.alert.showLoading()
+            .then(() => this.storage.set('walletHasEtp', true))
+            .then(() => this.storage.set('walletHasEtp', true))
+            .then(() => this.storage.set('walletHasDna', true))
+            .then(() => this.storage.set('walletType', 'etp'))
+            .then(() => {
+                return this.storage.set('dnaUserInfo', {
+                    name: username,
+                    address: username,
+                });
+            })
             .then(() => this.wallet.setXpub(xpub))
             .then(() => this.mvs.addAddresses(this.addresses))
             .then(() => this.alert.stopLoading())
@@ -46,6 +62,22 @@ export class LoginXpubPage {
                         break;
                 }
             })
+    }
+
+    usernameValid = (username) => {
+        if (!username || !DnaUtilRegexProvider.isBtsNameLegal(username)) {
+            this.validUsername = false;
+            return;
+        }
+
+
+        DnaReqWsSubscribeProvider.getAccount(username).then((data) => {
+            if (data && data.length > 0) {
+                this.validUsername = true;
+            }
+        }).catch((e) => {
+            this.validUsername = false;
+        });
     }
 
     xpubValid = (xpub) => {

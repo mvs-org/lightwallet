@@ -118,7 +118,6 @@ export class DnaTransferPage {
                     throw 'DNA.SEND_MEMO_CONTAIN_PASSWORD';
                 }
             })
-            .then(() => {})
             .then(() => {
                 let mnemonic: string = '';
                 try {

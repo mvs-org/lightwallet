@@ -63,6 +63,12 @@ export class DnaReqWsSubscribeProvider {
 
     }
 
+    static async getAccount(accountName) {
+        let instance = await DnaUtilWsApiProvider.instance(false, false);
+        let res = await instance.db_api().exec("get_full_accounts", [[accountName], true])
+        return res;
+    }
+
     // 订阅最新区块
     static async subscribeLatestBlock(fn) {
         let instance = await DnaUtilWsApiProvider.instance(true, false)

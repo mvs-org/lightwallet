@@ -29,6 +29,8 @@
     "DNA.FROM": "From",
     "DNA.TO": "To",
     "DNA.BLOCK": "Block",
+    "DNA.XPUB_USERNAME": "DNA Username",
+    "DNA.XPUB_INVALID_USERNAME": "Invalid username. please make sure you are registered",
 
     "ACCOUNT.TITLE": "Portfolio",
     "ACCOUNT.FROZEN": "Frozen",

@@ -23,9 +23,7 @@ export class DnaCardComponent {
     }
 
     gotoVote = () => {
-        if (this.balance) {
-            this.nav.push("dna-vote-page", {asset: 'DNA', assetId: this.assetId, userInfo: this.userInfo, balance: this.balance})
-        }
+        this.nav.push("dna-vote-page", {asset: 'DNA', assetId: this.assetId, userInfo: this.userInfo, balance: this.balance})
     }
 
     gotoTransactions = () => {
@@ -33,9 +31,7 @@ export class DnaCardComponent {
     }
 
     gotoTransfer = () => {
-        if (this.balance) {
-            this.nav.push("dna-transfer-page", {asset: 'DNA', assetId: this.assetId, userInfo: this.userInfo, balance: this.balance})
-        }
+        this.nav.push("dna-transfer-page", {asset: 'DNA', assetId: this.assetId, userInfo: this.userInfo, balance: this.balance})
     }
 
     gotoReceive = () => {

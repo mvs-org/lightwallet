@@ -27,9 +27,7 @@ export class DnaMstCardComponent {
     }
 
     gotoTransfer = () => {
-        if (this.balance && this.balance.available > 0) {
-            this.nav.push("dna-transfer-page", { asset: this.asset.symbol, assetId: this.asset.id, userInfo: this.userInfo, balance: this.balance })
-        }
+        this.nav.push("dna-transfer-page", { asset: this.asset.symbol, assetId: this.asset.id, userInfo: this.userInfo, balance: this.balance })
     }
 
     gotoReceive = () => {

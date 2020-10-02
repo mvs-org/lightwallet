@@ -33,7 +33,6 @@ export class DnaAccountPage {
     //whitelist: any = []
     saved_accounts_name: any = []
 
-    // TODO 控制只读模式显示的眼睛图标
     hasSeed: boolean = true
 
     dnaAssetId:string = DATA.TOKEN_ASSET_ID;
@@ -91,6 +90,10 @@ export class DnaAccountPage {
 
     private initialize = () => {
         if (!this.initialized) {
+            if (!this.userInfo.key) {
+                this.hasSeed = false;
+            }
+
             DnaReqWsSubscribeProvider.subscribeAccountBalance(
                 this.userInfo.name,
                 (balances) => this.handleBalance(balances),
@@ -114,7 +117,10 @@ export class DnaAccountPage {
             for (let i = 0; i < assetsSaved.order.length; i ++) {
                 for (let j = 0; j < assetsAll.length; j ++) {
                     if (assetsSaved.order[i] == assetsAll[j].symbol && assetsSaved.hidden.indexOf(assetsAll[j].symbol) <= -1) {
-                        assetsMst.push(assetsAll[j]);
+                        if (assetsAll[j].id !== this.dnaAssetId) {
+                            assetsMst.push(assetsAll[j]);
+                            this.initBalance(assetsAll[j].id);
+                        }
                     }
                 }
             }
@@ -187,9 +193,8 @@ export class DnaAccountPage {
                         currency: {
                             USD: usdTotal,
                             CNY: cnyTotal,
-                        }
+                        },
                     }
-
                 }
 
                 this.loading = false;
@@ -229,6 +234,16 @@ export class DnaAccountPage {
                     this.saveAccount(username);
                 }
             })
+    }
+
+    private initBalance(assetId) {
+        if (!this.balances[assetId]) {
+            this.balances[assetId] = {
+                total: 0,
+                available: 0,
+                frozen: 0,
+            }
+        }
     }
 
     private forgetAccountHandler = () => {

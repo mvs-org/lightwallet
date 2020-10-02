@@ -29,6 +29,8 @@
     "DNA.FROM": "来自",
     "DNA.TO": "到",
     "DNA.BLOCK": "区块",
+    "DNA.XPUB_USERNAME": "DNA 用户名",
+    "DNA.XPUB_INVALID_USERNAME": "无效用户名，请确保您的用户名已注册",
 
     "ACCOUNT.TITLE": "账户",
     "ACCOUNT.FROZEN": "冻结",
