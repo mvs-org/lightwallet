@@ -10,7 +10,7 @@
 <ion-content>
     <div *ngIf="!loading">
 
-        <ion-item no-lines>
+        <!--<ion-item no-lines>
             <ion-segment [(ngModel)]="display_segment" color="primary">
                 <ion-segment-button value="transactions">
                     {{ "TRANSACTIONS" | translate}}
@@ -19,7 +19,7 @@
                     {{ "HISTORY.LOCKS" | translate}}
                 </ion-segment-button>
             </ion-segment>
-        </ion-item>
+        </ion-item>-->
 
         <div *ngIf="display_segment=='transactions'">
             <ion-list [hidden]="!txs.length">

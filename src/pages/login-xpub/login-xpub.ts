@@ -7,7 +7,6 @@ import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { AlertProvider } from '../../providers/alert/alert';
 import {DnaUtilRegexProvider} from '../../providers/dna-util-regex/dna-util-regex';
 import {DnaReqWsSubscribeProvider} from '../../providers/dna-req-ws-subscribe/dna-req-ws-subscribe';
-import {DnaUtilUtilProvider} from '../../providers/dna-util-util/dna-util-util';
 
 
 @IonicPage()

@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+ import { Component } from '@angular/core';
 import { IonicPage, NavController, Platform } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { AppGlobals } from '../../app/app.global';
 import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
 import { Storage } from "@ionic/storage";
 import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { AlertProvider } from '../../providers/alert/alert';
 
 @IonicPage()
 @Component({
@@ -26,6 +27,7 @@ export class AppsPage {
         public platform: Platform,
         private wallet: WalletServiceProvider,
         private storage: Storage,
+        private alert: AlertProvider,
     ) {
         this.network = this.globals.network
         this.iab     = new InAppBrowser();
@@ -54,9 +56,13 @@ export class AppsPage {
 
     gotoDnaDapp = (url) => {
         this.browser = this.iab.create(url, '_blank', 'toolbar=no,location=no');
-        this.browser.on('loadstop', () => {
-            console.log('browser load stop')
-            //this.browser.executeScript({code: 'alert("hello world")'})
+        this.browser.on('message').subscribe((e) => {
+            this.alert.showMessage('webview message: ', JSON.stringify(e), '');
+        });
+
+        this.browser.on('loadstop').subscribe((e) => {
+            //this.alert.showMessage('webview loadstop: ', 'true', '');
+            this.browser.executeScript({code: 'try {alert(JSON.stringify(window.webkit.messageHandlers));window.webkit.messageHandlers.cordova_iab.postMessage(JSON.stringify({x:1,y:2}));alert("xxoo")} catch(e) {alert(JSON.stringify(e.message))}'});
         });
     }
 }
