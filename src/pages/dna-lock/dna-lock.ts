@@ -6,6 +6,7 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
 import { DnaUtilUtilProvider } from '../../providers/dna-util-util/dna-util-util';
 import { DnaUtilRegexProvider } from '../../providers/dna-util-regex/dna-util-regex';
 import { TranslateService } from '@ngx-translate/core';
+import { AppGlobals } from '../../app/app.global';
 
 let DATA = require('../../data/data').default;
 
@@ -33,10 +34,11 @@ export class DnaLockPage {
 
     isApp: boolean;
 
-    selectedStage: any;
+    selectedPeriod: any;
 
     timeInterval: any;
     isLoading: boolean = true;
+    amount: any;
     password: string;
 
     constructor(
@@ -46,8 +48,10 @@ export class DnaLockPage {
         private alert: AlertProvider,
         private translate: TranslateService,
         private storage: Storage,
+        private global: AppGlobals,
     ) {
         this.isApp = (!document.URL.startsWith('http') || document.URL.startsWith('http://localhost'));
+
         this.storage.get('dnaUserInfo').then((userInfo) => {
             if (userInfo && userInfo.name) {
                 this.userInfo = userInfo;
@@ -63,11 +67,20 @@ export class DnaLockPage {
     }
 
     load = () => {
+        // 获取余额
+        if (this.global.dnaBalances && this.global.dnaBalances[this.assetId]) {
+            this.balance = this.global.dnaBalances[this.assetId];
+        } else {
+            this.balance = {available: 0};
+        }
+
+
+
         this.isLoading = false;
     }
 
-    changeStage = (e) => {
-        console.log('lock stage: ', )
+    changePeriod = (e) => {
+        console.log('lock stage: ', this.selectedPeriod);
     }
 
     validPassword = (password) => {
@@ -79,7 +92,8 @@ export class DnaLockPage {
     }
 
     setAmountAll = () => {
-
+        let amount  = this.formatTokenWithoutSymbol(this.balance.available);
+        this.amount = amount.replace(/,/g, '');
     }
 
     send(password) {

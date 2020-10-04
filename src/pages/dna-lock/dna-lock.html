@@ -15,7 +15,7 @@
             <p align="center" class="wrong-input">{{"DNA.NOTICE_TRANSACTION_FEE_UNCOVERED"|translate}}</p>
             <ion-row>
                 <ion-col>
-                    <p class="available">{{"DNA.VOTE_LOCKED"|translate}}: <br *ngIf="platform.is('mobile')">{{selectedNodeSelfLock ? formatToken(selectedNodeSelfLock) : '-'}}</p>
+                    <p class="available">{{"AVAILABLE_BALANCE" | translate}}: <br *ngIf="platform.is('mobile')">{{formatTokenWithoutSymbol(balance.available)}} {{asset}}</p>
                 </ion-col>
                 <ion-col>
                     <p class="right">{{"FEE"|translate}}: <br *ngIf="platform.is('mobile')">{{formatToken(fee) + ' + ' + formatToken(pricePerKbyte) + ' / KB'}}</p>
@@ -25,21 +25,21 @@
                 <ion-list style="padding-bottom: 0;">
                     <div style="position: relative;">
                         <ion-item [ngClass]="{'error-border':!validAmount(amount)}">
-                            <ion-label color="primary" floating>{{"DNA.SEND_AMOUNT"|translate}}</ion-label>
+                            <ion-label color="primary" floating>{{"DNA.LOCK_AMOUNT"|translate}}</ion-label>
                             <ion-input name="amount" placeholder="" [(ngModel)]="amount"></ion-input>
                         </ion-item>
                         <button class="amount-set" (click)="setAmountAll()" ion-button color="primary">{{"DNA.SEND_AMOUNT_ALL"|translate}}</button>
                     </div>
-                    <ion-item *ngIf="amount && !validAmount(amount)" no-lines class="wrong-input">{{"DNA.SEND_AMOUNT_NO_MATCH" | translate}}</ion-item>
+                    <ion-item *ngIf="amount && !validAmount(amount)" no-lines class="wrong-input">{{"DNA.LOCK_AMOUNT_NO_MATCH" | translate}}</ion-item>
                     <br>
 
-                    <ion-item [ngClass]="{'error-border':!selectedStage}">
+                    <ion-item [ngClass]="{'error-border':!selectedPeriod}">
                         <ion-label>{{"锁仓几期"|translate}}</ion-label>
-                        <ion-select [(ngModel)]="selectedStage" name="selectedStage" multiple="false"
-                                    okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}" (ngModelChange)="changeStage($event)">
-                            <ng-container *ngFor="let stage of ['1', '2', '3']">
-                                <ion-option value="{{stage}}">
-                                    {{stage}}
+                        <ion-select [(ngModel)]="selectedPeriod" name="selectedPeriod" multiple="false"
+                                    okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}" (ngModelChange)="changePeriod($event)">
+                            <ng-container *ngFor="let period of ['1', '2', '3']">
+                                <ion-option value="{{period}}">
+                                    {{period}}
                                 </ion-option>
                             </ng-container>
                         </ion-select>

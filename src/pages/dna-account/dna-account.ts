@@ -9,6 +9,7 @@ import { DnaReqWsSubscribeProvider } from "../../providers/dna-req-ws-subscribe/
 import { DnaReqReqProvider } from "../../providers/dna-req-req/dna-req-req";
 import BigNumber from "bignumber.js";
 import { DnaUtilUtilProvider } from "../../providers/dna-util-util/dna-util-util";
+import { AppGlobals } from '../../app/app.global';
 
 let DATA = require('../../data/data.js').default;
 
@@ -58,6 +59,7 @@ export class DnaAccountPage {
         private event: Events,
         public navParams: NavParams,
         private storage: Storage,
+        private global: AppGlobals,
     ) {
 
         this.loading = true;
@@ -197,6 +199,9 @@ export class DnaAccountPage {
                             CNY: cnyTotal,
                         },
                     }
+
+                    // 存为全局变量
+                    this.global.dnaBalances = this.balances;
                 }
 
                 this.loading = false;

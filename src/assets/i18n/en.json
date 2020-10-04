@@ -43,6 +43,8 @@
     "DNA.VOTE_NODE_SELECT": "Incorrect vote node",
     "DNA.VOTE_SUCCESS": "Vote success",
     "DNA.LOCK": "Lock",
+    "DNA.LOCK_AMOUNT": "Lock Amount",
+    "DNA.LOCK_AMOUNT_NO_MATCH": "Please enter the correct lock amount",
 
     "ACCOUNT.TITLE": "Portfolio",
     "ACCOUNT.FROZEN": "Frozen",

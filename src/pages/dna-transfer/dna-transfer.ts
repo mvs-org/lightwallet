@@ -81,7 +81,7 @@ export class DnaTransferPage {
 
     setAmountAll = () => {
         let amount = this.formatTokenWithoutSymbol(this.balance.available);
-        this.sendAmount = amount.replace(',', '');
+        this.sendAmount = amount.replace(/,/g, '');
     }
 
     cancel(e) {

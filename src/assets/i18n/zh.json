@@ -43,6 +43,8 @@
     "DNA.VOTE_NODE_SELECT": "请选择投票节点",
     "DNA.VOTE_SUCCESS": "投票成功",
     "DNA.LOCK": "锁仓",
+    "DNA.LOCK_AMOUNT": "锁仓数量",
+    "DNA.LOCK_AMOUNT_NO_MATCH": "请输入正确的锁仓数量",
 
     "ACCOUNT.TITLE": "账户",
     "ACCOUNT.FROZEN": "冻结",

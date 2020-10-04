@@ -30,6 +30,7 @@ export class AppGlobals {
 
     // 当前账号的DNA数据
     dnaBlockHeight = 0;
+    dnaBalances: any;
 
     constructor(
         private event: Events,
