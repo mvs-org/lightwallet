@@ -13,62 +13,67 @@
 </ion-header>
 
 <ion-content padding style="padding-bottom: 0;">
-    <p align="center" class="wrong-input">{{"DNA.NOTICE_TRANSACTION_FEE_UNCOVERED"|translate}}</p>
-    <ion-row>
-        <ion-col>
-            <p class="available">{{"AVAILABLE_BALANCE" | translate}}: <br *ngIf="platform.is('mobile')">{{formatTokenWithoutSymbol(balance.available)}} {{asset}}</p>
-        </ion-col>
-        <ion-col>
-            <p class="right">{{"FEE"|translate}}: <br *ngIf="platform.is('mobile')">{{serviceFee ? '' + formatTokenWithoutSymbol(serviceFee.fee) + ' ' + asset + ' + ' + formatTokenWithoutSymbol(serviceFee.pricePerKbyte) + ' ' + asset + ' / KB' : '-'}}</p>
-        </ion-col>
-    </ion-row>
+    <div *ngIf="isLoading" class="mini-loader"></div>
 
-    <form style="padding-bottom: 0;">
-        <ion-list style="padding-bottom: 0;">
-
-            <ion-item [ngClass]="{'error-border':!validDepositAddress(depositAddress)}">
-                <ion-label color="primary" floating>{{"DNA.DEPOSIT_ADDRESS" | translate}}</ion-label>
-                <ion-input name="depositAddress" placeholder="" [(ngModel)]="depositAddress"></ion-input>
-            </ion-item>
-            <ion-item *ngIf="depositAddress && !validDepositAddress(depositAddress)" no-lines class="wrong-input">{{"DNA.DEPOSIT_ADDRESS_NO_MATCH" | translate}}</ion-item>
-
-            <div style="position: relative;">
-                <ion-item [ngClass]="{'error-border':!validSendAmount(sendAmount)}">
-                    <ion-label color="primary" floating>{{"DNA.SEND_AMOUNT"|translate}}</ion-label>
-                    <ion-input name="sendAmount" placeholder="" [(ngModel)]="sendAmount"></ion-input>
-                </ion-item>
-                <button class="amount-set" (click)="setAmountAll()" ion-button color="primary">{{"DNA.SEND_AMOUNT_ALL"|translate}}</button>
-            </div>
-
-            <!--<p style="padding-left: 16px;">{{"AVAILABLE_BALANCE" | translate}}: {{formatTokenWithoutSymbol(balance.available)}} {{asset}}</p>-->
-            <ion-item *ngIf="sendAmount && !validSendAmount(sendAmount)" no-lines class="wrong-input">{{"DNA.SEND_AMOUNT_NO_MATCH" | translate}}</ion-item>
-
-            <ion-item>
-                <ion-label color="primary" floating>{{"DNA.MEMO"|translate}}</ion-label>
-                <ion-input name="memo" placeholder="" [(ngModel)]="memo" maxlength="100"></ion-input>
-            </ion-item>
-
-            <ion-item [ngClass]="{'error-border':!validPassword(password)}">
-                <ion-label color="primary" floating>{{"PASSWORD"|translate}}</ion-label>
-                <ion-input name="password" type="password" placeholder="" [(ngModel)]="password"></ion-input>
-            </ion-item>
-            <ion-item *ngIf="password && !validPassword(password)" no-lines class="wrong-input">{{"DNA.PASSWORD_NO_MATCH" | translate}}</ion-item>
-            <br>
-            <br/>
-        </ion-list>
-        <ion-row class="padding-bottom">
+    <div *ngIf="!isLoading">
+        <p align="center" class="wrong-input">{{"DNA.NOTICE_TRANSACTION_FEE_UNCOVERED"|translate}}</p>
+        <ion-row>
             <ion-col>
-                <button type="submit" ion-button full icon-left [disabled]="!validDepositAddress(depositAddress) || !validSendAmount(sendAmount) || !validPassword(password)" (click)="send()" color="secondary">
-                    <ion-icon disabled="checked" name="checkmark"></ion-icon>
-                    {{'BUTTON.OK'|translate}}
-                </button>
+                <p class="available">{{"AVAILABLE_BALANCE" | translate}}: <br *ngIf="platform.is('mobile')">{{formatTokenWithoutSymbol(balance.available)}} {{asset}}</p>
             </ion-col>
             <ion-col>
-                <button ion-button color="danger" full item-right icon-left (click)="cancel($event)">
-                    <ion-icon name="close"></ion-icon>
-                    {{'CANCEL'|translate}}
-                </button>
+                <p class="right">{{"FEE"|translate}}: <br *ngIf="platform.is('mobile')">{{serviceFee ? '' + formatTokenWithoutSymbol(serviceFee.fee) + ' ' + asset + ' + ' + formatTokenWithoutSymbol(serviceFee.pricePerKbyte) + ' ' + asset + ' / KB' : '-'}}</p>
             </ion-col>
         </ion-row>
-    </form>
+
+        <form style="padding-bottom: 0;">
+            <ion-list style="padding-bottom: 0;">
+
+                <ion-item [ngClass]="{'error-border':!validDepositAddress(depositAddress)}">
+                    <ion-label color="primary" floating>{{"DNA.DEPOSIT_ADDRESS" | translate}}</ion-label>
+                    <ion-input name="depositAddress" placeholder="" [(ngModel)]="depositAddress"></ion-input>
+                </ion-item>
+                <ion-item *ngIf="depositAddress && !validDepositAddress(depositAddress)" no-lines class="wrong-input">{{"DNA.DEPOSIT_ADDRESS_NO_MATCH" | translate}}</ion-item>
+
+                <div style="position: relative;">
+                    <ion-item [ngClass]="{'error-border':!validSendAmount(sendAmount)}">
+                        <ion-label color="primary" floating>{{"DNA.SEND_AMOUNT"|translate}}</ion-label>
+                        <ion-input name="sendAmount" placeholder="" [(ngModel)]="sendAmount"></ion-input>
+                    </ion-item>
+                    <button class="amount-set" (click)="setAmountAll()" ion-button color="primary">{{"DNA.SEND_AMOUNT_ALL"|translate}}</button>
+                </div>
+
+                <!--<p style="padding-left: 16px;">{{"AVAILABLE_BALANCE" | translate}}: {{formatTokenWithoutSymbol(balance.available)}} {{asset}}</p>-->
+                <ion-item *ngIf="sendAmount && !validSendAmount(sendAmount)" no-lines class="wrong-input">{{"DNA.SEND_AMOUNT_NO_MATCH" | translate}}</ion-item>
+
+                <ion-item>
+                    <ion-label color="primary" floating>{{"DNA.MEMO"|translate}}</ion-label>
+                    <ion-input name="memo" placeholder="" [(ngModel)]="memo" maxlength="100"></ion-input>
+                </ion-item>
+
+                <ion-item [ngClass]="{'error-border':!validPassword(password)}">
+                    <ion-label color="primary" floating>{{"PASSWORD"|translate}}</ion-label>
+                    <ion-input name="password" type="password" placeholder="" [(ngModel)]="password"></ion-input>
+                </ion-item>
+                <ion-item *ngIf="password && !validPassword(password)" no-lines class="wrong-input">{{"DNA.PASSWORD_NO_MATCH" | translate}}</ion-item>
+                <br>
+                <br/>
+            </ion-list>
+            <ion-row class="padding-bottom">
+                <ion-col>
+                    <button type="submit" ion-button full icon-left [disabled]="!validDepositAddress(depositAddress) || !validSendAmount(sendAmount) || !validPassword(password)" (click)="send()" color="secondary">
+                        <ion-icon disabled="checked" name="checkmark"></ion-icon>
+                        {{'BUTTON.OK'|translate}}
+                    </button>
+                </ion-col>
+                <ion-col>
+                    <button ion-button color="danger" full item-right icon-left (click)="cancel($event)">
+                        <ion-icon name="close"></ion-icon>
+                        {{'CANCEL'|translate}}
+                    </button>
+                </ion-col>
+            </ion-row>
+        </form>
+
+    </div>
 </ion-content>

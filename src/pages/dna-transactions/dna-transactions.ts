@@ -89,7 +89,7 @@ export class DnaTransactionsPage {
         return Math.max(1, Math.min(99, Math.round((this.height - start) / (end - start) * 100)))
     }
 
-    async pageChange(page_number) {
+    pageChange = (page_number) => {
         this.page_tx = page_number;
     }
 

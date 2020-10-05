@@ -54,6 +54,7 @@
     "DNA.LOCK_PERIOD": "Period {{period}} ({{amount}} {{unit}})",
     "DNA.LOCK_NOTICE": "Please note that your DNA will be locked for {{amount}} {{unit}} until the {{unlockTime}}",
     "DNA.LOCK_NO_HISTORY": "No lock history yet",
+    "DNA.LOCK_SUCCESS": "Lock success",
 
     "ACCOUNT.TITLE": "Portfolio",
     "ACCOUNT.FROZEN": "Frozen",

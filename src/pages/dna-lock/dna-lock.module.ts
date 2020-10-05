@@ -7,6 +7,7 @@ import { PipesModule } from '../../pipes/pipes.module';
 import { ProgressBarModule } from 'angular-progress-bar';
 import { VoteItemModule } from '../../components/vote-item/vote-item.module';
 import { IonicSelectableModule } from 'ionic-selectable';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
     declarations: [
@@ -19,6 +20,7 @@ import { IonicSelectableModule } from 'ionic-selectable';
         ProgressBarModule,
         VoteItemModule,
         IonicSelectableModule,
+        NgxPaginationModule,
     ],
     providers:[
         AlertProvider

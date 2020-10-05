@@ -86,7 +86,17 @@
     </div>
 
     <div *ngIf="display_segment == 'history'">
-        <div [hidden]="histories && histories.length > 0">
+
+        <ion-list [hidden]="!locks || locks.length <= 0">
+            <div *ngFor="let lock of locks | paginate: { itemsPerPage: items_per_page, currentPage: page_lock }">
+                <!--<dna-lock-item [lock]="lock" [balance]="balance" [userInfo]="userInfo"></dna-lock-item>-->
+                haha
+            </div>
+        </ion-list>
+
+        <pagination-controls (pageChange)="changePage($event)" *ngIf="locks && locks.length > items_per_page"></pagination-controls>
+
+        <div [hidden]="locks && locks.length > 0">
             <ion-row>
                 <ion-col></ion-col>
                 <ion-col width-67>

@@ -30,6 +30,7 @@ export class DnaTransferPage {
     memo: string;
     password: string;
     serviceFee: any;
+    isLoading: boolean = true;
 
     constructor(
         public navCtrl: NavController,
@@ -49,6 +50,7 @@ export class DnaTransferPage {
     ionViewDidEnter() {
         DnaReqWsSubscribeProvider.wsFetchOperationFees(["transfer"]).then((feeResults) => {
             if (feeResults && feeResults.length > 0) {
+                this.isLoading  = false;
                 this.serviceFee = {
                     fee: feeResults[0].fee,
                     pricePerKbyte: feeResults[0].price_per_kbyte,

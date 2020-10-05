@@ -54,6 +54,7 @@
     "DNA.LOCK_PERIOD": "{{period}} 期 ({{amount}} {{unit}})",
     "DNA.LOCK_NOTICE": "请注意，您的 DNA 将被锁定 {{amount}} {{unit}}，直到 {{unlockTime}}",
     "DNA.LOCK_NO_HISTORY": "暂无锁仓记录",
+    "DNA.LOCK_SUCCESS": "锁仓成功",
 
     "ACCOUNT.TITLE": "账户",
     "ACCOUNT.FROZEN": "冻结",

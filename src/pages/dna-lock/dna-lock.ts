@@ -52,11 +52,13 @@ export class DnaLockPage {
 
     feeLock: any;
     feeWithdraw: any;
-    tableData: any;
     currentRound: any;
     canLock: boolean;
     canWithdraw: boolean;
-    histories: any;
+
+    locks: any;
+    items_per_page: number = 5;
+    page_lock: number;
 
     constructor(
         public navCtrl: NavController,
@@ -195,9 +197,9 @@ export class DnaLockPage {
                     return a.begin > b.begin ? -1 : 1;
                 });
 
-                this.tableData = results;
+                this.locks = results;
 
-                console.log('tableData: ', this.tableData);
+                console.log('histories: ', this.locks);
             }
         });
     }
@@ -286,7 +288,7 @@ export class DnaLockPage {
                         let txId = vestResult && vestResult['length'] > 0 ? vestResult[0].id : "";
                         let avai = parseInt(this.balance.available) - parseInt(this.feeLock) - parseInt(DnaUtilUtilProvider.toUnit(this.amount));
 
-                        this.translate.get(['DNA.VOTE_SUCCESS']).subscribe((translations: any) => {
+                        this.translate.get(['DNA.LOCK_SUCCESS']).subscribe((translations: any) => {
                             this.alert.showMessage('MESSAGE.SUCCESS', translations['DNA.LOCK_SUCCESS'] + ' ' + txId, '')
                         });
 
@@ -311,6 +313,10 @@ export class DnaLockPage {
     cancel(e) {
         e.preventDefault()
         this.navCtrl.pop()
+    }
+
+    changePage = (page_number) => {
+        this.page_lock = page_number;
     }
 
     changeTab = (e) => {
