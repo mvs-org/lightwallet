@@ -83,7 +83,7 @@
                 <br>
                 <ion-row class="padding-bottom">
                     <ion-col>
-                        <button type="submit" ion-button full icon-left [disabled]="!selectedNode || !validPassword(password)" (click)="send(password)" color="secondary">
+                        <button type="submit" ion-button full icon-left [disabled]="!canVote || !selectedNode || !validPassword(password)" (click)="send(password)" color="secondary">
                             <ion-icon disabled="checked" name="checkmark"></ion-icon>
                             {{'BUTTON.OK'|translate}}
                         </button>

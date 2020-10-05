@@ -241,7 +241,10 @@ export class DnaVotePage {
             });
         }
 
-        let mnemonic = DnaUtilUtilProvider.decryptKey(this.userInfo.key, password);
+        let mnemonic;
+        try {
+            mnemonic = DnaUtilUtilProvider.decryptKey(this.userInfo.key, password);
+        } catch (e) {}
         if (!mnemonic) {
             return this.alert.showError('DNA.SEND_PASSWORD_ERROR', '');
         }
@@ -257,7 +260,6 @@ export class DnaVotePage {
                     .then((voteResult) => {
                         let txId = voteResult && voteResult['length'] > 0 ? voteResult[0].id : '';
 
-                        this.alert.stopLoading();
                         this.translate.get(['DNA.VOTE_SUCCESS']).subscribe((translations: any) => {
                             this.alert.showMessage('MESSAGE.SUCCESS', translations['DNA.VOTE_SUCCESS'] + ' ' + txId, '')
                         });
@@ -265,6 +267,9 @@ export class DnaVotePage {
                         this.password = '';
                         this.load();
                     });
+            })
+            .then(() => {
+                this.alert.stopLoading();
             })
             .catch((e) => {
                 console.log(e);

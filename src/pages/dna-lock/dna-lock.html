@@ -9,7 +9,18 @@
 
 <ion-content padding style="padding-bottom: 0;">
 
-    <div>
+    <ion-item no-lines>
+        <ion-segment [(ngModel)]="display_segment" color="primary" (ngModelChange)="changeTab($event)">
+            <ion-segment-button value="lock">
+                {{ "DNA.LOCK" | translate}}
+            </ion-segment-button>
+            <ion-segment-button value="history">
+                {{ "DNA.LOCK_HISTORY" | translate}}
+            </ion-segment-button>
+        </ion-segment>
+    </ion-item>
+
+    <div *ngIf="display_segment == 'lock'">
         <div *ngIf="isLoading" class="mini-loader"></div>
         <div *ngIf="!isLoading">
             <p align="center" class="wrong-input">{{"DNA.NOTICE_TRANSACTION_FEE_UNCOVERED"|translate}}</p>
@@ -18,7 +29,10 @@
                     <p class="available">{{"AVAILABLE_BALANCE" | translate}}: <br *ngIf="platform.is('mobile')">{{formatTokenWithoutSymbol(balance.available)}} {{asset}}</p>
                 </ion-col>
                 <ion-col>
-                    <p class="right">{{"FEE"|translate}}: <br *ngIf="platform.is('mobile')">{{formatToken(fee) + ' + ' + formatToken(pricePerKbyte) + ' / KB'}}</p>
+                    <p style="text-align: center">{{"DNA.LOCK_FEE"|translate}}: <br *ngIf="platform.is('mobile')">{{formatToken(feeLock)}}</p>
+                </ion-col>
+                <ion-col>
+                    <p class="right">{{"DNA.LOCK_FEE_WITHDRAW"|translate}}: <br *ngIf="platform.is('mobile')">{{formatToken(feeWithdraw)}}</p>
                 </ion-col>
             </ion-row>
             <form style="padding-bottom: 0;">
@@ -34,13 +48,11 @@
                     <br>
 
                     <ion-item [ngClass]="{'error-border':!selectedPeriod}">
-                        <ion-label>{{"锁仓几期"|translate}}</ion-label>
+                        <ion-label>{{"DNA.LOCK_TIME"|translate}}</ion-label>
                         <ion-select [(ngModel)]="selectedPeriod" name="selectedPeriod" multiple="false"
                                     okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}" (ngModelChange)="changePeriod($event)">
-                            <ng-container *ngFor="let period of ['1', '2', '3']">
-                                <ion-option value="{{period}}">
-                                    {{period}}
-                                </ion-option>
+                            <ng-container *ngFor="let period of periodList">
+                                <ion-option value="{{period}}" [translate]="'DNA.LOCK_PERIOD'" [translateParams]="{period: period, amount: period * periodAmount, unit: periodUnit}"></ion-option>
                             </ng-container>
                         </ion-select>
                     </ion-item>
@@ -53,11 +65,11 @@
 
                     <br>
                 </ion-list>
-                <p align="center" class="wrong-input">{{"DNA.NOTICE_TRANSACTION_FEE_UNCOVERED"|translate}}</p>
+                <p align="center" class="wrong-input" [translate]="'DNA.LOCK_NOTICE'" [translateParams]="{amount: selectedPeriod * periodAmount, unit: periodUnit, unlockTime: getUnlockTime() | date : 'medium'}"></p>
                 <br>
                 <ion-row class="padding-bottom">
                     <ion-col>
-                        <button type="submit" ion-button full icon-left [disabled]="!validPassword(password)" (click)="send(password)" color="secondary">
+                        <button type="submit" ion-button full icon-left [disabled]="!canLock || !selectedPeriod || !validAmount(amount) || !validPassword(password)" (click)="lock(password)" color="secondary">
                             <ion-icon disabled="checked" name="checkmark"></ion-icon>
                             {{'BUTTON.OK'|translate}}
                         </button>
@@ -70,6 +82,22 @@
                     </ion-col>
                 </ion-row>
             </form>
+        </div>
+    </div>
+
+    <div *ngIf="display_segment == 'history'">
+        <div [hidden]="histories && histories.length > 0">
+            <ion-row>
+                <ion-col></ion-col>
+                <ion-col width-67>
+                    <img class="big-icon" [src]="'assets/icon/' + asset + '.png'">
+                </ion-col>
+                <ion-col></ion-col>
+            </ion-row>
+
+            <ion-card-content>
+                <ion-card-title class="center" [translate]="'DNA.LOCK_NO_HISTORY'"></ion-card-title>
+            </ion-card-content>
         </div>
     </div>
 

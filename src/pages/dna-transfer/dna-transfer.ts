@@ -67,7 +67,7 @@ export class DnaTransferPage {
 
     validSendAmount = (sendAmount) => {
         if (sendAmount) {
-            let amount = parseFloat(sendAmount.replace(',', ''));
+            let amount = parseFloat(sendAmount.replace(/,/g, ''));
             if (!isNaN(amount) && amount > 0) {
                 return true;
             }
@@ -143,8 +143,9 @@ export class DnaTransferPage {
                         return DnaReqTxProvider.transferDNA(walletInfo['privateKey'], this.userInfo.name, this.depositAddress, {amount: DnaUtilUtilProvider.toUnit(this.sendAmount), asset: this.asset}, this.memo, false)
                             .then((result) => {
                                 let txId = (result && result.length > 0) ? result[0].id : '';
+                                let avai = parseInt(this.balance.available) - parseInt(DnaUtilUtilProvider.toUnit(this.sendAmount).toString()) - feeObj['amount'];
 
-                                this.balance            = Object.assign({}, this.balance, {available: this.balance.available - parseInt(DnaUtilUtilProvider.toUnit(this.sendAmount).toString()) - feeObj['amount']});
+                                this.balance            = Object.assign({}, this.balance, {available: avai > 0 ? avai : 0});
                                 this.depositAddress     = '';
                                 this.sendAmount         = '';
                                 this.memo               = '';
