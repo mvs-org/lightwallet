@@ -22,7 +22,7 @@
                 <p class="available">{{"AVAILABLE_BALANCE" | translate}}: <br *ngIf="platform.is('mobile')">{{formatTokenWithoutSymbol(balance.available)}} {{asset}}</p>
             </ion-col>
             <ion-col>
-                <p class="right">{{"FEE"|translate}}: <br *ngIf="platform.is('mobile')">{{serviceFee ? '' + formatTokenWithoutSymbol(serviceFee.fee) + ' ' + asset + ' + ' + formatTokenWithoutSymbol(serviceFee.pricePerKbyte) + ' ' + asset + ' / KB' : '-'}}</p>
+                <p class="right">{{"FEE"|translate}}: <br *ngIf="platform.is('mobile')">{{serviceFee ? '' + formatTokenWithoutSymbol(serviceFee.fee) + ' DNA + ' + formatTokenWithoutSymbol(serviceFee.pricePerKbyte) + ' DNA / KB' : '-'}}</p>
             </ion-col>
         </ion-row>
 

@@ -25,7 +25,7 @@
     "DNA.SEND_PASSWORD_ERROR": "Password error",
     "DNA.SEND_AMOUNT_ALL": "Total",
     "DNA.NETWORK_ERROR": "Network error",
-    "DNA.TX_TYPE_0": "DNA transfer",
+    "DNA.TX_TYPE_0": "transfer",
     "DNA.FROM": "From",
     "DNA.TO": "To",
     "DNA.BLOCK": "Block",

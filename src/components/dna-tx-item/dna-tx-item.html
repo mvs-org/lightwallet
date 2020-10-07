@@ -29,7 +29,7 @@
                 <ion-row>
                     <ion-col>
                         <ion-item class="summaryTxType">
-                            {{'DNA.TX_TYPE_' + tx.op[0] | translate}}
+                            {{asset}} {{'DNA.TX_TYPE_' + tx.op[0] | translate}}
                             <div>
                                 <button class="ion-item" ion-button icon-left (click)="showHideDetails()">
                                     <ion-icon *ngIf="mode == 'summary'" name="arrow-dropdown"></ion-icon>
@@ -53,7 +53,7 @@
                                 </div>
                             </div>
                             <div *ngIf="!users[tx.op[1].from] || !users[tx.op[1].to]">-</div>
-                            <div class="default-color fee">{{'TX.TX_FEE' | translate}}: {{formatTokenWithoutSymbol(tx.op[1].fee.amount)}} {{asset}}</div>
+                            <div class="default-color fee">{{'TX.TX_FEE' | translate}}: {{formatToken(tx.op[1].fee.amount)}}</div>
                         </ion-item>
                     </ion-col>
                 </ion-row>

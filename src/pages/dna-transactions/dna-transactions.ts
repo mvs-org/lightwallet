@@ -37,12 +37,10 @@ export class DnaTransactionsPage {
         this.assetId  = navParams.get('assetId');
         this.userInfo = navParams.get('userInfo');
         this.loading  = true;
-
-        this.loadHistories();
     }
 
     async ionViewDidEnter() {
-
+        this.loadHistories();
     }
 
     loadHistories() {
@@ -56,22 +54,23 @@ export class DnaTransactionsPage {
             if (histories && histories.length > 0) {
                 for (let i = 0; i < histories.length; i ++) {
                     if (histories[i] && histories[i].op && histories[i].op.length > 0 && histories[i].op[1] && histories[i].op[1].amount) {
-                        if (histories[i].op[1].amount.asset_id == this.assetId) {
+                        if (histories[i].op[1].amount.asset_id === this.assetId) {
                             txs.push(histories[i]);
-                        }
-                        if (uids.indexOf(histories[i].op[1].from) <= -1) {
-                            uids.push(histories[i].op[1].from);
-                        }
-                        if (uids.indexOf(histories[i].op[1].to) <= -1) {
-                            uids.push(histories[i].op[1].to);
-                        }
-                        if (blks.indexOf(histories[i].block_num) <= -1) {
-                            blks.push(histories[i].block_num);
+
+                            if (uids.indexOf(histories[i].op[1].from) <= -1) {
+                                uids.push(histories[i].op[1].from);
+                            }
+                            if (uids.indexOf(histories[i].op[1].to) <= -1) {
+                                uids.push(histories[i].op[1].to);
+                            }
+                            if (blks.indexOf(histories[i].block_num) <= -1) {
+                                blks.push(histories[i].block_num);
+                            }
                         }
                     }
                 }
             }
-            this.txs = histories;
+            this.txs = txs;
 
             if (uids.length > 0) {
                 DnaReqWsSubscribeProvider.wsFetchBtsGetAccountsDetail(uids).then((accounts) => {

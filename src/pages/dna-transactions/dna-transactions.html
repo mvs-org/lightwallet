@@ -33,7 +33,8 @@
                 <ion-row>
                     <ion-col></ion-col>
                     <ion-col width-67>
-                        <img class="big-icon" [src]="'assets/icon/' + asset + '.png'">
+                        <img *ngIf="asset === 'DNA'" class="big-icon" [src]="'assets/icon/' + asset + '.png'">
+                        <img *ngIf="asset !== 'DNA'" class="big-icon" [src]="'assets/icon/default_mst.png'">
                     </ion-col>
                     <ion-col></ion-col>
                 </ion-row>
@@ -135,7 +136,8 @@
                 <ion-row>
                     <ion-col></ion-col>
                     <ion-col width-67>
-                        <img class="big-icon" [src]="'assets/icon/' + asset + '.png'">
+                        <img *ngIf="asset === 'DNA'" class="big-icon" [src]="'assets/icon/' + asset + '.png'">
+                        <img *ngIf="asset !== 'DNA'" class="big-icon" [src]="'assets/icon/default_mst.png'">
                     </ion-col>
                     <ion-col></ion-col>
                 </ion-row>

@@ -25,7 +25,7 @@
     "DNA.SEND_PASSWORD_ERROR": "密码错误",
     "DNA.SEND_AMOUNT_ALL": "全部",
     "DNA.NETWORK_ERROR": "网络错误",
-    "DNA.TX_TYPE_0": "DNA 转移",
+    "DNA.TX_TYPE_0": "转移",
     "DNA.FROM": "来自",
     "DNA.TO": "到",
     "DNA.BLOCK": "区块",

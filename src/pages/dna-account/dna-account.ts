@@ -73,6 +73,8 @@ export class DnaAccountPage {
         });
 
         this.initBalance(this.dnaAssetId);
+
+        //this.storage.remove('saved_dna_assets');
     }
 
     isOffline = () => !this.syncingSmall && this.offline
@@ -121,7 +123,7 @@ export class DnaAccountPage {
             for (let i = 0; i < assetsSaved.order.length; i ++) {
                 for (let j = 0; j < assetsAll.length; j ++) {
                     if (assetsSaved.order[i] == assetsAll[j].symbol && assetsSaved.hidden.indexOf(assetsAll[j].symbol) <= -1) {
-                        if (assetsAll[j].id !== this.dnaAssetId) {
+                        if (assetsAll[j].id != this.dnaAssetId) {
                             assetsMst.push(assetsAll[j]);
                             this.initBalance(assetsAll[j].id);
                         }
@@ -130,7 +132,14 @@ export class DnaAccountPage {
             }
             this.mstAssets = assetsMst;
         } else {
-            this.mstAssets = assetsAll.slice(0);
+            let assetsMst = [];
+            for (let i = 0; i < assetsAll.length; i ++) {
+                if (assetsAll[i].id != this.dnaAssetId) {
+                    assetsMst.push(assetsAll[i]);
+                    this.initBalance(assetsAll[i].id);
+                }
+            }
+            this.mstAssets = assetsMst;
         }
 
         this.mstAssetsAll = assetsAll;

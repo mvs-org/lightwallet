@@ -4,7 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { AppGlobals } from '../../app/app.global';
 import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
 import { Storage } from "@ionic/storage";
-//import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 //import { AlertProvider } from '../../providers/alert/alert';
 
 //declare let cordova: any;
@@ -19,9 +19,7 @@ export class AppsPage {
     loaded: boolean = false
     walletType: string;
     iab: any;
-    iab2: any;
     browser: any;
-    browser2: any;
 
     constructor(
         public nav: NavController,
@@ -33,8 +31,7 @@ export class AppsPage {
         //private alert: AlertProvider,
     ) {
         this.network = this.globals.network
-        //this.iab     = new InAppBrowser();
-        //this.iab2    = new InAppBrowser();
+        this.iab     = new InAppBrowser();
 
         // 获取当前显示的钱包是 ETP 还是 DNA
         this.storage.get('walletType').then((walletType) => {
@@ -60,10 +57,9 @@ export class AppsPage {
 
     MovieTicketsPage = () => this.wallet.openLink("https://movies.mvsdna.com")
 
+    // 'toolbar=no,location=no'
     gotoDnaDapp = (url) => {
-        // 'toolbar=no,location=no'
-
-        this.browser = this.iab.create(url, '_blank');//this.iab.create(url, '_blank');
+        this.browser = this.iab.create(url, '_blank');
         this.browser.on('message').subscribe((e) => {
             this.nav.push('PluginSettingsPage');
             //this.browser2 = cordova.ThemeableBrowser.open('https://qq.com', '_blank');

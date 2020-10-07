@@ -48,6 +48,10 @@ export class DnaTxItemComponent {
         }
     }
 
+    formatToken(val) {
+        return DnaUtilUtilProvider.formatToken(val, [], 4); //
+    }
+
     formatTokenWithoutSymbol(val) {
         return DnaUtilUtilProvider.formatToken(val, [], 4, "");
     }

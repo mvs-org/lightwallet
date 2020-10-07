@@ -49,7 +49,7 @@
             <ion-row *ngIf="mstAssets && mstAssets.length > 0">
                 <ng-container *ngFor="let asset of mstAssets" class="asset-container">
                     <ion-col *ngIf="balances[asset.id]!==undefined" class="asset-container">
-                        <dna-mst-card [balance]="balances[asset.id]" [asset]="asset" [userInfo]="userInfo" [language]="language" [icon]="'assets/icon/' + asset.symbol + '.png'"></dna-mst-card>
+                        <dna-mst-card [balance]="balances[asset.id]" [asset]="asset" [userInfo]="userInfo" [language]="language" [icon]="'assets/icon/default_mst.png'"></dna-mst-card>
                     </ion-col>
                 </ng-container>
             </ion-row>
