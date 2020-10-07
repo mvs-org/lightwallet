@@ -7,7 +7,6 @@ import { Storage } from "@ionic/storage";
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 //import { AlertProvider } from '../../providers/alert/alert';
 
-//declare let cordova: any;
 @IonicPage()
 @Component({
     selector: 'page-apps',
@@ -61,12 +60,15 @@ export class AppsPage {
     gotoDnaDapp = (url) => {
         this.browser = this.iab.create(url, '_blank');
         this.browser.on('message').subscribe((e) => {
-            this.nav.push('PluginSettingsPage');
-            //this.browser2 = cordova.ThemeableBrowser.open('https://qq.com', '_blank');
+            // https://github.com/apache/cordova-plugin-dialogs
+            if (navigator['notification']) {
+                navigator['notification'].prompt("\n付款账户: xo1234567890\n付款金额: 100DNA\n收款账户: nn1234567890\n交易详情: haha!!!\n\n请点击下方输入您的密码:", (e) => {
+
+                }, '交易确认', ['Cancel', 'Ok']);
+            }
         });
 
         this.browser.on('loadstop').subscribe((e) => {
-            //this.alert.showMessage('webview loadstop: ', 'true', '');
             this.browser.executeScript({code: 'try {alert(JSON.stringify(window.webkit.messageHandlers));window.webkit.messageHandlers.cordova_iab.postMessage(JSON.stringify({x:1,y:2}));} catch(e) {alert(JSON.stringify(e.message))}'});
         });
     }
