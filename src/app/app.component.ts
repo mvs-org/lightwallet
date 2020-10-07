@@ -291,11 +291,8 @@ export class MyETPWallet {
             .then(plugins => {
                 return Promise.all([
                     { title: 'ACCOUNT.TITLE', component: this.isEtp() ? "AccountPage" : "DnaAccountPage", icon: 'home', root: true },
-                    //{ title: 'AVATARS', component: "AvatarsPage", icon: 'person' },
-                    //{ title: 'AUTHENTICATION.TITLE', component: "AuthPage", icon: 'bitident', beta: true },
                     { title: 'DNA.LOCK', component: "dna-lock-page", icon: 'lock' },
                     { title: 'VOTE', component: "dna-vote-page", icon: 'ribbon' },
-                    { title: 'REGISTER_MIT', component: "MITRegisterPage", icon: 'create' },
                     { title: 'APPS', component: "AppsPage", icon: 'appstore', beta: true },
                     { title: 'NEWS', component: "NewsPage", icon: 'paper' },
                     { title: 'ADVANCED', component: "AdvancedPage", icon: 'settings' },

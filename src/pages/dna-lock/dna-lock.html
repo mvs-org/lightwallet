@@ -89,8 +89,7 @@
 
         <ion-list [hidden]="!locks || locks.length <= 0">
             <div *ngFor="let lock of locks | paginate: { itemsPerPage: items_per_page, currentPage: page_lock }">
-                <!--<dna-lock-item [lock]="lock" [balance]="balance" [userInfo]="userInfo"></dna-lock-item>-->
-                haha
+                <dna-lock-item [lock]="lock" [canWithdraw]="canWithdraw" [balance]="balance" [userInfo]="userInfo" [asset]="asset"></dna-lock-item>
             </div>
         </ion-list>
 

@@ -4,9 +4,10 @@ import { TranslateService } from '@ngx-translate/core';
 import { AppGlobals } from '../../app/app.global';
 import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
 import { Storage } from "@ionic/storage";
-import { InAppBrowser } from '@ionic-native/in-app-browser';
-import { AlertProvider } from '../../providers/alert/alert';
+//import { InAppBrowser } from '@ionic-native/in-app-browser';
+//import { AlertProvider } from '../../providers/alert/alert';
 
+//declare let cordova: any;
 @IonicPage()
 @Component({
     selector: 'page-apps',
@@ -18,7 +19,9 @@ export class AppsPage {
     loaded: boolean = false
     walletType: string;
     iab: any;
+    iab2: any;
     browser: any;
+    browser2: any;
 
     constructor(
         public nav: NavController,
@@ -27,10 +30,11 @@ export class AppsPage {
         public platform: Platform,
         private wallet: WalletServiceProvider,
         private storage: Storage,
-        private alert: AlertProvider,
+        //private alert: AlertProvider,
     ) {
         this.network = this.globals.network
-        this.iab     = new InAppBrowser();
+        //this.iab     = new InAppBrowser();
+        //this.iab2    = new InAppBrowser();
 
         // 获取当前显示的钱包是 ETP 还是 DNA
         this.storage.get('walletType').then((walletType) => {
@@ -42,6 +46,8 @@ export class AppsPage {
                 }
             });
         });
+
+
     }
 
     ionViewDidEnter() {
@@ -55,14 +61,17 @@ export class AppsPage {
     MovieTicketsPage = () => this.wallet.openLink("https://movies.mvsdna.com")
 
     gotoDnaDapp = (url) => {
-        this.browser = this.iab.create(url, '_blank', 'toolbar=no,location=no');
+        // 'toolbar=no,location=no'
+
+        this.browser = this.iab.create(url, '_blank');//this.iab.create(url, '_blank');
         this.browser.on('message').subscribe((e) => {
-            this.alert.showMessage('webview message: ', JSON.stringify(e), '');
+            this.nav.push('PluginSettingsPage');
+            //this.browser2 = cordova.ThemeableBrowser.open('https://qq.com', '_blank');
         });
 
         this.browser.on('loadstop').subscribe((e) => {
             //this.alert.showMessage('webview loadstop: ', 'true', '');
-            this.browser.executeScript({code: 'try {alert(JSON.stringify(window.webkit.messageHandlers));window.webkit.messageHandlers.cordova_iab.postMessage(JSON.stringify({x:1,y:2}));alert("xxoo")} catch(e) {alert(JSON.stringify(e.message))}'});
+            this.browser.executeScript({code: 'try {alert(JSON.stringify(window.webkit.messageHandlers));window.webkit.messageHandlers.cordova_iab.postMessage(JSON.stringify({x:1,y:2}));} catch(e) {alert(JSON.stringify(e.message))}'});
         });
     }
 }

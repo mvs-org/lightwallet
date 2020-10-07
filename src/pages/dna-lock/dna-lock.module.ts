@@ -8,6 +8,7 @@ import { ProgressBarModule } from 'angular-progress-bar';
 import { VoteItemModule } from '../../components/vote-item/vote-item.module';
 import { IonicSelectableModule } from 'ionic-selectable';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { DnaLockItemModule } from '../../components/dna-lock-item/dna-lock-item.module';
 
 @NgModule({
     declarations: [
@@ -21,6 +22,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
         VoteItemModule,
         IonicSelectableModule,
         NgxPaginationModule,
+        DnaLockItemModule
     ],
     providers:[
         AlertProvider
