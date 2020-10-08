@@ -72,4 +72,33 @@ export class AppsPage {
             this.browser.executeScript({code: 'try {alert(JSON.stringify(window.webkit.messageHandlers));window.webkit.messageHandlers.cordova_iab.postMessage(JSON.stringify({x:1,y:2}));} catch(e) {alert(JSON.stringify(e.message))}'});
         });
     }
+
+    getJavascript = () => {
+        if (this.platform.is('android')) {
+            return [
+                '/* "value" as string. "SIG_K1_..." */',
+                'function onSignDNAMessageSuccessful(id, value) {',
+                '   BrigeAPI.sendResponse(id, value);',
+                '}',
+                '/* "value" as string. {"signatures":["SIG_K1_..."]} */',
+                'function onSignDNASuccessful(id, value) {',
+                '   BrigeAPI.sendResponse(id, JSON.parse(value));',
+                '}',
+                '/* "error" as string */',
+                'function onSignDNAError(id, error) {',
+                '   BrigeAPI.sendError(id, {"type": "signature_rejected", "message": error, "code": 402, "isError": true});',
+                '}',
+                'window.tinyBrige = {',
+                '   signDNA: function (param) {',
+                '       window.webkit.messageHandlers["signDNA"].postMessage(param);',
+                '   },',
+                '   signDNAMsg: function (param) {',
+                '       window.webkit.messageHandlers["signDNAMsg"].postMessage(param);',
+                '   }',
+                '};',
+                'TinyIdentitys.initDNA("\\(account)", "\\(publicKey)");',
+
+            ];
+        }
+    }
 }
