@@ -53,13 +53,12 @@ export class MyETPWallet {
             .then(() => this.isLoggedIn())
             .then(async (loggedin) => {
                 if (loggedin) {
-                    this.rootPage = 'AppsPage';
-                    /*if (this.isDna() && this.walletHasDna) {
+                    if (this.isDna() && this.walletHasDna) {
                         this.rootPage = 'DnaLoadingPage';
                     } else {
                         return this.mvs.getUpdateNeeded(this.globals.show_loading_screen_after_unused_time)
                             .then(needUpdate => this.rootPage = needUpdate ? "LoadingPage" : "AccountPage")
-                    }*/
+                    }
                 } else {
                     this.rootPage = "LoginPage"
                 }

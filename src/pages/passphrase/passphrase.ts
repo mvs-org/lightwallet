@@ -138,8 +138,19 @@ export class PassphrasePage {
                             .then(() => this.wallet.getMasterPublicKey(password))
                             .then((xpub) => this.wallet.setXpub(xpub))
                             .then(() => this.wallet.saveSessionAccount(password))
-
-                            .then(() => this.nav.setRoot("LoadingPage", { reset: true }))
+                            .then(() => this.mvs.dataReset())
+                            .then(() => this.mvs.setDbVersion(this.globals.db_version))
+                            .then(() => this.mvs.updateHeight())
+                            .then(() => this.mvs.getData())
+                            .then(() => this.mvs.setUpdateTime())
+                            .then(() => this.mvs.listAvatars())
+                            .then((avatars) => {
+                                if(avatars.length === 0) {
+                                    this.nav.setRoot("AvatarsPage", { fromPassphrase: true })
+                                } else {
+                                    this.nav.setRoot("LoadingPage", { reset: true })
+                                }
+                            })
                             .catch((e) => {
                                 console.error(e);
                                 this.alert.stopLoading()
@@ -189,7 +200,19 @@ export class PassphrasePage {
                 .then(() => this.wallet.getMasterPublicKey(password))
                 .then((xpub) => this.wallet.setXpub(xpub))
                 .then(() => this.wallet.saveSessionAccount(password))
-                .then(() => this.nav.setRoot("LoadingPage", { reset: true }))
+                .then(() => this.mvs.dataReset())
+                .then(() => this.mvs.setDbVersion(this.globals.db_version))
+                .then(() => this.mvs.updateHeight())
+                .then(() => this.mvs.getData())
+                .then(() => this.mvs.setUpdateTime())
+                .then(() => this.mvs.listAvatars())
+                .then((avatars) => {
+                    if(avatars.length === 0) {
+                        this.nav.setRoot("AvatarsPage", { fromPassphrase: true })
+                    } else {
+                        this.nav.setRoot("LoadingPage", { reset: true })
+                    }
+                })
                 .catch((e) => {
                     console.error(e);
                     this.alert.stopLoading()

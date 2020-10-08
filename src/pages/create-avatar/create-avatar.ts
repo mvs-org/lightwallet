@@ -1,5 +1,5 @@
 import { Component, NgZone } from '@angular/core';
-import { IonicPage, NavController, Platform, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, Platform, AlertController, NavParams } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { AlertProvider } from '../../providers/alert/alert';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
@@ -28,6 +28,7 @@ export class CreateAvatarPage {
     message: string = ""
     available_symbol: boolean = false
     showAdvanced: boolean = false
+    fromPassphrase: boolean = !!this.navParams.get('fromPassphrase');
 
     constructor(
         public navCtrl: NavController,
@@ -38,6 +39,7 @@ export class CreateAvatarPage {
         private mvs: MvsServiceProvider,
         private zone: NgZone,
         private globals: AppGlobals,
+        private navParams: NavParams,
     ) {
 
         Promise.all([this.mvs.getAddresses(), this.mvs.getAddressBalances()])
@@ -115,7 +117,7 @@ export class CreateAvatarPage {
     send() {
         this.create()
             .then((result) => {
-                this.navCtrl.push("confirm-tx-page", { tx: result.encode().toString('hex') })
+                this.navCtrl.push("confirm-tx-page", { tx: result.encode().toString('hex'), fromPassphrase: this.fromPassphrase })
                 this.alert.stopLoading()
             })
     }

@@ -12,13 +12,14 @@ export class AvatarsPage {
     avatars: Array<any>;
     certs: Array<any>;
     no_avatar: boolean = false;
+    fromPassphrase: boolean = !!this.navParams.get('fromPassphrase');
 
     constructor(public navCtrl: NavController, public navParams: NavParams, private mvs: MvsServiceProvider) {
         this.no_avatar = false;
     }
 
     create(){
-        this.navCtrl.push("CreateAvatarPage")
+        this.navCtrl.push("CreateAvatarPage", {fromPassphrase: this.fromPassphrase})
     }
 
     createAsset(avatar_name: string, avatar_address: string){
@@ -33,6 +34,10 @@ export class AvatarsPage {
         this.loadAvatars()
             .then(()=>this.loadCerts())
             .catch(console.error);
+    }
+
+    goWallet() {
+        this.navCtrl.setRoot("LoadingPage", { reset: true })
     }
 
     loadAvatars(){
