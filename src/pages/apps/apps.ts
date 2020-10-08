@@ -5,6 +5,10 @@ import { AppGlobals } from '../../app/app.global';
 import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
 import { Storage } from "@ionic/storage";
 import { InAppBrowser } from '@ionic-native/in-app-browser';
+ import {DnaReqTxProvider} from '../../providers/dna-req-tx/dna-req-tx';
+ import {DnaReqWsSubscribeProvider} from '../../providers/dna-req-ws-subscribe/dna-req-ws-subscribe';
+ import {DnaUtilUtilProvider} from '../../providers/dna-util-util/dna-util-util';
+ import {DnaWalletProvider} from '../../providers/dna-wallet/dna-wallet';
 //import { AlertProvider } from '../../providers/alert/alert';
 
 @IonicPage()
@@ -47,12 +51,11 @@ export class AppsPage {
 
         this.storage.get('dnaUserInfo').then((userInfo) => {
             this.dnaUserInfo = userInfo;
-            console.log('dna user info: ', this.dnaUserInfo);
         });
     }
 
     ionViewDidEnter() {
-        //console.log('javascript: ', this.getJavascript('nn1234567890', 'pkey...'));
+
     }
 
     EtpBridgePage = () => this.nav.push("EtpBridgePage")
@@ -78,9 +81,9 @@ export class AppsPage {
 
             if (e.type === 'message') {
                 if (e.data.name == 'signDNA') {
-                    this.signDNA(e.data.object.data);
+                    this.signDNA(e.data.id, e.data.object.data);
                 } else if (e.data.name == 'signDNAMsg') {
-                    this.signDNAMsg(e.data.object.data);
+                    this.signDNAMsg(e.data.id, e.data.object.data);
                 }
             }
         });
@@ -90,16 +93,156 @@ export class AppsPage {
         });
     }
 
-    signDNA = (data) => {
+    signDNA = (id, data) => {
+        try {
+            data = JSON.parse(data);
+        } catch (e) {
+            return this.responseError(id, e);
+        }
+        
+        this.storage.get('dnaUserInfo')
+            .then((userInfo) => {
+                if (!data.operations
+                        || data.operations.length <= 0
+                        || data.operations[0].length < 2) {
+                    throw 'Param error';
+                }
+
+                console.log('data.operations: ', JSON.stringify(data.operations))
+
+                let fromAccountId = data.operations[0][1].from;
+                let toAccountId   = data.operations[0][1].to;
+                let sendAmount    = data.operations[0][1].amount;
+                let memo          = data.operations[0][1].memo;
+                let message       = (memo && memo.message) ? memo.message.toString() : '';
+                let amount        = sendAmount && sendAmount.amount ? sendAmount.amount : 0;
+                let assetId       = sendAmount && sendAmount.asset_id ? sendAmount.asset_id : '';
+
+                console.log('message: ', memo, message);
+                if (!fromAccountId || !toAccountId || !amount || !assetId) {
+                    throw 'Param error';
+                }
+
+                return DnaReqWsSubscribeProvider.wsFetchBtsGetAccountsDetail([fromAccountId, toAccountId])
+                    .then((accounts) => {
+                        let fromAccount = accounts.find(it => it.id == fromAccountId);
+                        let toAccount   = accounts.find(it => it.id == toAccountId);
+                        if (!fromAccount || !toAccount) {
+                            throw 'Account not found';
+                        }
+
+                        this.translate.get(['DNA.DAPP_FROM_ACCOUNT', 'DNA.DAPP_AMOUNT', 'DNA.DAPP_TO_ACCOUNT', 'DNA.DAPP_MESSAGE', 'DNA.DAPP_TITLE', 'DNA.DAPP_BUTTON_OK', 'DNA.DAPP_BUTTON_CANCEL', 'DNA.DAPP_INPUT_PASSWORD']).subscribe((transitions) => {
+                            let msg = '\n';
+                            msg += transitions['DNA.DAPP_FROM_ACCOUNT'] + ': ' + fromAccount.name + '\n';
+                            // TODO 多币种支持
+                            msg += transitions['DNA.DAPP_AMOUNT'] + ': ' + this.formatToken(amount) + '\n';
+                            msg += transitions['DNA.DAPP_TO_ACCOUNT'] + ': ' + toAccount.name + '\n';
+                            if (message) {
+                                msg += transitions['DNA.DAPP_MESSAGE'] + ': ' + message + '\n';
+                            }
+                            msg += '\n' + transitions['DNA.DAPP_INPUT_PASSWORD'] +  ': ';
+
+                            if (navigator['notification']) {
+                                navigator['notification'].prompt(msg, (e) => {
+                                    // 判断是否OK，OK调接口
+                                    console.log('notification: ', JSON.stringify(e));
+                                    if (e.buttonIndex == 2) {
+                                        if (e.input1) {
+                                            this.signDNATx({
+                                                id,
+                                                fromAccount,
+                                                toAccount,
+                                                sendAmount,
+                                                message,
+                                                password: e.input1,
+                                            });
+                                        } else {
+                                            this.passwordError();
+                                        }
+                                    }
+                                }, transitions['DNA.DAPP_TITLE'], [transitions['DNA.DAPP_BUTTON_CANCEL'], transitions['DNA.DAPP_BUTTON_OK']]);
+                            } else {
+                                // 测试代码
+                                console.log('SignDNA confirm: ', msg);
+
+                                /*this.signDNATx({
+                                    id,
+                                    fromAccount,
+                                    toAccount,
+                                    sendAmount,
+                                    message,
+                                    password: 'wh12345678',
+                                });*/
+                            }
+                        });
+                    });
+            })
+            .catch((e) => {
+                if (typeof e == 'string') {
+                    this.responseError(id, e);
+                } else if (e.message) {
+                    this.responseError(id, e.message);
+                }
+            });
+    }
+
+    signDNATx = (data) => {
+        console.log('signDNATx: ', data);
+
+        let mnemonic: string = '';
+        try {
+            mnemonic = DnaUtilUtilProvider.decryptKey(this.dnaUserInfo.key, data.password);
+            if (!mnemonic) {
+                return this.passwordError();
+            }
+        } catch (e) {
+            return this.passwordError();
+        }
+
+        // TODO 多币种支持
+        data.sendAmount.asset = 'DNA';
+
+        let walletInfo = DnaWalletProvider.getAccountInfo(mnemonic, 'bts');
+        DnaReqTxProvider.transferDNA(walletInfo['privateKey'], data.fromAccount.name, data.toAccount.name, data.sendAmount, data.message, false).then((result) => {
+            let txId = (result && result.length > 0) ? result[0].id : '';
+            if (navigator['notification']) {
+                console.log('executeScript: ', 'onSignDNASuccessful(' + JSON.stringify(data.id) + ', ' + JSON.stringify(txId) + ');');
+                this.browser.executeScript({code: 'window.onSignDNASuccessful(' + JSON.stringify(data.id) + ', ' + JSON.stringify(txId) + ');'});
+            } else {
+                console.log('onSignDNASuccessful: ', {id: data.id, value: txId});
+            }
+        }).catch((e) => {
+            this.responseError(data.id, e);
+        });
+    }
+
+    signDNAMsg = (id, data) => {
         if (navigator['notification']) {
-            navigator['notification'].alert(JSON.stringify(data), () => {}, 'signDNA:');
+            //navigator['notification'].alert(JSON.stringify(data), () => {}, 'signDNAMsg:' + id);
         }
     }
 
-    signDNAMsg = (data) => {
+    passwordError = () => {
+        console.log('password error.');
+
         if (navigator['notification']) {
-            navigator['notification'].alert(JSON.stringify(data), () => {}, 'signDNAMsg:');
+            this.translate.get(['MESSAGE.ERROR_TITLE', 'OK', 'MESSAGE.PASSWORD_WRONG']).subscribe((transitions) => {
+                navigator['notification'].alert(transitions['MESSAGE.PASSWORD_WRONG'], () => {}, transitions['MESSAGE.ERROR_TITLE'], transitions['OK']);
+            });
+
         }
+    }
+
+    responseError = (id, error) => {
+        console.log('onSignDNAError: ', {id, error});
+
+        if (navigator['notification']) {
+            this.browser.executeScript({code: 'window.onSignDNAError(' + JSON.stringify(id) + ', ' + JSON.stringify(error) + ');'});
+        }
+    }
+
+    formatToken(val) {
+        return DnaUtilUtilProvider.formatToken(val, [], 4); //
     }
 
     now = () => {
@@ -112,17 +255,17 @@ export class AppsPage {
 
         return javascript + [
             '/* "value" as string. "SIG_K1_..." */',
-            'function onSignDNAMessageSuccessful(id, value) {',
+            'window.onSignDNAMessageSuccessful = function (id, value) {',
             '   BrigeAPI.sendResponse(id, value);',
-            '}',
+            '};',
             '/* "value" as string. {"signatures":["SIG_K1_..."]} */',
-            'function onSignDNASuccessful(id, value) {',
-            '   BrigeAPI.sendResponse(id, JSON.parse(value));',
-            '}',
+            'window.onSignDNASuccessful = function (id, value) {',
+            '   BrigeAPI.sendResponse(id, value);',
+            '};',
             '/* "error" as string */',
-            'function onSignDNAError(id, error) {',
+            'window.onSignDNAError = function (id, error) {',
             '   BrigeAPI.sendError(id, {"type": "signature_rejected", "message": error, "code": 402, "isError": true});',
-            '}',
+            '};',
             'window.tinyBrige = {',
             '   signDNA: function (param) {',
             '       window.webkit.messageHandlers.cordova_iab.postMessage(JSON.stringify(param));',
