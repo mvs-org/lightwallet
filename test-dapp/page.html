@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <script src="./js/bitsharesjs-ws.min.js"></script>
+    <script src="./js/bitsharesjs.min.js"></script>
+
+    <script>
+        var coreToken = "DNA";
+
+        // mainnet
+        var chainId = '24938a99198d850bb7d79010c1325fb63fde63e8e477a5443ff5ce50ab867055';
+        var endpoint = 'wss://mvsdna.info/ws';
+        var prefix = "DNA";
+
+        // testnet
+        // var chainId = '0a2635a87e323bb2db4c8bcaab2f3238c910108e6b3dfab89f0b43283d72c969';
+        // var endpoint = 'wss://explorer.mvsdnadev.com/ws';
+        //var prefix = "DNA";
+
+        bitshares_ws.ChainConfig.setPrefix(prefix);
+        bitshares_ws.ChainConfig.setChainId(chainId);
+        bitshares_js.bitshares_ws.ChainConfig.setPrefix(prefix);
+        bitshares_js.bitshares_ws.ChainConfig.setChainId(chainId);
+
+
+        function hasScatter() {
+            return dnascatter !== undefined;
+        }
+
+        function getAccountName() {
+            let identity = TinyIdentitys.dna;
+            return identity == null || identity.accounts == null || identity.accounts[0].name;
+        }
+
+        let currentAccount = null;
+
+        function login() {
+            if (!hasScatter()) {
+                alert('dnascatter required');
+                return;
+            }
+            currentAccount = getAccountName();
+            document.getElementById('account').innerHTML = currentAccount;
+        }
+
+        function logout() {
+            currentAccount = null;
+            document.getElementById('account').innerHTML = "";
+        }
+
+        /**
+         * 和APP交互
+         * APP收到signDNA消息后：
+         * 1、调用ops.signed_transaction.fromObject()反序列化交易
+         * 2、遍历operations对象，看是否有memo需要加密，如果需要，则调用Aes.encrypt_with_checksum加密。
+         * 3、tr.set_required_fees()得到交易的手续费
+         * 4、tr.add_signer()方法签名交易
+         * 5、tr.broadcast()方法广播交易
+         * 6、根据结果注入脚本，执行Webview里面的onSignDNASuccessful或onSignDNAError
+         * 具体接口使用参考转账功能
+         */
+        function transfer() {
+            if (!currentAccount) {
+                alert('请先登录');
+            }
+
+            let fromAccount = currentAccount;
+            let memoSender = fromAccount;
+            let memo = "Testing transfer from scatter";
+
+            let toAccount = "mvs";
+
+
+            bitshares_ws.Apis.instance(endpoint, true)
+                .init_promise.then((res) => {
+
+
+                    let sendAmount = {
+                        amount: 10000,
+                        asset: "DNA"
+                    }
+                    Promise.all([
+                        _rpcFetch("get_account_by_name", [fromAccount]),
+                        _rpcFetch("get_account_by_name", [toAccount]),
+                        _rpcFetch("get_account_by_name", [memoSender]),
+                        _rpcFetch("get_assets", [[sendAmount.asset], false]),
+                        _rpcFetch("get_assets", [[sendAmount.asset], false])
+                    ]).then((res) => {
+                        // console.log("got data:", res);
+                        let [fromAccount, toAccount, memoSender, sendAsset, feeAsset] = res;
+                        sendAsset = sendAsset[0];
+                        feeAsset = feeAsset[0];
+
+                        // Memos are optional, but if you have one you need to encrypt it here
+                        let memoFromKey = memoSender.options.memo_key;
+                        console.log("memo pub key:", memoFromKey);
+                        let memoToKey = toAccount.options.memo_key;
+
+                        let memo_object = {
+                            from: memoFromKey,
+                            to: memoToKey,
+                            nonce: 0,//TODO: 这里需要在APP获取
+                            message: "",//TODO：这里需要用APP加密memo
+                            // Aes.encrypt_with_checksum(
+                            //     pKey,
+                            //     memoToKey,
+                            //     nonce,
+                            //     memo
+                            // )
+                        }
+
+                        let tr = new bitshares_js.TransactionBuilder()
+
+                        tr.add_type_operation("transfer", {
+                            fee: {
+                                amount: 0,
+                                asset_id: feeAsset.id
+                            },
+                            from: fromAccount.id,
+                            to: toAccount.id,
+                            amount: { amount: sendAmount.amount, asset_id: sendAsset.id },
+                            memo: memo_object
+                        })
+
+                        //发送消息给插件
+                        let trObj = tr.serialize();
+
+                        window.dnascatter.requestSignature({transaction: trObj}).then(function (res) {
+                            console.log(res);
+                            alert("交易成功：" + JSON.stringify(res));
+                        }).catch(function (error) {
+                            console.log(error);
+                            alert("交易失败：" + JSON.stringify(error));
+                        })
+
+                        // TODO:这部分在APP中完成（包含：获取手续费，交易签名，广播交易）
+                        // tr.set_required_fees().then(() => {
+                        //     tr.add_signer(pKey, pKey.toPublicKey().toPublicKeyString());
+                        //     console.log("serialized transaction:", tr.serialize());
+                        //     tr.broadcast();
+                        // })
+                    });
+                });
+        }
+
+        function _rpcFetch(api, params) {
+            let instance = bitshares_ws.Apis.instance();
+            return instance.db_api().exec(api, params).then(function (res) {
+                console.log(`${api} / ${JSON.stringify(params)}`);
+                console.log(res);
+                return res;
+            });
+        }
+
+    </script>
+</head>
+
+<body>
+    <div>
+        <h3>dna-tiny-scatter.js 第三方页面调用方法实例，需要实现APP和Webview的交互才可测试</h3>
+        <p>* APP收到signDNA消息后：<br>
+            * 1、调用ops.signed_transaction.fromObject()反序列化交易<br>
+            * 2、遍历operations对象，看是否有memo需要加密，如果需要，则调用Aes.encrypt_with_checksum加密。<br>
+            * 3、tr.set_required_fees()得到交易的手续费<br>
+            * 4、tr.add_signer()方法签名交易<br>
+            * 5、tr.broadcast()方法广播交易<br>
+            * 6、根据结果注入脚本，执行Webview里面的onSignDNASuccessful或onSignDNAError<br>
+            * 具体接口使用参考转账功能<br>
+        </p>
+        <div>
+            <br><br>
+            <div>当前登录账户：<span id="account"></span></div>
+            <br><br>
+            <div><button type="button" onclick="login()">登录</button></div>
+            <br><br>
+            <div><button type="button" onclick="transfer()">转账</button></div>
+            <br><br>
+            <div><button type="button" onclick="logout()">登出</button></div>
+        </div>
+    </div>
+</body>
+
+</html>
