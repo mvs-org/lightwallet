@@ -96,6 +96,7 @@ export class ImportWalletPage {
                             name: accountData[0].name,
                             address: accountData[0].name,
                             key: that.data['dna'].key,
+                            pkey: info['publicKey'],
                         };
                     })
                     .then((userInfo) => that.storage.set('dnaUserInfo', userInfo))

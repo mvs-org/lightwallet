@@ -127,6 +127,7 @@ export class PassphrasePage {
                                     name: username,
                                     address: username,
                                     key: dnaKeyFile.key,
+                                    pkey: this.dnaKeyPair.publicKey,
                                 });
                             })
                             .then(() =>  this.wallet.setSeedMobile(password, this.mnemonic))
@@ -177,6 +178,7 @@ export class PassphrasePage {
                         name: name,
                         address: name,
                         key: dnaKeyFile.key,
+                        pkey: this.dnaKeyPair.publicKey,
                     });
                 })
                 .then(() => this.wallet.setSeedMobile(password, this.mnemonic))
