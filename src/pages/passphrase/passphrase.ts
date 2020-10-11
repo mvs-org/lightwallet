@@ -257,7 +257,7 @@ export class PassphrasePage {
         return password && DnaUtilRegexProvider.isPasswordLegal(password);
     }
 
-    passwordRepeatValid = (password, password_repeat) => (password_repeat) ? password_repeat.length > 9 && password_repeat == password : false;
+    passwordRepeatValid = (password, password_repeat) => (password_repeat) ? password_repeat == password : false;
 
     completeNewWallet = (username, password, password_repeat) => (username && password && password_repeat) ? this.usernameValid(username) && this.complete(password, password_repeat) : false;
 
