@@ -103,7 +103,7 @@
 
 
     <div class="center" *ngIf="!mstsFullyLoaded">
-      <ion-button color="primary" (click)="getMoreMsts()" [disabled]="loadingMoreMsts">
+      <ion-button color="primary" fill="outline" shape="round" (click)="getMoreMsts()" [disabled]="loadingMoreMsts">
         <ion-icon slot="start" name="add"></ion-icon>
         <span translate="MST.ALL.LOAD_MORE"></span>
       </ion-button>

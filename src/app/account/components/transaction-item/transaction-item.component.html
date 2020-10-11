@@ -179,7 +179,7 @@
     </ion-item>
     <ion-row *ngIf="mode == 'hex'" class="ion-text-center">
         <ion-col>
-            <ion-button expand="full" (click)="walletService.copy(hexTx, 'tx')">
+            <ion-button expand="full" fill="outline" shape="round" (click)="walletService.copy(hexTx, 'tx')">
                 <ion-icon slot="start" name="copy"></ion-icon>
                 <span translate="CONFIRM.BUTTON.COPY"></span>
             </ion-button>

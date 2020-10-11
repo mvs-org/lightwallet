@@ -24,13 +24,13 @@
     </ion-row>
     <ion-row>
       <ion-col>
-        <ion-button color="danger" expand="full" (click)="cancel()">
+        <ion-button color="danger" expand="full" fill="outline" shape="round" (click)="cancel()">
           <ion-icon slot="start" name="close"></ion-icon>
           <span translate="SEND_SINGLE.BUTTON.CANCEL"></span>
         </ion-button>
       </ion-col>
       <ion-col>
-        <ion-button type="submit" expand="full" color="secondary" [disabled]="!input">
+        <ion-button type="submit" expand="full" color="primary" fill="outline" shape="round" [disabled]="!input">
           <ion-icon slot="start" disabled="checked" name="cog"></ion-icon>
           <span translate="SEND_SINGLE.BUTTON.NEXT"></span>
         </ion-button>

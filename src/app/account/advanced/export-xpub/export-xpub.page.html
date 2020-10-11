@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/account"></ion-back-button>
+      <ion-back-button defaultHref="/account/advanced"></ion-back-button>
     </ion-buttons>
     <ion-title translate="EXPORT_MASTER_PUBLIC_KEY.TITLE"></ion-title>
   </ion-toolbar>
@@ -18,7 +18,7 @@
           <ion-input ion-input type="password" [(ngModel)]="passphrase" name="passphrase"></ion-input>
         </ion-item>
         <br>
-        <ion-button type="submit" expand="full" (click)="export(this.passphrase)"
+        <ion-button type="submit" expand="full" fill="outline" shape="round" (click)="export(this.passphrase)"
           [disabled]="!validPassword(passphrase)">
           <ion-icon slot="start" name="key"></ion-icon>
           <span translate="EXPORT_MASTER_PUBLIC_KEY.BUTTON"></span>
@@ -28,7 +28,7 @@
       <ion-list *ngIf="xpub">
         <h4 translate="EXPORT_MASTER_PUBLIC_KEY.YOUR_KEY"></h4>
         <ion-item class="manual-copy breakwords">{{xpub}}</ion-item>
-        <ion-button expand="full" (click)="walletService.copy(xpub, 'xpub')">
+        <ion-button expand="full" fill="outline" shape="round" (click)="walletService.copy(xpub, 'xpub')">
           <ion-icon slot="start" name="copy"></ion-icon>
           <span translate="COPY"></span>
         </ion-button>

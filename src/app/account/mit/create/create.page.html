@@ -63,14 +63,14 @@
     </ion-list>
     <ion-row class="padding-bottom">
       <ion-col>
-        <ion-button color="danger" expand="full" routerLink="/account/mit">
+        <ion-button color="danger" fill="outline" shape="round" expand="full" routerLink="/account/mit">
           <ion-icon slot="start" name="close"></ion-icon>
           <span translate="CREATE_MIT.BUTTON.CANCEL"></span>
         </ion-button>
       </ion-col>
       <ion-col>
-        <ion-button expand="full" type="submit"
-          [disabled]="!sendForm.form.valid||!validSymbol(symbol)||!validContent(content)||!validName(recipient_avatar)||!validAddress(recipient_address)" color="secondary">
+        <ion-button expand="full" type="submit" fill="outline" shape="round"
+          [disabled]="!sendForm.form.valid||!validSymbol(symbol)||!validContent(content)||!validName(recipient_avatar)||!validAddress(recipient_address)" color="primary">
           <ion-icon slot="start" disabled="checked" name="cog"></ion-icon>
           <span translate="CREATE_MIT.BUTTON.NEXT"></span>
         </ion-button>

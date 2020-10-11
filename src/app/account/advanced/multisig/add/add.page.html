@@ -63,13 +63,13 @@
         </ion-row>
         <ion-row>
           <ion-col size="12" size-sm="6">
-            <ion-button type="submit" expand="full" (click)="walletService.copy(myPublicKey, 'xpub')">
+            <ion-button type="submit" expand="full" fill="outline" shape="round" (click)="walletService.copy(myPublicKey, 'xpub')">
               <ion-icon slot="start" name="copy"></ion-icon>
               <span translate="GLOBAL.COPY"></span>
             </ion-button>
           </ion-col>
           <ion-col size="12" size-sm="6">
-            <ion-button color="danger" expand="full" (click)="myPublicKey = ''">
+            <ion-button color="danger" expand="full" fill="outline" shape="round" (click)="myPublicKey = ''">
               <ion-icon slot="start" name="refresh"></ion-icon>
               <span translate="MULTISIG.ADD.UPDATE_MY_ADDRESS"></span>
             </ion-button>
@@ -104,7 +104,7 @@
           </ion-row>
         </ion-card>
         <ion-button *ngIf="cosigners.length < cosignersLimit" class="right-buttons" color="primary"
-          (click)="addCosigner()">
+          fill="outline" shape="round" (click)="addCosigner()">
           <ion-icon name="add"></ion-icon>
           <span translate="MULTISIG.ADD.ADD_COSIGNER"></span>
         </ion-button>
@@ -124,13 +124,13 @@
         <p translate="MULTISIG.ADD.STEP4_EXPLAIN"></p>
         <ion-row>
           <ion-col>
-            <ion-button color="danger" expand="full" routerLink="/account/advanced/multisig" routerDirection="back">
+            <ion-button color="danger" expand="full" fill="outline" shape="round" routerLink="/account/advanced/multisig" routerDirection="back">
               <ion-icon slot="start" name="close"></ion-icon>
               <span translate="GLOBAL.CANCEL"></span>
             </ion-button>
           </ion-col>
           <ion-col>
-            <ion-button type="submit" expand="full" [disabled]="!nbrSigReq" color="secondary">
+            <ion-button type="submit" expand="full" fill="outline" shape="round" [disabled]="!nbrSigReq" color="primary">
               <ion-icon slot="start" disabled="checked" name="send"></ion-icon>
               <span translate="MULTISIG.ADD.GET_ADDRESS"></span>
             </ion-button>
@@ -160,14 +160,14 @@
       </ion-list>
       <ion-row>
         <ion-col>
-          <ion-button color="danger" expand="full" routerLink="/account/advanced/multisig" routerDirection="back">
+          <ion-button color="danger" expand="full" fill="outline" shape="round" routerLink="/account/advanced/multisig" routerDirection="back">
             <ion-icon slot="start" name="close"></ion-icon>
             <span translate="GLOBAL.CANCEL"></span>
           </ion-button>
         </ion-col>
         <ion-col>
-          <ion-button type="submit" expand="full"
-            [disabled]="!validAddress(import_address) || !validPassword(passphrase_import)" color="secondary">
+          <ion-button type="submit" expand="full" fill="outline" shape="round"
+            [disabled]="!validAddress(import_address) || !validPassword(passphrase_import)" color="primary">
             <ion-icon slot="start" disabled="checked" name="send"></ion-icon>
             <span translate="MULTISIG.ADD.IMPORT_ADDRESS"></span>
           </ion-button>

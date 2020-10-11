@@ -48,7 +48,7 @@
                     </div>
                   </ion-col>
                   <ion-col>
-                    <ion-button class="right-buttons" fill="clear" color="danger"
+                    <ion-button class="right-buttons" fill="outline" shape="round" color="danger"
                       (click)="gotoMultisigTransfer('ETP', multisig.a)">
                       <ion-icon slot="start" name="send"></ion-icon>
                       <span translate="MULTISIG.SEND_ETP"></span>
@@ -62,7 +62,7 @@
                         {{mst.name}}</div>
                     </ion-col>
                     <ion-col>
-                      <ion-button class="right-buttons" fill="clear" color="danger"
+                      <ion-button class="right-buttons" fill="outline" shape="round" color="danger"
                         (click)="gotoMultisigTransfer(mst.name, multisig.a)">
                         <ion-icon slot="start" name="send"></ion-icon>
                         <span translate="MULTISIG.SEND" [translateParams]="{symbol: mst.name}"></span>

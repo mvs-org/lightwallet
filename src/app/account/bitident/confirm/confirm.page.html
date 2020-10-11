@@ -118,15 +118,15 @@
 
             <ion-row>
                 <ion-col>
-                    <ion-button color="danger" expand="full" (click)="cancel()">
+                    <ion-button color="danger" expand="full" fill="outline" shape="round" (click)="cancel()">
                         <ion-icon slot="start" name="close"></ion-icon>
                         <span translate="BITIDENT.CONFIRM.BUTTON.CANCEL"></span>
                     </ion-button>
                 </ion-col>
                 <ion-col>
-                    <ion-button type="submit" ion-button expand="full"
+                    <ion-button type="submit" ion-button expand="full" fill="outline" shape="round"
                         [disabled]="!signForm.form.valid||!validPassword(passphrase)||(sourceSignature == '' && !noSigAgreed)"
-                        color="secondary">
+                        color="primary">
                         <ion-icon slot="start" name="send"></ion-icon>
                         <span translate="BITIDENT.CONFIRM.BUTTON.NEXT"></span>
                     </ion-button>

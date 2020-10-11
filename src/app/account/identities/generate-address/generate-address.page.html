@@ -35,15 +35,15 @@
       </ion-list>
       <ion-row>
         <ion-col size="12" size-sm="6">
-          <ion-button color="danger" expand="full" (click)="cancel()">
+          <ion-button color="danger" fill="outline" shape="round" expand="full" (click)="cancel()">
             <ion-icon slot="start" name="close"></ion-icon>
             <span translate="GENERATE_ADDRESS.BUTTON.CANCEL"></span>
           </ion-button>
         </ion-col>
         <ion-col size="12" size-sm="6">
-          <ion-button expand="full" type="submit"
+          <ion-button expand="full" fill="outline" shape="round" type="submit"
             [disabled]="!sendForm.form.valid||!validIndex(index)||(!walletFromXpub && !validPassword(passphrase))"
-            color="secondary">
+            color="primary">
             <ion-icon slot="start" name="send"></ion-icon>
             <span translate="GENERATE_ADDRESS.BUTTON.CHANGE_ADDRESS_NUMBER"></span>
           </ion-button>
