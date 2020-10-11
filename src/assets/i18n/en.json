@@ -77,6 +77,8 @@
     "DNA.DAPP_BUTTON_OK": "OK",
     "DNA.DAPP_BUTTON_CANCEL": "CANCEL",
     "DNA.DAPP_INPUT_PASSWORD": "Please enter your password below",
+    "DNA.ELECTION_END": "Election End",
+    "DNA.VOTE_CAN_NOT": "Can't change witness votes now",
 
     "ACCOUNT.TITLE": "Portfolio",
     "ACCOUNT.FROZEN": "Frozen",

@@ -77,6 +77,8 @@
     "DNA.DAPP_BUTTON_OK": "确认",
     "DNA.DAPP_BUTTON_CANCEL": "取消",
     "DNA.DAPP_INPUT_PASSWORD": "请在下方输入您的密码",
+    "DNA.ELECTION_END": "奖励开始时间",
+    "DNA.VOTE_CAN_NOT": "当前阶段无法投票",
 
     "ACCOUNT.TITLE": "账户",
     "ACCOUNT.FROZEN": "冻结",

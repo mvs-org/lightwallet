@@ -19,6 +19,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Deeplinks } from '@ionic-native/deeplinks';
 import { LedgerProvider } from '../providers/ledger/ledger';
 import { IonicSelectableModule } from 'ionic-selectable';
+import {DnaAccountProvider} from '../providers/dna-account/dna-account';
 
 
 var pckg = require('../../package.json');
@@ -66,6 +67,7 @@ export function HttpLoaderFactory(http: Http) {
         PluginProvider,
         EtpBridgeServiceProvider,
         LedgerProvider,
+        DnaAccountProvider,
     ]
 })
 export class AppModule {

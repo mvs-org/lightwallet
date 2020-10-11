@@ -27,7 +27,7 @@
             <p align="center" class="wrong-input">{{"DNA.NOTICE_TRANSACTION_FEE_UNCOVERED"|translate}}</p>
             <ion-row>
                 <ion-col>
-                    <p class="available">{{"DNA.VOTE_LOCKED"|translate}}: <br *ngIf="platform.is('mobile')">{{selectedNodeSelfLock ? formatToken(selectedNodeSelfLock) : '-'}}</p>
+                    <p class="available">{{"DNA.VOTE_LOCKED"|translate}}: <br *ngIf="platform.is('mobile')">{{formatToken(balance ? balance.frozen : 0)}}</p>
                 </ion-col>
                 <ion-col>
                     <p class="right">{{"FEE"|translate}}: <br *ngIf="platform.is('mobile')">{{formatToken(fee) + ' + ' + formatToken(pricePerKbyte) + ' / KB'}}</p>
@@ -36,17 +36,18 @@
             <form style="padding-bottom: 0;">
                 <ion-list style="padding-bottom: 0;">
                     <div style="padding-left: 10px;">
-                        <ion-row>
+                        <p align="center">{{"DNA.ELECTION_END" | translate}}: {{nextRoundTime | date : 'medium'}}</p>
+                        <!--<ion-row>
                             <ion-col>
                                 <p>{{"VOTE.START" | translate}}: <br *ngIf="platform.is('mobile')">
                                     {{currentTime | date : 'medium'}}</p>
                             </ion-col>
                             <p style="text-align: center;"><br *ngIf="platform.is('mobile')">~</p>
                             <ion-col>
-                                <p class="right">{{"VOTE.END" | translate}}:<br *ngIf="platform.is('mobile')">
+                                <p class="right">{{"DNA.ELECTION_END" | translate}}:<br *ngIf="platform.is('mobile')">
                                     {{nextRoundTime | date : 'medium'}}</p>
                             </ion-col>
-                        </ion-row>
+                        </ion-row>-->
                         <!--<ion-row>
                             <ion-col>
                                 <progress-bar [progress]="electionProgressVote || 0"></progress-bar>
@@ -73,15 +74,18 @@
                     <div no-lines class="advice" *ngIf="selectedNodeIntro">{{"DNA.VOTE_TEAM_INTRO_TITLE" | translate}}: {{selectedNodeIntro}}</div>
                     <div no-lines class="advice" *ngIf="selectedNodePlan">{{"DNA.VOTE_BUILDING_PLAN_TITLE" | translate}}: {{selectedNodePlan}}</div>
                     <div no-lines class="advice" *ngIf="selectedNodeRatio">{{"DNA.VOTE_DIVIDEND_RATIO_TITLE" | translate}}: {{selectedNodeRatio}}</div>
-                    <ion-item [ngClass]="{'error-border':!validPassword(password)}">
-                        <ion-label color="primary" floating>{{"PASSWORD"|translate}}</ion-label>
-                        <ion-input name="password" type="password" placeholder="" [(ngModel)]="password"></ion-input>
-                    </ion-item>
-                    <ion-item *ngIf="password && !validPassword(password)" no-lines class="wrong-input">{{"DNA.PASSWORD_NO_MATCH" | translate}}</ion-item>
+                    <div *ngIf="canVote">
+                        <ion-item [ngClass]="{'error-border':!validPassword(password)}">
+                            <ion-label color="primary" floating>{{"PASSWORD"|translate}}</ion-label>
+                            <ion-input name="password" type="password" placeholder="" [(ngModel)]="password"></ion-input>
+                        </ion-item>
+                        <ion-item *ngIf="password && !validPassword(password)" no-lines class="wrong-input">{{"DNA.PASSWORD_NO_MATCH" | translate}}</ion-item>
+                    </div>
                     <br>
                 </ion-list>
                 <br>
-                <ion-row class="padding-bottom">
+                <p *ngIf="!canVote" align="center" class="wrong-input">{{'DNA.VOTE_CAN_NOT'|translate}}</p>
+                <ion-row *ngIf="canVote" class="padding-bottom">
                     <ion-col>
                         <button type="submit" ion-button full icon-left [disabled]="!canVote || !selectedNode || !validPassword(password)" (click)="send(password)" color="secondary">
                             <ion-icon disabled="checked" name="checkmark"></ion-icon>

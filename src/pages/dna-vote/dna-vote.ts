@@ -108,7 +108,7 @@ export class DnaVotePage {
                 return true;
             });
 
-            console.log('nodeList: ', this.nodeList);
+            //console.log('nodeList: ', this.nodeList);
 
             return DnaReqWsSubscribeProvider.wsFetchBtsGetAccountDetail(this.userInfo.name).then((account) => {
                 if (account && account.length > 0) {
@@ -186,11 +186,8 @@ export class DnaVotePage {
     loadRound = () => {
         return DnaReqWsSubscribeProvider.wsFetchVotingPeriod().then((round) => {
             this.currentRound = round;
-
-            console.log('currentRound: ', this.currentRound);
-            if (this.currentRound === 'pre' || this.currentRound === 'a') {
+            if (this.currentRound === 'pre'/* || this.currentRound === 'a'*/) {
                 this.canVote = true;
-                console.log('canVote', this.canVote);
             }
         });
     }

@@ -10,6 +10,7 @@ import { DnaReqReqProvider } from "../../providers/dna-req-req/dna-req-req";
 import BigNumber from "bignumber.js";
 import { DnaUtilUtilProvider } from "../../providers/dna-util-util/dna-util-util";
 import { AppGlobals } from '../../app/app.global';
+import { DnaAccountProvider } from '../../providers/dna-account/dna-account';
 
 let DATA = require('../../data/data.js').default;
 
@@ -60,6 +61,7 @@ export class DnaAccountPage {
         public navParams: NavParams,
         private storage: Storage,
         private global: AppGlobals,
+        private dnaAccount: DnaAccountProvider,
     ) {
 
         this.loading = true;
@@ -71,10 +73,6 @@ export class DnaAccountPage {
         this.event.subscribe("theme_changed", (theme) => {
             this.theme = ('theme-' + theme)
         });
-
-        this.initBalance(this.dnaAssetId);
-
-        //this.storage.remove('saved_dna_assets');
     }
 
     isOffline = () => !this.syncingSmall && this.offline
@@ -96,23 +94,29 @@ export class DnaAccountPage {
 
     private initialize = () => {
         if (!this.initialized) {
+            this.initialized = true;
             if (!this.userInfo.key) {
                 this.hasSeed = false;
             }
 
-            DnaReqWsSubscribeProvider.subscribeAccountBalance(
-                this.userInfo.name,
-                (balances) => this.handleBalance(balances),
-                (vestingBalances) => this.handleVestingBalance(vestingBalances),
-                (fullAccount) => this.handleFullAccount(fullAccount)
-            );
-        } else {
-            this.syncinterval = setTimeout(() => {
-                this.refreshTokenInfo();
-            }, 500);
+            // 余额
+            this.dnaAccount.initialize(this.userInfo);
+            this.event.subscribe('dna_balances_update', (balances) => {
+                this.balances = balances;
+            });
         }
+    }
 
-        this.initialized = true;
+    balance(assetId) {
+        if (this.balances && this.balances[assetId]) {
+            return this.balances[assetId];
+        } else {
+            return {
+                total: 0,
+                available: 0,
+                frozen: 0,
+            };
+        }
     }
 
     async loadMstAssets() {
@@ -125,7 +129,6 @@ export class DnaAccountPage {
                     if (assetsSaved.order[i] == assetsAll[j].symbol && assetsSaved.hidden.indexOf(assetsAll[j].symbol) <= -1) {
                         if (assetsAll[j].id != this.dnaAssetId) {
                             assetsMst.push(assetsAll[j]);
-                            this.initBalance(assetsAll[j].id);
                         }
                     }
                 }
@@ -136,7 +139,6 @@ export class DnaAccountPage {
             for (let i = 0; i < assetsAll.length; i ++) {
                 if (assetsAll[i].id != this.dnaAssetId) {
                     assetsMst.push(assetsAll[i]);
-                    this.initBalance(assetsAll[i].id);
                 }
             }
             this.mstAssets = assetsMst;
@@ -145,92 +147,8 @@ export class DnaAccountPage {
         this.mstAssetsAll = assetsAll;
     }
 
-    handleBalance(balances) {
-        if (balances) {
-            this.userData['balances'] = [balances];
-            this.refreshTokenInfo();
-        }
-    }
-
-    handleVestingBalance(vestingBalances) {
-        this.userData['vestingBalances'] = vestingBalances;
-    }
-
-    handleFullAccount(fullAccount) {
-        this.userData['selectedNode'] = "";
-        if (fullAccount.votes && fullAccount.votes.length && fullAccount.votes[0].length) {
-            this.userData['selectedNode'] = fullAccount.votes[0][0];
-        }
-    }
-
-    refreshTokenInfo() {
-        // 刷新高度
-        DnaReqWsSubscribeProvider.subscribeLatestBlock((res) => {
-            this.height = res.head_block_number;
-        });
-
-        // 刷新余额
-        DnaReqReqProvider.fetchTokenInfo()
-            .then((tokenInfo) => {
-                if (!tokenInfo || !tokenInfo['price_usd'] || !tokenInfo['price_cny']) {
-                    return;
-                }
-
-                console.log('DnaUserData:', this.userData);
-                console.log('DnaReqReqProvider.fetchTokenInfo: ', tokenInfo, this.userData);
-
-                let balances  = this.userData['balances'] || [];
-                for (var i = 0; i < balances.length; i ++) {
-                    let coreAsset        = balances[i];
-                    let availableBalance = coreAsset ? coreAsset.balance : 0;
-
-                    //加上vesting_balance
-                    let vestingBalances = this.userData['vestingBalances'] || [];
-                    let vestingBalance  = new BigNumber(0);
-                    for (let i = 0; i < vestingBalances.length; i++) {
-                        if (vestingBalances[i].balance.asset_id == coreAsset.asset_type) {
-                            vestingBalance = vestingBalance.plus(
-                                vestingBalances[i].balance.amount
-                            );
-                        }
-                    }
-
-                    let totalBalance = new BigNumber(availableBalance)
-                        .plus(vestingBalance)
-                        .toString();
-                    let usdTotal = new BigNumber(tokenInfo['price_usd'])
-                        .times(DnaUtilUtilProvider.toToken(totalBalance))
-                        .toFixed(2);
-                    let cnyTotal = new BigNumber(tokenInfo['price_cny'])
-                        .times(DnaUtilUtilProvider.toToken(totalBalance))
-                        .toFixed(2);
-
-                    this.balances[coreAsset.asset_type] = {
-                        total: totalBalance,
-                        available: availableBalance,
-                        frozen: vestingBalance.toString(),
-                        currency: {
-                            USD: usdTotal,
-                            CNY: cnyTotal,
-                        },
-                    }
-
-                    // 存为全局变量
-                    this.global.dnaBalances = this.balances;
-                }
-
-                this.loading = false;
-                this.storage.get('language').then((language) => this.language = language);
-
-                clearTimeout(this.syncinterval);
-                this.syncinterval = setTimeout(() => {
-                    this.refreshTokenInfo();
-                }, 3 * 1000);
-            })
-    }
-
     ionViewWillLeave = () => {
-        clearTimeout(this.syncinterval);
+
     }
 
     logout() {
@@ -256,16 +174,6 @@ export class DnaAccountPage {
                     this.saveAccount(username);
                 }
             })
-    }
-
-    private initBalance(assetId) {
-        if (!this.balances[assetId]) {
-            this.balances[assetId] = {
-                total: 0,
-                available: 0,
-                frozen: 0,
-            }
-        }
     }
 
     private forgetAccountHandler = () => {
