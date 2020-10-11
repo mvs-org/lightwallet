@@ -26,16 +26,21 @@
             <p align="center" class="wrong-input">{{"DNA.NOTICE_TRANSACTION_FEE_UNCOVERED"|translate}}</p>
             <ion-row>
                 <ion-col>
-                    <p class="available">{{"AVAILABLE_BALANCE" | translate}}: <br *ngIf="platform.is('mobile')">{{formatTokenWithoutSymbol(balance.available)}} {{asset}}</p>
+                    <p class="available">{{"AVAILABLE_BALANCE" | translate}}: <br *ngIf="platform.is('mobile')">{{formatToken(balance ? balance.available : 0)}}</p>
                 </ion-col>
                 <ion-col>
-                    <p style="text-align: center">{{"DNA.LOCK_FEE"|translate}}: <br *ngIf="platform.is('mobile')">{{formatToken(feeLock)}}</p>
+                    <p class="right">{{"DNA.FROZEN_BALANCE"|translate}}: <br *ngIf="platform.is('mobile')">{{formatToken(balance ? balance.frozen : 0)}}</p>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col>
+                    <p class="available">{{"DNA.LOCK_FEE"|translate}}: <br *ngIf="platform.is('mobile')">{{formatToken(feeLock)}}</p>
                 </ion-col>
                 <ion-col>
                     <p class="right">{{"DNA.LOCK_FEE_WITHDRAW"|translate}}: <br *ngIf="platform.is('mobile')">{{formatToken(feeWithdraw)}}</p>
                 </ion-col>
             </ion-row>
-            <form style="padding-bottom: 0;">
+            <form *ngIf="canLock" style="padding-bottom: 0;">
                 <ion-list style="padding-bottom: 0;">
                     <div style="position: relative;">
                         <ion-item [ngClass]="{'error-border':!validAmount(amount)}">
@@ -82,6 +87,8 @@
                     </ion-col>
                 </ion-row>
             </form>
+            <br>
+            <p *ngIf="!canLock" align="center" class="wrong-input">{{'DNA.LOCK_CAN_NOT'|translate}}</p>
         </div>
     </div>
 

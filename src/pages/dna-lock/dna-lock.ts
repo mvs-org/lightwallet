@@ -10,6 +10,7 @@ import { AppGlobals } from '../../app/app.global';
 import {DnaReqWsSubscribeProvider} from '../../providers/dna-req-ws-subscribe/dna-req-ws-subscribe';
 import {DnaWalletProvider} from '../../providers/dna-wallet/dna-wallet';
 import {DnaReqTxProvider} from '../../providers/dna-req-tx/dna-req-tx';
+import {DnaAccountProvider} from '../../providers/dna-account/dna-account';
 
 let DATA = require('../../data/data').default;
 
@@ -68,6 +69,7 @@ export class DnaLockPage {
         private translate: TranslateService,
         private storage: Storage,
         private global: AppGlobals,
+        private dnaAccount: DnaAccountProvider,
     ) {
         this.isApp = (!document.URL.startsWith('http') || document.URL.startsWith('http://localhost'));
 
@@ -78,13 +80,6 @@ export class DnaLockPage {
                 this.periodUnit = transitions['DNA.LOCK_UNIT_D'];
             }
         });
-
-        // 获取余额
-        if (this.global.dnaBalances && this.global.dnaBalances[this.assetId]) {
-            this.balance = this.global.dnaBalances[this.assetId];
-        } else {
-            this.balance = {available: 0};
-        }
     }
 
     ionViewDidEnter() {
@@ -92,6 +87,12 @@ export class DnaLockPage {
             if (userInfo && userInfo.name) {
                 this.userInfo = userInfo;
                 this.load();
+
+                // 获取余额
+                this.balance = this.dnaAccount.getBalance(this.assetId);
+                if (!this.balance) {
+                    this.navCtrl.pop();
+                }
             } else {
                 this.navCtrl.setRoot('LoginPage')
             }
@@ -221,7 +222,7 @@ export class DnaLockPage {
         return DnaReqWsSubscribeProvider.wsFetchVotingPeriod().then((round) => {
             this.currentRound = round;
             if (round == "pre" || round == "b") {
-                this.canLock = true;
+                this.canLock = false;
             }
             if (round == "a") {
                 this.canWithdraw = true;

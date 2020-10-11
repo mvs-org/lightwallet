@@ -79,6 +79,8 @@
     "DNA.DAPP_INPUT_PASSWORD": "Please enter your password below",
     "DNA.ELECTION_END": "Election End",
     "DNA.VOTE_CAN_NOT": "Can't change witness votes now",
+    "DNA.LOCK_CAN_NOT": "Can't lock now",
+    "DNA.FROZEN_BALANCE": "Frozen balance",
 
     "ACCOUNT.TITLE": "Portfolio",
     "ACCOUNT.FROZEN": "Frozen",

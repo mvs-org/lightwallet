@@ -28,6 +28,10 @@ export class DnaAccountProvider {
         }
     }
 
+    getBalance(assetId) {
+        return this.balances[assetId] ? this.balances[assetId] : null;
+    }
+
     private loadTokenInfo() {
         DnaReqReqProvider.fetchTokenInfo()
             .then((tokenInfo) => {
