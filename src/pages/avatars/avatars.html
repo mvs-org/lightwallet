@@ -54,7 +54,7 @@
         </ion-grid>
     </ion-card>
     <br><br>
-    <ion-row class="padding-bottom">
+    <ion-row *ngIf="fromPassphrase" class="padding-bottom">
         <ion-col col-sm-6 offset-md-1 col-md-5 offset-lg-2 col-lg-4 offset-xl-3 col-xl-3>
             <button ion-button icon-left color="primary" full icon-left (click)="create()" class="create-avatar-btn">
                 <ion-icon name="person-add"></ion-icon>
@@ -68,5 +68,9 @@
             </button>
         </ion-col>
     </ion-row>
+    <button *ngIf="!fromPassphrase" ion-button icon-left color="primary" icon-left (click)="create()" class="create-avatar-btn">
+        <ion-icon name="person-add"></ion-icon>
+        {{"CREATE_AVATAR" | translate}}
+    </button>
 
 </ion-content>

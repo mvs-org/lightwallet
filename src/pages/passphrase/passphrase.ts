@@ -118,7 +118,7 @@ export class PassphrasePage {
                         this.storage.set('walletHasEtp', true)
                             .then(() => this.storage.set('walletHasEtp', true))
                             .then(() => this.storage.set('walletHasDna', true))
-                            .then(() => this.storage.set('walletType', 'etp'))
+                            .then(() => this.storage.set('walletType', 'dna'))
                             .then(() => {
                                 let dnaEncryptedText = DnaUtilUtilProvider.encryptKey(this.mnemonic, password)
                                 let dnaKeyFile       = DnaUtilUtilProvider.getKeyFile(dnaEncryptedText, 'bts');
@@ -138,17 +138,23 @@ export class PassphrasePage {
                             .then(() => this.wallet.getMasterPublicKey(password))
                             .then((xpub) => this.wallet.setXpub(xpub))
                             .then(() => this.wallet.saveSessionAccount(password))
-                            .then(() => this.mvs.dataReset())
-                            .then(() => this.mvs.setDbVersion(this.globals.db_version))
-                            .then(() => this.mvs.updateHeight())
-                            .then(() => this.mvs.getData())
-                            .then(() => this.mvs.setUpdateTime())
-                            .then(() => this.mvs.listAvatars())
-                            .then((avatars) => {
-                                if(avatars.length === 0) {
-                                    this.nav.setRoot("AvatarsPage", { fromPassphrase: true })
+                            .then(() => {
+                                if (this.newWallet) {
+                                    this.nav.setRoot("DnaLoadingPage", {reset: true})
                                 } else {
-                                    this.nav.setRoot("LoadingPage", { reset: true })
+                                    return this.mvs.dataReset()
+                                        .then(() => this.mvs.setDbVersion(this.globals.db_version))
+                                        .then(() => this.mvs.updateHeight())
+                                        .then(() => this.mvs.getData())
+                                        .then(() => this.mvs.setUpdateTime())
+                                        .then(() => this.mvs.listAvatars())
+                                        .then((avatars) => {
+                                            if (avatars.length === 0) {
+                                                this.nav.setRoot("AvatarsPage", {fromPassphrase: true})
+                                            } else {
+                                                this.nav.setRoot("DnaLoadingPage", {reset: true})
+                                            }
+                                        });
                                 }
                             })
                             .catch((e) => {
@@ -172,7 +178,7 @@ export class PassphrasePage {
                 })
                 .then(() => this.storage.set('walletHasEtp', true))
                 .then(() => this.storage.set('walletHasDna', true))
-                .then(() => this.storage.set('walletType', 'etp'))
+                .then(() => this.storage.set('walletType', 'dna'))
                 .then(() => DnaReqReqProvider.fetchBtsGetAccountDetail(btsId))
                 .then((accounts) => {
                     if (accounts['result'] && accounts['result'].length > 0) {
@@ -200,17 +206,23 @@ export class PassphrasePage {
                 .then(() => this.wallet.getMasterPublicKey(password))
                 .then((xpub) => this.wallet.setXpub(xpub))
                 .then(() => this.wallet.saveSessionAccount(password))
-                .then(() => this.mvs.dataReset())
-                .then(() => this.mvs.setDbVersion(this.globals.db_version))
-                .then(() => this.mvs.updateHeight())
-                .then(() => this.mvs.getData())
-                .then(() => this.mvs.setUpdateTime())
-                .then(() => this.mvs.listAvatars())
-                .then((avatars) => {
-                    if(avatars.length === 0) {
-                        this.nav.setRoot("AvatarsPage", { fromPassphrase: true })
+                .then(() => {
+                    if (this.newWallet) {
+                        this.nav.setRoot("DnaLoadingPage", {reset: true})
                     } else {
-                        this.nav.setRoot("LoadingPage", { reset: true })
+                        return this.mvs.dataReset()
+                            .then(() => this.mvs.setDbVersion(this.globals.db_version))
+                            .then(() => this.mvs.updateHeight())
+                            .then(() => this.mvs.getData())
+                            .then(() => this.mvs.setUpdateTime())
+                            .then(() => this.mvs.listAvatars())
+                            .then((avatars) => {
+                                if (avatars.length === 0) {
+                                    this.nav.setRoot("AvatarsPage", {fromPassphrase: true})
+                                } else {
+                                    this.nav.setRoot("DnaLoadingPage", {reset: true})
+                                }
+                            });
                     }
                 })
                 .catch((e) => {

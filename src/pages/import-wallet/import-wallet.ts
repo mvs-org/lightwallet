@@ -60,7 +60,7 @@ export class ImportWalletPage {
         this.alert.showLoading();
         this.storage.set('walletHasDna', false)
             .then(() => this.storage.set('walletHasEtp', false))
-            .then(() => this.storage.set('walletType', 'etp'))
+            .then(() => this.storage.set('walletType', 'dna'))
             .then(() => this.storage.set('dnaUserInfo', null))
             .then(() => this.decryptDna(password));
     }
@@ -70,54 +70,50 @@ export class ImportWalletPage {
         let dnaNet = 'bts';
 
         // 检查是否有ETP
-        if (!this.data['etp']) {
+        if (!this.data['etp'] || !this.data['dna'] || !this.data['dna'].key || this.data['dna'].net != dnaNet) {
             this.alert.showError('MESSAGE.PASSWORD_WRONG', '');
             this.alert.stopLoading()
 
             return;
         }
 
-        if (this.data['dna'] && this.data['dna'].key && this.data['dna'].net == dnaNet) {
-            let key = DnaUtilUtilProvider.decryptKey(this.data['dna'].key, password)
-            if (key.length > 0) {
-                let that = this;
-                let info = DnaWalletProvider.getAccountInfo(key, dnaNet);
-                DnaReqWsSubscribeProvider.wsFetchBtsGetAccount(info['publicKey'])
-                    .then((data) => {
-                        if (data[0].length <= 0) {
-                            throw 'DNA.NO_ACCOUNT';
-                        }
+        let key = DnaUtilUtilProvider.decryptKey(this.data['dna'].key, password)
+        if (key.length > 0) {
+            let that = this;
+            let info = DnaWalletProvider.getAccountInfo(key, dnaNet);
+            DnaReqWsSubscribeProvider.wsFetchBtsGetAccount(info['publicKey'])
+                .then((data) => {
+                    if (data[0].length <= 0) {
+                        throw 'DNA.NO_ACCOUNT';
+                    }
 
-                        return data[0][0];
-                    })
-                    .then((btsId) => DnaReqWsSubscribeProvider.wsFetchBtsGetAccountDetail(btsId))
-                    .then((accountData) => {
-                        return {
-                            name: accountData[0].name,
-                            address: accountData[0].name,
-                            key: that.data['dna'].key,
-                            pkey: info['publicKey'],
-                        };
-                    })
-                    .then((userInfo) => that.storage.set('dnaUserInfo', userInfo))
-                    .then(() => that.storage.set('walletHasDna', true))
-                    .then(() => that.decryptEtp(password))
-                    .catch((e) => {
-                        if (e === 'DNA.NO_ACCOUNT') {
-                            that.alert.showError('DNA.NO_ACCOUNT', '');
-                        } else {
-                            that.alert.showError('MESSAGE.PASSWORD_WRONG', '');
-                        }
+                    return data[0][0];
+                })
+                .then((btsId) => DnaReqWsSubscribeProvider.wsFetchBtsGetAccountDetail(btsId))
+                .then((accountData) => {
+                    return {
+                        name: accountData[0].name,
+                        address: accountData[0].name,
+                        key: that.data['dna'].key,
+                        pkey: info['publicKey'],
+                    };
+                })
+                .then((userInfo) => that.storage.set('dnaUserInfo', userInfo))
+                .then(() => that.storage.set('walletHasDna', true))
+                .then(() => that.decryptEtp(password))
+                .catch((e) => {
+                    if (e === 'DNA.NO_ACCOUNT') {
+                        that.alert.showError('DNA.NO_ACCOUNT', '');
+                    } else {
+                        that.alert.showError('MESSAGE.PASSWORD_WRONG', '');
+                    }
 
-                        console.log(e);
-                        that.alert.stopLoading()
-                    });
-            } else {
-                this.alert.showError('MESSAGE.PASSWORD_WRONG', '');
-                this.alert.stopLoading()
-            }
+                    console.log(e);
+                    that.alert.stopLoading()
+                });
         } else {
-            this.decryptEtp(password);
+            this.alert.showError('MESSAGE.PASSWORD_WRONG', '');
+            this.alert.stopLoading()
         }
     }
 
@@ -133,7 +129,7 @@ export class ImportWalletPage {
             .then(([wallet, index]) => this.wallet.generateAddresses(wallet, 0, index))
             .then((addresses) => this.mvs.setAddresses(addresses))
             .then(() => this.wallet.saveSessionAccount(password))
-            .then(() => this.nav.setRoot("LoadingPage", { reset: true }))
+            .then(() => this.nav.setRoot("DnaLoadingPage", { reset: true }))
             .catch((e) => {
                 console.log(e);
                 this.alert.showError('MESSAGE.PASSWORD_WRONG', '');

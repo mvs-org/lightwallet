@@ -37,7 +37,7 @@ export class AvatarsPage {
     }
 
     goWallet() {
-        this.navCtrl.setRoot("LoadingPage", { reset: true })
+        this.navCtrl.setRoot("DnaLoadingPage", { reset: true })
     }
 
     loadAvatars(){

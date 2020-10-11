@@ -164,6 +164,12 @@ export class DnaAccountPage {
     }
 
     refreshTokenInfo() {
+        // 刷新高度
+        DnaReqWsSubscribeProvider.subscribeLatestBlock((res) => {
+            this.height = res.head_block_number;
+        });
+
+        // 刷新余额
         DnaReqReqProvider.fetchTokenInfo()
             .then((tokenInfo) => {
                 if (!tokenInfo || !tokenInfo['price_usd'] || !tokenInfo['price_cny']) {
@@ -219,7 +225,7 @@ export class DnaAccountPage {
                 clearTimeout(this.syncinterval);
                 this.syncinterval = setTimeout(() => {
                     this.refreshTokenInfo();
-                }, 10 * 1000);
+                }, 3 * 1000);
             })
     }
 

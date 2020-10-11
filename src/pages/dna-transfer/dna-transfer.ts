@@ -64,7 +64,7 @@ export class DnaTransferPage {
     }
 
     validDepositAddress = (depositAddress) => {
-        return depositAddress && DnaUtilRegexProvider.isBtsNameLegal(depositAddress);
+        return !!depositAddress;// && DnaUtilRegexProvider.isBtsNameLegal(depositAddress);
     }
 
     validSendAmount = (sendAmount) => {

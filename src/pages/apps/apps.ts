@@ -113,7 +113,7 @@ export class AppsPage {
                 let fromAccountId = data.operations[0][1].from;
                 let toAccountId   = data.operations[0][1].to;
                 let sendAmount    = data.operations[0][1].amount;
-                let memo          = data.operations[0][1].memo;
+                let memo          = data.memo_object;
                 let message       = (memo && memo.message) ? memo.message.toString() : '';
                 let amount        = sendAmount && sendAmount.amount ? sendAmount.amount : 0;
                 let assetId       = sendAmount && sendAmount.asset_id ? sendAmount.asset_id : '';

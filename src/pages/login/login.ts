@@ -31,7 +31,7 @@ export class LoginPage {
         public mvs: MvsServiceProvider,
         private alert: AlertProvider,
     ) {
-        this.isApp = (!document.URL.startsWith('http') || document.URL.startsWith('http://localhost'));
+        this.isApp = false;//(!document.URL.startsWith('http') || document.URL.startsWith('http://localhost'));
 
         this.wallet.getSavedAccounts()
             .then((accounts) => this.saved_accounts = accounts ? accounts : [])
