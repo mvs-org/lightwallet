@@ -54,17 +54,14 @@ export class AppsPage {
         });
     }
 
-    ionViewDidEnter() {
-
-    }
-
     EtpBridgePage = () => this.nav.push("EtpBridgePage")
 
     PluginSettingsPage = e => this.nav.push("PluginSettingsPage")
 
     MovieTicketsPage = () => this.wallet.openLink("https://movies.mvsdna.com")
 
-    // 'toolbar=no,location=no'
+    // iab.create 参数：'toolbar=no,location=no'
+    // 弹框文档：        https://github.com/apache/cordova-plugin-dialogs
     goDnaDapp = (url) => {
         if (!this.dnaUserInfo) {
             return;
@@ -72,13 +69,6 @@ export class AppsPage {
 
         this.browser = this.iab.create(url, '_blank');
         this.browser.on('message').subscribe((e) => {
-            // https://github.com/apache/cordova-plugin-dialogs
-            /*if (navigator['notification']) {
-                navigator['notification'].prompt("\n付款账户: xo1234567890\n付款金额: 100DNA\n收款账户: nn1234567890\n交易详情: haha!!!\n\n请点击下方输入您的密码:", (e) => {
-
-                }, '交易确认', ['Cancel', 'Ok']);
-            }*/
-
             if (e.type === 'message') {
                 if (e.data.name == 'signDNA') {
                     this.signDNA(e.data.id, e.data.object.data);
@@ -131,39 +121,48 @@ export class AppsPage {
                             throw 'Account not found';
                         }
 
-                        this.translate.get(['DNA.DAPP_FROM_ACCOUNT', 'DNA.DAPP_AMOUNT', 'DNA.DAPP_TO_ACCOUNT', 'DNA.DAPP_MESSAGE', 'DNA.DAPP_TITLE', 'DNA.DAPP_BUTTON_OK', 'DNA.DAPP_BUTTON_CANCEL', 'DNA.DAPP_INPUT_PASSWORD']).subscribe((transitions) => {
-                            let msg = '\n';
-                            msg += transitions['DNA.DAPP_FROM_ACCOUNT'] + ': ' + fromAccount.name + '\n';
-                            // TODO 多币种支持
-                            msg += transitions['DNA.DAPP_AMOUNT'] + ': ' + this.formatToken(amount) + '\n';
-                            msg += transitions['DNA.DAPP_TO_ACCOUNT'] + ': ' + toAccount.name + '\n';
-                            if (message) {
-                                msg += transitions['DNA.DAPP_MESSAGE'] + ': ' + message + '\n';
-                            }
-                            msg += '\n' + transitions['DNA.DAPP_INPUT_PASSWORD'] +  ': ';
+                        this.translate.get([
+                            'DNA.DAPP_FROM_ACCOUNT',
+                            'DNA.DAPP_AMOUNT',
+                            'DNA.DAPP_TO_ACCOUNT',
+                            'DNA.DAPP_MESSAGE',
+                            'DNA.DAPP_TITLE',
+                            'DNA.DAPP_BUTTON_OK',
+                            'DNA.DAPP_BUTTON_CANCEL',
+                            'DNA.DAPP_INPUT_PASSWORD',
+                        ]).subscribe((transitions) => {
+                            let confirmTxt = '\n' +
+                                transitions['DNA.DAPP_FROM_ACCOUNT'] + ': ' + fromAccount.name + '\n' +
+                                transitions['DNA.DAPP_AMOUNT'] + ': ' + this.formatToken(amount) + '\n' +
+                                transitions['DNA.DAPP_TO_ACCOUNT'] + ': ' + toAccount.name + '\n' +
+                                (message ? transitions['DNA.DAPP_MESSAGE'] + ': ' + message + '\n' : '') + '\n' +
+                                transitions['DNA.DAPP_INPUT_PASSWORD'] +  ': ';
 
                             if (navigator['notification']) {
-                                navigator['notification'].prompt(msg, (e) => {
-                                    // 判断是否OK，OK调接口
-                                    console.log('notification: ', JSON.stringify(e));
-                                    if (e.buttonIndex == 2) {
-                                        if (e.input1) {
-                                            this.signDNATx({
-                                                id,
-                                                fromAccount,
-                                                toAccount,
-                                                sendAmount,
-                                                message,
-                                                password: e.input1,
-                                            });
-                                        } else {
-                                            this.passwordError();
+                                navigator['notification'].prompt(
+                                    confirmTxt,
+                                    (e) => {
+                                        if (e.buttonIndex == 2) {
+                                            if (e.input1) {
+                                                this.signDNATx({
+                                                    id,
+                                                    fromAccount,
+                                                    toAccount,
+                                                    sendAmount,
+                                                    message,
+                                                    password: e.input1,
+                                                });
+                                            } else {
+                                                this.passwordError();
+                                            }
                                         }
-                                    }
-                                }, transitions['DNA.DAPP_TITLE'], [transitions['DNA.DAPP_BUTTON_CANCEL'], transitions['DNA.DAPP_BUTTON_OK']]);
+                                    },
+                                    transitions['DNA.DAPP_TITLE'],
+                                    [transitions['DNA.DAPP_BUTTON_CANCEL'], transitions['DNA.DAPP_BUTTON_OK']]
+                                );
                             } else {
                                 // 测试代码
-                                console.log('SignDNA confirm: ', msg);
+                                console.log('SignDNA confirm: ', confirmTxt);
 
                                 /*this.signDNATx({
                                     id,
@@ -203,11 +202,26 @@ export class AppsPage {
         data.sendAmount.asset = 'DNA';
 
         let walletInfo = DnaWalletProvider.getAccountInfo(mnemonic, 'bts');
-        DnaReqTxProvider.transferDNA(walletInfo['privateKey'], data.fromAccount.name, data.toAccount.name, data.sendAmount, data.message, false).then((result) => {
+        DnaReqTxProvider.transferDNA(
+            walletInfo['privateKey'],
+            data.fromAccount.name,
+            data.toAccount.name,
+            data.sendAmount,
+            data.message,
+            false
+        ).then((result) => {
             let txId = (result && result.length > 0) ? result[0].id : '';
             if (navigator['notification']) {
-                console.log('executeScript: ', 'onSignDNASuccessful(' + JSON.stringify(data.id) + ', ' + JSON.stringify(txId) + ');');
-                this.browser.executeScript({code: 'window.onSignDNASuccessful(' + JSON.stringify(data.id) + ', ' + JSON.stringify(txId) + ');'});
+                // 调用接口
+                this.browser.executeScript({
+                    code: 'window.onSignDNASuccessful(' + JSON.stringify(data.id) + ', ' + JSON.stringify(txId) + ');',
+                });
+
+                // 打印接口调用
+                console.log(
+                    'executeScript: ',
+                    'onSignDNASuccessful(' + JSON.stringify(data.id) + ', ' + JSON.stringify(txId) + ');'
+                );
             } else {
                 console.log('onSignDNASuccessful: ', {id: data.id, value: txId});
             }
@@ -222,23 +236,35 @@ export class AppsPage {
         }
     }
 
+    // 密码错误提示框
     passwordError = () => {
-        console.log('password error.');
-
         if (navigator['notification']) {
-            this.translate.get(['MESSAGE.ERROR_TITLE', 'OK', 'MESSAGE.PASSWORD_WRONG']).subscribe((transitions) => {
-                navigator['notification'].alert(transitions['MESSAGE.PASSWORD_WRONG'], () => {}, transitions['MESSAGE.ERROR_TITLE'], transitions['OK']);
+            this.translate.get([
+                'MESSAGE.ERROR_TITLE',
+                'OK',
+                'MESSAGE.PASSWORD_WRONG',
+            ]).subscribe((transitions) => {
+                navigator['notification'].alert(
+                    transitions['MESSAGE.PASSWORD_WRONG'],
+                    () => {},
+                    transitions['MESSAGE.ERROR_TITLE'],
+                    transitions['OK']
+                );
             });
-
         }
+
+        console.log('password error.');
     }
 
+    // 响应错误
     responseError = (id, error) => {
-        console.log('onSignDNAError: ', {id, error});
-
         if (navigator['notification']) {
-            this.browser.executeScript({code: 'window.onSignDNAError(' + JSON.stringify(id) + ', ' + JSON.stringify(error) + ');'});
+            this.browser.executeScript({
+                code: 'window.onSignDNAError(' + JSON.stringify(id) + ', ' + JSON.stringify(error) + ');',
+            });
         }
+
+        console.log('onSignDNAError: ', {id, error});
     }
 
     formatToken(val) {
