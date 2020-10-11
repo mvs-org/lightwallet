@@ -9,8 +9,8 @@ import { DnaReqWsSubscribeProvider } from '../../providers/dna-req-ws-subscribe/
 import BigNumber from 'bignumber.js';
 import { DnaReqReqProvider } from '../../providers/dna-req-req/dna-req-req';
 import { TranslateService } from '@ngx-translate/core';
-import {DnaWalletProvider} from '../../providers/dna-wallet/dna-wallet';
-import {DnaReqTxProvider} from '../../providers/dna-req-tx/dna-req-tx';
+import { DnaWalletProvider } from '../../providers/dna-wallet/dna-wallet';
+import { DnaReqTxProvider } from '../../providers/dna-req-tx/dna-req-tx';
 
 let DATA = require('../../data/data').default;
 
