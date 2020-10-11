@@ -102,7 +102,7 @@ export class MyETPWallet {
             .then((logged) => this.isLogged = !!logged)
             .then(() => this.storage.get('walletType'))
             .then((type) => {
-                this.walletType = (type === 'dna' ? 'dna' : 'etp')
+                this.walletType = (type === 'etp' ? 'etp' : 'dna')
             })
             .then(() => this.storage.get('walletHasEtp'))
             .then((hasEtp) => {
@@ -138,16 +138,16 @@ export class MyETPWallet {
 
     // 是否为ETP钱包
     isEtp() {
-        return this.walletType !== 'dna';
+        return this.walletType === 'etp';
     }
 
     // 是否为DNA钱包
     isDna() {
-        return this.walletType === 'dna';
+        return this.walletType !== 'etp';
     }
 
     setWalletType(type) {
-        this.walletType = (type === 'dna' ? 'dna' : 'etp');
+        this.walletType = (type === 'etp' ? 'etp' : 'dna');
         this.storage.set('walletType', this.walletType)
             .then(() => {
                 if (this.isDna()) {

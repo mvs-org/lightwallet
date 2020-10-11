@@ -5,18 +5,18 @@
       <div *ngIf="isLogged && walletHasEtp && walletHasDna" class="menu-set-wallet">
         <ion-row *ngIf="isEtp()">
           <ion-col>
-            <button ion-button color="primary" block full style="height: 24px;">ETP</button>
+            <button class="wallet-change" ion-button color="primary" block full style="height: 24px;">ETP</button>
           </ion-col>
           <ion-col>
-            <button menuClose ion-button color="dark" block outline (click)="setWalletType('dna')" style="height: 24px;">DNA</button>
+            <button class="wallet-change" menuClose ion-button color="dark" block outline (click)="setWalletType('dna')" style="height: 24px;">DNA</button>
           </ion-col>
         </ion-row>
         <ion-row *ngIf="isDna()">
           <ion-col>
-            <button menuClose ion-button color="dark" block outline (click)="setWalletType('etp')" style="height: 24px;">ETP</button>
+            <button class="wallet-change" menuClose ion-button color="dark" block outline (click)="setWalletType('etp')" style="height: 24px;">ETP</button>
           </ion-col>
           <ion-col>
-            <button ion-button color="primary" block full style="height: 24px;">DNA</button>
+            <button class="wallet-change" ion-button color="primary" block full style="height: 24px;">DNA</button>
           </ion-col>
         </ion-row>
       </div>
