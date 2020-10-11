@@ -26,13 +26,13 @@
                 <p class="wrong-input" *ngIf="showRestartOption" translate="LOADING.STOPPED"></p>
                 <ion-row *ngIf="showRestartOption" class="padding-bottom">
                     <ion-col>
-                        <ion-button color="danger" (click)="cancel()">
+                        <ion-button color="danger" (click)="cancel()" fill="outline" shape="round">
                             <ion-icon slot="start" name="close"></ion-icon>
                             <span translate="LOADING.BUTTON.BACK"></span>
                         </ion-button>
                     </ion-col>
                     <ion-col>
-                        <ion-button type="submit" (click)="updateBalances()" color="primary">
+                        <ion-button type="submit" (click)="updateBalances()" fill="outline" shape="round" color="primary">
                             <ion-icon slot="start" name="sync"></ion-icon>
                             <span translate="LOADING.BUTTON.RETRY"></span>
                         </ion-button>

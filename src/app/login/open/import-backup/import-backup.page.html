@@ -61,15 +61,15 @@
                     </ion-row>
                     <ion-row class="buttons">
                         <ion-col size="6">
-                            <ion-button color="secondary" expand="full" type="submit" [disabled]="!importForm.form.valid || !validmnemonic">
-                                <ion-icon slot="start" name="download"></ion-icon>
-                                <span translate="IMPORT_WALLET_MNEMONIC.IMPORT_BUTTON"></span>
+                            <ion-button color="danger" expand="full" fill="outline" shape="round" type="button" (click)="clear()">
+                                <ion-icon slot="start" name="trash"></ion-icon>
+                                <span translate="IMPORT_WALLET_MNEMONIC.RESET"></span>
                             </ion-button>
                         </ion-col>
                         <ion-col size="6">
-                            <ion-button color="danger" expand="full" type="button" (click)="clear()">
-                                <ion-icon slot="start" name="trash"></ion-icon>
-                                <span translate="IMPORT_WALLET_MNEMONIC.RESET"></span>
+                            <ion-button color="secondary" expand="full" fill="outline" shape="round" type="submit" [disabled]="!importForm.form.valid || !validmnemonic">
+                                <ion-icon slot="start" name="download"></ion-icon>
+                                <span translate="IMPORT_WALLET_MNEMONIC.IMPORT_BUTTON"></span>
                             </ion-button>
                         </ion-col>
                     </ion-row>

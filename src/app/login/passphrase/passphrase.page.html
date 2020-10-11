@@ -29,7 +29,7 @@
             </ion-label>
             <ion-input formControlName="repeat" type="password" clearOnEdit="false"></ion-input>
           </ion-item>
-          <ion-button *ngIf="!isMobile" [disabled]="!form.valid" type="submit" expand="full">
+          <ion-button *ngIf="!isMobile" [disabled]="!form.valid" type="submit" expand="full" fill="outline" shape="round">
             <ion-icon slot="start" name="download"></ion-icon>
             <span translate="SELECT_PASSPHRASE.BUTTON.DOWNLOAD_FILE"></span>
           </ion-button>
