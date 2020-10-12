@@ -14,7 +14,7 @@ export class HistoryPage implements OnInit {
 
   asset: string
   txs: any[] = []
-  loading: boolean
+  loading = true
 
   displaySegment = 'transactions'
   height: number
@@ -49,7 +49,6 @@ export class HistoryPage implements OnInit {
   ) {
     this.addresses = history.state.data ? history.state.data.addresses : ''
     this.asset = this.activatedRoute.snapshot.params.symbol
-    this.loading = true
     this.current_time = Date.now()
     this.transactionMap = this.metaverseService.getTransactionMap()
     this.metaverseService.assetOrder().then(result => this.assets = ['ETP'].concat(result))
@@ -71,7 +70,7 @@ export class HistoryPage implements OnInit {
   }
 
   depositProgress(start, end) {
-    return Math.max(1, Math.min(99, Math.round((this.height - start) / (end - start) * 100)))
+    return Math.max(0.01, Math.min(0.99, Math.round((this.height - start) / (end - start) * 100) / 100))
   }
 
   private async showTxs(filter) {
@@ -168,7 +167,7 @@ export class HistoryPage implements OnInit {
     const outputs = await this.metaverseService.getFrozenOutputs(this.asset)
     this.frozen_outputs_locked = []
     this.frozen_outputs_unlocked = []
-    let groupedFrozenOuputs = {}
+    const groupedFrozenOuputs = {}
     outputs.forEach((output) => {
       groupedFrozenOuputs[output.height] = groupedFrozenOuputs[output.height] ? groupedFrozenOuputs[output.height] : {}
       if (groupedFrozenOuputs[output.height][output.locked_until]) {
@@ -183,9 +182,9 @@ export class HistoryPage implements OnInit {
         groupedFrozenOuputs[output.height][output.locked_until] = output
       }
     })
-    for (var height in groupedFrozenOuputs) {
-      var unlock = groupedFrozenOuputs[height]
-      for (let output in unlock) {
+    for (const height in groupedFrozenOuputs) {
+      const unlock = groupedFrozenOuputs[height]
+      for (const output in unlock) {
         if (this.height > parseInt(output)) {
           this.frozen_outputs_unlocked.push(unlock[output])
         } else {

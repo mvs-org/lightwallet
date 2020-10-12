@@ -467,6 +467,7 @@
         "TRANSACTIONS": "Transactions",
         "NO_TXS_YET": "No transactions yet",
         "NO_TXS_YET_TEXT": "Start using your wallet today!",
+        "UNLOCK_APPROXIMATION_INFORMATION": "*Please be aware that the 'Locked until' date is an approximation based on the number of block remaining and the average blocktime of the last 10000 blocks. It might vary based on block generation speed.",
         "LOCKS": "Locks",
         "ASSETS_LIST": "Asset",
         "ADDRESSES_LIST": "Addresses",

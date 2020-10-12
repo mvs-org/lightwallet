@@ -11,139 +11,99 @@
 </ion-header>
 
 <ion-content>
-    <div *ngIf="!loading">
 
-        <ion-item lines="none">
-            <ion-segment [(ngModel)]="displaySegment" color="primary">
-                <ion-segment-button value="transactions" translate="HISTORY.TRANSACTIONS"></ion-segment-button>
-                <ion-segment-button value="deposits" translate="HISTORY.LOCKS"></ion-segment-button>
-            </ion-segment>
-        </ion-item>
+    <ion-item lines="none">
+        <ion-segment [(ngModel)]="displaySegment" color="primary">
+            <ion-segment-button value="transactions" translate="HISTORY.TRANSACTIONS"></ion-segment-button>
+            <ion-segment-button value="deposits" translate="HISTORY.LOCKS"></ion-segment-button>
+        </ion-segment>
+    </ion-item>
 
-        <div *ngIf="displaySegment=='transactions'">
+    <div *ngIf="displaySegment=='transactions' && !loading">
 
-            <ion-row class="order-selectors">
-                <ion-col size="12" size-sm="6">
-                    <ion-item class="no-padding no-color-border">
-                        <ion-label translate="HISTORY.ASSETS_LIST"></ion-label>
-                        <ion-select [(ngModel)]="asset" (ionChange)="updateFilters(asset, addresses)">
-                            <ion-select-option *ngFor="let asset of assets" value="{{asset}}">{{asset}}
-                            </ion-select-option>
-                        </ion-select>
-                    </ion-item>
-                </ion-col>
-                <ion-col size="12" size-sm="6">
-                    <ion-item class="no-padding no-color-border">
-                        <ion-label translate="HISTORY.ADDRESSES_LIST"></ion-label>
-                        <ion-select [(ngModel)]="addresses" multiple="true" (ngModelChange)="onChange($event)"
-                            (ionChange)="updateFilters(asset, addresses)" #selectAddresses>
-                            <!--ion-select-option *ngIf="!allSelected" [value]="'all'" (ionSelect)="selectAll()" translate="HISTORY.SELECT_ALL_ADDRESSES"></ion-select-option>
-                            <ion-select-option *ngIf="allSelected" [value]="'none'" (ionSelect)="selectNone()" translate="HISTORY.SELECT_NONE_ADDRESSES"></ion-select-option-->
-                            <ion-select-option *ngFor="let address of allAddresses" [value]="address">{{address}}
-                            </ion-select-option>
-                        </ion-select>
-                    </ion-item>
-                </ion-col>
-            </ion-row>
-
-            <ion-list [hidden]="!txs.length">
-
-                <div *ngFor="let tx of txs | orderBy: ['confirmed_at', '1']">
-                    <tx-item *ngIf="tx && !tx.confirmed_at" [tx]="tx" [hexTx]="''" [status]="'PENDING'"
-                        [height]="height" [mode]="'summary'" [addresses]="addresses"></tx-item>
-                </div>
-
-                <div *ngFor="let tx of txs | paginate: { itemsPerPage: items_per_page, currentPage: page_tx }">
-                    <tx-item *ngIf="tx && tx.confirmed_at" [tx]="tx" [hexTx]="''" [status]="'MINED'" [height]="height"
-                        [mode]="'summary'" [addresses]="addresses"></tx-item>
-                </div>
-            </ion-list>
-            <pagination-controls class="pagination" (pageChange)="pageChange($event)"
-                *ngIf="txs && txs.length > items_per_page"></pagination-controls>
-
-            <div [hidden]="txs && txs.length">
-                <ion-row>
-                    <ion-col></ion-col>
-                    <ion-col width-67>
-                        <img class="big-icon" [src]="icon" (error)="errorImg($event)">
-                    </ion-col>
-                    <ion-col></ion-col>
-                </ion-row>
-
-                <ion-card-content>
-                    <ion-card-title class="center" translate="HISTORY.NO_TXS_YET"></ion-card-title>
-                    <p class="center" translate="HISTORY.NO_TXS_YET_TEXT"></p>
-                </ion-card-content>
-            </div>
-        </div>
-
-        <div *ngIf="displaySegment=='deposits'">
-            <ion-row class="order-selectors"
-                [hidden]="frozen_outputs_locked.length < 2 && frozen_outputs_unlocked.length < 2">
-                <ion-col size="6">
-                    <ion-item class="no-padding no-color-border">
-                        <ion-label translate="HISTORY.ORDER_BY"></ion-label>
-                        <ion-select [(ngModel)]="order_by">
-                            <ion-select-option value="locked_until" translate="HISTORY.ORDER_BY_UNLOCK_HEIGHT">
-                            </ion-select-option>
-                            <ion-select-option value="height" translate="HISTORY.ORDER_BY_HEIGHT"></ion-select-option>
-                        </ion-select>
-                    </ion-item>
-                </ion-col>
-                <ion-col size="6">
-                    <ion-item class="no-padding no-color-border">
-                        <ion-label translate="HISTORY.DIRECTION"></ion-label>
-                        <ion-select [(ngModel)]="direction">
-                            <ion-select-option value="0" translate="HISTORY.DIRECTION_EARLIEST_TOP"></ion-select-option>
-                            <ion-select-option value="1" translate="HISTORY.DIRECTION_LATEST_TOP"></ion-select-option>
-                        </ion-select>
-                    </ion-item>
-                </ion-col>
-            </ion-row>
-
-            <ion-list [hidden]="!frozen_outputs_locked.length">
-                <h2 class="center" translate="HISTORY.FROZEN_TX"></h2>
-                <ion-item *ngFor="let output of frozen_outputs_locked | orderBy: [order_by, direction]">
-                    <ion-item lines="none">
-                        <ion-avatar item-start>
-                            <img class="coinlogo" [src]="icon" onerror="this.src='assets/icon/default_mst.png'">
-                        </ion-avatar>
-                        <ion-label>
-                            <h1>{{asset}}</h1>
-                        </ion-label>
-                    </ion-item>
-                    <p *ngFor="let transaction of output.transactions">{{'TRANSACTION'|translate}}: <a
-                            href="{{explorerURL(transaction)}}" target="_blank" rel="noopener">{{transaction}}</a>
-                    </p>
-                    <p>{{'AMOUNT'|translate}}:
-                        <span *ngIf="asset == 'ETP'">{{output.value | format : output.attachment.decimals}}</span>
-                        <span *ngIf="asset != 'ETP'">{{output.attenuation_model_param.lock_quantity | format :
-                                output.attachment.decimals}}</span>
-                    </p>
-                    <p>{{'LOCKED_SINCE'|translate}}: {{output.height}} ({{output.confirmed_at*1000 | date :
-                            'medium'}})</p>
-                    <p>{{'LOCKED_UNTIL'|translate}}: {{output.locked_until}} (~{{((output.locked_until - height) *
-                            blocktime * 1000) + current_time | date : 'medium'}})*</p>
-                    <p>{{'LOCKED_FOR_BLOCKS'|translate}}: {{asset == 'ETP' ? output.locked_until-output.height :
-                            output.attenuation_model_param.lock_period}} {{'BLOCKS'|translate}}</p>
-                    <div *ngIf="output.height<= height">
-                        <ion-progress-bar color="primary"
-                            *ngIf="height<=output.locked_until && depositProgress(output.height, output.locked_until)>0"
-                            [value]="depositProgress(output.height, output.locked_until)"></ion-progress-bar>
-                    </div>
+        <ion-row class="order-selectors">
+            <ion-col size="12" size-sm="6">
+                <ion-item class="no-padding no-color-border">
+                    <ion-label translate="HISTORY.ASSETS_LIST"></ion-label>
+                    <ion-select [(ngModel)]="asset" (ionChange)="updateFilters(asset, addresses)">
+                        <ion-select-option *ngFor="let asset of assets" value="{{asset}}">{{asset}}
+                        </ion-select-option>
+                    </ion-select>
                 </ion-item>
-            </ion-list>
+            </ion-col>
+            <ion-col size="12" size-sm="6">
+                <ion-item class="no-padding no-color-border">
+                    <ion-label translate="HISTORY.ADDRESSES_LIST"></ion-label>
+                    <ion-select [(ngModel)]="addresses" multiple="true" (ngModelChange)="onChange($event)"
+                        (ionChange)="updateFilters(asset, addresses)" #selectAddresses>
+                        <!--ion-select-option *ngIf="!allSelected" [value]="'all'" (ionSelect)="selectAll()" translate="HISTORY.SELECT_ALL_ADDRESSES"></ion-select-option>
+                            <ion-select-option *ngIf="allSelected" [value]="'none'" (ionSelect)="selectNone()" translate="HISTORY.SELECT_NONE_ADDRESSES"></ion-select-option-->
+                        <ion-select-option *ngFor="let address of allAddresses" [value]="address">{{address}}
+                        </ion-select-option>
+                    </ion-select>
+                </ion-item>
+            </ion-col>
+        </ion-row>
 
-            <ion-row [hidden]="!frozen_outputs_locked.length">
-                <ion-col>
-                    <p align="center">{{"HISTORY.UNLOCK_APPROXIMATION_INFORMATION" | translate}}</p>
+        <ion-list [hidden]="!txs.length">
+
+            <div *ngFor="let tx of txs | orderBy: ['confirmed_at', '1']">
+                <tx-item *ngIf="tx && !tx.confirmed_at" [tx]="tx" [hexTx]="''" [status]="'PENDING'" [height]="height"
+                    [mode]="'summary'" [addresses]="addresses"></tx-item>
+            </div>
+
+            <div *ngFor="let tx of txs | paginate: { itemsPerPage: items_per_page, currentPage: page_tx }">
+                <tx-item *ngIf="tx && tx.confirmed_at" [tx]="tx" [hexTx]="''" [status]="'MINED'" [height]="height"
+                    [mode]="'summary'" [addresses]="addresses"></tx-item>
+            </div>
+        </ion-list>
+        <pagination-controls class="pagination" (pageChange)="pageChange($event)"
+            *ngIf="txs && txs.length > items_per_page"></pagination-controls>
+
+        <div [hidden]="txs && txs.length">
+            <ion-row>
+                <ion-col></ion-col>
+                <ion-col width-67>
+                    <img class="big-icon" [src]="icon" (error)="errorImg($event)">
                 </ion-col>
+                <ion-col></ion-col>
             </ion-row>
 
-            <ion-list [hidden]="!frozen_outputs_unlocked.length">
-                <h2 class="center" translate="HISTORY.UNFROZEN_TX"></h2>
-                <div
-                    *ngFor="let output of frozen_outputs_unlocked | orderBy: [order_by, direction] | paginate: { itemsPerPage: items_per_page, currentPage: page_deposit_unlocked }">
+            <ion-card-content>
+                <ion-card-title class="center" translate="HISTORY.NO_TXS_YET"></ion-card-title>
+                <p class="center" translate="HISTORY.NO_TXS_YET_TEXT"></p>
+            </ion-card-content>
+        </div>
+    </div>
+
+    <div *ngIf="displaySegment=='deposits' && !loading">
+        <ion-row class="order-selectors"
+            [hidden]="frozen_outputs_locked.length < 2 && frozen_outputs_unlocked.length < 2">
+            <ion-col size="6">
+                <ion-item class="no-padding no-color-border">
+                    <ion-label translate="HISTORY.ORDER_BY"></ion-label>
+                    <ion-select [(ngModel)]="order_by">
+                        <ion-select-option value="locked_until" translate="HISTORY.ORDER_BY_UNLOCK_HEIGHT">
+                        </ion-select-option>
+                        <ion-select-option value="height" translate="HISTORY.ORDER_BY_HEIGHT"></ion-select-option>
+                    </ion-select>
+                </ion-item>
+            </ion-col>
+            <ion-col size="6">
+                <ion-item class="no-padding no-color-border">
+                    <ion-label translate="HISTORY.DIRECTION"></ion-label>
+                    <ion-select [(ngModel)]="direction">
+                        <ion-select-option value="0" translate="HISTORY.DIRECTION_EARLIEST_TOP"></ion-select-option>
+                        <ion-select-option value="1" translate="HISTORY.DIRECTION_LATEST_TOP"></ion-select-option>
+                    </ion-select>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+
+        <ion-list [hidden]="!frozen_outputs_locked.length">
+            <h2 class="center" translate="HISTORY.FROZEN_TX"></h2>
+            <ion-card *ngFor="let output of frozen_outputs_locked | orderBy: [order_by, direction]">
+                <ion-grid>
                     <ion-item lines="none">
                         <ion-avatar slot="start">
                             <img class="coinlogo" [src]="icon" onerror="this.src='assets/icon/default_mst.png'">
@@ -167,28 +127,70 @@
                         [translateParams]="{number: asset == 'ETP' ? output.locked_until - output.height : output.attenuation_model_param.lock_period}">
                     </div>
                     <div *ngIf="output.height <= height">
-                        <ion-progress-bar color="primary" *ngIf="height>output.locked_until" [value]="100">
+                        <ion-progress-bar color="primary" *ngIf="height < output.locked_until"
+                            [value]="depositProgress(output.height, output.locked_until)">
                         </ion-progress-bar>
                     </div>
-                </div>
-                <pagination-controls (pageChange)="page_deposit_unlocked = $event"
-                    *ngIf="frozen_outputs_unlocked && frozen_outputs_unlocked.length > items_per_page">
-                </pagination-controls>
-            </ion-list>
+                </ion-grid>
+            </ion-card>
+        </ion-list>
 
-            <div [hidden]="frozen_outputs_unlocked.length || frozen_outputs_locked.length">
-                <ion-row>
-                    <ion-col></ion-col>
-                    <ion-col width-67>
-                        <img class="big-icon" [src]="icon" onerror="this.src='assets/icon/default_mst.png'">
-                    </ion-col>
-                    <ion-col></ion-col>
-                </ion-row>
+        <ion-row [hidden]="!frozen_outputs_locked.length">
+            <ion-col>
+                <p align="center" translate="HISTORY.UNLOCK_APPROXIMATION_INFORMATION"></p>
+            </ion-col>
+        </ion-row>
 
-                <ion-card-content>
-                    <ion-card-title class="center" [translate]="'HISTORY.NO_LOCK_YET'"></ion-card-title>
-                </ion-card-content>
-            </div>
+        <ion-list [hidden]="!frozen_outputs_unlocked.length">
+            <h2 class="center" translate="HISTORY.UNFROZEN_TX"></h2>
+            <ion-card
+                *ngFor="let output of frozen_outputs_unlocked | orderBy: [order_by, direction] | paginate: { itemsPerPage: items_per_page, currentPage: page_deposit_unlocked }">
+                <ion-grid>
+                    <ion-item lines="none">
+                        <ion-avatar slot="start">
+                            <img class="coinlogo" [src]="icon" onerror="this.src='assets/icon/default_mst.png'">
+                        </ion-avatar>
+                        <ion-label>
+                            <h1>{{asset}}</h1>
+                        </ion-label>
+                    </ion-item>
+                    <div *ngFor="let transaction of output.transactions">{{'HISTORY.LOCKED_TRANSACTION'|translate}}:
+                        <a href="{{explorerURL(transaction)}}" target="_blank" rel="noopener">{{transaction}}</a>
+                    </div>
+                    <div translate="HISTORY.LOCKED_AMOUNT"
+                        [translateParams]="{asset: asset, number: asset == 'ETP' ? (output.value | format : output.attachment.decimals) : output.attenuation_model_param.lock_quantity | format : output.attachment.decimals}">
+                    </div>
+                    <div translate="HISTORY.LOCKED_SINCE_BLOCK"
+                        [translateParams]="{block: output.height, time: output.confirmed_at*1000|date:'medium'}">
+                    </div>
+                    <div translate="HISTORY.LOCKED_UNTIL_BLOCK_ONLY" [translateParams]="{block: output.locked_until}">
+                    </div>
+                    <div translate="HISTORY.LOCKED_FOR_BLOCKS"
+                        [translateParams]="{number: asset == 'ETP' ? output.locked_until - output.height : output.attenuation_model_param.lock_period}">
+                    </div>
+                    <div *ngIf="output.height <= height">
+                        <ion-progress-bar color="primary" *ngIf="height>output.locked_until" [value]="1">
+                        </ion-progress-bar>
+                    </div>
+                </ion-grid>
+            </ion-card>
+            <pagination-controls (pageChange)="page_deposit_unlocked = $event"
+                *ngIf="frozen_outputs_unlocked && frozen_outputs_unlocked.length > items_per_page">
+            </pagination-controls>
+        </ion-list>
+
+        <div [hidden]="frozen_outputs_unlocked.length || frozen_outputs_locked.length">
+            <ion-row>
+                <ion-col></ion-col>
+                <ion-col width-67>
+                    <img class="big-icon" [src]="icon" onerror="this.src='assets/icon/default_mst.png'">
+                </ion-col>
+                <ion-col></ion-col>
+            </ion-row>
+
+            <ion-card-content>
+                <ion-card-title class="center" [translate]="'HISTORY.NO_LOCK_YET'"></ion-card-title>
+            </ion-card-content>
         </div>
     </div>
     <div class="mini-loader" *ngIf="loading"></div>
