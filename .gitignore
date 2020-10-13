@@ -3,6 +3,7 @@ platforms
 www
 plugins
 android
+.gradle
 .sourcemaps
 screenshots
 debug.png
