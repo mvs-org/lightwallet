@@ -195,8 +195,10 @@ export class DnaLockPage {
                     } else {
 
                     }
-                    console.log(obj);
-                    results.push(obj);
+
+                    if (obj.amount > 0) {
+                        results.push(obj);
+                    }
                 }
 
                 results = results.sort((a, b) => {
@@ -204,8 +206,6 @@ export class DnaLockPage {
                 });
 
                 this.locks = results;
-
-                console.log('histories: ', this.locks);
             }
         });
     }

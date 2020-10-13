@@ -34,7 +34,7 @@ export class DnaLockItemComponent {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        console.log('lock item: ', this.lock);
+        //console.log('lock item: ', this.lock);
     }
 
     goWithdraw = () => {
