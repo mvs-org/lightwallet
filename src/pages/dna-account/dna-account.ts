@@ -6,10 +6,7 @@ import { AlertProvider } from '../../providers/alert/alert';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
 import { DnaReqWsSubscribeProvider } from "../../providers/dna-req-ws-subscribe/dna-req-ws-subscribe";
-import { DnaReqReqProvider } from "../../providers/dna-req-req/dna-req-req";
-import BigNumber from "bignumber.js";
-import { DnaUtilUtilProvider } from "../../providers/dna-util-util/dna-util-util";
-import { AppGlobals } from '../../app/app.global';
+//import { AppGlobals } from '../../app/app.global';
 import { DnaAccountProvider } from '../../providers/dna-account/dna-account';
 
 let DATA = require('../../data/data.js').default;
@@ -48,7 +45,7 @@ export class DnaAccountPage {
     mitAssets: any;
 
     private initialized = false;
-    private syncinterval: any;
+    //private syncinterval: any;
 
     constructor(
         public nav: NavController,
@@ -60,7 +57,7 @@ export class DnaAccountPage {
         private event: Events,
         public navParams: NavParams,
         private storage: Storage,
-        private global: AppGlobals,
+        //private global: AppGlobals,
         private dnaAccount: DnaAccountProvider,
     ) {
 
