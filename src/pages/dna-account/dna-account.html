@@ -47,9 +47,9 @@
             <h2 [translate]="'DNA.HEADLINE_OTHER'"></h2>
             <div *ngIf="mstAssets && mstAssets.length <= 0" [translate]="'DNA.NO_MST_TEXT'"></div>
             <ion-row *ngIf="mstAssets && mstAssets.length > 0">
-                <ng-container *ngFor="let asset of mstAssets" class="asset-container">
-                    <ion-col class="asset-container">
-                        <dna-mst-card [balance]="balance(asset.id)" [asset]="asset" [userInfo]="userInfo" [language]="language" [icon]="'assets/icon/' + asset.symbol + '.png'"></dna-mst-card>
+                <ng-container *ngFor="let asset of mstAssets" class="asset-container-mst">
+                    <ion-col class="asset-container-mst">
+                        <dna-mst-card [balance]="balance(asset.id)" [asset]="asset" [userInfo]="userInfo" [language]="language" [icon]="icons[asset.symbol] ? icons[asset.symbol] : ''"></dna-mst-card>
                     </ion-col>
                 </ng-container>
             </ion-row>

@@ -16,21 +16,21 @@ export class DnaMstCardComponent {
 
     constructor(
         private nav: NavController
-    ) {  }
+    ) { }
 
     formatTokenWithoutSymbol(val) {
-        return DnaUtilUtilProvider.formatToken(val, [], this.asset.precision, "");
+        return DnaUtilUtilProvider.formatToken(val, [], 4, "", this.asset.precision);
     }
 
     gotoTransactions = () => {
-        this.nav.push("dna-transactions-page", { asset: this.asset.symbol, assetId: this.asset.id, userInfo: this.userInfo })
+        this.nav.push("dna-transactions-page", { asset: this.asset.symbol, assetId: this.asset.id, assetPrecision: this.asset.precision, userInfo: this.userInfo })
     }
 
     gotoTransfer = () => {
-        this.nav.push("dna-transfer-page", { asset: this.asset.symbol, assetId: this.asset.id, userInfo: this.userInfo, balance: this.balance })
+        this.nav.push("dna-transfer-page", { asset: this.asset.symbol, assetId: this.asset.id, assetPrecision: this.asset.precision, userInfo: this.userInfo, balance: this.balance })
     }
 
     gotoReceive = () => {
-        this.nav.push('dna-receive-page', { asset: this.asset.symbol, assetId: this.asset.id, userInfo: this.userInfo });
+        this.nav.push('dna-receive-page', { asset: this.asset.symbol, assetId: this.asset.id, assetPrecision: this.asset.precision, userInfo: this.userInfo });
     }
 }

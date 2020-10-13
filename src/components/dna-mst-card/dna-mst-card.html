@@ -4,7 +4,8 @@
             <ion-col>
                 <ion-item class="grid-info">
                     <ion-avatar item-start>
-                        <img class="coinlogo" [src]="icon">
+                        <img *ngIf="icon" class="coinlogo" [src]="icon">
+                        <div *ngIf="!icon" class="coinlogo-txt">{{asset.symbol.substring(0, 1)}}</div>
                     </ion-avatar>
                     <h1 class="symbol overflow">
                         {{asset.symbol}}
@@ -13,7 +14,10 @@
                         </button>-->
                     </h1>
                     <h2 class="balances balance-text">
-                        <div class="balance-field-fiat">
+                        <!--<div class="balance-field-fiat">
+                            {{"ACCOUNT.TOTAL"|translate}}
+                        </div>-->
+                        <div class="balance-field">
                             {{"ACCOUNT.TOTAL"|translate}}
                         </div>
                         <div class="balance-field">
@@ -24,7 +28,7 @@
                         </div>
                     </h2>
                     <h2 class="balances">
-                        <div class="balance-field-fiat">
+                        <!--<div class="balance-field-fiat">
                             <div>{{formatTokenWithoutSymbol(balance ? balance.total : 0)}}</div>
                             <div *ngIf="!balance || balance.total <= 0" class="fiat">
                                 ≈ -
@@ -32,6 +36,10 @@
                             <div *ngIf="balance && balance.total > 0" class="fiat">
                                 ≈ {{language == 'zh' ? 'CNY' : 'USD'}} {{language == 'zh' ? balance.currency['CNY'] : balance.currency['USD']}}
                             </div>
+                        </div>
+                        -->
+                        <div class="balance-field">
+                            <div>{{formatTokenWithoutSymbol(balance ? balance.total : 0)}}</div>
                         </div>
                         <div class="balance-field">
                             <div>{{formatTokenWithoutSymbol(balance ? balance.available : 0)}}</div>

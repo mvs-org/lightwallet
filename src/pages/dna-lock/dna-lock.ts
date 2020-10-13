@@ -6,7 +6,7 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
 import { DnaUtilUtilProvider } from '../../providers/dna-util-util/dna-util-util';
 import { DnaUtilRegexProvider } from '../../providers/dna-util-regex/dna-util-regex';
 import { TranslateService } from '@ngx-translate/core';
-import { AppGlobals } from '../../app/app.global';
+//import { AppGlobals } from '../../app/app.global';
 import {DnaReqWsSubscribeProvider} from '../../providers/dna-req-ws-subscribe/dna-req-ws-subscribe';
 import {DnaWalletProvider} from '../../providers/dna-wallet/dna-wallet';
 import {DnaReqTxProvider} from '../../providers/dna-req-tx/dna-req-tx';
@@ -36,6 +36,7 @@ export class DnaLockPage {
     balance: any;
     userInfo: any;
 
+    icons: any;
     isApp: boolean;
 
     display_segment: string = 'lock';
@@ -68,9 +69,10 @@ export class DnaLockPage {
         private alert: AlertProvider,
         private translate: TranslateService,
         private storage: Storage,
-        private global: AppGlobals,
+        //private global: AppGlobals,
         private dnaAccount: DnaAccountProvider,
     ) {
+        this.icons = DATA.icons;
         this.isApp = (!document.URL.startsWith('http') || document.URL.startsWith('http://localhost'));
 
         this.translate.get(['DNA.LOCK_UNIT_M', 'DNA.LOCK_UNIT_D']).subscribe((transitions) => {
@@ -222,7 +224,7 @@ export class DnaLockPage {
         return DnaReqWsSubscribeProvider.wsFetchVotingPeriod().then((round) => {
             this.currentRound = round;
             if (round == "pre" || round == "b") {
-                this.canLock = false;
+                this.canLock = true;
             }
             if (round == "a") {
                 this.canWithdraw = true;

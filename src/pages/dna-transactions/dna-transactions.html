@@ -24,7 +24,7 @@
         <div *ngIf="display_segment=='transactions'">
             <ion-list [hidden]="!txs.length">
                 <div *ngFor="let tx of txs | paginate: { itemsPerPage: items_per_page, currentPage: page_tx }">
-                    <dna-tx-item [tx]="tx" [users]="users" [asset]="asset" [userInfo]="userInfo" [mode]="'summary'"></dna-tx-item>
+                    <dna-tx-item [tx]="tx" [users]="users" [asset]="asset" [assetId]="assetId" [assetPrecision]="assetPrecision" [userInfo]="userInfo" [mode]="'summary'"></dna-tx-item>
                 </div>
             </ion-list>
             <pagination-controls (pageChange)="pageChange($event)" *ngIf="txs && txs.length > items_per_page"></pagination-controls>
@@ -33,7 +33,11 @@
                 <ion-row>
                     <ion-col></ion-col>
                     <ion-col width-67>
-                        <img class="big-icon" [src]="'assets/icon/' + asset + '.png'">
+                        <img *ngIf="icons[asset]" class="big-icon" [src]="icons[asset]">
+                        <div *ngIf="!icons[asset]" class="big-icon-box">
+                            <img class="big-icon" [src]="'assets/icon/DNA.png'">
+                            <div class="big-icon-txt">{{asset.substring(0, 1)}}</div>
+                        </div>
                     </ion-col>
                     <ion-col></ion-col>
                 </ion-row>

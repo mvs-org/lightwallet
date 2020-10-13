@@ -11,6 +11,8 @@ import {DnaWalletProvider} from "../../providers/dna-wallet/dna-wallet";
 import {DnaReqTxProvider} from "../../providers/dna-req-tx/dna-req-tx";
 import BigNumber from "bignumber.js";
 
+let DATA = require('../../data/data').default;
+
 @IonicPage({
     name: 'dna-transfer-page',
     segment: 'dna-send/:asset'
@@ -22,6 +24,7 @@ import BigNumber from "bignumber.js";
 export class DnaTransferPage {
 
     asset: string = this.navParams.get('asset');
+    assetPrecision: number = this.navParams.get('assetPrecision');
     balance: any = this.navParams.get('balance');
     userInfo: any = this.navParams.get('userInfo');
 
@@ -59,8 +62,12 @@ export class DnaTransferPage {
         });
     }
 
+    formatToken(val) {
+        return DnaUtilUtilProvider.formatToken(val, [], 4); //
+    }
+
     formatTokenWithoutSymbol(val) {
-        return DnaUtilUtilProvider.formatToken(val, [], 4, "");
+        return DnaUtilUtilProvider.formatToken(val, [], 4, "", this.assetPrecision);
     }
 
     validDepositAddress = (depositAddress) => {
@@ -107,7 +114,7 @@ export class DnaTransferPage {
                 }
             }).then(() => {
                 // 检查余额是否充足
-                let amount = DnaUtilUtilProvider.toUnit(this.sendAmount);
+                let amount = DnaUtilUtilProvider.toUnit(this.sendAmount, this.assetPrecision);
                 if (amount > this.balance.available) {
                     throw 'DNA.SEND_AVAILABLE_NOT_ENOUGH';
                 }
@@ -135,17 +142,19 @@ export class DnaTransferPage {
                 let walletInfo = DnaWalletProvider.getAccountInfo(mnemonic, 'bts');
 
                 // TODO 现在是直接转账，是否要加确认？
-                return DnaReqTxProvider.transferDNA(walletInfo['privateKey'], this.userInfo.name, this.depositAddress, {amount: DnaUtilUtilProvider.toUnit(this.sendAmount), asset: this.asset}, this.memo, true)
+                return DnaReqTxProvider.transferDNA(walletInfo['privateKey'], this.userInfo.name, this.depositAddress, {amount: DnaUtilUtilProvider.toUnit(this.sendAmount, this.assetPrecision), asset: this.asset}, this.memo, true)
                     .then((result) => {
                         if (!result || !result.operations || !result.operations[0] || !result.operations[0][1] || !result.operations[0][1].fee) {
                             throw 'DNA.NETWORK_ERROR';
                         }
 
                         let feeObj = result.operations[0][1].fee;
-                        return DnaReqTxProvider.transferDNA(walletInfo['privateKey'], this.userInfo.name, this.depositAddress, {amount: DnaUtilUtilProvider.toUnit(this.sendAmount), asset: this.asset}, this.memo, false)
+                        return DnaReqTxProvider.transferDNA(walletInfo['privateKey'], this.userInfo.name, this.depositAddress, {amount: DnaUtilUtilProvider.toUnit(this.sendAmount, this.assetPrecision), asset: this.asset}, this.memo, false)
                             .then((result) => {
                                 let txId = (result && result.length > 0) ? result[0].id : '';
-                                let avai = parseInt(this.balance.available) - parseInt(DnaUtilUtilProvider.toUnit(this.sendAmount).toString()) - feeObj['amount'];
+                                let avai = this.asset == DATA.TOKEN_SYMBOL
+                                        ? parseInt(this.balance.available) - parseInt(DnaUtilUtilProvider.toUnit(this.sendAmount, this.assetPrecision).toString()) - feeObj['amount']
+                                        : parseInt(this.balance.available) - parseInt(DnaUtilUtilProvider.toUnit(this.sendAmount, this.assetPrecision).toString());
 
                                 this.balance            = Object.assign({}, this.balance, {available: avai > 0 ? avai : 0});
                                 this.depositAddress     = '';

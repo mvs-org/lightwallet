@@ -22,6 +22,8 @@ export class DnaTxItemComponent {
     @Input() users: any;
     @Input() userInfo: any;
     @Input() asset: string;
+    @Input() assetId: string;
+    @Input() assetPrecision: number;
 
     blockNum: any;
     block: any;
@@ -53,7 +55,7 @@ export class DnaTxItemComponent {
     }
 
     formatTokenWithoutSymbol(val) {
-        return DnaUtilUtilProvider.formatToken(val, [], 4, "");
+        return DnaUtilUtilProvider.formatToken(val, [], 4, "", this.assetPrecision);
     }
 
     async showHideDetails() {

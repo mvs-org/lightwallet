@@ -28,7 +28,7 @@ export class DnaAccountPage {
     height: number
     loading: boolean
     theme: string
-    //icons: any = { MST: [], MIT: [] }
+    icons: any;
     //tickers = {}
     //base: string
     //domains: any = []
@@ -69,6 +69,7 @@ export class DnaAccountPage {
             this.height = blockHeight;
         });
 
+        this.icons = DATA.icons;
         this.theme = document.getElementById('theme').className
         this.event.subscribe("theme_changed", (theme) => {
             this.theme = ('theme-' + theme)

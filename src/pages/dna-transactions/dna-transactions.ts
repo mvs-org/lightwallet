@@ -3,6 +3,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {DnaReqWsSubscribeProvider} from "../../providers/dna-req-ws-subscribe/dna-req-ws-subscribe";
 
+let DATA = require('../../data/data').default;
+
 @IonicPage({
     name: 'dna-transactions-page',
     segment: 'dna-transactions/:asset'
@@ -18,8 +20,11 @@ export class DnaTransactionsPage {
 
     asset: string;
     assetId: string;
+    assetPrecision: number;
     userInfo: any;
     loading: boolean;
+
+    icons: any;
 
     height: number
 
@@ -33,10 +38,12 @@ export class DnaTransactionsPage {
         public navCtrl: NavController,
         public navParams: NavParams,
     ) {
-        this.asset    = navParams.get('asset');
-        this.assetId  = navParams.get('assetId');
-        this.userInfo = navParams.get('userInfo');
-        this.loading  = true;
+        this.icons          = DATA.icons;
+        this.asset          = navParams.get('asset');
+        this.assetId        = navParams.get('assetId');
+        this.assetPrecision = navParams.get('assetPrecision');
+        this.userInfo       = navParams.get('userInfo');
+        this.loading        = true;
     }
 
     async ionViewDidEnter() {

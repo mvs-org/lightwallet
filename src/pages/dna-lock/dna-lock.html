@@ -106,7 +106,11 @@
             <ion-row>
                 <ion-col></ion-col>
                 <ion-col width-67>
-                    <img class="big-icon" [src]="'assets/icon/' + asset + '.png'">
+                    <img *ngIf="icons[asset]" class="big-icon" [src]="icons[asset]">
+                    <div *ngIf="!icons[asset]" class="big-icon-box">
+                        <img class="big-icon" [src]="'assets/icon/DNA.png'">
+                        <div class="big-icon-txt">{{asset.substring(0, 1)}}</div>
+                    </div>
                 </ion-col>
                 <ion-col></ion-col>
             </ion-row>
