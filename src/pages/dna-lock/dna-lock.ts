@@ -7,10 +7,11 @@ import { DnaUtilUtilProvider } from '../../providers/dna-util-util/dna-util-util
 import { DnaUtilRegexProvider } from '../../providers/dna-util-regex/dna-util-regex';
 import { TranslateService } from '@ngx-translate/core';
 //import { AppGlobals } from '../../app/app.global';
-import {DnaReqWsSubscribeProvider} from '../../providers/dna-req-ws-subscribe/dna-req-ws-subscribe';
-import {DnaWalletProvider} from '../../providers/dna-wallet/dna-wallet';
-import {DnaReqTxProvider} from '../../providers/dna-req-tx/dna-req-tx';
-import {DnaAccountProvider} from '../../providers/dna-account/dna-account';
+import { DnaReqWsSubscribeProvider } from '../../providers/dna-req-ws-subscribe/dna-req-ws-subscribe';
+import { DnaWalletProvider } from '../../providers/dna-wallet/dna-wallet';
+import { DnaReqTxProvider } from '../../providers/dna-req-tx/dna-req-tx';
+import { DnaAccountProvider } from '../../providers/dna-account/dna-account';
+import BigNumber from 'bignumber.js'
 
 let DATA = require('../../data/data').default;
 
@@ -158,7 +159,9 @@ export class DnaLockPage {
                         obj['seconds'] = vb.policy[1].vesting_seconds;
                         //开始解锁时间
                         obj['unlockTime'] = new Date(vb.policy[1].start_claim + "Z");
-                        obj['withdraw_available'] = 0;
+
+                        obj['withdraw_available'] = parseInt('' + (parseFloat(this.comCsEard(vb.policy[1], vb.balance.amount)) / Math.max(vb.policy[1].vesting_seconds, 1)));
+                        /*obj['withdraw_available'] = 0;
                         if (obj['unlockTime'] < now) {
                             //现在已经超过开始解锁时间
                             obj['withdraw_available'] =
@@ -167,7 +170,7 @@ export class DnaLockPage {
                             if (obj['withdraw_available'] > obj.amount) {
                                 obj['withdraw_available'] = obj.amount;
                             }
-                        }
+                        }*/
                     } else if (vb.policy[0] == 0) {
                         //linear_vesting_policy_initializer
                         obj['lockTime'] = new Date(vb.policy[1].begin_timestamp + "Z");
@@ -218,6 +221,24 @@ export class DnaLockPage {
                     console.log('feeWithdraw: ', this.feeWithdraw);
                 }
             });
+    }
+
+    comCsEard(p, amt) {
+        let delta_seconds      = parseInt('' + ((new Date().getTime() - new Date(p.coin_seconds_earned_last_update + "Z").getTime()) / 1000));
+        let delta_coin_seconds = new BigNumber(amt);
+        delta_coin_seconds = delta_coin_seconds.times(delta_seconds);
+        let coin_seconds_earned_cap = new BigNumber(amt);
+        coin_seconds_earned_cap = coin_seconds_earned_cap.times(
+            Math.max(p.vesting_seconds, 1)
+        );
+
+        let v1 = delta_coin_seconds.plus(p.coin_seconds_earned);
+        let v2 = coin_seconds_earned_cap;
+        if (v1.isGreaterThan(v2)) {
+            return v2.toFixed(0);
+        } else {
+            return v1.toFixed(0);
+        }
     }
 
     loadRound = () => {

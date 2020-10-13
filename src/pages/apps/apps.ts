@@ -67,7 +67,9 @@ export class AppsPage {
             return;
         }
 
-        this.browser = this.iab.create(url, '_blank');
+        this.browser = this.iab.create(url, '_blank', {
+            hardwareback: 'no',
+        });
         this.browser.on('message').subscribe((e) => {
             if (e.type === 'message') {
                 if (e.data.name == 'signDNA') {

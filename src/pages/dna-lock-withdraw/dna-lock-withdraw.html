@@ -15,7 +15,7 @@
             <p align="center" class="wrong-input">{{"DNA.NOTICE_TRANSACTION_FEE_UNCOVERED"|translate}}</p>
             <ion-row>
                 <ion-col>
-                    <p class="available">{{"AVAILABLE_BALANCE" | translate}}: <br *ngIf="platform.is('mobile')">{{formatTokenWithoutSymbol(balance.available)}} {{asset}}</p>
+                    <p class="available">{{'DNA.LOCK_UNLOCK_AMOUNT' | translate}}: <br *ngIf="platform.is('mobile')">{{formatTokenWithoutSymbol(lock.withdraw_available)}} {{asset}}</p>
                 </ion-col>
                 <ion-col>
                     <p class="right">{{"DNA.LOCK_FEE_WITHDRAW"|translate}}: <br *ngIf="platform.is('mobile')">{{formatToken(feeWithdraw)}}</p>
