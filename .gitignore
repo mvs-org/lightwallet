@@ -3,6 +3,7 @@ platforms
 www
 plugins
 android
+ios
 .gradle
 .sourcemaps
 screenshots
