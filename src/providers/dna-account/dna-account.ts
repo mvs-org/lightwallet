@@ -49,7 +49,9 @@ export class DnaAccountProvider {
             .catch((e) => {
                 console.log('Dna token info load failed: ', e);
 
-                this.loadTokenInfo();
+                setTimeout(() => {
+                    this.loadTokenInfo();
+                }, 1000);
             });
     }
 
@@ -74,7 +76,9 @@ export class DnaAccountProvider {
             .catch((e) => {
                 console.log('Dna full account load failed: ', e);
 
-                this.loadFullAccount();
+                setTimeout(() => {
+                    this.loadFullAccount();
+                }, 1000);
             });
     }
 

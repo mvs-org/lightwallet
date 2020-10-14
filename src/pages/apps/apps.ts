@@ -1,15 +1,17 @@
- import { Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { IonicPage, NavController, Platform } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { AppGlobals } from '../../app/app.global';
 import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
 import { Storage } from "@ionic/storage";
 import { InAppBrowser } from '@ionic-native/in-app-browser';
- import {DnaReqTxProvider} from '../../providers/dna-req-tx/dna-req-tx';
- import {DnaReqWsSubscribeProvider} from '../../providers/dna-req-ws-subscribe/dna-req-ws-subscribe';
- import {DnaUtilUtilProvider} from '../../providers/dna-util-util/dna-util-util';
- import {DnaWalletProvider} from '../../providers/dna-wallet/dna-wallet';
+import {DnaReqTxProvider} from '../../providers/dna-req-tx/dna-req-tx';
+import {DnaReqWsSubscribeProvider} from '../../providers/dna-req-ws-subscribe/dna-req-ws-subscribe';
+import {DnaUtilUtilProvider} from '../../providers/dna-util-util/dna-util-util';
+import {DnaWalletProvider} from '../../providers/dna-wallet/dna-wallet';
 //import { AlertProvider } from '../../providers/alert/alert';
+
+let DATA = require('../../data/data').default;
 
 @IonicPage()
 @Component({
@@ -25,6 +27,7 @@ export class AppsPage {
     browser: any;
     dnaUserInfo: any;
     dnaPublicKey: any;
+    opened: boolean = false;
 
     constructor(
         public nav: NavController,
@@ -67,6 +70,7 @@ export class AppsPage {
             return;
         }
 
+        this.opened  = true;
         this.browser = this.iab.create(url, '_blank', {
             hardwareback: 'no',
         });
@@ -83,107 +87,202 @@ export class AppsPage {
         this.browser.on('loadstop').subscribe((e) => {
             this.browser.executeScript({code: this.getJavascript(this.dnaUserInfo['name'], this.dnaUserInfo['pkey'])});
         });
+        this.browser.on('exit').subscribe((e) => {
+            this.opened = false;
+        });
     }
 
     signDNA = (id, data) => {
         try {
             data = JSON.parse(data);
-        } catch (e) {
-            return this.responseError(id, e);
-        }
-        
-        this.storage.get('dnaUserInfo')
-            .then((userInfo) => {
-                if (!data.operations
-                        || data.operations.length <= 0
-                        || data.operations[0].length < 2) {
-                    throw 'Param error';
+            if (data.operations && data.operations.length > 0 && data.operations[0].length >= 2) {
+                console.log('message.data: ', JSON.stringify(data));
+                console.log('message.data.operations: ', JSON.stringify(data.operations));
+                if (!this.opened) {
+                    return;
                 }
 
-                console.log('data.operations: ', JSON.stringify(data.operations))
+                if (data.operations[0][0] != 0) {
+                    this.signDNAOperation(id, data);
+                } else {
+                    this.storage.get('dnaUserInfo')
+                        .then((userInfo) => {
+                            let fromAccountId = data.operations[0][1].from;
+                            let toAccountId   = data.operations[0][1].to;
+                            let sendAmount    = data.operations[0][1].amount;
+                            let memo          = data.memo_object;
+                            let message       = (memo && memo.message) ? memo.message.toString() : '';
+                            let amount        = sendAmount && sendAmount.amount ? sendAmount.amount : 0;
+                            let assetId       = sendAmount && sendAmount.asset_id ? sendAmount.asset_id : '';
 
-                let fromAccountId = data.operations[0][1].from;
-                let toAccountId   = data.operations[0][1].to;
-                let sendAmount    = data.operations[0][1].amount;
-                let memo          = data.memo_object;
-                let message       = (memo && memo.message) ? memo.message.toString() : '';
-                let amount        = sendAmount && sendAmount.amount ? sendAmount.amount : 0;
-                let assetId       = sendAmount && sendAmount.asset_id ? sendAmount.asset_id : '';
-
-                console.log('message: ', memo, message);
-                if (!fromAccountId || !toAccountId || !amount || !assetId) {
-                    throw 'Param error';
-                }
-
-                return DnaReqWsSubscribeProvider.wsFetchBtsGetAccountsDetail([fromAccountId, toAccountId])
-                    .then((accounts) => {
-                        let fromAccount = accounts.find(it => it.id == fromAccountId);
-                        let toAccount   = accounts.find(it => it.id == toAccountId);
-                        if (!fromAccount || !toAccount) {
-                            throw 'Account not found';
-                        }
-
-                        this.translate.get([
-                            'DNA.DAPP_FROM_ACCOUNT',
-                            'DNA.DAPP_AMOUNT',
-                            'DNA.DAPP_TO_ACCOUNT',
-                            'DNA.DAPP_MESSAGE',
-                            'DNA.DAPP_TITLE',
-                            'DNA.DAPP_BUTTON_OK',
-                            'DNA.DAPP_BUTTON_CANCEL',
-                            'DNA.DAPP_INPUT_PASSWORD',
-                        ]).subscribe((transitions) => {
-                            let confirmTxt = '\n' +
-                                transitions['DNA.DAPP_FROM_ACCOUNT'] + ': ' + fromAccount.name + '\n' +
-                                transitions['DNA.DAPP_AMOUNT'] + ': ' + this.formatToken(amount) + '\n' +
-                                transitions['DNA.DAPP_TO_ACCOUNT'] + ': ' + toAccount.name + '\n' +
-                                (message ? transitions['DNA.DAPP_MESSAGE'] + ': ' + message + '\n' : '') + '\n' +
-                                transitions['DNA.DAPP_INPUT_PASSWORD'] +  ': ';
-
-                            if (navigator['notification']) {
-                                navigator['notification'].prompt(
-                                    confirmTxt,
-                                    (e) => {
-                                        if (e.buttonIndex == 2) {
-                                            if (e.input1) {
-                                                this.signDNATx({
-                                                    id,
-                                                    fromAccount,
-                                                    toAccount,
-                                                    sendAmount,
-                                                    message,
-                                                    password: e.input1,
-                                                });
-                                            } else {
-                                                this.passwordError();
-                                            }
-                                        }
-                                    },
-                                    transitions['DNA.DAPP_TITLE'],
-                                    [transitions['DNA.DAPP_BUTTON_CANCEL'], transitions['DNA.DAPP_BUTTON_OK']]
-                                );
-                            } else {
-                                // 测试代码
-                                console.log('SignDNA confirm: ', confirmTxt);
-
-                                /*this.signDNATx({
-                                    id,
-                                    fromAccount,
-                                    toAccount,
-                                    sendAmount,
-                                    message,
-                                    password: 'wh12345678',
-                                });*/
+                            if (!fromAccountId || !toAccountId || !amount || !assetId) {
+                                throw 'Param error';
                             }
+
+                            if (!this.opened) {
+                                return;
+                            }
+                            return DnaReqWsSubscribeProvider.wsFetchBtsGetAccountsDetail([fromAccountId, toAccountId])
+                                .then((accounts) => {
+                                    let fromAccount = accounts.find(it => it.id == fromAccountId);
+                                    let toAccount   = accounts.find(it => it.id == toAccountId);
+                                    if (!fromAccount || !toAccount) {
+                                        throw 'Account not found';
+                                    }
+
+                                    this.translate.get([
+                                        'DNA.DAPP_FROM_ACCOUNT',
+                                        'DNA.DAPP_AMOUNT',
+                                        'DNA.DAPP_TO_ACCOUNT',
+                                        'DNA.DAPP_MESSAGE',
+                                        'DNA.DAPP_TITLE',
+                                        'DNA.DAPP_BUTTON_OK',
+                                        'DNA.DAPP_BUTTON_CANCEL',
+                                        'DNA.DAPP_INPUT_PASSWORD',
+                                    ]).subscribe((transitions) => {
+                                        let confirmTxt = '\n' +
+                                            transitions['DNA.DAPP_FROM_ACCOUNT'] + ': ' + fromAccount.name + '\n' +
+                                            transitions['DNA.DAPP_AMOUNT'] + ': ' + this.formatToken(amount) + '\n' +
+                                            transitions['DNA.DAPP_TO_ACCOUNT'] + ': ' + toAccount.name + '\n' +
+                                            (message ? transitions['DNA.DAPP_MESSAGE'] + ': ' + message + '\n' : '') + '\n' +
+                                            transitions['DNA.DAPP_INPUT_PASSWORD'] +  ': ';
+
+                                        if (navigator['notification']) {
+                                            if (!this.opened) {
+                                                return;
+                                            }
+
+                                            navigator['notification'].prompt(
+                                                confirmTxt,
+                                                (e) => {
+                                                    if (e.buttonIndex == 2) {
+                                                        if (e.input1) {
+                                                            this.signDNATx({
+                                                                id,
+                                                                fromAccount,
+                                                                toAccount,
+                                                                sendAmount,
+                                                                message,
+                                                                password: e.input1,
+                                                            });
+                                                        } else {
+                                                            this.passwordError();
+                                                        }
+                                                    }
+                                                },
+                                                transitions['DNA.DAPP_TITLE'],
+                                                [transitions['DNA.DAPP_BUTTON_CANCEL'], transitions['DNA.DAPP_BUTTON_OK']]
+                                            );
+                                        } else {
+                                            // 测试代码
+                                            console.log('SignDNA confirm: ', confirmTxt);
+
+                                            /*this.signDNATx({
+                                                id,
+                                                fromAccount,
+                                                toAccount,
+                                                sendAmount,
+                                                message,
+                                                password: 'wh12345678',
+                                            });*/
+                                        }
+                                    });
+                                });
+                        })
+                        .catch((e) => {
+                            this.responseError(id, e);
                         });
+                }
+            }
+        } catch (e) {
+            this.responseError(id, e);
+        }
+    }
+
+    signDNAOperation = (id, data) => {
+        if (DATA.operations[data.operations[0][0]]) {
+            this.translate.get([
+                'DNA.DAPP_ACCOUNT_CREATE',
+                'DNA.DAPP_OPERATION',
+                'DNA.DAPP_TITLE_OP',
+                'DNA.DAPP_BUTTON_OK',
+                'DNA.DAPP_BUTTON_CANCEL',
+                'DNA.DAPP_INPUT_PASSWORD',
+            ]).subscribe((transitions) => {
+                let confirmTxt = '\n';
+                if (DATA.operations[data.operations[0][0]] === 'account_create') {
+                    confirmTxt += transitions['DNA.DAPP_ACCOUNT_CREATE'] + ': ' + data.operations[0][1].name;
+                } else {
+                    confirmTxt += transitions['DNA.DAPP_OPERATION'] + ': ' + DATA.operations[data.operations[0][0]];
+                }
+
+                confirmTxt += '\n\n';
+                confirmTxt += transitions['DNA.DAPP_INPUT_PASSWORD'] +  ': ';
+
+                if (navigator['notification']) {
+                    if (!this.opened) {
+                        return;
+                    }
+
+                    navigator['notification'].prompt(
+                        confirmTxt,
+                        (e) => {
+                            if (e.buttonIndex == 2) {
+                                if (e.input1) {
+                                    this.signDNAOperationTx(id, data, e.input1);
+                                } else {
+                                    this.passwordError();
+                                }
+                            }
+                        },
+                        transitions['DNA.DAPP_TITLE_OP'],
+                        [transitions['DNA.DAPP_BUTTON_CANCEL'], transitions['DNA.DAPP_BUTTON_OK']]
+                    );
+                }
+            });
+        } else {
+            this.responseError(id, 'Param error');
+        }
+    }
+
+    signDNAOperationTx(id, data, password) {
+        console.log('signDNAOperationTx: ', id, data, password);
+
+        let mnemonic: string = '';
+        try {
+            mnemonic = DnaUtilUtilProvider.decryptKey(this.dnaUserInfo.key, password);
+            if (!mnemonic) {
+                return this.passwordError();
+            }
+        } catch (e) {
+            return this.passwordError();
+        }
+
+        let walletInfo = DnaWalletProvider.getAccountInfo(mnemonic, 'bts');
+
+        if (!this.opened) {
+            return;
+        }
+        DnaReqTxProvider.operationDNA(walletInfo['privateKey'], data.operations[0])
+            .then((result) => {
+                let txId = (result && result['length'] > 0) ? result[0].id : '';
+                if (navigator['notification']) {
+                    // 调用接口
+                    this.browser.executeScript({
+                        code: 'window.onSignDNASuccessful(' + JSON.stringify(id) + ', ' + JSON.stringify(txId) + ');',
                     });
+
+                    // 打印接口调用
+                    console.log(
+                        'executeScript: ',
+                        'onSignDNASuccessful(' + JSON.stringify(id) + ', ' + JSON.stringify(txId) + ');'
+                    );
+                } else {
+                    console.log('onSignDNASuccessful: ', {id: id, value: txId});
+                }
             })
             .catch((e) => {
-                if (typeof e == 'string') {
-                    this.responseError(id, e);
-                } else if (e.message) {
-                    this.responseError(id, e.message);
-                }
+                this.responseError(id, e);
             });
     }
 
@@ -204,6 +303,10 @@ export class AppsPage {
         data.sendAmount.asset = 'DNA';
 
         let walletInfo = DnaWalletProvider.getAccountInfo(mnemonic, 'bts');
+
+        if (!this.opened) {
+            return;
+        }
         DnaReqTxProvider.transferDNA(
             walletInfo['privateKey'],
             data.fromAccount.name,
@@ -262,11 +365,15 @@ export class AppsPage {
     responseError = (id, error) => {
         if (navigator['notification']) {
             this.browser.executeScript({
-                code: 'window.onSignDNAError(' + JSON.stringify(id) + ', ' + JSON.stringify(error) + ');',
+                code: 'window.onSignDNAError('
+                    + JSON.stringify(id)
+                    + ', '
+                    + JSON.stringify(typeof error === 'string' ? error : error.message)
+                    + ');',
             });
         }
 
-        console.log('onSignDNAError: ', {id, error});
+        console.log('onSignDNAError: ', [id, typeof error === 'string' ? error : error.message]);
     }
 
     formatToken(val) {

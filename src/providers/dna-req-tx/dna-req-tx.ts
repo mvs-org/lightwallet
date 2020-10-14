@@ -12,6 +12,16 @@ ChainConfig.setPrefix('DNA')
 @Injectable()
 export class DnaReqTxProvider {
 
+    static async operationDNA(pKey, operation) {
+        let tr = new TransactionBuilder();
+        tr.add_type_operation(DATA.operations[operation[0]], operation[1]);
+        await tr.set_required_fees();
+        tr.add_signer(pKey, pKey.toPublicKey().toPublicKeyString());
+        let result = await this.processTranscation(tr)
+        console.log("transfer result:", JSON.stringify(result));
+        return result;
+    }
+
     //send BTS:transfer("zhiguang1111", "zhiguang2222", { amount: 100000, asset: "DNA" }, memo);
     static async transferDNA(pKey, fromAccount, toAccount, sendAmount, memo, estFee = false) {
         //console.log(pKey.toWif());
