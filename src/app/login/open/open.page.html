@@ -11,9 +11,12 @@
 
 
   <ion-grid>
-    <ion-row *ngIf="saved_accounts && saved_accounts.length" class="ion-text-center">
+    <ion-row class="title">
+      <h1 class="center title-text" translate="LOGIN.OPEN.ACCESS_MY_WALLET"></h1>
+      <h3 *ngIf="noAccount" class="center pointer" translate="LOGIN.OPEN.NO_WALLET_YET"></h3>
+    </ion-row>
+    <ion-row *ngIf="!noAccount" class="ion-text-center">
       <ion-col size="12" size-md="4" offset-md="4">
-        <div class="option" translate="LOGIN.OPEN.LOCAL_ACCOUNT"></div>
         <div *ngFor="let account of saved_accounts">
           <ion-button expand="full" fill="outline" shape="round" class="account-btn" (click)="loginViaAccount(account)"
           *ngIf="account.network == globals.network || (!account.network && globals.network=='mainnet')">
@@ -26,6 +29,7 @@
       </ion-col>
     </ion-row>
     <ion-row>
+      <br>
       <ion-col size="12" size-md="3" size-lg="2" offset-lg="2">
         <ion-card routerLink="/login/open/backup-words">
           <ion-card-header class="ion-text-center">

@@ -15,6 +15,7 @@ export class OpenPage implements OnInit {
 
   saved_accounts: Array<any> = []
   isApp: boolean
+  noAccount = true
 
   constructor(
     public platform: Platform,
@@ -29,9 +30,16 @@ export class OpenPage implements OnInit {
     this.isApp = this.walletService.isApp()
   }
 
-  ionViewWillEnter() {
-    this.walletService.getSavedAccounts()
-      .then((accounts) => this.saved_accounts = accounts ? accounts : [])
+  async ionViewWillEnter() {
+    console.log("Hello")
+    this.saved_accounts = await this.walletService.getSavedAccounts() || []
+    console.log(this.saved_accounts)
+    this.saved_accounts.forEach(account => {
+      if ((account.network === this.globals.network)
+        || (!account.network && this.globals.network === 'mainnet')) {
+        this.noAccount = false
+      }
+    })
   }
 
 
