@@ -19,6 +19,7 @@ export class OpenQrPage implements OnInit {
   xpub: string
   index: number
   password: string
+  isMobile: boolean
 
   constructor(
     private modalCtrl: ModalController,
@@ -30,7 +31,7 @@ export class OpenQrPage implements OnInit {
   ) { }
 
   async ngOnInit() {
-
+    this.isMobile = this.walletService.isMobile()
   }
 
   async scan() {

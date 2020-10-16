@@ -18,6 +18,8 @@
         "OPEN_WALLET_TEXT": "Enter the new reality by importing your existing Metaverse Blockchain wallet.",
         "OPEN": {
             "TITLE": "Open existing wallet",
+            "ACCESS_MY_WALLET": "Access my wallet",
+            "NO_WALLET_YET": "No wallet yet? Create a new wallet",
             "LOCAL_ACCOUNT": "Open from an existing local account",
             "OR": "You can also open another wallet using on of the following methods",
             "BACKUP_WORDS": "Backup Words",
