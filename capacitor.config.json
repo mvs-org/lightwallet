@@ -1,6 +1,6 @@
 {
-  "appId": "com.mvs.dna",
-  "appName": "DNA",
+  "appId": "com.mvsdna.walletapp",
+  "appName": "DnaWallet",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",

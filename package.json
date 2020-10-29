@@ -35,7 +35,7 @@
     "@capacitor/cli": "2.4.2",
     "@capacitor/core": "2.4.2",
     "@capacitor/ios": "^2.4.2",
-    "@ionic-native/barcode-scanner": "^4.20.0",
+    "@ionic-native/barcode-scanner": "^3.14.0",
     "@ionic-native/clipboard": "4.10.0",
     "@ionic-native/core": "3.12.1",
     "@ionic-native/deeplinks": "^3.14.0",
@@ -82,7 +82,7 @@
     "ngx-countdown": "^1.0.6",
     "ngx-pagination": "^3.2.1",
     "node-sass": "^4.13.0",
-    "phonegap-plugin-barcodescanner": "^7.1.2",
+    "phonegap-plugin-barcodescanner": "^8.0.1",
     "prebuild-install": "^5.3.5",
     "qs": "^6.9.4",
     "rxjs": "^5.5.2",
@@ -135,9 +135,8 @@
       "ionic-plugin-keyboard": {},
       "cordova-plugin-ionic-keyboard": {},
       "ionic-plugin-deeplinks": {
-        "URL_SCHEME": "mvs",
-        "DEEPLINK_SCHEME": "https",
-        "DEEPLINK_HOST": "app.myetpwallet.com"
+        "URL_SCHEME": "value",
+        "DEEPLINK_HOST": "value"
       },
       "cordova-plugin-inappbrowser": {},
       "cordova-plugin-dialogs": {}
