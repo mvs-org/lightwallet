@@ -38,6 +38,8 @@
     "@swimlane/ngx-charts": "^16.0.0",
     "@zxing/ngx-scanner": "^3.0.1",
     "bitident": "^0.1.11",
+    "bitsharesjs": "github:mvs-develop/dna-js#dna",
+    "bitsharesjs-ws": "github:mvs-develop/dna-ws-js#dna",
     "crypto-js": "^4.0.0",
     "lodash": "^4.17.20",
     "metaversejs": "^0.3.98",
