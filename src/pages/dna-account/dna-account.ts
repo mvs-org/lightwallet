@@ -91,6 +91,8 @@ export class DnaAccountPage {
     }
 
     private initialize = () => {
+        this.dnaAccount.initialize(this.userInfo);
+
         if (!this.initialized) {
             this.initialized = true;
             if (!this.userInfo.key) {
@@ -98,7 +100,6 @@ export class DnaAccountPage {
             }
 
             // 余额
-            this.dnaAccount.initialize(this.userInfo);
             this.event.subscribe('dna_balances_update', (balances) => {
                 this.balances = balances;
             });

@@ -20,8 +20,15 @@ export class DnaAccountProvider {
     }
 
     initialize(userInfo: any) {
-        this.userInfo = userInfo;
-        this.balances = {};
+        if (!this.userInfo) {
+            this.userInfo = userInfo;
+            this.balances = {};
+        } else if (this.userInfo.name !== userInfo.name) {
+            this.userInfo = userInfo;
+            this.balances = {};
+            this.event.publish('dna_balances_update', this.balances);
+        }
+
         if (!this.initialized) {
             this.initialized = true;
             this.loadTokenInfo();
