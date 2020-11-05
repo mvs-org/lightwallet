@@ -1,7 +1,7 @@
 <ion-menu [content]="content">
   <ion-header>
     <ion-toolbar>
-      <ion-title>{{'MENU'|translate}}</ion-title>
+      <ion-title><div class="menu-title">{{'MENU'|translate}}</div></ion-title>
       <div *ngIf="isLogged && walletHasEtp && walletHasDna" class="menu-set-wallet">
         <ion-row *ngIf="isEtp()">
           <ion-col>

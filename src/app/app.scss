@@ -18,11 +18,16 @@
 .menu-set-wallet {
     position: absolute;
     right: 15px;
+    min-height: 70px;
     height: 100%;
     top: 0;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.menu-title {
+    text-align: left;
 }
 
 .alert-md .alert-wrapper, .alert-ios .alert-wrapper {
