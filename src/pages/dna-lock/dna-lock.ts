@@ -339,6 +339,7 @@ export class DnaLockPage {
                 console.log(e);
 
                 this.alert.stopLoading();
+
                 this.alert.showError('DNA.NETWORK_ERROR', '');
             });
     }

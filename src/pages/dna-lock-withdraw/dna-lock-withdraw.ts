@@ -127,7 +127,12 @@ export class DnaLockWithdrawPage {
                 console.log(e);
 
                 this.alert.stopLoading();
-                this.alert.showError('DNA.NETWORK_ERROR', '');
+
+                if (typeof e == 'object' && typeof e.message === 'string' && e.message.indexOf('DNA is less than required') > -1) {
+                    this.alert.showError('DNA.TRANSACTION_FEE_NOT_ENOUGH', '');
+                } else {
+                    this.alert.showError('DNA.NETWORK_ERROR', '');
+                }
             });
     }
 
