@@ -20,9 +20,10 @@ export class DnaAccountProvider {
     }
 
     initialize(userInfo: any) {
+        this.userInfo = userInfo;
+        this.balances = {};
         if (!this.initialized) {
             this.initialized = true;
-            this.userInfo    = userInfo;
             this.loadTokenInfo();
             this.loadFullAccount();
         }
