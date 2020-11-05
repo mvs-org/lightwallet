@@ -136,6 +136,7 @@
     "CONFIRM": "Confirm",
     "SKIP": "Skip",
     "COPY": "Copy",
+    "COPIED": "Copied",
     "WARNING": "Warning",
     "BACKUP_WORDS_BACKED_UP_TEXT": "Confirm that you have written down your backup words",
     "BACKUP_WORDS_BACKED_UP_YES": "Yes, I have made a backup",

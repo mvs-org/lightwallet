@@ -19,7 +19,8 @@
             <ion-card class="username-card">
                 <ion-card-content class="username-card-content">
                     <div class="username-content">{{userInfo.name}}</div>
-                    <button ion-button class="username-copy" [ngxClipboard]="copy">{{'COPY'|translate}}</button>
+                    <button *ngIf="!copied" ion-button class="username-copy" [ngxClipboard]="copy" (cbOnSuccess)="copySuccess()">{{'COPY'|translate}}</button>
+                    <button *ngIf="copied" ion-button color="medium" class="username-copy" [ngxClipboard]="copy" (cbOnSuccess)="copySuccess()">{{'COPIED'|translate}}</button>
                 </ion-card-content>
             </ion-card>
         </div>

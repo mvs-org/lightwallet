@@ -13,6 +13,7 @@ export class DnaReceivePage {
 
     asset: string = this.navParams.get('asset');
     userInfo: any = this.navParams.get('userInfo');
+    copied: boolean = false;
 
     constructor(
         //private navCtrl: NavController,
@@ -25,5 +26,9 @@ export class DnaReceivePage {
 
     ionViewDidEnter() {
 
+    }
+
+    copySuccess = () => {
+        this.copied = true;
     }
 }

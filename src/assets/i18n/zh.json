@@ -136,6 +136,7 @@
     "CONFIRM": "确定",
     "SKIP": "跳过",
     "COPY": "复制",
+    "COPIED": "已复制",
     "WARNING": "警告",
     "BACKUP_WORDS_BACKED_UP_TEXT": "请确认您已备份好您的助记词",
     "BACKUP_WORDS_BACKED_UP_YES": " 是的, 我已经备份了我的助记词",
