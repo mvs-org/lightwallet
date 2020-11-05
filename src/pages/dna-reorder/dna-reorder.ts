@@ -4,6 +4,8 @@ import { Storage } from '@ionic/storage';
 import { TranslateService } from '@ngx-translate/core';
 import {DnaReqWsSubscribeProvider} from "../../providers/dna-req-ws-subscribe/dna-req-ws-subscribe";
 
+let DATA = require('../../data/data.js').default;
+
 @IonicPage()
 @Component({
     selector: 'page-dna-reorder',
@@ -17,6 +19,7 @@ export class DnaReorderPage {
     originalHiddenAsset: Array<string> = []
 
     assets: any;
+    icons: any;
 
     constructor(
         public navCtrl: NavController,
@@ -24,13 +27,15 @@ export class DnaReorderPage {
         public platform: Platform,
         private storage: Storage,
     ) {
+        this.icons = DATA.icons;
+
         DnaReqWsSubscribeProvider.wsListAssets().then((assets) => {
             this.assets = [];
             if (assets && assets.length > 0) {
                 for (var i = 0; i < assets.length; i ++) {
-                    //if (assets[i].id !== this.dnaAssetId) {
-                    this.assets.push(assets[i].symbol);
-                    //}
+                    if (assets[i].id !== DATA.TOKEN_ASSET_ID) {
+                        this.assets.push(assets[i].symbol);
+                    }
                 }
             }
 

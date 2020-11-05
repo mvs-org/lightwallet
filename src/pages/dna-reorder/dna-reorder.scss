@@ -7,4 +7,16 @@ page-dna-reorder {
         color: grey;
         filter: opacity(0.4);
     }
+
+    .coinlogo-txt {
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        text-align: center;
+        line-height: 40px;
+        color: #fff;
+        background-color: rgba(89, 191, 193, 1);
+        font-size: 22px;
+        font-weight: bold;
+    }
 }
