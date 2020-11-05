@@ -21,6 +21,7 @@
     "DNA.SEND_CAN_NOT_YOURSELF": "Can't transfer token to yourself",
     "DNA.SEND_DEPOSIT_ADDRESS_NOT_EXISTS": "Recipient address does not exist",
     "DNA.SEND_AVAILABLE_NOT_ENOUGH": "Asset not enough",
+    "DNA.TRANSACTION_FEE_NOT_ENOUGH": "Transaction fee not enough",
     "DNA.SEND_MEMO_CONTAIN_PASSWORD": "Do not use password in memo",
     "DNA.SEND_PASSWORD_ERROR": "Password error",
     "DNA.SEND_AMOUNT_ALL": "Total",

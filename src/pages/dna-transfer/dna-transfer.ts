@@ -170,14 +170,14 @@ export class DnaTransferPage {
                     });
             })
             .catch((e) => {
-                if (typeof e === 'string' && e.substr(0, 3) === 'DNA') {
-                    this.alert.showError(e, '');
-                } else {
-
-                }
-
                 console.log(e);
                 this.alert.stopLoading();
+
+                if (typeof e === 'string' && e.substr(0, 3) === 'DNA') {
+                    this.alert.showError(e, '');
+                } else if (typeof e == 'object' && typeof e.message === 'string' && e.message.indexOf('DNA is less than required') > -1) {
+                    this.alert.showError('DNA.TRANSACTION_FEE_NOT_ENOUGH', '');
+                }
             });
     }
 

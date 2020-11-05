@@ -21,6 +21,7 @@
     "DNA.SEND_CAN_NOT_YOURSELF": "不能转账给自己",
     "DNA.SEND_DEPOSIT_ADDRESS_NOT_EXISTS": "收款地址不存在",
     "DNA.SEND_AVAILABLE_NOT_ENOUGH": "余额不足",
+    "DNA.TRANSACTION_FEE_NOT_ENOUGH": "交易手续费不足",
     "DNA.SEND_MEMO_CONTAIN_PASSWORD": "不要在备注中输入密码",
     "DNA.SEND_PASSWORD_ERROR": "密码错误",
     "DNA.SEND_AMOUNT_ALL": "全部",
