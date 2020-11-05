@@ -96,10 +96,19 @@ export class DnaLockPage {
                 if (!this.balance) {
                     this.navCtrl.pop();
                 }
+
+                this.loadBalance();
             } else {
                 this.navCtrl.setRoot('LoginPage')
             }
         });
+    }
+
+    loadBalance = () => {
+        setTimeout(() => {
+            this.balance = this.dnaAccount.getBalance(this.assetId);
+            this.loadBalance();
+        }, 1000);
     }
 
     load = () => {

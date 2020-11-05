@@ -11,6 +11,7 @@ import { DnaReqReqProvider } from '../../providers/dna-req-req/dna-req-req';
 import { TranslateService } from '@ngx-translate/core';
 import { DnaWalletProvider } from '../../providers/dna-wallet/dna-wallet';
 import { DnaReqTxProvider } from '../../providers/dna-req-tx/dna-req-tx';
+import { DnaAccountProvider } from '../../providers/dna-account/dna-account';
 
 let DATA = require('../../data/data').default;
 
@@ -33,7 +34,7 @@ export class DnaVotePage {
 
     asset: string = DATA.TOKEN_SYMBOL;
     assetId: string = DATA.TOKEN_ASSET_ID;
-    balance: any = this.navParams.get('balance');
+    balance: any;
     userInfo: any;
 
     isApp: boolean;
@@ -68,6 +69,7 @@ export class DnaVotePage {
         private alert: AlertProvider,
         private translate: TranslateService,
         private storage: Storage,
+        private dnaAccount: DnaAccountProvider,
     ) {
         this.isApp       = (!document.URL.startsWith('http') || document.URL.startsWith('http://localhost'));
         this.currentTime = Date.now()
@@ -80,10 +82,20 @@ export class DnaVotePage {
                 this.navCtrl.setRoot("LoginPage")
             }
         });
+
+        this.balance = this.dnaAccount.getBalance(this.assetId);
+        this.loadBalance();
     }
 
     ionViewDidEnter() {
 
+    }
+
+    loadBalance = () => {
+        setTimeout(() => {
+            this.balance = this.dnaAccount.getBalance(this.assetId);
+            this.loadBalance();
+        }, 1000);
     }
 
     load = () => {
