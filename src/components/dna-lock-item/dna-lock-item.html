@@ -63,10 +63,11 @@
                     <ion-col>
                         <ion-item class="right summaryAmount">
                             <div>
-                                <div *ngIf="!lock.withdraw_available" class="sendAmount">{{formatToken(lock.withdraw_available ? lock.withdraw_available : '0')}}</div>
-                                <div *ngIf="lock.withdraw_available" class="receiveAmount">{{formatToken(lock.withdraw_available ? lock.withdraw_available : '0')}}</div>
+                                <div class="sendAmount">{{formatToken(lock.amount)}}</div>
+                                <!--<div *ngIf="!lock.withdraw_available" class="sendAmount">{{formatToken(lock.withdraw_available ? lock.withdraw_available : '0')}}</div>-->
+                                <!--<div *ngIf="lock.withdraw_available" class="receiveAmount">{{formatToken(lock.withdraw_available ? lock.withdraw_available : '0')}}</div>-->
                             </div>
-                            <div class="default-color fee">{{'DNA.LOCK_AMOUNT' | translate}}: {{formatToken(lock.amount)}}</div>
+                            <!--<div class="default-color fee">{{'DNA.LOCK_AMOUNT' | translate}}: {{formatToken(lock.amount)}}</div>-->
                         </ion-item>
                     </ion-col>
                 </ion-row>
