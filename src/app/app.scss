@@ -18,7 +18,6 @@
 .menu-set-wallet {
     position: absolute;
     right: 15px;
-    min-height: 70px;
     height: 100%;
     top: 0;
     display: flex;
@@ -28,6 +27,11 @@
 
 .menu-title {
     text-align: left;
+    position: absolute;
+    padding-left: 16px;
+    left: 0;
+    top: 50%;
+    transform: translate(0, -50%);
 }
 
 .alert-md .alert-wrapper, .alert-ios .alert-wrapper {

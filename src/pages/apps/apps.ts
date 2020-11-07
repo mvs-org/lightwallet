@@ -71,9 +71,7 @@ export class AppsPage {
         }
 
         this.opened  = true;
-        this.browser = this.iab.create(url, '_blank', {
-            hardwareback: 'no',
-        });
+        this.browser = this.iab.create(url, '_blank', 'hardwareback=no,toolbar=yes');
         this.browser.on('message').subscribe((e) => {
             if (e.type === 'message') {
                 if (e.data.name == 'signDNA') {
