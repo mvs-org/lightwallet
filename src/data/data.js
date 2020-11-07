@@ -25,6 +25,8 @@ let METAVERSE_BURN_ADDRESS = "";
 let CHAIN_ID = "24938a99198d850bb7d79010c1325fb63fde63e8e477a5443ff5ce50ab867055";
 let KEY_PREFIX = "DNA";
 
+let APPS_URL = 'https://wallet-api.mvsdna.info/wallet/apps';
+
 let ICONS = {
     DNA: 'assets/icon/DNA.png',
     ETP: 'assets/icon/ETP.png',
@@ -149,6 +151,8 @@ let data = {
 
   metaverseBurnDID: METAVERSE_BURN_DID,
   metaverseBurnAddress: METAVERSE_BURN_ADDRESS,
+
+  APPS_URL: APPS_URL,
 
   icons: ICONS,
   operations: OPERATIONS,

@@ -8,6 +8,26 @@ axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded;char
 
 @Injectable()
 export class DnaUtilHttpProvider {
+
+    // 获取 APP
+    static async apps() {
+        return new Promise((resolve, reject) => {
+            axios({
+                url: DATA.APPS_URL,
+                method: 'GET',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                data: {},
+            }).then((response) => {
+                resolve(response.data)
+            }).catch((e) => {
+                console.log(e);
+                reject(e)
+            })
+        })
+    }
+
     // POST 方法
     static async post(url, param) {
         return new Promise((resolve, reject) => {

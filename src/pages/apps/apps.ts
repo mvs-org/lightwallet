@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, Platform } from 'ionic-angular';
+import { IonicPage, NavController, Platform, Events } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { AppGlobals } from '../../app/app.global';
 import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
@@ -10,6 +10,8 @@ import {DnaReqWsSubscribeProvider} from '../../providers/dna-req-ws-subscribe/dn
 import {DnaUtilUtilProvider} from '../../providers/dna-util-util/dna-util-util';
 import {DnaWalletProvider} from '../../providers/dna-wallet/dna-wallet';
 //import { AlertProvider } from '../../providers/alert/alert';
+
+import { DnaUtilHttpProvider } from '../../providers/dna-util-http/dna-util-http';
 
 let DATA = require('../../data/data').default;
 
@@ -28,6 +30,9 @@ export class AppsPage {
     dnaUserInfo: any;
     dnaPublicKey: any;
     opened: boolean = false;
+    dnaApps: any = [];
+    language: string = 'en';
+    isApp: boolean;
 
     constructor(
         public nav: NavController,
@@ -36,9 +41,11 @@ export class AppsPage {
         public platform: Platform,
         private wallet: WalletServiceProvider,
         private storage: Storage,
+        private event: Events,
         //private alert: AlertProvider,
     ) {
         this.network = this.globals.network
+        this.isApp   = (!document.URL.startsWith('http') || document.URL.startsWith('http://localhost'));
         this.iab     = new InAppBrowser();
 
         // 获取当前显示的钱包是 ETP 还是 DNA
@@ -49,11 +56,33 @@ export class AppsPage {
                 if (!walletHasDna) {
                     this.walletType = 'etp';
                 }
-            });
-        });
 
-        this.storage.get('dnaUserInfo').then((userInfo) => {
-            this.dnaUserInfo = userInfo;
+                if (this.walletType === 'dna') {
+                    // 获取 DNA 账号信息
+                    this.storage.get('dnaUserInfo').then((userInfo) => {
+                        this.dnaUserInfo = userInfo;
+                    });
+
+                    // 获取 DNA APP 信息
+                    if (this.isApp) {
+                        DnaUtilHttpProvider.apps().then((apps) => {
+                            if (typeof apps === 'object' && apps['code'] == 0) {
+                                this.dnaApps = apps['results'];
+                            }
+                        });
+                    }
+            
+                    // 获取语言
+                    this.storage.get('language').then((language) => {
+                        this.language = (language) ? language : 'en';
+                        this.event.subscribe("settings_update", (e) => {
+                            if (typeof e === "object" && e.type === 'language') {
+                                this.language = (e.option) ? e.option : 'en';
+                            }
+                        });
+                    });
+                }
+            });
         });
     }
 
@@ -72,22 +101,24 @@ export class AppsPage {
 
         this.opened  = true;
         this.browser = this.iab.create(url, '_blank', 'hardwareback=no,toolbar=yes');
-        this.browser.on('message').subscribe((e) => {
-            if (e.type === 'message') {
-                if (e.data.name == 'signDNA') {
-                    this.signDNA(e.data.id, e.data.object.data);
-                } else if (e.data.name == 'signDNAMsg') {
-                    this.signDNAMsg(e.data.id, e.data.object.data);
+        if (this.isApp) {
+            this.browser.on('message').subscribe((e) => {
+                if (e.type === 'message') {
+                    if (e.data.name == 'signDNA') {
+                        this.signDNA(e.data.id, e.data.object.data);
+                    } else if (e.data.name == 'signDNAMsg') {
+                        this.signDNAMsg(e.data.id, e.data.object.data);
+                    }
                 }
-            }
-        });
+            });
 
-        this.browser.on('loadstop').subscribe((e) => {
-            this.browser.executeScript({code: this.getJavascript(this.dnaUserInfo['name'], this.dnaUserInfo['pkey'])});
-        });
-        this.browser.on('exit').subscribe((e) => {
-            this.opened = false;
-        });
+            this.browser.on('loadstop').subscribe((e) => {
+                this.browser.executeScript({code: this.getJavascript(this.dnaUserInfo['name'], this.dnaUserInfo['pkey'])});
+            });
+            this.browser.on('exit').subscribe((e) => {
+                this.opened = false;
+            });
+        }
     }
 
     signDNA = (id, data) => {
