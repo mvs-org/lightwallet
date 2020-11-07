@@ -25,7 +25,6 @@ export class DnaAccountPage {
     height: number
     loading: boolean
     theme: string
-    icons: any;
     //tickers = {}
     //base: string
     //domains: any = []
@@ -35,6 +34,7 @@ export class DnaAccountPage {
     hasSeed: boolean = true
 
     dnaAssetId:string = DATA.TOKEN_ASSET_ID;
+    dnaSymbol: string = DATA.TOKEN_SYMBOL;
     language:string;
     userInfo:any;
     userData:any = {};
@@ -66,7 +66,6 @@ export class DnaAccountPage {
             this.height = blockHeight;
         });
 
-        this.icons = DATA.icons;
         this.theme = document.getElementById('theme').className
         this.event.subscribe("theme_changed", (theme) => {
             this.theme = ('theme-' + theme)

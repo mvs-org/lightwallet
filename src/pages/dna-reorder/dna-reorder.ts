@@ -3,6 +3,7 @@ import { IonicPage, NavController, Platform } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { TranslateService } from '@ngx-translate/core';
 import {DnaReqWsSubscribeProvider} from "../../providers/dna-req-ws-subscribe/dna-req-ws-subscribe";
+import { DnaAccountProvider } from '../../providers/dna-account/dna-account';
 
 let DATA = require('../../data/data.js').default;
 
@@ -19,16 +20,14 @@ export class DnaReorderPage {
     originalHiddenAsset: Array<string> = []
 
     assets: any;
-    icons: any;
 
     constructor(
         public navCtrl: NavController,
         public translate: TranslateService,
         public platform: Platform,
         private storage: Storage,
+        private dnaAccount: DnaAccountProvider,
     ) {
-        this.icons = DATA.icons;
-
         DnaReqWsSubscribeProvider.wsListAssets().then((assets) => {
             this.assets = [];
             if (assets && assets.length > 0) {

@@ -20,11 +20,11 @@
                         </ion-item>
                         <ion-item *ngIf="(lock.withdraw_available > 0 && lock.requested_withdraw <= 0) && (canWithdraw || lock.balance_type != 'governance')">
                             <div class="tx-hash" style="width: 100%">
-                                <h2 class="font-mono overflow">
+                                <h2 class="font-mono overflow" style="padding-right: 100px;">
                                     {{'DNA.LOCK_CAN_WITHDRAW' | translate}}
                                 </h2>
                             </div>
-                            <button *ngIf="!platform.is('mobile')" id="explorerTxButton" [disabled]="false" ion-button (click)="goWithdraw()">
+                            <button id="explorerTxButton" [disabled]="false" ion-button (click)="goWithdraw()">
                                 {{'DNA.LOCK_WITHDRAW' | translate}}
                             </button>
                         </ion-item>
@@ -37,11 +37,11 @@
                         </ion-item>
                     </ion-col>
                     <ion-col>
-                        <ion-item *ngIf="(lock.withdraw_available > 0 && lock.requested_withdraw <= 0) && (canWithdraw || lock.balance_type != 'governance') && platform.is('mobile')">
+                        <!--<ion-item *ngIf="(lock.withdraw_available > 0 && lock.requested_withdraw <= 0) && (canWithdraw || lock.balance_type != 'governance') && platform.is('mobile')">
                             <button id="explorerTxButton" [disabled]="false" ion-button (click)="goWithdraw()">
                                 {{'DNA.LOCK_WITHDRAW' | translate}}
                             </button>
-                        </ion-item>
+                        </ion-item>-->
                         <ion-item class="right timestamp">
                             <h2>{{lock.lockTime | date : 'medium'}}</h2>
                         </ion-item>

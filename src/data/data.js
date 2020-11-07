@@ -28,8 +28,6 @@ let KEY_PREFIX = "DNA";
 let ICONS = {
     DNA: 'assets/icon/DNA.png',
     ETP: 'assets/icon/ETP.png',
-    DBTC: '',
-    DETP: '',
 };
 
 let OPERATIONS = [

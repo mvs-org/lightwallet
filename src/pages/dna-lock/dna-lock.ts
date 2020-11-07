@@ -37,7 +37,6 @@ export class DnaLockPage {
     balance: any;
     userInfo: any;
 
-    icons: any;
     isApp: boolean;
 
     display_segment: string = 'lock';
@@ -73,7 +72,6 @@ export class DnaLockPage {
         //private global: AppGlobals,
         private dnaAccount: DnaAccountProvider,
     ) {
-        this.icons = DATA.icons;
         this.isApp = (!document.URL.startsWith('http') || document.URL.startsWith('http://localhost'));
 
         this.translate.get(['DNA.LOCK_UNIT_M', 'DNA.LOCK_UNIT_D']).subscribe((transitions) => {

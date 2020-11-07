@@ -4,7 +4,7 @@
             <ion-icon name="menu"></ion-icon>
         </button>
         <ion-title>
-            <!--{{'ACCOUNT.TITLE'|translate}}-->DNA
+            <!--{{'ACCOUNT.TITLE'|translate}}-->{{dnaSymbol}}
             <ion-icon *ngIf="!hasSeed" name="eye"></ion-icon>
         </ion-title>
         <ion-buttons end>
@@ -40,7 +40,7 @@
             <ion-row>
                 <ng-container class="asset-container">
                     <ion-col class="asset-container">
-                        <dna-card [balance]="balance(dnaAssetId)" [assetId]="dnaAssetId" [userInfo]="userInfo" [language]="language" [icon]="'assets/icon/DNA.png'"></dna-card>
+                        <dna-card [balance]="balance(dnaAssetId)" [assetId]="dnaAssetId" [userInfo]="userInfo" [language]="language" [icon]="dnaAccount.getAssetIcon(dnaSymbol)"></dna-card>
                     </ion-col>
                 </ng-container>
             </ion-row>
@@ -49,7 +49,7 @@
             <ion-row *ngIf="mstAssets && mstAssets.length > 0">
                 <ng-container *ngFor="let asset of mstAssets" class="asset-container-mst">
                     <ion-col class="asset-container asset-container-mst">
-                        <dna-mst-card [balance]="balance(asset.id)" [asset]="asset" [userInfo]="userInfo" [language]="language" [icon]="icons[asset.symbol] ? icons[asset.symbol] : ''"></dna-mst-card>
+                        <dna-mst-card [balance]="balance(asset.id)" [asset]="asset" [userInfo]="userInfo" [language]="language" [icon]="dnaAccount.getAssetIcon(asset.symbol)"></dna-mst-card>
                     </ion-col>
                 </ng-container>
             </ion-row>

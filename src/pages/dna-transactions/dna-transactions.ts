@@ -2,8 +2,7 @@ import { Component } from '@angular/core';
 //import { AppGlobals } from '../../app/app.global';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {DnaReqWsSubscribeProvider} from "../../providers/dna-req-ws-subscribe/dna-req-ws-subscribe";
-
-let DATA = require('../../data/data').default;
+import { DnaAccountProvider } from '../../providers/dna-account/dna-account';
 
 @IonicPage({
     name: 'dna-transactions-page',
@@ -37,8 +36,8 @@ export class DnaTransactionsPage {
     constructor(
         public navCtrl: NavController,
         public navParams: NavParams,
+        public dnaAccount: DnaAccountProvider
     ) {
-        this.icons          = DATA.icons;
         this.asset          = navParams.get('asset');
         this.assetId        = navParams.get('assetId');
         this.assetPrecision = navParams.get('assetPrecision');

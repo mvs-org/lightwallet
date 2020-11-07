@@ -4,8 +4,7 @@
             <ion-col>
                 <ion-item class="grid-info">
                     <ion-avatar item-start>
-                        <img *ngIf="icon" class="coinlogo" [src]="icon">
-                        <div *ngIf="!icon" class="coinlogo-txt">{{asset.symbol.substring(0, 1)}}</div>
+                        <img class="coinlogo" [src]="icon">
                     </ion-avatar>
                     <h1 class="symbol overflow">
                         {{asset.symbol}}

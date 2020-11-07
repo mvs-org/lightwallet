@@ -5,6 +5,8 @@ import { DnaUtilWsApiProvider } from '../dna-util-ws-api/dna-util-ws-api';
 import { DnaUtilUtilProvider } from '../dna-util-util/dna-util-util';
 import { Events } from 'ionic-angular';
 
+let DATA = require('../../data/data.js').default;
+
 @Injectable()
 export class DnaAccountProvider {
 
@@ -13,10 +15,12 @@ export class DnaAccountProvider {
     private tokenInfo: any;
     private fullAccount: any;
     private balances: any;
+    private icons: any;
 
     constructor(
         private event: Events,
     ) {
+        this.icons = DATA.icons;
     }
 
     initialize(userInfo: any) {
@@ -38,6 +42,14 @@ export class DnaAccountProvider {
 
     getBalance(assetId) {
         return this.balances[assetId] ? this.balances[assetId] : null;
+    }
+
+    getAssetIcon(symbol) {
+        if (this.icons[symbol]) {
+            return this.icons[symbol];
+        }
+
+        return 'https://wallet-api.mvsdna.info/wallet/logos/' + symbol + '.png';
     }
 
     private loadTokenInfo() {
