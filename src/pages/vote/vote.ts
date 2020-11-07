@@ -106,7 +106,7 @@ export class VotePage {
         this.candidate = navParams.get('candidate') || ''
         this.quantity = navParams.get('amount') || ''
 
-        this.isApp = (!document.URL.startsWith('http') || document.URL.startsWith('http://localhost:8080'));
+        this.isApp = (!document.URL.startsWith('http') || document.URL.startsWith('http://localhost'));
 
         this.current_time = Date.now()
 

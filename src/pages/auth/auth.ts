@@ -21,7 +21,7 @@ export class AuthPage {
         private barcodeScanner: BarcodeScanner,
     ) {
 
-        this.isApp = (!document.URL.startsWith('http') || document.URL.startsWith('http://localhost:8080'));
+        this.isApp = (!document.URL.startsWith('http') || document.URL.startsWith('http://localhost'));
 
     }
 

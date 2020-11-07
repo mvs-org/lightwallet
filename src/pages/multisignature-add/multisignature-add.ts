@@ -49,7 +49,7 @@ export class MultisignatureAddPage {
 
         this.cosigners.push('')
 
-        this.isApp = (!document.URL.startsWith('http') || document.URL.startsWith('http://localhost:8080'));
+        this.isApp = (!document.URL.startsWith('http') || document.URL.startsWith('http://localhost'));
 
         //Load addresses and balances
         Promise.all([this.mvs.getAddresses(), this.mvs.getAddressBalances()])

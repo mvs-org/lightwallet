@@ -65,7 +65,7 @@ export class MultisignatureTransferPage {
         this.sendFrom = navParams.get('address')
         this.total_to_send[this.selectedAsset] = 0
         this.total = 0
-        this.isApp = (!document.URL.startsWith('http') || document.URL.startsWith('http://localhost:8080'));
+        this.isApp = (!document.URL.startsWith('http') || document.URL.startsWith('http://localhost'));
 
         //Load addresses
         mvs.getAddresses()
