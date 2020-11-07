@@ -12,6 +12,7 @@ import {DnaWalletProvider} from '../../providers/dna-wallet/dna-wallet';
 //import { AlertProvider } from '../../providers/alert/alert';
 
 import { DnaUtilHttpProvider } from '../../providers/dna-util-http/dna-util-http';
+import { DnaAccountProvider } from '../../providers/dna-account/dna-account';
 
 let DATA = require('../../data/data').default;
 
@@ -42,6 +43,7 @@ export class AppsPage {
         private wallet: WalletServiceProvider,
         private storage: Storage,
         private event: Events,
+        private dnaAccount: DnaAccountProvider,
         //private alert: AlertProvider,
     ) {
         this.network = this.globals.network

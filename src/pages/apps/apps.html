@@ -41,7 +41,10 @@
     <ion-list *ngIf="loaded && walletType === 'dna'">
         <ion-row *ngFor="let app of dnaApps">
             <button ion-item (click)="goDnaDapp(app.uri, app.name[language])">
-                <ion-icon name="cube" item-start></ion-icon>
+                <!--<ion-icon name="cube" item-start></ion-icon>-->
+                <ion-avatar item-start>
+                    <img class="coinlogo" style="width: 28px; height: auto;" [src]="dnaAccount.getAssetIcon(app.logo)">
+                </ion-avatar>
                 <h1>{{app.name[language]}}</h1>
                 <p>{{app.summary[language]}}</p>
             </button>
