@@ -115,9 +115,6 @@ export class DnaTransferPage {
             }).then(() => {
                 // 检查余额是否充足
                 let amount = DnaUtilUtilProvider.toUnit(this.sendAmount, this.assetPrecision);
-                if (amount > this.balance.available) {
-                    throw 'DNA.SEND_AVAILABLE_NOT_ENOUGH';
-                }
                 if (new BigNumber(this.balance.available).isLessThan(new BigNumber(amount))) {
                     throw 'DNA.SEND_AVAILABLE_NOT_ENOUGH';
                 }
