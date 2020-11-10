@@ -1,4 +1,6 @@
 {
+    "OK": "Ok",
+    "CANCEL": "Cancel",
     "GLOBAL": {
         "PASSWORD": "Password",
         "CANCEL": "Cancel",
@@ -7,6 +9,7 @@
         "SHOW_ADVANCED": "Show advanced"
     },
     "LOGIN": {
+        "NETWORK": "Network",
         "MENU_ENTRY": "Login",
         "TITLE": "MyETPWallet - THE NEW REALITY",
         "CREATE_WALLET_TITLE": "Create new wallet",
@@ -15,6 +18,8 @@
         "OPEN_WALLET_TEXT": "Enter the new reality by importing your existing Metaverse Blockchain wallet.",
         "OPEN": {
             "TITLE": "Open existing wallet",
+            "ACCESS_MY_WALLET": "Access my wallet",
+            "NO_WALLET_YET": "No wallet yet? Create a new wallet",
             "LOCAL_ACCOUNT": "Open from an existing local account",
             "OR": "You can also open another wallet using on of the following methods",
             "BACKUP_WORDS": "Backup Words",
@@ -105,8 +110,9 @@
         }
     },
     "CERTIFICATES": {
-        "TITLE": "Certificates",
         "MENU_ENTRY": "Certificates",
+        "TITLE": "Certificates",
+        "SUBTITLE": "Check your list of certificates",
         "INFORMATION": "Certificates provide special rights to their owners. They can grant permissions for the issuance of Smart Assets.",
         "NO_CERTIFICATE": "You don't have any certificates"
     },
@@ -150,15 +156,16 @@
     },
     "MST_DETAILS": {
         "BALANCE": {
-            "TITLE": "My balances",
+            "TITLE": "My Balance",
             "TOTAL": "Total",
             "AVAILABLE": "Available",
             "CONFIRMING": "Confirming",
             "FROZEN": "Frozen",
-            "SEND": "Send"
+            "SEND": "Send",
+            "VOTE": "Vote"
         },
         "INFO": {
-            "TITLE": "General information",
+            "TITLE": "General Information",
             "MAX_SUPPLY": "Max supply",
             "TOTAL_SUPPLY": "Total supply",
             "BURNED_QUANTITY": "Burned quantity",
@@ -349,11 +356,6 @@
             "QRCODE": "Show QR Code",
             "HISTORY": "History",
             "CREATE_AVATAR": "Create Avatar"
-        },
-        "TOAST": {
-            "ADDRESS_COPIED": "Address copied!",
-            "AVATAR_COPIED": "Avatar name copied!",
-            "COPIED": "Copied!"
         }
     },
     "QR_ADDRESS": {
@@ -467,6 +469,7 @@
         "TRANSACTIONS": "Transactions",
         "NO_TXS_YET": "No transactions yet",
         "NO_TXS_YET_TEXT": "Start using your wallet today!",
+        "UNLOCK_APPROXIMATION_INFORMATION": "*Please be aware that the 'Locked until' date is an approximation based on the number of block remaining and the average blocktime of the last 10000 blocks. It might vary based on block generation speed.",
         "LOCKS": "Locks",
         "ASSETS_LIST": "Asset",
         "ADDRESSES_LIST": "Addresses",
@@ -572,6 +575,7 @@
         "SEND_MANY": "Send to many",
         "NOTICE_TRANSACTION_FEE_UNCOVERED": "Please make sure that you have enough ETP to cover the transaction fee.",
         "AVAILABLE_BALANCE": "Available balance",
+        "TOO_MANY_DECIMALS": "You have specified too many decimals",
         "MESSAGE": {
             "INSUFFICIENT_BALANCE": "You need at least 10 ETP to create a MST.",
             "ERROR_TOO_MANY_INPUTS": "Too many inputs",
@@ -639,6 +643,10 @@
         "MESSAGE_TOO_LONG": "Too long message. Please use a shorter message",
         "CHANGE_ADDRESS": "Specify change address (optional)",
         "CHANGE_ADDRESS_AUTO": "Automatic",
+        "IMPORT_CSV_TOO_MANY_RECIPIENT": {
+            "TITLE": "Too many recipient",
+            "MESSAGE": "This file contains too many recipients. The maximum number of recipients is limited to "
+        },
         "HELP": {
             "MESSAGE": "This message will be clearly and publicly displayed in your transaction. Do not enter any personal data!"
         },
@@ -681,7 +689,14 @@
         "WRONG_PASSWORD": "Wrong password, please try again",
         "ERR_CONNECTION": "Unable to broadcast the transaction. Please check you internet connection or try again later.",
         "ERR_INSUFFICIENT_BALANCE": "Insufficient balance. Please double check your available balance.",
-        "ERR_TOO_MANY_INPUTS": "This transaction contains too many inputs. Please try a smaller amount."
+        "ERR_TOO_MANY_INPUTS": "This transaction contains too many inputs. Please try a smaller amount.",
+        "COPY": {
+            "ADDRESS": "Address copied!",
+            "AVATAR": "Avatar name copied!",
+            "TX": "Transaction copied!",
+            "XPUB": "Public key copied!",
+            "DEFAULT": "Copied!"
+        }
     },
     "DEVELOPER": {
         "REMOVE_ACCOUNTS": "Clear Accounts",
@@ -1010,10 +1025,17 @@
         "IMPORT_ORDER_DESCRIPTION": "If you created an order from another device or directly from SWFT website, you can import it with the order ID to follow its status.",
         "INFORMATION_WARNING": "The SWFT telegram support will never ask a user to send any funds to addresses other than the deposit address of the order details. Details about the order should not be necessary. The order id should be enough information for the support to find the order.",
         "INFORMATION_LINK": "Telegram",
+        "TOAST": {
+            "ID_COPIED": "Order ID copied!"
+        },
         "BUTTON": {
             "NEXT": "Swap",
-            "CANCEL": "Cancel"
+            "CANCEL": "Cancel",
+            "DEPOSIT": "Deposit"
         }
+    },
+    "SWFT_DETAILS": {
+        "HEADLINE": "Order details"
     },
     "MESSAGE": {
         "LOADING": "Loading...",
@@ -1023,6 +1045,8 @@
     },
     "MULTISIG": {
         "MENU_ENTRY": "Multisignature",
+        "TITLE": "Multisignature",
+        "SUBTITLE": "Share a multisignature address with co-signers",
         "HEADLINE": "Multisignature",
         "WARNING_MULTISIG_TITLE": "Multisignature addresses and transactions via MyETPWallet are in Beta!",
         "WARNING_MULTISIG_MESSAGE": "Since v0.6.0, you can now use multisignature addresses in MyETPWallet. However, please use this new feature carefully and avoid sending important quantity of ETP or MST to your multisignature addresses. If you notice any bug, do not hesitate to report it via Report Bug in the main menu!",
@@ -1113,6 +1137,10 @@
         "INVALID_BITIDENT": {
             "TITLE": "Invalid Bitident QRCode",
             "SUBTITLE": "This is not a valid Bitident QRCode. Please double check the code and verify that you are using the latest version of MyETPWallet."
+        },
+        "DIFFERENT_ASSET": {
+            "TITLE": "The asset currently selected is different from the one used in the QRCode",
+            "SUBTITLE": "Please make sure the other party and you are using the same asset"
         }
     },
     "INFO": {
@@ -1146,5 +1174,47 @@
             "CHANGE_ADDRESS_NUMBER": "Update number of addresses",
             "CANCEL": "Cancel"
         }
+    },
+    "UPDATE": {
+        "AVAILABLE_TEXT": "A new version is available",
+        "APPLY": "Apply Now"
+    },
+    "ADVANCED": {
+        "TITLE": "Advanced",
+        "MENU_ENTRY": "Advanced"
+    },
+    "BURN": {
+        "TITLE": "Burn",
+        "SUBTITLE": "Burn ETP or MST to permanently destroy them",
+        "SELECT_ASSET": "Asset to burn",
+        "CONFIRMATION": {
+            "TITLE": "These tokens will be permanently deleted!",
+            "SUBTITLE": "You are about to burn these tokens. They will be permanently destroyed, and there will be no way to get them back. Are you sure you want to destroy them?",
+            "CANCEL": "Maybe not...",
+            "OK": "Yes, burn them!"
+        }
+    },
+    "DECODE": {
+        "TITLE": "Sign transaction",
+        "SUBTITLE": "Decode and sign a raw transaction",
+        "TX_TO_SIGN": "Transaction to sign or broadcast",
+        "DESCRIPTION": "Please enter the raw transaction, in hexadecimal format. The transaction can be signed or unsigned.",
+        "ERROR_DECODE": {
+            "TITLE": "Cannot decode this raw transaction",
+            "SUBTITLE": "This raw transaction cannot be decoded. Please make sure this raw transaction is correct."
+        }
+    },
+    "VOTE": {
+        "TITLE": "DNA election",
+        "INFORMATION": "Check the information of the current vote on ",
+        "INFORMATION_BAYVIEW": "Futur votes will take place on ",
+        "INFORMATION_DNA": "For further information about DNA, please check the official website ",
+        "UNLOCK_APPROXIMATION_INFORMATION": "*Please be aware that the 'Locked until' date is an approximation based on the number of block remaining and the average blocktime of the last 10000 blocks. It might vary based on block generation speed.",
+        "HISTORY_LOCKED": "Currently locked votes",
+        "HISTORY_UNLOCKED": "Unlocked votes",
+        "VOTE_FOR_DELEGATE": "Vote for delegate: {{delegate}}",
+        "REWARD": "Reward: {{amount}} DNA",
+        "LOCKED_SINCE_BLOCK": "Locked since block {{block}}",
+        "LOCKED_UNTIL_BLOCK": "Locked until block {{block}}"
     }
 }

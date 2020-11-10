@@ -8,7 +8,6 @@ import { ConfirmPageRoutingModule } from './confirm-routing.module'
 
 import { ConfirmPage } from './confirm.page'
 import { TranslateModule } from '@ngx-translate/core'
-import { ClipboardModule } from 'ngx-clipboard'
 import { TransactionItemModule } from './../components/transaction-item/transaction-item.module'
 import { PipesModule } from 'src/app/pipes/pipes.module'
 
@@ -18,7 +17,6 @@ import { PipesModule } from 'src/app/pipes/pipes.module'
     FormsModule,
     IonicModule,
     TranslateModule.forChild(),
-    ClipboardModule,
     PipesModule,
     TransactionItemModule,
     ConfirmPageRoutingModule,

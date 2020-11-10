@@ -70,15 +70,15 @@
     </ion-card>
 
     <div class="right-buttons">
-      <ion-button color="secondary" (click)="download()">
+      <ion-button color="primary" fill="outline" shape="round" (click)="download()">
         <ion-icon slot="start" name="download"></ion-icon>
         <span translate="ASSET_LOCK.BUTTON.EXPORT_CSV"></span>
       </ion-button>
-      <ion-button color="light" (click)="csvExample()">
+      <ion-button color="secondary" fill="outline" shape="round" (click)="csvExample()">
         <ion-icon slot="start" name="download"></ion-icon>
         <span translate="ASSET_LOCK.BUTTON.DOWNLOAD_CSV_EXAMPLE"></span>
       </ion-button>
-      <ion-button *ngIf="periods.length < periods_nbr_limit" color="primary" (click)="addPeriod()">
+      <ion-button *ngIf="periods.length < periods_nbr_limit" color="success" fill="outline" shape="round" (click)="addPeriod()">
         <ion-icon slot="start" name="add"></ion-icon>
         <span translate="ASSET_LOCK.BUTTON.ADD_PERIOD"></span>
       </ion-button>

@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/account/advanced"></ion-back-button>
+    </ion-buttons>
+    <ion-title translate="EXPORT_MASTER_PUBLIC_KEY.TITLE"></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <p align="center" class="wrong-input" translate="EXPORT_MASTER_PUBLIC_KEY.WARNING"></p>
+
+    <form #exportXpubForm="ngForm">
+      <ion-list *ngIf="!xpub">
+        <ion-item>
+          <ion-label color="primary" position="floating">{{"EXPORT_MASTER_PUBLIC_KEY.PASSWORD"|translate}}</ion-label>
+          <ion-input ion-input type="password" [(ngModel)]="passphrase" name="passphrase"></ion-input>
+        </ion-item>
+        <br>
+        <ion-button type="submit" expand="full" fill="outline" shape="round" (click)="export(this.passphrase)"
+          [disabled]="!validPassword(passphrase)">
+          <ion-icon slot="start" name="key"></ion-icon>
+          <span translate="EXPORT_MASTER_PUBLIC_KEY.BUTTON"></span>
+        </ion-button>
+      </ion-list>
+
+      <ion-list *ngIf="xpub">
+        <h4 translate="EXPORT_MASTER_PUBLIC_KEY.YOUR_KEY"></h4>
+        <ion-item class="manual-copy breakwords">{{xpub}}</ion-item>
+        <ion-button expand="full" fill="outline" shape="round" (click)="walletService.copy(xpub, 'xpub')">
+          <ion-icon slot="start" name="copy"></ion-icon>
+          <span translate="COPY"></span>
+        </ion-button>
+      </ion-list>
+    </form>
+  </ion-grid>
+</ion-content>

@@ -26,6 +26,7 @@ export class InputItemComponent {
     }
 
     async init() {
+        
         this.network = await this.appService.getNetwork()
     }
 
@@ -36,7 +37,8 @@ export class InputItemComponent {
 
     checkInput = () => this.walletService.openLink(this.explorerURLWithIndex(this.input.previous_output.hash, this.input.previous_output.index))
 
-    explorerURLWithIndex = (tx, index) => (this.network === 'mainnet') ? 'https://explorer.mvs.org/tx/' + tx + '?index=' + index : 'https://explorer-testnet.mvs.org/tx/' + tx + '?index=' + index
-
+    explorerURLWithIndex(tx, index){
+        return (this.appService.network === 'mainnet') ? 'https://explorer.mvs.org/tx/' + tx + '?index=' + index : 'https://explorer-testnet.mvs.org/tx/' + tx + '?index=' + index
+    }
 
 }

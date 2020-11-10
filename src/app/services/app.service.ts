@@ -51,12 +51,16 @@ export class AppService {
 
   async updateNetwork(newNetwork?: string) {
     console.log('set network')
-    if(newNetwork){
+    if (newNetwork){
       await this.storage.set('network', newNetwork)
     }
     this.network = await this.getNetwork()
-    console.log(this.network)
     this.network$.next(this.network)
+    if (this.network === 'testnet') {
+      document.body.classList.add('testnet')
+    } else {
+      document.body.classList.remove('testnet')
+    }
     return this.network
   }
 

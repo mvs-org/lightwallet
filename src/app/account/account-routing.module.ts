@@ -40,10 +40,6 @@ const routes: Routes = [
                 loadChildren: () => import('../settings/settings.module').then(m => m.SettingsPageModule)
             },
             {
-                path: 'certificates',
-                loadChildren: () => import('./certificates/certificates.module').then(m => m.CertificatesPageModule)
-            },
-            {
                 path: 'bitident',
                 loadChildren: () => import('./bitident/bitident.module').then(m => m.BitidentPageModule)
             },
@@ -52,8 +48,12 @@ const routes: Routes = [
                 loadChildren: () => import('./swft/swft.module').then(m => m.SwftPageModule)
             },
             {
-                path: 'multisig',
-                loadChildren: () => import('./multisig/multisig.module').then(m => m.MultisigPageModule)
+                path: 'advanced',
+                loadChildren: () => import('./advanced/advanced.module').then(m => m.AdvancedPageModule)
+            },
+            {
+                path: 'vote',
+                loadChildren: () => import('./vote/vote.module').then(m => m.VotePageModule)
             },
         ]
     },

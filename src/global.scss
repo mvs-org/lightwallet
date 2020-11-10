@@ -171,10 +171,19 @@ ion-header {
 }
 
 ion-content:not(.main-menu) {
-    --padding-start: 20px;
-    --padding-top: 20px;
-    --padding-bottom: 20px;
-    --padding-end: 20px;
+    // --padding-start: 20px;
+    // --padding-top: 20px;
+    // --padding-bottom: 20px;
+    // --padding-end: 20px;
+}
+
+@media screen and (max-width: 630px) {
+    ion-content:not(.main-menu) {
+        --padding-start: 5px;
+        --padding-top: 10px;
+        --padding-bottom: 10px;
+        --padding-end: 5px;
+    }
 }
 
 ion-spinner {
@@ -228,4 +237,42 @@ ion-footer ion-button {
 
 .pointer {
     cursor: pointer;
+}
+
+.invisible {
+    visibility: hidden;
+}
+
+.qrcode img {
+    height: 250px;
+}
+
+@media screen and (max-width: 350px) {
+
+    .qrcode img {
+        height: 150px;
+    }
+}
+
+.mat-body,
+.mat-body-1,
+.mat-typography
+{
+    ion-label{
+        p {
+            margin-bottom: 0px;
+        }
+    }
+}
+
+.mono {
+    font-family: monospace;
+}
+
+ion-card{
+    border-radius: 0px;
+}
+
+.testnet ion-header {
+    --ion-toolbar-background: #40d3ff;
 }

@@ -36,6 +36,7 @@
     "@ionic/storage": "^2.2.0",
     "@ngx-translate/core": "^12.1.2",
     "@ngx-translate/http-loader": "^4.0.0",
+    "@swimlane/ngx-charts": "^16.0.0",
     "@zxing/ngx-scanner": "^3.0.1",
     "bitident": "^0.1.11",
     "crypto-js": "^4.0.0",

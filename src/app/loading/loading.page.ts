@@ -59,7 +59,7 @@ export class LoadingPage implements OnInit, OnDestroy {
             this.maxHeight = await this.metaverseService.updateHeight()
             await this.metaverseService.getData()
             await this.metaverseService.setUpdateTime()
-            setTimeout(() => this.router.navigate(['/account', 'portfolio'], { replaceUrl: true }), 2000)
+            setTimeout(() => this.router.navigate(['/account', 'portfolio'], { replaceUrl: true }), 1000)
         } catch (error) {
             console.error(error)
             switch (error.message) {

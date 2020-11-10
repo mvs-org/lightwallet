@@ -2,11 +2,12 @@
     font-size: 48px;
 }
 
-ion-card{
+ion-card {
     height: 100%;
+    margin: 0;
 }
 
-.option{
+.option {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -16,4 +17,13 @@ ion-card{
 
 .account-btn {
     text-transform: initial;
+}
+
+.title {
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+.title h1, .title h3 {
+    width: 100%;
 }

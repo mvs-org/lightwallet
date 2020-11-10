@@ -1,0 +1,56 @@
+<ion-card class="manual-copy display-overflow">
+    <ion-item>
+        <ion-grid>
+            <ion-row>
+                <ion-col>
+                    <span class="hash">{{output.hash}}</span>
+                    <ion-button class="tx-link-button" color="primary" fill="clear" (click)="checkTx()">
+                        <ion-icon slot="icon-only" name="open" size="small"></ion-icon>
+                    </ion-button>
+                    <div class="timestamp" lines="none">
+                        <p>{{output.confirmed_at*1000 | date : 'medium'}}</p>
+                    </div>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col>
+                    <div class="summaryTxType" translate="VOTE.VOTE_FOR_DELEGATE"
+                        [translateParams]="{delegate: output.voteAvatar}"></div>
+                </ion-col>
+                <ion-col>
+                    <div class="right summaryAmount">
+                        <div>{{output.attenuation_model_param.lock_quantity | format : output.attachment.decimals}} DNA
+                        </div>
+                        <div *ngIf="reward" class="default-color fee" translate="VOTE.REWARD"
+                            [translateParams]="{amount: reward}"></div>
+                    </div>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col>
+                    <p>
+                        <span translate="VOTE.LOCKED_SINCE_BLOCK" [translateParams]="{block: output.height}"></span>
+                        <br>
+                        ({{output.confirmed_at*1000 | date : 'medium'}})
+                    </p>
+                </ion-col>
+                <ion-col class="right">
+                    <p>
+                        <span translate="VOTE.LOCKED_UNTIL_BLOCK"
+                            [translateParams]="{block: output.locked_until}"></span>
+                        <br>
+                        (~{{((output.locked_until - height) * blocktime * 1000) + current_time |date : 'medium'}})*
+                    </p>
+                </ion-col>
+            </ion-row>
+            <ion-row *ngIf="output.height<=height">
+                <ion-col>
+                    <ion-progress-bar
+                        *ngIf="height<=output.locked_until && depositProgress(output.height, output.locked_until)>0"
+                        [value]="depositProgress(output.height, output.locked_until)"></ion-progress-bar>
+                    <ion-progress-bar *ngIf="height>output.locked_until" [value]="1"></ion-progress-bar>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-item>
+</ion-card>

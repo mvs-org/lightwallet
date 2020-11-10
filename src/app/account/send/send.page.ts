@@ -17,7 +17,7 @@ class RecipientSendMore {
   ) { }
 }
 
-export const deeplinkRegex = /^.*app\.myetpwallet\.com\/send\/(.+)\?(.*)$/
+export const deeplinkRegex = /^.*app\.myetpwallet\.com\/account\/send\/(.+)\?(.*)$/
 @Component({
   selector: 'app-send',
   templateUrl: './send.page.html',
@@ -80,18 +80,77 @@ export class SendPage implements OnInit {
     private walletService: WalletService,
     private modalCtrl: ModalController,
   ) {
+  }
+
+  ngOnInit() {
+
+  }
+
+  initializeParameters(asset: string, params: any) {
+    if (this.selectedAsset !== asset) {
+      this.alertService.showErrorTranslated('SCAN.DIFFERENT_ASSET.TITLE', 'SCAN.DIFFERENT_ASSET.SUBTITLE')
+    } else {
+      this.quantity = params.q || params.quantity || params.amount || ''
+      this.recipient_address = params.r || params.recipient || ''
+      this.recipient_avatar = params.a || params.avatar || ''
+      this.message = params.m || params.message || ''
+      this.disableParams = params.d === 'true' || params.disableParams === 'true'
+
+      if (history.state.data) {
+        this.quantity = history.state.data.quantity || this.quantity
+        this.recipient_address = history.state.data.recipient || this.recipient_address
+        this.recipient_avatar = history.state.data.avatar || this.recipient_avatar
+        this.message = history.state.data.message || this.message
+      }
+
+      if (this.recipient_avatar !== '') {
+        this.sendToAvatar = true
+        this.recipientAvatarChanged()
+      }
+      this.params.amount = this.quantity !== ''
+      this.params.recipient_address = this.recipient_address !== ''
+      this.params.recipient_avatar = this.recipient_avatar !== ''
+      this.params.message = this.message !== ''
+    }
+  }
+
+  ionViewWillEnter() {
 
     this.selectedAsset = this.activatedRoute.snapshot.params.symbol
-    this.initializeParameters(this.selectedAsset, this.activatedRoute.snapshot.paramMap)
+    this.quantity = ''
+    this.addressbalances = []
+    this.sendFrom = 'auto'
+    this.feeAddress = 'auto'
+    this.transfer_type = 'one'
+    this.recipients = []
+    this.total_to_send = {}
+    this.total_to_send[this.selectedAsset] = 0
+    this.sendMoreValidQuantity = false
+    this.sendMoreValidAddress = false
+    this.sendMore_limit = 1000
+    this.total = 0
+    this.message = ''
+    this.sendMoreValidEachAvatar = []
+    this.lock = false
+    this.isMobile = this.walletService.isMobile()
+    this.showAdvanced = false
+    this.addressbalancesObject = {}
+    this.tickers = {}
+    this.disableParams = false
+    this.params = {
+      amount: false,
+      recipient_address: false,
+      recipient_avatar: false,
+      message: false,
+    }
+
+    this.initializeParameters(this.selectedAsset, this.activatedRoute.snapshot.queryParams)
 
     if (this.selectedAsset === 'ETP') {
       this.recipients.push(new RecipientSendMore('', '', { ETP: undefined }, undefined))
     } else {
       this.recipients.push(new RecipientSendMore('', '', { MST: { [this.selectedAsset]: undefined } }, undefined))
     }
-    this.total_to_send[this.selectedAsset] = 0
-    this.total = 0
-    this.isMobile = this.walletService.isMobile()
 
     // Load addresses and balances
     Promise.all([this.metaverseService.getBalances(), this.metaverseService.getAddresses(), this.metaverseService.getAddressBalances()])
@@ -122,6 +181,17 @@ export class SendPage implements OnInit {
           }
         })
         this.addressbalances = addrblncs
+
+        if (history.state.data && history.state.data.sender) {
+          this.addressbalances.forEach((addressbalance) => {
+            if (addressbalance.address === history.state.data.sender) {
+              if (addressbalance.balance !== 0) {
+                this.sendFrom = history.state.data.sender
+                this.onFromAddressChange()
+              }
+            }
+          })
+        }
       })
 
     this.fee = this.appService.default_fees.default
@@ -131,31 +201,8 @@ export class SendPage implements OnInit {
         this.fee = fees.default
         this.defaultFee = this.fee
       })
-  }
 
-  ngOnInit() {
 
-  }
-
-  initializeParameters(asset: string, params: { get(param: string): any }) {
-    if (this.selectedAsset !== asset) {
-      this.alertService.showErrorTranslated('ERROR_SCAN_ASSET_NOT_MATCH_TITLE', 'ERROR_SCAN_ASSET_NOT_MATCH_MESSAGE')
-    } else {
-      this.quantity = params.get('q') || params.get('quantity') || params.get('amount') || ''
-      this.recipient_address = params.get('r') || params.get('recipient') || ''
-      this.recipient_avatar = params.get('a') || params.get('avatar') || ''
-      this.message = params.get('m') || params.get('message') || ''
-      this.disableParams = params.get('d') === 'true' || params.get('disableParams') === 'true'
-
-      if (this.recipient_avatar !== '') {
-        this.sendToAvatar = true
-        this.recipientAvatarChanged()
-      }
-      this.params.amount = this.quantity !== ''
-      this.params.recipient_address = this.recipient_address !== ''
-      this.params.recipient_avatar = this.recipient_avatar !== ''
-      this.params.message = this.message !== ''
-    }
   }
 
 
@@ -172,7 +219,7 @@ export class SendPage implements OnInit {
     [this.base, this.tickers] = await this.metaverseService.getBaseAndTickers()
   }
 
-  onFromAddressChange(event) {
+  onFromAddressChange() {
     if (this.sendFrom === 'auto') {
       this.showBalance = this.balance
     } else {
@@ -456,7 +503,12 @@ export class SendPage implements OnInit {
         const codeContent = result.data.text.toString()
         if (deeplinkRegex.test(codeContent)) {
           const asset = codeContent.match(deeplinkRegex)[1]
-          const params = new URLSearchParams(codeContent.match(deeplinkRegex)[2])
+          const paramsArray = codeContent.match(deeplinkRegex)[2].split('&')
+          const params = {}
+          paramsArray.forEach(param => {
+            const split = param.split('=')
+            params[split[0]] = split[1]
+          })
           this.initializeParameters(asset, params)
         } else {
           const content = codeContent.toString().split('&')

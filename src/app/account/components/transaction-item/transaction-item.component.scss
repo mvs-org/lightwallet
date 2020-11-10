@@ -33,7 +33,12 @@
 }
 
 .hash {
-    font-size: 20px;
+    // font-size: 20px;
+    overflow: hidden;
+    // white-space: nowrap;
+    word-break:break-all;
+    text-overflow: ellipsis;
+    overflow-wrap: break-word;
 }
 
 .fee {
@@ -74,14 +79,6 @@ textarea{
     display: inline-block;
 }
 
-#explorerTxButton {
-    display: inline-block;
-    top: -10px;
-    position: absolute;
-    top: 4px;
-    right: 14px;
-}
-
 .card {
     margin-left: 10px;
     width: calc(100% - 20px);
@@ -93,4 +90,10 @@ textarea{
 
 input-item, output-item {
     width: 100%;
+}
+
+.tx-link-button{
+    top: 40%;
+    -ms-transform: translateY(-40%);
+    transform: translateY(-40%);
 }

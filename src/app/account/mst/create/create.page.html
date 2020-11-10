@@ -187,13 +187,13 @@
 
     <ion-row>
       <ion-col>
-        <ion-button color="danger" expand="full" (click)="cancel()">
+        <ion-button color="danger" expand="full" fill="outline" shape="round" (click)="cancel()">
           <ion-icon slot="start" name="close"></ion-icon>
           <span translate="CREATE_MST.BUTTON.CANCEL"></span>
         </ion-button>
       </ion-col>
       <ion-col>
-        <ion-button expand="full" type="submit" color="secondary"
+        <ion-button expand="full" type="submit" color="primary" fill="outline" shape="round"
           [disabled]="!sendForm.form.valid||!validSymbol(symbol)||symbol_check=='exist'||symbol_check=='not_domain_owner'||symbol_check=='other_avatar_domain_owner'||!validMaxSupply(max_supply, asset_decimals)||(max_supply=='custom' && !validMaxSupplyCustom(custom_max_supply, asset_decimals))||!validDecimals(asset_decimals)||!validName(issuer_name)||!validAddress(issue_address)||!validDescription(description)||((!addressbalances || !addressbalances[issue_address] || !addressbalances[issue_address][selectedAsset] || addressbalances[issue_address][selectedAsset].available<1000000000))||(lock && !attenuation_model)||(mining && !mstMiningModel)">
           <ion-icon slot="start" disabled="checked" name="cog"></ion-icon>
           <span translate="CREATE_MST.BUTTON.NEXT"></span>

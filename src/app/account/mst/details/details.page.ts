@@ -64,8 +64,28 @@ export class DetailsPage implements OnInit {
   loadingMstInfo = true
 
   stakelist: Array<any> = []
+  stakelistChartData: Array<any> = []
   loadingStakelist = true
   stakelistFullyLoaded = false
+  colorScheme = {
+    domain: [
+      '#006599', // dark blue
+      '#0099CB', // blue
+      '#fe6700', // orange
+      '#ffd21c', // yellow
+      '#be0000', // red
+      '#fe0000', // red
+    ]
+  }
+
+  balanceColorScheme = {
+    domain: [
+      '#00bb00', //green
+      '#be0000', // red
+      '#0099CB', // blue
+      // '#ffd21c', // yellow
+    ]
+  }
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -119,12 +139,12 @@ export class DetailsPage implements OnInit {
         mining_model: undefined,
         updates: [],
       }
-      //this.miningModel = {
-      //initial: 300000000,
-      //interval: 500000,
-      //base: 0.95,
-      //basePercent: 5,
-      //}
+      // this.miningModel = {
+      // initial: 300000000,
+      // interval: 500000,
+      // base: 0.95,
+      // basePercent: 5,
+      // }
     } else {
       this.asset = await this.metaverseService.getMst(this.symbol)
 
@@ -150,11 +170,12 @@ export class DetailsPage implements OnInit {
     if (!this.loadingStakelist || this.stakelist.length === 0) {
       this.loadingStakelist = true
       const options = {
-        limit: 5,
-        lastAddress: this.stakelist.length === 0 ? undefined : this.stakelist[this.stakelist.length - 1].a
+        limit: 10,
+        lastAddress: this.stakelist.length === 0 ? undefined : this.stakelist[this.stakelist.length - 1].name
       }
       const result = await this.metaverseService.getStake(this.symbol, options)
-      this.stakelist = this.stakelist.concat(result)
+      this.stakelist = this.stakelist.concat(result.map(e => ({ name: e.a, value: e.q / Math.pow(10, this.asset.decimals), q: e.q })))
+      this.stakelistChartData = this.getStakelistData(this.stakelist)
       if (result && result.length < options.limit) {
         this.stakelistFullyLoaded = true
       }
@@ -162,8 +183,17 @@ export class DetailsPage implements OnInit {
     }
   }
 
+  getStakelistData(list: Array<any>) {
+    const sum = list.reduce((acc, cur) => acc + cur.value, 0)
+    return [...list, { name: 'Rest', value: (this.asset.quantity + (this.asset.minedQuantity || 0)) / Math.pow(10, this.asset.decimals) - sum }]
+  }
+
   checkTx = (type, data) => this.walletService.openLink(this.explorerURL(type, data))
 
   explorerURL = (type, data) => (this.appService.network === 'mainnet') ? 'https://explorer.mvs.org/' + type + '/' + data : 'https://explorer-testnet.mvs.org/' + type + '/' + data
+
+  format(value, decimals = 0){
+    return value / Math.pow(10, decimals)
+  }
 
 }

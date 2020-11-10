@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { LanguageService } from 'src/app/services/language.service'
+import { Location } from '@angular/common'
 
 export class Language {
   constructor(public label: string, public key: string) { }
@@ -17,7 +18,8 @@ export class LanguagePage implements OnInit {
 
   constructor(
     private language: LanguageService,
-  ) {}
+    private location: Location,
+  ) { }
 
   async ngOnInit() {
     this.languages = []
@@ -33,7 +35,8 @@ export class LanguagePage implements OnInit {
   }
 
   select(key) {
-      this.language.set(key)
+    this.language.set(key)
+    this.location.back()
   }
 
 }

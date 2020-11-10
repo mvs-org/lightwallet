@@ -17,10 +17,6 @@ const routes: Routes = [
     loadChildren: () => import('./export-mobile/export-mobile.module').then( m => m.ExportMobilePageModule)
   },
   {
-    path: 'export-xpub',
-    loadChildren: () => import('./export-xpub/export-xpub.module').then( m => m.ExportXpubPageModule)
-  },
-  {
     path: 'base-currency',
     loadChildren: () => import('./base-currency/base-currency.module').then( m => m.BaseCurrencyPageModule)
   },

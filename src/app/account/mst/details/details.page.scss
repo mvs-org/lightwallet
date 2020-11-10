@@ -2,16 +2,25 @@
     width: 28px;
 }
 
-#explorerTxButton {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-}
-
 .no-mst-info {
     margin-top: 10px;
 }
 
-.card-block-stakelist {
-    padding-bottom: 20px;
+#distributionChart{
+    width: 320px;
+    height: 320px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+#balancesChart{
+    margin-right: auto;
+    margin-left: auto;
+    height: 200px;
+    min-width: 500px;
+}
+
+ion-card {
+    margin: 0px;
+    margin-bottom: 10px;
 }

@@ -1,7 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core'
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core'
 import { MetaverseService } from 'src/app/services/metaverse.service'
 import { Subscription } from 'rxjs'
 import { Router } from '@angular/router'
+import { IonSlides } from '@ionic/angular'
 
 @Component({
   selector: 'app-mst',
@@ -9,6 +10,10 @@ import { Router } from '@angular/router'
   styleUrls: ['./mst.page.scss'],
 })
 export class MstPage implements OnInit, OnDestroy {
+
+  // settings for slides and the segments (selector menu)
+  @ViewChild('slides') slides: IonSlides
+  segment = 0
 
   balances: any
   balancesKeys: string[]
@@ -48,6 +53,10 @@ export class MstPage implements OnInit, OnDestroy {
 
   private async loadTickers() {
     [this.base, this.tickers] = await this.metaverseService.getBaseAndTickers()
+  }
+
+  async setSegment() {
+    this.segment = await this.slides.getActiveIndex()
   }
 
   private async showBalances() {
@@ -137,13 +146,7 @@ export class MstPage implements OnInit, OnDestroy {
     await this.metaverseService.setHiddenMst(hidden)
   }
 
-  cancelReordering() {
-    const reorderGroup = document.getElementById('reorder') as HTMLInputElement
-    reorderGroup.disabled = true
-    this.status = 'default'
-  }
-
-  errorImg = (e) => e.target.remove()
+  errorImg = (e: any) => e.target.remove()
 
   clickMst(symbol) {
     if (this.status === 'default') {
@@ -191,15 +194,6 @@ export class MstPage implements OnInit, OnDestroy {
     // Add MST to order
     this.order.push(mst.symbol)
     await this.metaverseService.addAssetsToAssetOrder([mst.symbol])
-  }
-
-  async delete(symbol) {
-    await this.metaverseService.removeAssetsFromAssetOrder([symbol])
-    this.msts.forEach((mst, index) => {
-      if (mst.symbol === symbol) {
-        this.msts.splice(index, 1)
-      }
-    })
   }
 
 }

@@ -1,0 +1,44 @@
+ion-grid {
+    width: 100%;
+}
+
+.summaryTxType {
+    font-size: 20px;
+    color: var(--ion-color-primary);
+}
+
+.summaryAmount {
+    color: var(--ion-color-primary);
+    font-size: 20px;
+    float: right;
+    width: 100%;
+}
+
+.hash {
+    margin-top: 10px;
+    --min-height: 16px;
+}
+
+.fee {
+    font-size: 16px;
+}
+
+.summaryTxType .label {
+    margin: 0;
+}
+
+.tx-link-button {
+    top: 40%;
+    -ms-transform: translateY(-40%);
+    transform: translateY(-40%);
+}
+
+.timestamp .input-wrapper {
+    height: 20px;
+    margin-right: 8px;
+}
+
+.card {
+    margin-left: 10px;
+    width: calc(100% - 20px);
+}

@@ -11,15 +11,22 @@
       </ion-col>
     </ion-row>
 
-    <ion-row>
-      <ion-col size-md="12" size-lg="6" offset-lg="3">
+    <ion-row class="ion-justify-content-center">
+      <ion-select [(ngModel)]="network" name="network" multiple="false" (ngModelChange)="setNetwork($event)"
+        okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}" [interfaceOptions]="selectOptions">
+        <ion-select-option selected="true" value="mainnet" translate="MAINNET"></ion-select-option>
+        <ion-select-option value="testnet" translate="TESTNET"></ion-select-option>
+      </ion-select>
+
+
+      <!--ion-col size-md="12" size-lg="6" offset-lg="3">
         <ion-segment [(ngModel)]="network" (ionChange)="setNetwork($event)" color="primary" id="network-switch">
           <ion-segment-button id="network-switch-option-mainnet" value="mainnet" translate="MAINNET">
           </ion-segment-button>
           <ion-segment-button id="network-switch-option-testnet" value="testnet" translate="TESTNET">
           </ion-segment-button>
         </ion-segment>
-      </ion-col>
+      </ion-col-->
     </ion-row>
 
     <ion-row class="ion-justify-content-center">
