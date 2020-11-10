@@ -290,8 +290,10 @@ export class DnaLockPage {
     }
 
     setAmountAll = () => {
-        let amount  = this.formatTokenWithoutSymbol(this.balance.available);
-        this.amount = amount.replace(/,/g, '');
+        if (this.balance && this.balance.available) {
+            let amount  = this.formatTokenWithoutSymbol(this.balance.available);
+            this.amount = amount.replace(/,/g, '');
+        }
     }
 
     lock(password) {
@@ -299,7 +301,7 @@ export class DnaLockPage {
             return this.alert.showError('', '');
         }
 
-        if (parseInt(DnaUtilUtilProvider.toUnit(this.amount)) > parseInt(this.balance.available)) {
+        if (!this.balance || !this.balance.available || parseInt(DnaUtilUtilProvider.toUnit(this.amount)) > parseInt(this.balance.available)) {
             return this.alert.showError('DNA.LOCK_AMOUNT_NO_MATCH', '');
         }
 
