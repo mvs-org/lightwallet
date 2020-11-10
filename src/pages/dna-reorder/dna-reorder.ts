@@ -21,6 +21,8 @@ export class DnaReorderPage {
 
     assets: any;
 
+    savedDnaAssets: any;
+
     constructor(
         public navCtrl: NavController,
         public translate: TranslateService,
@@ -38,26 +40,33 @@ export class DnaReorderPage {
                 }
             }
 
-
             this.storage.get('saved_dna_assets').then((savedDnaAssets: any) => {
-                if (savedDnaAssets && savedDnaAssets.order && savedDnaAssets.hidden) {
-                    this.assetOrder          = savedDnaAssets.order;
-                    this.originalAssetOrder  = this.assetOrder.slice(0);
-                    this.hiddenAsset         = savedDnaAssets.hidden;
-                    this.originalHiddenAsset = this.hiddenAsset.slice(0);
-                } else {
-                    this.assetOrder          = [];
-                    this.originalAssetOrder  = [];
-                    this.hiddenAsset         = [];
-                    this.originalHiddenAsset = [];
-                }
-
-                for (var i = 0; i < this.assets.length; i ++) {
-                    if (this.assetOrder.indexOf(this.assets[i]) <= -1) {
-                        this.assetOrder.push(this.assets[i]);
-                        this.originalAssetOrder.push(this.assets[1]);
+                this.savedDnaAssets = savedDnaAssets ? savedDnaAssets : {};
+                this.storage.get('dnaUserInfo').then((userInfo) => {
+                    if (userInfo
+                            && userInfo.name
+                            && savedDnaAssets
+                            && savedDnaAssets[userInfo.name]
+                            && savedDnaAssets[userInfo.name].order
+                            && savedDnaAssets[userInfo.name].hidden) {
+                        this.assetOrder          = savedDnaAssets[userInfo.name].order;
+                        this.originalAssetOrder  = this.assetOrder.slice(0);
+                        this.hiddenAsset         = savedDnaAssets[userInfo.name].hidden;
+                        this.originalHiddenAsset = this.hiddenAsset.slice(0);
+                    } else {
+                        this.assetOrder          = [];
+                        this.originalAssetOrder  = [];
+                        this.hiddenAsset         = [];
+                        this.originalHiddenAsset = [];
                     }
-                }
+    
+                    for (var i = 0; i < this.assets.length; i ++) {
+                        if (this.assetOrder.indexOf(this.assets[i]) <= -1) {
+                            this.assetOrder.push(this.assets[i]);
+                            this.originalAssetOrder.push(this.assets[1]);
+                        }
+                    }
+                });
             });
         });
     }
@@ -67,9 +76,17 @@ export class DnaReorderPage {
     }
 
     async save(assetOrder, hiddenAsset) {
-        this.storage.set('saved_dna_assets', {order: assetOrder, hidden: hiddenAsset}).then(() => {
-            this.navCtrl.pop();
+        this.storage.get('dnaUserInfo').then((userInfo) => {
+            if (userInfo && userInfo.name) {
+                this.savedDnaAssets[userInfo.name] = {order: assetOrder, hidden: hiddenAsset};
+                this.storage.set('saved_dna_assets', this.savedDnaAssets).then(() => {
+                    this.navCtrl.pop();
+                });
+            }
         });
+        //this.storage.set('saved_dna_assets', {order: assetOrder, hidden: hiddenAsset}).then(() => {
+        //    this.navCtrl.pop();
+        //});
     }
 
     compareArray(array1, array2) {

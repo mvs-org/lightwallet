@@ -27,10 +27,13 @@ export class DnaAccountProvider {
         if (!this.userInfo) {
             this.userInfo = userInfo;
             this.balances = {};
+            console.log('dna userinfo init:', this.userInfo);
         } else if (this.userInfo.name !== userInfo.name) {
             this.userInfo = userInfo;
             this.balances = {};
             this.event.publish('dna_balances_update', this.balances);
+            
+            console.log('dna userinfo reset:', this.userInfo);
         }
 
         if (!this.initialized) {

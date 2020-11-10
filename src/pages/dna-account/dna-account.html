@@ -45,7 +45,7 @@
                 </ng-container>
             </ion-row>
             <h2 [translate]="'DNA.HEADLINE_OTHER'"></h2>
-            <div *ngIf="mstAssets && mstAssets.length <= 0" [translate]="'DNA.NO_MST_TEXT'"></div>
+            <div *ngIf="mstAssets && mstAssets.length <= 0 && mstAssetsAll.length <= 0" [translate]="'DNA.NO_MST_TEXT'"></div>
             <ion-row *ngIf="mstAssets && mstAssets.length > 0">
                 <ng-container *ngFor="let asset of mstAssets" class="asset-container-mst">
                     <ion-col class="asset-container asset-container-mst">
@@ -53,7 +53,7 @@
                     </ion-col>
                 </ng-container>
             </ion-row>
-            <ion-row *ngIf="mstAssets && mstAssets.length > 0">
+            <ion-row *ngIf="mstAssetsAll && mstAssetsAll.length > 0">
                 <br>
                 <ion-col>
                     <button col-12 offset-sm-6 col-sm-6 offset-md-8 col-md-4 offset-lg-10 col-lg-2 ion-button icon-left item-end (click)="reorder()">

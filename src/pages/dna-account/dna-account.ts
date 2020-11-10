@@ -120,11 +120,11 @@ export class DnaAccountPage {
     async loadMstAssets() {
         let assetsAll   = this.mstAssetsAll ? this.mstAssetsAll : await DnaReqWsSubscribeProvider.wsListAssets();
         let assetsSaved = await this.storage.get('saved_dna_assets');
-        if (assetsSaved && assetsSaved.order && assetsSaved.hidden) {
+        if (assetsSaved && assetsSaved[this.userInfo.name] && assetsSaved[this.userInfo.name].order && assetsSaved[this.userInfo.name].hidden) {
             let assetsMst = [];
-            for (let i = 0; i < assetsSaved.order.length; i ++) {
+            for (let i = 0; i < assetsSaved[this.userInfo.name].order.length; i ++) {
                 for (let j = 0; j < assetsAll.length; j ++) {
-                    if (assetsSaved.order[i] == assetsAll[j].symbol && assetsSaved.hidden.indexOf(assetsAll[j].symbol) <= -1) {
+                    if (assetsSaved[this.userInfo.name].order[i] == assetsAll[j].symbol && assetsSaved[this.userInfo.name].hidden.indexOf(assetsAll[j].symbol) <= -1) {
                         if (assetsAll[j].id != this.dnaAssetId) {
                             assetsMst.push(assetsAll[j]);
                         }
