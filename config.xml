@@ -8,6 +8,7 @@
     <allow-navigation href="http://ionic.local/*" />
     <allow-navigation href="http://172.31.36.87:8101" />
     <allow-intent href="https://*/*" />
+    <allow-intent href="http://*/*" />
     <preference name="webviewbounce" value="false" />
     <preference name="UIWebViewBounce" value="false" />
     <preference name="DisallowOverscroll" value="true" />
