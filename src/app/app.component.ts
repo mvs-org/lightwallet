@@ -118,6 +118,15 @@ export class MyETPWallet {
                 //    this.walletType = 'etp';
                 //}
             })
+            .then(() => this.storage.get('dnaUserInfo'))
+            .then((userInfo) => {
+                if (this.isLogged) {
+                    if (!userInfo || !userInfo.name) {
+                        this.walletType   = 'etp';
+                        this.walletHasDna = false;
+                    }
+                }
+            })
             .then(() => {
                 console.log('app.isLogged:', this.isLogged)
                 console.log('app.walletType:', this.walletType)
