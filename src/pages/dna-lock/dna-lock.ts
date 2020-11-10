@@ -92,7 +92,7 @@ export class DnaLockPage {
                 // 获取余额
                 this.balance = this.dnaAccount.getBalance(this.assetId);
                 if (!this.balance) {
-                    this.navCtrl.pop();
+                    //this.navCtrl.pop();
                 }
 
                 this.loadBalance();
