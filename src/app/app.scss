@@ -27,11 +27,13 @@
 
 .menu-title {
     text-align: left;
-    position: absolute;
-    padding-left: 16px;
-    left: 0;
-    top: 50%;
-    transform: translate(0, -50%);
+    padding-left: 16px !important;
+    padding-right: 0px !important;
+}
+.menu-title .toolbar-title-ios {
+    text-align: left !important;
+    position: relative !important;
+    overflow: visible !important;
 }
 
 .alert-md .alert-wrapper, .alert-ios .alert-wrapper {
