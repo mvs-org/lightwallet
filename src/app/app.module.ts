@@ -35,7 +35,7 @@ export function createTranslateLoader(http: HttpClient) {
     HttpClientModule,
     IonicStorageModule.forRoot({
       name: '__myetpwallet',
-      driverOrder: ['indexeddb', 'sqlite', 'websql', 'localstorage']
+      driverOrder: ['indexeddb', 'localstorage']
     }),
     TranslateModule.forRoot({
       loader: {
