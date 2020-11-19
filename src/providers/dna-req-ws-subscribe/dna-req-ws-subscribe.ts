@@ -98,7 +98,7 @@ export class DnaReqWsSubscribeProvider {
 
     static async wsListAssets() {
         let instance = await DnaUtilWsApiProvider.instance(false, false)
-        let data = await instance.db_api().exec('list_assets', ['BTS', 100])
+        let data = await instance.db_api().exec('list_assets', ['', 100])
         return data;
     }
 
