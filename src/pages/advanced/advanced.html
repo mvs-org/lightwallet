@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content padding>
-    <ion-list>
+    <ion-list *ngIf="loaded && walletType === 'etp'">
         <ion-row *ngIf="hasSeed">
             <button ion-item (click)="MultisignaturePage()">
                 <ion-icon name="people" item-start></ion-icon>
@@ -44,4 +44,5 @@
             </button>
         </ion-row>
     </ion-list>
+    <p *ngIf="loaded && walletType === 'dna'" class="notice">{{'DNA.COMING_SOON'|translate}}</p>
 </ion-content>

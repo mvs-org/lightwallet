@@ -27,6 +27,7 @@ export class ConfirmTxPage {
     addresses: Array<string> = []
     multisig: any = {}
     walletType: string = 'hasSeed'
+    fromPassphrase: boolean = !!this.navParams.get('fromPassphrase');
 
     constructor(
         public navCtrl: NavController,

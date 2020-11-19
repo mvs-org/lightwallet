@@ -1,0 +1,77 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>
+            <!--{{'ACCOUNT.TITLE'|translate}}-->{{dnaSymbol}}
+            <ion-icon *ngIf="!hasSeed" name="eye"></ion-icon>
+        </ion-title>
+        <ion-buttons end>
+            <ion-spinner *ngIf="isSyncing() && platform.is('mobile')"></ion-spinner>
+            <ion-icon *ngIf="isOffline()" name="flash" class="offlineIcon"></ion-icon>
+        </ion-buttons>
+        <ion-buttons end>
+            <button *ngIf="!platform.is('mobile')" ion-button icon-left (click)="logout()">
+                <ion-icon name="log-out"></ion-icon>
+                <span [translate]="'LOGOUT'"></span>
+            </button>
+            <button ion-button icon-left (click)="sync()">
+                <span *ngIf="platform.is('mobile')&&platform.is('ios')&&!isSyncing()" class="block-iPhone">{{height}}
+                    <ion-icon name="cube"></ion-icon></span>
+                <span *ngIf="!(platform.is('mobile')&&platform.is('ios'))"><span [translate]="'HEIGHT'"></span>:
+                    {{height}}</span>
+            </button>
+            <button *ngIf="!platform.is('mobile')" class="refresh-btn" ion-button (click)="sync()" icon-left>
+                <ion-icon *ngIf="!isSyncing()" name="refresh"></ion-icon>
+                <ion-spinner *ngIf="isSyncing()"></ion-spinner>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+
+<ion-content class="center spread-out">
+    <ion-refresher *ngIf="platform.is('mobile')&&!syncingSmall" (ionRefresh)="sync($event)">
+        <ion-refresher-content class="mini-loader mini-loader-mobile"></ion-refresher-content>
+    </ion-refresher>
+    <div class="mini-loader" *ngIf="mstAssets == undefined"></div>
+    <ion-list no-lines *ngIf="mstAssets">
+        <ion-grid>
+            <ion-row>
+                <ng-container class="asset-container">
+                    <ion-col class="asset-container">
+                        <dna-card [balance]="balance(dnaAssetId)" [assetId]="dnaAssetId" [userInfo]="userInfo" [language]="language" [icon]="dnaAccount.getAssetIcon(dnaSymbol)"></dna-card>
+                    </ion-col>
+                </ng-container>
+            </ion-row>
+            <h2 [translate]="'DNA.HEADLINE_OTHER'"></h2>
+            <div *ngIf="mstAssets && mstAssets.length <= 0 && mstAssetsAll.length <= 0" [translate]="'DNA.NO_MST_TEXT'"></div>
+            <ion-row *ngIf="mstAssets && mstAssets.length > 0">
+                <ng-container *ngFor="let asset of mstAssets" class="asset-container-mst">
+                    <ion-col class="asset-container asset-container-mst">
+                        <dna-mst-card [balance]="balance(asset.id)" [asset]="asset" [userInfo]="userInfo" [language]="language" [icon]="dnaAccount.getAssetIcon(asset.symbol)"></dna-mst-card>
+                    </ion-col>
+                </ng-container>
+            </ion-row>
+            <ion-row *ngIf="mstAssetsAll && mstAssetsAll.length > 0">
+                <br>
+                <ion-col>
+                    <button col-12 offset-sm-6 col-sm-6 offset-md-8 col-md-4 offset-lg-10 col-lg-2 ion-button icon-left item-end (click)="reorder()">
+                        <ion-icon name="reorder"></ion-icon>
+                        <span [translate]="'REORDER'"></span>
+                    </button>
+                </ion-col>
+            </ion-row>
+            <br>
+            <!--<h2 [translate]="'HEADLINE_MIT'"></h2>
+            <div *ngIf="mitAssets.length <= 0" [translate]="'NO_MIT_TEXT'"></div>
+            <ion-row *ngIf="balances!=undefined">
+                <ng-container *ngFor="let mit of balances.MIT" class="asset-container">
+                    <ion-col class="asset-container">
+                        <mit-card [avatar]="mit.owner" [symbol]="mit.symbol"></mit-card>
+                    </ion-col>
+                </ng-container>
+            </ion-row>-->
+        </ion-grid>
+    </ion-list>
+</ion-content>

@@ -10,7 +10,7 @@ import { AlertProvider } from '../../providers/alert/alert';
     ],
     imports: [
         IonicPageModule.forChild(AppsPage),
-        TranslateModule
+        TranslateModule,
     ],
     providers: [
         AlertProvider

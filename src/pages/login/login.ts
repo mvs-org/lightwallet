@@ -31,7 +31,7 @@ export class LoginPage {
         public mvs: MvsServiceProvider,
         private alert: AlertProvider,
     ) {
-        this.isApp = (!document.URL.startsWith('http') || document.URL.startsWith('http://localhost:8080'));
+        this.isApp = (!document.URL.startsWith('http') || document.URL.startsWith('http://localhost'));
 
         this.wallet.getSavedAccounts()
             .then((accounts) => this.saved_accounts = accounts ? accounts : [])
@@ -39,6 +39,7 @@ export class LoginPage {
 
     ionViewDidEnter() {
         this.loadNetwork()
+        //this.alert.showMessage('document.URL', document.URL, '');
     }
 
     getLogoClasses() {
@@ -91,12 +92,36 @@ export class LoginPage {
         let account_name = account.name
         let content = account.view_only_content
         this.alert.showLoading()
+            // 初始化双链相关的标记
+            .then(() => this.storage.set('walletHasEtp', true))
+            .then(() => this.storage.set('walletHasDna', false))
+            .then(() => this.storage.set('walletType', 'etp'))
+            .then(() => this.storage.set('dnaUserInfo', null))
+            .then(() => this.storage.get('saved_dna_accounts'))
+            .then((savedDnaAccounts) => {
+                if (savedDnaAccounts && savedDnaAccounts.length > 0) {
+                    let index = -1;
+                    savedDnaAccounts.find((o, i) => {
+                        if (o.name === account.name) {
+                            index = i;
+                            return true;
+                        }
+                    });
+                    if (index >= 0) {
+                        return this.storage.set('walletHasDna', true)
+                            .then(() => this.storage.set('dnaUserInfo', savedDnaAccounts[index].dnaUserInfo))
+                            .then(() => this.storage.set('walletType', savedDnaAccounts[index].walletType));
+                    }
+                }
+            })
             .then(() => this.wallet.getWalletFromMasterPublicKey(content.xpub))
             .then((wallet) => this.wallet.generateAddresses(wallet, 0, account.params.index || this.globals.index))
             .then((addresses) => this.mvs.addAddresses(addresses))
             .then(() => this.wallet.setupViewOnlyAccount(account_name, content))
             .then(() => this.alert.stopLoading())
-            .then(() => this.nav.setRoot("LoadingPage", { reset: true }))
+            // 获取默认展示 ETP 还是 DNA，并跳转至相应的 Loading 页面
+            .then(() => this.storage.get('walletType'))
+            .then((walletType) => this.nav.setRoot(walletType === 'dna' ? "DnaLoadingPage" : "LoadingPage", { reset: true }))
             .catch((error) => {
                 console.error(error.message)
                 this.alert.stopLoading()

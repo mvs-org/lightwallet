@@ -1,0 +1,103 @@
+<ion-card class="manual-copy display-overflow">
+    <ion-grid>
+        <ion-row class="hash">
+            <ion-col>
+                <ion-row>
+                    <ion-col>
+                        <ion-item *ngIf="(!lock.withdraw_available || lock.withdraw_available <= 0) && lock.requested_withdraw <= 0">
+                            <div class="tx-hash" style="width: 100%">
+                                <h2 class="font-mono overflow">
+                                    {{'DNA.LOCK_LOCKING' | translate}}
+                                </h2>
+                            </div>
+                        </ion-item>
+                        <ion-item *ngIf="lock.requested_withdraw > 0">
+                            <div class="tx-hash" style="width: 100%">
+                                <h2 class="font-mono overflow">
+                                    {{'DNA.LOCK_WITHDRAW_IN_NEXT_ELECTION' | translate}}
+                                </h2>
+                            </div>
+                        </ion-item>
+                        <ion-item *ngIf="(lock.withdraw_available > 0 && lock.requested_withdraw <= 0) && (canWithdraw || lock.balance_type != 'governance')">
+                            <div class="tx-hash" style="width: 100%">
+                                <h2 class="font-mono overflow" style="padding-right: 100px;">
+                                    {{'DNA.LOCK_CAN_WITHDRAW' | translate}}
+                                </h2>
+                            </div>
+                            <button id="explorerTxButton" [disabled]="false" ion-button (click)="goWithdraw()">
+                                {{'DNA.LOCK_WITHDRAW' | translate}}
+                            </button>
+                        </ion-item>
+                        <ion-item *ngIf="(lock.withdraw_available > 0 && lock.requested_withdraw <= 0) && (!canWithdraw && lock.balance_type == 'governance')">
+                            <div class="tx-hash" style="width: 100%">
+                                <h2 class="font-mono overflow">
+                                    {{'DNA.LOCK_UNLOCK_IN_A' | translate}}
+                                </h2>
+                            </div>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col>
+                        <!--<ion-item *ngIf="(lock.withdraw_available > 0 && lock.requested_withdraw <= 0) && (canWithdraw || lock.balance_type != 'governance') && platform.is('mobile')">
+                            <button id="explorerTxButton" [disabled]="false" ion-button (click)="goWithdraw()">
+                                {{'DNA.LOCK_WITHDRAW' | translate}}
+                            </button>
+                        </ion-item>-->
+                        <ion-item class="right timestamp">
+                            <h2>{{lock.lockTime | date : 'medium'}}</h2>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <ion-row>
+                    <ion-col>
+                        <ion-item class="summaryTxType">
+                            {{'DNA.LOCK_TYPE_' + lock.balance_type | translate}}
+                            <div>
+                                <button class="ion-item" ion-button icon-left (click)="showHideDetails()">
+                                    <ion-icon *ngIf="mode == 'summary'" name="arrow-dropdown"></ion-icon>
+                                    <span *ngIf="mode == 'summary'">{{'SHOW_DETAILS'|translate}}</span>
+                                    <ion-icon *ngIf="mode !== 'summary'" name="arrow-dropup"></ion-icon>
+                                    <span *ngIf="mode !== 'summary'">{{'HIDE_DETAILS'|translate}}</span>
+                                </button>
+                            </div>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col>
+                        <ion-item class="right summaryAmount">
+                            <div>
+                                <div class="sendAmount">{{formatToken(lock.amount)}}</div>
+                                <!--<div *ngIf="!lock.withdraw_available" class="sendAmount">{{formatToken(lock.withdraw_available ? lock.withdraw_available : '0')}}</div>-->
+                                <!--<div *ngIf="lock.withdraw_available" class="receiveAmount">{{formatToken(lock.withdraw_available ? lock.withdraw_available : '0')}}</div>-->
+                            </div>
+                            <!--<div class="default-color fee">{{'DNA.LOCK_AMOUNT' | translate}}: {{formatToken(lock.amount)}}</div>-->
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+            </ion-col>
+        </ion-row>
+        <div [@expandCollapse]="this.mode !== 'summary'" *ngIf="this.mode !== 'summary'">
+            <ion-row style="padding-bottom: 15px;">
+                <ion-col col-12 col-md-6>
+                    <ion-row>
+                        <p style="padding-left: 22px;">{{'DNA.LOCK_UNLOCK_AMOUNT' | translate}}: {{formatToken(lock.withdraw_available ? lock.withdraw_available : '0')}}</p>
+                    </ion-row>
+                    <ion-row>
+                        <p style="padding-left: 22px;">{{'DNA.LOCK_AMOUNT' | translate}}: {{formatToken(lock.amount)}}</p>
+                    </ion-row>
+                </ion-col>
+                <ion-col col-12 col-md-6>
+                    <ion-row>
+                        <p *ngIf="lock.balance_type == 'cashback'" style="padding-left: 22px;">{{'DNA.LOCK_UNLOCK_TIME' | translate}}: {{'DNA.LOCK_UNLOCK_TIME_LINEAR' | translate}}</p>
+                        <p *ngIf="lock.balance_type != 'cashback'" style="padding-left: 22px;">{{'DNA.LOCK_UNLOCK_TIME' | translate}}: {{lock.unlockTime | date : 'medium'}}</p>
+                    </ion-row>
+                    <ion-row>
+                        <p style="padding-left: 22px;">{{'DNA.LOCK_TIME' | translate}}: {{lock.lockTime | date : 'medium'}}</p>
+                    </ion-row>
+                </ion-col>
+            </ion-row>
+        </div>
+    </ion-grid>
+</ion-card>

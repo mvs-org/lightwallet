@@ -37,7 +37,7 @@
                 <p [translate]="'THEME_SETTINGS_TEXT'"></p>
             </button>
         </ion-row>
-        <ion-row>
+        <ion-row *ngIf="walletType != 'dna'">
             <button ion-item (click)="BaseCurrencyPage()">
                 <ion-icon name="logo-usd" item-start></ion-icon>
                 <h1 [translate]="'SETTINGS.BASE_CURRENCY'"></h1>

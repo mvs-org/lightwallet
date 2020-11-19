@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams, Loading } from 'ionic-angular';
 import { MvsServiceProvider } from '../../providers/mvs-service/mvs-service';
 import { AppGlobals } from '../../app/app.global';
 import { TranslateService } from '@ngx-translate/core';
-import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import {BarcodeScanner} from '@ionic-native/barcode-scanner';
 import { WalletServiceProvider } from '../../providers/wallet-service/wallet-service';
 import { AlertProvider } from '../../providers/alert/alert';
 

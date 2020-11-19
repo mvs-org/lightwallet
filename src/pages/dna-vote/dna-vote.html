@@ -1,0 +1,125 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>{{ "VOTE" | translate}}</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding style="padding-bottom: 0;">
+
+    <!--<ion-item no-lines>
+        <ion-segment [(ngModel)]="display_segment" color="primary" (ngModelChange)="changeTab($event)">
+            <ion-segment-button value="vote">
+                {{ "VOTE.SEGMENT_VOTE" | translate}}
+            </ion-segment-button>
+            <ion-segment-button value="history">
+                {{ "VOTE.SEGMENT_HISTORY" | translate}}
+            </ion-segment-button>
+        </ion-segment>
+    </ion-item>-->
+
+    <div *ngIf="display_segment == 'vote'">
+
+        <div *ngIf="isLoading" class="mini-loader"></div>
+        <div *ngIf="!isLoading">
+            <p align="center" class="wrong-input">{{"DNA.NOTICE_TRANSACTION_FEE_UNCOVERED"|translate}}</p>
+            <ion-row>
+                <ion-col>
+                    <p class="available">{{"DNA.VOTE_LOCKED"|translate}}: <br *ngIf="platform.is('mobile')">{{formatToken(balance ? balance.frozen : 0)}}</p>
+                </ion-col>
+                <ion-col>
+                    <p class="right">{{"FEE"|translate}}: <br *ngIf="platform.is('mobile')">{{formatToken(fee) + ' + ' + formatToken(pricePerKbyte) + ' / KB'}}</p>
+                </ion-col>
+            </ion-row>
+            <form style="padding-bottom: 0;">
+                <ion-list style="padding-bottom: 0;">
+                    <div style="padding-left: 10px;">
+                        <p align="center">{{"DNA.ELECTION_END" | translate}}: {{nextRoundTime | date : 'medium'}}</p>
+                        <!--<ion-row>
+                            <ion-col>
+                                <p>{{"VOTE.START" | translate}}: <br *ngIf="platform.is('mobile')">
+                                    {{currentTime | date : 'medium'}}</p>
+                            </ion-col>
+                            <p style="text-align: center;"><br *ngIf="platform.is('mobile')">~</p>
+                            <ion-col>
+                                <p class="right">{{"DNA.ELECTION_END" | translate}}:<br *ngIf="platform.is('mobile')">
+                                    {{nextRoundTime | date : 'medium'}}</p>
+                            </ion-col>
+                        </ion-row>-->
+                        <!--<ion-row>
+                            <ion-col>
+                                <progress-bar [progress]="electionProgressVote || 0"></progress-bar>
+                            </ion-col>
+                        </ion-row>-->
+                    </div>
+                    <br>
+                    <ion-item [ngClass]="{'error-border':!selectedNode}">
+                        <ion-label>{{"VOTE.SELECT_DELEGATE"|translate}}</ion-label>
+                        <ion-select [(ngModel)]="selectedNode" name="selectedNode" multiple="false"
+                                    okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}" (ngModelChange)="changeNode($event)">
+                            <ng-container *ngFor="let node of nodeList">
+                                <ion-option *ngIf="isShow(node)" value="{{node.vote_id}}">
+                                    {{node.witness_account_name}}
+                                    <!--<span *ngIf="hasSelfLock(node)">
+                                        {{"DNA.VOTE_SELF_LOCK" | translate}}
+                                        {{formatToken(node.selfLock)}}
+                                    </span>-->
+                                </ion-option>
+                            </ng-container>
+                        </ion-select>
+                    </ion-item>
+                    <div no-lines class="advice" *ngIf="selectedNodeSelfLock">{{"DNA.VOTE_SELF_LOCK" | translate}}: {{formatToken(selectedNodeSelfLock)}}</div>
+                    <div no-lines class="advice" *ngIf="selectedNodeIntro">{{"DNA.VOTE_TEAM_INTRO_TITLE" | translate}}: {{selectedNodeIntro}}</div>
+                    <div no-lines class="advice" *ngIf="selectedNodePlan">{{"DNA.VOTE_BUILDING_PLAN_TITLE" | translate}}: {{selectedNodePlan}}</div>
+                    <div no-lines class="advice" *ngIf="selectedNodeRatio">{{"DNA.VOTE_DIVIDEND_RATIO_TITLE" | translate}}: {{selectedNodeRatio}}</div>
+                    <div *ngIf="canVote">
+                        <ion-item [ngClass]="{'error-border':!validPassword(password)}">
+                            <ion-label color="primary" floating>{{"PASSWORD"|translate}}</ion-label>
+                            <ion-input name="password" type="password" placeholder="" [(ngModel)]="password"></ion-input>
+                        </ion-item>
+                        <ion-item *ngIf="password && !validPassword(password)" no-lines class="wrong-input">{{"DNA.PASSWORD_NO_MATCH" | translate}}</ion-item>
+                    </div>
+                    <br>
+                </ion-list>
+                <br>
+                <p *ngIf="!canVote" align="center" class="wrong-input">{{'DNA.VOTE_CAN_NOT'|translate}}</p>
+                <ion-row *ngIf="canVote" class="padding-bottom">
+                    <ion-col>
+                        <button type="submit" ion-button full icon-left [disabled]="!canVote || !selectedNode || !validPassword(password)" (click)="send(password)" color="secondary">
+                            <ion-icon disabled="checked" name="checkmark"></ion-icon>
+                            {{'BUTTON.OK'|translate}}
+                        </button>
+                    </ion-col>
+                    <ion-col>
+                        <button ion-button color="danger" full item-right icon-left (click)="cancel($event)">
+                            <ion-icon name="close"></ion-icon>
+                            {{'CANCEL'|translate}}
+                        </button>
+                    </ion-col>
+                </ion-row>
+            </form>
+        </div>
+    </div>
+
+    <div *ngIf="display_segment == 'history'">
+        <h2 class="center" *ngIf="true">{{"VOTE.HISTORY_LOCKED" |
+            translate}}</h2>
+        <!--
+        <vote-item *ngFor="let output of frozen_outputs_locked" [output]="output" [height]="height"
+            [blocktime]="blocktime" [reward]="rewards[output.hash]" [icon]="'assets/icon/DNA.png'"></vote-item>-->
+
+        <ion-row [hidden]="true">
+            <ion-col>
+                <p align="center">{{"HISTORY.UNLOCK_APPROXIMATION_INFORMATION" | translate}}</p>
+            </ion-col>
+        </ion-row>
+
+        <h2 class="center" *ngIf="true">
+            {{"VOTE.HISTORY_UNLOCKED"|translate}}</h2>
+        <!--<vote-item *ngFor="let output of frozen_outputs_unlocked" [output]="output" [height]="height"
+            [blocktime]="blocktime" [reward]="rewards[output.hash]" [icon]="'assets/icon/DNA.png'"></vote-item>-->
+    </div>
+
+</ion-content>

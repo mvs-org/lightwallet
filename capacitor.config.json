@@ -1,0 +1,31 @@
+{
+  "appId": "com.mvsdna.walletapp",
+  "appName": "DnaWallet",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  },
+  "cordova": {
+    "preferences": {
+      "webviewbounce": "false",
+      "UIWebViewBounce": "false",
+      "DisallowOverscroll": "true",
+      "android-minSdkVersion": "19",
+      "android-targetSdkVersion": "28",
+      "BackupWebStorage": "none",
+      "SplashMaintainAspectRatio": "true",
+      "FadeSplashScreenDuration": "800",
+      "AutoHideSplashScreen": "false",
+      "FadeSplashScreen": "true",
+      "SplashShowOnlyFirstTime": "false",
+      "SplashScreen": "screen",
+      "SplashScreenDelay": "1000",
+      "orientation": "portrait",
+      "xwalkMultipleApk": "false"
+    }
+  }
+}

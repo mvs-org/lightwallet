@@ -556,13 +556,40 @@ export class MvsServiceProvider {
                     .then((language: any) => {
                         return this.storage.get('saved_accounts')
                             .then((saved_accounts: any) => {
-                                return this.storage.clear()
-                                    .then(() => {
-                                        this.event.publish('settings_update', {});
-                                        return Promise.all([this.storage.set('language', language), this.storage.set('theme', theme), this.storage.set('saved_accounts', saved_accounts)]);
-                                    })
-                            })
-                    })
+                                // 保存 DNA 账户信息，避免被清除
+                                return this.storage.get('saved_dna_accounts')
+                                    .then((saved_dna_accounts: any) => {
+                                        return this.storage.get('saved_dna_assets')
+                                            .then((saved_dna_assets: any) => {
+                                                return this.storage.get('walletHasEtp').then((walletHasEtp) => {
+                                                    return this.storage.get('walletHasDna').then((walletHasDna) => {
+                                                        return this.storage.get('walletType').then((walletType) => {
+                                                            return this.storage.get('dnaUserInfo').then((dnaUserInfo) => {
+                                                                return this.storage.clear()
+                                                                    .then(() => {
+                                                                        setTimeout(() => {
+                                                                            this.event.publish('settings_update', {});
+                                                                        }, 2000);
+                                                                        return Promise.all([
+                                                                            this.storage.set('language', language),
+                                                                            this.storage.set('theme', theme),
+                                                                            this.storage.set('saved_accounts', saved_accounts),
+                                                                            this.storage.set('saved_dna_accounts', saved_dna_accounts),
+                                                                            this.storage.set('saved_dna_assets', saved_dna_assets),
+                                                                            this.storage.set('walletHasEtp', walletHasEtp),
+                                                                            this.storage.set('walletHasDna', walletHasDna),
+                                                                            this.storage.set('walletType', walletType),
+                                                                            this.storage.set('dnaUserInfo', dnaUserInfo),
+                                                                        ]);
+                                                                    });
+                                                            });
+                                                        });
+                                                    });
+                                                });
+                                            });
+                                    });
+                            });
+                    });
             });
     }
 

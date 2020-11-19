@@ -1,0 +1,54 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>{{ "DNA.LOCK_WITHDRAW" | translate}}</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding style="padding-bottom: 0;">
+
+    <div>
+        <div *ngIf="isLoading" class="mini-loader"></div>
+        <div *ngIf="!isLoading">
+            <p align="center" class="wrong-input">{{"DNA.NOTICE_TRANSACTION_FEE_UNCOVERED"|translate}}</p>
+            <ion-row>
+                <ion-col>
+                    <p class="available">{{'DNA.LOCK_UNLOCK_AMOUNT' | translate}}: <br *ngIf="platform.is('mobile')">{{formatTokenWithoutSymbol(lock.withdraw_available)}} {{asset}}</p>
+                </ion-col>
+                <ion-col>
+                    <p class="right">{{"DNA.LOCK_FEE_WITHDRAW"|translate}}: <br *ngIf="platform.is('mobile')">{{formatToken(feeWithdraw)}}</p>
+                </ion-col>
+            </ion-row>
+            <form style="padding-bottom: 0;">
+                <ion-list style="padding-bottom: 0;">
+
+                    <ion-item [ngClass]="{'error-border':!validPassword(password)}">
+                        <ion-label color="primary" floating>{{"PASSWORD"|translate}}</ion-label>
+                        <ion-input name="password" type="password" placeholder="" [(ngModel)]="password"></ion-input>
+                    </ion-item>
+                    <ion-item *ngIf="password && !validPassword(password)" no-lines class="wrong-input">{{"DNA.PASSWORD_NO_MATCH" | translate}}</ion-item>
+
+                    <br>
+                </ion-list>
+                <br>
+                <ion-row class="padding-bottom">
+                    <ion-col>
+                        <button type="submit" ion-button full icon-left [disabled]="!validPassword(password)" (click)="withdraw(password)" color="secondary">
+                            <ion-icon disabled="checked" name="checkmark"></ion-icon>
+                            {{'BUTTON.OK'|translate}}
+                        </button>
+                    </ion-col>
+                    <ion-col>
+                        <button ion-button color="danger" full item-right icon-left (click)="cancel($event)">
+                            <ion-icon name="close"></ion-icon>
+                            {{'CANCEL'|translate}}
+                        </button>
+                    </ion-col>
+                </ion-row>
+            </form>
+        </div>
+    </div>
+
+</ion-content>

@@ -15,6 +15,27 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 
+.menu-set-wallet {
+    position: absolute;
+    right: 15px;
+    height: 100%;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.menu-title {
+    text-align: left;
+    padding-left: 16px !important;
+    padding-right: 0px !important;
+}
+.menu-title .toolbar-title {
+    text-align: left !important;
+    position: relative !important;
+    overflow: visible !important;
+}
+
 .alert-md .alert-wrapper, .alert-ios .alert-wrapper {
     max-width: 600px;
 }
@@ -745,4 +766,8 @@ ion-list-header{
     padding-bottom: calc(env(safe-area-inset-bottom) + 4px);
     min-height: calc(44px + constant(safe-area-inset-bottom));
     min-height: calc(44px + env(safe-area-inset-bottom));
+}
+
+.wallet-change {
+    width: 52px;
 }

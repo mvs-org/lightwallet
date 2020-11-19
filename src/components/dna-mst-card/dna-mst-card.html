@@ -1,0 +1,73 @@
+<ion-card class="card-block">
+    <ion-grid>
+        <ion-row>
+            <ion-col>
+                <ion-item class="grid-info">
+                    <ion-avatar item-start>
+                        <img class="coinlogo" [src]="icon">
+                    </ion-avatar>
+                    <h1 class="symbol overflow">
+                        {{asset.symbol}}
+                        <!--<button ion-button clear color="danger" icon-left (click)="gotoVote()" class="swap-buton">
+                            <ion-icon name="ribbon"></ion-icon>{{"VOTE"|translate}}
+                        </button>-->
+                    </h1>
+                    <h2 class="balances balance-text">
+                        <!--<div class="balance-field-fiat">
+                            {{"ACCOUNT.TOTAL"|translate}}
+                        </div>-->
+                        <div class="balance-field">
+                            {{"ACCOUNT.TOTAL"|translate}}
+                        </div>
+                        <div class="balance-field">
+                            {{"ACCOUNT.AVAILABLE"|translate}}
+                        </div>
+                        <div class="balance-field">
+                            {{"ACCOUNT.FROZEN"|translate}}
+                        </div>
+                    </h2>
+                    <h2 class="balances">
+                        <!--<div class="balance-field-fiat">
+                            <div>{{formatTokenWithoutSymbol(balance ? balance.total : 0)}}</div>
+                            <div *ngIf="!balance || balance.total <= 0" class="fiat">
+                                ≈ -
+                            </div>
+                            <div *ngIf="balance && balance.total > 0" class="fiat">
+                                ≈ {{language == 'zh' ? 'CNY' : 'USD'}} {{language == 'zh' ? balance.currency['CNY'] : balance.currency['USD']}}
+                            </div>
+                        </div>
+                        -->
+                        <div class="balance-field">
+                            <div>{{formatTokenWithoutSymbol(balance ? balance.total : 0)}}</div>
+                        </div>
+                        <div class="balance-field">
+                            <div>{{formatTokenWithoutSymbol(balance ? balance.available : 0)}}</div>
+                        </div>
+                        <div class="balance-field">
+                            <div class="frozen-balance">
+                                {{formatTokenWithoutSymbol(balance ? balance.frozen : 0)}}
+                            </div>
+                        </div>
+                    </h2>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-card>
+<ion-row col-12 class="row-buttons">
+    <ion-col col-4>
+        <button ion-button full clear color="secondary" icon-left (click)="gotoReceive()">
+            <ion-icon name="download"></ion-icon>{{ "RECEIVE" | translate }}
+        </button>
+    </ion-col>
+    <ion-col col-4>
+        <button ion-button full clear color="danger" icon-left (click)="gotoTransfer()">
+            <ion-icon name="send"></ion-icon>{{ "SEND" | translate }}
+        </button>
+    </ion-col>
+    <ion-col col-4>
+        <button ion-button full clear color="primary" icon-left (click)="gotoTransactions()">
+            <ion-icon name="time"></ion-icon>{{ "HISTORY" | translate }}
+        </button>
+    </ion-col>
+</ion-row>

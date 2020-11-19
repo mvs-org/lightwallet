@@ -1,0 +1,74 @@
+page-dna-transactions {
+    img.big-icon {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+
+    progress-bar .progress-outer {
+        border: 0 !important;
+        padding: 0 !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        border-radius: 0 !important;
+    }
+
+    progress-bar .progress-inner {
+        height: 20px;
+        padding: 0 !important;
+        min-width: 20px !important;
+        border-radius: 0 !important;
+    }
+
+    .no-padding {
+        padding: 0;
+    }
+
+    .no-padding .item-cover {
+        margin-left: 0 !important;
+    }
+
+    .center {
+        text-align: center;
+    }
+
+    .order-selectors {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    .ngx-pagination {
+        text-align: center;
+        
+    }
+
+    .ngx-pagination .current {
+        background-color: #488aff;
+    }
+
+    .big-icon-box {
+        position: relative;
+        width: 100%;
+        height: auto;
+    }
+
+    .big-icon-box .big-icon {
+        opacity: 0;
+    }
+
+    .big-icon-box .big-icon-txt {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        color: #ccc;
+        background-color: rgba(238, 238, 238, 1);
+        font-size: calc((100vw/10) + 12px);
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}

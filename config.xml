@@ -1,13 +1,14 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget android-versionCode="9030" id="com.myetpwallet.app" version="0.9.3" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>MyETPWallet</name>
+    <name>DNA</name>
     <description>The Metaverse lightwallet.</description>
-    <author email="info@mvs.org" href="https://www.myetpwallet.com/">My ETP Wallet</author>
+    <author email="info@mvs.org" href="https://www.myetpwallet.com/">My DNA Wallet</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-navigation href="http://ionic.local/*" />
     <allow-navigation href="http://172.31.36.87:8101" />
     <allow-intent href="https://*/*" />
+    <allow-intent href="http://*/*" />
     <preference name="webviewbounce" value="false" />
     <preference name="UIWebViewBounce" value="false" />
     <preference name="DisallowOverscroll" value="true" />

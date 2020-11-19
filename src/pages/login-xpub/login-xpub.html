@@ -12,6 +12,13 @@
             </ion-col>
         </ion-row>
         <ion-row>
+            <ion-item class="center-psw" [ngClass]="{'error-border': username && !validUsername, 'valid-border': validUsername}">
+                <ion-label color="primary" floating>{{'DNA.XPUB_USERNAME'| translate}}</ion-label>
+                <ion-input name="username" type="text" placeholder="" [(ngModel)]="username" (ngModelChange)="usernameValid(username)"></ion-input>
+            </ion-item>
+        </ion-row>
+            <ion-item *ngIf="username && !validUsername" no-lines class="wrong-input center-psw">{{"DNA.XPUB_INVALID_USERNAME" | translate}}</ion-item>
+        <ion-row>
             <ion-item class="center-psw" [ngClass]="{'error-border':xpub && !validXpub, 'valid-border':validXpub}">
                 <ion-label color="primary" floating>{{'XPUB.PUBLIC_KEY'| translate}}</ion-label>
                 <ion-input name="xpub" type="text" placeholder="" [(ngModel)]="xpub" (ngModelChange)="xpubValid(xpub)"></ion-input>
@@ -23,7 +30,7 @@
         </ion-item>
 
         <ion-row class="button more-top-padding">
-            <button ion-button icon-left full [disabled]="!validXpub" (click)="login(xpub)">
+            <button ion-button icon-left full [disabled]="!validXpub || !validUsername" (click)="login(xpub, username)">
                 <ion-icon name="arrow-forward"></ion-icon>
                 {{'BUTTON.NEXT'|translate}}
             </button>

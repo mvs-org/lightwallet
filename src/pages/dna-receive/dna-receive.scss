@@ -1,0 +1,127 @@
+page-dna-receive {
+
+    .icon {
+        max-width: 30px;
+    }
+
+    ion-card-content {
+        text-align: left;
+    }
+
+    .right {
+        float: right;
+    }
+
+    .card-ios {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .avatar-logo {
+        width: 18px;
+        display: inline-block;
+    }
+
+    .address {
+        //display: inline-block;
+        word-break: break-all;
+    }
+
+    .qrcode-btn {
+        padding: 0px;
+        height: auto;
+        display: inline-block;
+        top: -10px;
+    }
+
+    .qrcode-btn img {
+        height: 28px;
+        width: 28px;
+    }
+
+    .qrcode-btn .button-inner {
+        height: auto;
+    }
+
+    .copy-btn {
+        width: 28px;
+        height: 28px;
+        margin: 0px;
+        top: -10px;
+        padding: inherit;
+        color: black;
+    }
+
+    #history-btn {
+        padding-right: 0;
+    }
+
+    .address-text {
+        border: 0px !important;
+        resize: none;
+        padding-top: 10px;
+        margin-right: 10px;
+    }
+
+    .qrcode {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-top: 8vh;
+    }
+
+    .qrcode-card {
+        width: calc(16vw + 36px);
+    }
+
+    .qrcode-card-content {
+        padding: 18px;
+    }
+
+    .qrcode img {
+        display: block;
+        width: 16vw;
+        height: 16vw;
+    }
+
+    .qrcode.mobile .qrcode-card {
+        width: calc(30vw + 18px);
+    }
+
+    .qrcode.mobile .qrcode-card-content {
+        padding: 9px;
+    }
+
+    .qrcode.mobile img {
+        width: 30vw;
+        height: 30vw;
+    }
+
+    .username {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-top: 5vh;
+    }
+    .username-card {
+        width: 100% !important;
+    }
+    .username-card-content {
+        display: flex;
+        white-space: nowrap;
+        padding: 0;
+        align-items: center;
+    }
+    .username-content {
+        padding: 0 4em 0 1em;
+        font-size: 1.2em;
+    }
+    .username-copy {
+        margin: 0;
+        padding: 0 0;
+        width: 88px;
+    }
+    .username.pc .username-content {
+        width: 40vw;
+    }
+}

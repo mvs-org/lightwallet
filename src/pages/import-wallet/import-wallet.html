@@ -39,10 +39,11 @@
                     <ion-label color="primary" floating>{{"PASSWORD" | translate}}</ion-label>
                     <ion-input name="password" id="password-input" type="password" [(ngModel)]="password" required></ion-input>
                 </ion-item>
+                <ion-item class="center-psw wrong-input" *ngIf="password && !passwordValid(password)" no-lines>{{"PASSPHRASE.NOT_MATCH_PASSWORD" | translate}}</ion-item>
             </ion-row>
             <br>
             <ion-row>
-                <button type="submit" ion-button id="submit-button" full [disabled]="!importForm.form.valid||!fileLoaded"
+                <button type="submit" ion-button id="submit-button" full [disabled]="!importForm.form.valid||!fileLoaded||!passwordValid(password)"
                     color="primary">
                     {{"IMPORT_WALLET" | translate}}
                 </button>
