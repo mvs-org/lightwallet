@@ -2,13 +2,13 @@
 // 系统版本号，格式：版本 上次更新日期（日期格式：英文月份-日-年）
 let VERSION = '0.0.6 April-17-2020';
 // 接口地址
-let BASE_URL = 'https://mvsdna.info';  // explorer.mvsdnadev.com
+let BASE_URL = 'https://explorer.mvsdnadev.com';  // explorer.mvsdnadev.com
 // 注册服务地址，可以同接口地址，然后在nginx反代
-let BASE_REG_URL = BASE_URL;
+let BASE_REG_URL = BASE_URL + '/wsloan';
 // HTTP RPC
-let HTTP_RPC_URL = 'https://mvsdna.info/rpc'; //'https://mvsdna.info/ws';
+let HTTP_RPC_URL = 'https://explorer.mvsdnadev.com/rpcloan'; //'https://mvsdna.info/ws';
 // WS RPC
-let WS_RPC_URL = 'wss://mvsdna.info/ws';
+let WS_RPC_URL = 'wss://explorer.mvsdnadev.com/wsloan';
 
 let TOKEN_SYMBOL = "DNA";
 let TOKEN_ASSET_ID = "1.3.0";
@@ -28,8 +28,8 @@ let KEY_PREFIX = "DNA";
 let APPS_URL = 'https://wallet-api.mvsdna.info/wallet/apps';
 
 let ICONS = {
-  DNA: 'assets/icon/DNA.png',
-  ETP: 'assets/icon/ETP.png',
+    DNA: 'assets/icon/DNA.png',
+    ETP: 'assets/icon/ETP.png',
 };
 
 let OPERATIONS = [
