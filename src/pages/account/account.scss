@@ -160,3 +160,20 @@ page-account {
     }
 
 }
+
+.warning-card {
+    background-color: #ff000038;
+}
+
+.warning-card ion-checkbox {
+    margin-left: 11px !important;
+}
+
+.warning-card ion-item {
+    background-color: transparent;
+    text-align: right;
+}
+
+.warning-btn {
+    text-align: right;
+}

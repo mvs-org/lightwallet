@@ -275,6 +275,14 @@ export class WalletServiceProvider {
         return this.storage.set('account_name', account_name)
     }
 
+    getShowWarning() {
+        return this.storage.get('show_save_words')
+    }
+
+    setShowWarning(show: boolean) {
+        return this.storage.set('show_save_words', show)
+    }
+
     deleteAccount(account_name) {
         return this.storage.get('saved_accounts')
             .then((accounts) => {

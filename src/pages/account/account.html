@@ -4,7 +4,7 @@
             <ion-icon name="menu"></ion-icon>
         </button>
         <ion-title>
-            {{'ACCOUNT.TITLE'|translate}} 
+            {{'ACCOUNT.TITLE'|translate}}
             <ion-icon *ngIf="!hasSeed" name="eye"></ion-icon>
         </ion-title>
         <ion-buttons end>
@@ -36,11 +36,29 @@
     </ion-refresher>
     <div class="mini-loader" *ngIf="syncing&&balances==undefined"></div>
     <ion-list no-lines *ngIf="!syncing||balances!=undefined">
+        <ion-card class="warning-card" *ngIf="showWarningMessage">
+            <ion-card-header>
+                <ion-label color="danger" class="display-overflow">
+                    <ion-icon name="warning"></ion-icon>
+                    {{'ACCOUNT.MAJOR_UPDATE_INCOMING'|translate}}
+                </ion-label>
+            </ion-card-header>
+            <ion-card-content class="warning-btn">
+                <ion-item>
+                    <ion-label text-wrap>{{"ACCOUNT.MAJOR_UPDATE_INCOMING_CHECKBOX"|translate}}</ion-label>
+                    <ion-checkbox item-right [(ngModel)]="doNotShowAgain"></ion-checkbox>
+                </ion-item>
+                <button ion-button clear (click)="hideWarning()">
+                    {{'BUTTON.OK'|translate}}
+                </button>
+            </ion-card-content>
+        </ion-card>
         <ion-grid>
             <ion-row>
                 <ng-container class="asset-container">
                     <ion-col class="asset-container">
-                        <etp-card *ngIf="balances!=undefined" [balance]="balances.ETP" [icon]="'assets/icon/ETP.png'" [tickers]="tickers.ETP" [base]="base"></etp-card>
+                        <etp-card *ngIf="balances!=undefined" [balance]="balances.ETP" [icon]="'assets/icon/ETP.png'"
+                            [tickers]="tickers.ETP" [base]="base"></etp-card>
                     </ion-col>
                 </ng-container>
             </ion-row>
@@ -48,15 +66,17 @@
             <ion-row *ngIf="balances!=undefined">
                 <ng-container *ngFor="let asset of balancesKeys" class="asset-container">
                     <ion-col *ngIf="balances.MST[asset]!==undefined" class="asset-container">
-                        <mst-card [balance]="balances.MST[asset]" [symbol]="asset" [theme]="theme" [icon]="icons.MST[asset]"
-                            [swap]="whitelist.indexOf(asset) > -1" [tickers]="tickers[asset]" [base]="base"></mst-card>
+                        <mst-card [balance]="balances.MST[asset]" [symbol]="asset" [theme]="theme"
+                            [icon]="icons.MST[asset]" [swap]="whitelist.indexOf(asset) > -1" [tickers]="tickers[asset]"
+                            [base]="base"></mst-card>
                     </ion-col>
                 </ng-container>
             </ion-row>
             <ion-row>
                 <br>
                 <ion-col>
-                    <button col-12 offset-sm-6 col-sm-6 offset-md-8 col-md-4 offset-lg-10 col-lg-2 ion-button icon-left item-end (click)="reorder()">
+                    <button col-12 offset-sm-6 col-sm-6 offset-md-8 col-md-4 offset-lg-10 col-lg-2 ion-button icon-left
+                        item-end (click)="reorder()">
                         <ion-icon name="reorder"></ion-icon>
                         <span [translate]="'REORDER'"></span>
                     </button>
