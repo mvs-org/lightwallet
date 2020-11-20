@@ -831,5 +831,8 @@
     "IMPORT.SHOW_VIEW_ONLY_QRCODE_BUTTON": "Export view only wallet",
 
     "VOTE.SECONDARY_ELECTION": "Secondary nodes election",
-    "VOTE.ELECTION_NUMBER": "Election {{number}}"
+    "VOTE.ELECTION_NUMBER": "Election {{number}}",
+
+    "ACCOUNT.MAJOR_UPDATE_INCOMING": "Major update incoming: A major update of MyEtpWallet is planned for the 15th of December 2020. This update might require you to re-import your account. Please make sure you have your 24 backup words. If you don't have them, please create another account, save the 24 backup words in a safe place, and send your funds to this new account before the next update.",
+    "ACCOUNT.MAJOR_UPDATE_INCOMING_CHECKBOX": "Do not show again"
 }

@@ -831,5 +831,8 @@
     "IMPORT.SHOW_VIEW_ONLY_QRCODE_BUTTON": "导出只读钱包",
 
     "VOTE.SECONDARY_ELECTION": "二级节点预选",
-    "VOTE.ELECTION_NUMBER": "第{{number}}期选举"
+    "VOTE.ELECTION_NUMBER": "第{{number}}期选举",
+
+    "ACCOUNT.MAJOR_UPDATE_INCOMING": "重大更新通知：2020年12月15日MyEtpWallet将迎来一次重大更新。此次更新可能需要您重新输入您的账号及密码。请确保您有24个备份单词。如您遗忘或者丢失密码，请您在更新前重新建立账户，妥善保存24个备份密码，并将资金发送至新账户。",
+    "ACCOUNT.MAJOR_UPDATE_INCOMING_CHECKBOX": "不再显示"
 }

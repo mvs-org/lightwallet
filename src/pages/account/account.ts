@@ -27,6 +27,8 @@ export class AccountPage {
     whitelist: any = []
     saved_accounts_name: any = []
     hasSeed: boolean
+    showWarningMessage = false
+    doNotShowAgain = false
 
     private syncinterval: any;
 
@@ -56,6 +58,17 @@ export class AccountPage {
         this.wallet.hasSeed()
             .then((hasSeed) => this.hasSeed = hasSeed)
 
+        this.wallet.getShowWarning()
+            .then((show) => {
+                this.showWarningMessage = show !== false
+            })
+    }
+
+    async hideWarning() {
+        this.showWarningMessage = false
+        if(this.doNotShowAgain) {
+            this.wallet.setShowWarning(false)
+        }
     }
 
     isOffline = () => !this.syncingSmall && this.offline
@@ -71,7 +84,6 @@ export class AccountPage {
             } catch (e) {
                 console.error(e);
             }
-            
         }
         else
             this.nav.setRoot("LoginPage")
@@ -124,7 +136,7 @@ export class AccountPage {
     logout() {
         this.wallet.getSessionAccountInfo()
             .then((account_info) => {
-                if(account_info || !this.hasSeed) {
+                if (account_info || !this.hasSeed) {
                     this.alert.showLogout(this.saveAccountHandler, this.forgetAccountHandler)
                 } else {
                     this.alert.showLogoutNoAccount(() => this.mvs.hardReset()
@@ -231,7 +243,7 @@ export class AccountPage {
             .then(([all, hidden]) => {
                 let order = []
                 all.forEach(symbol => {
-                    if(hidden.indexOf(symbol) === -1) {
+                    if (hidden.indexOf(symbol) === -1) {
                         order.push(symbol)
                     }
                 })
