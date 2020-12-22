@@ -18,6 +18,8 @@
         "OPEN_WALLET_TEXT": "通过导入现有的元界区块链钱包进入新的现实。",
         "OPEN": {
             "TITLE": "打开现有的钱包",
+            "ACCESS_MY_WALLET": "进入我的钱包",
+            "NO_WALLET_YET": "没有钱包？创建新钱包。",
             "LOCAL_ACCOUNT": "从现有的本地帐户打开",
             "OR": "您也可以使用以下方法之一打开另一个钱包",
             "BACKUP_WORDS": "备份单词",
@@ -108,8 +110,9 @@
         }
     },
     "CERTIFICATES": {
-        "TITLE": "证书",
         "MENU_ENTRY": "证书",
+        "TITLE": "证书",
+        "SUBTITLE": "检查您的证书列表",
         "INFORMATION": "证书向其所有者提供特殊权利。他们可以授予发行智能资产的权限。",
         "NO_CERTIFICATE": "您没有任何证书"
     },
@@ -139,7 +142,16 @@
             "TOTAL": "总共",
             "AVAILABLE": "可用的",
             "UNCONFIRMED": "未确认",
-            "FROZEN": "Frozen"
+            "FROZEN": "冻结",
+            "BUTTON": {
+                "SEND": "发送"
+            }
+        },
+        "ALL": {
+            "TITLE": "全部MSTs",
+            "SYMBOL": "符号",
+            "DESCRIPTION": "描述",
+            "LOAD_MORE": "加载更多"
         }
     },
     "MST_DETAILS": {
@@ -149,9 +161,11 @@
             "AVAILABLE": "可用的",
             "CONFIRMING": "确认",
             "FROZEN": "冻结",
-            "SEND": "发送"
+            "SEND": "发送",
+            "VOTE": "投票"
         },
         "INFO": {
+            "TITLE": "基本信息",
             "MAX_SUPPLY": "最大供应量",
             "TOTAL_SUPPLY": "总供给",
             "BURNED_QUANTITY": "销毁数量",
@@ -255,7 +269,7 @@
             "DEVELOPERS": "开发人员社区"
         },
         "LOCK": "我要锁定此MST",
-        "Help":  {
+        "HELP":  {
             "FEE_DISTRIBUTION": "交易费用分配"
         },
         "BUTTON": {
@@ -283,7 +297,8 @@
         }
     },
     "MAIN_MENU": {
-        "APPS": "Apps"
+        "HEIGHT": "高度: {{height}}",
+        "APPS": "应用"
     },
     "OPEN_FILE":  {
         "TITLE": "输入钱包",
@@ -452,6 +467,9 @@
         "TITLE": "交易记录",
         "MENU_ENTRY": "历史",
         "TRANSACTIONS": "交易",
+        "NO_TXS_YET": "暂无交易记录",
+        "NO_TXS_YET_TEXT": "现在开始使用您的钱包",
+        "UNLOCK_APPROXIMATION_INFORMATION": "*请注意此“解锁时间”是由最近的10000个区块的平均出块时间预估所得，可能会随着出块速度而变化。",
         "LOCKS": "锁定",
         "ASSETS_LIST": "资产",
         "ADDRESSES_LIST": "地址",
@@ -557,6 +575,7 @@
         "SEND_MANY": "发送给很多",
         "NOTICE_TRANSACTION_FEE_UNCOVERED": "请确保您有足够的ETP来支付交易费用。",
         "AVAILABLE_BALANCE": "可用余额",
+        "TOO_MANY_DECIMALS": "您指定的小数位过多",
         "MESSAGE":  {
             "INSUFFICIENT_BALANCE": "创建MST至少需要10个ETP。",
             "ERROR_TOO_MANY_INPUTS": "输入太多",
@@ -589,7 +608,7 @@
         "ALL": {
             "TITLE": "全部发送？",
             "SUBTITLE": "您真的要发送所有可用余额吗？",
-            "OK": "Ok",
+            "OK": "好的",
             "CANCEL": "取消"
         },
         "MESSAGE_TOO_LONG": "消息太长。请使用短消息",
@@ -624,6 +643,10 @@
         "MESSAGE_TOO_LONG": "消息太长。请使用短消息",
         "CHANGE_ADDRESS": "指定更改地址（可选）",
         "CHANGE_ADDRESS_AUTO": "自动",
+        "IMPORT_CSV_TOO_MANY_RECIPIENT": {
+            "TITLE": "接收者过多",
+            "MESSAGE": "此文件包含的接收者超出上限，上限为"
+        },
         "HELP":  {
             "MESSAGE": "此消息将在您的交易中清晰公开显示。请勿输入任何个人数据！"
         },
@@ -1002,10 +1025,17 @@
         "IMPORT_ORDER_DESCRIPTION": "如果您是从其他设备或直接从SWFT网站创建的订单,则可以导入带有订单ID的订单以跟随其状态。",
         "INFORMATION_WARNING": "SWFT telegram支持部门将永远不会要求用户将任何资金发送到除订单详细信息的存放地址以外的地址。有关该订单的详细信息不是必需的。订单ID应该是支持该信息的足够信息找到订单。",
         "INFORMATION_LINK": "Telegram",
+        "TOAST": {
+            "ID_COPIED": "订单编号已复制"
+        },
         "BUTTON": {
             "NEXT": "交换",
-            "CANCEL": "取消"
+            "CANCEL": "取消",
+            "DEPOSIT": "存款"
         }
+    },
+    "SWFT_DETAILS": {
+        "HEADLINE": "指令细节"
     },
     "MESSAGE":  {
         "LOADING": "正在加载...",
@@ -1015,6 +1045,8 @@
     },
     "MULTISIG": {
         "MENU_ENTRY": "多重签名",
+        "TITLE": "多重签名",
+        "SUBTITLE": "与共同签名者分享多重签名地址",
         "HEADLINE": "多重签名",
         "WARNING_MULTISIG_TITLE": "通过MyETPWallet的多重签名地址和交易均处于Beta状态！",
         "WARNING_MULTISIG_MESSAGE": "自v0.6.0起,您现在可以在MyETPWallet中使用多重签名地址。但是,请谨慎使用此新功能,并避免将大量ETP或MST发送到多重签名地址。如果您发现任何错误,请不要犹豫。通过主菜单中的“报告错误”进行报告！",
@@ -1105,6 +1137,10 @@
         "INVALID_BITIDENT": {
             "TITLE": "无效的Bitident 轻钱包",
             "SUBTITLE": "这不是有效的Bitident 轻钱包。请仔细检查该代码,并确认您正在使用最新版本的MyETPWallet。"
+        },
+        "DIFFERENT_ASSET": {
+            "TITLE": "当前选择的资产与二维码中的资产不同",
+            "SUBTITLE": "请确认对方和您使用的是同一资产"
         }
     },
     "INFO": {
@@ -1138,5 +1174,47 @@
             "CHANGE_ADDRESS_NUMBER": "更新地址数",
             "CANCEL": "取消"
         }
+    },
+    "UPDATE": {
+        "AVAILABLE_TEXT": "新版本已可用",
+        "APPLY": "申请"
+    },
+    "ADVANCED": {
+        "TITLE": "进阶",
+        "MENU_ENTRY": "进阶"
+    },
+    "BURN": {
+        "TITLE": "销毁",
+        "SUBTITLE": "永久销毁ETP或MST",
+        "SELECT_ASSET": "销毁此资产",
+        "CONFIRMATION": {
+            "TITLE": "这些代币将被永远删除！",
+            "SUBTITLE": "您将要销毁这些代币，销毁后将无法取回。您确定要销毁它们吗？",
+            "CANCEL": "否",
+            "OK": "是"
+        }
+    },
+    "DECODE": {
+        "TITLE": "签署交易",
+        "SUBTITLE": "解码并签署原始交易",
+        "TX_TO_SIGN": "要签署或广播的交易",
+        "DESCRIPTION": "请以十六进制格式输入签名或未签名的原始交易。",
+        "ERROR_DECODE": {
+            "TITLE": "无法解码原始交易",
+            "SUBTITLE": "无法解码此原始交易。请重新确认原始交易。"
+        }
+    },
+    "VOTE": {
+        "TITLE": "DNA选举",
+        "INFORMATION": "查看当前投票信息 ",
+        "INFORMATION_BAYVIEW": " 未来投票请点击链接 ",
+        "INFORMATION_DNA": " 如需获取更多关于DNA信息，请访问官网 ",
+        "UNLOCK_APPROXIMATION_INFORMATION": "*请注意此“解锁时间”是由最近的10000个区块的平均出块时间预估所得，可能会随着出块速度而变化。",
+        "HISTORY_LOCKED": "目前锁仓票数",
+        "HISTORY_UNLOCKED": "已解锁票数",
+        "VOTE_FOR_DELEGATE": "投票候选人: {{delegate}}",
+        "REWARD": "投票奖励: {{amount}} DNA",
+        "LOCKED_SINCE_BLOCK": "锁自第{{block}}区块",
+        "LOCKED_UNTIL_BLOCK": "锁至第{{block}}区块 (~{{time}})"
     }
 }
