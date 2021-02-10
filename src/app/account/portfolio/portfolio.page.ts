@@ -53,6 +53,8 @@ export class PortfolioPage implements OnInit, OnDestroy {
     [this.base, this.tickers] = await this.metaverseService.getBaseAndTickers()
   }
 
+  fiatValue = (quantity: string, selectedAsset: string, decimals: number) => (parseFloat(quantity) / Math.pow(10, decimals) * this.tickers[selectedAsset][this.base].price) || 0
+
   private async showBalances() {
     try {
       this.balances = await this.metaverseService.getBalances()
