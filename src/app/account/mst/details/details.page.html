@@ -23,12 +23,32 @@
             <ion-card-title class="ion-text-center" translate="MST_DETAILS.BALANCE.TITLE"></ion-card-title>
           </ion-card-header>
           <ion-card-content>
-            <ion-row>
+            <ion-row class="ion-hide-sm-up">
+              <div id="balancesChartSmall">
+                <ion-spinner name="dots" *ngIf="loadingBalance || !balance || !asset; else BalancesSmall"></ion-spinner>
+                <ng-template #BalancesSmall id="balancesChartSmall">
+                  <br><br>
+                  <ion-row>
+                    <ion-col translate="MST.GRID.AVAILABLE"></ion-col>
+                    <ion-col class="right">{{format(balance.available||0, asset.decimals)}}</ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col translate="MST.GRID.UNCONFIRMED"></ion-col>
+                    <ion-col class="right">{{format(balance.unconfirmed||0, asset.decimals)}}</ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col translate="MST.GRID.FROZEN"></ion-col>
+                    <ion-col class="right">{{format(balance.frozen||0, asset.decimals)}}</ion-col>
+                  </ion-row>
+                </ng-template>
+              </div>
+            </ion-row>
+            <ion-row class="ion-hide-sm-down">
               <div id="balancesChart">
                 <ion-spinner name="dots" *ngIf="loadingBalance || !balance || !asset; else Balances"></ion-spinner>
                 <ng-template #Balances>
-                  <ngx-charts-advanced-pie-chart [scheme]="balanceColorScheme"
-                    [results]="[{name: 'Available', value: format(balance.available||0, asset.decimals)}, {name: 'Frozen', value: format(balance.frozen||0, asset.decimals)}, {name: 'Confirming', value: format(balance.unconfirmed||0, asset.decimals)}]">
+                  <ngx-charts-advanced-pie-chart [scheme]="balanceColorScheme" egendPosition="below"
+                    [results]="[{name: 'MST.GRID.AVAILABLE' | translate, value: format(balance.available||0, asset.decimals)}, {name: 'MST.GRID.UNCONFIRMED' | translate, value: format(balance.unconfirmed||0, asset.decimals)}, {name: 'MST.GRID.FROZEN' | translate, value: format(balance.frozen||0, asset.decimals)}]">
                   </ngx-charts-advanced-pie-chart>
                 </ng-template>
               </div>
