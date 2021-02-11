@@ -1,6 +1,6 @@
 {
     "appId": "com.myetpwallet.app",
-    "version": "10002",
+    "version": "10200",
     "appName": "MyETPWallet",
     "bundledWebRuntime": false,
     "npmClient": "npm",
