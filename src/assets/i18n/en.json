@@ -350,12 +350,14 @@
         "UNCONFIRMED": "Unconfirmed",
         "ADDRESS_NO_MST": "This address has no MST.",
         "CHANGE_ADDRESS_NUMBER": "Change number of addresses",
+        "NO_VM_ADDRESS": "You do not have a Virtual Machine address yet",
         "BUTTON": {
             "CHANGE_ADDRESS_NUMBER": "Change number of addresses",
             "COPY": "Copy address",
             "QRCODE": "Show QR Code",
             "HISTORY": "History",
-            "CREATE_AVATAR": "Create Avatar"
+            "CREATE_AVATAR": "Create Avatar",
+            "CREATE_VM_ADDRESS": "Create VM address"
         }
     },
     "QR_ADDRESS": {

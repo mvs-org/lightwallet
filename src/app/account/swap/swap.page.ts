@@ -52,30 +52,6 @@ export class SwapPage implements OnInit {
 
   ngOnInit() {
 
-    // Load addresses and balances
-    Promise.all([this.metaverseService.getBalances(), this.metaverseService.getAddresses(), this.metaverseService.getAddressBalances()])
-      .then(([balances, addresses, addressbalancesObject]) => {
-        this.balances = balances.MST
-        const balance = (this.selectedAsset === 'ETP') ? balances.ETP : balances.MST[this.selectedAsset]
-        this.balance = (balance && balance.available) ? balance.available : 0
-        this.etpBalance = balances.ETP.available
-        this.showBalance = this.balance
-        this.decimals = balance.decimals
-        this.addresses = addresses
-        this.addressbalancesObject = addressbalancesObject
-        this.updateBalancePerAddress()
-      })
-
-    this.fee = this.appService.default_fees.default
-    this.defaultFee = this.fee
-    this.metaverseService.getFees()
-      .then(fees => {
-        this.fee = fees.default
-        this.defaultFee = this.fee
-      })
-
-    this.metaverseService.getGlobalAvatar(this.swapAvatar)
-      .then(avatar => this.swapAddress = avatar.address)
   }
 
   updateBalancePerAddress() {
@@ -103,7 +79,7 @@ export class SwapPage implements OnInit {
     }
   }
 
-  async ionViewDidEnter() {
+  init() {
     this.selectedAsset = 'ETP'
     this.quantity = ''
     this.sendFrom = 'auto'
@@ -111,6 +87,35 @@ export class SwapPage implements OnInit {
     this.message = ''
     this.showAdvanced = false
     this.vmAddress = ''
+
+    // Load addresses and balances
+    Promise.all([this.metaverseService.getBalances(), this.metaverseService.getAddresses(), this.metaverseService.getAddressBalances()])
+      .then(([balances, addresses, addressbalancesObject]) => {
+        this.balances = balances.MST
+        const balance = (this.selectedAsset === 'ETP') ? balances.ETP : balances.MST[this.selectedAsset]
+        this.balance = (balance && balance.available) ? balance.available : 0
+        this.etpBalance = balances.ETP.available
+        this.showBalance = this.balance
+        this.decimals = balance.decimals
+        this.addresses = addresses
+        this.addressbalancesObject = addressbalancesObject
+        this.updateBalancePerAddress()
+      })
+
+    this.fee = this.appService.default_fees.default
+    this.defaultFee = this.fee
+    this.metaverseService.getFees()
+      .then(fees => {
+        this.fee = fees.default
+        this.defaultFee = this.fee
+      })
+
+    this.metaverseService.getGlobalAvatar(this.swapAvatar)
+      .then(avatar => this.swapAddress = avatar.address)
+  }
+
+  async ionViewDidEnter() {
+    this.init()
 
     const addresses = await this.metaverseService.getAddresses()
     const vmAddresses = await this.metaverseService.getVmAddresses()

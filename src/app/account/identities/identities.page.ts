@@ -20,6 +20,7 @@ export class IdentitiesPage implements OnInit {
     isMobile: boolean
     loading = true
     msts = []
+    vmAddress: string
 
     constructor(
         private metaverseService: MetaverseService,
@@ -35,8 +36,6 @@ export class IdentitiesPage implements OnInit {
             .then((addresses) => {
                 if (!Array.isArray(addresses) || !addresses.length) {
                     this.router.navigate(['/'])
-                } else {
-                    this.showBalances()
                 }
             })
 
@@ -44,8 +43,11 @@ export class IdentitiesPage implements OnInit {
 
     ngOnInit() { }
 
-    ionViewDidEnter() {
+    async ionViewDidEnter() {
         this.loadTickers()
+        const vmAddresses = await this.metaverseService.getVmAddresses()
+        this.vmAddress = vmAddresses[0]
+        this.showBalances()
     }
 
     async showBalances() {
@@ -79,7 +81,6 @@ export class IdentitiesPage implements OnInit {
     send = (asset, sender) => this.router.navigate(['account', 'send', asset], { state: { data: { sender } } })
 
     async show(address) {
-        address = 'https://app.myetpwallet.com/send/DNA?message=test&recipient=abc'
         const content = address
         const title = address
 
