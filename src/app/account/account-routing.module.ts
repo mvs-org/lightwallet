@@ -55,6 +55,10 @@ const routes: Routes = [
                 path: 'vote',
                 loadChildren: () => import('./vote/vote.module').then(m => m.VotePageModule)
             },
+            {
+                path: 'swap',
+                loadChildren: () => import('./swap/swap.module').then(m => m.SwapPageModule)
+            },
         ]
     },
 ]

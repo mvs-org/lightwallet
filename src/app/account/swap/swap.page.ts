@@ -1,20 +1,20 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, ViewChild } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { MetaverseService } from 'src/app/services/metaverse.service'
 import { AppService } from 'src/app/services/app.service'
 import { AlertService } from 'src/app/services/alert.service'
 import { Location } from '@angular/common'
 import { Platform } from '@ionic/angular'
+import { hdkey } from 'ethereumjs-wallet'
 
 @Component({
-  selector: 'app-burn',
-  templateUrl: './burn.page.html',
-  styleUrls: ['./burn.page.scss'],
+  selector: 'app-swap',
+  templateUrl: './swap.page.html',
+  styleUrls: ['./swap.page.scss'],
 })
-export class BurnPage implements OnInit {
+export class SwapPage implements OnInit {
 
-  selectedAsset: string
-  assetsList: Array<string>
+  selectedAsset = 'ETP'
   addresses: Array<string>
   balances: any = {}
   balance: number
@@ -35,6 +35,11 @@ export class BurnPage implements OnInit {
   tickers = {}
   base: string
 
+  @ViewChild('quantityInput') quantityInput
+  swapAvatar = 'metaverse'
+  swapAddress: string
+  vmAddress = ''
+
   constructor(
     private metaverseService: MetaverseService,
     private appService: AppService,
@@ -46,7 +51,6 @@ export class BurnPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.selectedAsset = this.activatedRoute.snapshot.params.symbol || 'ETP'
 
     // Load addresses and balances
     Promise.all([this.metaverseService.getBalances(), this.metaverseService.getAddresses(), this.metaverseService.getAddressBalances()])
@@ -57,10 +61,6 @@ export class BurnPage implements OnInit {
         this.etpBalance = balances.ETP.available
         this.showBalance = this.balance
         this.decimals = balance.decimals
-        this.assetsList = Object.keys(this.balances)
-        this.assetsList.sort((a, b) =>
-          a.localeCompare(b)
-        )
         this.addresses = addresses
         this.addressbalancesObject = addressbalancesObject
         this.updateBalancePerAddress()
@@ -73,6 +73,9 @@ export class BurnPage implements OnInit {
         this.fee = fees.default
         this.defaultFee = this.fee
       })
+
+    this.metaverseService.getGlobalAvatar(this.swapAvatar)
+      .then(avatar => this.swapAddress = avatar.address)
   }
 
   updateBalancePerAddress() {
@@ -101,10 +104,23 @@ export class BurnPage implements OnInit {
   }
 
   async ionViewDidEnter() {
+    this.selectedAsset = 'ETP'
+    this.quantity = ''
+    this.sendFrom = 'auto'
+    this.feeAddress = 'auto'
+    this.message = ''
+    this.showAdvanced = false
+    this.vmAddress = ''
+
     const addresses = await this.metaverseService.getAddresses()
+    const vmAddresses = await this.metaverseService.getVmAddresses()
     if (!Array.isArray(addresses) || !addresses.length) {
       this.router.navigate(['login'])
+    } else if (!vmAddresses || !vmAddresses.length || !vmAddresses[0]) {
+      this.alertService.showMessage('SWAP.NO_VM_ADDRESS.TITLE', 'SWAP.NO_VM_ADDRESS.SUBTITLE', '')
+      this.router.navigate(['account', 'identities'])
     } else {
+      this.vmAddress = vmAddresses[0]
       this.loadTickers()
     }
   }
@@ -116,11 +132,11 @@ export class BurnPage implements OnInit {
   fiatValue = (quantity: string) => (parseFloat(quantity) * this.tickers[this.selectedAsset][this.base].price) || 0
 
   validQuantity = (quantity) => quantity !== undefined
-  && this.countDecimals(quantity) <= this.decimals
-  && (quantity > 0)
-  && ((this.selectedAsset === 'ETP' &&
-    this.showBalance >= (Math.round(parseFloat(quantity) * Math.pow(10, this.decimals)) + this.fee)) ||
-    (this.selectedAsset !== 'ETP' && this.showBalance >= parseFloat(quantity) * Math.pow(10, this.decimals)))
+    && this.countDecimals(quantity) <= this.decimals
+    && (quantity > 0)
+    && ((this.selectedAsset === 'ETP' &&
+      this.showBalance >= (Math.round(parseFloat(quantity) * Math.pow(10, this.decimals)) + this.fee)) ||
+      (this.selectedAsset !== 'ETP' && this.showBalance >= parseFloat(quantity) * Math.pow(10, this.decimals)))
 
 
   countDecimals(value) {
@@ -128,6 +144,23 @@ export class BurnPage implements OnInit {
       return value.toString().split('.')[1].length || 0
     } else {
       return 0
+    }
+  }
+
+  async sendAll() {
+    const confirm = await this.alertService.alertConfirm(
+      'SEND_SINGLE.ALL.TITLE',
+      'SEND_SINGLE.ALL.SUBTITLE',
+      'SEND_SINGLE.ALL.CANCEL',
+      'SEND_SINGLE.ALL.OK'
+    )
+    if (confirm) {
+      if (this.selectedAsset === 'ETP') {
+        this.quantity = parseFloat(((this.showBalance / 100000000 - this.fee / 100000000).toFixed(this.decimals)) + '') + ''
+      } else {
+        this.quantity = parseFloat((this.showBalance / Math.pow(10, this.decimals)).toFixed(this.decimals) + '') + ''
+      }
+      this.quantityInput.setFocus()
     }
   }
 
@@ -143,35 +176,41 @@ export class BurnPage implements OnInit {
     }
   }
 
-  create() {
-    return this.alertService.showLoading()
-      .then(() => {
-        const messages = []
-        if (this.message) {
-          messages.push(this.message)
-        }
-        return this.metaverseService.burn(
-          this.selectedAsset,
-          Math.round(parseFloat(this.quantity) * Math.pow(10, this.decimals)),
-          (this.sendFrom !== 'auto') ? this.sendFrom : null,
-          (this.showAdvanced && this.changeAddress !== 'auto') ? this.changeAddress : undefined,
-          (this.showAdvanced) ? this.fee : this.defaultFee,
-          (this.showAdvanced && messages !== []) ? messages : undefined
-        )
-      })
-      .catch((error) => {
-        console.error(error.message)
-        this.alertService.stopLoading()
-        throw Error(error)
-      })
+  async create() {
+    try {
+      await this.alertService.showLoading()
+      const messages = []
+      messages.push(this.vmAddress)
+      if (this.showAdvanced && this.message) {
+        messages.push(this.message)
+      }
+      return this.metaverseService.createSendTx(
+        this.selectedAsset,
+        this.swapAddress,
+        this.swapAvatar,
+        Math.round(parseFloat(this.quantity) * Math.pow(10, this.decimals)),
+        (this.sendFrom !== 'auto') ? this.sendFrom : null,
+        (this.showAdvanced && this.changeAddress !== 'auto') ? this.changeAddress : undefined,
+        (this.showAdvanced) ? this.fee : this.defaultFee,
+        (messages !== []) ? messages : undefined
+      )
+    } catch (error) {
+      console.error(error.message)
+      this.alertService.stopLoading()
+      throw Error(error)
+    }
   }
 
   async send() {
     try {
+      const messages = []
+      if (this.message) {
+        messages.push(this.message)
+      }
       const result = await this.create()
       const tx = result.encode().toString('hex')
-      this.router.navigate(['account', 'confirm'], { state: { data: { tx } } })
       this.alertService.stopLoading()
+      this.router.navigate(['account', 'confirm'], { state: { data: { tx } } })
     } catch (error) {
       console.error(error)
       this.alertService.stopLoading()
@@ -194,15 +233,10 @@ export class BurnPage implements OnInit {
 
   validMessageLength = (message) => this.metaverseService.verifyMessageSize(message) < 253
 
-  onSelectedAssetChange(event) {
-    this.decimals = this.balances[this.selectedAsset].decimals
-    this.updateBalancePerAddress()
-  }
-
   validForm = () =>
-    (this.validQuantity(this.quantity)
-      && this.validMessageLength(this.message)
-      && this.validFromAddress(this.sendFrom))
+  (this.validQuantity(this.quantity)
+    && this.validMessageLength(this.message)
+    && this.validFromAddress(this.sendFrom))
 
   cancel() {
     this.location.back()

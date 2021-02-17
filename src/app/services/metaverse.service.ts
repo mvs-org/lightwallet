@@ -494,7 +494,7 @@ export class MetaverseService {
     }
     await this.calculateBalances()
     const balances = await this.getBalances()
-    if (balanceUpdateNeeded){
+    if (balanceUpdateNeeded) {
       this.balanceUpdated$.next(balances)
     }
     this.syncing$.next(false)
@@ -1123,6 +1123,14 @@ export class MetaverseService {
 
   getStake(mst, options = {}) {
     return this.blockchain.MST.stake(mst, options)
+  }
+
+  async getVmAddresses(): Promise<string[]> {
+    return await this.storage.get('vm_addresses') || []
+  }
+
+  setVmAddresses(addresses: Array<string>) {
+    return this.storage.set('vm_addresses', addresses)
   }
 
 }

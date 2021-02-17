@@ -581,7 +581,9 @@
             "ERROR_TOO_MANY_INPUTS": "Too many inputs",
             "ERROR_TOO_MANY_INPUTS_TEXT": "This transaction contains too many inputs. Please try a smaller amount",
             "CREATE_TRANSACTION": "Unable to create transaction.",
-            "ERROR_SEND_TEXT": "Could not create the transaction. Please check your input and try again."
+            "ERROR_SEND_TEXT": "Could not create the transaction. Please check your input and try again.",
+            "ONE_TX_PER_BLOCK": "Please note currently each account can only broadcast 1 transaction per block",
+            "BROADCAST_ERROR": "Unable to broadcast the transaction. Please check you internet connection or try again later."
         }
     },
     "ERROR": {
@@ -1216,5 +1218,13 @@
         "REWARD": "Reward: {{amount}} DNA",
         "LOCKED_SINCE_BLOCK": "Locked since block {{block}}",
         "LOCKED_UNTIL_BLOCK": "Locked until block {{block}}"
+    },
+    "SWAP": {
+        "MENU_ENTRY": "Swap",
+        "TITLE": "Swap",
+        "NO_VM_ADDRESS": {
+            "TITLE": "No VM address",
+            "SUBTITLE": "Please create a Virtual Machine address before swapping your ETP"
+        }
     }
 }

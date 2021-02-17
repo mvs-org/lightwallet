@@ -180,9 +180,9 @@ export class CreatePage implements OnInit {
         console.error(error)
         this.alertService.stopLoading()
         if (error.message === 'ERR_INSUFFICIENT_BALANCE') {
-          this.alertService.showError('MESSAGE.ISSUE_INSUFFICIENT_BALANCE', '')
+          this.alertService.showError('SEND.MESSAGE.INSUFFICIENT_BALANCE', '')
         } else {
-          this.alertService.showError('MESSAGE.CREATE_TRANSACTION', error.message)
+          this.alertService.showError('SEND.MESSAGE.CREATE_TRANSACTION', error.message)
         }
         throw Error('ERR_CREATE_TX')
       })
@@ -210,21 +210,21 @@ export class CreatePage implements OnInit {
       .catch((error) => {
         switch (error.message) {
           case 'ERR_CONNECTION':
-            this.alertService.showError('ERROR_SEND_TEXT', '')
+            this.alertService.showError('SEND.MESSAGE.ERROR_SEND_TEXT', '')
             break
           case 'ERR_CREATE_TX':
             // already handle in create function
             break
           case 'ERR_BROADCAST':
-            this.translate.get('MESSAGE.ONE_TX_PER_BLOCK').subscribe((message: string) => {
-              this.alertService.showError('MESSAGE.BROADCAST_ERROR', message)
+            this.translate.get('SEND.MESSAGE.ONE_TX_PER_BLOCK').subscribe((message: string) => {
+              this.alertService.showError('SEND.MESSAGE.BROADCAST_ERROR', message)
             })
             break
           case 'ERR_INSUFFICIENT_BALANCE':
-            this.alertService.showError('MESSAGE.INSUFFICIENT_BALANCE', '')
+            this.alertService.showError('SEND.MESSAGE.INSUFFICIENT_BALANCE', '')
             break
           default:
-            this.alertService.showError('MESSAGE.CREATE_TRANSACTION', error.message)
+            this.alertService.showError('SEND.MESSAGE.CREATE_TRANSACTION', error.message)
         }
       })
   }

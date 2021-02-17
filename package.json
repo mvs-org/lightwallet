@@ -39,6 +39,7 @@
     "@zxing/ngx-scanner": "^3.0.1",
     "bitident": "^0.1.11",
     "crypto-js": "^4.0.0",
+    "ethereumjs-wallet": "^1.0.1",
     "lodash": "^4.17.20",
     "metaversejs": "^0.3.98",
     "mvs-blockchain": "^0.1.71",
