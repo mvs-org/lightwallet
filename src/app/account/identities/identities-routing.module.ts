@@ -16,6 +16,10 @@ const routes: Routes = [
     path: 'generate-address',
     loadChildren: () => import('./generate-address/generate-address.module').then( m => m.GenerateAddressPageModule)
   },
+  {
+    path: 'generate-vm-address',
+    loadChildren: () => import('./generate-vm-address/generate-vm-address.module').then( m => m.GenerateVmAddressPageModule)
+  },
 ]
 
 @NgModule({

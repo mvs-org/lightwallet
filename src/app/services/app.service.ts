@@ -21,6 +21,8 @@ export class AppService {
   readonly ADDRESS_PREFIX_TESTNET = 't'
   readonly ETPMap = '0xa52b0a032139e6303b86cfeb0bb9ae780a610354'
   readonly SwapAddress = '0xc1e5fd24fa2b4a3581335fc3f2850f717dd09c86'
+  readonly mainnetMetaverseSwapAddress = 'MGh4kfGY2pmUwpvXAjCHCtZ1V43J2pckV3'
+  readonly testnetMetaverseSwapAddress = 'tFiWa2DihiSwvCfC42qpYYWawtsvo5od6n'
   readonly crosschain_avatar = 'droplet'
   readonly dev_avatar = 'developer-community'
   readonly min_confirmations = 3

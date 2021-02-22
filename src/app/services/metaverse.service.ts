@@ -1125,11 +1125,11 @@ export class MetaverseService {
     return this.blockchain.MST.stake(mst, options)
   }
 
-  async getVmAddresses(): Promise<string[]> {
+  async getVmAddresses(): Promise<any[]> {
     return await this.storage.get('vm_addresses') || []
   }
 
-  setVmAddresses(addresses: Array<string>) {
+  setVmAddresses(addresses: Array<any>) {
     return this.storage.set('vm_addresses', addresses)
   }
 

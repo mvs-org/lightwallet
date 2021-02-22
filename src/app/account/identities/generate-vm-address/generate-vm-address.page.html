@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button routerLink="/account/identities"></ion-back-button>
+    </ion-buttons>
+    <ion-title translate="GENERATE_VM_ADDRESS.TITLE"></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <p align="center" translate="GENERATE_VM_ADDRESS.EXPLANATION"></p>
+      </ion-col>
+    </ion-row>
+
+    <form *ngIf="!loading else loadingSpinner" #sendForm="ngForm" (ngSubmit)="generateAddress(passphrase)">
+      <ion-list>
+        <ion-item [ngClass]="{'error-border': !validPassword(passphrase)}">
+          <ion-label color="primary" position="floating" translate="GLOBAL.PASSWORD"></ion-label>
+          <ion-input name="passphrase" type="password" [(ngModel)]="passphrase" required></ion-input>
+        </ion-item>
+        <br>
+      </ion-list>
+      <ion-row>
+        <ion-col size="12" size-sm="6">
+          <ion-button color="danger" fill="outline" shape="round" expand="full" (click)="cancel()">
+            <ion-icon slot="start" name="close"></ion-icon>
+            <span translate="GENERATE_VM_ADDRESS.BUTTON.CANCEL"></span>
+          </ion-button>
+        </ion-col>
+        <ion-col size="12" size-sm="6">
+          <ion-button expand="full" fill="outline" shape="round" type="submit"
+            [disabled]="!sendForm.form.valid||!validPassword(passphrase)"
+            color="primary">
+            <ion-icon slot="start" name="send"></ion-icon>
+            <span translate="GENERATE_VM_ADDRESS.BUTTON.CHANGE_ADDRESS_NUMBER"></span>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </form>
+
+    <ng-template #loadingSpinner>
+      <ion-spinner></ion-spinner>
+    </ng-template>
+
+  </ion-grid>
+</ion-content>

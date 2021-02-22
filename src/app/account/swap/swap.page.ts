@@ -5,7 +5,6 @@ import { AppService } from 'src/app/services/app.service'
 import { AlertService } from 'src/app/services/alert.service'
 import { Location } from '@angular/common'
 import { Platform } from '@ionic/angular'
-import { hdkey } from 'ethereumjs-wallet'
 
 @Component({
   selector: 'app-swap',
@@ -36,14 +35,12 @@ export class SwapPage implements OnInit {
   base: string
 
   @ViewChild('quantityInput') quantityInput
-  swapAvatar = 'metaverse'
   swapAddress: string
-  vmAddress = ''
+  vmAddress: any
 
   constructor(
     private metaverseService: MetaverseService,
     private appService: AppService,
-    private activatedRoute: ActivatedRoute,
     private router: Router,
     private alertService: AlertService,
     private location: Location,
@@ -86,7 +83,7 @@ export class SwapPage implements OnInit {
     this.feeAddress = 'auto'
     this.message = ''
     this.showAdvanced = false
-    this.vmAddress = ''
+    this.vmAddress = {}
 
     // Load addresses and balances
     Promise.all([this.metaverseService.getBalances(), this.metaverseService.getAddresses(), this.metaverseService.getAddressBalances()])
@@ -109,9 +106,7 @@ export class SwapPage implements OnInit {
         this.fee = fees.default
         this.defaultFee = this.fee
       })
-
-    this.metaverseService.getGlobalAvatar(this.swapAvatar)
-      .then(avatar => this.swapAddress = avatar.address)
+    this.swapAddress = (this.appService.network === 'testnet') ? this.appService.testnetMetaverseSwapAddress : this.appService.mainnetMetaverseSwapAddress
   }
 
   async ionViewDidEnter() {
@@ -123,7 +118,7 @@ export class SwapPage implements OnInit {
       this.router.navigate(['login'])
     } else if (!vmAddresses || !vmAddresses.length || !vmAddresses[0]) {
       this.alertService.showMessage('SWAP.NO_VM_ADDRESS.TITLE', 'SWAP.NO_VM_ADDRESS.SUBTITLE', '')
-      this.router.navigate(['account', 'identities'])
+      this.router.navigate(['account', 'identities', 'generate-vm-address'])
     } else {
       this.vmAddress = vmAddresses[0]
       this.loadTickers()
@@ -185,14 +180,14 @@ export class SwapPage implements OnInit {
     try {
       await this.alertService.showLoading()
       const messages = []
-      messages.push(this.vmAddress)
+      messages.push(this.vmAddress.address)
       if (this.showAdvanced && this.message) {
         messages.push(this.message)
       }
       return this.metaverseService.createSendTx(
         this.selectedAsset,
         this.swapAddress,
-        this.swapAvatar,
+        undefined,
         Math.round(parseFloat(this.quantity) * Math.pow(10, this.decimals)),
         (this.sendFrom !== 'auto') ? this.sendFrom : null,
         (this.showAdvanced && this.changeAddress !== 'auto') ? this.changeAddress : undefined,

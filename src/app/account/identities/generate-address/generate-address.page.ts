@@ -71,7 +71,7 @@ export class GenerateAddressPage implements OnInit {
           this.alertService.showError('MESSAGE.PASSWORD_WRONG', '')
           break
         default:
-          this.alertService.showError('GENERATE_ADDRESSES.ERROR', error.message)
+          this.alertService.showError('GENERATE_ADDRESSES.ERROR.UNKOWN_ERROR', error.message)
           break
       }
     }

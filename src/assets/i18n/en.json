@@ -350,6 +350,7 @@
         "UNCONFIRMED": "Unconfirmed",
         "ADDRESS_NO_MST": "This address has no MST.",
         "CHANGE_ADDRESS_NUMBER": "Change number of addresses",
+        "VM_ADDRESS": "VM address",
         "NO_VM_ADDRESS": "You do not have a Virtual Machine address yet",
         "BUTTON": {
             "CHANGE_ADDRESS_NUMBER": "Change number of addresses",
@@ -1176,6 +1177,17 @@
         },
         "BUTTON": {
             "CHANGE_ADDRESS_NUMBER": "Update number of addresses",
+            "CANCEL": "Cancel"
+        }
+    },
+    "GENERATE_VM_ADDRESS": {
+        "TITLE": "Generate VM address",
+        "EXPLANATION": "Before migrating your tokens to the new chain, please create your Virtual Machine address that will receive your tokens",
+        "ERROR": {
+            "UNKOWN_ERROR": "Error while generating new addresses"
+        },
+        "BUTTON": {
+            "CHANGE_ADDRESS_NUMBER": "Generate VM address",
             "CANCEL": "Cancel"
         }
     },

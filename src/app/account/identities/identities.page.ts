@@ -20,7 +20,7 @@ export class IdentitiesPage implements OnInit {
     isMobile: boolean
     loading = true
     msts = []
-    vmAddress: string
+    vmAddress: any
 
     constructor(
         private metaverseService: MetaverseService,
@@ -80,6 +80,8 @@ export class IdentitiesPage implements OnInit {
 
     send = (asset, sender) => this.router.navigate(['account', 'send', asset], { state: { data: { sender } } })
 
+    swap = () => this.router.navigate(['account', 'identities', 'swap'])
+
     async show(address) {
         const content = address
         const title = address
@@ -104,19 +106,23 @@ export class IdentitiesPage implements OnInit {
 
     errorImg = (e) => e.target.remove()
 
-    async mobileMenu(address) {
+    async mobileMenu(address, type = 'metaverse') {
         const buttons = [
             {
                 icon: 'qr-code',
                 text: 'IDENTITIES.BUTTON.QRCODE',
                 action: 'qrcode',
             },
-            {
-                icon: 'time',
-                text: 'IDENTITIES.BUTTON.HISTORY',
-                action: 'history',
-            },
         ]
+        if(type === 'metaverse') {
+            buttons.push(
+                {
+                    icon: 'time',
+                    text: 'IDENTITIES.BUTTON.HISTORY',
+                    action: 'history',
+                },
+            )
+        }
         const result = await this.actionSheetService.default('', '', buttons)
         switch (result) {
             case 'qrcode':

@@ -24,22 +24,22 @@
           <div class="pointer" (click)="walletService.copy(vmAddress, 'address')">
             <ion-card-title>
               <img class="avatar-logo" [src]="'assets/icon/default.png'">
-              VM Address
+              <span translate="IDENTITIES.VM_ADDRESS"></span>
             </ion-card-title>
             <ion-card-subtitle>
-              {{vmAddress}}
+              {{vmAddress.address}}
             </ion-card-subtitle>
           </div>
           <ion-buttons slot="end" class="ion-hide-sm-down">
-            <ion-button color="primary" class="qrcode-btn" id="qrcode" (click)="show(vmAddress)">
+            <ion-button color="primary" class="qrcode-btn" id="qrcode" (click)="show(vmAddress.address)">
               <ion-icon slot="icon-only" name="qr-code" size="small"></ion-icon>
             </ion-button>
-            <ion-button color="primary" class="time-btn" id="time" (click)="history(vmAddress)">
-              <ion-icon slot="icon-only" name="time" size="small"></ion-icon>
+            <ion-button color="primary" class="time-btn" id="time" (click)="swap()">
+              <ion-icon slot="icon-only" name="swap-horizontal" size="small"></ion-icon>
             </ion-button>
           </ion-buttons>
           <ion-buttons slot="end" class="ion-hide-sm-up">
-            <ion-button color="primary" id="morebtn" (click)="mobileMenu(vmAddress)">
+            <ion-button color="primary" id="morebtn" (click)="mobileMenu(vmAddress.address, 'hex')">
               <ion-icon slot="icon-only" name="ellipsis-horizontal" size="small"></ion-icon>
             </ion-button>
           </ion-buttons>
@@ -51,7 +51,7 @@
             <span translate="IDENTITIES.NO_VM_ADDRESS"></span>
           </ion-card-title>
           <ion-buttons slot="end">
-            <ion-button color="primary">
+            <ion-button color="primary" routerLink="./generate-vm-address">
               <span translate="IDENTITIES.BUTTON.CREATE_VM_ADDRESS"></span>
             </ion-button>
           </ion-buttons>
