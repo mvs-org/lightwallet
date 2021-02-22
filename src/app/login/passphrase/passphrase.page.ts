@@ -28,7 +28,7 @@ export class PassphrasePage implements OnInit {
     public translate: TranslateService,
     private crypto: CryptoService,
     public platform: Platform,
-    public mvs: MetaverseService,
+    public metaverseService: MetaverseService,
     public loadingCtrl: LoadingController,
     public wallet: WalletService,
     private formBuilder: FormBuilder,
@@ -92,7 +92,8 @@ export class PassphrasePage implements OnInit {
       await this.wallet.setMobileWallet(seed)
       const wallet = await this.wallet.getWallet(password)
       const addresses = await this.wallet.generateAddresses(wallet, 0, this.globals.index)
-      await this.mvs.setAddresses(addresses)
+      await this.metaverseService.setAddresses(addresses)
+      await this.metaverseService.setVmAddressFromPassphrase(password)
       const xpub = await this.wallet.getMasterPublicKey(password)
       await this.wallet.setXpub(xpub)
       await this.wallet.saveSessionAccount(password)

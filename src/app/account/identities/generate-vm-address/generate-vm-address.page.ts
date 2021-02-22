@@ -3,7 +3,6 @@ import { MetaverseService } from 'src/app/services/metaverse.service'
 import { WalletService } from 'src/app/services/wallet.service'
 import { AppService } from 'src/app/services/app.service'
 import { AlertService } from 'src/app/services/alert.service'
-import { hdkey } from 'ethereumjs-wallet'
 import { Router } from '@angular/router'
 
 
@@ -43,15 +42,7 @@ export class GenerateVmAddressPage implements OnInit {
   async generateAddress(passphrase) {
     try {
       await this.alertService.showLoading()
-      const seed = await this.walletService.getSeed(passphrase)
-      console.log(seed)
-      const hdwallet = hdkey.fromMasterSeed(Buffer.from(seed, 'hex'))
-      const address = hdwallet.derivePath("m/44'/60'/0'/0/0").getWallet().getAddressString()
-
-      console.log({ address })
-
-      this.metaverseService.setVmAddresses([{ address }])
-
+      await this.metaverseService.setVmAddressFromPassphrase(passphrase)
       this.alertService.stopLoading()
       this.router.navigate(['account', 'identities'])
     } catch (error) {

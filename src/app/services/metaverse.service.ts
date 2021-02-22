@@ -7,6 +7,7 @@ import Blockchain from 'mvs-blockchain'
 import { keyBy } from 'lodash'
 import { Subject, BehaviorSubject } from 'rxjs'
 import { filter } from 'rxjs/operators'
+import { hdkey } from 'ethereumjs-wallet'
 
 declare const Metaverse: any
 
@@ -1131,6 +1132,13 @@ export class MetaverseService {
 
   setVmAddresses(addresses: Array<any>) {
     return this.storage.set('vm_addresses', addresses)
+  }
+
+  async setVmAddressFromPassphrase(passphrase: string) {
+    const seed = await this.wallet.getSeed(passphrase)
+    const hdwallet = hdkey.fromMasterSeed(Buffer.from(seed, 'hex'))
+    const address = hdwallet.derivePath("m/44'/60'/0'/0/0").getWallet().getAddressString()
+    return this.setVmAddresses([{ address }])
   }
 
 }

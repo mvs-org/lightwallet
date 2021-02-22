@@ -357,6 +357,7 @@
             "COPY": "Copy address",
             "QRCODE": "Show QR Code",
             "HISTORY": "History",
+            "SWAP": "Swap",
             "CREATE_AVATAR": "Create Avatar",
             "CREATE_VM_ADDRESS": "Create VM address"
         }

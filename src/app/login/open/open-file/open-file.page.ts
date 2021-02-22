@@ -70,6 +70,7 @@ export class OpenFilePage implements OnInit {
       const index = await this.walletService.getAddressIndexFromWallet()
       const addresses = await this.walletService.generateAddresses(wallet, 0, index)
       await this.metaverseService.setAddresses(addresses)
+      await this.metaverseService.setVmAddressFromPassphrase(password)
       await this.walletService.saveSessionAccount(password)
       await this.router.navigate(['/loading'], { state: { data: { reset: true } } })
       await this.alertService.stopLoading()

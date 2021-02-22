@@ -80,7 +80,7 @@ export class IdentitiesPage implements OnInit {
 
     send = (asset, sender) => this.router.navigate(['account', 'send', asset], { state: { data: { sender } } })
 
-    swap = () => this.router.navigate(['account', 'identities', 'swap'])
+    swap = () => this.router.navigate(['account',  'swap'])
 
     async show(address) {
         const content = address
@@ -122,6 +122,14 @@ export class IdentitiesPage implements OnInit {
                     action: 'history',
                 },
             )
+        } else if(type === 'hex') {
+            buttons.push(
+                {
+                    icon: 'swap-horizontal',
+                    text: 'IDENTITIES.BUTTON.SWAP',
+                    action: 'swap',
+                },
+            )
         }
         const result = await this.actionSheetService.default('', '', buttons)
         switch (result) {
@@ -131,6 +139,8 @@ export class IdentitiesPage implements OnInit {
             case 'history':
                 this.history(address)
                 break
+            case 'swap':
+                this.swap()
             default:
             // action cancelled
         }
