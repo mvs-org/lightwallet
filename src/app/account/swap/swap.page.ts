@@ -5,6 +5,7 @@ import { AppService } from 'src/app/services/app.service'
 import { AlertService } from 'src/app/services/alert.service'
 import { Location } from '@angular/common'
 import { Platform } from '@ionic/angular'
+import { WalletService } from 'src/app/services/wallet.service'
 
 @Component({
   selector: 'app-swap',
@@ -40,6 +41,7 @@ export class SwapPage implements OnInit {
 
   constructor(
     private metaverseService: MetaverseService,
+    private walletService: WalletService,
     private appService: AppService,
     private router: Router,
     private alertService: AlertService,
@@ -113,7 +115,7 @@ export class SwapPage implements OnInit {
     this.init()
 
     const addresses = await this.metaverseService.getAddresses()
-    const vmAddresses = await this.metaverseService.getVmAddresses()
+    const vmAddresses = await this.walletService.getVmAddresses()
     if (!Array.isArray(addresses) || !addresses.length) {
       this.router.navigate(['login'])
     } else if (!vmAddresses || !vmAddresses.length || !vmAddresses[0]) {

@@ -42,7 +42,7 @@ export class GenerateVmAddressPage implements OnInit {
   async generateAddress(passphrase) {
     try {
       await this.alertService.showLoading()
-      await this.metaverseService.setVmAddressFromPassphrase(passphrase)
+      await this.walletService.setVmAddressFromPassphrase(passphrase)
       this.alertService.stopLoading()
       this.router.navigate(['account', 'identities'])
     } catch (error) {

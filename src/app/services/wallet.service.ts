@@ -7,6 +7,7 @@ import { Platform } from '@ionic/angular'
 import { AppService } from './app.service'
 import { ClipboardService } from 'ngx-clipboard'
 import { ToastService } from './toast.service'
+import { hdkey } from 'ethereumjs-wallet'
 
 declare const Metaverse: any
 
@@ -547,6 +548,22 @@ export class WalletService {
         } catch (error) {
             console.log('Error while copying')
         }
+    }
+
+
+    async getVmAddresses(): Promise<any[]> {
+        return await this.storage.get('vm_addresses') || []
+    }
+
+    setVmAddresses(addresses: Array<any>) {
+        return this.storage.set('vm_addresses', addresses)
+    }
+
+    async setVmAddressFromPassphrase(passphrase: string) {
+        const seed = await this.getSeed(passphrase)
+        const hdwallet = hdkey.fromMasterSeed(Buffer.from(seed, 'hex'))
+        const address = hdwallet.derivePath("m/44'/60'/0'/0/0").getWallet().getAddressString()
+        return this.setVmAddresses([{ address }])
     }
 
 }

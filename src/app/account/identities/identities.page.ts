@@ -45,7 +45,7 @@ export class IdentitiesPage implements OnInit {
 
     async ionViewDidEnter() {
         this.loadTickers()
-        const vmAddresses = await this.metaverseService.getVmAddresses()
+        const vmAddresses = await this.walletService.getVmAddresses()
         this.vmAddress = vmAddresses[0]
         this.showBalances()
     }
