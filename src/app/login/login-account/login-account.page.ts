@@ -51,6 +51,7 @@ export class LoginAccountPage implements OnInit {
       const xpub = await this.walletService.getMasterPublicKey(password)
       await this.walletService.setXpub(xpub)
       await this.walletService.saveSessionAccount(password)
+      await this.walletService.setVmAddressFromPassphrase(password)
       this.alertService.stopLoading()
       this.router.navigate(['/loading'], { state: { data: { reset: true } } })
     } catch (error) {
