@@ -9,6 +9,8 @@ import { ClipboardService } from 'ngx-clipboard'
 import { ToastService } from './toast.service'
 import { hdkey } from 'ethereumjs-wallet'
 
+const web3 = require('web3');
+
 declare const Metaverse: any
 
 @Injectable({
@@ -564,6 +566,10 @@ export class WalletService {
         const hdwallet = hdkey.fromMasterSeed(Buffer.from(seed, 'hex'))
         const address = hdwallet.derivePath("m/44'/60'/0'/0/0").getWallet().getAddressString()
         return this.setVmAddresses([{ address }])
+    }
+
+    async validWeb3Address(address: string) {
+        return web3.utils.isAddress(address)
     }
 
 }

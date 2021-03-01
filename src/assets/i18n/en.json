@@ -1242,6 +1242,10 @@
         "NO_VM_ADDRESS": {
             "TITLE": "No VM address",
             "SUBTITLE": "Please create a Virtual Machine address before swapping your ETP"
+        },
+        "INVALID_VM_ADDRESS": {
+            "TITLE": "Invalid VM address",
+            "SUBTITLE": "Your VM address is invalid. Please logout and login again to regenerate your VM address, or update your wallet to the latest version."
         }
     }
 }

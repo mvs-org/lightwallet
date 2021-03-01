@@ -126,6 +126,9 @@ export class SwapPage implements OnInit {
     } else if (!vmAddresses || !vmAddresses.length || !vmAddresses[0]) {
       this.alertService.showMessage('SWAP.NO_VM_ADDRESS.TITLE', 'SWAP.NO_VM_ADDRESS.SUBTITLE', '')
       this.router.navigate(['account', 'identities', 'generate-vm-address'])
+    } else if (await this.walletService.validWeb3Address(vmAddresses[0].address) === false) {
+      this.alertService.showMessage('SWAP.INVALID_VM_ADDRESS.TITLE', 'SWAP.INVALID_VM_ADDRESS.SUBTITLE', '')
+      this.router.navigate(['account', 'portfolio'])
     } else {
       this.vmAddress = vmAddresses[0]
       this.swapInfo = await this.metaverseService.getSwapInfo()
