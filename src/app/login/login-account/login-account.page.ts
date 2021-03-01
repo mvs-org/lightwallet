@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core'
-import { LoadingController, AlertController } from '@ionic/angular'
-import { TranslateService } from '@ngx-translate/core'
 import { WalletService } from 'src/app/services/wallet.service'
 import { MetaverseService } from 'src/app/services/metaverse.service'
-import { ActivatedRoute, Router } from '@angular/router'
+import { Router } from '@angular/router'
 import { AlertService } from '../../services/alert.service'
 
 @Component({
@@ -21,10 +19,6 @@ export class LoginAccountPage implements OnInit {
     public mvs: MetaverseService,
     private router: Router,
     private walletService: WalletService,
-    private loadingCtrl: LoadingController,
-    private translate: TranslateService,
-    private alertCtrl: AlertController,
-    private activatedRoute: ActivatedRoute,
     private alertService: AlertService,
   ) { }
 

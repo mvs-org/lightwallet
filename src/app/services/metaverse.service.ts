@@ -1125,4 +1125,8 @@ export class MetaverseService {
     return this.blockchain.MST.stake(mst, options)
   }
 
+  getSwapInfo() {
+    return this.blockchain.vm.swap()
+  }
+
 }

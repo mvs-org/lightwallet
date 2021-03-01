@@ -7,7 +7,7 @@ import { Subject, BehaviorSubject } from 'rxjs'
 })
 export class AppService {
 
-  readonly version: string = '0.10.1b'
+  readonly version: string = '0.10.3'
   readonly ci_number = ''
   readonly ci_link = ''
   readonly ci_commit = ''
@@ -21,7 +21,7 @@ export class AppService {
   readonly ADDRESS_PREFIX_TESTNET = 't'
   readonly ETPMap = '0xa52b0a032139e6303b86cfeb0bb9ae780a610354'
   readonly SwapAddress = '0xc1e5fd24fa2b4a3581335fc3f2850f717dd09c86'
-  readonly mainnetMetaverseSwapAddress = 'MGh4kfGY2pmUwpvXAjCHCtZ1V43J2pckV3'
+  readonly mainnetMetaverseSwapAddress = 'MDapsEyvWoRGfRTmgQcLhAh32znptjFVqX'
   readonly testnetMetaverseSwapAddress = 'tFiWa2DihiSwvCfC42qpYYWawtsvo5od6n'
   readonly crosschain_avatar = 'droplet'
   readonly dev_avatar = 'developer-community'

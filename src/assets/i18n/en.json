@@ -1237,6 +1237,8 @@
     "SWAP": {
         "MENU_ENTRY": "Swap",
         "TITLE": "Swap",
+        "CLOSED": "The swap is currently closed. Please come back later!",
+        "UPDATE_REQUIRED": "Please update MyETPWallet to version {{requiredVersion}} or above in order to be able to swap",
         "NO_VM_ADDRESS": {
             "TITLE": "No VM address",
             "SUBTITLE": "Please create a Virtual Machine address before swapping your ETP"

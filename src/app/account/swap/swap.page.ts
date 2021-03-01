@@ -7,6 +7,8 @@ import { Location } from '@angular/common'
 import { Platform } from '@ionic/angular'
 import { WalletService } from 'src/app/services/wallet.service'
 
+var compareVersions = require('compare-versions');
+
 @Component({
   selector: 'app-swap',
   templateUrl: './swap.page.html',
@@ -38,6 +40,9 @@ export class SwapPage implements OnInit {
   @ViewChild('quantityInput') quantityInput
   swapAddress: string
   vmAddress: any
+  swapInfo: any
+  updateRequired = true
+  requiredVersion: string
 
   constructor(
     private metaverseService: MetaverseService,
@@ -123,6 +128,9 @@ export class SwapPage implements OnInit {
       this.router.navigate(['account', 'identities', 'generate-vm-address'])
     } else {
       this.vmAddress = vmAddresses[0]
+      this.swapInfo = await this.metaverseService.getSwapInfo()
+      this.requiredVersion = this.swapInfo.minVersion
+      this.updateRequired = compareVersions(this.appService.version, this.requiredVersion) == -1
       this.loadTickers()
     }
   }
@@ -189,7 +197,7 @@ export class SwapPage implements OnInit {
       return this.metaverseService.createSendTx(
         this.selectedAsset,
         this.swapAddress,
-        undefined,
+        'Burn',
         Math.round(parseFloat(this.quantity) * Math.pow(10, this.decimals)),
         (this.sendFrom !== 'auto') ? this.sendFrom : null,
         (this.showAdvanced && this.changeAddress !== 'auto') ? this.changeAddress : undefined,
