@@ -21,7 +21,7 @@
       <ion-card-header>
         <!--If has VM Address-->
         <ion-toolbar *ngIf="vmAddress" style="background-color: transparent;">
-          <div class="pointer" (click)="walletService.copy(vmAddress, 'address')">
+          <div class="pointer" (click)="walletService.copy(vmAddress.address, 'address')">
             <ion-card-title>
               <img class="avatar-logo" [src]="'assets/icon/default.png'">
               <span translate="IDENTITIES.VM_ADDRESS"></span>

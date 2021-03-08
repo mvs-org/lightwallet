@@ -5,7 +5,7 @@ import { WalletService } from './wallet.service'
 // import Metaverse from 'metaversejs/index.js'
 import Blockchain from 'mvs-blockchain'
 import { keyBy } from 'lodash'
-import { Subject, BehaviorSubject } from 'rxjs'
+import { BehaviorSubject } from 'rxjs'
 import { filter } from 'rxjs/operators'
 
 declare const Metaverse: any

@@ -350,12 +350,16 @@
         "UNCONFIRMED": "未确认",
         "ADDRESS_NO_MST": "该地址没有MST。",
         "CHANGE_ADDRESS_NUMBER": "更改地址数",
+        "VM_ADDRESS": "VM address",
+        "NO_VM_ADDRESS": "You do not have a Virtual Machine address yet",
         "BUTTON": {
             "CHANGE_ADDRESS_NUMBER": "更改地址数",
             "COPY": "复制地址",
             "QRCODE": "显示二维码",
             "HISTORY": "历史",
-            "CREATE_AVATAR": "创建Avatar"
+            "SWAP": "Swap",
+            "CREATE_AVATAR": "创建Avatar",
+            "CREATE_VM_ADDRESS": "Create VM address"
         }
     },
     "QR_ADDRESS": {
@@ -374,7 +378,7 @@
             "TITLE": "连接电话",
             "SUBTITLE": "将您的私钥导出到移动应用程序MyETPWallet。"
         },
-        "LANGUAGE":  {
+        "LANGUAGE": {
             "TITLE": "语言",
             "SUBTITLE": "更改语言。"
         },
@@ -424,7 +428,7 @@
             "SUBTITLE": "此帐户名已经保存。请使用其他帐户名"
         }
     },
-    "LANGUAGE":  {
+    "LANGUAGE": {
         "TITLE": "更改语言"
     },
     "EXPORT_MOBILE": {
@@ -581,7 +585,9 @@
             "ERROR_TOO_MANY_INPUTS": "输入太多",
             "ERROR_TOO_MANY_INPUTS_TEXT": "此交易包含太多输入。请尝试更少量的输入",
             "CREATE_TRANSACTION": "无法创建交易。",
-            "ERROR_SEND_TEXT": "无法创建交易。请检查您的输入,然后重试。"
+            "ERROR_SEND_TEXT": "无法创建交易。请检查您的输入,然后重试。",
+            "ONE_TX_PER_BLOCK": "Please note currently each account can only broadcast 1 transaction per block",
+            "BROADCAST_ERROR": "Unable to broadcast the transaction. Please check you internet connection or try again later."
         }
     },
     "ERROR": {
@@ -628,7 +634,7 @@
             }
         }
     },
-    "SEND_MORE":  {
+    "SEND_MORE": {
         "FEE": "费用",
         "TO_AVATAR": "发送到Avatar",
         "RECIPIENT_TITLE": "收件人{{index}}",
@@ -1175,6 +1181,17 @@
             "CANCEL": "取消"
         }
     },
+    "GENERATE_VM_ADDRESS": {
+        "TITLE": "Generate VM address",
+        "EXPLANATION": "Before migrating your tokens to the new chain, please create your Virtual Machine address that will receive your tokens",
+        "ERROR": {
+            "UNKOWN_ERROR": "Error while generating new addresses"
+        },
+        "BUTTON": {
+            "CHANGE_ADDRESS_NUMBER": "Generate VM address",
+            "CANCEL": "Cancel"
+        }
+    },
     "UPDATE": {
         "AVAILABLE_TEXT": "新版本已可用",
         "APPLY": "申请"
@@ -1216,5 +1233,19 @@
         "REWARD": "投票奖励: {{amount}} DNA",
         "LOCKED_SINCE_BLOCK": "锁自第{{block}}区块",
         "LOCKED_UNTIL_BLOCK": "锁至第{{block}}区块 (~{{time}})"
+    },
+    "SWAP": {
+        "MENU_ENTRY": "Swap",
+        "TITLE": "Swap",
+        "CLOSED": "The swap is currently closed. Please come back later!",
+        "UPDATE_REQUIRED": "Please update MyETPWallet to version {{requiredVersion}} or above in order to be able to swap",
+        "NO_VM_ADDRESS": {
+            "TITLE": "No VM address",
+            "SUBTITLE": "Please create a Virtual Machine address before swapping your ETP"
+        },
+        "INVALID_VM_ADDRESS": {
+            "TITLE": "Invalid VM address",
+            "SUBTITLE": "Your VM address is invalid. Please logout and login again to regenerate your VM address, or update your wallet to the latest version."
+        }
     }
 }

@@ -16,6 +16,9 @@
   <p *ngIf="swapInfo && swapInfo.open && updateRequired" class="center" [translate]="'SWAP.UPDATE_REQUIRED'" [translateParams]="{requiredVersion: requiredVersion}"></p>
 
   <div *ngIf="swapInfo && swapInfo.open && !updateRequired">
+    <p align="center" translate="SWAP.EXPLANATION"></p>
+    <p align="center" class="wrong-input" translate="SWAP.WARNING_RED"></p>
+    <p align="center" *ngIf="swapInfo.showWarning" translate="SWAP.WARNING"></p>
     <p align="center" *ngIf="etpBalance<fee/100000000" class="wrong-input"
       translate="SEND.NOTICE_TRANSACTION_FEE_UNCOVERED"></p>
     <ion-row>
@@ -64,7 +67,7 @@
 
         <ion-item *ngIf="!validFromAddress(sendFrom)" lines="none" class="wrong-input"
           translate="SEND_SINGLE.FROM_ADDRESS_NO_ETP"></ion-item>
-        <br>
+        <!--br>
         <ion-item class="toggle-input">
           <ion-label translate="SEND_SINGLE.SHOW_ADVANCED"></ion-label>
           <ion-toggle [(ngModel)]="showAdvanced" name="showAdvanced" checked="false"></ion-toggle>
@@ -101,7 +104,7 @@
                 - {{addressbalance.balance | format : decimals}} {{selectedAsset}}</ion-select-option>
             </ion-select>
           </ion-item>
-        </div>
+        </div-->
       </ion-list>
       <ion-row>
         <ion-col>

@@ -1235,13 +1235,16 @@
         "LOCKED_UNTIL_BLOCK": "Locked until block {{block}}"
     },
     "SWAP": {
-        "MENU_ENTRY": "Swap",
-        "TITLE": "Swap",
-        "CLOSED": "The swap is currently closed. Please come back later!",
-        "UPDATE_REQUIRED": "Please update MyETPWallet to version {{requiredVersion}} or above in order to be able to swap",
+        "MENU_ENTRY": "ETP migration",
+        "TITLE": "ETP migration",
+        "CLOSED": "The migration is currently closed. Please come back later!",
+        "EXPLANATION": "This migration service is one-way from the UTXO chain to the Metaverse Virtual Machine.",
+        "WARNING_RED": "You will not be able to swap back to the UTXO chain.",
+        "WARNING": "Most exchanges only support the UTXO chain at the moment. We recommend you only migrate the amount of ETP you plan to use in the Metaverse Virtual Machine. ",
+        "UPDATE_REQUIRED": "Please update MyETPWallet to version {{requiredVersion}} or above in order to be able to migrate",
         "NO_VM_ADDRESS": {
             "TITLE": "No VM address",
-            "SUBTITLE": "Please create a Virtual Machine address before swapping your ETP"
+            "SUBTITLE": "Please create a Virtual Machine address before migrating your ETP"
         },
         "INVALID_VM_ADDRESS": {
             "TITLE": "Invalid VM address",
