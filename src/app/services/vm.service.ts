@@ -45,30 +45,19 @@ export class VmService {
       this.web3.setProvider(this.network)
       this.ready$.next(true)
     })
-    //this.sendTest()
   }
 
   async sendParams(to: string, value: string, gas: number = 21000, gasPrice: number = 10) {
+    const quantity = parseFloat(value) * Math.pow(10, 18) + ''
     const params = {
       to,
-      value: new BN(parseFloat(value) * Math.pow(10, 18)),
+      //value: new BN(quantity),
+      value: quantity,
       chainId: 43,
       gas,
       gasPrice,
     }
     return params
-  }
-
-  async sendTest() {
-    const privateKey = await this.wallet.exportPrivateKey('12345678', "m/44'/60'/0'/0/0")
-    const params = {
-      to: '0xD78ceA77cb890A5e6Eff2B4C31f24e61C27f9Baa',
-      value: new BN('1000000000000000000'),
-      chainId: 43,
-      gas: 21000,
-      gasPrice: 10,
-    }
-    return this.send(params, privateKey)
   }
 
   getHeight() {
@@ -81,16 +70,18 @@ export class VmService {
 
   showBlockNumber(block: { number: Buffer }) {
     const number = new BN(block.number.toString('hex'), 16).toNumber()
-    console.log(number)
+    return number
   }
 
-  async send(params: VMTransactionConfig, privateKey: string){
+  async sign(params: VMTransactionConfig, passphrase: string) {
+    const privateKey = await this.wallet.exportPrivateKey(passphrase, "m/44'/60'/0'/0/0")
     const account = this.web3.eth.accounts.wallet.add(privateKey)
     const signedTx = await account.signTransaction(params)
     this.web3.eth.accounts.wallet.clear()
+    return signedTx
+  }
 
-    console.log({signedTx})
-
+  async send(signedTx) {
     const tx = this.web3.eth.sendSignedTransaction(signedTx.rawTransaction)
     .once('transactionHash', (hash) => {
       console.log({hash})

@@ -154,7 +154,7 @@ export class SendVmPage implements OnInit {
 
   async send() {
     try {
-      const params = this.vmService.sendParams(this.recipient_address, this.quantity)
+      const params = await this.vmService.sendParams(this.recipient_address, this.quantity)
       this.alertService.stopLoading()
       this.router.navigate(['account', 'confirm-vm'], { state: { data: { params } } })
     } catch (error) {
