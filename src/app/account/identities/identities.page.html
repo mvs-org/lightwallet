@@ -17,10 +17,10 @@
   <ion-spinner name="dots" *ngIf="loading"></ion-spinner>
 
   <div *ngIf="!loading">
-    <ion-card>
+    <ion-card *ngIf="vmAddress">
       <ion-card-header>
         <!--If has VM Address-->
-        <ion-toolbar *ngIf="vmAddress" style="background-color: transparent;">
+        <ion-toolbar style="background-color: transparent;">
           <div class="pointer" (click)="walletService.copy(vmAddress.address, 'address')">
             <ion-card-title>
               <img class="avatar-logo" [src]="'assets/icon/default.png'">
@@ -44,9 +44,42 @@
             </ion-button>
           </ion-buttons>
         </ion-toolbar>
+      </ion-card-header>
 
-        <!--If does not have VM Address-->
-        <ion-toolbar *ngIf="!vmAddress" style="background-color: transparent;">
+      <ion-card-content>
+        <ion-item class="ion-no-padding">
+          <ion-item class="inside-line" lines="none">
+            <img class="coinlogo" [src]="'assets/icon/default_mst.png'" (error)="errorImg($event)">
+            <ion-label class="symbol" translate="MST.GRID.SYMBOL"></ion-label>
+            <ion-col translate="IDENTITIES.TOTAL" class="right"></ion-col>
+          </ion-item>
+          <ion-buttons slot="end" class="right-buttons">
+            <ion-button class="invisible" color="danger" fill="outline" shape="round" (click)="send('ETP', vmAddress.address)"
+              translate="MST.GRID.BUTTON.SEND"></ion-button>
+          </ion-buttons>
+        </ion-item>
+
+        <ion-item class="ion-no-padding">
+          <ion-item class="inside-line" lines="none">
+            <img class="coinlogo" [src]="'assets/icon/ETP.png'" (error)="errorImg($event)">
+            <ion-label class="symbol">ETP</ion-label>
+            <ion-col class="right">
+              {{format(vmAddress.balance, 18)}}
+            </ion-col>
+          </ion-item>
+          <ion-buttons slot="end" class="right-buttons">
+            <ion-button color="danger" fill="outline" shape="round" (click)="send('ETP', vmAddress.address)">
+              <span translate="MST.GRID.BUTTON.SEND"></span>
+            </ion-button>
+          </ion-buttons>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+
+    <!--If does not have VM Address-->
+    <ion-card *ngIf="!vmAddress">
+      <ion-card-content>
+        <ion-toolbar style="background-color: transparent;">
           <ion-card-title>
             <span translate="IDENTITIES.NO_VM_ADDRESS"></span>
           </ion-card-title>
@@ -56,7 +89,7 @@
             </ion-button>
           </ion-buttons>
         </ion-toolbar>
-      </ion-card-header>
+      </ion-card-content>
     </ion-card>
 
     <ion-card *ngFor="let address of addresses">
@@ -116,9 +149,6 @@
               translate="MST.GRID.BUTTON.SEND"></ion-button>
           </ion-buttons>
         </ion-item>
-
-
-
 
         <ion-item class="ion-no-padding">
           <ion-item class="inside-line" lines="none">

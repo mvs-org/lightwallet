@@ -1,7 +1,6 @@
-import { Injectable, OnInit } from '@angular/core'
+import { Injectable } from '@angular/core'
 import { AlertService } from './alert.service'
 import { WalletService } from 'src/app/services/wallet.service'
-import { TranslateService } from '@ngx-translate/core'
 import { MetaverseService } from 'src/app/services/metaverse.service'
 import { Router } from '@angular/router'
 
@@ -16,7 +15,6 @@ export class LogoutService {
   constructor(
     private alertService: AlertService,
     private walletService: WalletService,
-    private translate: TranslateService,
     private metaverseService: MetaverseService,
     private router: Router,
   ) { }

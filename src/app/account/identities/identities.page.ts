@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { ModalController } from '@ionic/angular'
 import { MetaverseService } from '../../services/metaverse.service'
 import { WalletService } from '../../services/wallet.service'
+import { VmService } from '../../services/vm.service'
 import { Router } from '@angular/router'
 import { QrComponent } from '../../qr/qr.component'
 import { ActionSheetService } from '../../services/action-sheet.service'
@@ -26,6 +27,7 @@ export class IdentitiesPage implements OnInit {
         private metaverseService: MetaverseService,
         public modalCtrl: ModalController,
         public walletService: WalletService,
+        public vmService: VmService,
         private router: Router,
         private actionSheetService: ActionSheetService,
     ) {
@@ -47,6 +49,8 @@ export class IdentitiesPage implements OnInit {
         this.loadTickers()
         const vmAddresses = await this.walletService.getVmAddresses()
         this.vmAddress = vmAddresses[0]
+        this.vmAddress.balance = await this.vmService.balanceOf(this.vmAddress.address)
+        console.log(this.vmAddress)
         this.showBalances()
     }
 

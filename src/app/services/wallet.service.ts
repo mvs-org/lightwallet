@@ -60,6 +60,11 @@ export class WalletService {
             .then((wallet) => (wallet != undefined && wallet.index))
     }
 
+    async exportPrivateKey(passphrase: string, path: string): Promise<string>{
+        const wallet = await this.getWallet(passphrase)
+        return wallet.rootnode.derivePath(path).keyPair.d.toBuffer(32).toString('hex')
+    }
+
     getMnemonic(passphrase) {
         return this.storage.get('wallet')
             .then((wallet) => this.crypto.decrypt(wallet.mnemonic, passphrase))
