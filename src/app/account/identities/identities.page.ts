@@ -50,7 +50,7 @@ export class IdentitiesPage implements OnInit {
         const vmAddresses = await this.walletService.getVmAddresses()
         this.vmAddress = vmAddresses[0]
         this.vmAddress.balance = await this.vmService.balanceOf(this.vmAddress.address)
-        console.log(this.vmAddress)
+
         this.showBalances()
     }
 
@@ -83,6 +83,8 @@ export class IdentitiesPage implements OnInit {
     format = (quantity, decimals) => quantity / Math.pow(10, decimals)
 
     send = (asset, sender) => this.router.navigate(['account', 'send', asset], { state: { data: { sender } } })
+
+    sendVm = (asset, sender) => this.router.navigate(['account', 'send-vm', asset], { state: { data: { sender } } })
 
     swap = () => this.router.navigate(['account',  'swap'])
 

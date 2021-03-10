@@ -177,18 +177,6 @@ export class SwapPage implements OnInit {
     }
   }
 
-  async confirm() {
-    const confirm = await this.alertService.alertConfirm(
-      'BURN.CONFIRMATION.TITLE',
-      'BURN.CONFIRMATION.SUBTITLE',
-      'BURN.CONFIRMATION.CANCEL',
-      'BURN.CONFIRMATION.OK'
-    )
-    if (confirm) {
-      this.send()
-    }
-  }
-
   async create() {
     try {
       await this.alertService.showLoading()

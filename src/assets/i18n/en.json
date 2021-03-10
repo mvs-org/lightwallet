@@ -1250,5 +1250,9 @@
             "TITLE": "Invalid VM address",
             "SUBTITLE": "Your VM address is invalid. Please logout and login again to regenerate your VM address, or update your wallet to the latest version."
         }
+    },
+    "SEND_VM": {
+        "TITLE": "Transfer in the MVM",
+        "NOTICE_NO_BALANCE": "You do not have any balance"
     }
 }

@@ -59,6 +59,14 @@ const routes: Routes = [
                 path: 'swap',
                 loadChildren: () => import('./swap/swap.module').then(m => m.SwapPageModule)
             },
+            {
+                path: 'send-vm',
+                loadChildren: () => import('./send-vm/send-vm.module').then(m => m.SendVmPageModule)
+            },
+            {
+                path: 'confirm-vm',
+                loadChildren: () => import('./confirm-vm/confirm-vm.module').then(m => m.ConfirmVmPageModule)
+            },
         ]
     },
 ]

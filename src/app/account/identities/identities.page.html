@@ -54,7 +54,7 @@
             <ion-col translate="IDENTITIES.TOTAL" class="right"></ion-col>
           </ion-item>
           <ion-buttons slot="end" class="right-buttons">
-            <ion-button class="invisible" color="danger" fill="outline" shape="round" (click)="send('ETP', vmAddress.address)"
+            <ion-button class="invisible" color="danger" fill="outline" shape="round" (click)="sendVm('ETP', vmAddress.address)"
               translate="MST.GRID.BUTTON.SEND"></ion-button>
           </ion-buttons>
         </ion-item>
@@ -68,7 +68,7 @@
             </ion-col>
           </ion-item>
           <ion-buttons slot="end" class="right-buttons">
-            <ion-button color="danger" fill="outline" shape="round" (click)="send('ETP', vmAddress.address)">
+            <ion-button color="danger" fill="outline" shape="round" (click)="sendVm('ETP', vmAddress.address)">
               <span translate="MST.GRID.BUTTON.SEND"></span>
             </ion-button>
           </ion-buttons>

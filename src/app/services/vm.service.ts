@@ -48,7 +48,28 @@ export class VmService {
     //this.sendTest()
   }
 
+  async sendParams(to: string, value: string, gas: number = 21000, gasPrice: number = 10) {
+    const params = {
+      to,
+      value: new BN(parseFloat(value) * Math.pow(10, 18)),
+      chainId: 43,
+      gas,
+      gasPrice,
+    }
+    return params
+  }
 
+  async sendTest() {
+    const privateKey = await this.wallet.exportPrivateKey('12345678', "m/44'/60'/0'/0/0")
+    const params = {
+      to: '0xD78ceA77cb890A5e6Eff2B4C31f24e61C27f9Baa',
+      value: new BN('1000000000000000000'),
+      chainId: 43,
+      gas: 21000,
+      gasPrice: 10,
+    }
+    return this.send(params, privateKey)
+  }
 
   getHeight() {
     return this.web3.eth.getBlockNumber()

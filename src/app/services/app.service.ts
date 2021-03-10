@@ -32,7 +32,8 @@ export class AppService {
     default: 10000,
     minimum: 10000,
     mitIssue: 100000,
-    mstIssue: 1000000000
+    mstIssue: 1000000000,
+    sendVm: 10,
   }
   readonly max_addresses: number = 50
   readonly defaultLanguage = 'en'

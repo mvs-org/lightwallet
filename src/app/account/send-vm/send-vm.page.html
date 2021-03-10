@@ -1,0 +1,74 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{selectedAsset}} {{ "SEND_VM.TITLE" | translate}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <br>
+  <ion-spinner name="dots" *ngIf="!vmAddress"></ion-spinner>
+
+  <div *ngIf="vmAddress">
+    <ion-row>
+      <p align="center" *ngIf="vmAddress.balance == 0" class="wrong-input" translate="SEND_VM.NOTICE_NO_BALANCE"></p>
+      <ion-col>
+        <p class="available">{{"SEND.AVAILABLE_BALANCE" | translate}}: <br
+            *ngIf="platform.is('mobile')">{{vmAddress.balance |
+          format : decimals}} {{selectedAsset}}</p>
+      </ion-col>
+      <ion-col>
+        <p class="right">{{"SEND_SINGLE.FEE"|translate}}:<br *ngIf="platform.is('mobile')">
+          {{fee | format : 18}} ETP</p>
+      </ion-col>
+    </ion-row>
+
+    <form #sendForm="ngForm" (ngSubmit)="send()" (keyup.enter)="send()">
+      <ion-list>
+
+        <!--Recipient-->
+        <ion-item
+          [ngClass]="{'error-border':!validAddress(recipient_address), 'valid-border':validAddress(recipient_address)}">
+          <ion-label color="primary" position="floating" translate="SEND_SINGLE.RECIPIENT_ADDRESS"></ion-label>
+          <ion-input #recipientAddressInput name="recipient_address" [(ngModel)]="recipient_address"
+            (ngModelChange)="recipientChanged()" required></ion-input>
+          <ion-button slot="end" class="scanButton"
+            *ngIf="isMobile" (click)="scan()">
+            <ion-icon slot="icon-only" name="qr-code"></ion-icon>
+          </ion-button>
+        </ion-item>
+
+        <!--Quantity-->
+        <ion-item [ngClass]="{'error-border':!validQuantity(quantity), 'valid-border':validQuantity(quantity)}">
+          <ion-label color="primary" position="floating" translate="SEND_SINGLE.AMOUNT"></ion-label>
+          <ion-input #quantityInput name="quantity" type="number" min="0" [(ngModel)]="quantity" required></ion-input>
+          <ion-button slot="end" type="button" fill="outline" shape="round" id="sendAll" (click)="sendAll()"
+            translate="SEND_SINGLE.BUTTON.SEND_ALL"></ion-button>
+        </ion-item>
+        <div *ngIf="tickers && tickers[selectedAsset] && tickers[selectedAsset][base]" class="advice">
+          ≈{{base}} {{fiatValue(quantity) | number : '1.0-2'}}
+        </div>
+        <ion-item *ngIf="countDecimals(quantity) > decimals" lines="none" class="wrong-input"
+          translate="SEND.TOO_MANY_DECIMALS"></ion-item>
+        <br>
+      </ion-list>
+      <ion-row>
+        <ion-col>
+          <ion-button color="danger" expand="full" fill="outline" shape="round" (click)="cancel()">
+            <ion-icon slot="start" name="close"></ion-icon>
+            <span translate="SEND_SINGLE.BUTTON.CANCEL"></span>
+          </ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button type="submit" expand="full" color="primary" fill="outline" shape="round">
+            <ion-icon slot="start" disabled="checked" name="cog"></ion-icon>
+            <span translate="SEND_SINGLE.BUTTON.NEXT"></span>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </form>
+  </div>
+</ion-content>
