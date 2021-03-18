@@ -17,7 +17,7 @@
   <ion-spinner name="dots" *ngIf="loading"></ion-spinner>
 
   <div *ngIf="!loading">
-    <ion-card *ngIf="vmAddress">
+    <ion-card *ngIf="vmAddress && vmAddress.address">
       <ion-card-header>
         <!--If has VM Address-->
         <ion-toolbar style="background-color: transparent;">
@@ -64,7 +64,7 @@
             <img class="coinlogo" [src]="'assets/icon/ETP.png'" (error)="errorImg($event)">
             <ion-label class="symbol">ETP</ion-label>
             <ion-col class="right">
-              {{format(vmAddress.balance, 18)}}
+              {{vmAddress.balance | format: 18}}
             </ion-col>
           </ion-item>
           <ion-buttons slot="end" class="right-buttons">
@@ -77,7 +77,7 @@
     </ion-card>
 
     <!--If does not have VM Address-->
-    <ion-card *ngIf="!vmAddress">
+    <ion-card *ngIf="!vmAddress || !vmAddress.address">
       <ion-card-content>
         <ion-toolbar style="background-color: transparent;">
           <ion-card-title>

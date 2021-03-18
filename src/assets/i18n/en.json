@@ -1253,6 +1253,8 @@
     },
     "SEND_VM": {
         "TITLE": "Transfer in the MVM",
-        "NOTICE_NO_BALANCE": "You do not have any balance"
+        "NOTICE_NO_BALANCE": "You do not have any balance",
+        "GAS_PRICE": "Gas price (Satoshi)",
+        "GAS": "Gas limit"
     }
 }

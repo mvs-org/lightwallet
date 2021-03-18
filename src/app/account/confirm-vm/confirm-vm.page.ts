@@ -91,11 +91,9 @@ export class ConfirmVmPage implements OnInit {
   }
 
   async sign() {
-    await this.alertService.showLoading()
     try {
       this.signedTx = await this.vmService.sign(this.params, this.passphrase)
       this.hexTx = this.signedTx.rawTransaction
-      this.alertService.stopLoading()
       return this.signedTx
     } catch (error) {
       console.error(error.message)
@@ -123,8 +121,6 @@ export class ConfirmVmPage implements OnInit {
   validPassword = (passphrase) => (passphrase.length > 0)
 
   async submit() {
-    
-
     try {
       await this.alertService.showLoading()
       const signTx = await this.sign()

@@ -33,8 +33,15 @@ export class AppService {
     minimum: 10000,
     mitIssue: 100000,
     mstIssue: 1000000000,
-    sendVm: 10,
   }
+  readonly default_fees_vm = {
+    avatar: 1000000000000000000,
+    mitIssue: 1000000000000000,
+    mstIssue: 10000000000000000000,
+    gas: 21000,
+    gasPrice: 10000000000,
+  }
+
   readonly max_addresses: number = 50
   readonly defaultLanguage = 'en'
 

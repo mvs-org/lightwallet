@@ -19,22 +19,13 @@ import { ScanPage } from 'src/app/scan/scan.page'
 export class SendVmPage implements OnInit {
 
   selectedAsset = 'ETP'
-  addresses: Array<string>
-  balances: any = {}
-  balance: number
   decimals: number
   quantity = ''
-  addressbalances: Array<any>
-  sendFrom = 'auto'
-  changeAddress: string
-  feeAddress = 'auto'
 
   message = ''
-  fee: number
-  defaultFee: number
+  gas: number
+  gasPriceSatoshi: number
   showAdvanced = false
-  addressbalancesObject: any = {}
-  etpBalance: number
   tickers = {}
   base: string
 
@@ -44,10 +35,9 @@ export class SendVmPage implements OnInit {
   @ViewChild('quantityInput') quantityInput
   swapAddress: string
   vmAddress: any = {}
-  updateRequired = true
-  requiredVersion: string
 
-  recipient_address: string
+  recipientAddress: string
+  validRecipientAddress = false
 
   constructor(
     private metaverseService: MetaverseService,
@@ -62,23 +52,19 @@ export class SendVmPage implements OnInit {
   ) { }
 
   ngOnInit() {
-
-  }
-
-  async ionViewDidEnter() {
     this.init()
   }
 
   async init() {
     this.selectedAsset = 'ETP'
     this.quantity = ''
-    this.sendFrom = 'auto'
     this.showAdvanced = false
     this.decimals = 18
-    this.recipient_address = ''
+    this.recipientAddress = ''
     this.isMobile = this.walletService.isMobile()
-    this.fee = this.appService.default_fees.sendVm
-    this.defaultFee = this.fee
+    this.gas = this.appService.default_fees_vm.gas
+    this.gasPriceSatoshi = this.appService.default_fees_vm.gasPrice/Math.pow(10, 10)
+    this.validRecipientAddress = false
 
     const vmAddresses = await this.walletService.getVmAddresses()
 
@@ -92,6 +78,7 @@ export class SendVmPage implements OnInit {
     } else {
       this.vmAddress = vmAddresses[0]
       this.vmAddress.balance = await this.vmService.balanceOf(this.vmAddress.address)
+      console.log(await this.validAddress(this.vmAddress.address))
       this.loadTickers()
     }
 
@@ -106,7 +93,15 @@ export class SendVmPage implements OnInit {
   validQuantity = (quantity) => quantity !== undefined
     && this.countDecimals(quantity) <= this.decimals
     && (quantity > 0)
-    && (this.vmAddress.balance >= (Math.round(parseFloat(quantity) * Math.pow(10, this.decimals)) + this.fee))
+    && (this.vmAddress.balance >= (Math.round(parseFloat(quantity) * Math.pow(10, this.decimals)) + this.gas*this.gasPriceSatoshi*Math.pow(10, 10)))
+
+  validGas = (gas) => gas !== undefined
+    && this.countDecimals(gas) === 0
+    && (gas >= this.appService.default_fees_vm.gas)
+
+  validGasPrice = (gasPriceSatoshi) => gasPriceSatoshi !== undefined
+    && this.countDecimals(gasPriceSatoshi) === 0
+    && (gasPriceSatoshi >= this.appService.default_fees_vm.gasPrice/Math.pow(10, 10))
 
 
   countDecimals(value) {
@@ -127,8 +122,8 @@ export class SendVmPage implements OnInit {
       if (result.data && result.data.text) {
         const codeContent = result.data.text.toString()
         const content = codeContent.toString().split('&')
-        if (this.metaverseService.validAddress(content[0])) {
-          this.recipient_address = content[0]
+        if (this.validAddress(content[0])) {
+          this.recipientAddress = content[0]
           this.recipientAddressInput.setFocus()
         } else {
           this.alertService.showMessage('SCAN.INVALID_ADDRESS.TITLE', 'SCAN.INVALID_ADDRESS.SUBTITLE', '')
@@ -147,14 +142,14 @@ export class SendVmPage implements OnInit {
       'SEND_SINGLE.ALL.OK'
     )
     if (confirm) {
-      this.quantity = parseFloat((this.vmAddress.balance / Math.pow(10, this.decimals)).toFixed(this.decimals) + '') + ''
+      this.quantity = parseFloat(((this.vmAddress.balance-(this.gas*this.gasPriceSatoshi*Math.pow(10, 10))) / Math.pow(10, this.decimals)).toFixed(this.decimals) + '') + ''
       this.quantityInput.setFocus()
     }
   }
 
   async send() {
     try {
-      const params = await this.vmService.sendParams(this.recipient_address, this.quantity)
+      const params = await this.vmService.sendParams(this.recipientAddress, this.quantity)
       this.alertService.stopLoading()
       this.router.navigate(['account', 'confirm-vm'], { state: { data: { params } } })
     } catch (error) {
@@ -174,7 +169,7 @@ export class SendVmPage implements OnInit {
     }
   }
 
-  validForm = () => this.validQuantity(this.quantity) && this.validAddress(this.recipient_address)
+  validForm = () => this.validQuantity(this.quantity) && this.validRecipientAddress
 
   cancel() {
     this.location.back()
@@ -184,10 +179,11 @@ export class SendVmPage implements OnInit {
     return this.walletService.validWeb3Address(address)
   }
 
-  recipientChanged = () => {
-    if (this.recipient_address) {
-      this.recipient_address = this.recipient_address.trim()
+  async recipientChanged() {
+    if (this.recipientAddress) {
+      this.recipientAddress = this.recipientAddress.trim()
     }
+    this.validRecipientAddress = await this.validAddress(this.recipientAddress)
   }
 
 }

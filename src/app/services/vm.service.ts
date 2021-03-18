@@ -41,21 +41,25 @@ export class VmService {
     .subscribe(network => {
       console.log('setup metaverse service for network', network)
       this.network = network === 'testnet' ? 'https://vm.mvs.org/testnet_rpc/' : 'https://vm.mvs.org/mainnet_rpc/'
-      this.network = 'https://vm.mvs.org/testnet_rpc/'
+      //this.network = 'http://localhost:9933'
+      //this.network = 'http://167.86.95.203:15539'
       this.web3.setProvider(this.network)
       this.ready$.next(true)
     })
   }
 
-  async sendParams(to: string, value: string, gas: number = 21000, gasPrice: number = 10) {
-    const quantity = parseFloat(value) * Math.pow(10, 18) + ''
+  async sendParams(to: string, value: string, gas: number = this.appService.default_fees_vm.gas, gasPrice: number = this.appService.default_fees_vm.gasPrice) {
+    //const quantity = parseFloat(value) * Math.pow(10, 18) + ''
     const params = {
       to,
-      //value: new BN(quantity),
-      value: quantity,
-      chainId: 43,
+      value: this.web3.utils.toWei(value + '', 'ether'),
+      //value: new BN(parseFloat(value) * Math.pow(10, 18)),
+      //value: quantity,
+      chainId: this.network  === 'testnet' ? 43 : 23,
+      networkId: this.network  === 'testnet' ? 43 : 23,
       gas,
       gasPrice,
+      nonce: undefined,
     }
     return params
   }
@@ -73,7 +77,13 @@ export class VmService {
     return number
   }
 
-  async sign(params: VMTransactionConfig, passphrase: string) {
+  async getPrivateKey(passphrase: string) {
+    const privateKey = await this.wallet.exportPrivateKey(passphrase, "m/44'/60'/0'/0/0")
+    console.log(privateKey)
+    return privateKey
+  }
+
+  async sign(params: any, passphrase: string) {
     const privateKey = await this.wallet.exportPrivateKey(passphrase, "m/44'/60'/0'/0/0")
     const account = this.web3.eth.accounts.wallet.add(privateKey)
     const signedTx = await account.signTransaction(params)

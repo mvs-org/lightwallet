@@ -12,7 +12,7 @@
   <br>
   <ion-spinner name="dots" *ngIf="!vmAddress"></ion-spinner>
 
-  <div *ngIf="vmAddress">
+  <div *ngIf="vmAddress && vmAddress.address">
     <ion-row>
       <p align="center" *ngIf="vmAddress.balance == 0" class="wrong-input" translate="SEND_VM.NOTICE_NO_BALANCE"></p>
       <ion-col>
@@ -22,38 +22,49 @@
       </ion-col>
       <ion-col>
         <p class="right">{{"SEND_SINGLE.FEE"|translate}}:<br *ngIf="platform.is('mobile')">
-          {{fee | format : 18}} ETP</p>
+          {{gas*gasPriceSatoshi | format : 8}} ETP</p>
       </ion-col>
     </ion-row>
 
     <form #sendForm="ngForm" (ngSubmit)="send()" (keyup.enter)="send()">
       <ion-list>
 
-        <!--Recipient-->
-        <ion-item
-          [ngClass]="{'error-border':!validAddress(recipient_address), 'valid-border':validAddress(recipient_address)}">
+        <ion-item [ngClass]="{'error-border': !validRecipientAddress, 'valid-border': validRecipientAddress}">
           <ion-label color="primary" position="floating" translate="SEND_SINGLE.RECIPIENT_ADDRESS"></ion-label>
-          <ion-input #recipientAddressInput name="recipient_address" [(ngModel)]="recipient_address"
+          <ion-input #recipientAddressInput name="recipient_address" [(ngModel)]="recipientAddress"
             (ngModelChange)="recipientChanged()" required></ion-input>
-          <ion-button slot="end" class="scanButton"
-            *ngIf="isMobile" (click)="scan()">
+          <ion-button slot="end" class="scanButton" *ngIf="isMobile" (click)="scan()">
             <ion-icon slot="icon-only" name="qr-code"></ion-icon>
           </ion-button>
         </ion-item>
 
-        <!--Quantity-->
         <ion-item [ngClass]="{'error-border':!validQuantity(quantity), 'valid-border':validQuantity(quantity)}">
           <ion-label color="primary" position="floating" translate="SEND_SINGLE.AMOUNT"></ion-label>
           <ion-input #quantityInput name="quantity" type="number" min="0" [(ngModel)]="quantity" required></ion-input>
           <ion-button slot="end" type="button" fill="outline" shape="round" id="sendAll" (click)="sendAll()"
             translate="SEND_SINGLE.BUTTON.SEND_ALL"></ion-button>
         </ion-item>
+
         <div *ngIf="tickers && tickers[selectedAsset] && tickers[selectedAsset][base]" class="advice">
           ≈{{base}} {{fiatValue(quantity) | number : '1.0-2'}}
         </div>
         <ion-item *ngIf="countDecimals(quantity) > decimals" lines="none" class="wrong-input"
           translate="SEND.TOO_MANY_DECIMALS"></ion-item>
         <br>
+        <ion-item class="toggle-input">
+          <ion-label translate="SEND_SINGLE.SHOW_ADVANCED"></ion-label>
+          <ion-toggle [(ngModel)]="showAdvanced" name="showAdvanced" checked="false"></ion-toggle>
+        </ion-item>
+        <div *ngIf="showAdvanced">
+          <ion-item [ngClass]="{'error-border':!validGasPrice(gasPriceSatoshi), 'valid-border':validGasPrice(gasPriceSatoshi)}">
+            <ion-label color="primary" position="floating" translate="SEND_VM.GAS_PRICE"></ion-label>
+            <ion-input name="gasPrice" type="number" min="0" [(ngModel)]="gasPriceSatoshi" required></ion-input>
+          </ion-item>
+          <ion-item [ngClass]="{'error-border':!validGas(gas), 'valid-border':validGas(gas)}">
+            <ion-label color="primary" position="floating" translate="SEND_VM.GAS"></ion-label>
+            <ion-input name="gas" type="number" min="0" [(ngModel)]="gas" required></ion-input>
+          </ion-item>
+        </div>
       </ion-list>
       <ion-row>
         <ion-col>
