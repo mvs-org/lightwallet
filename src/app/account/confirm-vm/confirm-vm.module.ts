@@ -8,7 +8,7 @@ import { ConfirmVmPageRoutingModule } from './confirm-vm-routing.module'
 
 import { ConfirmVmPage } from './confirm-vm.page'
 import { TranslateModule } from '@ngx-translate/core'
-import { TransactionItemModule } from '../components/transaction-item/transaction-item.module'
+import { TransactionItemVmModule } from '../components/transaction-item-vm/transaction-item-vm.module'
 import { PipesModule } from 'src/app/pipes/pipes.module'
 
 @NgModule({
@@ -18,7 +18,7 @@ import { PipesModule } from 'src/app/pipes/pipes.module'
     IonicModule,
     TranslateModule.forChild(),
     PipesModule,
-    TransactionItemModule,
+    TransactionItemVmModule,
     ConfirmVmPageRoutingModule,
   ],
   declarations: [

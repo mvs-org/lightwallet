@@ -521,7 +521,8 @@
             "MST_MINING": "Mining reward",
             "ETP_LOCK": "ETP lock",
             "ETP_LOCK_REWARD": "ETP lock reward",
-            "MST_LOCK": "MST lock"
+            "MST_LOCK": "MST lock",
+            "VM_ETP": "MVM ETP transfer"
         },
         "NO_LOCK_YET": "No lock transaction yet",
         "ORDER_BY": "Order by",
@@ -812,6 +813,7 @@
             "BURN_ETP": "Burn ETP transaction",
             "BURN_MST": "Burn MST transaction",
             "DNA_VOTE": "DNA vote",
+            "VM_ETP": "MVM ETP transfer",
             "UNKNOWN": "Unknown transaction type"
         },
         "SELECT_MODE": "Visualisation mode",
@@ -1254,7 +1256,11 @@
     "SEND_VM": {
         "TITLE": "Transfer in the MVM",
         "NOTICE_NO_BALANCE": "You do not have any balance",
-        "GAS_PRICE": "Gas price (Satoshi)",
+        "GAS_PRICE": "Gas price (Sats)",
         "GAS": "Gas limit"
+    },
+    "TX_VM": {
+        "FROM": "From:",
+        "TO": "To:"
     }
 }

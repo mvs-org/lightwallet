@@ -20,7 +20,7 @@
             <ion-row>
                 <ion-col>
                     <ion-row>
-                        <ion-col size-xs="12" size="6">
+                        <ion-col size="12" size-sm="6">
                             <div class="summaryTxType">
                                 <div>{{'TX.TX_TYPE.' + txType | translate}}</div>
                                 <div *ngIf="multisig.status == 'NOT_MULTISIG' && (status == 'SIGNED' || status == 'UNSIGNED' || status == 'PARTIALLY')"
@@ -40,7 +40,7 @@
                                 </div>
                             </div>
                         </ion-col>
-                        <ion-col class="summaryAmount">
+                        <ion-col size="12" size-sm="6" class="summaryAmount">
                             <div class="right" *ngIf="txType == 'ETP' || txType == 'COINSTAKE'">
                                 <div *ngIf="totalPersonalInputs.ETP && totalPersonalInputs.ETP - totalPersonalOutputs.ETP - txFee > 0"
                                     class="sendAmount">

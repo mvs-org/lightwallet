@@ -16,9 +16,9 @@ export class ConfirmVmPage implements OnInit {
   params: any
   passphrase = ''
   signedTx: any
-  mode = 'default'
   showAdvanced = false
   status: string
+  vmAddress: any = {}
 
   constructor(
     public mvs: MetaverseService,
@@ -36,7 +36,8 @@ export class ConfirmVmPage implements OnInit {
     if (this.params === undefined) {
       this.router.navigate(['account', 'portfolio'])
     } else {
-
+      const vmAddresses = await this.walletService.getVmAddresses()
+      this.vmAddress = vmAddresses[0] || {}
     }
   }
 

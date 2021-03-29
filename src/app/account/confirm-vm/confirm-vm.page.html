@@ -11,43 +11,15 @@
 
   <form #signTxForm="ngForm" (ngSubmit)="submit()">
 
-    <h2 translate="CONFIRM.PAGE_TITLE"></h2>
-
-    <!--ion-item>
-      <ion-label translate="TX.SELECT_MODE"></ion-label>
-      <ion-select [(ngModel)]="mode" name="mode" multiple="false" okText="{{'OK'|translate}}"
-        cancelText="{{'CANCEL'|translate}}">
-        <ion-select-option selected="true" value="default">{{"TX.MODE.DEFAULT"| translate}}</ion-select-option>
-        <ion-select-option value="satoshi">{{"TX.MODE.SATOSHI"| translate}}</ion-select-option>
-        <ion-select-option value="hex">{{"TX.MODE.HEX"| translate}}</ion-select-option>
-      </ion-select>
-    </ion-item-->
+    <tx-item-vm [params]="params" [status]="'UNSIGNED'" [from]="vmAddress.address" [addresses]="[vmAddress.address]"></tx-item-vm>
 
     <ion-item *ngIf="!signedTx" [ngClass]="{'error-border': !validPassword(passphrase)}">
       <ion-label color="primary" position="floating" translate="CONFIRM.PASSWORD"></ion-label>
       <ion-input name="passphrase" type="password" [(ngModel)]="passphrase" required></ion-input>
     </ion-item>
     <br>
-    <ion-item class="toggle-input">
-      <ion-label translate="CONFIRM.SHOW_ADVANCED"></ion-label>
-      <ion-toggle [(ngModel)]="showAdvanced" name="showAdvanced" checked="false"></ion-toggle>
-    </ion-item>
 
-    <div *ngIf="showAdvanced">
-      <ion-row>
-        <ion-col *ngIf="signedTx">
-          <br>
-          <h4 translate="CONFIRM.PREVIEW_SIGNED_TX"></h4>
-          <ion-item class="manual-copy breakwords">{{signedTx}}</ion-item>
-          <ion-button expand="full" fill="outline" shape="round" (click)="walletService.copy(signedTx, 'tx')">
-            <ion-icon slot="start" name="copy"></ion-icon>
-            <span translate="COPY"></span>
-          </ion-button>
-        </ion-col>
-      </ion-row>
-    </div>
-
-    <ion-row >
+    <ion-row>
       <ion-col>
         <ion-button color="danger" fill="outline" shape="round" expand="full" (click)="cancel()">
           <ion-icon slot="start" name="close"></ion-icon>
@@ -55,15 +27,11 @@
         </ion-button>
       </ion-col>
       <ion-col>
-        <ion-button *ngIf="!signedTx" type="submit" expand="full" fill="outline" shape="round"
+        <ion-button type="submit" expand="full" fill="outline" shape="round"
           [disabled]="!signTxForm.form.valid||!validPassword(passphrase)"
           color="primary">
           <ion-icon slot="start" name="send"></ion-icon>
           <span translate="CONFIRM.BUTTON.SIGN_AND_SEND"></span>
-        </ion-button>
-        <ion-button *ngIf="signedTx" type="submit" expand="full" fill="outline" shape="round" color="primary">
-          <ion-icon slot="start" name="send"></ion-icon>
-          <span translate="CONFIRM.BUTTON.BROADCAST"></span>
         </ion-button>
       </ion-col>
     </ion-row>
