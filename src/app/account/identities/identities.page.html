@@ -14,7 +14,7 @@
 
 <ion-content>
 
-  <ion-spinner name="dots" *ngIf="loading"></ion-spinner>
+  <ion-spinner class="general-spinner" name="dots" *ngIf="loading"></ion-spinner>
 
   <div *ngIf="!loading">
     <ion-card *ngIf="vmAddress && vmAddress.address">
@@ -64,7 +64,8 @@
             <img class="coinlogo" [src]="'assets/icon/ETP.png'" (error)="errorImg($event)">
             <ion-label class="symbol">ETP</ion-label>
             <ion-col class="right">
-              {{vmAddress.balance | format: 18}}
+              <span *ngIf="vmAddress && vmAddress.balance !== undefined">{{vmAddress.balance | format: 18}}</span>
+              <ion-spinner name="dots" *ngIf="!vmAddress || vmAddress.balance == undefined"></ion-spinner>
             </ion-col>
           </ion-item>
           <ion-buttons slot="end" class="right-buttons">

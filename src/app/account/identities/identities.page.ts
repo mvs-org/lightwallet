@@ -47,12 +47,12 @@ export class IdentitiesPage implements OnInit {
 
     async ionViewDidEnter() {
         this.loadTickers()
+        this.showBalances()
         const vmAddresses = await this.walletService.getVmAddresses()
         this.vmAddress = vmAddresses[0] || {}
         if(this.vmAddress.address) {
             this.vmAddress.balance = await this.vmService.balanceOf(this.vmAddress.address)
         }
-        this.showBalances()
     }
 
     async showBalances() {
