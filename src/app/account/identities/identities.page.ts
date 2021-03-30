@@ -89,6 +89,8 @@ export class IdentitiesPage implements OnInit {
 
     swap = () => this.router.navigate(['account',  'swap'])
 
+    exportPrivateKey = () => this.router.navigate(['account', 'identities', 'export-private-key-vm'])
+
     async show(address) {
         const content = address
         const title = address
@@ -136,6 +138,11 @@ export class IdentitiesPage implements OnInit {
                     text: 'IDENTITIES.BUTTON.SWAP',
                     action: 'swap',
                 },
+                {
+                    icon: 'key',
+                    text: 'IDENTITIES.BUTTON.EXPORT_PRIVATE_KEY',
+                    action: 'key',
+                },
             )
         }
         const result = await this.actionSheetService.default('', '', buttons)
@@ -148,6 +155,8 @@ export class IdentitiesPage implements OnInit {
                 break
             case 'swap':
                 this.swap()
+            case 'key':
+                this.exportPrivateKey()
             default:
             // action cancelled
         }

@@ -78,13 +78,11 @@ export class VmService {
   }
 
   async getPrivateKey(passphrase: string) {
-    const privateKey = await this.wallet.exportPrivateKey(passphrase, "m/44'/60'/0'/0/0")
-    console.log(privateKey)
-    return privateKey
+    return this.wallet.exportPrivateKey(passphrase, "m/44'/60'/0'/0/0")
   }
 
   async sign(params: any, passphrase: string) {
-    const privateKey = await this.wallet.exportPrivateKey(passphrase, "m/44'/60'/0'/0/0")
+    const privateKey = await this.getPrivateKey(passphrase)
     const account = this.web3.eth.accounts.wallet.add(privateKey)
     const signedTx = await account.signTransaction(params)
     this.web3.eth.accounts.wallet.clear()

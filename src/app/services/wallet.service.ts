@@ -549,6 +549,9 @@ export class WalletService {
                 case 'xpub':
                     this.toastService.simpleToast('TOAST.COPY.XPUB')
                     break
+                case 'privateKey':
+                    this.toastService.simpleToast('TOAST.COPY.PRIVATE_KEY')
+                    break
                 default:
                     this.toastService.simpleToast('TOAST.COPY.DEFAULT')
             }

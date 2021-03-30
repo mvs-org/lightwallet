@@ -20,6 +20,10 @@ const routes: Routes = [
     path: 'generate-vm-address',
     loadChildren: () => import('./generate-vm-address/generate-vm-address.module').then( m => m.GenerateVmAddressPageModule)
   },
+  {
+    path: 'export-private-key-vm',
+    loadChildren: () => import('./export-private-key-vm/export-private-key-vm.module').then( m => m.ExportPrivateKeyVmPageModule)
+  },
 ]
 
 @NgModule({
