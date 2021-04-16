@@ -350,16 +350,17 @@
         "UNCONFIRMED": "未确认",
         "ADDRESS_NO_MST": "该地址没有MST。",
         "CHANGE_ADDRESS_NUMBER": "更改地址数",
-        "VM_ADDRESS": "VM address",
-        "NO_VM_ADDRESS": "You do not have a Virtual Machine address yet",
+        "VM_ADDRESS": "VM地址",
+        "NO_VM_ADDRESS": "您没有VM地址",
         "BUTTON": {
             "CHANGE_ADDRESS_NUMBER": "更改地址数",
             "COPY": "复制地址",
             "QRCODE": "显示二维码",
             "HISTORY": "历史",
-            "SWAP": "Swap",
+            "SWAP": "兑换",
             "CREATE_AVATAR": "创建Avatar",
-            "CREATE_VM_ADDRESS": "Create VM address"
+            "CREATE_VM_ADDRESS": "创建VM地址",
+            "EXPORT_PRIVATE_KEY": "导出私钥"
         }
     },
     "QR_ADDRESS": {
@@ -521,7 +522,8 @@
             "MST_MINING": "采矿奖励",
             "ETP_LOCK": "ETP锁",
             "ETP_LOCK_REWARD": "ETP锁定奖励",
-            "MST_LOCK": "MST锁定"
+            "MST_LOCK": "MST锁定",
+            "VM_ETP": "MVM ETP转移"
         },
         "NO_LOCK_YET": "尚未进行锁定交易",
         "ORDER_BY": "订购依据",
@@ -586,8 +588,8 @@
             "ERROR_TOO_MANY_INPUTS_TEXT": "此交易包含太多输入。请尝试更少量的输入",
             "CREATE_TRANSACTION": "无法创建交易。",
             "ERROR_SEND_TEXT": "无法创建交易。请检查您的输入,然后重试。",
-            "ONE_TX_PER_BLOCK": "Please note currently each account can only broadcast 1 transaction per block",
-            "BROADCAST_ERROR": "Unable to broadcast the transaction. Please check you internet connection or try again later."
+            "ONE_TX_PER_BLOCK": "请注意目前每个账号每个区块每次仅可发生一次交易",
+            "BROADCAST_ERROR": "发送失败，请检查您的网络或稍后再试"
         }
     },
     "ERROR": {
@@ -698,10 +700,11 @@
         "ERR_TOO_MANY_INPUTS": "此交易包含太多输入。请尝试较小的输入。",
         "COPY": {
             "ADDRESS": "地址已复制！",
-            "AVATAR": "Avatar name copied!",
-            "TX": "Transaction copied!",
-            "XPUB": "Public key copied!",
-            "DEFAULT": "Copied!"
+            "AVATAR": "Avatar 已复制！",
+            "TX": "交易已复制！",
+            "XPUB": "公钥已复制！",
+            "PRIVATE_KEY": "私钥已复制！",
+            "DEFAULT": "已复制！"
         }
     },
     "DEVELOPER": {
@@ -722,7 +725,7 @@
         "TITLE": "导出主公钥",
         "WARNING": "主公钥允许生成您所有的钱包地址。即使不能使用它来访问资金,在与他人共享时也要非常小心。",
         "PASSWORD": "密码",
-        "BUTTON": "显示密钥",
+        "BUTTON": "显示公钥",
         "YOUR_KEY": "您的主公钥: "
     },
     "CONFIRM": {
@@ -812,6 +815,7 @@
             "BURN_ETP": "销毁ETP",
             "BURN_MST": "销毁MST",
             "DNA_VOTE": "DNA投票",
+            "VM_ETP": "MVM ETP转移",
             "UNKNOWN": "未知的交易类型"
         },
         "SELECT_MODE": "可视化模式",
@@ -1182,14 +1186,14 @@
         }
     },
     "GENERATE_VM_ADDRESS": {
-        "TITLE": "Generate VM address",
-        "EXPLANATION": "Before migrating your tokens to the new chain, please create your Virtual Machine address that will receive your tokens",
+        "TITLE": "生成VM地址",
+        "EXPLANATION": "在转移您的币至新区块链之前，请先建立您的VM地址以便接收币",
         "ERROR": {
-            "UNKOWN_ERROR": "Error while generating new addresses"
+            "UNKOWN_ERROR": "生成新地址时发生错误"
         },
         "BUTTON": {
-            "CHANGE_ADDRESS_NUMBER": "Generate VM address",
-            "CANCEL": "Cancel"
+            "CHANGE_ADDRESS_NUMBER": "生成VM地址",
+            "CANCEL": "取消"
         }
     },
     "UPDATE": {
@@ -1235,17 +1239,37 @@
         "LOCKED_UNTIL_BLOCK": "锁至第{{block}}区块 (~{{time}})"
     },
     "SWAP": {
-        "MENU_ENTRY": "Swap",
-        "TITLE": "Swap",
-        "CLOSED": "The swap is currently closed. Please come back later!",
-        "UPDATE_REQUIRED": "Please update MyETPWallet to version {{requiredVersion}} or above in order to be able to swap",
+        "MENU_ENTRY": "兑换",
+        "TITLE": "兑换",
+        "CLOSED": "兑换目前关闭，请稍后再试",
+        "EXPLANATION": "这个转移服务是从UTXO链到MVM的单边转移服务",
+        "WARNING_RED": "您将不能返回UTXO链",
+        "WARNING": "目前多数交易平台仅支持TUXO，我们建议您仅转移您计划使用的ETP数额到MVM链",
+        "UPDATE_REQUIRED": "请更新MyETPWallet至最新版本 {{requiredVersion}}以便兑换顺利进行",
         "NO_VM_ADDRESS": {
-            "TITLE": "No VM address",
-            "SUBTITLE": "Please create a Virtual Machine address before swapping your ETP"
+            "TITLE": "没有VM地址",
+            "SUBTITLE": "请在兑换您的ETP之前建立一个VM地址"
         },
         "INVALID_VM_ADDRESS": {
-            "TITLE": "Invalid VM address",
-            "SUBTITLE": "Your VM address is invalid. Please logout and login again to regenerate your VM address, or update your wallet to the latest version."
+            "TITLE": "VM地址不可用",
+            "SUBTITLE": "您的VM地址不可用。请退出重进，重新生成您的VM地址，或者更新您的钱包至最新版本"
         }
+    },
+    "SEND_VM": {
+        "TITLE": "MVM 交易",
+        "NOTICE_NO_BALANCE": "您余额不足",
+        "GAS_PRICE": "燃料价格（Sats）",
+        "GAS": "燃料限制"
+    },
+    "TX_VM": {
+        "FROM": "发送人:",
+        "TO": "接收人:"
+    },
+    "EXPORT_PRIVATE_KEY_VM_ADDRESS": {
+        "TITLE": "导出VM地址私钥",
+        "WARNING": "您可使用此公钥在VM地址上随意支配资金，请谨慎使用和保存。请注意此私钥仅可用于您的VM地址，不可用于其他地址",
+        "PASSWORD": "密码",
+        "BUTTON": "显示私钥",
+        "YOUR_KEY": "您的VM地址私钥:"
     }
 }
