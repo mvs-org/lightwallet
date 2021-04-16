@@ -17,8 +17,10 @@
       <p align="center" *ngIf="vmAddress.balance == 0" class="wrong-input" translate="SEND_VM.NOTICE_NO_BALANCE"></p>
       <ion-col>
         <p class="available">{{"SEND.AVAILABLE_BALANCE" | translate}}: <br
-            *ngIf="platform.is('mobile')">{{vmAddress.balance |
-          format : decimals}} {{selectedAsset}}</p>
+            *ngIf="platform.is('mobile')">
+            <span *ngIf="vmAddress && vmAddress.balance !== undefined">{{vmAddress.balance | format : decimals}} {{selectedAsset}}</span>
+            <ion-spinner class="balance-spinner" name="dots" *ngIf="!vmAddress || vmAddress.balance == undefined"></ion-spinner>
+        </p>
       </ion-col>
       <ion-col>
         <p class="right">{{"SEND_SINGLE.FEE"|translate}}:<br *ngIf="platform.is('mobile')">
