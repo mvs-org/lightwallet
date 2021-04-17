@@ -16,7 +16,7 @@
                             </div>
                         </ion-col>
                         <ion-col size="12" size-sm="6" class="summaryAmount">
-                            <div class="right" *ngIf="txType == 'ETP' || txType == 'COINSTAKE'">
+                            <div class="right" *ngIf="txType == 'VM_ETP'">
                                 <div *ngIf="myAddress(from) && !myAddress(params.to)"
                                     class="sendAmount">
                                     -{{params.value | format : 18}} ETP
