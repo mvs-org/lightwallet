@@ -1267,9 +1267,9 @@
     },
     "EXPORT_PRIVATE_KEY_VM_ADDRESS": {
         "TITLE": "Export VM address Private Key",
-        "WARNING": "The Private Key allows the spending of the funds on the address, please be careful where you use or store it. Note that this private key is the one of your VM address only, it does not allow spending of funds on your other addresses.",
+        "WARNING": "The Private Key allows the spending of the funds on the address, please be careful where you use or store it. Note that this private key provides access to your VM address only, it does not allow spending of funds on your other addresses.",
         "PASSWORD": "Password",
         "BUTTON": "Show Private Key",
-        "YOUR_KEY": "Your VM address private public key:"
+        "YOUR_KEY": "Your VM address private key:"
     }
 }
