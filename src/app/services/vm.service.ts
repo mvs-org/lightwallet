@@ -40,7 +40,7 @@ export class VmService {
     .pipe(filter(n => !!n))
     .subscribe(network => {
       console.log('setup metaverse service for network', network)
-      this.network = network === 'testnet' ? 'https://vm.mvs.org/testnet_rpc/' : 'https://vm.mvs.org/mainnet_rpc/'
+      this.network = network === 'testnet' ? 'wss://vm.mvs.org/testnet_ws/' : 'wss://vm.mvs.org/mainnet_ws/'
       this.web3.setProvider(this.network)
       this.ready$.next(true)
     })
