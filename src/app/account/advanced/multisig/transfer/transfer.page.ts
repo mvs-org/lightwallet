@@ -210,13 +210,13 @@ export class TransferPage implements OnInit {
             this.alertService.showError('MESSAGE.PASSWORD_WRONG', '')
             throw Error('ERR_CREATE_TX')
           case 'ERR_INSUFFICIENT_BALANCE':
-            this.alertService.showError('MESSAGE.INSUFFICIENT_BALANCE', '')
+            this.alertService.showError('SEND.MESSAGE.INSUFFICIENT_BALANCE', '')
             throw Error('ERR_CREATE_TX')
           case 'ERR_TOO_MANY_INPUTS':
-            this.alertService.showErrorTranslated('ERROR_TOO_MANY_INPUTS', 'ERROR_TOO_MANY_INPUTS_TEXT')
+            this.alertService.showErrorTranslated('SEND.MESSAGE.ERROR_TOO_MANY_INPUTS', 'SEND.MESSAGE.ERROR_TOO_MANY_INPUTS_TEXT')
             throw Error('ERR_CREATE_TX')
           default:
-            this.alertService.showError('MESSAGE.CREATE_TRANSACTION', error.message)
+            this.alertService.showError('SEND.MESSAGE.CREATE_TRANSACTION', error.message)
             throw Error('ERR_CREATE_TX')
         }
       })
@@ -235,13 +235,13 @@ export class TransferPage implements OnInit {
         this.alertService.stopLoading()
         switch (error.message) {
           case 'ERR_CONNECTION':
-            this.alertService.showError('ERROR_SEND_TEXT', '')
+            this.alertService.showError('SEND.MESSAGE.ERROR_SEND_TEXT', '')
             break
           case 'ERR_CREATE_TX':
             // already handle in create function
             break
           default:
-            this.alertService.showError('MESSAGE.BROADCAST_ERROR', error.message)
+            this.alertService.showError('SEND.MESSAGE.BROADCAST_ERROR', error.message)
         }
       })
   }

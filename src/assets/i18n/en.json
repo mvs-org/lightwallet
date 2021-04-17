@@ -350,12 +350,17 @@
         "UNCONFIRMED": "Unconfirmed",
         "ADDRESS_NO_MST": "This address has no MST.",
         "CHANGE_ADDRESS_NUMBER": "Change number of addresses",
+        "VM_ADDRESS": "VM address",
+        "NO_VM_ADDRESS": "You do not have a Virtual Machine address yet",
         "BUTTON": {
             "CHANGE_ADDRESS_NUMBER": "Change number of addresses",
             "COPY": "Copy address",
             "QRCODE": "Show QR Code",
             "HISTORY": "History",
-            "CREATE_AVATAR": "Create Avatar"
+            "SWAP": "Swap",
+            "CREATE_AVATAR": "Create Avatar",
+            "CREATE_VM_ADDRESS": "Create VM address",
+            "EXPORT_PRIVATE_KEY": "Export private key"
         }
     },
     "QR_ADDRESS": {
@@ -517,7 +522,8 @@
             "MST_MINING": "Mining reward",
             "ETP_LOCK": "ETP lock",
             "ETP_LOCK_REWARD": "ETP lock reward",
-            "MST_LOCK": "MST lock"
+            "MST_LOCK": "MST lock",
+            "VM_ETP": "MVM ETP transfer"
         },
         "NO_LOCK_YET": "No lock transaction yet",
         "ORDER_BY": "Order by",
@@ -581,7 +587,9 @@
             "ERROR_TOO_MANY_INPUTS": "Too many inputs",
             "ERROR_TOO_MANY_INPUTS_TEXT": "This transaction contains too many inputs. Please try a smaller amount",
             "CREATE_TRANSACTION": "Unable to create transaction.",
-            "ERROR_SEND_TEXT": "Could not create the transaction. Please check your input and try again."
+            "ERROR_SEND_TEXT": "Could not create the transaction. Please check your input and try again.",
+            "ONE_TX_PER_BLOCK": "Please note currently each account can only broadcast 1 transaction per block",
+            "BROADCAST_ERROR": "Unable to broadcast the transaction. Please check you internet connection or try again later."
         }
     },
     "ERROR": {
@@ -695,6 +703,7 @@
             "AVATAR": "Avatar name copied!",
             "TX": "Transaction copied!",
             "XPUB": "Public key copied!",
+            "PRIVATE_KEY": "Private key copied!",
             "DEFAULT": "Copied!"
         }
     },
@@ -806,6 +815,7 @@
             "BURN_ETP": "Burn ETP transaction",
             "BURN_MST": "Burn MST transaction",
             "DNA_VOTE": "DNA vote",
+            "VM_ETP": "MVM ETP transfer",
             "UNKNOWN": "Unknown transaction type"
         },
         "SELECT_MODE": "Visualisation mode",
@@ -1175,6 +1185,17 @@
             "CANCEL": "Cancel"
         }
     },
+    "GENERATE_VM_ADDRESS": {
+        "TITLE": "Generate VM address",
+        "EXPLANATION": "Before migrating your tokens to the new chain, please create your Virtual Machine address that will receive your tokens",
+        "ERROR": {
+            "UNKOWN_ERROR": "Error while generating new addresses"
+        },
+        "BUTTON": {
+            "CHANGE_ADDRESS_NUMBER": "Generate VM address",
+            "CANCEL": "Cancel"
+        }
+    },
     "UPDATE": {
         "AVAILABLE_TEXT": "A new version is available",
         "APPLY": "Apply Now"
@@ -1216,5 +1237,39 @@
         "REWARD": "Reward: {{amount}} DNA",
         "LOCKED_SINCE_BLOCK": "Locked since block {{block}}",
         "LOCKED_UNTIL_BLOCK": "Locked until block {{block}}"
+    },
+    "SWAP": {
+        "MENU_ENTRY": "ETP migration",
+        "TITLE": "ETP migration",
+        "CLOSED": "The migration is currently closed. Please come back later!",
+        "EXPLANATION": "This migration service is one-way from the UTXO chain to the Metaverse Virtual Machine.",
+        "WARNING_RED": "You will not be able to swap back to the UTXO chain.",
+        "WARNING": "Most exchanges only support the UTXO chain at the moment. We recommend you only migrate the amount of ETP you plan to use in the Metaverse Virtual Machine. ",
+        "UPDATE_REQUIRED": "Please update MyETPWallet to version {{requiredVersion}} or above in order to be able to migrate",
+        "NO_VM_ADDRESS": {
+            "TITLE": "No VM address",
+            "SUBTITLE": "Please create a Virtual Machine address before migrating your ETP"
+        },
+        "INVALID_VM_ADDRESS": {
+            "TITLE": "Invalid VM address",
+            "SUBTITLE": "Your VM address is invalid. Please logout and login again to regenerate your VM address, or update your wallet to the latest version."
+        }
+    },
+    "SEND_VM": {
+        "TITLE": "Transfer in the MVM",
+        "NOTICE_NO_BALANCE": "You do not have any balance",
+        "GAS_PRICE": "Gas price (Sats)",
+        "GAS": "Gas limit"
+    },
+    "TX_VM": {
+        "FROM": "From:",
+        "TO": "To:"
+    },
+    "EXPORT_PRIVATE_KEY_VM_ADDRESS": {
+        "TITLE": "Export VM address Private Key",
+        "WARNING": "The Private Key allows the spending of the funds on the address, please be careful where you use or store it. Note that this private key provides access to your VM address only, it does not allow spending of funds on your other addresses.",
+        "PASSWORD": "Password",
+        "BUTTON": "Show Private Key",
+        "YOUR_KEY": "Your VM address private key:"
     }
 }

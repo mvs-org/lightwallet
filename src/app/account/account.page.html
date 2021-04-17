@@ -8,8 +8,10 @@
                 <div>{{(globals.network$|async) === 'testnet' ? 'testnet' : ''}}</div>
             </div>
             <ion-list id="inbox-list">
-                <ion-buttons slot="end">
-                    <ion-icon slot="start" *ngIf="isOffline()" name="flash" class="offlineIcon"></ion-icon>
+                <div class="center" *ngIf="isOffline()">
+                    <ion-icon color="danger" name="flash" size="large"></ion-icon>
+                </div>
+                <ion-buttons>
                     <ion-button class="center" (click)="sync()">
                         <span *ngIf="height" translate="MAIN_MENU.HEIGHT" [translateParams]="{height: height}"></span>
                     </ion-button>

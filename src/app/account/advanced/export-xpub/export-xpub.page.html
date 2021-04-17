@@ -11,15 +11,14 @@
   <ion-grid>
     <p align="center" class="wrong-input" translate="EXPORT_MASTER_PUBLIC_KEY.WARNING"></p>
 
-    <form #exportXpubForm="ngForm">
+    <form #exportXpubForm="ngForm" (ngSubmit)="export(passphrase)">
       <ion-list *ngIf="!xpub">
         <ion-item>
-          <ion-label color="primary" position="floating">{{"EXPORT_MASTER_PUBLIC_KEY.PASSWORD"|translate}}</ion-label>
-          <ion-input ion-input type="password" [(ngModel)]="passphrase" name="passphrase"></ion-input>
+          <ion-label color="primary" position="floating" translate="EXPORT_MASTER_PUBLIC_KEY.PASSWORD"></ion-label>
+          <ion-input type="password" [(ngModel)]="passphrase" name="passphrase"></ion-input>
         </ion-item>
         <br>
-        <ion-button type="submit" expand="full" fill="outline" shape="round" (click)="export(this.passphrase)"
-          [disabled]="!validPassword(passphrase)">
+        <ion-button type="submit" expand="full" fill="outline" shape="round" [disabled]="!validPassword(passphrase)">
           <ion-icon slot="start" name="key"></ion-icon>
           <span translate="EXPORT_MASTER_PUBLIC_KEY.BUTTON"></span>
         </ion-button>

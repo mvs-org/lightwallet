@@ -1,6 +1,6 @@
 {
   "name": "myetpwallet",
-  "version": "0.10.2",
+  "version": "0.10.4",
   "author": "Metaverse Foundation",
   "homepage": "https://myetpwallet.com",
   "scripts": {
@@ -39,10 +39,12 @@
     "@swimlane/ngx-charts": "^16.0.0",
     "@zxing/ngx-scanner": "^3.0.1",
     "bitident": "^0.1.11",
+    "compare-versions": "^3.6.0",
     "crypto-js": "^4.0.0",
+    "ethereumjs-wallet": "^1.0.1",
     "lodash": "^4.17.20",
     "metaversejs": "^0.3.98",
-    "mvs-blockchain": "^0.1.71",
+    "mvs-blockchain": "^0.1.72",
     "ngx-clipboard": "^13.0.1",
     "ngx-countdown": "^10.0.0",
     "ngx-pagination": "^5.0.0",
@@ -50,6 +52,7 @@
     "phonegap-plugin-barcodescanner": "^8.1.0",
     "rxjs": "~6.5.1",
     "tslib": "^1.10.0",
+    "web3": "^1.3.4",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {

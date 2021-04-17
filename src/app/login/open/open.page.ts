@@ -31,9 +31,7 @@ export class OpenPage implements OnInit {
   }
 
   async ionViewWillEnter() {
-    console.log("Hello")
     this.saved_accounts = await this.walletService.getSavedAccounts() || []
-    console.log(this.saved_accounts)
     this.saved_accounts.forEach(account => {
       if ((account.network === this.globals.network)
         || (!account.network && this.globals.network === 'mainnet')) {

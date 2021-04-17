@@ -7,6 +7,9 @@ import { Platform } from '@ionic/angular'
 import { AppService } from './app.service'
 import { ClipboardService } from 'ngx-clipboard'
 import { ToastService } from './toast.service'
+import { hdkey } from 'ethereumjs-wallet'
+
+const web3 = require('web3');
 
 declare const Metaverse: any
 
@@ -55,6 +58,11 @@ export class WalletService {
     isSetup = () => {
         return this.storage.get('wallet')
             .then((wallet) => (wallet != undefined && wallet.index))
+    }
+
+    async exportPrivateKey(passphrase: string, path: string): Promise<string>{
+        const wallet = await this.getWallet(passphrase)
+        return wallet.rootnode.derivePath(path).keyPair.d.toBuffer(32).toString('hex')
     }
 
     getMnemonic(passphrase) {
@@ -541,12 +549,35 @@ export class WalletService {
                 case 'xpub':
                     this.toastService.simpleToast('TOAST.COPY.XPUB')
                     break
+                case 'privateKey':
+                    this.toastService.simpleToast('TOAST.COPY.PRIVATE_KEY')
+                    break
                 default:
                     this.toastService.simpleToast('TOAST.COPY.DEFAULT')
             }
         } catch (error) {
             console.log('Error while copying')
         }
+    }
+
+
+    async getVmAddresses(): Promise<any[]> {
+        return await this.storage.get('vm_addresses') || []
+    }
+
+    setVmAddresses(addresses: Array<any>) {
+        return this.storage.set('vm_addresses', addresses)
+    }
+
+    async setVmAddressFromPassphrase(passphrase: string) {
+        const seed = await this.getSeed(passphrase)
+        const hdwallet = hdkey.fromMasterSeed(Buffer.from(seed, 'hex'))
+        const address = hdwallet.derivePath("m/44'/60'/0'/0/0").getWallet().getChecksumAddressString()
+        return this.setVmAddresses([{ address }])
+    }
+
+    async validWeb3Address(address: string) {
+        return web3.utils.isAddress(address)
     }
 
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { ModalController } from '@ionic/angular'
 import { MetaverseService } from '../../services/metaverse.service'
 import { WalletService } from '../../services/wallet.service'
+import { VmService } from '../../services/vm.service'
 import { Router } from '@angular/router'
 import { QrComponent } from '../../qr/qr.component'
 import { ActionSheetService } from '../../services/action-sheet.service'
@@ -20,11 +21,13 @@ export class IdentitiesPage implements OnInit {
     isMobile: boolean
     loading = true
     msts = []
+    vmAddress: any = {}
 
     constructor(
         private metaverseService: MetaverseService,
         public modalCtrl: ModalController,
         public walletService: WalletService,
+        public vmService: VmService,
         private router: Router,
         private actionSheetService: ActionSheetService,
     ) {
@@ -35,8 +38,6 @@ export class IdentitiesPage implements OnInit {
             .then((addresses) => {
                 if (!Array.isArray(addresses) || !addresses.length) {
                     this.router.navigate(['/'])
-                } else {
-                    this.showBalances()
                 }
             })
 
@@ -44,8 +45,14 @@ export class IdentitiesPage implements OnInit {
 
     ngOnInit() { }
 
-    ionViewDidEnter() {
+    async ionViewDidEnter() {
         this.loadTickers()
+        this.showBalances()
+        const vmAddresses = await this.walletService.getVmAddresses()
+        this.vmAddress = vmAddresses[0] || {}
+        if(this.vmAddress.address) {
+            this.vmAddress.balance = await this.vmService.balanceOf(this.vmAddress.address)
+        }
     }
 
     async showBalances() {
@@ -78,8 +85,13 @@ export class IdentitiesPage implements OnInit {
 
     send = (asset, sender) => this.router.navigate(['account', 'send', asset], { state: { data: { sender } } })
 
+    sendVm = (asset, sender) => this.router.navigate(['account', 'send-vm', asset], { state: { data: { sender } } })
+
+    swap = () => this.router.navigate(['account',  'swap'])
+
+    exportPrivateKey = () => this.router.navigate(['account', 'identities', 'export-private-key-vm'])
+
     async show(address) {
-        address = 'https://app.myetpwallet.com/send/DNA?message=test&recipient=abc'
         const content = address
         const title = address
 
@@ -103,19 +115,36 @@ export class IdentitiesPage implements OnInit {
 
     errorImg = (e) => e.target.remove()
 
-    async mobileMenu(address) {
+    async mobileMenu(address, type = 'metaverse') {
         const buttons = [
             {
                 icon: 'qr-code',
                 text: 'IDENTITIES.BUTTON.QRCODE',
                 action: 'qrcode',
             },
-            {
-                icon: 'time',
-                text: 'IDENTITIES.BUTTON.HISTORY',
-                action: 'history',
-            },
         ]
+        if(type === 'metaverse') {
+            buttons.push(
+                {
+                    icon: 'time',
+                    text: 'IDENTITIES.BUTTON.HISTORY',
+                    action: 'history',
+                },
+            )
+        } else if(type === 'hex') {
+            buttons.push(
+                {
+                    icon: 'swap-horizontal',
+                    text: 'IDENTITIES.BUTTON.SWAP',
+                    action: 'swap',
+                },
+                {
+                    icon: 'key',
+                    text: 'IDENTITIES.BUTTON.EXPORT_PRIVATE_KEY',
+                    action: 'key',
+                },
+            )
+        }
         const result = await this.actionSheetService.default('', '', buttons)
         switch (result) {
             case 'qrcode':
@@ -124,6 +153,10 @@ export class IdentitiesPage implements OnInit {
             case 'history':
                 this.history(address)
                 break
+            case 'swap':
+                this.swap()
+            case 'key':
+                this.exportPrivateKey()
             default:
             // action cancelled
         }

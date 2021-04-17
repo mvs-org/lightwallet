@@ -59,7 +59,7 @@ export class OpenQrPage implements OnInit {
                   this.alertService.showError('IMPORT_QR.MESSAGE.ERROR_NETWORK_MISMATCH', '')
                 } else {
                   if (this.seed) {
-                    this.walletService.setMobileWallet(this.seed).then(() => this.qrCodeLoaded = true)
+                    this.qrCodeLoaded = true
                     this.alertService.stopLoading()
                   } else if (xpub) {
                     this.walletService.getWalletFromMasterPublicKey(xpub)

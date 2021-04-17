@@ -1,0 +1,65 @@
+<ion-spinner name="dots" *ngIf="!params"></ion-spinner>
+<ion-card *ngIf="params">
+    <ion-item button class="manual-copy display-overflow" lines="none">
+        <ion-grid>
+            <ion-row *ngIf="status == 'SIGNED' || status == 'UNSIGNED'">
+                <ion-col>
+                    <h1 translate="TX.TX_SUMMARY"></h1>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col>
+                    <ion-row>
+                        <ion-col size="12" size-sm="6">
+                            <div class="summaryTxType">
+                                <div>{{'TX.TX_TYPE.' + txType | translate}}</div>
+                            </div>
+                        </ion-col>
+                        <ion-col size="12" size-sm="6" class="summaryAmount">
+                            <div class="right" *ngIf="txType == 'VM_ETP'">
+                                <div *ngIf="myAddress(from) && !myAddress(params.to)"
+                                    class="sendAmount">
+                                    -{{params.value | format : 18}} ETP
+                                </div>
+                                <div *ngIf="!myAddress(from) && myAddress(params.to)"
+                                    class="receiveAmount">
+                                    +{{params.value | format : 18}} ETP
+                                </div>
+                                <div *ngIf="myAddress(from) && myAddress(params.to)">
+                                    {{params.value | format : 18}} ETP
+                                    <div translate="TX.INTRAWALLET"></div>
+                                </div>
+                            </div>
+                            <br>
+                            <div *ngIf="txFee" class="fee right">
+                                {{'TX.TX_FEE' | translate}}: {{txFee | format : 8}} ETP
+                            </div>
+                        </ion-col>
+                    </ion-row>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col size="12" size-sm="6">
+                    <ion-row>
+                        <ion-col translate="TX_VM.FROM"></ion-col>
+                    </ion-row>
+                    <ion-row [ngClass]="{'personal': myAddress(from)}">
+                        <ion-col>
+                            {{from}}
+                        </ion-col>
+                    </ion-row>
+                </ion-col>
+                <ion-col size="12" size-sm="6" class="right">
+                    <ion-row>
+                        <ion-col translate="TX_VM.TO"></ion-col>
+                    </ion-row>
+                    <ion-row [ngClass]="{'personal': myAddress(params.to)}">
+                        <ion-col>
+                            {{params.to}}
+                        </ion-col>
+                    </ion-row>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-item>
+</ion-card>

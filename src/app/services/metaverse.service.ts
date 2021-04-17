@@ -5,7 +5,7 @@ import { WalletService } from './wallet.service'
 // import Metaverse from 'metaversejs/index.js'
 import Blockchain from 'mvs-blockchain'
 import { keyBy } from 'lodash'
-import { Subject, BehaviorSubject } from 'rxjs'
+import { BehaviorSubject } from 'rxjs'
 import { filter } from 'rxjs/operators'
 
 declare const Metaverse: any
@@ -494,7 +494,7 @@ export class MetaverseService {
     }
     await this.calculateBalances()
     const balances = await this.getBalances()
-    if (balanceUpdateNeeded){
+    if (balanceUpdateNeeded) {
       this.balanceUpdated$.next(balances)
     }
     this.syncing$.next(false)
@@ -1123,6 +1123,10 @@ export class MetaverseService {
 
   getStake(mst, options = {}) {
     return this.blockchain.MST.stake(mst, options)
+  }
+
+  getSwapInfo() {
+    return this.blockchain.vm.swap()
   }
 
 }

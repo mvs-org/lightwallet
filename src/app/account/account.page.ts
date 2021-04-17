@@ -63,6 +63,11 @@ export class AccountPage implements OnInit, OnDestroy {
             icon: 'person'
         },
         {
+            title: 'SWAP.MENU_ENTRY',
+            url: '/account/swap',
+            icon: 'arrow-back'
+        },
+        {
             title: 'MST.MENU_ENTRY',
             url: '/account/mst',
             icon: 'globe'

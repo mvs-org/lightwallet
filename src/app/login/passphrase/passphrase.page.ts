@@ -28,9 +28,9 @@ export class PassphrasePage implements OnInit {
     public translate: TranslateService,
     private crypto: CryptoService,
     public platform: Platform,
-    public mvs: MetaverseService,
+    public metaverseService: MetaverseService,
     public loadingCtrl: LoadingController,
-    public wallet: WalletService,
+    public walletService: WalletService,
     private formBuilder: FormBuilder,
     private router: Router,
     private alertService: AlertService,
@@ -38,7 +38,7 @@ export class PassphrasePage implements OnInit {
 
 
   ngOnInit() {
-    this.isMobile = this.wallet.isMobile()
+    this.isMobile = this.walletService.isMobile()
     const passphrase = new FormControl('', [Validators.required, Validators.minLength(8)])
     const repeat = new FormControl('', [Validators.required])
     this.form = this.formBuilder.group({
@@ -88,14 +88,15 @@ export class PassphrasePage implements OnInit {
   async encrypt() {
     const password = this.form.value.passphrase
     try {
-      const seed = await this.wallet.setSeedMobile(password, this.mnemonic)
-      await this.wallet.setMobileWallet(seed)
-      const wallet = await this.wallet.getWallet(password)
-      const addresses = await this.wallet.generateAddresses(wallet, 0, this.globals.index)
-      await this.mvs.setAddresses(addresses)
-      const xpub = await this.wallet.getMasterPublicKey(password)
-      await this.wallet.setXpub(xpub)
-      await this.wallet.saveSessionAccount(password)
+      const seed = await this.walletService.setSeedMobile(password, this.mnemonic)
+      await this.walletService.setMobileWallet(seed)
+      const wallet = await this.walletService.getWallet(password)
+      const addresses = await this.walletService.generateAddresses(wallet, 0, this.globals.index)
+      await this.metaverseService.setAddresses(addresses)
+      await this.walletService.setVmAddressFromPassphrase(password)
+      const xpub = await this.walletService.getMasterPublicKey(password)
+      await this.walletService.setXpub(xpub)
+      await this.walletService.saveSessionAccount(password)
       this.router.navigate(['/loading'], { state: { data: { reset: true } } })
     } catch (error) {
       console.error(error)

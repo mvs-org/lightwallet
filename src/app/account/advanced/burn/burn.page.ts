@@ -177,13 +177,13 @@ export class BurnPage implements OnInit {
       this.alertService.stopLoading()
       switch (error.message) {
         case 'ERR_INSUFFICIENT_BALANCE':
-          this.alertService.showError('SEND_ONE.INSUFFICIENT_BALANCE', '')
+          this.alertService.showError('SEND.MESSAGE.INSUFFICIENT_BALANCE', '')
           break
         case 'ERR_TOO_MANY_INPUTS':
-          this.alertService.showErrorTranslated('SEND_ONE.ERROR_TOO_MANY_INPUTS', 'SEND_ONE.ERROR_TOO_MANY_INPUTS_TEXT')
+          this.alertService.showErrorTranslated('SEND.MESSAGE.ERROR_TOO_MANY_INPUTS', 'SEND.MESSAGE.ERROR_TOO_MANY_INPUTS_TEXT')
           break
         default:
-          this.alertService.showError('SEND_ONE.CREATE_TRANSACTION', error.message)
+          this.alertService.showError('SEND.MESSAGE.CREATE_TRANSACTION', error.message)
           break
       }
     }
