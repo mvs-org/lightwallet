@@ -572,7 +572,7 @@ export class WalletService {
     async setVmAddressFromPassphrase(passphrase: string) {
         const seed = await this.getSeed(passphrase)
         const hdwallet = hdkey.fromMasterSeed(Buffer.from(seed, 'hex'))
-        const address = hdwallet.derivePath("m/44'/60'/0'/0/0").getWallet().getAddressString()
+        const address = hdwallet.derivePath("m/44'/60'/0'/0/0").getWallet().getChecksumAddressString()
         return this.setVmAddresses([{ address }])
     }
 

@@ -41,8 +41,6 @@ export class VmService {
     .subscribe(network => {
       console.log('setup metaverse service for network', network)
       this.network = network === 'testnet' ? 'https://vm.mvs.org/testnet_rpc/' : 'https://vm.mvs.org/mainnet_rpc/'
-      //this.network = 'http://localhost:9933'
-      //this.network = 'http://167.86.95.203:15539'
       this.web3.setProvider(this.network)
       this.ready$.next(true)
     })
