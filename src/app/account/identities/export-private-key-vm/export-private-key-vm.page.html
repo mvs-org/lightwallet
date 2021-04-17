@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/account/identities"></ion-back-button>
+    </ion-buttons>
+    <ion-title translate="EXPORT_PRIVATE_KEY_VM_ADDRESS.TITLE"></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <p align="center" class="wrong-input" translate="EXPORT_PRIVATE_KEY_VM_ADDRESS.WARNING"></p>
+
+    <form #exportXpubForm="ngForm" (ngSubmit)="export(passphrase)">
+      <ion-list *ngIf="!privateKey">
+        <ion-item>
+          <ion-label color="primary" position="floating" translate="EXPORT_PRIVATE_KEY_VM_ADDRESS.PASSWORD"></ion-label>
+          <ion-input type="password" [(ngModel)]="passphrase" name="passphrase"></ion-input>
+        </ion-item>
+        <br>
+        <ion-button type="submit" expand="full" fill="outline" shape="round" [disabled]="!validPassword(passphrase)">
+          <ion-icon slot="start" name="key"></ion-icon>
+          <span translate="EXPORT_PRIVATE_KEY_VM_ADDRESS.BUTTON"></span>
+        </ion-button>
+      </ion-list>
+
+      <ion-list *ngIf="privateKey">
+        <h4 translate="EXPORT_PRIVATE_KEY_VM_ADDRESS.YOUR_KEY"></h4>
+        <ion-item class="manual-copy breakwords">{{privateKey}}</ion-item>
+        <ion-button expand="full" fill="outline" shape="round" (click)="walletService.copy(privateKey, 'privateKey')">
+          <ion-icon slot="start" name="copy"></ion-icon>
+          <span translate="COPY"></span>
+        </ion-button>
+      </ion-list>
+    </form>
+  </ion-grid>
+</ion-content>

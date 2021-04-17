@@ -1,0 +1,52 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/login"></ion-back-button>
+        </ion-buttons>
+        <ion-title translate="CREATE_WALLET.TITLE"></ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-grid>
+        <ion-row>
+            <ion-col size-md="12" size-lg="6" offset-lg="3">
+                <ion-row center text-center class="title-text-padding">
+                    <ion-col>
+                        <h1 translate="CREATE_WALLET.YOUR_MNEMONIC_WORDS"></h1>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col center text-center>
+                        <p translate="CREATE_WALLET.BACKUP_WORDS_WRITE_DOWN_TEXT"></p>
+                    </ion-col>
+                </ion-row>
+                <ion-card *ngIf="wallet">
+                    <ion-text color="danger">
+                        <h1 class="ion-text-center">{{wallet.mnemonic}}</h1>
+                    </ion-text>
+                </ion-card>
+                <ion-row class="more-bottom-padding">
+                    <ion-col center text-center>
+                        <p translate="CREATE_WALLET.LIGHT_WALLET_INFO_TEXT"></p>
+                    </ion-col>
+                </ion-row>
+                <ion-button *ngIf="!isApp" expand="full" fill="outline" shape="round" (click)="confirmBackup()">
+                    <ion-icon slot="start" name="arrow-forward"></ion-icon>
+                    <span translate="CREATE_WALLET.BUTTON.NEXT"></span>
+                </ion-button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
+
+<ion-footer *ngIf="isApp">
+    <ion-row>
+        <ion-col>
+            <ion-button expand="full" (click)="confirmBackup()">
+                <ion-icon slot="start" name="arrow-forward"></ion-icon>
+                <span translate="CREATE_WALLET.BUTTON.NEXT"></span>
+            </ion-button>
+        </ion-col>
+    </ion-row>
+</ion-footer>

@@ -1,0 +1,278 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "~@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import '~@ionic/angular/css/display.css';
+
+/* Optional CSS utils that can be commented out */
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+
+
+.alert-md .alert-wrapper, .alert-ios .alert-wrapper {
+    max-width: 600px;
+}
+
+.alert-message {
+    overflow-y: inherit;
+}
+
+.scroll-content {
+    padding-bottom: 0 !important;
+    top: -5px;
+    padding-top: 21px !important;
+}
+
+.error-border {
+    --highlight-background: red !important;
+    --border-color: red !important;
+}
+
+.warning-border {
+    --highlight-background: orange !important;
+    --border-color: orange !important;
+}
+
+.valid-border {
+    --highlight-background: #32db64 !important;
+    --border-color: #32db64 !important;
+}
+
+.item-input.ion-untouched:not(.error-border):not(.warning-border):not(.valid-border) {
+    --highlight-background: #488aff !important;
+    --border-color: #488aff !important;
+}
+
+.wrong-input {
+    color: red !important;
+}
+
+.warning-input {
+    color: orange !important;
+}
+
+.valid-input{
+    color: #32db64 !important;
+}
+
+.beta-tag {
+    color: red;
+    font-size: 0.8em;
+    top: 10px;
+    position: absolute;
+    padding-left: 5px;
+}
+
+.advice {
+    font-size: 0.9rem !important;
+    color: rgb(148, 148, 148);
+    padding-left: 16px;
+    margin-top: 10px;
+}
+
+.alert-sub-title, .alert-message{
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+    line-height: inherit !important;
+}
+
+.manual-copy {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+}
+
+.valid-input, .wrong-input, .info-input, .warning-input, .toggle-input, .valid-input ion-label, .wrong-input ion-label, .info-input ion-label, .warning-input ion-label, .toggle-input ion-label {
+    text-overflow: initial;
+    white-space: initial;
+}
+
+.small-label {
+    min-height: 22px;
+    height: 22px;
+}
+
+.display-overflow {
+    text-overflow: initial;
+    white-space: initial;
+}
+
+.overflow {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.info-input {
+    min-height: 0;
+}
+
+.info-input ion-label {
+    margin-top: 10px;
+    margin-bottom: 0;
+}
+
+.alert-input {
+    color: inherit !important;
+}
+
+.textareaCard {
+    padding: 0 10px;
+    border-radius: 2px;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.center {
+    margin: auto !important;
+    text-align: center;
+}
+
+.right, .right ion-item {
+    text-align: right;
+    float: right;
+}
+
+*:focus { 
+    outline: none; 
+}
+
+ion-item span {
+    overflow: visible;
+}
+
+.breakwords {
+    word-break: break-all;
+}
+
+ion-header {
+    z-index: 999;
+}
+
+ion-content:not(.main-menu) {
+    // --padding-start: 20px;
+    // --padding-top: 20px;
+    // --padding-bottom: 20px;
+    // --padding-end: 20px;
+}
+
+@media screen and (max-width: 630px) {
+    ion-content:not(.main-menu) {
+        --padding-start: 5px;
+        --padding-top: 10px;
+        --padding-bottom: 10px;
+        --padding-end: 5px;
+    }
+}
+
+ion-spinner {
+    margin-left: calc(50% - 15px);
+}
+
+ion-footer {
+    height: 48px;
+}
+
+ion-footer ion-row {
+    height: 100%;
+}
+
+ion-footer ion-col {
+    padding: 0
+}
+
+ion-footer ion-button {
+    margin: 0;
+    height: 100%;
+}
+
+.scanButton {
+    height: 34px;
+    width: 34px;
+    margin-top: 20px;
+}
+
+.loading-spinner {
+    width: 33px;
+}
+
+.ngx-pagination a {
+    color: var(--ion-color-dark) !important;
+    background-color: transparent !important;
+}
+
+.ngx-pagination a:hover {
+    color: white !important;
+    background-color: var(--ion-color-primary) !important;
+}
+
+.ngx-pagination .current {
+    background-color: var(--ion-color-primary) !important;
+}
+
+.noPadding {
+    padding: 0;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.invisible {
+    visibility: hidden;
+}
+
+.qrcode img {
+    height: 250px;
+}
+
+@media screen and (max-width: 350px) {
+
+    .qrcode img {
+        height: 150px;
+    }
+}
+
+.mat-body,
+.mat-body-1,
+.mat-typography
+{
+    ion-label{
+        p {
+            margin-bottom: 0px;
+        }
+    }
+}
+
+.mono {
+    font-family: monospace;
+}
+
+ion-card{
+    border-radius: 0px;
+}
+
+.testnet ion-header {
+    --ion-toolbar-background: #40d3ff;
+}

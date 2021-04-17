@@ -1,0 +1,11 @@
+{
+    "applinks": {
+        "apps": [],
+        "details": [
+            {
+                "appID": "L34QZ39VV7.app.myetpwallet.com",
+                "paths": ["*"]
+            }
+        ]
+    }
+}

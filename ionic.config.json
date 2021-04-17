@@ -1,8 +1,7 @@
 {
-  "name": "myetpwallet",
+  "name": "MyETPWallet",
   "integrations": {
-    "cordova": {}
+    "capacitor": {}
   },
-  "type": "ionic-angular",
-  "id": "8a12ec1e"
+  "type": "angular"
 }

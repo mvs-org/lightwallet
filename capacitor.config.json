@@ -1,0 +1,10 @@
+{
+    "appId": "com.myetpwallet.app",
+    "version": "10400",
+    "appName": "MyETPWallet",
+    "bundledWebRuntime": false,
+    "npmClient": "npm",
+    "webDir": "www",
+    "cordova": {},
+    "linuxAndroidStudioPath": "/home/laurent/android-studio/bin/studio.sh"
+}

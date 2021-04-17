@@ -1,0 +1,54 @@
+<ion-split-pane contentId="main-content">
+    <ion-menu contentId="main-content" type="overlay">
+        <ion-content class="main-menu">
+            <img src="/assets/logo.png" class="logo" alt="Metaverse">
+            <div class="center">
+                v{{globals.version}} 
+                <ion-icon slot="start" *ngIf="!hasSeed" name="eye"></ion-icon>
+                <div>{{(globals.network$|async) === 'testnet' ? 'testnet' : ''}}</div>
+            </div>
+            <ion-list id="inbox-list">
+                <div class="center" *ngIf="isOffline()">
+                    <ion-icon color="danger" name="flash" size="large"></ion-icon>
+                </div>
+                <ion-buttons>
+                    <ion-button class="center" (click)="sync()">
+                        <span *ngIf="height" translate="MAIN_MENU.HEIGHT" [translateParams]="{height: height}"></span>
+                    </ion-button>
+                </ion-buttons>
+                <ion-item-divider class="sync-divider noPadding">
+                    <ion-progress-bar class="sync-bar" *ngIf="isSyncing() || !height" type="indeterminate"></ion-progress-bar>
+                </ion-item-divider>
+                <ion-menu-toggle auto-hide="false" *ngFor="let p of mainItems; let i = index">
+                    <ion-item [routerLink]="[p.url]" lines="none" detail="false" routerDirection="root">
+                        <ion-icon [color]="p.selected ? 'primary' : 'none'" slot="start" [ios]="p.icon + '-outline'"
+                            [md]="p.icon + '-sharp'"></ion-icon>
+                        <ion-label>{{ p.title | translate }}</ion-label>
+                    </ion-item>
+                </ion-menu-toggle>
+                <ion-item-divider>
+                    <ion-label>
+                        <ion-note translate="MAIN_MENU.APPS"></ion-note>
+                    </ion-label>
+                </ion-item-divider>
+                <ion-menu-toggle auto-hide="false" *ngFor="let p of appItems">
+                    <ion-item [routerLink]="[p.url]" lines="none" detail="false" routerDirection="root">
+                        <ion-icon [color]="p.selected ? 'primary' : 'none'" slot="start" [ios]="p.icon + '-outline'"
+                            [md]="p.icon + '-sharp'"></ion-icon>
+                        <ion-label>{{ p.title | translate }}</ion-label>
+                    </ion-item>
+                </ion-menu-toggle>
+            </ion-list>
+        </ion-content>
+        <ion-footer>
+            <ion-menu-toggle auto-hide="false" *ngFor="let p of footerItems">
+                <ion-item [routerLink]="[p.url]" lines="none" detail="false" routerDirection="root">
+                    <ion-icon [color]="p.selected ? 'primary' : 'none'" slot="start" [ios]="p.icon + '-outline'"
+                        [md]="p.icon + '-sharp'"></ion-icon>
+                    <ion-label>{{ p.title | translate }}</ion-label>
+                </ion-item>
+            </ion-menu-toggle>
+        </ion-footer>
+    </ion-menu>
+    <ion-router-outlet id="main-content"></ion-router-outlet>
+</ion-split-pane>

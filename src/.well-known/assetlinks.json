@@ -1,0 +1,14 @@
+[
+    {
+        "relation": [
+            "delegate_permission/common.handle_all_urls"
+        ],
+        "target": {
+            "namespace": "android_app",
+            "package_name": "com.myetpwallet.app",
+            "sha256_cert_fingerprints": [
+                "BC:C8:31:C0:E9:E3:C7:26:95:D0:87:7E:B9:7D:3A:B0:01:EA:E5:F0:49:54:D3:45:3D:A6:3E:80:69:51:69:40"
+            ]
+        }
+    }
+]

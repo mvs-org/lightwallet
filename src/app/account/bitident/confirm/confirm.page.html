@@ -1,0 +1,139 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/bitident"></ion-back-button>
+        </ion-buttons>
+        <ion-title translate="BITIDENT.CONFIRM.TITLE"></ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-grid>
+        <ion-row class="top-info">
+            <ion-col>
+                <p align="center" translate="BITIDENT.CONFIRM.INFORMATION"></p>
+            </ion-col>
+        </ion-row>
+
+        <ion-item *ngIf="verifiedToken && !verifiedToken.target">
+            <ion-label color="primary" floating>{{"BITIDENT.CONFIRM.SELECT_AVATAR" | translate}}</ion-label>
+            <ion-select #selectAvatar [(ngModel)]="avatar" name="avatar" multiple="false" okText="{{'OK'|translate}}"
+                cancelText="{{'CANCEL'|translate}}" (ionChange)="onAvatarSelectChange(avatar)">
+                <ion-select-option *ngFor="let avatar of avatars" value="{{avatar}}">{{avatar}}</ion-select-option>
+            </ion-select>
+        </ion-item>
+
+        <form #signForm="ngForm" *ngIf="verifiedToken && verifiedToken.target" lines="none"
+            (ngSubmit)="signAndSend(passphrase)">
+
+            <ion-card size="12" size-lg="6">
+                <ion-grid>
+                    <ion-row>
+                        <ion-col>
+                            <ion-item lines="none" translate="BITIDENT.CONFIRM.VERIFY_SOURCE"></ion-item>
+                        </ion-col>
+                        <ion-col class="right">
+                            <ion-item lines="none">{{verifiedToken.source}}</ion-item>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col>
+                            <ion-item lines="none" translate="BITIDENT.CONFIRM.VERIFY_AVATAR"></ion-item>
+                        </ion-col>
+                        <ion-col class="right">
+                            <ion-item lines="none">{{verifiedToken.target}}</ion-item>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col>
+                            <ion-item lines="none" translate="BITIDENT.CONFIRM.VERIFY_HOST"></ion-item>
+                        </ion-col>
+                        <ion-col class="right">
+                            <ion-item lines="none">{{hostname}}</ion-item>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col>
+                            <ion-item lines="none" translate="BITIDENT.CONFIRM.VERIFY_REMAINING_TIME"></ion-item>
+                        </ion-col>
+                        <ion-col class="right">
+                            <ion-item lines="none">
+                                <countdown [config]="{leftTime: leftTime}">$!m!:$!s!</countdown>
+                            </ion-item>
+                        </ion-col>
+                    </ion-row>
+                    <div *ngIf="showDetails">
+                        <ion-row>
+                            <ion-col>
+                                <ion-item lines="none" translate="BITIDENT.CONFIRM.VERIFY_CALLBACK"></ion-item>
+                            </ion-col>
+                            <ion-col class="right">
+                                <ion-item lines="none">
+                                    <span>{{verifiedToken.callback}}</span>
+                                </ion-item>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col>
+                                <ion-item lines="none" translate="BITIDENT.CONFIRM.VERIFY_TIME_OF_REQUEST"></ion-item>
+                            </ion-col>
+                            <ion-col class="right">
+                                <ion-item lines="none">{{verifiedToken.time*1000|date : 'medium'}}</ion-item>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col>
+                                <ion-item lines="none" translate="BITIDENT.CONFIRM.VERIFY_REQUEST_DURATION"></ion-item>
+                            </ion-col>
+                            <ion-col class="right">
+                                <ion-item lines="none" translate="BITIDENT.CONFIRM.VERIFY_REQUEST_DURATION_VALUE"
+                                    [translateParams]="{seconds: verifiedToken.timeout}"></ion-item>
+                            </ion-col>
+                        </ion-row>
+                    </div>
+                    <ion-row>
+                        <ion-col>
+                            <ion-button class="right-buttons" (click)="showDetails = !showDetails">
+                                <ion-icon slot="start" *ngIf="!showDetails" name="arrow-down"></ion-icon>
+                                <ion-icon slot="start" *ngIf="showDetails" name="arrow-up"></ion-icon>
+                                <span *ngIf="!showDetails" translate="BITIDENT.CONFIRM.SHOW_DETAILS"></span>
+                                <span *ngIf="showDetails" translate="BITIDENT.CONFIRM.HIDE_DETAILS"></span>
+                            </ion-button>
+                        </ion-col>
+                    </ion-row>
+
+                </ion-grid>
+            </ion-card>
+
+            <ion-item [ngClass]="{'error-border': !validPassword(passphrase)}">
+                <ion-label color="primary" position="floating" translate="BITIDENT.CONFIRM.PASSWORD"></ion-label>
+                <ion-input name="passphrase" type="password" [(ngModel)]="passphrase" required></ion-input>
+            </ion-item>
+            <br>
+
+            <ion-item *ngIf="sourceSignature == ''">
+                <ion-label id="disclaimer-agree-label" text-wrap translate="BITIDENT.CONFIRM.NO_SIG_AGREE"></ion-label>
+                <ion-checkbox name="no_sig_agreed" [(ngModel)]="noSigAgreed" id="no-sig-agree"></ion-checkbox>
+            </ion-item>
+
+            <ion-row>
+                <ion-col>
+                    <ion-button color="danger" expand="full" fill="outline" shape="round" (click)="cancel()">
+                        <ion-icon slot="start" name="close"></ion-icon>
+                        <span translate="BITIDENT.CONFIRM.BUTTON.CANCEL"></span>
+                    </ion-button>
+                </ion-col>
+                <ion-col>
+                    <ion-button type="submit" ion-button expand="full" fill="outline" shape="round"
+                        [disabled]="!signForm.form.valid||!validPassword(passphrase)||(sourceSignature == '' && !noSigAgreed)"
+                        color="primary">
+                        <ion-icon slot="start" name="send"></ion-icon>
+                        <span translate="BITIDENT.CONFIRM.BUTTON.NEXT"></span>
+                    </ion-button>
+                </ion-col>
+            </ion-row>
+
+        </form>
+
+    </ion-grid>
+</ion-content>

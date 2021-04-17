@@ -1,0 +1,93 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title translate="ACCOUNT.TITLE"></ion-title>
+    </ion-toolbar>
+</ion-header>
+
+
+
+<ion-content>
+
+    <ion-item>
+        <img class="coinlogo" [src]="'assets/icon/default_mst.png'" (error)="errorImg($event)">
+        <ion-label class="symbol" translate="MST.GRID.SYMBOL"></ion-label>
+        <ion-col translate="MST.GRID.TOTAL" class="right"></ion-col>
+        <ion-col translate="MST.GRID.UNCONFIRMED" class="ion-hide-sm-down right"></ion-col>
+        <ion-col translate="MST.GRID.FROZEN" class="ion-hide-sm-down right"></ion-col>
+        <ion-buttons slot="end" class="right-buttons">
+            <ion-button class="invisible" color="danger" fill="outline" shape="round" [routerLink]="'/account/send/ETP'"
+                (click)="$event.preventDefault();$event.stopPropagation()" translate="MST.GRID.BUTTON.SEND">
+            </ion-button>
+        </ion-buttons>
+    </ion-item>
+    <ion-spinner name="dots" *ngIf="loading"></ion-spinner>
+
+    <div *ngIf="!loading">
+        <ion-item button [routerLink]="'/account/mst/ETP'">
+            <img class="coinlogo" [src]="'assets/icon/ETP.png'" (error)="errorImg($event)">
+            <ion-label class="symbol">ETP</ion-label>
+            <ion-col class="right">
+                {{etpBalance.total || 0 | format : 8}}
+                <div *ngIf="tickers && tickers['ETP'] && tickers['ETP'][base]" class="fiat">
+                    ≈{{base}} {{fiatValue(etpBalance.total || 0, 'ETP', 8) | number : '1.0-2'}}
+                </div>
+            </ion-col>
+            <ion-col class="ion-hide-sm-down right">
+                {{etpBalance.unconfirmed || 0 | format : 8}}
+                <div *ngIf="tickers && tickers['ETP'] && tickers['ETP'][base]" class="fiat">
+                    ≈{{base}} {{fiatValue(etpBalance.unconfirmed || 0, 'ETP', 8) | number : '1.0-2'}}
+                </div>
+            </ion-col>
+            <ion-col class="ion-hide-sm-down right">
+                {{etpBalance.frozen || 0 | format : 8}}
+                <div *ngIf="tickers && tickers['ETP'] && tickers['ETP'][base]" class="fiat">
+                    ≈{{base}} {{fiatValue(etpBalance.frozen || 0, 'ETP', 8) | number : '1.0-2'}}
+                </div>
+            </ion-col>
+            <ion-buttons slot="end" class="right-buttons">
+                <ion-button color="danger" fill="outline" shape="round" [routerLink]="'/account/send/ETP'"
+                    (click)="$event.preventDefault();$event.stopPropagation()" translate="MST.GRID.BUTTON.SEND">
+                </ion-button>
+            </ion-buttons>
+        </ion-item>
+
+        <div *ngFor="let mst of msts | orderBy: ['order', '-1']; let i = index">
+            <ion-item *ngIf="!mst.hidden && (mst.balance.total || mst.symbol == 'DNA')" button
+                [routerLink]="'/account/mst/'+mst.symbol">
+                <img class="coinlogo" [src]="mst.icon" (error)="errorImg($event)"
+                    [ngClass]="{'default-logo': mst.icon == 'default_mst'}">
+                <ion-label class="symbol">{{mst.symbol}}</ion-label>
+                <ion-col class="right">
+                    {{mst.balance.total || 0 | format : mst.balance.decimals}}
+                    <div *ngIf="tickers && tickers[mst.symbol] && tickers[mst.symbol][base]" class="fiat">
+                        ≈{{base}} {{fiatValue(mst.balance.total || 0, mst.symbol, mst.balance.decimals) | number : '1.0-2'}}
+                    </div>
+                </ion-col>
+                <ion-col class="ion-hide-sm-down right">
+                    {{mst.balance.unconfirmed || 0 | format : mst.balance.decimals}}
+                    <div *ngIf="tickers && tickers[mst.symbol] && tickers[mst.symbol][base]" class="fiat">
+                        ≈{{base}} {{fiatValue(mst.balance.unconfirmed || 0, mst.symbol, mst.balance.decimals) | number : '1.0-2'}}
+                    </div>
+                </ion-col>
+                <ion-col class="ion-hide-sm-down right">
+                    {{mst.balance.frozen || 0 | format : mst.balance.decimals}}
+                    <div *ngIf="tickers && tickers[mst.symbol] && tickers[mst.symbol][base]" class="fiat">
+                        ≈{{base}} {{fiatValue(mst.balance.frozen || 0, mst.symbol, mst.balance.decimals) | number : '1.0-2'}}
+                    </div>
+                </ion-col>
+                <ion-buttons slot="end" class="right-buttons">
+                    <ion-button color="danger" fill="outline" shape="round"
+                        (click)="$event.preventDefault();$event.stopPropagation()"
+                        [routerLink]="'/account/send/' + mst.symbol">
+                        <span translate="MST.GRID.BUTTON.SEND"></span>
+                    </ion-button>
+                </ion-buttons>
+            </ion-item>
+        </div>
+    </div>
+
+
+</ion-content>

@@ -1,13 +1,11 @@
 {
-  "name": "My ETP Wallet",
-  "short_name": "My ETP Wallet",
-  "start_url": "index.html",
-  "display": "standalone",
-  "icons": [{
-    "src": "assets/icon/ETP.png",
-    "sizes": "512x512",
-    "type": "image/png"
-  }],
-  "background_color": "#4e8ef7",
-  "theme_color": "#4e8ef7"
+  "name": "MyETPWallet",
+  "version": "0.11.1",
+  "description": "Metaverse Blockchain wallet",
+"content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+  "browser_action": {
+    "default_popup": "index.html",
+    "default_icon": "assets/icon/default.png"
+  },
+  "manifest_version": 2
 }

@@ -1,0 +1,29 @@
+.icon {
+    font-size: 48px;
+}
+
+ion-card {
+    height: 100%;
+    margin: 0;
+}
+
+.option {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    font-size: large;
+}
+
+.account-btn {
+    text-transform: initial;
+}
+
+.title {
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+.title h1, .title h3 {
+    width: 100%;
+}
