@@ -155,8 +155,10 @@ export class IdentitiesPage implements OnInit {
                 break
             case 'swap':
                 this.swap()
+                break
             case 'key':
                 this.exportPrivateKey()
+                break
             default:
             // action cancelled
         }
