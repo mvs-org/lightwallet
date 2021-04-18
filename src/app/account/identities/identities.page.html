@@ -66,7 +66,7 @@
           <ion-item class="inside-line" lines="none">
             <img class="coinlogo" [src]="'assets/icon/ETP.png'" (error)="errorImg($event)">
             <ion-label class="symbol">ETP</ion-label>
-            <ion-col class="right">
+            <ion-col class="overflow right">
               <span *ngIf="vmAddress && vmAddress.balance !== undefined">{{vmAddress.balance | format: 18}}</span>
               <ion-spinner name="dots" *ngIf="!vmAddress || vmAddress.balance == undefined"></ion-spinner>
             </ion-col>
@@ -158,12 +158,12 @@
           <ion-item class="inside-line" lines="none">
             <img class="coinlogo" [src]="'assets/icon/ETP.png'" (error)="errorImg($event)">
             <ion-label class="symbol">ETP</ion-label>
-            <ion-col class="right"> {{(addressBalancesObject[address] && addressBalancesObject[address].ETP) ? format(
+            <ion-col class="overflow right"> {{(addressBalancesObject[address] && addressBalancesObject[address].ETP) ? format(
               addressBalancesObject[address].ETP.available + addressBalancesObject[address].ETP.unconfirmed +
               addressBalancesObject[address].ETP.frozen || 0,
               addressBalancesObject[address].ETP.decimals) : 0}}
             </ion-col>
-            <ion-col class="ion-hide-sm-down right">
+            <ion-col class="ion-hide-sm-down overflow right">
               {{(addressBalancesObject[address] &&
               addressBalancesObject[address].ETP)?format(addressBalancesObject[address].ETP.frozen,
               addressBalancesObject[address].ETP.decimals):0}}
@@ -183,12 +183,12 @@
               <img class="coinlogo" [src]="mstInfo.icon" (error)="errorImg($event)"
                 [ngClass]="{'default-logo': mstInfo.icon == 'default_mst'}">
               <ion-label class="symbol">{{mstInfo.symbol}}</ion-label>
-              <ion-col class="right">{{format(
+              <ion-col class="overflow right">{{format(
                 addressBalancesObject[address].MST[mstInfo.symbol].available +
                 addressBalancesObject[address].MST[mstInfo.symbol].unconfirmed +
                 addressBalancesObject[address].MST[mstInfo.symbol].frozen,
                 addressBalancesObject[address].MST[mstInfo.symbol].decimals) || 0}}</ion-col>
-              <ion-col class="ion-hide-sm-down right">
+              <ion-col class="ion-hide-sm-down overflow right">
                 {{format(addressBalancesObject[address].MST[mstInfo.symbol].frozen,addressBalancesObject[address].MST[mstInfo.symbol].decimals)
                 || 0}}
               </ion-col>
