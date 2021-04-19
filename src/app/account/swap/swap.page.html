@@ -19,8 +19,6 @@
     <p align="center" translate="SWAP.EXPLANATION"></p>
     <p align="center" class="wrong-input" translate="SWAP.WARNING_RED"></p>
     <p align="center" *ngIf="swapInfo.showWarning" translate="SWAP.WARNING"></p>
-    <p align="center" *ngIf="etpBalance<fee/100000000" class="wrong-input"
-      translate="SEND.NOTICE_TRANSACTION_FEE_UNCOVERED"></p>
     <ion-row>
       <ion-col>
         <p class="available">{{"SEND.AVAILABLE_BALANCE" | translate}}: <br *ngIf="platform.is('mobile')">{{showBalance |
@@ -31,6 +29,7 @@
           {{fee | format : 8}} ETP</p>
       </ion-col>
     </ion-row>
+    <p align="center" *ngIf="etpBalance<fee/100000000" class="wrong-input" translate="SEND.NOTICE_TRANSACTION_FEE_UNCOVERED"></p>
 
     <form #sendForm="ngForm" (ngSubmit)="send()" (keyup.enter)="send()">
       <ion-list>
