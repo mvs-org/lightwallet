@@ -15,6 +15,7 @@
 
 
 <ion-content class="center spread-out">
+  <br>
   <div *ngIf="balances!=undefined && balances.MIT.length==0" translate="MIT.NO_MIT"></div>
   <ion-list *ngIf="balances!=undefined">
     <ion-item *ngFor="let mit of balances.MIT" button [routerLink]="'/account/mit/'+mit.symbol" detail>
