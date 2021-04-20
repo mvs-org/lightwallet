@@ -14,7 +14,6 @@
 
   <div *ngIf="vmAddress && vmAddress.address">
     <ion-row>
-      <p align="center" *ngIf="vmAddress.balance == 0" class="wrong-input" translate="SEND_VM.NOTICE_NO_BALANCE"></p>
       <ion-col>
         <p class="available">{{"SEND.AVAILABLE_BALANCE" | translate}}: <br
             *ngIf="platform.is('mobile')">
@@ -27,6 +26,7 @@
           {{gas*gasPriceSatoshi | format : 8}} ETP</p>
       </ion-col>
     </ion-row>
+    <p align="center" *ngIf="(vmAddress.balance/10000000000) < gas*gasPriceSatoshi" class="wrong-input" translate="SEND.NOTICE_TRANSACTION_FEE_UNCOVERED"></p>
 
     <form #sendForm="ngForm" (ngSubmit)="send()" (keyup.enter)="send()">
       <ion-list>

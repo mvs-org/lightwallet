@@ -19,7 +19,7 @@
 
       <ion-row *ngIf="isMobile">
         <ion-col>
-          <ion-button expand="full" id="open-wallet-button" color="primary" (click)="scan()">
+          <ion-button expand="full" fill="outline" shape="round" id="open-wallet-button" color="primary" (click)="scan()">
             <ion-icon slot="start" name="qr-code"></ion-icon>
             <span translate="BITIDENT.BUTTON.SCAN_QRCODE"></span>
           </ion-button>
@@ -28,7 +28,7 @@
 
       <ion-row *ngIf="isMobile">
         <ion-col>
-          <ion-button expand="full" id="manual-enter-mobile-button" color="medium"
+          <ion-button expand="full" fill="outline" shape="round" id="manual-enter-mobile-button" color="medium"
             (click)="manualEnterMobile = !manualEnterMobile">
             <ion-icon slot="start" name="copy"></ion-icon>
             <span translate="BITIDENT.BUTTON.ENTER_MANUALLY"></span>
@@ -51,13 +51,13 @@
 
       <ion-row *ngIf="!isMobile || manualEnterMobile">
         <ion-col size="12" size-sm="6">
-          <ion-button expand="full" id="open-how-to-auth" color="secondary" (click)="howToAuth()">
+          <ion-button expand="full" fill="outline" shape="round" id="open-how-to-auth" color="secondary" (click)="howToAuth()">
             <ion-icon slot="start" name="information-circle"></ion-icon>
             <span translate="BITIDENT.BUTTON.HOW_TO_AUTH"></span>
           </ion-button>
         </ion-col>
         <ion-col size="12" size-sm="6">
-          <ion-button type="submit" expand="full" [disabled]="!connectForm.form.valid||!validAuthToken(token)"
+          <ion-button type="submit" expand="full" fill="outline" shape="round" [disabled]="!connectForm.form.valid||!validAuthToken(token)"
             color="primary">
             <ion-icon slot="start" name="cog"></ion-icon>
             <span translate="BITIDENT.CHECK"></span>
@@ -67,7 +67,7 @@
 
       <ion-row *ngIf="isMobile && !manualEnterMobile">
         <ion-col>
-          <ion-button expand="full" id="open-how-to-auth" color="secondary" (click)="howToAuth()">
+          <ion-button expand="full" fill="outline" shape="round" id="open-how-to-auth" color="secondary" (click)="howToAuth()">
             <ion-icon slot="start" name="information-circle"></ion-icon>
             <span translate="BITIDENT.BUTTON.HOW_TO_AUTH"></span>
           </ion-button>
