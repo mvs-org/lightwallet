@@ -16,8 +16,6 @@
     </ion-item>
 
     <br>
-    <p align="center" *ngIf="etpBalance<fee/100000000" class="wrong-input"
-        translate="SEND.NOTICE_TRANSACTION_FEE_UNCOVERED"></p>
     <ion-row>
         <ion-col>
             <p class="available">{{"SEND.AVAILABLE_BALANCE" | translate}}: <br *ngIf="platform.is('mobile')">{{showBalance |
@@ -32,6 +30,7 @@
                 {{10000*recipients.length | format : 8}} ETP</p>
         </ion-col>
     </ion-row>
+    <p align="center" *ngIf="etpBalance<fee/100000000" class="wrong-input" translate="SEND.NOTICE_TRANSACTION_FEE_UNCOVERED"></p>
 
     <form *ngIf="transfer_type == 'one'" #sendForm="ngForm" (ngSubmit)="send()" (keyup.enter)="send()">
         <ion-list>

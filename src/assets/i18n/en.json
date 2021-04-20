@@ -1246,6 +1246,7 @@
         "WARNING_RED": "You will not be able to swap back to the UTXO chain.",
         "WARNING": "Most exchanges only support the UTXO chain at the moment. We recommend you only migrate the amount of ETP you plan to use in the Metaverse Virtual Machine. ",
         "UPDATE_REQUIRED": "Please update MyETPWallet to version {{requiredVersion}} or above in order to be able to migrate",
+        "LOWER_MIN_AMOUNT": "Please send at least {{minAmount}} ETP to migrate to the MVM",
         "NO_VM_ADDRESS": {
             "TITLE": "No VM address",
             "SUBTITLE": "Please create a Virtual Machine address before migrating your ETP"

@@ -36,6 +36,7 @@ export class SwapPage implements OnInit {
   etpBalance: number
   tickers = {}
   base: string
+  minQuantity: number
 
   @ViewChild('quantityInput') quantityInput
   swapAddress: string
@@ -91,6 +92,7 @@ export class SwapPage implements OnInit {
     this.message = ''
     this.showAdvanced = false
     this.vmAddress = {}
+    this.minQuantity = 100000000
 
     // Load addresses and balances
     Promise.all([this.metaverseService.getBalances(), this.metaverseService.getAddresses(), this.metaverseService.getAddressBalances()])
@@ -134,6 +136,7 @@ export class SwapPage implements OnInit {
       this.swapInfo = await this.metaverseService.getSwapInfo()
       this.requiredVersion = this.swapInfo.minVersion
       this.updateRequired = compareVersions(this.appService.version, this.requiredVersion) == -1
+      this.minQuantity = this.swapInfo.minQuantity || 100000000
       this.loadTickers()
     }
   }
@@ -146,11 +149,13 @@ export class SwapPage implements OnInit {
 
   validQuantity = (quantity) => quantity !== undefined
     && this.countDecimals(quantity) <= this.decimals
-    && (quantity > 0)
+    && this.validMinQuantity(quantity)
     && ((this.selectedAsset === 'ETP' &&
       this.showBalance >= (Math.round(parseFloat(quantity) * Math.pow(10, this.decimals)) + this.fee)) ||
       (this.selectedAsset !== 'ETP' && this.showBalance >= parseFloat(quantity) * Math.pow(10, this.decimals)))
 
+  validMinQuantity = (quantity) => quantity !== undefined
+    && (quantity*100000000 >= this.minQuantity)
 
   countDecimals(value) {
     if (Math.floor(value) !== value && value.toString().split('.').length > 1) {
@@ -203,28 +208,30 @@ export class SwapPage implements OnInit {
   }
 
   async send() {
-    try {
-      const messages = []
-      if (this.message) {
-        messages.push(this.message)
-      }
-      const result = await this.create()
-      const tx = result.encode().toString('hex')
-      this.alertService.stopLoading()
-      this.router.navigate(['account', 'confirm'], { state: { data: { tx } } })
-    } catch (error) {
-      console.error(error)
-      this.alertService.stopLoading()
-      switch (error.message) {
-        case 'ERR_INSUFFICIENT_BALANCE':
-          this.alertService.showError('SEND.MESSAGE.INSUFFICIENT_BALANCE', '')
-          break
-        case 'ERR_TOO_MANY_INPUTS':
-          this.alertService.showErrorTranslated('SEND.MESSAGE.ERROR_TOO_MANY_INPUTS', 'SEND.MESSAGE.ERROR_TOO_MANY_INPUTS_TEXT')
-          break
-        default:
-          this.alertService.showError('SEND.MESSAGE.CREATE_TRANSACTION', error.message)
-          break
+    if(this.validForm()) {
+      try {
+        const messages = []
+        if (this.message) {
+          messages.push(this.message)
+        }
+        const result = await this.create()
+        const tx = result.encode().toString('hex')
+        this.alertService.stopLoading()
+        this.router.navigate(['account', 'confirm'], { state: { data: { tx } } })
+      } catch (error) {
+        console.error(error)
+        this.alertService.stopLoading()
+        switch (error.message) {
+          case 'ERR_INSUFFICIENT_BALANCE':
+            this.alertService.showError('SEND.MESSAGE.INSUFFICIENT_BALANCE', '')
+            break
+          case 'ERR_TOO_MANY_INPUTS':
+            this.alertService.showErrorTranslated('SEND.MESSAGE.ERROR_TOO_MANY_INPUTS', 'SEND.MESSAGE.ERROR_TOO_MANY_INPUTS_TEXT')
+            break
+          default:
+            this.alertService.showError('SEND.MESSAGE.CREATE_TRANSACTION', error.message)
+            break
+        }
       }
     }
   }

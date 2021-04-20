@@ -1246,6 +1246,7 @@
         "WARNING_RED": "您将不能返回UTXO链",
         "WARNING": "目前多数交易平台仅支持TUXO，我们建议您仅转移您计划使用的ETP数额到MVM链",
         "UPDATE_REQUIRED": "请更新MyETPWallet至最新版本 {{requiredVersion}}以便兑换顺利进行",
+        "LOWER_MIN_AMOUNT": "如需转移到MVM，请至少发送{{minAmount}}ETP",
         "NO_VM_ADDRESS": {
             "TITLE": "没有VM地址",
             "SUBTITLE": "请在兑换您的ETP之前建立一个VM地址"
