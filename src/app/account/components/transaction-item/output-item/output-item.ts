@@ -35,6 +35,7 @@ export class OutputItemComponent {
             })
             this.output.locked_until = this.height + 1 + parseInt(this.attenuationObject.LP, 10)
         }
+        console.log(this.output)
     }
 
 }
