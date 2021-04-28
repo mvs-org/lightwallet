@@ -64,6 +64,8 @@ export class IdentitiesPage implements OnInit {
         const hidden = await this.metaverseService.getHiddenMst()
         const icons = await this.metaverseService.getDefaultIcon()
 
+        this.msts = []
+
         order.forEach((symbol) => {
             this.msts.push({
                 symbol,

@@ -31,7 +31,12 @@
             "PUBLIC_KEY": "公钥",
             "PUBLIC_KEY_TEXT": "扩展的公共密钥（xpub）允许您打开仅查看钱包。"
         },
-        "INFO_TEXT_BROWSER": "现有MVS钱包用户的通知: 首次登录myetpwallet.com时,请使用备份单词创建一个钱包文件,然后从该文件中打开钱包。"
+        "INFO_TEXT_BROWSER": "现有MVS钱包用户的通知: 首次登录myetpwallet.com时,请使用备份单词创建一个钱包文件,然后从该文件中打开钱包。",
+        "FILE_BACK_LOGIN_ALERT": {
+            "TITLE": "备份已生成",
+            "SUBTITLE": "您的备份文件已经下载，现在您可以点击“打开钱包”选项打开钱包，然后点击“文件”选项",
+            "OK": "好的"
+        }
     },
     "IMPORT_QR": {
         "TITLE": "导入二维码",
@@ -413,7 +418,7 @@
             "TITLE": "您确定吗？",
             "SUBTITLE": "所有登录数据将被清除。",
             "CANCEL": "取消",
-            "OK": "OK"
+            "OK": "好的"
         },
         "SAVE_ACCOUNT_NO_NAME": {
             "TITLE": "请输入一个帐户名",
@@ -557,7 +562,7 @@
             },
             "BUTTON": {
                 "BACK": "返回",
-                "OK": "OK"
+                "OK": "好的"
             }
         }
     },
@@ -739,7 +744,7 @@
         "CONFIRM_ALERT": {
             "TITLE": "太棒了！",
             "SUBTITLE": "您的交易已成功发送",
-            "OK": "Ok"
+            "OK": "好的"
         },
         "BUTTON": {
             "CANCEL": "取消",
@@ -1050,7 +1055,7 @@
     "MESSAGE":  {
         "LOADING": "正在加载...",
         "ERROR_TITLE": "糟糕...",
-        "OK": "Ok",
+        "OK": "好的",
         "PASSWORD_WRONG": "密码错误,请重试"
     },
     "MULTISIG": {

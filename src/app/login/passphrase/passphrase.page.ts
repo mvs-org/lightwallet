@@ -22,6 +22,7 @@ export class PassphrasePage implements OnInit {
   loading: boolean
 
   isMobile: boolean
+  isApp: boolean
 
   constructor(
     private globals: AppService,
@@ -39,6 +40,7 @@ export class PassphrasePage implements OnInit {
 
   ngOnInit() {
     this.isMobile = this.walletService.isMobile()
+    this.isApp = this.walletService.isApp()
     const passphrase = new FormControl('', [Validators.required, Validators.minLength(8)])
     const repeat = new FormControl('', [Validators.required])
     this.form = this.formBuilder.group({
@@ -69,6 +71,11 @@ export class PassphrasePage implements OnInit {
   async downloadAndReturnLogin() {
     await this.download()
     this.router.navigate(['/'])
+    this.alertService.showMessage(
+      'LOGIN.FILE_BACK_LOGIN_ALERT.TITLE',
+      'LOGIN.FILE_BACK_LOGIN_ALERT.SUBTITLE',
+      '',
+      'LOGIN.FILE_BACK_LOGIN_ALERT.OK')
   }
 
   /* encypts mnemonic with authentication provider encypt function

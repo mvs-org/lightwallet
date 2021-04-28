@@ -31,8 +31,8 @@
     <ion-row>
       <br>
       <ion-col size="12" size-md="3" size-lg="2" offset-lg="2">
-        <ion-card routerLink="/login/open/backup-words">
-          <ion-card-header class="ion-text-center">
+        <ion-card routerLink="/login/open/backup-words" class="ion-text-center">
+          <ion-card-header>
             <ion-icon name="receipt-outline" class="icon"></ion-icon>
             <ion-card-title translate="LOGIN.OPEN.BACKUP_WORDS"></ion-card-title>
           </ion-card-header>
@@ -40,9 +40,9 @@
         </ion-card>
       </ion-col>
 
-      <ion-col size="12" size-md="3" size-lg="2">
-        <ion-card routerLink="/login/open/file">
-          <ion-card-header class="ion-text-center">
+      <ion-col *ngIf="!isApp" size="12" size-md="3" size-lg="2">
+        <ion-card routerLink="/login/open/file" class="ion-text-center">
+          <ion-card-header>
             <ion-icon name="document-outline" class="icon"></ion-icon>
             <ion-card-title translate="LOGIN.OPEN.FILE"></ion-card-title>
           </ion-card-header>
@@ -51,8 +51,8 @@
       </ion-col>
 
       <ion-col size="12" size-md="3" size-lg="2">
-        <ion-card routerLink="/login/open/qr">
-          <ion-card-header class="ion-text-center">
+        <ion-card routerLink="/login/open/qr" class="ion-text-center">
+          <ion-card-header>
             <ion-icon name="qr-code-outline" class="icon"></ion-icon>
             <ion-card-title translate="LOGIN.OPEN.QR_CODE"></ion-card-title>
           </ion-card-header>
@@ -61,8 +61,8 @@
       </ion-col>
 
       <ion-col size="12" size-md="3" size-lg="2">
-        <ion-card routerLink="/login/open/xpub">
-          <ion-card-header class="ion-text-center">
+        <ion-card routerLink="/login/open/xpub" class="ion-text-center">
+          <ion-card-header>
             <ion-icon name="eye-outline" class="icon"></ion-icon>
             <ion-card-title translate="LOGIN.OPEN.PUBLIC_KEY"></ion-card-title>
           </ion-card-header>
