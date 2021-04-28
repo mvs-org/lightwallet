@@ -69,6 +69,11 @@ export class PassphrasePage implements OnInit {
   async downloadAndReturnLogin() {
     await this.download()
     this.router.navigate(['/'])
+    this.alertService.showMessage(
+      'LOGIN.FILE_BACK_LOGIN_ALERT.TITLE',
+      'LOGIN.FILE_BACK_LOGIN_ALERT.SUBTITLE',
+      '',
+      'LOGIN.FILE_BACK_LOGIN_ALERT.OK')
   }
 
   /* encypts mnemonic with authentication provider encypt function
