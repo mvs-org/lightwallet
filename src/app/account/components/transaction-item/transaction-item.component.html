@@ -40,8 +40,8 @@
                                 </div>
                             </div>
                         </ion-col>
-                        <ion-col size="12" size-sm="6" class="summaryAmount">
-                            <div class="right" *ngIf="txType == 'ETP' || txType == 'COINSTAKE'">
+                        <ion-col size="12" size-sm="6" class="summaryAmount right">
+                            <div *ngIf="txType == 'ETP' || txType == 'COINSTAKE'">
                                 <div *ngIf="totalPersonalInputs.ETP && totalPersonalInputs.ETP - totalPersonalOutputs.ETP - txFee > 0"
                                     class="sendAmount">
                                     -{{totalPersonalInputs.ETP - totalPersonalOutputs.ETP | format : 8}} ETP
@@ -88,7 +88,6 @@
                                     {{txTypeValue}}
                                 </div>
                             </div>
-                            <br>
                             <div *ngIf="txFee" class="fee right">
                                 {{'TX.TX_FEE' | translate}}: {{txFee | format : 8}} ETP
                             </div>
