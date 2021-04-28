@@ -40,7 +40,7 @@
 </ion-content>
 
 <ion-footer *ngIf="isMobile">
-  <ion-row>
+  <ion-row *ngIf="!isApp">
     <ion-col size="6">
       <ion-button color="secondary" [disabled]="!form.valid" (click)="download()" type="submit" expand="full">
         <ion-icon slot="start" name="download"></ion-icon>
@@ -48,6 +48,15 @@
       </ion-button>
     </ion-col>
     <ion-col size="6">
+      <ion-button [disabled]="!form.valid" (click)="encrypt()" type="submit" expand="full">
+        <ion-icon slot="start" name="arrow-forward"></ion-icon>
+        <span translate="SELECT_PASSPHRASE.BUTTON.ENTER"></span>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+
+  <ion-row *ngIf="isApp">
+    <ion-col size="12">
       <ion-button [disabled]="!form.valid" (click)="encrypt()" type="submit" expand="full">
         <ion-icon slot="start" name="arrow-forward"></ion-icon>
         <span translate="SELECT_PASSPHRASE.BUTTON.ENTER"></span>

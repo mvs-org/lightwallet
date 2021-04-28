@@ -22,6 +22,7 @@ export class PassphrasePage implements OnInit {
   loading: boolean
 
   isMobile: boolean
+  isApp: boolean
 
   constructor(
     private globals: AppService,
@@ -39,6 +40,7 @@ export class PassphrasePage implements OnInit {
 
   ngOnInit() {
     this.isMobile = this.walletService.isMobile()
+    this.isApp = this.walletService.isApp()
     const passphrase = new FormControl('', [Validators.required, Validators.minLength(8)])
     const repeat = new FormControl('', [Validators.required])
     this.form = this.formBuilder.group({
