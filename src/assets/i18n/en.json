@@ -34,7 +34,7 @@
         "INFO_TEXT_BROWSER": "Notice for existing MVS wallet users: On your first login to myetpwallet.com, please create a wallet file from your backup words and then open the wallet from the file.",
         "FILE_BACK_LOGIN_ALERT": {
             "TITLE": "Backup file generated",
-            "SUBTITLE": "Your backup file has been generated. You can now open your wallet using 'Open wallet' and choose the 'File' option.",
+            "SUBTITLE": "Your backup file has been downloaded. You can now open your wallet using 'Open wallet' and choose the 'File' option.",
             "OK": "Got it"
         }
     },
