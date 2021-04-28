@@ -7,7 +7,7 @@ import { Subject, BehaviorSubject } from 'rxjs'
 })
 export class AppService {
 
-  readonly version: string = '0.10.9'
+  readonly version: string = '0.10.10'
   readonly ci_number = ''
   readonly ci_link = ''
   readonly ci_commit = ''
