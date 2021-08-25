@@ -125,7 +125,7 @@ export class DetailsPage implements OnInit {
         secondaryissue_threshold: 0,
         decimals: 8,
         issuer: 'mvs.org',
-        address: 'MGqHvbaH9wzdr6oUDFz4S1HptjoKQcjRve',
+        address: '',
         issue_tx: '2a845dfa63a7c20d40dbc4b15c3e970ef36332b367500fd89307053cb4c1a2c1',
         height: 0,
         description: 'MVS Official Token',

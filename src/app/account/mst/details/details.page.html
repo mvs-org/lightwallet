@@ -264,19 +264,25 @@
                   </ion-col>
                   <ion-col class="right">{{asset.issuer}}</ion-col>
                 </ion-row>
-                <ion-row>
+                <ion-row *ngIf="asset.symbol !== 'ETP'">
                   <ion-col>
                     <div translate="MST_DETAILS.INFO.ADDRESS"></div>
                   </ion-col>
-                  <ion-col class="right">{{asset.address}}</ion-col>
-                  <!--TODO address link to explorer-->
+                  <ion-col class="right">
+                    <a href="{{explorerURL('adr', asset.address)}}" target="_blank" rel="noopener">
+                      {{asset.address}}
+                    </a>
+                  </ion-col>
                 </ion-row>
                 <ion-row>
                   <ion-col>
                     <div translate="MST_DETAILS.INFO.HEIGHT"></div>
                   </ion-col>
-                  <ion-col class="right">{{asset.height}}</ion-col>
-                  <!--TODO block height link to explorer-->
+                  <ion-col class="right">
+                    <a href="{{explorerURL('blk', asset.height)}}" target="_blank" rel="noopener">
+                      {{asset.height}}
+                    </a>
+                  </ion-col>
                 </ion-row>
                 <ion-row>
                   <ion-col>
@@ -288,11 +294,9 @@
                   <ion-col>
                     <div translate="MST_DETAILS.INFO.HASH"></div>
                   </ion-col>
-                  <ion-col class="right">
-                    {{asset.issue_tx}}
-                    <ion-button fill="clear" (click)="checkTx('asset', symbol)">
-                      <ion-icon slot="icon-only" name="open"></ion-icon>
-                    </ion-button>
+                  <ion-col class="right" (click)="checkTx('asset', symbol)">
+                    <a href="{{explorerURL('tx', asset.issue_tx)}}" target="_blank"
+                      rel="noopener">{{asset.issue_tx}}</a>
                   </ion-col>
                   <!--TODO tx link to explorer-->
                 </ion-row>
