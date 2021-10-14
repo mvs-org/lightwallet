@@ -347,8 +347,8 @@
         "FOOTER": "元界团队保留随时自行决定解释和更改上述条款的权利。MyETPWallet在MIT开源协议的保护下分发。"
     },
     "IDENTITIES": {
-        "TITLE": "身份",
-        "MENU_ENTRY": "身份",
+        "TITLE": "地址",
+        "MENU_ENTRY": "地址",
         "TOTAL": "总共",
         "AVAILABLE": "可用的",
         "FROZEN": "冻结",
