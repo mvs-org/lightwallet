@@ -126,7 +126,7 @@ export class DetailsPage implements OnInit {
         decimals: 8,
         issuer: 'mvs.org',
         address: '',
-        issue_tx: '2a845dfa63a7c20d40dbc4b15c3e970ef36332b367500fd89307053cb4c1a2c1',
+        issue_tx: '',
         height: 0,
         description: 'MVS Official Token',
         minedQuantity: undefined,

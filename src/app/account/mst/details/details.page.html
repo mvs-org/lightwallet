@@ -291,7 +291,7 @@
                   <ion-col class="right">{{asset.description}}</ion-col>
                 </ion-row>
                 <ion-row>
-                  <ion-col>
+                  <ion-col *ngIf="asset.symbol !== 'ETP'">
                     <div translate="MST_DETAILS.INFO.HASH"></div>
                   </ion-col>
                   <ion-col class="right" (click)="checkTx('asset', symbol)">
