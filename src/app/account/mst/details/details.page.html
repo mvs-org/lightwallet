@@ -1,0 +1,343 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/account/mst"></ion-back-button>
+      <img class="coinLogoHeader" [src]="icon">
+    </ion-buttons>
+    <ion-title>{{symbol}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/account/history/{{symbol}}">
+        <ion-icon slot="icon-only" name="time"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size>
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title class="ion-text-center" translate="MST_DETAILS.BALANCE.TITLE"></ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-row class="ion-hide-sm-up">
+              <div id="balancesChartSmall">
+                <ion-spinner name="dots" *ngIf="loadingBalance || !balance || !asset; else BalancesSmall"></ion-spinner>
+                <ng-template #BalancesSmall id="balancesChartSmall">
+                  <br><br>
+                  <ion-row>
+                    <ion-col translate="MST.GRID.AVAILABLE"></ion-col>
+                    <ion-col class="right">{{format(balance.available||0, asset.decimals)}}</ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col translate="MST.GRID.UNCONFIRMED"></ion-col>
+                    <ion-col class="right">{{format(balance.unconfirmed||0, asset.decimals)}}</ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col translate="MST.GRID.FROZEN"></ion-col>
+                    <ion-col class="right">{{format(balance.frozen||0, asset.decimals)}}</ion-col>
+                  </ion-row>
+                </ng-template>
+              </div>
+            </ion-row>
+            <ion-row class="ion-hide-sm-down">
+              <div id="balancesChart">
+                <ion-spinner name="dots" *ngIf="loadingBalance || !balance || !asset; else Balances"></ion-spinner>
+                <ng-template #Balances>
+                  <ngx-charts-advanced-pie-chart [scheme]="balanceColorScheme" egendPosition="below"
+                    [results]="[{name: 'MST.GRID.AVAILABLE' | translate, value: format(balance.available||0, asset.decimals)}, {name: 'MST.GRID.UNCONFIRMED' | translate, value: format(balance.unconfirmed||0, asset.decimals)}, {name: 'MST.GRID.FROZEN' | translate, value: format(balance.frozen||0, asset.decimals)}]">
+                  </ngx-charts-advanced-pie-chart>
+                </ng-template>
+              </div>
+            </ion-row>
+            <div class="center">
+              <ion-button color="danger" shape="round" fill="outline" [routerLink]="'/account/send/' + symbol">
+                <ion-icon slot="start" name="arrow-forward"></ion-icon>
+                <span translate="MST_DETAILS.BALANCE.SEND"></span>
+              </ion-button>
+              <ion-button *ngIf="symbol == 'DNA'" color="primary" shape="round" fill="outline"
+                [routerLink]="'/account/vote/' + symbol">
+                <ion-icon slot="start" name="megaphone"></ion-icon>
+                <span translate="MST_DETAILS.BALANCE.VOTE"></span>
+              </ion-button>
+            </div>
+          </ion-card-content>
+        </ion-card>
+
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title class="ion-text-center" translate="MST_DETAILS.INFO.TITLE"></ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-spinner name="dots" *ngIf="loadingMstInfo || !asset; else MstInfo"></ion-spinner>
+            <ng-template #MstInfo>
+              <div *ngIf="asset; else NoMstInfo">
+                <ion-row *ngIf="asset.symbol == 'ETP' || (!miningModel && asset.secondaryissue_threshold == 0)">
+                  <ion-col>
+                    <div translate="MST_DETAILS.INFO.MAX_SUPPLY"></div>
+                  </ion-col>
+                  <ion-col class="right">{{asset.quantity | format : asset.decimals}}</ion-col>
+                </ion-row>
+                <ion-row *ngIf="asset.symbol != 'ETP' && (miningModel || asset.secondaryissue_threshold != 0)">
+                  <ion-col>
+                    <div translate="MST_DETAILS.INFO.TOTAL_SUPPLY"></div>
+                  </ion-col>
+                  <ion-col class="right">{{asset.quantity + asset.minedQuantity | format : asset.decimals}}</ion-col>
+                </ion-row>
+                <!--TODO-->
+                <!--ion-row *ngIf="asset.symbol == 'ETP'">
+              <ion-col>
+                <div translate="MST_DETAILS.INFO.TOTAL_SUPPLY"></div>
+              </ion-col>
+              <ion-col class="right">{{asset.quantity | format : asset.decimals}}</ion-col>
+            </ion-row-->
+                <!--TODO-->
+                <!--ion-row *ngIf="asset.symbol == 'ETP'">
+              <ion-col>
+                <div translate="MST_DETAILS.INFO.BURNED_QUANTITY"></div>
+              </ion-col>
+              <ion-col class="right">{{0 | format : 0}}</ion-col>
+            </ion-row-->
+                <ion-row *ngIf="asset.symbol !== 'ETP'">
+                  <ion-col>
+                    <div translate="MST_DETAILS.INFO.BURNED_QUANTITY"></div>
+                  </ion-col>
+                  <ion-col class="right">{{asset.burnedQuantity | format : asset.decimals}}</ion-col>
+                </ion-row>
+                <!--TODO-->
+                <!--ion-row *ngIf="asset.symbol == 'ETP'">
+              <ion-col>
+                <div translate="MST_DETAILS.INFO.CIRCULATION_SUPPLY"></div>
+              </ion-col>
+              <ion-col class="right">{{0 | format : 0}}</ion-col>
+            </ion-row-->
+                <!--TO REVIEW (DNA?)-->
+                <ion-row *ngIf="asset.symbol !== 'ETP'">
+                  <ion-col>
+                    <div translate="MST_DETAILS.INFO.CIRCULATION_SUPPLY"></div>
+                  </ion-col>
+                  <ion-col class="right">
+                    {{asset.quantity + asset.minedQuantity - asset.burnedQuantity | format : asset.decimals}}
+                  </ion-col>
+                </ion-row>
+                <ion-row
+                  *ngIf="asset.symbol != 'ETP' && (asset.original_quantity != asset.quantity || asset.minedQuantity != 0)">
+                  <ion-col>
+                    <div translate="MST_DETAILS.INFO.INITIAL_MAX_SUPPLY"></div>
+                  </ion-col>
+                  <ion-col class="right">{{asset.original_quantity | format : asset.decimals}}</ion-col>
+                </ion-row>
+                <!--Mining-->
+                <ion-row *ngIf="asset.symbol != 'ETP' && asset.minedQuantity">
+                  <ion-col>
+                    <div translate="MST_DETAILS.INFO.MINED_SUPPLY"></div>
+                  </ion-col>
+                  <ion-col class="right">{{asset.minedQuantity | format : asset.decimals}}</ion-col>
+                </ion-row>
+                <ion-row *ngIf="miningModel && miningModel.initial">
+                  <ion-col>
+                    <div translate="MST_DETAILS.INFO.MINING_MODEL_INITIAL"></div>
+                  </ion-col>
+                  <ion-col class="right">{{miningModel.initial | format : asset.decimals}}</ion-col>
+                </ion-row>
+                <ion-row *ngIf="miningModel && miningModel.initial">
+                  <ion-col>
+                    <div translate="MST_DETAILS.INFO.MINING_CURRENT_REWARD"></div>
+                  </ion-col>
+                  <ion-col class="right">{{currentMstMiningReward | format : asset.decimals}}</ion-col>
+                </ion-row>
+                <ion-row *ngIf="currentEtpMiningRewardPow && asset.symbol == 'ETP'">
+                  <ion-col>
+                    <div translate="MST_DETAILS.INFO.MINING_CURRENT_REWARD_POW"></div>
+                  </ion-col>
+                  <ion-col class="right">{{currentEtpMiningRewardPow | format : asset.decimals}}</ion-col>
+                </ion-row>
+                <ion-row *ngIf="currentEtpMiningRewardPos && asset.symbol == 'ETP'">
+                  <ion-col>
+                    <div translate="MST_DETAILS.INFO.MINING_CURRENT_REWARD_POS"></div>
+                  </ion-col>
+                  <ion-col class="right">{{currentEtpMiningRewardPos | format : asset.decimals}}</ion-col>
+                </ion-row>
+                <ion-row *ngIf="miningModel && miningModel.initial">
+                  <ion-col>
+                    <div translate="MST_DETAILS.INFO.MINING_MODEL_INTERVAL"></div>
+                  </ion-col>
+                  <ion-col class="right">{{miningModel.interval | format : asset.decimals}}</ion-col>
+                </ion-row>
+                <ion-row *ngIf="miningModel && miningModel.initial">
+                  <ion-col>
+                    <div translate="MST_DETAILS.INFO.MINING_MODEL_BASE"></div>
+                  </ion-col>
+                  <ion-col class="right">{{miningModel.basePercent | format : 0}}%</ion-col>
+                </ion-row>
+                <!--Secondary issues-->
+                <ion-row *ngIf="asset.original_quantity != asset.quantity">
+                  <ion-col>
+                    <div translate="MST_DETAILS.INFO.ADDED_VIA_SECONDARY_ISSUE"></div>
+                  </ion-col>
+                  <ion-col class="right">
+                    {{asset.quantity - asset.original_quantity | format : asset.decimals}}
+                    <ion-buttons slot="end">
+                      <ion-button>
+                        <ion-icon slot="icon-only"
+                          *ngIf="asset.original_quantity != asset.quantity && !showSecondaryHistory" name="eye"
+                          (click)="showSecondaryHistory = true"></ion-icon>
+                        <ion-icon slot="icon-only"
+                          *ngIf="asset.original_quantity != asset.quantity && showSecondaryHistory" name="eye"
+                          (click)="showSecondaryHistory = false"></ion-icon>
+                      </ion-button>
+                    </ion-buttons>
+                  </ion-col>
+                </ion-row>
+                <div *ngFor="let update of asset.updates; let index = index">
+                  <ion-row *ngIf="showSecondaryHistory && update.is_secondaryissue">
+                    <ion-col>
+                      <div translate="MST_DETAILS.INFO.SECONDARY_ISSUE_PAST" [translateParams]="{index: index+1}">
+                      </div>
+                    </ion-col>
+                    <!--TODO link to tx: tx/{{update.issue_tx}} -->
+                    <ion-col class="right">
+                      {{update.quantity | format : asset.decimals}} - {{update.confirmed_at * 1000 | date : 'medium'}}
+                      <div *ngIf="update.attenuation_model_param"
+                        translate="MST_DETAILS.INFO.SECONDARY_ISSUE_PAST_FROZEN">
+                      </div>
+                      <!--div class="inline">
+                    <a ng-show="update.attenuation_model_param && !this.showModel" ng-click="this.showModel = true"><i class="fas fa-plus-circle"></i></a>
+                    <a ng-show="update.attenuation_model_param && this.showModel" ng-click="this.showModel = false"><i class="fas fa-minus-circle"></i></a>
+                </div>
+                <div ng-show="this.showModel">
+                    <div class="col-xs-6 col-md-4 noPaddingLeftRight">{{ 'ASSET.SECONDARY_ISSUE_PAST_MODEL_TYPE' | translate }}:</div>
+                    <div class="col-xs-6 col-md-8 noPaddingLeftRight">{{ 'ASSET.SECONDARY_ISSUE_PAST_MODEL_TYPE' | translate }} {{update.attenuation_model_param.type}}</div>
+
+                    <div class="col-xs-6 col-md-4 noPaddingLeftRight">{{ 'ASSET.SECONDARY_ISSUE_PAST_MODEL_QUANTITY' | translate }}:</div>
+                    <div class="col-xs-6 col-md-8 noPaddingLeftRight">{{update.attenuation_model_param.lock_quantity | numberFormat : asset.decimals}}</div>
+
+                    <div class="col-xs-6 col-md-4 noPaddingLeftRight">{{ 'ASSET.SECONDARY_ISSUE_PAST_MODEL_PERIOD_NBR' | translate }}:</div>
+                    <div class="col-xs-6 col-md-8 noPaddingLeftRight">{{update.attenuation_model_param.total_period_nbr}} {{ 'ASSET.SECONDARY_ISSUE_PAST_MODEL_PERIOD' | translate }}</div>
+                    <div ng-show="update.attenuation_model_param.type == 1">
+                        <div class="col-xs-6 col-md-4 noPaddingLeftRight">{{ 'ASSET.SECONDARY_ISSUE_PAST_MODEL_PERIOD_TIME' | translate }}:</div>
+                        <div class="col-xs-6 col-md-8 noPaddingLeftRight">{{update.attenuation_model_param.lock_period}} {{ 'ASSET.SECONDARY_ISSUE_PAST_MODEL_BLOCKS' | translate }}</div>
+                    </div>
+
+                    <div ng-show="update.attenuation_model_param.type == 2" ng-repeat="period in update.attenuation_model_param.locked">
+                        <div class="col-xs-12 noPaddingLeftRight">
+                            <div class="col-xs-6 col-md-4 noPaddingLeftRight">{{ 'ASSET.SECONDARY_ISSUE_PAST_MODEL_QUANTITY_MODEL2_1' | translate }}{{$index+1}}{{ 'ASSET.SECONDARY_ISSUE_PAST_MODEL_QUANTITY_MODEL2_2' | translate }}</div>
+                            <div class="col-xs-6 col-md-8 noPaddingLeftRight">{{period.quantity | numberFormat : asset.decimals}}</div>
+                        </div>
+                        <div class="col-xs-12 noPaddingLeftRight">
+                            <div class="col-xs-6 col-md-4 noPaddingLeftRight">{{ 'ASSET.SECONDARY_ISSUE_PAST_MODEL_PERIOD_MODEL2' | translate }}{{$index+1}}</div>
+                            <div class="col-xs-6 col-md-8 noPaddingLeftRight">{{period.number}} {{ 'ASSET.SECONDARY_ISSUE_PAST_MODEL_BLOCKS' | translate }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div-->
+                    </ion-col>
+                  </ion-row>
+                </div>
+
+                <ion-row *ngIf="asset.symbol != 'ETP'">
+                  <ion-col>
+                    <div translate="MST_DETAILS.INFO.SECONDARY_ISSUE"></div>
+                  </ion-col>
+                  <ion-col class="right">
+                    <span *ngIf="asset.secondaryissue_threshold == 0"
+                      translate="MST_DETAILS.INFO.SECONDARY_ISSUE_DISABLED"></span>
+                    <span *ngIf="asset.secondaryissue_threshold == 127"
+                      translate="MST_DETAILS.INFO.SECONDARY_ISSUE_DISABLED"></span>
+                    <span
+                      *ngIf="asset.secondaryissue_threshold != 0 && asset.secondaryissue_threshold != 127">{{asset.secondaryissue_threshold}}%</span>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <div translate="MST_DETAILS.INFO.DECIMALS"></div>
+                  </ion-col>
+                  <ion-col class="right">{{asset.decimals}}</ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <div translate="MST_DETAILS.INFO.ISSUER"></div>
+                  </ion-col>
+                  <ion-col class="right">{{asset.issuer}}</ion-col>
+                </ion-row>
+                <ion-row *ngIf="asset.symbol !== 'ETP'">
+                  <ion-col>
+                    <div translate="MST_DETAILS.INFO.ADDRESS"></div>
+                  </ion-col>
+                  <ion-col class="right">
+                    <a href="{{explorerURL('adr', asset.address)}}" target="_blank" rel="noopener">
+                      {{asset.address}}
+                    </a>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <div translate="MST_DETAILS.INFO.HEIGHT"></div>
+                  </ion-col>
+                  <ion-col class="right">
+                    <a href="{{explorerURL('blk', asset.height)}}" target="_blank" rel="noopener">
+                      {{asset.height}}
+                    </a>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <div translate="MST_DETAILS.INFO.DESCRIPTION"></div>
+                  </ion-col>
+                  <ion-col class="right">{{asset.description}}</ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col *ngIf="asset.symbol !== 'ETP'">
+                    <div translate="MST_DETAILS.INFO.HASH"></div>
+                  </ion-col>
+                  <ion-col class="right" (click)="checkTx('asset', symbol)">
+                    <a href="{{explorerURL('tx', asset.issue_tx)}}" target="_blank"
+                      rel="noopener">{{asset.issue_tx}}</a>
+                  </ion-col>
+                  <!--TODO tx link to explorer-->
+                </ion-row>
+              </div>
+              <ng-template #NoMstInfo>
+                <p class="center no-mst-info" translate="MST_DETAILS.INFO.NO_INFO"></p>
+              </ng-template>
+            </ng-template>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size>
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title class="ion-text-center" translate="MST_DETAILS.STAKELIST.TITLE"></ion-card-title>
+          </ion-card-header>
+          <ion-card-content class="center">
+            <div id="distributionChart">
+              <ngx-charts-pie-chart scheme="neons" [results]="stakelistChartData" [legend]="false" [labels]="false"
+                [doughnut]="false" [view]="[320, 320]" [explodeSlices]="false" [scheme]="colorScheme"
+                legendPosition="below">
+              </ngx-charts-pie-chart>
+            </div>
+            <!-- <ion-item *ngFor="let staker of stakelist; let index = index">
+              <ion-label>
+                {{index + 1}}. <span>{{staker.name}}</span>
+                <p>
+                  {{staker.q | format : asset.decimals}} {{symbol}}
+                </p>
+              </ion-label>
+            </ion-item> -->
+            <!-- <ion-spinner name="dots" *ngIf="loadingStakelist"></ion-spinner>
+            <ion-button color="primary" expand="full" (click)="getStakelist()" [disabled]="loadingStakelist"
+              *ngIf="!stakelistFullyLoaded">
+              <ion-icon slot="start" name="add"></ion-icon>
+              <span translate="MST_DETAILS.STAKELIST.LOAD_MORE"></span>
+            </ion-button> -->
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

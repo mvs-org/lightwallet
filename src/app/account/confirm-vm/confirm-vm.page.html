@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/account/portfolio"></ion-back-button>
+    </ion-buttons>
+    <ion-title translate="CONFIRM.TITLE"></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <form #signTxForm="ngForm" (ngSubmit)="submit()">
+
+    <tx-item-vm [params]="params" [status]="'UNSIGNED'" [from]="vmAddress.address" [addresses]="[vmAddress.address]"></tx-item-vm>
+
+    <ion-item *ngIf="!signedTx" [ngClass]="{'error-border': !validPassword(passphrase)}">
+      <ion-label color="primary" position="floating" translate="CONFIRM.PASSWORD"></ion-label>
+      <ion-input name="passphrase" type="password" [(ngModel)]="passphrase" required></ion-input>
+    </ion-item>
+    <br>
+
+    <ion-row>
+      <ion-col>
+        <ion-button color="danger" fill="outline" shape="round" expand="full" (click)="cancel()">
+          <ion-icon slot="start" name="close"></ion-icon>
+          <span translate="CONFIRM.BUTTON.CANCEL"></span>
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button type="submit" expand="full" fill="outline" shape="round"
+          [disabled]="!signTxForm.form.valid||!validPassword(passphrase)"
+          color="primary">
+          <ion-icon slot="start" name="send"></ion-icon>
+          <span translate="CONFIRM.BUTTON.SIGN_AND_SEND"></span>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+  </form>
+</ion-content>

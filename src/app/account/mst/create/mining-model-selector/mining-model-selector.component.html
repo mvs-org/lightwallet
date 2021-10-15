@@ -1,0 +1,30 @@
+<ion-list>
+
+    <ion-item [ngClass]="{'error-border':!validInitial(initial), 'valid-border': validInitial(initial)}">
+        <ion-label color="primary" position="floating" translate="CREATE_MST.MST_MINING.INITIAL_REWARD"></ion-label>
+        <ion-input name="initial" type="number" [(ngModel)]="initial" min="0" (ngModelChange)="inputChange($event)">
+        </ion-input>
+    </ion-item>
+    <div lines="none" class="advice" translate="CREATE_MST.MST_MINING.HELP.INITIAL_REWARD"></div>
+
+    <ion-item [ngClass]="{'error-border':!validInterval(interval), 'valid-border': validInterval(interval)}">
+        <ion-label color="primary" position="floating" translate="CREATE_MST.MST_MINING.INTERVAL"></ion-label>
+        <ion-input name="interval" type="number" min="0" step="1" [(ngModel)]="interval"
+            (ngModelChange)="inputChange($event)"></ion-input>
+    </ion-item>
+    <div lines="none" class="advice" translate="CREATE_MST.MST_MINING.HELP.INTERVAL"></div>
+
+    <ion-item lines="none">
+        <ion-label color="primary" translate="CREATE_MST.MST_MINING.BASE"></ion-label>
+        <ion-badge item-end color="primary">{{basePercent}}%</ion-badge>
+    </ion-item>
+    <ion-item>
+        <ion-range min="0" max="100" step="1" pin="true" snaps="true" color="primary" [(ngModel)]="basePercent"
+            name="basePercent" (ngModelChange)="inputChange($event)">
+            <ion-label range-left>0%</ion-label>
+            <ion-label range-right>100%</ion-label>
+        </ion-range>
+    </ion-item>
+    <div lines="none" class="advice" translate="CREATE_MST.MST_MINING.HELP.BASE"></div>
+
+</ion-list>

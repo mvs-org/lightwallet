@@ -1,0 +1,79 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/account/mit"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{symbol}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12" size-md="6">
+        <ion-card class="card-block">
+          <ion-item lines="none">
+            <ion-avatar slot="start">
+              <img class="coinlogo" [src]="'assets/icon/default_mit.png'">
+            </ion-avatar>
+            <ion-label>
+              <h1>
+                <ion-col>
+                  {{symbol}}
+                </ion-col>
+              </h1>
+              <ion-button id="explorerTxButton" fill="clear" (click)="checkTx('mit', symbol)">
+                <ion-icon slot="icon-only" name="open"></ion-icon>
+              </ion-button>
+              <ion-row>
+                <ion-col>
+                  <div translate="MIT_DETAILS.OWNER"></div>
+                </ion-col>
+                <ion-col class="right">{{owner}}</ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  <div translate="MIT_DETAILS.CREATOR"></div>
+                </ion-col>
+                <ion-col class="right">{{creator}}</ion-col>
+              </ion-row>
+            </ion-label>
+          </ion-item>
+        </ion-card>
+      </ion-col>
+      <ion-col size="12" size-md="6">
+        <ion-card class="card-block">
+          <ion-item lines="none">
+            <div>
+              <h1 translate="MIT_DETAILS.CONTENT"></h1>
+              <p text-wrap class="mit-content">{{content}}</p>
+            </div>
+          </ion-item>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <br>
+  <ion-item lines="none">
+    <h2 translate="MIT_DETAILS.HISTORY"></h2>
+  </ion-item>
+  <ion-list>
+    <ion-card *ngFor="let step of history">
+      <ion-item lines="none">
+        <h2 translate="MIT_DETAILS.RECIPIENT_AVATAR">
+          <span>: {{step.to_did}}</span>
+        </h2>
+      </ion-item>
+      <ion-item lines="none" translate="MIT_DETAILS.STATUS">
+        <span>: {{step.status}}</span>
+      </ion-item>
+      <ion-item lines="none" class="" translate="MIT_DETAILS.DATE">
+        <span>: {{step.confirmed_at*1000|date : 'medium'}}</span>
+        <ion-button fill="clear" color="primary" (click)="checkTx('tx', step.tx)">
+          <ion-icon slot="icon-only" name="open"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </ion-card>
+  </ion-list>
+</ion-content>

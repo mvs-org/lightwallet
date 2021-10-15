@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title translate="BASE_CURRENCY.TITLE"></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list>
+    <ion-item button *ngFor="let currency of currencies" [disabled]="currency == currentBase" (click)="select(currency)">
+      <ion-label>{{currency}}
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

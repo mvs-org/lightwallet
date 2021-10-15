@@ -1,0 +1,77 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title translate="LOGIN.OPEN.TITLE"></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+
+  <ion-grid>
+    <ion-row class="title">
+      <h1 class="center title-text" translate="LOGIN.OPEN.ACCESS_MY_WALLET"></h1>
+      <h3 *ngIf="noAccount" class="center pointer" translate="LOGIN.OPEN.NO_WALLET_YET" (click)="goToCreate()"></h3>
+    </ion-row>
+    <ion-row *ngIf="!noAccount" class="ion-text-center">
+      <ion-col size="12" size-md="4" offset-md="4">
+        <div *ngFor="let account of saved_accounts">
+          <ion-button expand="full" fill="outline" shape="round" class="account-btn" (click)="loginViaAccount(account)"
+          *ngIf="account.network == globals.network || (!account.network && globals.network=='mainnet')">
+          <ion-icon slot="start" *ngIf="account.content" name="person"></ion-icon>
+          <ion-icon slot="start" *ngIf="!account.content && account.view_only_content" name="eye"></ion-icon>
+          {{account.name}}
+        </ion-button>
+        </div>
+        <div class="option" translate="LOGIN.OPEN.OR"></div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <br>
+      <ion-col size="12" size-md="3" size-lg="2" offset-lg="2">
+        <ion-card routerLink="/login/open/backup-words" class="ion-text-center">
+          <ion-card-header>
+            <ion-icon name="receipt-outline" class="icon"></ion-icon>
+            <ion-card-title translate="LOGIN.OPEN.BACKUP_WORDS"></ion-card-title>
+          </ion-card-header>
+          <ion-card-content translate="LOGIN.OPEN.BACKUP_WORDS_TEXT"></ion-card-content>
+        </ion-card>
+      </ion-col>
+
+      <ion-col *ngIf="!isApp" size="12" size-md="3" size-lg="2">
+        <ion-card routerLink="/login/open/file" class="ion-text-center">
+          <ion-card-header>
+            <ion-icon name="document-outline" class="icon"></ion-icon>
+            <ion-card-title translate="LOGIN.OPEN.FILE"></ion-card-title>
+          </ion-card-header>
+          <ion-card-content translate="LOGIN.OPEN.FILE_TEXT"></ion-card-content>
+        </ion-card>
+      </ion-col>
+
+      <ion-col size="12" size-md="3" size-lg="2">
+        <ion-card routerLink="/login/open/qr" class="ion-text-center">
+          <ion-card-header>
+            <ion-icon name="qr-code-outline" class="icon"></ion-icon>
+            <ion-card-title translate="LOGIN.OPEN.QR_CODE"></ion-card-title>
+          </ion-card-header>
+          <ion-card-content translate="LOGIN.OPEN.QR_CODE_TEXT"></ion-card-content>
+        </ion-card>
+      </ion-col>
+
+      <ion-col size="12" size-md="3" size-lg="2">
+        <ion-card routerLink="/login/open/xpub" class="ion-text-center">
+          <ion-card-header>
+            <ion-icon name="eye-outline" class="icon"></ion-icon>
+            <ion-card-title translate="LOGIN.OPEN.PUBLIC_KEY"></ion-card-title>
+          </ion-card-header>
+          <ion-card-content translate="LOGIN.OPEN.PUBLIC_KEY_TEXT"></ion-card-content>
+        </ion-card>
+      </ion-col>
+
+    </ion-row>
+
+  </ion-grid>
+
+</ion-content>

@@ -1,0 +1,80 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/account/mit"></ion-back-button>
+    </ion-buttons>
+    <ion-title translate="CREATE_MIT.TITLE"></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-row>
+    <ion-col>
+      <p align="center" translate="CREATE_MIT.INFORMATION"></p>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col class="right" translate="CREATE_MIT.FEE_WARNING" [translateParams]="{fee: fee | format : 8}"></ion-col>
+  </ion-row>
+  <form #sendForm="ngForm" (ngSubmit)="send()">
+    <ion-list>
+      <ion-item [ngClass]="{'error-border':!validSymbol(symbol)}">
+        <ion-label color="primary" position="floating" translate="CREATE_MIT.SYMBOL"></ion-label>
+        <ion-input name="symbol" [(ngModel)]="symbol" maxlength="63" (ngModelChange)="symbolChanged()" required>
+        </ion-input>
+      </ion-item>
+      <ion-item *ngIf="symbol.length >= 3 && !symbol_available" lines="none" class="wrong-input" translate="CREATE_MIT.MIT_ALREADY_EXIST"></ion-item>
+      <ion-item *ngIf="symbol.length > 0 && symbol.length < 3" lines="none" class="wrong-input" translate="CREATE_MIT.MIT_SYMBOL_TOO_SHORT"></ion-item>
+
+      <ion-item [ngClass]="{'error-border':!validContent(content)}">
+        <ion-label color="primary" position="floating" translate="CREATE_MIT.CONTENT"></ion-label>
+        <ion-input name="content" [(ngModel)]="content" maxlength="252"></ion-input>
+      </ion-item>
+      <ion-item [ngClass]="{'error-border':!validName(recipient_avatar)}">
+        <ion-label color="primary" position="floating" translate="CREATE_MIT.AVATAR_NAME"></ion-label>
+        <ion-select *ngIf="!no_avatar" [(ngModel)]="recipient_avatar" name="recipient_avatar" multiple="false"
+          okText="{{'OK'|translate}}" cancelText="{{'CANCEL'|translate}}" (ngModelChange)="avatarChanged()">
+          <ion-select-option *ngFor="let avatar of avatars" value="{{avatar.symbol}}">{{avatar.symbol}}</ion-select-option>
+        </ion-select>
+        <ion-input name="no_avatar" *ngIf="no_avatar" [(ngModel)]="no_avatar_placeholder" disabled></ion-input>
+      </ion-item>
+      <ion-item *ngIf="no_avatar" lines="none" class="wrong-input" translate="CREATE_MIT.NO_AVATAR"></ion-item>
+
+      <ion-item [ngClass]="{'error-border':!validAddress(recipient_address)}">
+        <ion-label color="primary" position="floating" translate="CREATE_MIT.RECIPIENT_ADDRESS"></ion-label>
+        <ion-input name="recipient_address" [(ngModel)]="recipient_address" disabled></ion-input>
+      </ion-item>
+      <ion-item class="toggle-input">
+        <ion-label translate="CREATE_MIT.SHOW_ADVANCED"></ion-label>
+        <ion-toggle [(ngModel)]="showAdvanced" name="showAdvanced" checked="false"></ion-toggle>
+      </ion-item>
+      <div *ngIf="showAdvanced">
+        <ion-item lines="none">
+          <ion-label color="primary" translate="CREATE_MIT.FEE"></ion-label>
+          <ion-badge item-end color="primary">{{fee | format : 8}} ETP</ion-badge>
+        </ion-item>
+        <ion-item>
+          <ion-range min="10000" max="10000000" step="10000" color="primary" [(ngModel)]="fee" name="fee">
+            <ion-label range-left>{{10000 | format : 8}}</ion-label>
+            <ion-label range-right>{{10000000 | format : 8}}</ion-label>
+          </ion-range>
+        </ion-item>
+      </div>
+    </ion-list>
+    <ion-row class="padding-bottom">
+      <ion-col>
+        <ion-button color="danger" fill="outline" shape="round" expand="full" routerLink="/account/mit">
+          <ion-icon slot="start" name="close"></ion-icon>
+          <span translate="CREATE_MIT.BUTTON.CANCEL"></span>
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button expand="full" type="submit" fill="outline" shape="round"
+          [disabled]="!sendForm.form.valid||!validSymbol(symbol)||!validContent(content)||!validName(recipient_avatar)||!validAddress(recipient_address)" color="primary">
+          <ion-icon slot="start" disabled="checked" name="cog"></ion-icon>
+          <span translate="CREATE_MIT.BUTTON.NEXT"></span>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </form>
+</ion-content>

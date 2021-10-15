@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title translate="MIT.TITLE"></ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/account/mit/create">
+        <ion-icon slot="icon-only" name="add"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+
+<ion-content class="center spread-out">
+  <br>
+  <div *ngIf="balances!=undefined && balances.MIT.length==0" translate="MIT.NO_MIT"></div>
+  <ion-list *ngIf="balances!=undefined">
+    <ion-item *ngFor="let mit of balances.MIT" button [routerLink]="'/account/mit/'+mit.symbol" detail>
+      <ion-label>
+        <b>{{mit.symbol}}</b>
+        <p>{{mit.owner}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

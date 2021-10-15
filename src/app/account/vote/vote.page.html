@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/account/mst"></ion-back-button>
+    </ion-buttons>
+    <ion-title translate="VOTE.TITLE"></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+
+  <ion-row>
+    <ion-col>
+      <p align="center">
+        <span translate="VOTE.INFORMATION"></span>
+        <a class="pointer" (click)="checkElection()">{{electionURL()}}</a>
+      </p>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col>
+      <p align="center">
+        <span translate="VOTE.INFORMATION_BAYVIEW"></span>
+        <a class="pointer" (click)="openLink('https://www.bayviewplatform.com/')">www.bayviewplatform.com</a>
+      </p>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col>
+      <p align="center">
+        <span translate="VOTE.INFORMATION_DNA"></span>
+        <a class="pointer" (click)="openLink('https://mvsdna.com/')">mvsdna.com</a>
+      </p>
+    </ion-col>
+  </ion-row>
+
+  <div *ngIf="frozen_outputs_locked && frozen_outputs_locked.length">
+    <h2 class="center" translate="VOTE.HISTORY_LOCKED"></h2>
+    <app-vote-item *ngFor="let output of frozen_outputs_locked" [output]="output" [height]="height" [blocktime]="blocktime"
+      [reward]="rewards[output.hash]" [icon]="'assets/icon/DNA.png'"></app-vote-item>
+    <ion-row>
+      <ion-col>
+        <p align="center" translate="VOTE.UNLOCK_APPROXIMATION_INFORMATION"></p>
+      </ion-col>
+    </ion-row>
+  </div>
+  <div *ngIf="frozen_outputs_unlocked && frozen_outputs_unlocked.length">
+    <h2 class="center" translate="VOTE.HISTORY_UNLOCKED"></h2>
+    <app-vote-item *ngFor="let output of frozen_outputs_unlocked" [output]="output" [height]="height"
+      [blocktime]="blocktime" [reward]="rewards[output.hash]" [icon]="'assets/icon/DNA.png'"></app-vote-item>
+  </div>
+
+</ion-content>
