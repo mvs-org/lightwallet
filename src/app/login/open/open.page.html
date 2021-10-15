@@ -13,7 +13,7 @@
   <ion-grid>
     <ion-row class="title">
       <h1 class="center title-text" translate="LOGIN.OPEN.ACCESS_MY_WALLET"></h1>
-      <h3 *ngIf="noAccount" class="center pointer" translate="LOGIN.OPEN.NO_WALLET_YET"></h3>
+      <h3 *ngIf="noAccount" class="center pointer" translate="LOGIN.OPEN.NO_WALLET_YET" (click)="goToCreate()"></h3>
     </ion-row>
     <ion-row *ngIf="!noAccount" class="ion-text-center">
       <ion-col size="12" size-md="4" offset-md="4">

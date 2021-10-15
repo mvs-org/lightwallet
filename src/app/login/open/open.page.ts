@@ -49,6 +49,10 @@ export class OpenPage implements OnInit {
     }
   }
 
+  goToCreate() {
+    this.router.navigate(['login', 'create'])
+  }
+
   async loginAccountViewOnly(account) {
     try {
       const accountName = account.name
