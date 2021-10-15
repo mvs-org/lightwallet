@@ -347,8 +347,8 @@
         "FOOTER": "The Metaverse Team reserves the right to interpret and change the aforementioned clauses at any time, in our sole discretion. MyETPWallet is distributed under the protection of the MIT open source protocol."
     },
     "IDENTITIES": {
-        "TITLE": "Identities",
-        "MENU_ENTRY": "Identities",
+        "TITLE": "Addresses",
+        "MENU_ENTRY": "Addresses",
         "TOTAL": "Total",
         "AVAILABLE": "Available",
         "FROZEN": "Frozen",
