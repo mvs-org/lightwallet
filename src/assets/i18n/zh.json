@@ -656,6 +656,7 @@
         "MESSAGE_TOO_LONG": "消息太长。请使用短消息",
         "CHANGE_ADDRESS": "指定更改地址（可选）",
         "CHANGE_ADDRESS_AUTO": "自动",
+        "TOTAL_MORE_AVAILABLE": "发送资产总额超出您的最大可用余额",
         "IMPORT_CSV_TOO_MANY_RECIPIENT": {
             "TITLE": "接收者过多",
             "MESSAGE": "此文件包含的接收者超出上限，上限为"
