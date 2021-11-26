@@ -250,7 +250,7 @@
                 </ion-button>
             </div>
 
-            <ion-item [ngClass]="{'error-border':total > showBalance}">
+            <ion-item [ngClass]="{'error-border':!validSendMoreTotalQuantity()}">
                 <ion-label color="primary">
                     <span translate="SEND_MORE.TOTAL_TO_SEND"></span>
                     <p class="total-amount">
@@ -262,7 +262,7 @@
                     </p>
                 </ion-label>
             </ion-item>
-            <ion-item *ngIf="total > showBalance" lines="none" class="wrong-input"
+            <ion-item *ngIf="!validSendMoreTotalQuantity()" lines="none" class="wrong-input"
                 translate="SEND_MORE.TOTAL_MORE_AVAILABLE"></ion-item>
             <br>
             <ion-item [ngClass]="{'error-border':!validFromAddress(sendFrom)}">
