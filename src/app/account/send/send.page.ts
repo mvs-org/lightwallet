@@ -371,6 +371,7 @@ export class SendPage implements OnInit {
   validSendMoreAvatar = (input: string, index: number) => /[A-Za-z0-9.-]/.test(input) && this.sendMoreValidEachAvatar[index]
 
   validSendMoreTotalQuantity = () => (this.total+10000*this.recipients.length) <= this.showBalance
+
   validForm = () =>
     (this.transfer_type === 'one'
       && this.validaddress(this.recipient_address)
