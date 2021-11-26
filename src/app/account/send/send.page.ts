@@ -243,7 +243,7 @@ export class SendPage implements OnInit {
   fiatValue = (quantity: string) => (parseFloat(quantity) * this.tickers[this.selectedAsset][this.base].price) || 0
 
   countDecimals(value) {
-    if (Math.floor(value) !== value && value.toString().split('.').length > 1) {
+    if (value && Math.floor(value) !== value && value.toString().split('.').length > 1) {
       return value.toString().split('.')[1].length || 0
     }
     return 0
@@ -370,6 +370,7 @@ export class SendPage implements OnInit {
 
   validSendMoreAvatar = (input: string, index: number) => /[A-Za-z0-9.-]/.test(input) && this.sendMoreValidEachAvatar[index]
 
+  validSendMoreTotalQuantity = () => (this.total+10000*this.recipients.length) <= this.showBalance
   validForm = () =>
     (this.transfer_type === 'one'
       && this.validaddress(this.recipient_address)
@@ -380,7 +381,7 @@ export class SendPage implements OnInit {
     || (this.transfer_type === 'more'
       && this.sendMoreValidQuantity
       && this.sendMoreValidAddress
-      && this.total > this.showBalance
+      && this.validSendMoreTotalQuantity()
       && this.validMessageLength(this.message)
       && this.validFromAddress(this.sendFrom))
 
